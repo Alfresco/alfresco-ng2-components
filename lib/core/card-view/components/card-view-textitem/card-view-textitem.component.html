@@ -1,6 +1,6 @@
 <div [attr.data-automation-id]="'card-textitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
-    <span *ngIf="!isEditable()">
+    <ng-container *ngIf="!isEditable()">
         <span *ngIf="!isClickable(); else elseBlock" [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <span *ngIf="showProperty()"
                 [ngClass]="property.multiline?'adf-textitem-multiline':'adf-textitem-scroll'">
@@ -21,8 +21,8 @@
                 </button>
             </div>
         </ng-template>
-    </span>
-    <span *ngIf="isEditable()">
+    </ng-container>
+    <ng-container *ngIf="isEditable()">
         <div *ngIf="!inEdit" role="button"
             tabindex="0"
             [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
@@ -88,7 +88,7 @@
                 </ul>
             </mat-error>
         </div>
-    </span>
+    </ng-container>
     <ng-template #elseEmptyValueBlock>
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
     </ng-template>

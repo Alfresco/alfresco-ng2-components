@@ -164,6 +164,7 @@ describe('CardViewDateItemComponent', () => {
         component.property.editable = true;
         fixture.detectChanges();
 
+        expect(component.isEditable()).toBe(false);
         const datePicker = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-${component.property.key}"]`));
         const datePickerToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-${component.property.key}"]`));
         expect(datePicker).toBeNull('Datepicker should NOT be in DOM');
@@ -217,83 +218,92 @@ describe('CardViewDateItemComponent', () => {
         );
     }));
 
-    it('should render the clear icon in case of displayClearAction:true', () => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.value = 'Jul 10 2017';
-        fixture.detectChanges();
+    describe('clear icon', () => {
+        it('should render the clear icon in case of displayClearAction:true', () => {
+            component.editable = true;
+            component.property.editable = true;
+            component.property.value = 'Jul 10 2017';
+            fixture.detectChanges();
 
-        const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`));
-        expect(datePickerClearToggle).not.toBeNull('Clean Icon should be in DOM');
-    });
+            const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear-${component.property.key}"]`));
+            expect(datePickerClearToggle).not.toBeNull('Clean Icon should be in DOM');
+        });
 
-    it('should not render the clear icon in case of property value empty', () => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.value = null;
-        fixture.detectChanges();
+        it('should not render the clear icon in case of property value empty', () => {
+            component.editable = true;
+            component.property.editable = true;
+            component.property.value = null;
+            fixture.detectChanges();
 
-        const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
-        expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
-    });
+            const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
+            expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
+        });
 
-    it('should not render the clear icon in case of displayClearAction:false', () => {
-        component.editable = true;
-        component.property.editable = true;
-        component.displayClearAction = false;
-        component.property.value = 'Jul 10 2017';
-        fixture.detectChanges();
+        it('should not render the clear icon in case of displayClearAction:false', () => {
+            component.editable = true;
+            component.property.editable = true;
+            component.displayClearAction = false;
+            component.property.value = 'Jul 10 2017';
+            fixture.detectChanges();
 
-        const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
-        expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
-    });
+            const datePickerClearToggle = fixture.debugElement.query(By.css(`[data-automation-id="datepicker-date-clear--${component.property.key}"]`));
+            expect(datePickerClearToggle).toBeNull('Clean Icon should not be in DOM');
+        });
 
-    it('should remove the property value after a successful clear attempt', async(() => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.value = 'Jul 10 2017';
-        fixture.detectChanges();
+        it('should remove the property value after a successful clear attempt', async(() => {
+            component.editable = true;
+            component.property.editable = true;
+            component.property.value = 'Jul 10 2017';
+            fixture.detectChanges();
 
-        component.onDateClear();
+            component.onDateClear();
 
-        fixture.whenStable().then(
-            () => {
+            fixture.whenStable().then(
+                () => {
+                    expect(component.property.value).toBeNull();
+                }
+            );
+        }));
+
+        it('should remove the property default value after a successful clear attempt', async(() => {
+            component.editable = true;
+            component.property.editable = true;
+            component.property.default = 'Jul 10 2017';
+            fixture.detectChanges();
+
+            component.onDateClear();
+
+            fixture.whenStable().then(
+                () => {
+                    expect(component.property.default).toBeNull();
+                }
+            );
+        }));
+
+        it('should remove actual and default value after a successful clear attempt', async(() => {
+            component.editable = true;
+            component.property.editable = true;
+            component.property.default = 'Jul 10 2017';
+            component.property.value = 'Jul 10 2017';
+            fixture.detectChanges();
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
+                (updateNotification) => {
+                    expect(updateNotification.target).toBe(component.property);
+                    expect(updateNotification.changed).toEqual({ dateKey: null });
+                    disposableUpdate.unsubscribe();
+                }
+            );
+
+            component.onDateClear();
+
+            fixture.whenStable().then(() => {
                 expect(component.property.value).toBeNull();
-            }
-        );
-    }));
-
-    it('should remove the property default value after a successful clear attempt', async(() => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.default = 'Jul 10 2017';
-        fixture.detectChanges();
-
-        component.onDateClear();
-
-        fixture.whenStable().then(
-            () => {
                 expect(component.property.default).toBeNull();
-            }
-        );
-    }));
-
-    it('should remove actual and default value after a successful clear attempt', async(() => {
-        component.editable = true;
-        component.property.editable = true;
-        component.property.default = 'Jul 10 2017';
-        component.property.value = 'Jul 10 2017';
-        fixture.detectChanges();
-
-        component.onDateClear();
-
-        fixture.whenStable().then(
-            () => {
-                expect(component.property.value).toBeNull();
-                expect(component.property.default).toBeNull();
-            }
-        );
-    }));
+            });
+        }));
+    });
 
     it('should be possible update a date-time', async () => {
         component.editable = true;

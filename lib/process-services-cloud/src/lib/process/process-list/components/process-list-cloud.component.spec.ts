@@ -126,7 +126,7 @@ describe('ProcessListCloudComponent', () => {
         expect(loadingContent.nativeElement).toBeDefined();
 
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.ngOnChanges({ 'appName': appName });
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
@@ -139,14 +139,13 @@ describe('ProcessListCloudComponent', () => {
     it('should load spinner and show the content', () => {
         spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
         const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-        component.appName = appName.currentValue;
 
         fixture.detectChanges();
         expect(component.isLoading).toBe(true);
         let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
         expect(loadingContent.nativeElement).toBeDefined();
 
-        component.ngOnChanges({ 'appName': appName });
+        component.ngOnChanges({ appName });
         fixture.detectChanges();
 
         expect(component.isLoading).toBe(false);

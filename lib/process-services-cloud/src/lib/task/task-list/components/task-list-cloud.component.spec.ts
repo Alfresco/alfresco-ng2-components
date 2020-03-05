@@ -124,6 +124,48 @@ describe('TaskListCloudComponent', () => {
         expect(component.columns.length).toEqual(3);
     });
 
+    it('should display empty content when process list is empty', () => {
+        const emptyList = {list: {entries: []}};
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
+
+        fixture.detectChanges();
+        expect(component.isLoading).toBe(true);
+        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent.nativeElement).toBeDefined();
+
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+        component.ngOnChanges({ appName });
+        fixture.detectChanges();
+
+        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent).toBeFalsy();
+
+        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+        expect(emptyContent.nativeElement).toBeDefined();
+    });
+
+    it('should load spinner and show the content', () => {
+        spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+        const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+
+        fixture.detectChanges();
+        expect(component.isLoading).toBe(true);
+        let loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent.nativeElement).toBeDefined();
+
+        component.ngOnChanges({ appName });
+        fixture.detectChanges();
+
+        expect(component.isLoading).toBe(false);
+        loadingContent = fixture.debugElement.query(By.css('mat-progress-spinner'));
+        expect(loadingContent).toBeFalsy();
+
+        const emptyContent = fixture.debugElement.query(By.css('.adf-empty-content'));
+        expect(emptyContent).toBeFalsy();
+
+        expect(component.rows.length).toEqual(1);
+    });
+
     it('should use the custom schemaColumn from app.config.json', () => {
         component.presetColumn = 'fakeCustomSchema';
         component.ngAfterContentInit();

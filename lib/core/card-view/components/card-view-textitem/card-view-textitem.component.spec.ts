@@ -111,128 +111,6 @@ describe('CardViewTextItemComponent', () => {
             expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: false
-            });
-            component.displayEmpty = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
-        });
-
-        it('should render the default as value if the value is empty and clickable true', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
-        });
-
-        it('should not render the edit icon in case of clickable true but edit false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull();
-        });
-
-        it('should not render the clickable icon in case editable set to false', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true,
-                icon: 'create'
-            });
-            component.editable = false;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
-            expect(value).toBeNull('icon should NOT be shown');
-        });
-
-        it('should render the defined clickable icon in case of clickable true and editable input set to true', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true,
-                icon: 'FAKE_ICON'
-            });
-            component.editable = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
-        });
-
-        it('should not render clickable icon in case of clickable true and icon undefined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            component.editable = true;
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
-            expect(value).toBeNull('icon should NOT be shown');
-        });
-
-        it('should not render the edit icon in case of clickable true and icon undefined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: true
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
-        });
-
-        it('should not render the edit icon in case of clickable false and icon defined', () => {
-            component.property = new CardViewTextItemModel({
-                label: 'Text label',
-                value: '',
-                key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY',
-                clickable: false,
-                icon: 'FAKE-ICON'
-            });
-            fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
-            expect(value).toBeNull('Edit icon should NOT be shown');
-        });
-
         it('should render value when editable:true', () => {
             component.editable = true;
             component.property.editable = true;
@@ -268,6 +146,150 @@ describe('CardViewTextItemComponent', () => {
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
         });
+    });
+
+    describe('clickable', () => {
+        beforeEach(() => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: '',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY'
+            });
+        });
+
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
+            component.property.clickable = false;
+            component.displayEmpty = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+        });
+
+        it('should render the default as value if the value is empty and clickable true', () => {
+            component.property.clickable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+        });
+
+        it('should not render the edit icon in case of clickable true but edit false', () => {
+            component.property.clickable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull();
+        });
+
+        it('should not render the clickable icon in case editable set to false', () => {
+            component.property.clickable = true;
+            component.property.icon = 'create';
+            component.editable = false;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).toBeNull('icon should NOT be shown');
+        });
+
+        it('should render the defined clickable icon in case of clickable true and editable input set to true', () => {
+            component.property.clickable = true;
+            component.property.icon = 'FAKE_ICON';
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
+        });
+
+        it('should not render clickable icon in case of clickable true and icon undefined', () => {
+            component.property.clickable = true;
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value).toBeNull('icon should NOT be shown');
+        });
+
+        it('should not render the edit icon in case of clickable true and icon undefined', () => {
+            component.property.clickable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should not render the edit icon in case of clickable false and icon defined', () => {
+            component.property.clickable = false;
+            component.property.icon = 'FAKE_ICON';
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            expect(value).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should call back function when clickable property enabled', () => {
+            const callBackSpy = jasmine.createSpy('callBack');
+            component.property.clickable = true;
+            component.property.icon = 'FAKE_ICON';
+            component.property.clickCallBack = callBackSpy;
+            component.editable = true;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            expect(value.nativeElement.innerText).toBe('FAKE_ICON');
+            value.nativeElement.click();
+            expect(callBackSpy).toHaveBeenCalled();
+        });
+
+        it('should click event to the event stream when clickable property enabled', () => {
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            spyOn(cardViewUpdateService, 'clicked').and.stub();
+
+            component.property.clickable = true;
+            component.property.icon = 'FAKE_ICON';
+            component.editable = false;
+            fixture.detectChanges();
+
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
+            value.nativeElement.click();
+            expect(cardViewUpdateService.clicked).toHaveBeenCalled();
+        });
+
+        it('should update input the value on click of save', () => {
+            component.property.clickable = true;
+
+            component.property.editable = true;
+            component.editable = true;
+            component.editedValue = 'updated-value';
+            component.property.isValid = () => true;
+            const expectedText = 'changed text';
+            spyOn(component, 'update').and.callThrough();
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            fixture.detectChanges();
+
+            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
+                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.changed).toEqual({ textkey: expectedText });
+                disposableUpdate.unsubscribe();
+            });
+
+            updateTextField(component.property.key, expectedText);
+
+            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
+            saveButton.nativeElement.click();
+
+            expect(component.update).toHaveBeenCalled();
+            fixture.detectChanges();
+
+            expect(getFieldValue(component.property.key)).toEqual(expectedText);
+            expect(component.property.value).toBe(expectedText);
+        });
+
     });
 
     describe('Update', () => {
@@ -460,7 +482,7 @@ describe('CardViewTextItemComponent', () => {
 
             fixture.detectChanges();
 
-            expect(getDomValue(component.property.key)).toEqual('Lorem ipsum');
+            expect(getFieldValue(component.property.key)).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
         });
 
@@ -487,7 +509,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.update).toHaveBeenCalled();
             fixture.detectChanges();
 
-            expect(getDomValue(component.property.key)).toEqual(expectedText);
+            expect(getFieldValue(component.property.key)).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
         });
     });
@@ -599,7 +621,7 @@ describe('CardViewTextItemComponent', () => {
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
             expect(error).toBeFalsy();
 
-            expect(getDomValue(component.property.key)).toEqual('10');
+            expect(getFieldValue(component.property.key)).toEqual('10');
             expect(component.property.value).toBe(10);
         });
 
@@ -626,7 +648,7 @@ describe('CardViewTextItemComponent', () => {
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
             expect(error).toBeFalsy();
 
-            expect(getDomValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(getFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
         });
     });
@@ -692,7 +714,7 @@ describe('CardViewTextItemComponent', () => {
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
             expect(error).toBeFalsy();
 
-            expect(getDomValue(component.property.key)).toEqual(floatValue.toString());
+            expect(getFieldValue(component.property.key)).toEqual(floatValue.toString());
             expect(component.property.value).toBe(floatValue);
         });
 
@@ -718,7 +740,7 @@ describe('CardViewTextItemComponent', () => {
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-textkey"] li`));
             expect(error).toBeFalsy();
 
-            expect(getDomValue(component.property.key)).toEqual(expectedFloat.toString());
+            expect(getFieldValue(component.property.key)).toEqual(expectedFloat.toString());
             expect(component.property.value).toBe(expectedFloat.toString());
         });
     });
@@ -745,7 +767,7 @@ describe('CardViewTextItemComponent', () => {
         fixture.detectChanges();
     }
 
-    function getDomValue(key): string {
+    function getFieldValue(key): string {
         const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
         return textItemReadOnly.nativeElement.textContent;
     }
