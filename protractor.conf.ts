@@ -1,5 +1,4 @@
 const path = require('path');
-const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
@@ -14,7 +13,7 @@ require('ts-node').register({
 const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
 
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
-const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
+const { uploadScreenshot } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
 
 const projectRoot = path.resolve(__dirname);
@@ -148,10 +147,12 @@ exports.config = {
     SELENIUM_PROMISE_MANAGER: false,
 
     plugins: [{
-        package: 'jasmine2-protractor-utils',
-        disableScreenshot: false,
-        screenshotOnExpectFailure: true,
-        screenshotOnSpecFailure: false,
+        package: 'protractor-screenshoter-plugin',
+        screenshotOnExpect: 'failure',
+        screenshotOnSpec: 'none',
+        withLogs: true,
+        writeReportFreq: 'asap',
+        imageToAscii: 'none',
         clearFoldersBeforeTest: true,
         screenshotPath: `${projectRoot}/e2e-output/screenshots/`
     }],
@@ -187,15 +188,6 @@ exports.config = {
 
         browser.manage().window().setSize(width, height);
 
-        jasmine.getEnv().addReporter(
-            new SpecReporter({
-                spec: {
-                    displayStacktrace: true,
-                    displayDuration: true
-                }
-            })
-        );
-
         return browser.driver.executeScript(disableCSSAnimation);
 
         function disableCSSAnimation() {
@@ -213,12 +205,6 @@ exports.config = {
             head.appendChild(style);
         }
 
-    },
-
-    beforeLaunch: function () {
-        if (SAVE_SCREENSHOT) {
-            cleanReportFolder();
-        }
     },
 
     afterLaunch: async function () {
@@ -242,11 +228,6 @@ exports.config = {
                 console.error('Error saving screenshot', error);
             }
 
-            try {
-                await saveReport(alfrescoJsApi, retryCount);
-            } catch (error) {
-                console.error('Error saving Report', error);
-            }
         }
 
         return retry.afterLaunch(4);
