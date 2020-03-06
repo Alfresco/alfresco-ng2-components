@@ -26,7 +26,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
-
 describe('Upload component', () => {
 
     const contentServicesPage = new ContentServicesPage();
@@ -87,15 +86,13 @@ describe('Upload component', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_location
     });
-    beforeAll(async () => {
 
+    beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
-        const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
-        Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
    });
 
     beforeEach(async () => {
@@ -111,7 +108,6 @@ describe('Upload component', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
             }
         }
-
     });
 
     it('[C260143] Should be possible to maximize/minimize the upload dialog', async () => {
@@ -214,8 +210,6 @@ describe('Upload component', () => {
 
         await uploadToggles.enableFolderUpload();
         await expect(await uploadToggles.checkFolderUploadToggleIsEnabled()).toBe(true);
-        await expect(await contentServicesPage.getFolderButtonTooltip()).toEqual('Custom tooltip');
-
         await contentServicesPage.uploadFolder(parentFolder.location);
         await uploadDialog.fileIsUploaded(fileInsideParentFolder.name);
         await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
@@ -229,17 +223,22 @@ describe('Upload component', () => {
         await expect(await uploadToggles.checkFolderUploadToggleIsEnabled()).toBe(true);
         await contentServicesPage.uploadFolder(subFolder.location);
         await uploadDialog.fileIsUploaded(fileInsideSubFolder.name);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
 
         await uploadToggles.enableFolderUpload();
-        await browser.executeScript(' setTimeout(() => {document.querySelector("#adf-upload-dialog-cancel-all").click();' +
-            'document.querySelector("#adf-upload-dialog-cancel").click();  }, 100)');
-
+        await browser.executeScript(` setInterval(() => {
+               if(document.querySelector('[data-automation-id="adf"]')){
+                    document.querySelector("#adf-upload-dialog-cancel-all").click();
+                    document.querySelector("#adf-upload-dialog-cancel").click();
+                }
+              }, 2000)`);
         await contentServicesPage.uploadFolder(adfBigFolder.location);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.openFolder(adfBigFolder.name);
-        await expect(contentServicesPage.numberOfResultsDisplayed()).toBe('0');
+        await expect(contentServicesPage.numberOfResultsDisplayed()).toBe(0);
     });
 });

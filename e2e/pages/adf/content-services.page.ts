@@ -438,10 +438,9 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
     }
 
-    async uploadFolder(folderName: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
-        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderName)));
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
+    async uploadFolder(folderLocation: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
+        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderLocation)));
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {
@@ -461,10 +460,6 @@ export class ContentServicesPage {
 
     async checkUploadButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.uploadFileButton);
-    }
-
-    async checkUploadFolderButton(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
     }
 
     async uploadButtonIsEnabled(): Promise<boolean> {
@@ -691,11 +686,4 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(item);
         await BrowserActions.click(item);
     }
-
-    async openFolder(name): Promise<void> {
-        const folderUploaded: ElementFinder = element(by.css('span[aria-label="' + name + '"]'));
-        await BrowserActions.click(folderUploaded);
-        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-    }
-
 }
