@@ -16,16 +16,16 @@
  */
 
 import { by, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../utils/browser-visibility';
-import { BrowserActions } from '../utils/browser-actions';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
 
-export class FormControllersPage {
+export class TogglePage {
 
     async enableToggle(toggle: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(toggle);
         const check = await toggle.getAttribute('class');
         if (check.indexOf('mat-checked') < 0) {
-            const elem = toggle.all(by.css('div')).first();
+            const elem = toggle.all(by.css('input')).first();
             await BrowserActions.click(elem);
         }
     }
@@ -34,7 +34,7 @@ export class FormControllersPage {
         await BrowserVisibility.waitUntilElementIsVisible(toggle);
         const check = await toggle.getAttribute('class');
         if (check.indexOf('mat-checked') >= 0) {
-            const elem = toggle.all(by.css('div')).first();
+            const elem = toggle.all(by.css('input')).first();
             await BrowserActions.click(elem);
         }
     }

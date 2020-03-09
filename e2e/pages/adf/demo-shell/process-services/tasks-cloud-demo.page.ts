@@ -17,7 +17,7 @@
 
 import { element, by, browser, ElementFinder, ElementArrayFinder } from 'protractor';
 import {
-    FormControllersPage,
+    TogglePage,
     TaskFiltersCloudComponentPage,
     EditTaskFilterCloudComponentPage,
     BrowserVisibility,
@@ -49,34 +49,34 @@ export class TasksCloudDemoPage {
 
     modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"]')));
 
-    formControllersPage: FormControllersPage = new FormControllersPage();
+    togglePage: TogglePage = new TogglePage();
 
     editTaskFilterCloud: EditTaskFilterCloudComponentPage = new EditTaskFilterCloudComponentPage();
 
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
 
     async disableDisplayTaskDetails(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.displayTaskDetailsToggle);
+        await this.togglePage.disableToggle(this.displayTaskDetailsToggle);
     }
 
     async disableDisplayProcessDetails(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.displayProcessDetailsToggle);
+        await this.togglePage.disableToggle(this.displayProcessDetailsToggle);
     }
 
     async enableMultiSelection(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.multiSelectionToggle);
+        await this.togglePage.enableToggle(this.multiSelectionToggle);
     }
 
     async enableActionMenu(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.actionMenuToggle);
+        await this.togglePage.enableToggle(this.actionMenuToggle);
     }
 
     async enableContextMenu(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.contextMenuToggle);
+        await this.togglePage.enableToggle(this.contextMenuToggle);
     }
 
     async enableTestingMode(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.testingModeToggle);
+        await this.togglePage.enableToggle(this.testingModeToggle);
     }
 
     taskListCloudComponent(): TaskListCloudComponentPage {

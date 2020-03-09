@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, FormControllersPage } from '@alfresco/adf-testing';
-import { $$, browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
+import { BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage } from '@alfresco/adf-testing';
+import { $$, browser, by, element, ElementFinder, ElementArrayFinder, protractor } from 'protractor';
 import { DropActions } from '../../actions/drop.actions';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
@@ -36,7 +36,7 @@ export class ContentServicesPage {
     };
 
     contentList: DocumentListPage = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
-    formControllersPage: FormControllersPage = new FormControllersPage();
+    togglePage: TogglePage = new TogglePage();
     createFolderDialog: FolderDialogPage = new FolderDialogPage();
     createLibraryDialog: CreateLibraryDialogPage = new CreateLibraryDialogPage();
     dragAndDropAction: DropActions = new DropActions();
@@ -187,12 +187,12 @@ export class ContentServicesPage {
     }
 
     async enableDropFilesInAFolder(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.multipleFileUploadToggle);
+        await this.togglePage.enableToggle(this.multipleFileUploadToggle);
     }
 
     async disableDropFilesInAFolder(): Promise<void> {
         await browser.executeScript('arguments[0].scrollIntoView()', this.multipleFileUploadToggle);
-        await this.formControllersPage.disableToggle(this.multipleFileUploadToggle);
+        await this.togglePage.disableToggle(this.multipleFileUploadToggle);
     }
 
     async getElementsDisplayedId() {
@@ -438,10 +438,9 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
     }
 
-    async uploadFolder(folderName: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
-        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderName)));
-        await BrowserVisibility.waitUntilElementIsVisible(this.uploadFolderButton);
+    async uploadFolder(folderLocation: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
+        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderLocation)));
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {
@@ -687,5 +686,4 @@ export class ContentServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(item);
         await BrowserActions.click(item);
     }
-
 }

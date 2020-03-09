@@ -23,7 +23,7 @@ export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
+            await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {

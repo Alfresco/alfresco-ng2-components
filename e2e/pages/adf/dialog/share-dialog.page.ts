@@ -16,12 +16,12 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility, FormControllersPage, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, TogglePage, BrowserActions } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 export class ShareDialogPage {
 
-    formControllersPage = new FormControllersPage();
+    togglePage = new TogglePage();
     shareDialog: ElementFinder = element(by.css('adf-share-dialog'));
     dialogTitle: ElementFinder = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle: ElementFinder = element(by.css('[data-automation-id="adf-share-toggle"] label'));
@@ -44,7 +44,7 @@ export class ShareDialogPage {
     }
 
     async clickUnShareFile() {
-        await this.formControllersPage.enableToggle(this.shareToggle);
+        await this.togglePage.enableToggle(this.shareToggle);
     }
 
     async clickConfirmationDialogCancelButton(): Promise<void> {

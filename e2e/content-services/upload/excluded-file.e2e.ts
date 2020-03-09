@@ -25,6 +25,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { DropActions } from '../../actions/drop.actions';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Upload component - Excluded Files', () => {
 
@@ -48,6 +49,21 @@ describe('Upload component - Excluded Files', () => {
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+    });
+
+    const folderUpload = new FolderModel({
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+    });
+
+    const acceptedFileInsideFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_ACCEPTED_INSIDE_TEXT_FOLDER.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_ACCEPTED_INSIDE_TEXT_FOLDER.file_location
+    });
+
+    const excludedFileInsideFolder = new FolderModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_EXCLUDED_INSIDE_TEXT_FOLDER.file_name,
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_EXCLUDED_INSIDE_TEXT_FOLDER.file_location
     });
 
     beforeAll(async () => {
@@ -108,6 +124,22 @@ describe('Upload component - Excluded Files', () => {
             .uploadFile(txtFileModel.location);
 
         await contentServicesPage.checkContentIsNotDisplayed(txtFileModel.name);
+    });
+
+    it('[C260125] Should not upload excluded file when they are in a Folder', async () => {
+        await LocalStorageUtil.setConfigField('files', JSON.stringify({
+            excluded: ['*.cpio'],
+            'match-options': { 'nocase': true }
+        }));
+
+        await uploadToggles.enableFolderUpload();
+        await contentServicesPage.uploadFolder(folderUpload.location);
+        await uploadDialog.clickOnCloseButton();
+        await uploadDialog.dialogIsNotDisplayed();
+
+        await contentServicesPage.openFolder(folderUpload.name);
+        await contentServicesPage.checkContentIsDisplayed(acceptedFileInsideFolder.name);
+        await contentServicesPage.checkContentIsNotDisplayed(excludedFileInsideFolder.name);
     });
 
     it('[C274688] Should extension type added as excluded and accepted not be uploaded', async () => {

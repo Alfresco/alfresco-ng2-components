@@ -505,6 +505,14 @@ exports.Files = {
             folder_location: "/resources/adf/allFileTypes/documents/text",
             folder_name: "text"
         },
+        FILE_ACCEPTED_INSIDE_TEXT_FOLDER: {
+            file_location: "/resources/adf/allFileTypes/documents/text/a_odt_file.odt",
+            file_name: "a_odt_file.odt"
+        },
+        FILE_EXCLUDED_INSIDE_TEXT_FOLDER: {
+            file_location: "/resources/adf/allFileTypes/documents/text/a_cpio_file.cpio",
+            file_name: "a_cpio_file.cpio"
+        },
         WORD_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/word",
             folder_name: "word"
@@ -516,7 +524,11 @@ exports.Files = {
         IMG_RENDITION_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/images-rendition",
             folder_name: "images-rendition"
-        }
+        },
+        ADF_FOLDER: {
+            folder_location: "/resources/adf",
+            folder_name: "adf"
+        },
     },
 
     PROFILE_IMAGES: {

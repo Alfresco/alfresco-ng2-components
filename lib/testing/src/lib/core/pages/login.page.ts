@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormControllersPage } from './form-controller.page';
+import { TogglePage } from '../../material/pages/toggle.page';
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { LocalStorageUtil } from '../utils/local-storage.util';
@@ -25,7 +25,7 @@ export class LoginPage {
 
     loginURL: string = browser.baseUrl + '/login';
 
-    formControllersPage: FormControllersPage = new FormControllersPage();
+    togglePage: TogglePage = new TogglePage();
     txtUsername: ElementFinder = element(by.css('input[id="username"]'));
     txtPassword: ElementFinder = element(by.css('input[id="password"]'));
     logoImg: ElementFinder = element(by.css('img[id="adf-login-img-logo"]'));
@@ -210,23 +210,23 @@ export class LoginPage {
     }
 
     async enableFooter(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.footerSwitch);
+        await this.togglePage.enableToggle(this.footerSwitch);
     }
 
     async disableFooter(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.footerSwitch);
+        await this.togglePage.disableToggle(this.footerSwitch);
     }
 
     async disableRememberMe(): Promise<void> {
-        await this.formControllersPage.disableToggle(this.rememberMeSwitch);
+        await this.togglePage.disableToggle(this.rememberMeSwitch);
     }
 
     async enableSuccessRouteSwitch(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.successRouteSwitch);
+        await this.togglePage.enableToggle(this.successRouteSwitch);
     }
 
     async enableLogoSwitch(): Promise<void> {
-        await this.formControllersPage.enableToggle(this.logoSwitch);
+        await this.togglePage.enableToggle(this.logoSwitch);
     }
 
     async enterSuccessRoute(route): Promise<void> {

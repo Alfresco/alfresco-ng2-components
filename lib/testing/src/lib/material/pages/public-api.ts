@@ -18,3 +18,4 @@
 export * from './tabs.page';
 export * from './date-picker.page';
 export * from './dropdown.page';
+export * from './toggle.page';
