@@ -47,6 +47,7 @@ export class ContentServicesPage {
     currentFolder: ElementFinder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
     createFolderButton: ElementFinder = element(by.css('button[data-automation-id="create-new-folder"]'));
     editFolderButton: ElementFinder = element(by.css('button[data-automation-id="edit-folder"]'));
+    deleteNodesButton: ElementFinder = element(by.css('button[data-automation-id="delete-toolbar-button"]'));
     createLibraryButton: ElementFinder = element(by.css('button[data-automation-id="create-new-library"]'));
     activeBreadcrumb: ElementFinder = element(by.css('div[class*="active"]'));
     tooltip = by.css('div[class*="--text adf-full-width"] span');
@@ -135,6 +136,14 @@ export class ContentServicesPage {
         await this.contentList.clickOnActionMenu(content);
         await this.waitForContentOptions();
         await BrowserActions.click(this.deleteContentElement);
+    }
+
+    async clickDeleteOnToolbar(): Promise<void> {
+        await BrowserActions.click(this.deleteNodesButton);
+    }
+
+    async checkToolbarDeleteIsDisabled(): Promise<void> {
+        await BrowserActions.checkIsDisabled(this.deleteNodesButton);
     }
 
     async metadataContent(content): Promise<void> {

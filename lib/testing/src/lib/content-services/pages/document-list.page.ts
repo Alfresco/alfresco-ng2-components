@@ -57,6 +57,10 @@ export class DocumentListPage {
         await this.dataTable.selectRow('Display name', nodeName);
     }
 
+    async selectRowWithKeyboard(nodeName: string): Promise<void> {
+        await this.dataTable.selectRowWithKeyboard('Display name', nodeName);
+    }
+
     async rightClickOnRow(nodeName: string): Promise<void> {
         await this.dataTable.rightClickOnRow('Display name', nodeName);
     }

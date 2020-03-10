@@ -22,7 +22,7 @@ import { NodeEntry, Node, DeletedNodeEntity, DeletedNode } from '@alfresco/js-ap
 import { Observable, forkJoin, from, of } from 'rxjs';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { TranslationService } from '../services/translation.service';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 
 interface ProcessedNodeData {
     entry: Node | DeletedNode;
@@ -119,6 +119,7 @@ export class NodeDeleteDirective implements OnChanges {
         }
 
         return from(promise).pipe(
+            retry(3),
             map(() => ({
                 entry: node.entry,
                 status: 1

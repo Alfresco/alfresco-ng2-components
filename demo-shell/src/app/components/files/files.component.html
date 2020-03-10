@@ -113,7 +113,9 @@
                         <mat-icon>get_app</mat-icon>
                     </button>
                     <button mat-icon-button
+                            data-automation-id="delete-toolbar-button"
                             adf-check-allowable-operation="delete"
+                            permanent=true
                             [adf-nodes]="documentList.selection"
                             title="{{ 'DOCUMENT_LIST.TOOLBAR.DELETE' | translate }}"
                             (delete)="onDeleteActionSuccess($event)"
