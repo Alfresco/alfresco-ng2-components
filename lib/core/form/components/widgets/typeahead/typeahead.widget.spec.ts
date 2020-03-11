@@ -304,9 +304,9 @@ describe('TypeaheadWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).not.toBeNull();
-                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_2"]'))).not.toBeNull();
-                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_3"]'))).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-1"] span'))).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-2"] span'))).not.toBeNull();
                 });
             }));
 
@@ -321,7 +321,7 @@ describe('TypeaheadWidgetComponent', () => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).not.toBeNull();
+                    expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).not.toBeNull();
                     typeaheadHTMLElement.focus();
                     typeaheadWidgetComponent.value = '';
                     typeaheadHTMLElement.dispatchEvent(new Event('keyup'));
@@ -329,7 +329,7 @@ describe('TypeaheadWidgetComponent', () => {
                     fixture.detectChanges();
                     fixture.whenStable().then(() => {
                         fixture.detectChanges();
-                        expect(fixture.debugElement.query(By.css('[id="typeahead-name_option_1"]'))).toBeNull();
+                        expect(fixture.debugElement.query(By.css('[id="adf-typeahed-widget-user-0"] span'))).toBeNull();
                     });
                 });
             }));
@@ -377,9 +377,9 @@ describe('TypeaheadWidgetComponent', () => {
                 typeaheadWidgetComponent.onKeyUp(keyboardEvent);
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(fixture.debugElement.queryAll(By.css('[id="mat-option-1"]'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="mat-option-2"]'))).toBeDefined();
-                    expect(fixture.debugElement.queryAll(By.css('[id="mat-option-3"]'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-0"] span'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-1"] span'))).toBeDefined();
+                    expect(fixture.debugElement.queryAll(By.css('[id="adf-typeahed-widget-user-2"] span'))).toBeDefined();
                 });
             }));
         });

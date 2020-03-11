@@ -160,4 +160,64 @@ describe('Dynamic Table widget ', () => {
             await widget.dynamicTable().checkTableRowIsNotVisible(1);
         });
     });
+
+    describe('Custom validation', () => {
+
+        const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+        alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+
+        beforeAll(async () => {
+            const users = new UsersActions();
+
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+
+            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+            const application = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
+
+            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === application.id);
+            process = await appsActions.startProcess(alfrescoJsApi, application, app.CUSTOM_VALIDATOR.processName);
+            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        });
+
+        afterAll(async () => {
+            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        });
+
+        beforeEach(async () => {
+            const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks`;
+            await BrowserActions.getUrl(urlToNavigateTo);
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.formFields().checkFormIsDisplayed();
+        });
+
+        it('[C260437] Customised validator', async () => {
+            await widget.dynamicTable().clickAddRow();
+            await widget.dynamicTable().setDatatableInput('admin', app.CUSTOM_VALIDATOR.FIELD.NAME);
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Sorry, wrong value. You cannot use "admin".');
+
+            await widget.dynamicTable().setDatatableInput('name', app.CUSTOM_VALIDATOR.FIELD.NAME);
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Id\' is required.');
+
+            await widget.dynamicTable().setDatatableInput('id', app.CUSTOM_VALIDATOR.FIELD.ID);
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Number\' is required.' );
+
+            await widget.dynamicTable().setDatatableInput('12', app.CUSTOM_VALIDATOR.FIELD.NUM);
+            await widget.dynamicTable().clickSaveButton();
+            await expect(await widget.dynamicTable().checkErrorMessage()).toBe('Field \'Address\' is required.');
+
+            await widget.dynamicTable().setDatatableInput('address', app.CUSTOM_VALIDATOR.FIELD.ADDRESS);
+            await widget.dynamicTable().clickSaveButton();
+            await taskPage.taskDetails().clickCompleteFormTask();
+        });
+    });
 });

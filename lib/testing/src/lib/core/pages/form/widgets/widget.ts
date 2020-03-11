@@ -34,6 +34,8 @@ import { ContainerWidgetPage } from './container-widget.page';
 import { PeopleWidgetPage } from './people-widget.page';
 import { TabPage } from './tab.page';
 import { DocumentWidgetPage } from './document-widget.page';
+import { GroupWidgetPage } from './group-widget.page';
+import { TypeaheadWidgetPage } from './typeahead-widget.page';
 
 export class Widget {
 
@@ -107,6 +109,14 @@ export class Widget {
 
     peopleWidget(): PeopleWidgetPage {
         return new PeopleWidgetPage();
+    }
+
+    groupWidget(): GroupWidgetPage {
+        return new GroupWidgetPage();
+    }
+
+    typeahedWidget(): TypeaheadWidgetPage {
+        return new TypeaheadWidgetPage();
     }
 
     tab(): TabPage {

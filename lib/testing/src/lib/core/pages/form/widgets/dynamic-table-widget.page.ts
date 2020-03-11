@@ -28,7 +28,7 @@ export class DynamicTableWidgetPage {
     addButton: ElementFinder = element(by.id('label-add-row'));
     cancelButton: ElementFinder = element(by.cssContainingText('button span', 'Cancel'));
     editButton: ElementFinder = element(by.cssContainingText('button span', 'edit'));
-    addRow: ElementFinder = element(by.id('dynamictable-add-row'));
+    addRow: ElementFinder = element(by.id('label-add-row'));
     columnDateTime: ElementFinder = element(by.id('columnDateTime'));
     columnDate: ElementFinder = element(by.id('columnDate'));
     calendarHeader: ElementFinder = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
@@ -37,7 +37,6 @@ export class DynamicTableWidgetPage {
     errorMessage: ElementFinder = element(by.css('div[class="adf-error-text"]'));
     dateWidget: ElementFinder = element.all(by.css('mat-datepicker-toggle button')).first();
     tableRow: ElementArrayFinder = element.all(by.css('tbody tr'));
-    dataTableInput: ElementFinder = element(by.id('id'));
 
     getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -68,11 +67,11 @@ export class DynamicTableWidgetPage {
         await BrowserActions.click(this.cancelButton);
     }
 
-    async setDatatableInput(text): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dataTableInput);
-        await this.dataTableInput.clear();
-        await this.dataTableInput.sendKeys(text);
-    }
+    async setDatatableInput(text, id = 'id'): Promise<void> {
+        const dataTableInput: ElementFinder = element(by.id(id));
+        await BrowserVisibility.waitUntilElementIsVisible(dataTableInput);
+        await BrowserActions.clearSendKeys(dataTableInput, text);
+     }
 
     async getTableRowText(rowNumber): Promise<string> {
         const tableRowByIndex = element(by.id('dynamictable-row-' + rowNumber));

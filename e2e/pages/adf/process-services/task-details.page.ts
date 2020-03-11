@@ -65,6 +65,7 @@ export class TaskDetailsPage {
     editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
     claimElement = element(by.css('[data-automation-id="header-claim-button"]'));
     releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
+    saveElement = element(by.css('button[id="adf-form-save"]'));
 
     attachFormDropdown = new DropdownPage(element(by.css('div[class="adf-attach-form-row"]')));
 
@@ -428,6 +429,11 @@ export class TaskDetailsPage {
 
     async releaseTask(): Promise<void> {
         await BrowserActions.click(this.releaseElement);
+    }
+
+    async saveTask(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.saveElement);
+        await BrowserActions.click(this.saveElement);
     }
 
 }

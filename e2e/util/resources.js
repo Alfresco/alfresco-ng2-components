@@ -343,7 +343,86 @@ exports.Files = {
                 user_id: "adf-people-search-input",
                 checkbox_id: "check"
             }
+        },
+
+        CUSTOM_VALIDATOR: {
+            formName: "dynamic-table-custom-validation",
+            title: "custom-validation",
+            processName: "custom-validation",
+            FIELD: {
+                NAME: "name",
+                ID: "id",
+                NUM: "num",
+                ADDRESS: "address",
+                ROW: "label-row-0"
+            }
+        },
+
+        TYPE_AHEAD_WIDGET: {
+            formName: "Type ahead widget",
+            title: "type-ahead-widget",
+            processName: "type-ahead-process",
+            FIELD: {
+                widget_id: "Label"
+            },
+            case1: {
+                searchTerm: 'Customer',
+                result: [
+                    '123456789 - Customer Number One',
+                    '987654321 - Customer Number Two',
+                    '919191919191 - Customer Number Three',
+                    '91919191 - Customer Number X'
+                ]
+            },
+            case2: {
+                searchTerm: 'One',
+                result: [ '123456789 - Customer Number One' ]
+            }
         }
+    },
+
+    MORE_WIDGETS: {
+        file_location: "/resources/apps/More Widgets.zip",
+        title: "More Widgets",
+        group: { name:  "Users", subgroup: [  { name: "Heros" },  { name: "Villains" }] },
+        subGroupUser: { firstName: "Hero", lastName: "User" } ,
+        groupUser: [
+            { firstName: "Hero", lastName: "Audience" },
+            { firstName: "Villain", lastName: "Audience" },
+        ],
+
+        ADD_PEOPLE_AND_GROUP_RESTRICTION: {
+            formName: 'People widget - group restriction',
+            FIELD: {
+                widget_id: 'Finally',
+                checkbox_id: 'check'
+            },
+            searchTerm: 'Audience'
+        },
+
+        ADD_GROUP_VISIBILITY: {
+            formName: "Group widget - visibility",
+            FIELD: {
+                widget_id: 'Dreamteam',
+                checkbox_id: 'check'
+            },
+            searchTerm: 'e'
+        },
+
+        ADD_GROUP_AND_SUBGROUP_RESTRICTION: {
+            formName: "Group widget - subgroup restriction",
+            FIELD: {
+                widget_id: 'Dreamteam',
+                checkbox_id: 'check'
+            },
+            searchTerm: 's'
+        }
+    },
+
+    STENCIL_PROCESS: {
+        file_location: "/resources/apps/Stencil_app.zip",
+        processName: 'stencil_process',
+        taskName: 'stencil task'
     },
 
     DYNAMIC_TABLE_APP: {

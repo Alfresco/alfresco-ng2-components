@@ -58,6 +58,13 @@ export class PeopleWidgetPage {
         await BrowserActions.click(user);
     }
 
+    async getDropDownList(): Promise<any[]> {
+        await this.checkDropDownListIsDisplayed();
+        const users = by.css('.adf-people-label-name');
+        await BrowserVisibility.waitUntilElementIsVisible(element(users));
+        return element.all(users).map((elementFinder) => elementFinder.getText());
+    }
+
     async checkPeopleFieldIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleField);
     }

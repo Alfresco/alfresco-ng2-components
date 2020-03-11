@@ -56,9 +56,9 @@ export class UsersActions {
     async createApsUserWithName(alfrescoJsApi, tenantId, email, firstName, lastName) {
         const user = new User({ tenantId , email, firstName, lastName});
 
-        await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+        const { id } = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
 
-        return user;
+        return { ...user, id };
     }
 
     async cleanupTenant(alfrescoJsApi, tenantId) {
