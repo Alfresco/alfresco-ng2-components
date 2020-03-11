@@ -296,7 +296,6 @@ exports.Files = {
                 checkbox_id: "viewtable",
                 dateTime_input_id: "datetime",
                 row: "label-row-0"
-
             }
         },
 
@@ -305,6 +304,7 @@ exports.Files = {
             title: "ALL_WIDGETS",
             processName: "ALL_WIDGETS",
             FIELD: {
+                dynamic_table_id: "dynamictable",
                 dynamic_table_age_id: "label2",
                 dynamic_table_date_id: "label",
                 checkbox_id: "viewtable",
@@ -347,8 +347,8 @@ exports.Files = {
 
         CUSTOM_VALIDATOR: {
             formName: "dynamic-table-custom-validation",
-            title: "custom-validation",
-            processName: "custom-validation",
+            title: "dynamic-table-custom-validation",
+            processName: "dynamic-table-custom-validation",
             FIELD: {
                 NAME: "name",
                 ID: "id",
@@ -360,7 +360,7 @@ exports.Files = {
 
         TYPE_AHEAD_WIDGET: {
             formName: "Type ahead widget",
-            title: "type-ahead-widget",
+            title: "type-ahead-process",
             processName: "type-ahead-process",
             FIELD: {
                 widget_id: "Label"

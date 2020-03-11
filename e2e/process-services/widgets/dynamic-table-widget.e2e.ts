@@ -22,15 +22,22 @@ import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
+import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Dynamic Table widget ', () => {
 
     const loginPage = new LoginPage();
-    let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
-    let alfrescoJsApi;
     const appsActions = new AppsActions();
+    const users = new UsersActions();
+    const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
+
+    let processUserModel;
     let appModel;
     let deployedApp, process;
 
@@ -38,27 +45,16 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
-            const users = new UsersActions();
-
-            alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
-
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-            deployedApp = appDefinitions.data.find((currentApp) => {
-                return currentApp.modelId === appModel.id;
-            });
+            deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === appModel.id);
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
         });
 
         beforeEach(async () => {
@@ -72,7 +68,7 @@ describe('Dynamic Table widget ', () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C276729] Should be possible to set visibility properties for Dynamic Table', async () => {
@@ -82,7 +78,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         it('[C279349] Should be able to have a Date Time widget in a Dynamic Table widget', async () => {
-            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickAddRow();
             await widget.dateTimeWidget().openDatepicker(app.FIELD.dateTime_input_id);
             await widget.dateTimeWidget().selectDay('10');
             await widget.dateTimeWidget().selectHour('8');
@@ -95,50 +91,38 @@ describe('Dynamic Table widget ', () => {
     });
 
     describe('with People Widget App', () => {
-
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
         beforeAll(async () => {
-            const users = new UsersActions();
-
-            alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
-
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, browser.params.resources.Files.WIDGET_CHECK_APP.file_location);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-            deployedApp = appDefinitions.data.find((currentApp) => {
-                return currentApp.modelId === appModel.id;
-            });
+            deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === appModel.id);
             process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
-        });
-
-        beforeEach(async () => {
-            const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
-            await BrowserActions.getUrl(urlToNavigateTo);
-            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-            await taskPage.formFields().checkFormIsDisplayed();
         });
 
         afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await navigationBarPage.clickLogoutButton();
+        });
 
+        beforeEach(async () => {
+            const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            await BrowserActions.getUrl(urlToNavigateTo);
+            await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
+            await taskPage.formFields().checkFormIsDisplayed();
         });
 
         it('[C260407] Should be able to add/delete/update row in Dynamic Table widget', async () => {
-
-            await widget.dynamicTable().clickAddRow();
+            await widget.dynamicTable().clickAddRow(app.FIELD.dynamic_table_id);
             await widget.dynamicTable().setDatatableInput('User1');
             await widget.dynamicTable().clickSaveButton();
             await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User1');
@@ -154,7 +138,7 @@ describe('Dynamic Table widget ', () => {
             await widget.dynamicTable().clickSaveButton();
             await expect(await widget.dynamicTable().getTableRowText(0)).toEqual('User2');
 
-            await widget.dynamicTable().clickAddRow();
+            await widget.dynamicTable().clickAddRow(app.FIELD.dynamic_table_id);
             await widget.dynamicTable().setDatatableInput('User3');
             await widget.dynamicTable().clickCancelButton();
             await widget.dynamicTable().checkTableRowIsNotVisible(1);
@@ -164,14 +148,8 @@ describe('Dynamic Table widget ', () => {
     describe('Custom validation', () => {
 
         const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
 
         beforeAll(async () => {
-            const users = new UsersActions();
-
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
@@ -181,7 +159,6 @@ describe('Dynamic Table widget ', () => {
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === application.id);
             process = await appsActions.startProcess(alfrescoJsApi, application, app.CUSTOM_VALIDATOR.processName);
-            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
         });
 
         afterAll(async () => {
@@ -191,9 +168,11 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
+            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.formFields().checkFormIsDisplayed();
         });
 

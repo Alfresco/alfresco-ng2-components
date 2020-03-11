@@ -32,28 +32,24 @@ describe('Dynamic Table', () => {
     const datePicker = new DatePickerPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    let user, tenantId, appId, apps, users;
+    const apps = new AppsActions();
+    const users = new UsersActions();
+    const alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
+
+    let user, tenantId, appId;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
-        apps = new AppsActions();
-        users = new UsersActions();
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(alfrescoJsApi);
         tenantId = user.tenantId;
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     describe('Date Picker', () => {
@@ -71,23 +67,19 @@ describe('Dynamic Table', () => {
         const rowPosition = 0;
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(user.email, user.password);
-
-            const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            await alfrescoJsApi.login(user.email, user.password);
+            const importedApp = await apps.importPublishDeployApp(alfrescoJsApi, app.file_location);
             appId = importedApp.id;
-
             await loginPage.loginToProcessServicesUsingUserModel(user);
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApi.login(user.email, user.password);
-
-            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+            await alfrescoJsApi.login(user.email, user.password);
+            await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         });
 
         beforeEach(async () => {
             await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-
             await processServiceTabBarPage.clickProcessButton();
 
             await processFiltersPage.clickCreateProcessButton();
@@ -95,14 +87,14 @@ describe('Dynamic Table', () => {
         });
 
         it('[C286277] Should have a datepicker and a mask for DateTime field', async () => {
-            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickAddRow();
             await widget.dynamicTable().clickColumnDateTime();
 
             await expect(await widget.dynamicTable().addRandomStringOnDateTime(randomText.wrongDateTime)).toBe('');
         });
 
         it('[C286279] Should be able to save row with Date field', async () => {
-            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickAddRow();
             await widget.dynamicTable().addRandomStringOnDate(randomText.wrongDate);
             await widget.dynamicTable().clickSaveButton();
             await expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.error);
@@ -116,7 +108,7 @@ describe('Dynamic Table', () => {
         });
 
         it('[C311456] Should be able to delete date that is not mandatory and save the Dynamic Table', async () => {
-            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickAddRow();
             await widget.dynamicTable().clickSaveButton();
             await expect(await widget.dynamicTable().checkErrorMessage()).toBe(randomText.requiredError);
 
@@ -135,35 +127,29 @@ describe('Dynamic Table', () => {
         const dropdown = widget.dropdown();
 
         beforeAll(async () => {
+            await alfrescoJsApi.login(user.email, user.password);
 
-            await this.alfrescoJsApi.login(user.email, user.password);
-
-            const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            const importedApp = await apps.importPublishDeployApp(alfrescoJsApi, app.file_location);
             appId = importedApp.id;
-
             await loginPage.loginToProcessServicesUsingUserModel(user);
-
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApi.login(user.email, user.password);
-
-            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-
+            await alfrescoJsApi.login(user.email, user.password);
+            await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         });
 
         beforeEach(async () => {
             await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
             await processServiceTabBarPage.clickProcessButton();
-
             await processFiltersPage.clickCreateProcessButton();
             await processFiltersPage.clickNewProcessDropdown();
         });
 
         it('[C286519] Should be able to save row with required dropdown column', async () => {
             const dropdownOption = 'Option 1';
-            await widget.dynamicTable().clickAddButton();
+            await widget.dynamicTable().clickAddRow();
             await dropdown.selectOption(dropdownOption);
             await widget.dynamicTable().clickSaveButton();
             await widget.dynamicTable().checkItemIsPresent(dropdownOption);

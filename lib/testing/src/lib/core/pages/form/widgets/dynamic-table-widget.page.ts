@@ -25,10 +25,8 @@ export class DynamicTableWidgetPage {
 
     labelLocator: Locator = by.css('dynamic-table-widget div div');
     columnNameLocator: Locator = by.css('table[id*="dynamic-table"] th');
-    addButton: ElementFinder = element(by.id('label-add-row'));
     cancelButton: ElementFinder = element(by.cssContainingText('button span', 'Cancel'));
     editButton: ElementFinder = element(by.cssContainingText('button span', 'edit'));
-    addRow: ElementFinder = element(by.id('label-add-row'));
     columnDateTime: ElementFinder = element(by.id('columnDateTime'));
     columnDate: ElementFinder = element(by.id('columnDate'));
     calendarHeader: ElementFinder = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
@@ -46,12 +44,9 @@ export class DynamicTableWidgetPage {
         return this.formFields.getFieldText(fieldId, this.columnNameLocator);
     }
 
-    async clickAddButton(): Promise<void> {
-        await BrowserActions.click(this.addButton);
-    }
-
-    async clickAddRow(): Promise<void> {
-        await BrowserActions.click(this.addRow);
+    async clickAddRow(id?: string): Promise<void> {
+        const rowButton = element(by.id(`${id ? id : 'label'}-add-row`));
+        await BrowserActions.click(rowButton);
     }
 
     async clickTableRow(rowNumber): Promise<void> {
