@@ -376,7 +376,7 @@ describe('Task Details - Form', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
         });
 
-        it('[C212922] Should a User task form be cancelled, saved or completed.', async () => {
+        it('[C212922] Should a User task form be refreshed, saved or completed.', async () => {
             await appActions.startProcess(this.alfrescoJsApi, app, app.processName);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -394,7 +394,7 @@ describe('Task Details - Form', () => {
             await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('');
 
             await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
-            await taskPage.taskDetails().saveTask();
+            await taskPage.taskDetails().saveTaskForm();
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await tasksListPage.checkTaskListIsLoaded();

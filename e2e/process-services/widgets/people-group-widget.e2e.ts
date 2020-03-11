@@ -25,7 +25,7 @@ import { User } from '../../models/APS/user';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
-describe('Group widget', () => {
+describe('People and Group widget', () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
@@ -63,7 +63,7 @@ describe('Group widget', () => {
         await taskPage.tasksListPage().checkTaskListIsLoaded();
     });
 
-    it('[C275715][C275715] Add group widget - Visibility and restriction', async () => {
+    it('[C275715] Add group widget - Visibility and group restriction', async () => {
         const name = 'group visibility task';
         const groupVisibilityForm = app.ADD_GROUP_VISIBILITY;
         await taskPage.createTask({name, formName: groupVisibilityForm.formName});
@@ -80,7 +80,7 @@ describe('Group widget', () => {
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
-    it('[C275716] Add group widget - group restrictions', async () => {
+    it('[C275716] Add group widget - sub group restrictions', async () => {
         const name = 'group widget - subgroup restriction';
         const subgroupFrom = app.ADD_GROUP_AND_SUBGROUP_RESTRICTION;
         await taskPage.createTask({name, formName: subgroupFrom.formName});
@@ -105,7 +105,7 @@ describe('Group widget', () => {
         await expect(await widget.groupWidget().getFieldValue(subgroupFrom.FIELD.widget_id)).toBe('Heros');
     });
 
-    it('[C275714] Add people widget -  group restrictions', async () => {
+    it('[C275714] Add people widget - group restrictions', async () => {
         const name = 'people widget - group restrictions';
         const peopleWidget = app.ADD_PEOPLE_AND_GROUP_RESTRICTION;
         await taskPage.createTask({name, formName: peopleWidget.formName});
@@ -118,8 +118,8 @@ describe('Group widget', () => {
         await widget.peopleWidget().insertUser(peopleWidget.FIELD.widget_id, peopleWidget.searchTerm);
         await widget.peopleWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.peopleWidget().getDropDownList();
-        await expect(suggestions.sort()).toEqual(getUsers().sort());
-        await widget.peopleWidget().selectUserFromDropDown(getUsers()[0]);
+        await expect(suggestions.sort()).toEqual(getGroupMembers().sort());
+        await widget.peopleWidget().selectUserFromDropDown(getGroupMembers()[0]);
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
@@ -146,7 +146,7 @@ describe('Group widget', () => {
         return app.group.subgroup.map(subgroup => subgroup.name);
     }
 
-    function getUsers() {
+    function getGroupMembers() {
         return app.groupUser.map(groupUser => `${groupUser.firstName} ${groupUser.lastName}`);
     }
 });

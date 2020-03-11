@@ -139,7 +139,8 @@
     "processparent",
     "uploadfileform",
     "processwithstarteventform",
-    "processstring"
+    "processstring",
+    "typeahed"
   ],
   "dictionaries": [
     "html",
