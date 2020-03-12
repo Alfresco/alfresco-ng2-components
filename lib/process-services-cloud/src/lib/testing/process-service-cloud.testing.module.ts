@@ -17,19 +17,20 @@
 
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import {
     AlfrescoApiService,
     AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,
-    ContextMenuModule,
-    CoreModule,
-    LogService,
     StorageService,
-    TRANSLATION_PROVIDER,
-    UserPreferencesService
+    LogService,
+    TranslationService,
+    TranslationMock,
+    UserPreferencesService,
+    ContextMenuModule,
+    CoreModule
 } from '@alfresco/adf-core';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
@@ -39,16 +40,9 @@ import { HttpClientModule } from '@angular/common/http';
         ContextMenuModule
     ],
     providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'app',
-                source: 'resources'
-            }
-        },
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
+        { provide: TranslationService, useClass: TranslationMock },
         StorageService,
         LogService,
         UserPreferencesService

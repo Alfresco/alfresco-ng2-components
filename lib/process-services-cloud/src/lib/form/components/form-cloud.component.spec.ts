@@ -21,6 +21,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { Observable, of, throwError } from 'rxjs';
 import {
     AppConfigService,
+    CoreModule,
     FormFieldModel,
     FormFieldTypes,
     FormModel,
@@ -28,6 +29,7 @@ import {
     FormOutcomeModel,
     FormRenderingService,
     setupTestBed,
+    TRANSLATION_PROVIDER,
     WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -43,6 +45,7 @@ import {
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudModule } from '../form-cloud.module';
 import { TranslateService } from '@ngx-translate/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
@@ -54,8 +57,19 @@ describe('FormCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessServiceCloudTestingModule,
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
             FormCloudModule
+        ],
+        providers: [
+            {
+                provide: TRANSLATION_PROVIDER,
+                multi: true,
+                useValue: {
+                    name: 'app',
+                    source: 'resources'
+                }
+            }
         ]
     });
 
