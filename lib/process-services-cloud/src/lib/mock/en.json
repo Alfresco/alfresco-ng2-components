@@ -1,0 +1,14 @@
+{
+  "FILE_UPLOAD_FIELD": {
+    "TITLE": "File Upload"
+  },
+  "TEXT_FIELD": {
+    "TITLE": "Text field"
+  },
+  "AMOUNT_FIELD": {
+    "TITLE": "Amount field"
+  },
+  "DATE_FIELD": {
+    "TITLE": "Date field"
+  }
+}
