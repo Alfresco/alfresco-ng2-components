@@ -29,6 +29,10 @@ export class HyperlinkWidgetPage {
         return this.formFields.getFieldText(fieldId, this.fieldLocator);
     }
 
+    async getFieldHref(fieldId): Promise<string> {
+        return this.formFields.getWidget(fieldId).element(this.fieldLocator).getAttribute('href');
+    }
+
     async getFieldLabel(fieldId): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
