@@ -98,7 +98,7 @@ export class ShareDialogPage {
     }
 
     async setDefaultMinutes() {
-        await this.dateTimePickerPage.dateTime.setDefaulEnabledtMinutes();
+        await this.dateTimePickerPage.dateTime.setDefaultEnabledMinutes();
     }
 
     async dateTimePickerDialogIsClosed(): Promise<void> {

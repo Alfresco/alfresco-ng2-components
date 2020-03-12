@@ -67,7 +67,7 @@ export class DateTimePickerCalendarPage {
         await BrowserActions.click(this.hoursPicker.all(this.firstEnabledHourSelector).first());
     }
 
-    async setDefaulEnabledtMinutes() {
+    async setDefaultEnabledMinutes() {
         await BrowserVisibility.waitUntilElementIsVisible(this.minutePicker);
         await BrowserActions.click(this.minutePicker.all(this.firstEnabledMinutesSelector).first());
     }
