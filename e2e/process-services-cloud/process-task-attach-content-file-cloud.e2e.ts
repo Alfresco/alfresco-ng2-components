@@ -15,14 +15,24 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, StartProcessCloudPage, StringUtil, TaskFormCloudComponent, ProcessCloudWidgetPage, ViewerPage, UploadActions, ContentNodeSelectorDialogPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import {
+    AppListCloudPage,
+    LoginSSOPage,
+    StartProcessCloudPage,
+    StringUtil,
+    TaskFormCloudComponent,
+    ProcessCloudWidgetPage,
+    ViewerPage,
+    UploadActions,
+    ContentNodeSelectorDialogPage
+} from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-describe('Process Task - attache content file', () => {
+describe('Process Task - Attache content file', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -34,16 +44,9 @@ describe('Process Task - attache content file', () => {
     const startProcessPage = new StartProcessCloudPage();
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
     const viewerPage = new ViewerPage();
-    const apiService = new ApiService(
-        browser.params.config.oauth2.clientId,
-        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-    );
 
     const processName = StringUtil.generateRandomString(10);
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
-    let testUser, groupInfo;
     const folderName = StringUtil.generateRandomString(5);
     let uploadedFolder: any;
 
@@ -56,58 +59,69 @@ describe('Process Task - attache content file', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     };
 
+    const pdfFileTwo = {
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+    };
+
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: 'url'
+        hostEcm: browser.params.config.bpmHost
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
-   });
-
-    afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await identityService.deleteIdentityUser(testUser.idIdentityService);
-   });
-
-    afterEach(async () => {
+        await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
     });
 
-    it('[C291860] Should be able to start a process', async () => {
+    it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.startProcessWithProcessDefinition(processName, 'upload-single-multiple-pro');
-        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
+        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
         await processCloudDemoPage.processListCloudComponent().selectRow(processName);
 
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-
         await tasksCloudDemoPage.taskListCloudComponent().selectRow('UploadSingleMultipleFiles');
+
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible(widgets.contentMultipleAttachFileId);
+        await attachFileFromContent(pdfFileOne.name);
+        await viewAttachedFile(pdfFileOne.name);
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible(widgets.contentMultipleAttachFileId);
+
+        await attachFileFromContent(pdfFileTwo.name);
+        await viewAttachedFile(pdfFileTwo.name);
+        await taskFormCloudComponent.clickCompleteButton();
+
+        await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName('UploadSingleMultipleFiles');
+
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName('UploadSingleMultipleFiles');
+
+        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
+        await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
+
+        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
+        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+    });
+
+    async function attachFileFromContent(fileName: string) {
+        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
         await contentUploadFileWidget.clickAttachContentFile(widgets.contentMultipleAttachFileId);
 
         await contentNodeSelectorDialog.checkDialogIsDisplayed();
@@ -123,32 +137,22 @@ describe('Process Task - attache content file', () => {
 
         await contentList.dataTablePage().waitForTableBody();
         await contentList.dataTablePage().waitTillContentLoaded();
-        await contentList.dataTablePage().checkRowContentIsDisplayed(pdfFileOne.name);
+        await contentList.dataTablePage().checkRowContentIsDisplayed(fileName);
 
-        await contentNodeSelectorDialog.clickContentNodeSelectorResult(pdfFileOne.name);
+        await contentNodeSelectorDialog.clickContentNodeSelectorResult(fileName);
         await contentNodeSelectorDialog.checkCopyMoveButtonIsEnabled();
         await contentNodeSelectorDialog.clickMoveCopyButton();
+    }
 
-        await contentUploadFileWidget.checkFileIsAttached(pdfFileOne.name);
-        await contentUploadFileWidget.viewFile(pdfFileOne.name);
+    async function viewAttachedFile(fileName: string) {
+        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
+        await contentUploadFileWidget.checkFileIsAttached(fileName);
+        await contentUploadFileWidget.viewFile(fileName);
 
         await viewerPage.checkFileThumbnailIsDisplayed();
-        await viewerPage.checkFileNameIsDisplayed(pdfFileOne.name);
+        await viewerPage.checkFileNameIsDisplayed(fileName);
         await viewerPage.clickCloseButton();
-        await taskFormCloudComponent.clickCompleteButton();
-
-        await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName('UploadSingleMultipleFiles');
-
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName('UploadSingleMultipleFiles');
-
-        await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-        await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
-
-        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
-   });
+    }
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
