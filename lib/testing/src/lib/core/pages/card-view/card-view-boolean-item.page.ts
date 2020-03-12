@@ -24,7 +24,7 @@ export class CardBooleanItemPage {
     labelLocator: Locator = by.css('div[data-automation-id*="card-boolean-label"]');
     checkbox: Locator = by.css('mat-checkbox[data-automation-id*="card-boolean"]');
 
-    constructor(label: string = 'assignee') {
+    constructor(label: string = 'required') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-boolitem`));
     }
 

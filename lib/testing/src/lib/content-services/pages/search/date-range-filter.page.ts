@@ -16,7 +16,7 @@
  */
 
 import { by, protractor, ElementFinder, Locator, element } from 'protractor';
-import { DatePickerPage } from '../../../material/pages/date-picker.page';
+import { DatePickerCalendarPage } from '../../../material/pages/date-picker-calendar.page';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
@@ -53,17 +53,17 @@ export class DateRangeFilterPage {
         return selectedDate;
     }
 
-    async openFromDatePicker(): Promise<DatePickerPage> {
+    async openFromDatePicker(): Promise<DatePickerCalendarPage> {
         await BrowserActions.click(this.filter.element(this.fromDateToggle));
 
-        const datePicker = new DatePickerPage();
+        const datePicker = new DatePickerCalendarPage();
         await datePicker.checkDatePickerIsDisplayed();
         return datePicker;
     }
 
-    async openToDatePicker(): Promise<DatePickerPage> {
+    async openToDatePicker(): Promise<DatePickerCalendarPage> {
         await BrowserActions.click(this.filter.element(this.toDateToggle));
-        const datePicker = new DatePickerPage();
+        const datePicker = new DatePickerCalendarPage();
         await datePicker.checkDatePickerIsDisplayed();
         return datePicker;
     }

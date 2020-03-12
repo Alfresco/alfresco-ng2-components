@@ -16,6 +16,9 @@
  */
 
 export * from './tabs.page';
+export * from './date-picker-calendar.page';
+export * from './date-time-picker.page';
 export * from './date-picker.page';
+export * from './date-time-picker-calendar.page';
 export * from './dropdown.page';
 export * from './toggle.page';

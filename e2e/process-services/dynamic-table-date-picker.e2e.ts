@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, DatePickerPage, DateUtil } from '@alfresco/adf-testing';
+import { LoginPage, Widget, DatePickerCalendarPage, DateUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -29,7 +29,7 @@ describe('Dynamic Table', () => {
     const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const datePicker = new DatePickerPage();
+    const datePicker = new DatePickerCalendarPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
     let user, tenantId, appId, apps, users;
