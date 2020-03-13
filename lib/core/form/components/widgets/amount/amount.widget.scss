@@ -28,7 +28,7 @@
 
             &:not(.mat-focused) {
                 .adf-amount-widget__prefix-spacing {
-                    color: mat-color($foreground, disabled-text);
+                    color: mat-color($foreground, secondary-text);
                 }
             }
         }
