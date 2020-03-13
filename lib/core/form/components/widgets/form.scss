@@ -6,6 +6,7 @@
     $warn: map-get($theme, warn);
 
     @include adf-hyperlink-widget-theme($theme);
+    @include adf-amount-widget-theme($theme);
 
     ul > li > form-field > .adf-focus {
         .adf-label {

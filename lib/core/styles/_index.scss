@@ -8,6 +8,7 @@
 @import '../form/components/widgets/dynamic-table/dynamic-table.widget';
 @import '../form/components/widgets/form';
 @import '../form/components/widgets/hyperlink/hyperlink.widget';
+@import '../form/components/widgets/amount/amount.widget';
 @import '../form/components/widgets/people/people.widget';
 @import '../info-drawer/info-drawer-layout.component';
 @import '../login/components/login.component';
@@ -45,6 +46,7 @@
     @include adf-dynamic-table-theme($theme);
     @include adf-form-theme($theme);
     @include adf-hyperlink-widget-theme($theme);
+    @include adf-amount-widget-theme($theme);
     @include adf-form-people-widget-theme($theme);
     @include adf-info-drawer-theme($theme);
     @include adf-login-theme($theme);
