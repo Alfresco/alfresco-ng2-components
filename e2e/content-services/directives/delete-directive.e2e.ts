@@ -18,12 +18,11 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { LoginPage, UploadActions, PaginationPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, PaginationPage, StringUtil, PermissionActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
-/*tslint:disable*/
+
 describe('Delete Directive', () => {
 
     this.alfrescoJsApi = new AlfrescoApi({
@@ -33,11 +32,12 @@ describe('Delete Directive', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navigationBarPage = new NavigationBarPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const acsUser = new AcsUserModel();
+    const secondAcsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const permissionActions = new PermissionActions(this.alfrescoJsApi);
     let baseFolderUploaded;
 
     const txtFileModel = new FileModel({
@@ -88,6 +88,7 @@ describe('Delete Directive', () => {
     beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(secondAcsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
     });
 
@@ -113,9 +114,7 @@ describe('Delete Directive', () => {
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await navigationBarPage.clickContentServicesButton();
-            await contentServicesPage.waitForTableBody();
-            await contentServicesPage.doubleClickRow(baseFolder.name);
+            await browser.get(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
 
@@ -189,11 +188,9 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await navigationBarPage.clickContentServicesButton();
+            await browser.get(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
-            await contentServicesPage.doubleClickRow(baseFolder.name);
-            await contentServicesPage.waitForTableBody();
-        })
+        });
 
         it('[C260191] - Delete content selected from different pages', async () => {
             await contentServicesPage.sortByName('ASC');
@@ -209,5 +206,64 @@ describe('Delete Directive', () => {
             await contentListPage.dataTable.checkContentIsDisplayed('Display name', txtFileModel.name);
         });
 
+    });
+
+    describe('when user does not have `delete` permission', () => {
+
+        let createdSite = null;
+        let fileTxt, filePdf, folderA, folderB;
+
+        beforeEach(async () => {
+            createdSite = await this.alfrescoJsApi.core.sitesApi.createSite({
+                title: StringUtil.generateRandomString(20).toLowerCase(),
+                visibility: 'PRIVATE'
+            });
+
+            await this.alfrescoJsApi.core.sitesApi.addSiteMember(createdSite.entry.id, {
+                id: secondAcsUser.id,
+                role: 'SiteCollaborator'
+            });
+
+            fileTxt = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, createdSite.entry.guid);
+            filePdf = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, createdSite.entry.guid);
+            folderA = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
+            folderB = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
+
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteManager', folderA);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteManager', fileTxt);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteConsumer', folderB);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteConsumer', filePdf);
+
+            await permissionActions.disableInheritedPermissionsForNode(folderA.entry.id);
+            await permissionActions.disableInheritedPermissionsForNode(folderB.entry.id);
+            await permissionActions.disableInheritedPermissionsForNode(fileTxt.entry.id);
+            await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
+
+            await loginPage.loginToContentServicesUsingUserModel(secondAcsUser);
+            await browser.get(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
+            await contentServicesPage.waitForTableBody();
+        });
+
+        it('[C216426] - Delete file without delete permissions', async () => {
+            await contentListPage.selectRowWithKeyboard(filePdf.entry.name);
+            await contentListPage.dataTable.checkRowIsSelected('Display name', filePdf.entry.name);
+            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await contentListPage.selectRowWithKeyboard(folderB.entry.name);
+            await contentListPage.dataTable.checkRowIsSelected('Display name', folderB.entry.name);
+            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await contentListPage.selectRowWithKeyboard(folderA.entry.name);
+            await contentListPage.dataTable.checkRowIsSelected('Display name', folderA.entry.name);
+            await contentServicesPage.checkToolbarDeleteIsDisabled();
+            await contentListPage.selectRowWithKeyboard(fileTxt.entry.name);
+            await contentListPage.dataTable.checkRowIsSelected('Display name', fileTxt.entry.name);
+            await contentServicesPage.checkToolbarDeleteIsDisabled();
+        });
+
+        afterEach(async () => {
+            try {
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(createdSite.entry.id);
+            } catch (error) {
+            }
+        });
     });
 });
