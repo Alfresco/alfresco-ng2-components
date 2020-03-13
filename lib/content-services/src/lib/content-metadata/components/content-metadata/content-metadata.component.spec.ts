@@ -147,10 +147,12 @@ describe('ContentMetadataComponent', () => {
             expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
         });
 
-        it('should raise error message', (done) => {
+        it('should raise error message and reload the properties', (done) => {
+            spyOn(contentMetadataService, 'getBasicProperties');
             const property = <CardViewBaseItemModel> { key: 'property-key', value: 'original-value' };
 
             const sub = contentMetadataService.error.subscribe((err) => {
+                expect(contentMetadataService.getBasicProperties).toHaveBeenCalledWith(node);
                 expect(err.statusCode).toBe(0);
                 expect(err.message).toBe('METADATA.ERRORS.GENERIC');
                 sub.unsubscribe();
