@@ -58,6 +58,10 @@ export class CardViewUpdateService {
         });
     }
 
+    /**
+     * Updates the cardview items property
+     * @Input UpdateNotification
+     */
     updateElement(notification: UpdateNotification) {
         this.updateItem$.next(notification);
     }

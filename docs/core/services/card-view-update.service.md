@@ -126,6 +126,16 @@ respondToCardClick(cn: ClickNotification) {
 
 Note that this function will only be called if the `clickable` property of the model object is set to true for this item.
 
+## Update cardview update item
+
+[`updateElement`](../../../lib/core/card-view/services/card-view-update.service.ts)  function helps to update the card view item. It takes the [`UpdateNotification`](../../../lib/core/card-view/services/card-view-update.service.ts)  type object as parameter.
+
+Example
+
+```javascript
+   this.cardViewUpdateService.updateElement(updateNotification)
+```
+
 ## See also
 
 -   [Card view component](../components/card-view.component.md)
