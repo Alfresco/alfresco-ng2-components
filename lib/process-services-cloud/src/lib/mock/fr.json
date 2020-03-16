@@ -1,0 +1,14 @@
+{
+  "FILE_UPLOAD_FIELD": {
+    "TITLE": "Téléchargement de fichiers"
+  },
+  "TEXT_FIELD": {
+    "TITLE": "Champ de texte"
+  },
+  "AMOUNT_FIELD": {
+    "TITLE": "Champ Montant"
+  },
+  "DATE_FIELD": {
+    "TITLE": "Champ de date"
+  }
+}

@@ -832,3 +832,122 @@ export const conditionalUploadWidgetsMock = {
         }
     }
 };
+
+export const multilingualForm = {
+    'formRepresentation': {
+        'id': 'form-2aaaf20e-43d3-46bf-89be-859d5f512dd2',
+        'name': 'multilingualform',
+        'description': '',
+        'version': 0,
+        'formDefinition': {
+            'tabs': [],
+            'fields': [
+                {
+                    'id': '451e2235-3310-4c2d-9b4a-08b53ae1640c',
+                    'name': 'Label',
+                    'type': 'container',
+                    'tab': null,
+                    'numberOfColumns': 2,
+                    'fields': {
+                        '1': [
+                            {
+                                'id': 'textField',
+                                'name': 'TEXT_FIELD.TITLE',
+                                'type': 'text',
+                                'required': false,
+                                'colspan': 1,
+                                'placeholder': null,
+                                'minLength': 0,
+                                'maxLength': 0,
+                                'regexPattern': null,
+                                'visibilityCondition': null,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                }
+                            }
+                        ],
+                        '2': []
+                    }
+                },
+                {
+                    'id': '1c87df6c-514e-45a7-96bc-508562683bb3',
+                    'name': 'Label',
+                    'type': 'container',
+                    'tab': null,
+                    'numberOfColumns': 2,
+                    'fields': {
+                        '1': [
+                            {
+                                'id': 'fildUploadField',
+                                'name': 'FILE_UPLOAD_FIELD.TITLE',
+                                'type': 'multi-line-text',
+                                'colspan': 1,
+                                'placeholder': null,
+                                'minLength': 0,
+                                'maxLength': 0,
+                                'regexPattern': null,
+                                'required': false,
+                                'visibilityCondition': null,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                }
+                            }
+                        ],
+                        '2': [
+                            {
+                                'id': 'amountField',
+                                'name': 'AMOUNT_FIELD.TITLE',
+                                'type': 'amount',
+                                'required': false,
+                                'colspan': 1,
+                                'placeholder': '123',
+                                'minValue': null,
+                                'maxValue': null,
+                                'visibilityCondition': null,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                },
+                                'enableFractions': false,
+                                'currency': '$'
+                            }
+                        ]
+                    }
+                },
+                {
+                    'id': '33138eea-130f-4bba-b5a5-29ea60f31786',
+                    'name': 'Label',
+                    'type': 'container',
+                    'tab': null,
+                    'numberOfColumns': 2,
+                    'fields': {
+                        '1': [
+                            {
+                                'id': 'dateField',
+                                'name': 'DATE_FIELD.TITLE',
+                                'type': 'date',
+                                'required': false,
+                                'colspan': 1,
+                                'placeholder': null,
+                                'minValue': null,
+                                'maxValue': null,
+                                'visibilityCondition': null,
+                                'params': {
+                                    'existingColspan': 1,
+                                    'maxColspan': 2
+                                },
+                                'dateDisplayFormat': 'D-M-YYYY'
+                            }
+                        ],
+                        '2': []
+                    }
+                }
+            ],
+            'outcomes': [],
+            'metadata': {},
+            'variables': []
+        }
+    }
+};

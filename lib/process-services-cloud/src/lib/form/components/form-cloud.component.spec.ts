@@ -17,10 +17,11 @@
 
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     AppConfigService,
+    CoreModule,
     FormFieldModel,
     FormFieldTypes,
     FormModel,
@@ -28,8 +29,7 @@ import {
     FormOutcomeModel,
     FormRenderingService,
     setupTestBed,
-    TranslationMock,
-    TranslationService,
+    TRANSLATION_PROVIDER,
     WidgetVisibilityService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
@@ -39,33 +39,45 @@ import {
     cloudFormMock,
     conditionalUploadWidgetsMock,
     emptyFormRepresentationJSON,
-    fakeCloudForm
+    fakeCloudForm,
+    multilingualForm
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudModule } from '../form-cloud.module';
+import { TranslateService } from '@ngx-translate/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('FormCloudComponent', () => {
-
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: FormRenderingService;
+    let translateService: TranslateService;
 
     setupTestBed({
         imports: [
-            ProcessServiceCloudTestingModule,
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
             FormCloudModule
         ],
         providers: [
-            { provide: TranslationService, useClass: TranslationMock }
+            {
+                provide: TRANSLATION_PROVIDER,
+                multi: true,
+                useValue: {
+                    name: 'app',
+                    source: 'resources'
+                }
+            }
         ]
     });
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         formRenderingService = TestBed.get(FormRenderingService);
         formCloudService = TestBed.get(FormCloudService);
         visibilityService = TestBed.get(WidgetVisibilityService);
+        translateService = TestBed.get(TranslateService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
         const appConfigService = TestBed.get(AppConfigService);
         spyOn(appConfigService, 'get').and.returnValue([]);
@@ -73,7 +85,7 @@ describe('FormCloudComponent', () => {
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
         fixture.detectChanges();
-   });
+   }));
 
     it('should check form', () => {
         expect(formComponent.hasForm()).toBeFalsy();
@@ -848,7 +860,6 @@ describe('FormCloudComponent', () => {
     });
 
     describe('form validations', () => {
-
         it('should be able to set visibility conditions for Attach File widget', async () => {
             spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));
             const formId = '123';
@@ -870,7 +881,42 @@ describe('FormCloudComponent', () => {
             const label = fixture.debugElement.query(By.css(`${container} label`));
             expect(label.nativeElement.innerText).toEqual('Attach file');
         });
+    });
 
+    describe('Multilingual Form', () => {
+        it('should  translate form labels  on language change',  async () => {
+            spyOn(formCloudService, 'getForm').and.returnValue(of(multilingualForm));
+            const formId = '123';
+            const appName = 'test-app';
+            formComponent.formId = formId;
+            formComponent.appVersion = 1;
+
+            formComponent.ngOnChanges({ 'appName': new SimpleChange(null, appName, true) });
+            expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
+
+            fixture.detectChanges();
+            expect(getLabelValue('textField')).toEqual('Text field');
+            expect(getLabelValue('fildUploadField')).toEqual('File Upload');
+            expect(getLabelValue('dateField')).toEqual('Date field (D-M-YYYY)');
+            expect(getLabelValue('amountField')).toEqual('Amount field');
+
+            expect(translateService.getLangs()).toEqual(['en', '']);
+            fixture.ngZone.run(() => translateService.use('fr'));
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            expect(translateService.getLangs()).toEqual(['en', '', 'fr']);
+            expect(getLabelValue('textField')).toEqual('Champ de texte');
+            expect(getLabelValue('fildUploadField')).toEqual('Téléchargement de fichiers');
+            expect(getLabelValue('dateField')).toEqual('Champ de date (D-M-YYYY)');
+            expect(getLabelValue('amountField')).toEqual('Champ Montant');
+        });
+
+        function getLabelValue(containerId: string): string {
+            const label = fixture.debugElement.nativeElement.querySelector(`[id="field-${containerId}-container"] label`);
+            return label.innerText;
+        }
     });
 });
 
