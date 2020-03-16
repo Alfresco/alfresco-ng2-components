@@ -28,7 +28,7 @@ import {
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { switchMap, takeUntil, catchError } from 'rxjs/operators';
+import { switchMap, takeUntil, catchError, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -93,8 +93,8 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             .pipe(
                 switchMap((changes) =>
                     this.saveNode(changes).pipe(
+                        tap(() => this.cardViewUpdateService.updateElement(changes)),
                         catchError((err) => {
-                            this.loadProperties(this.node);
                             this.handleUpdateError(err);
                             return of(null);
                         })

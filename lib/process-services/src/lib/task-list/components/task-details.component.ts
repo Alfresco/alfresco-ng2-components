@@ -43,7 +43,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
-import { share, takeUntil } from 'rxjs/operators';
+import { share, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-details',
@@ -275,6 +275,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     private updateTaskDetails(updateNotification: UpdateNotification) {
         this.taskListService
             .updateTask(this.taskId, updateNotification.changed)
+            .pipe(tap(() => this.cardViewUpdateService.updateElement(updateNotification)))
             .subscribe(() => this.loadDetails(this.taskId));
     }
 

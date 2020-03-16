@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, EventEmitter, Output, OnDestroy, OnChanges, OnInit } from '@angular/core';
-import { takeUntil, concatMap } from 'rxjs/operators';
+import { takeUntil, concatMap, tap } from 'rxjs/operators';
 import { Subject, of, forkJoin } from 'rxjs';
 import {
     CardViewDateItemModel,
@@ -274,6 +274,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
      */
     private updateTaskDetails(updateNotification: UpdateNotification) {
         this.taskCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
+            .pipe(tap(() => this.cardViewUpdateService.updateElement(updateNotification)))
             .subscribe(
                 (taskDetails) => {
                     this.taskDetails = taskDetails;

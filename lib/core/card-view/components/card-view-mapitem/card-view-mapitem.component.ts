@@ -18,6 +18,7 @@
 import { Component, Input } from '@angular/core';
 import { CardViewMapItemModel } from '../../models/card-view-mapitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-mapitem',
@@ -25,14 +26,16 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
     styleUrls: ['./card-view-mapitem.component.scss']
 })
 
-export class CardViewMapItemComponent {
+export class CardViewMapItemComponent extends BaseCardView<CardViewMapItemModel> {
     @Input()
     property: CardViewMapItemModel;
 
     @Input()
     displayEmpty: boolean = true;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    constructor(cardViewUpdateService: CardViewUpdateService) {
+        super(cardViewUpdateService);
+    }
 
     showProperty() {
         return this.displayEmpty || !this.property.isEmpty();
