@@ -13,11 +13,12 @@
                    (ngModelChange)="validate()"
                    (keyup)="onKeyUp($event)"
                    [disabled]="field.readOnly"
+                   data-automation-id="adf-typeahed-search-input"
                    placeholder="{{field.placeholder}}"
                    [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-                <mat-option *ngFor="let item of options" [value]="item">
-                    <span [id]="field.name+'_option_'+item.id">{{item.name}}</span>
+                <mat-option *ngFor="let item of options; let i = index" id="adf-typeahed-widget-user-{{i}}" [value]="item">
+                    <span id="adf-typeahed-label-name">{{item.name}}</span>
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>

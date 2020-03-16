@@ -27,11 +27,13 @@ import { FiltersPage } from '../pages/adf/process-services/filters.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
 import CONSTANTS = require('../util/constants');
+import { TasksPage } from '../pages/adf/process-services/tasks.page';
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
+    const taskPage = new TasksPage();
     const filtersPage = new FiltersPage();
     const widget = new Widget();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
@@ -372,6 +374,36 @@ describe('Task Details - Form', () => {
             await tasksListPage.selectRow(app.visibilityProcess.taskName);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
+        });
+
+        it('[C212922] Should a User task form be refreshed, saved or completed.', async () => {
+            await appActions.startProcess(this.alfrescoJsApi, app, app.processName);
+
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await tasksListPage.checkTaskListIsLoaded();
+
+            await tasksListPage.selectRow(app.taskName);
+            await expect(await taskDetailsPage.getParentName()).toEqual(app.processName);
+
+            await widget.textWidget().isWidgetVisible(app.form_fields.form_fieldId);
+            await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
+
+            await taskPage.formFields().refreshForm();
+
+            await widget.textWidget().isWidgetVisible(app.form_fields.form_fieldId);
+            await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('');
+
+            await widget.textWidget().setValue(app.form_fields.form_fieldId, 'value');
+            await taskPage.taskDetails().saveTaskForm();
+
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+            await tasksListPage.checkTaskListIsLoaded();
+
+            await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+            await tasksListPage.checkTaskListIsLoaded();
+            await expect(await widget.textWidget().getFieldValue(app.form_fields.form_fieldId)).toEqual('value');
+
+            await taskDetailsPage.clickCompleteFormTask();
         });
     });
 });

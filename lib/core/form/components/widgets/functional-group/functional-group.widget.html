@@ -6,6 +6,7 @@
         <input matInput
                class="adf-input"
                type="text"
+               data-automation-id="adf-group-search-input"
                [id]="field.id"
                [(ngModel)]="value"
                (keyup)="onKeyUp($event)"
@@ -13,10 +14,10 @@
                placeholder="{{field.placeholder}}"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onItemSelect($event.option.value)">
-            <mat-option *ngFor="let item of groups"
+            <mat-option *ngFor="let item of groups; let i = index" id="adf-group-widget-user-{{i}}"
                        [id]="field.id +'-'+item.id"
                        (click)="onItemClick(item, $event)"  [value]="item">
-                <span>{{item.name}}</span>
+                <span id="adf-group-label-name">{{item.name}}</span>
             </mat-option>
         </mat-autocomplete>
 
