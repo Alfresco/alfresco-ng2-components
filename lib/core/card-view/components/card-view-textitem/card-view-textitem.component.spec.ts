@@ -437,6 +437,24 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toBe(expectedText);
         }));
 
+        it('should update the value using the updateItem$ subject', async(() => {
+            component.inEdit = false;
+            component.property.isValid = () => true;
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const expectedText = 'changed text';
+            fixture.detectChanges();
+
+            let textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
+            expect(component.property.value).toBe('Lorem ipsum');
+
+            cardViewUpdateService.updateElement({ target: { key: component.property.key, value: expectedText  } });
+            fixture.detectChanges();
+
+            expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
+            expect(component.property.value).toBe(expectedText);
+        }));
+
         it('should reset the value using the escape key', async(() => {
             component.inEdit = false;
             component.property.isValid = () => true;

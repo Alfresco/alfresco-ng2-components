@@ -167,7 +167,6 @@ export class CardViewComponent implements OnInit, OnDestroy {
     }
 
     onItemChange(notification: UpdateNotification) {
-        this.cardViewUpdateService.updateElement(notification);
         let value = notification.changed[notification.target.key];
 
         if (notification.target.type === 'keyvaluepairs') {

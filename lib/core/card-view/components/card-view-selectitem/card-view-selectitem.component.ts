@@ -44,14 +44,10 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnChanges(): void {
-        this.refreshValue();
-    }
-
-    refreshValue() {
         this.value = this.property.value;
     }
 
-        isEditable(): boolean {
+    isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 
