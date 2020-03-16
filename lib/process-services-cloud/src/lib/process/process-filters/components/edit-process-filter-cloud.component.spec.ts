@@ -561,5 +561,61 @@ describe('EditProcessFilterCloudComponent', () => {
             });
             component.onFilterChange();
         });
+
+        it('should call restore default filters service on deletion of last filter', (done) => {
+            component.toggleFilterActions = true;
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of([]));
+            const restoreFiltersSpy = spyOn(component, 'restoreDefaultProcessFilters').and.returnValue(of([]));
+            const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            fixture.detectChanges();
+
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
+            stateElement.click();
+            fixture.detectChanges();
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            deleteButton.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(deleteFilterSpy).toHaveBeenCalled();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(deleteSpy).toHaveBeenCalled();
+                    expect(restoreFiltersSpy).toHaveBeenCalled();
+                    done();
+                });
+
+            });
+        });
+
+        it('should not call restore default filters service on deletion first filter', (done) => {
+            component.toggleFilterActions = true;
+            const deleteFilterSpy = spyOn(service, 'deleteFilter').and.returnValue(of([{ name: 'mock-filter-name'}]));
+            const restoreFiltersSpy = spyOn(component, 'restoreDefaultProcessFilters').and.returnValue(of([]));
+            const deleteSpy: jasmine.Spy = spyOn(component.action, 'emit');
+            fixture.detectChanges();
+
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
+            stateElement.click();
+            fixture.detectChanges();
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            deleteButton.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(deleteFilterSpy).toHaveBeenCalled();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(deleteSpy).toHaveBeenCalled();
+                    expect(restoreFiltersSpy).not.toHaveBeenCalled();
+                    done();
+                });
+
+            });
+        });
     });
 });

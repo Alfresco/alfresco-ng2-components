@@ -18,8 +18,8 @@
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter, takeUntil, finalize } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
@@ -357,11 +357,15 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     delete(deleteAction: TaskFilterAction): void {
         this.taskFilterCloudService
             .deleteFilter(this.taskFilter)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                deleteAction.filter = this.taskFilter;
-                this.action.emit(deleteAction);
-            });
+            .pipe(
+                filter((filters) => {
+                    deleteAction.filter = this.taskFilter;
+                    this.action.emit(deleteAction);
+                    return filters.length === 0;
+                }),
+                switchMap(() => this.restoreDefaultTaskFilters()),
+                takeUntil(this.onDestroy$))
+            .subscribe(() => {});
     }
 
     saveAs(saveAsAction: TaskFilterAction): void {
@@ -408,6 +412,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     replaceSpaceWithHyphen(name: string): string {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
+    }
+
+    restoreDefaultTaskFilters(): Observable<TaskFilterCloudModel[]> {
+        return this.taskFilterCloudService.getTaskListFilters(this.appName);
     }
 
     showActions(): boolean {

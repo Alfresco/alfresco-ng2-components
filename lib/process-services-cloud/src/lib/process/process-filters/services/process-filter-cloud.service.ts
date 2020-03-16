@@ -159,7 +159,7 @@ export class ProcessFilterCloudService {
                     filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateProcessFilters(deletedFilter.appName, key, filters);
                 } else {
-                    return [];
+                    return of([]);
                 }
             }),
             map((filters: ProcessFilterCloudModel[]) => {

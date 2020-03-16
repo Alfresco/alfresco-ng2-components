@@ -18,8 +18,8 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialog, DateAdapter } from '@angular/material';
-import { debounceTime, filter, takeUntil, finalize } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
@@ -338,11 +338,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     delete(deleteAction: ProcessFilterAction) {
         this.processFilterCloudService
             .deleteFilter(this.processFilter)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                deleteAction.filter = this.processFilter;
-                this.action.emit(deleteAction);
-            });
+            .pipe(
+                filter((filters) => {
+                    deleteAction.filter = this.processFilter;
+                    this.action.emit(deleteAction);
+                    return filters.length === 0;
+                }),
+                switchMap(() => this.restoreDefaultProcessFilters()),
+                takeUntil(this.onDestroy$))
+            .subscribe(() => {});
     }
 
     /**
@@ -394,6 +398,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     replaceSpaceWithHyphen(name: string): string {
         const regExt = new RegExp(' ', 'g');
         return name.replace(regExt, '-');
+    }
+
+    restoreDefaultProcessFilters(): Observable<ProcessFilterCloudModel[]> {
+        return this.processFilterCloudService.getProcessFilters(this.appName);
     }
 
     showActions(): boolean {
