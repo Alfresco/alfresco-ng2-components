@@ -48,7 +48,7 @@ export class CardViewUpdateService {
     update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
             target: property,
-            changed: transformKeyToObject(property.key, newValue),
+            changed: transformKeyToObject(property.key, newValue)
         });
     }
 
