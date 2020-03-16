@@ -17,3 +17,4 @@
 
 export * from './card-view-text-item.page';
 export * from './card-view-boolean-item.page';
+export * from './card-view-date-item.page';

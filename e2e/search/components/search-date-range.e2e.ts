@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, DatePickerPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
@@ -31,7 +31,7 @@ describe('Search Date Range Filter', () => {
     const searchFilters = new SearchFiltersPage();
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     const searchResults = new SearchResultsPage();
-    const datePicker = new DatePickerPage();
+    const datePicker = new DatePickerCalendarPage();
     const navigationBar = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 

@@ -16,12 +16,13 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility, TogglePage, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, TogglePage, BrowserActions, DateTimePickerPage } from '@alfresco/adf-testing';
 import moment = require('moment');
 
 export class ShareDialogPage {
 
     togglePage = new TogglePage();
+    dateTimePickerPage = new DateTimePickerPage();
     shareDialog: ElementFinder = element(by.css('adf-share-dialog'));
     dialogTitle: ElementFinder = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
     shareToggle: ElementFinder = element(by.css('[data-automation-id="adf-share-toggle"] label'));
@@ -29,11 +30,6 @@ export class ShareDialogPage {
     shareLink: ElementFinder = element(by.css('[data-automation-id="adf-share-link"]'));
     closeButton: ElementFinder = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
     copySharedLinkButton: ElementFinder = element(by.css('.adf-input-action'));
-    timeDatePickerButton: ElementFinder = element(by.css('mat-datetimepicker-toggle button'));
-    dayPicker: ElementFinder = element(by.css('mat-datetimepicker-month-view'));
-    clockPicker: ElementFinder = element(by.css('mat-datetimepicker-clock'));
-    hoursPicker: ElementFinder = element(by.css('.mat-datetimepicker-clock-hours'));
-    minutePicker: ElementFinder = element(by.css('.mat-datetimepicker-clock-minutes'));
     expirationDateInput: ElementFinder = element(by.css('input[formcontrolname="time"]'));
     confirmationDialog: ElementFinder = element(by.css('adf-confirm-dialog'));
     confirmationCancelButton: ElementFinder = element(by.id('adf-confirm-cancel'));
@@ -81,35 +77,28 @@ export class ShareDialogPage {
     }
 
     async clickDateTimePickerButton(): Promise<void> {
-        await BrowserActions.click(this.timeDatePickerButton);
+        await this.dateTimePickerPage.clickDateTimePicker();
     }
 
     async calendarTodayDayIsDisabled(): Promise<void> {
         const tomorrow = moment().add(1, 'days').format('D');
 
         if (tomorrow !== '1') {
-            const today = await BrowserActions.getText(this.dayPicker.element(by.css('.mat-datetimepicker-calendar-body-today')));
-            await BrowserVisibility.waitUntilElementIsPresent(element(by.cssContainingText('.mat-datetimepicker-calendar-body-disabled', today)));
+            await this.dateTimePickerPage.checkCalendarTodayDayIsDisabled();
         }
     }
 
     async setDefaultDay(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.dayPicker);
-
-        const tomorrow = moment().add(1, 'days').format('LL');
-        await BrowserActions.click(this.dayPicker.element(by.css(`td[aria-label="${tomorrow}"]`)));
-
+        const tomorrow = moment().add(1, 'days').format('D');
+        await this.dateTimePickerPage.setDate(tomorrow);
     }
 
     async setDefaultHour(): Promise<void> {
-        const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
-        await BrowserVisibility.waitUntilElementIsVisible(this.clockPicker);
-        await BrowserActions.click(this.hoursPicker.all(by.css(selector)).first());
+        await this.dateTimePickerPage.dateTime.setDefaultEnabledHour();
     }
 
     async setDefaultMinutes() {
-        const selector = '.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)';
-        await BrowserActions.click(this.minutePicker.all(by.css(selector)).first());
+        await this.dateTimePickerPage.dateTime.setDefaultEnabledMinutes();
     }
 
     async dateTimePickerDialogIsClosed(): Promise<void> {
