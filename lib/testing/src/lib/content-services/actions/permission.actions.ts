@@ -45,7 +45,7 @@ export class PermissionActions {
     }
 
     enableInheritedPermissionsForNode(nodeId: string): Promise<NodeEntry> {
-        const nodeBody = { permissions: { isInheritanceEnabled: false } };
+        const nodeBody = { permissions: { isInheritanceEnabled: true } };
         return this.alfrescoJsApi.nodes.updateNode(nodeId, nodeBody, { include: ['permissions'] });
     }
 

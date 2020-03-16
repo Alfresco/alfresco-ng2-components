@@ -213,7 +213,7 @@ describe('Delete Directive', () => {
         let createdSite = null;
         let fileTxt, filePdf, folderA, folderB;
 
-        beforeEach(async () => {
+        beforeAll(async () => {
             createdSite = await this.alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
                 visibility: 'PRIVATE'
@@ -244,6 +244,14 @@ describe('Delete Directive', () => {
             await contentServicesPage.waitForTableBody();
         });
 
+        afterAll(async () => {
+            try {
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(
+                    createdSite.entry.id
+                );
+            } catch (error) {}
+        });
+
         it('[C216426] - Delete file without delete permissions', async () => {
             await contentListPage.selectRowWithKeyboard(filePdf.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', filePdf.entry.name);
@@ -257,13 +265,6 @@ describe('Delete Directive', () => {
             await contentListPage.selectRowWithKeyboard(fileTxt.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', fileTxt.entry.name);
             await contentServicesPage.checkToolbarDeleteIsDisabled();
-        });
-
-        afterEach(async () => {
-            try {
-                await this.alfrescoJsApi.core.sitesApi.deleteSite(createdSite.entry.id);
-            } catch (error) {
-            }
         });
     });
 });
