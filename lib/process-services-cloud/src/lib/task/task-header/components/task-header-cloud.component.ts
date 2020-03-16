@@ -278,12 +278,12 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                 this.cardViewUpdateService.updateElement(updateNotification);
                 return of(null);
             }))
-            .subscribe(
-                (taskDetails) => {
-                    this.taskDetails = taskDetails;
+            .subscribe((taskDetails) => {
+                    if (taskDetails) {
+                        this.taskDetails = taskDetails;
+                    }
                     this.refreshData();
-                }
-            );
+                });
     }
 
     private loadParentName(taskId: string) {

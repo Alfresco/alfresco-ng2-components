@@ -189,10 +189,11 @@ describe('CardViewDateItemComponent', () => {
         const cardViewUpdateService = TestBed.get(CardViewUpdateService);
         const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
+        const property = { ...component.property };
 
         const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
             (updateNotification) => {
-                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.target).toEqual(property);
                 expect(updateNotification.changed).toEqual({ dateKey: expectedDate.toDate() });
                 disposableUpdate.unsubscribe();
                 done();

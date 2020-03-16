@@ -39,7 +39,6 @@ describe('TaskHeaderCloudComponent', () => {
     let appConfigService: AppConfigService;
     let taskCloudService: TaskCloudService;
     let getTaskByIdSpy: jasmine.Spy;
-    let updateTaskSpy: jasmine.Spy;
     let getCandidateGroupsSpy: jasmine.Spy;
     let getCandidateUsersSpy: jasmine.Spy;
     let isTaskEditableSpy: jasmine.Spy;
@@ -64,7 +63,6 @@ describe('TaskHeaderCloudComponent', () => {
         component.appName = 'mock-app-name';
         component.taskId = 'mock-task-id';
         getTaskByIdSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
-        updateTaskSpy = spyOn(taskCloudService, 'updateTask').and.returnValue(of(assignedTaskDetailsCloudMock));
         isTaskEditableSpy = spyOn(taskCloudService, 'isTaskEditable').and.returnValue(true);
         getCandidateUsersSpy = spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
         getCandidateGroupsSpy = spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
@@ -162,6 +160,7 @@ describe('TaskHeaderCloudComponent', () => {
         }));
 
         it('should be able to call update service on updating task description', async(() => {
+            spyOn(taskCloudService, 'updateTask').and.returnValue(of(assignedTaskDetailsCloudMock));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const descriptionEditIcon = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-edit-icon-description"]'));
@@ -176,10 +175,36 @@ describe('TaskHeaderCloudComponent', () => {
                 const submitEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-update-description"]'));
                 submitEl.nativeElement.click();
                 fixture.detectChanges();
-                expect(updateTaskSpy).toHaveBeenCalled();
+                expect(taskCloudService.updateTask).toHaveBeenCalled();
             });
         }));
-   });
+
+        it('should roll back task description on error', async () => {
+            spyOn(taskCloudService, 'updateTask').and.returnValue(throwError('fake'));
+            fixture.detectChanges();
+
+            await fixture.whenStable();
+            let description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+            expect(description.nativeElement.innerText.trim()).toEqual('This is the description');
+
+            const descriptionEditIcon = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-edit-icon-description"]'));
+            descriptionEditIcon.nativeElement.click();
+            fixture.detectChanges();
+
+            const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-edittextarea-description"]'));
+            inputEl.nativeElement.value = 'updated description';
+            inputEl.nativeElement.dispatchEvent(new Event('input'));
+
+            const submitEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-update-description"]'));
+            submitEl.nativeElement.click();
+            expect(taskCloudService.updateTask).toHaveBeenCalled();
+
+            await fixture.whenStable();
+            fixture.detectChanges();
+            description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+            expect(description.nativeElement.innerText.trim()).toEqual('This is the description');
+        });
+    });
 
     describe('Task with parentTaskId', () => {
 

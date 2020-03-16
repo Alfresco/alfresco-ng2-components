@@ -265,7 +265,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedText });
                 disposableUpdate.unsubscribe();
             });
@@ -309,10 +309,11 @@ describe('CardViewTextItemComponent', () => {
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
             component.editedValue = 'updated-value';
+            const property = { ...component.property };
 
             component.update(event);
 
-            expect(cardViewUpdateService.update).toHaveBeenCalledWith(component.property, 'updated-value');
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
         });
 
         it('should NOT trigger the update event if the editedValue is invalid', () => {
@@ -384,7 +385,7 @@ describe('CardViewTextItemComponent', () => {
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
-                    expect(updateNotification.target).toBe(component.property);
+                    expect(updateNotification.target).toEqual({ ...component.property });
                     expect(updateNotification.changed).toEqual({ textkey: expectedText });
                     disposableUpdate.unsubscribe();
                     done();
@@ -413,7 +414,7 @@ describe('CardViewTextItemComponent', () => {
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
-                    expect(updateNotification.target).toBe(component.property);
+                    expect(updateNotification.target).toEqual({ ...component.property });
                     expect(updateNotification.changed).toEqual({ textkey: expectedText });
                     disposableUpdate.unsubscribe();
                 }
@@ -506,7 +507,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedText });
                 disposableUpdate.unsubscribe();
             });
@@ -643,7 +644,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).not.toEqual(expectedNumber);
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
                 disposableUpdate.unsubscribe();
             });
@@ -717,7 +718,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
-                expect(updateNotification.target).toBe(component.property);
+                expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedFloat.toString() });
                 disposableUpdate.unsubscribe();
             });
