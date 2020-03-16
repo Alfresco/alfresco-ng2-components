@@ -57,8 +57,8 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     onChange(event: MatSelectChange): void {
         const selectedOption = event.value !== undefined ? event.value : null;
-        this.cardViewUpdateService.update(this.property, selectedOption);
-        // this.property.value = selectedOption;
+        this.cardViewUpdateService.update(<any> { ...this.property }, selectedOption);
+        this.property.value = selectedOption;
     }
 
     showNoneOption() {
