@@ -33,7 +33,7 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
             .pipe(takeUntil(this.destroy$))
             .subscribe((notification: UpdateNotification) => {
             if (this.property.key === notification.target.key) {
-                this.property.value =  notification.target && notification.target.property && notification.target.property.value;
+                this.property.value = notification.target.value;
             }
         });
     }

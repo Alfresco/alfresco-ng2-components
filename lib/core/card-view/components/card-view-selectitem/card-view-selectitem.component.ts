@@ -44,10 +44,14 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnChanges(): void {
+        this.refreshValue();
+    }
+
+    refreshValue() {
         this.value = this.property.value;
     }
 
-    isEditable(): boolean {
+        isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 
@@ -57,7 +61,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     onChange(event: MatSelectChange): void {
         const selectedOption = event.value !== undefined ? event.value : null;
-        this.cardViewUpdateService.update(<any> { ...this.property }, selectedOption);
+        this.cardViewUpdateService.update(<CardViewSelectItemModel<string>> { ...this.property }, selectedOption);
         this.property.value = selectedOption;
     }
 

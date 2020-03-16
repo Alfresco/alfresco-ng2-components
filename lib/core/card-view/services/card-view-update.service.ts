@@ -22,7 +22,6 @@ import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 export interface UpdateNotification {
     target: any;
     changed: any;
-    value: any;
 }
 
 export interface ClickNotification {
@@ -50,7 +49,6 @@ export class CardViewUpdateService {
         this.itemUpdated$.next({
             target: property,
             changed: transformKeyToObject(property.key, newValue),
-            value: newValue
         });
     }
 

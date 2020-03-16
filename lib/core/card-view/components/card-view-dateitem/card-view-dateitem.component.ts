@@ -114,7 +114,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
             const momentDate = moment(newDateValue.value, this.dateFormat, true);
             if (momentDate.isValid()) {
                 this.valueDate = momentDate;
-                this.cardViewUpdateService.update(<any> {...this.property }, momentDate.toDate());
+                this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, momentDate.toDate());
                 this.property.value = momentDate.toDate();
             }
         }
