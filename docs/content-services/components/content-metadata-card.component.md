@@ -347,6 +347,13 @@ To customize the separator used by this card you can set it in your `app.config.
             "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
         }
     },
-    "multi-value-pipe-separator" : " - "
+    "multi-value-pipe-separator" : " - ",
+    "multi-value-chips" : false
 },
 ```
+
+### Use chips for multi value properties
+
+If you want to display chips fo each value instead of a composed string you just need to enable it in the content-metadata config. 
+
+![Chips for multi value properties](../../docassets/images/metadata-chips.png)

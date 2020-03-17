@@ -23,6 +23,7 @@ import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator, CardViewItemIntValidator } from '@alfresco/adf-core';
+import { MatChipsModule } from '@angular/material';
 
 describe('CardViewTextItemComponent', () => {
 
@@ -31,7 +32,10 @@ describe('CardViewTextItemComponent', () => {
     const mouseEvent = new MouseEvent('click');
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            CoreTestingModule,
+            MatChipsModule
+        ]
     });
 
     beforeEach(() => {
@@ -145,6 +149,48 @@ describe('CardViewTextItemComponent', () => {
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
+        });
+
+        it('should render chips for multivalue properties when chips are enabled', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: ['item1', 'item2', 'item3'],
+                key: 'textkey',
+                default: ['FAKE-DEFAULT-KEY'],
+                editable: true,
+                multivalued: true
+            });
+            component.useChipsForMultiValueProperty = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
+            expect(valueChips).not.toBeNull();
+            expect(valueChips.length).toBe(3);
+            expect(valueChips[0].nativeElement.innerText.trim()).toBe('item1');
+            expect(valueChips[1].nativeElement.innerText.trim()).toBe('item2');
+            expect(valueChips[2].nativeElement.innerText.trim()).toBe('item3');
+        });
+
+        it('should render string for multivalue properties when chips are disabled', () => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: ['item1', 'item2', 'item3'],
+                key: 'textkey',
+                default: ['FAKE-DEFAULT-KEY'],
+                editable: true,
+                multivalued: true
+            });
+
+            component.useChipsForMultiValueProperty = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const valueChips = fixture.debugElement.query(By.css(`mat-chip-list`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText.trim()).toBe('item1,item2,item3');
+            expect(valueChips).toBeNull();
         });
     });
 

@@ -817,10 +817,11 @@
   "content-metadata": {
     "presets": {
       "default": {
-        "exif:exif": "*"
+        "includeAll": true
       }
     },
-    "multi-value-pipe-separator": ", "
+    "multi-value-pipe-separator": ", ",
+    "multi-value-chips": true
   },
   "sideNav": {
     "expandedSidenav": true,

@@ -20,6 +20,7 @@ import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { BaseCardView } from '../base-card-view';
+import { MatChipInputEvent } from '@angular/material';
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -29,6 +30,7 @@ import { BaseCardView } from '../base-card-view';
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
 
     static DEFAULT_SEPARATOR = ', ';
+    static DEFAULT_USE_CHIPS = false;
 
     @Input()
     editable: boolean = false;
@@ -40,18 +42,20 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     private editorInput: any;
 
     inEdit: boolean = false;
-    editedValue: string;
+    editedValue: string | string[];
     errorMessages: string[];
     valueSeparator: string;
+    useChipsForMultiValueProperty: boolean;
 
     constructor(cardViewUpdateService: CardViewUpdateService,
                 private appConfig: AppConfigService) {
         super(cardViewUpdateService);
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
+        this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips') || CardViewTextItemComponent.DEFAULT_USE_CHIPS;
     }
 
     ngOnChanges(): void {
-        this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
+        this.resetValue();
     }
 
     showProperty(): boolean {
@@ -87,19 +91,27 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }, 0);
     }
 
-    reset(event: MouseEvent|KeyboardEvent): void {
+    reset(event: MouseEvent | KeyboardEvent): void {
         event.stopPropagation();
 
-        this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
+        this.resetValue();
         this.setEditMode(false);
         this.resetErrorMessages();
+    }
+
+    resetValue() {
+        if (this.isChipViewEnabled()) {
+            this.editedValue = this.property.value ? Array.from(this.property.value) : [];
+        } else {
+            this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
+        }
     }
 
     private resetErrorMessages() {
         this.errorMessages = [];
     }
 
-    update(event: MouseEvent|KeyboardEvent): void {
+    update(event: MouseEvent | KeyboardEvent): void {
         event.stopPropagation();
 
         if (this.property.isValid(this.editedValue)) {
@@ -113,12 +125,24 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    prepareValueForUpload(property: CardViewTextItemModel, value: string): string | string [] {
-        if (property.multivalued) {
+    prepareValueForUpload(property: CardViewTextItemModel, value: string | string[]): string | string[] {
+        if (property.multivalued && typeof value === 'string') {
             const listOfValues = value.split(this.valueSeparator.trim()).map((item) => item.trim());
             return listOfValues;
         }
         return value;
+    }
+
+    removeValueFromList(itemIndex: number) {
+        if (typeof this.editedValue !== 'string') {
+            this.editedValue.splice(itemIndex, 1);
+        }
+    }
+
+    addValueToList(newListItem: MatChipInputEvent) {
+        if (typeof this.editedValue !== 'string') {
+            this.editedValue.push(newListItem.value);
+        }
     }
 
     onTextAreaInputChange() {
@@ -131,5 +155,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         } else {
             this.cardViewUpdateService.clicked(this.property);
         }
+    }
+
+    isChipViewEnabled(): boolean {
+        return this.property.multivalued && this.useChipsForMultiValueProperty;
     }
 }
