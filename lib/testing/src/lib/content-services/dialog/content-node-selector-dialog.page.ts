@@ -113,16 +113,14 @@ export class ContentNodeSelectorDialogPage {
         await this.checkSearchInputIsDisplayed();
         await this.checkCancelButtonIsDisplayed();
 
-        const contentList = await this.contentListPage();
+        await this.contentList.dataTablePage().waitForTableBody();
+        await this.contentList.dataTablePage().waitTillContentLoaded();
+        await this.contentList.dataTablePage().checkRowContentIsDisplayed(folderName);
+        await this.contentList.dataTablePage().doubleClickRowByContent(folderName);
 
-        await contentList.dataTablePage().waitForTableBody();
-        await contentList.dataTablePage().waitTillContentLoaded();
-        await contentList.dataTablePage().checkRowContentIsDisplayed(folderName);
-        await contentList.dataTablePage().doubleClickRowByContent(folderName);
-
-        await contentList.dataTablePage().waitForTableBody();
-        await contentList.dataTablePage().waitTillContentLoaded();
-        await contentList.dataTablePage().checkRowContentIsDisplayed(fileName);
+        await this.contentList.dataTablePage().waitForTableBody();
+        await this.contentList.dataTablePage().waitTillContentLoaded();
+        await this.contentList.dataTablePage().checkRowContentIsDisplayed(fileName);
 
         await this.clickContentNodeSelectorResult(fileName);
         await this.checkCopyMoveButtonIsEnabled();
