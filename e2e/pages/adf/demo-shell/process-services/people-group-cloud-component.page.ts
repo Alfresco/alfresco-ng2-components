@@ -35,7 +35,7 @@ export class PeopleGroupCloudComponentPage {
     groupAppInput: ElementFinder = element(by.css('input[data-automation-id="app-group-app-input"]'));
     peopleCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation: ElementFinder = element(by.css('mat-checkbox.app-preselect-value'));
+    preselectValidation: ElementFinder = element.all(by.css('mat-checkbox.app-preselect-value')).first();
     preselectValidationStatus: ElementFinder = element(by.css('mat-checkbox.app-preselect-value label input'));
     peopleFilterByAppName: ElementFinder = element(by.css('.app-people-control-options mat-radio-button[value="appName"]'));
     groupFilterByAppName: ElementFinder = element(by.css('.app-groups-control-options mat-radio-button[value="appName"]'));
