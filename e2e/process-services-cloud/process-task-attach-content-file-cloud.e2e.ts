@@ -45,14 +45,13 @@ describe('Process Task - Attache content file', () => {
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
     const viewerPage = new ViewerPage();
 
-    const processName = StringUtil.generateRandomString(10);
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const processDefinitionName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
+    const uploadWidgetId = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.uploadSingleMultiple.widgets.contentMultipleAttachFileId;
+    const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
+    const processName = StringUtil.generateRandomString(10);
     const folderName = StringUtil.generateRandomString(5);
     let uploadedFolder: any;
-
-    const widgets = {
-        contentMultipleAttachFileId: 'UploadMultipleFileFromContentId'
-    };
 
     const pdfFileOne = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -85,7 +84,7 @@ describe('Process Task - Attache content file', () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
         await processCloudDemoPage.openNewProcessForm();
-        await startProcessPage.startProcessWithProcessDefinition(processName, 'upload-single-multiple-pro');
+        await startProcessPage.startProcessWithProcessDefinition(processName, processDefinitionName);
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
@@ -94,28 +93,28 @@ describe('Process Task - Attache content file', () => {
         await processCloudDemoPage.processListCloudComponent().selectRow(processName);
 
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
-        await tasksCloudDemoPage.taskListCloudComponent().selectRow('UploadSingleMultipleFiles');
+        await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible(widgets.contentMultipleAttachFileId);
-        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
-        await contentUploadFileWidget.clickAttachContentFile(widgets.contentMultipleAttachFileId);
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible(uploadWidgetId);
+        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(uploadWidgetId);
+        await contentUploadFileWidget.clickAttachContentFile(uploadWidgetId);
 
         await contentNodeSelectorDialog.attachFileFromContentNode(folderName, pdfFileOne.name);
         await viewAttachedFile(contentUploadFileWidget, pdfFileOne.name);
 
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible(widgets.contentMultipleAttachFileId);
-        await contentUploadFileWidget.clickAttachContentFile(widgets.contentMultipleAttachFileId);
+        await taskFormCloudComponent.formFields().checkWidgetIsVisible(uploadWidgetId);
+        await contentUploadFileWidget.clickAttachContentFile(uploadWidgetId);
 
         await contentNodeSelectorDialog.attachFileFromContentNode(folderName, pdfFileTwo.name);
         await viewAttachedFile(contentUploadFileWidget, pdfFileTwo.name);
         await taskFormCloudComponent.clickCompleteButton();
 
         await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName('UploadSingleMultipleFiles');
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(taskName);
 
         await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
-        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName('UploadSingleMultipleFiles');
+        await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();

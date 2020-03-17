@@ -147,7 +147,10 @@ export const ACTIVITI_CLOUD_APPS: any = {
                 name: 'resultcollectionform'
             },
             uploadSingleMultiple: {
-                name: 'upload-single-multiple'
+                name: 'upload-single-multiple',
+                widgets: {
+                    contentMultipleAttachFileId: 'UploadMultipleFileFromContentId'
+                }
             },
             formWithJsonWidget: {
                 name: 'form-with-json-widget'
@@ -158,7 +161,8 @@ export const ACTIVITI_CLOUD_APPS: any = {
 
         },
         tasks: {
-            processstring: 'inputtask'
+            processstring: 'inputtask',
+            uploadSingleMultipleFiles: 'UploadSingleMultipleFiles'
         },
         security: [
             { 'role': 'ACTIVITI_ADMIN', 'groups': [], 'users': ['superadminuser', 'processadminuser'] },
