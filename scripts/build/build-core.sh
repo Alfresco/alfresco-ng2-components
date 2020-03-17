@@ -19,6 +19,7 @@ echo "====== Copy assets ======"
 cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
+rm ./lib/dist/core/prebuilt-themes/*.js
 
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-core/ && \

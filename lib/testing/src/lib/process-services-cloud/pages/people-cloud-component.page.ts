@@ -53,7 +53,7 @@ export class PeopleCloudComponentPage {
     }
 
     async selectAssigneeFromList(name: string): Promise<void> {
-        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+        const assigneeRow = element.all(by.cssContainingText('mat-option span.adf-people-label-name', name)).first();
         await BrowserActions.click(assigneeRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
