@@ -449,7 +449,7 @@ describe('CardViewTextItemComponent', () => {
             expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
 
-            cardViewUpdateService.updateElement({ target: { key: component.property.key, value: expectedText  } });
+            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText  });
             fixture.detectChanges();
 
             expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
