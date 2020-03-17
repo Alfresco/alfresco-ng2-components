@@ -276,7 +276,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.taskListService
             .updateTask(this.taskId, updateNotification.changed)
             .pipe(catchError(() => {
-                this.cardViewUpdateService.updateElement(updateNotification);
+                this.cardViewUpdateService.updateElement(updateNotification.target);
                 return of(null);
             }))
             .subscribe(() => this.loadDetails(this.taskId));

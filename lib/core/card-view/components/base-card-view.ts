@@ -16,8 +16,9 @@
  */
 
 import { Input, OnDestroy } from '@angular/core';
-import { CardViewUpdateService, UpdateNotification } from '../services/card-view.services';
+import { CardViewUpdateService } from '../services/card-view.services';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
+import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -31,9 +32,9 @@ export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy 
     constructor(protected cardViewUpdateService: CardViewUpdateService) {
         this.cardViewUpdateService.updateItem$
             .pipe(takeUntil(this.destroy$))
-            .subscribe((notification: UpdateNotification) => {
-            if (this.property.key === notification.target.key) {
-                this.property.value = notification.target.value;
+            .subscribe((itemModel: CardViewBaseItemModel) => {
+            if (this.property.key === itemModel.key) {
+                this.property.value = itemModel.value;
             }
         });
     }

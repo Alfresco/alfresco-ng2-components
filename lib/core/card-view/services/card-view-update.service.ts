@@ -43,7 +43,7 @@ export class CardViewUpdateService {
 
     itemUpdated$ = new Subject<UpdateNotification>();
     itemClicked$ = new Subject<ClickNotification>();
-    updateItem$ = new Subject<UpdateNotification>();
+    updateItem$ = new Subject<CardViewBaseItemModel>();
 
     update(property: CardViewBaseItemModel, newValue: any) {
         this.itemUpdated$.next({
@@ -60,9 +60,9 @@ export class CardViewUpdateService {
 
     /**
      * Updates the cardview items property
-     * @Input UpdateNotification
+     * @param CardViewBaseItemModel
      */
-    updateElement(notification: UpdateNotification) {
+    updateElement(notification: CardViewBaseItemModel) {
         this.updateItem$.next(notification);
     }
 

@@ -128,12 +128,12 @@ Note that this function will only be called if the `clickable` property of the m
 
 ## Update cardview update item
 
-[`updateElement`](../../../lib/core/card-view/services/card-view-update.service.ts)  function helps to update the card view item. It takes the [`UpdateNotification`](../../../lib/core/card-view/services/card-view-update.service.ts)  type object as parameter.
+[`updateElement`](../../../lib/core/card-view/services/card-view-update.service.ts)  function helps to update the card view item. It takes the [`CardViewBaseItemModel`](../../../lib/core/card-view/models/card-view-baseitem.model.ts)  type object as parameter.
 
 Example
 
 ```javascript
-   this.cardViewUpdateService.updateElement(updateNotification)
+   this.cardViewUpdateService.updateElement(cardViewBaseItemModel)
 ```
 
 ## See also

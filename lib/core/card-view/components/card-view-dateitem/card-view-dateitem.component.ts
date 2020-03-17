@@ -122,7 +122,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
 
     onDateClear() {
         this.valueDate = null;
-        this.cardViewUpdateService.update(this.property, null);
+        this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, null);
         this.property.value = null;
         this.property.default = null;
     }

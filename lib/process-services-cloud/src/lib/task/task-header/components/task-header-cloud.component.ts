@@ -275,7 +275,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     private updateTaskDetails(updateNotification: UpdateNotification) {
         this.taskCloudService.updateTask(this.appName, this.taskId, updateNotification.changed)
             .pipe(catchError(() => {
-                this.cardViewUpdateService.updateElement(updateNotification);
+                this.cardViewUpdateService.updateElement(updateNotification.target);
                 return of(null);
             }))
             .subscribe((taskDetails) => {
