@@ -900,26 +900,6 @@
                   "description": "Wildcard for every aspect"
                 },
                 {
-                  "type": "object",
-                  "description": "",
-                  "required": [
-                    "includeAll"
-                  ],
-                  "properties": {
-                    "includeAll": {
-                      "description": "includeAll all property",
-                      "type": "boolean"
-                    },
-                    "postfix": {
-                      "description": "exclude",
-                      "type": [
-                        "string",
-                        "array"
-                      ]
-                    }
-                  }
-                },
-                {
                   "$ref": "#/definitions/content-metadata-aspect"
                 },
                 {

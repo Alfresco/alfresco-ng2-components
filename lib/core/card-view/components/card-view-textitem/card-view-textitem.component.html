@@ -3,16 +3,16 @@
      *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
 <div class="adf-property-value">
     <span *ngIf="!isEditable()">
-        <span *ngIf="!isClickable(); else elseBlock"
+        <span *ngIf="!isClickable(); else nonClickableTemplate"
               [attr.data-automation-id]="'card-textitem-value-' + property.key">
-            <span *ngIf="!isChipViewEnabled(); else chipListTemplate">
+            <span *ngIf="!isChipViewEnabled; else chipListTemplate">
                 <span *ngIf="showProperty()"
                       [ngClass]="property.multiline?'adf-textitem-multiline':'adf-textitem-scroll'">
                     {{ property.displayValue }}
                 </span>
             </span>
         </span>
-        <ng-template #elseBlock>
+        <ng-template #nonClickableTemplate>
             <div role="button"
                  class="adf-textitem-clickable"
                  [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
@@ -21,13 +21,12 @@
                  fxLayoutAlign="space-between center">
                 <span class="adf-textitem-clickable-value"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key">
-                    <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+                    <span *ngIf="showProperty(); else emptyValueTemplate">{{ property.displayValue }}</span>
                 </span>
                 <button mat-icon-button
                         fxFlex="0 0 auto"
                         *ngIf="showClickableIcon()"
                         class="adf-textitem-action"
-                        [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                         [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                         [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key">
                     <mat-icon class="adf-textitem-icon">{{property?.icon}}</mat-icon>
@@ -46,15 +45,14 @@
              [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
              fxLayout="row"
              fxLayoutAlign="space-between center">
-            <span *ngIf="!isChipViewEnabled(); else chipListTemplate"
+            <span *ngIf="!isChipViewEnabled; else chipListTemplate"
                   [attr.data-automation-id]="'card-textitem-value-' + property.key">
-                <span *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+                <span *ngIf="showProperty(); else emptyValueTemplate">{{ property.displayValue }}</span>
             </span>
 
             <button mat-icon-button
                     fxFlex="0 0 auto"
                     class="adf-textitem-action"
-                    [attr.aria-label]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                     [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                     [attr.data-automation-id]="'card-textitem-edit-icon-' + property.key">
 
@@ -66,7 +64,7 @@
             <div class="adf-textitem-editable-controls">
                 <mat-form-field floatPlaceholder="never"
                                 class="adf-input-container">
-                    <input *ngIf="!isChipViewEnabled() && !property.multiline"
+                    <input *ngIf="!isChipViewEnabled && !property.multiline"
                            #editorInput
                            (keydown.escape)="reset($event)"
                            (keydown.enter)="update($event)"
@@ -75,7 +73,7 @@
                            [placeholder]="property.default | translate"
                            [(ngModel)]="editedValue"
                            [attr.data-automation-id]="'card-textitem-editinput-' + property.key">
-                    <textarea *ngIf="!isChipViewEnabled() && property.multiline"
+                    <textarea *ngIf="!isChipViewEnabled && property.multiline"
                               #editorInput
                               matInput
                               matTextareaAutosize
@@ -86,7 +84,7 @@
                               [(ngModel)]="editedValue"
                               (input)="onTextAreaInputChange()"
                               [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
-                    <div *ngIf="isChipViewEnabled()">
+                    <div *ngIf="isChipViewEnabled">
                         <mat-chip-list class="adf-input"
                                        #chipList>
                             <mat-chip *ngFor="let propertyValue of editedValue; let idx = index"
@@ -107,7 +105,6 @@
                 <button mat-icon-button
                         class="adf-textitem-action"
                         (click)="update($event)"
-                        [attr.aria-label]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                         [attr.title]="'CORE.METADATA.ACTIONS.SAVE' | translate"
                         [attr.data-automation-id]="'card-textitem-update-' + property.key">
                     <mat-icon class="adf-textitem-icon">done</mat-icon>
@@ -116,7 +113,6 @@
                 <button mat-icon-button
                         (click)="reset($event)"
                         class="adf-textitem-action"
-                        [attr.aria-label]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                         [attr.title]="'CORE.METADATA.ACTIONS.CANCEL' | translate"
                         [attr.data-automation-id]="'card-textitem-reset-' + property.key">
 
@@ -132,7 +128,7 @@
             </mat-error>
         </div>
     </span>
-    <ng-template #elseEmptyValueBlock>
+    <ng-template #emptyValueTemplate>
         <span class="adf-textitem-default-value">{{ property.default | translate }}</span>
     </ng-template>
 

@@ -91,7 +91,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }, 0);
     }
 
-    reset(event: MouseEvent | KeyboardEvent): void {
+    reset(event: Event): void {
         event.stopPropagation();
 
         this.resetValue();
@@ -100,7 +100,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     resetValue() {
-        if (this.isChipViewEnabled()) {
+        if (this.isChipViewEnabled) {
             this.editedValue = this.property.value ? Array.from(this.property.value) : [];
         } else {
             this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
@@ -111,7 +111,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.errorMessages = [];
     }
 
-    update(event: MouseEvent | KeyboardEvent): void {
+    update(event: Event): void {
         event.stopPropagation();
 
         if (this.property.isValid(this.editedValue)) {
@@ -157,7 +157,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
-    isChipViewEnabled(): boolean {
+    get isChipViewEnabled(): boolean {
         return this.property.multivalued && this.useChipsForMultiValueProperty;
     }
 }
