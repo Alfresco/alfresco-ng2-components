@@ -108,6 +108,27 @@ export class ContentNodeSelectorDialogPage {
         await this.contentList.dataTablePage().doubleClickRowByContent(name);
     }
 
+    async attachFileFromContentNode(folderName: string, fileName: string) {
+        await this.checkDialogIsDisplayed();
+        await this.checkSearchInputIsDisplayed();
+        await this.checkCancelButtonIsDisplayed();
+
+        const contentList = await this.contentListPage();
+
+        await contentList.dataTablePage().waitForTableBody();
+        await contentList.dataTablePage().waitTillContentLoaded();
+        await contentList.dataTablePage().checkRowContentIsDisplayed(folderName);
+        await contentList.dataTablePage().doubleClickRowByContent(folderName);
+
+        await contentList.dataTablePage().waitForTableBody();
+        await contentList.dataTablePage().waitTillContentLoaded();
+        await contentList.dataTablePage().checkRowContentIsDisplayed(fileName);
+
+        await this.clickContentNodeSelectorResult(fileName);
+        await this.checkCopyMoveButtonIsEnabled();
+        await this.clickMoveCopyButton();
+    }
+
     contentListPage(): DocumentListPage {
         return this.contentList;
     }

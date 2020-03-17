@@ -98,13 +98,17 @@ describe('Process Task - Attache content file', () => {
 
         await taskFormCloudComponent.formFields().checkFormIsDisplayed();
         await taskFormCloudComponent.formFields().checkWidgetIsVisible(widgets.contentMultipleAttachFileId);
-        await attachFileFromContent(pdfFileOne.name);
-        await viewAttachedFile(pdfFileOne.name);
+        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
+        await contentUploadFileWidget.clickAttachContentFile(widgets.contentMultipleAttachFileId);
+
+        await contentNodeSelectorDialog.attachFileFromContentNode(folderName, pdfFileOne.name);
+        await viewAttachedFile(contentUploadFileWidget, pdfFileOne.name);
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible(widgets.contentMultipleAttachFileId);
+        await contentUploadFileWidget.clickAttachContentFile(widgets.contentMultipleAttachFileId);
 
-        await attachFileFromContent(pdfFileTwo.name);
-        await viewAttachedFile(pdfFileTwo.name);
+        await contentNodeSelectorDialog.attachFileFromContentNode(folderName, pdfFileTwo.name);
+        await viewAttachedFile(contentUploadFileWidget, pdfFileTwo.name);
         await taskFormCloudComponent.clickCompleteButton();
 
         await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
@@ -120,34 +124,9 @@ describe('Process Task - Attache content file', () => {
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
     });
 
-    async function attachFileFromContent(fileName: string) {
-        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
-        await contentUploadFileWidget.clickAttachContentFile(widgets.contentMultipleAttachFileId);
-
-        await contentNodeSelectorDialog.checkDialogIsDisplayed();
-        await contentNodeSelectorDialog.checkSearchInputIsDisplayed();
-        await contentNodeSelectorDialog.checkCancelButtonIsDisplayed();
-
-        const contentList = await contentNodeSelectorDialog.contentListPage();
-
-        await contentList.dataTablePage().waitForTableBody();
-        await contentList.dataTablePage().waitTillContentLoaded();
-        await contentList.dataTablePage().checkRowContentIsDisplayed(folderName);
-        await contentList.dataTablePage().doubleClickRowByContent(folderName);
-
-        await contentList.dataTablePage().waitForTableBody();
-        await contentList.dataTablePage().waitTillContentLoaded();
-        await contentList.dataTablePage().checkRowContentIsDisplayed(fileName);
-
-        await contentNodeSelectorDialog.clickContentNodeSelectorResult(fileName);
-        await contentNodeSelectorDialog.checkCopyMoveButtonIsEnabled();
-        await contentNodeSelectorDialog.clickMoveCopyButton();
-    }
-
-    async function viewAttachedFile(fileName: string) {
-        const contentUploadFileWidget = await processCloudWidget.attachFileWidgetCloud(widgets.contentMultipleAttachFileId);
-        await contentUploadFileWidget.checkFileIsAttached(fileName);
-        await contentUploadFileWidget.viewFile(fileName);
+    async function viewAttachedFile(contentUploadWidget, fileName: string) {
+        await contentUploadWidget.checkFileIsAttached(fileName);
+        await contentUploadWidget.viewFile(fileName);
 
         await viewerPage.checkFileThumbnailIsDisplayed();
         await viewerPage.checkFileNameIsDisplayed(fileName);
