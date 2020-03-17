@@ -19,6 +19,7 @@ import { Component, Input } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { CardViewBoolItemModel } from '../../models/card-view-boolitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-boolitem',
@@ -26,22 +27,21 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
     styleUrls: ['./card-view-boolitem.component.scss']
 })
 
-export class CardViewBoolItemComponent {
-
-    @Input()
-    property: CardViewBoolItemModel;
+export class CardViewBoolItemComponent extends BaseCardView<CardViewBoolItemModel> {
 
     @Input()
     editable: boolean;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    constructor(cardViewUpdateService: CardViewUpdateService) {
+        super(cardViewUpdateService);
+    }
 
     isEditable() {
         return this.editable && this.property.editable;
     }
 
     changed(change: MatCheckboxChange) {
-        this.cardViewUpdateService.update(this.property, change.checked );
+        this.cardViewUpdateService.update(<CardViewBoolItemModel> { ...this.property }, change.checked );
         this.property.value = change.checked;
     }
 }

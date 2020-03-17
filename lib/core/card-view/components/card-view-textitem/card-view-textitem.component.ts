@@ -19,18 +19,16 @@ import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-textitem',
     templateUrl: './card-view-textitem.component.html',
     styleUrls: ['./card-view-textitem.component.scss']
 })
-export class CardViewTextItemComponent implements OnChanges {
+export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
 
     static DEFAULT_SEPARATOR = ', ';
-
-    @Input()
-    property: CardViewTextItemModel;
 
     @Input()
     editable: boolean = false;
@@ -46,8 +44,9 @@ export class CardViewTextItemComponent implements OnChanges {
     errorMessages: string[];
     valueSeparator: string;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService,
+    constructor(cardViewUpdateService: CardViewUpdateService,
                 private appConfig: AppConfigService) {
+        super(cardViewUpdateService);
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
     }
 
@@ -105,7 +104,7 @@ export class CardViewTextItemComponent implements OnChanges {
 
         if (this.property.isValid(this.editedValue)) {
             const updatedValue = this.prepareValueForUpload(this.property, this.editedValue);
-            this.cardViewUpdateService.update(this.property, updatedValue);
+            this.cardViewUpdateService.update(<CardViewTextItemModel> { ...this.property }, updatedValue);
             this.property.value = updatedValue;
             this.setEditMode(false);
             this.resetErrorMessages();

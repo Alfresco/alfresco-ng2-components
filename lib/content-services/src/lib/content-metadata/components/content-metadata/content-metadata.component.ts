@@ -94,7 +94,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
                 switchMap((changes) =>
                     this.saveNode(changes).pipe(
                         catchError((err) => {
-                            this.loadProperties(this.node);
+                            this.cardViewUpdateService.updateElement(changes.target);
                             this.handleUpdateError(err);
                             return of(null);
                         })

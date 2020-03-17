@@ -38,12 +38,12 @@ import {
     OnDestroy
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Observable, Observer, of, Subject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
-import { share, takeUntil } from 'rxjs/operators';
+import { catchError, share, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-task-details',
@@ -275,6 +275,10 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     private updateTaskDetails(updateNotification: UpdateNotification) {
         this.taskListService
             .updateTask(this.taskId, updateNotification.changed)
+            .pipe(catchError(() => {
+                this.cardViewUpdateService.updateElement(updateNotification.target);
+                return of(null);
+            }))
             .subscribe(() => this.loadDetails(this.taskId));
     }
 

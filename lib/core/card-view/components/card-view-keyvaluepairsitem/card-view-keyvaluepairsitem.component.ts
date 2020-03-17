@@ -20,6 +20,7 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewKeyValuePairsItemModel } from '../../models/card-view.models';
 import { CardViewKeyValuePairsItemType } from '../../interfaces/card-view.interfaces';
 import { MatTableDataSource } from '@angular/material';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-boolitem',
@@ -27,10 +28,7 @@ import { MatTableDataSource } from '@angular/material';
     styleUrls: ['./card-view-keyvaluepairsitem.component.scss']
 })
 
-export class CardViewKeyValuePairsItemComponent implements OnChanges {
-
-    @Input()
-    property: CardViewKeyValuePairsItemModel;
+export class CardViewKeyValuePairsItemComponent extends BaseCardView<CardViewKeyValuePairsItemModel> implements OnChanges {
 
     @Input()
     editable: boolean = false;
@@ -38,7 +36,9 @@ export class CardViewKeyValuePairsItemComponent implements OnChanges {
     values: CardViewKeyValuePairsItemType[];
     matTableValues: MatTableDataSource<CardViewKeyValuePairsItemType>;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    constructor(cardViewUpdateService: CardViewUpdateService) {
+        super(cardViewUpdateService);
+    }
 
     ngOnChanges() {
         this.values = this.property.value || [];
@@ -68,7 +68,7 @@ export class CardViewKeyValuePairsItemComponent implements OnChanges {
         const validValues = this.values.filter((i) => i.name.length && i.value.length);
 
         if (remove || validValues.length) {
-            this.cardViewUpdateService.update(this.property, validValues);
+            this.cardViewUpdateService.update(<CardViewKeyValuePairsItemModel> { ...this.property }, validValues);
             this.property.value = validValues;
         }
     }

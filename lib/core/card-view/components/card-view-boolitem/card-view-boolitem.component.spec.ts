@@ -178,10 +178,11 @@ describe('CardViewBoolItemComponent', () => {
         it('should trigger the update event when changing the checkbox', () => {
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
+            const property = { ... component.property };
 
             component.changed(<MatCheckboxChange> { checked: true });
 
-            expect(cardViewUpdateService.update).toHaveBeenCalledWith(component.property, true);
+            expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, true);
         });
 
         it('should update the property value after a changed', async(() => {
@@ -198,10 +199,11 @@ describe('CardViewBoolItemComponent', () => {
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             component.property.value = false;
             fixture.detectChanges();
+            const property = { ...component.property };
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
-                    expect(updateNotification.target).toBe(component.property);
+                    expect(updateNotification.target).toEqual(property);
                     expect(updateNotification.changed).toEqual({ boolkey: true });
                     disposableUpdate.unsubscribe();
                     done();

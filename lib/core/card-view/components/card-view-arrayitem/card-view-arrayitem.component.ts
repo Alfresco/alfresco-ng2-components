@@ -15,22 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CardViewArrayItemModel } from '../../models/card-view-arrayitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
   selector: 'adf-card-view-arrayitem',
   templateUrl: './card-view-arrayitem.component.html',
   styleUrls: ['./card-view-arrayitem.component.scss']
 })
-export class CardViewArrayItemComponent {
+export class CardViewArrayItemComponent extends BaseCardView<CardViewArrayItemModel> {
 
-    /** The CardViewArrayItemModel of data used to populate the cardView array items. */
-    @Input()
-    property: CardViewArrayItemModel;
-
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    constructor(cardViewUpdateService: CardViewUpdateService) {
+        super(cardViewUpdateService);
+    }
 
     clicked(): void {
         if (this.isClickable()) {

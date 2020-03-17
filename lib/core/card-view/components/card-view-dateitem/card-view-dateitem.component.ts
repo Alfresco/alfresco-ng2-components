@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { MatDatetimepicker, DatetimeAdapter, MAT_DATETIME_FORMATS } from '@mat-datetimepicker/core';
-import { MomentDatetimeAdapter, MAT_MOMENT_DATETIME_FORMATS } from '@mat-datetimepicker/moment';
+import { DatetimeAdapter, MAT_DATETIME_FORMATS, MatDatetimepicker } from '@mat-datetimepicker/core';
+import { MAT_MOMENT_DATETIME_FORMATS, MomentDatetimeAdapter } from '@mat-datetimepicker/moment';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
@@ -29,6 +29,7 @@ import { MOMENT_DATE_FORMATS } from '../../../utils/moment-date-formats.model';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
     providers: [
@@ -41,7 +42,7 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: './card-view-dateitem.component.html',
     styleUrls: ['./card-view-dateitem.component.scss']
 })
-export class CardViewDateItemComponent implements OnInit, OnDestroy {
+export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemModel> implements OnInit, OnDestroy {
 
     @Input()
     property: CardViewDateItemModel;
@@ -63,10 +64,11 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private cardViewUpdateService: CardViewUpdateService,
+    constructor(cardViewUpdateService: CardViewUpdateService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
                 private appConfig: AppConfigService) {
+        super(cardViewUpdateService);
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
 
@@ -112,7 +114,7 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
             const momentDate = moment(newDateValue.value, this.dateFormat, true);
             if (momentDate.isValid()) {
                 this.valueDate = momentDate;
-                this.cardViewUpdateService.update(this.property, momentDate.toDate());
+                this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, momentDate.toDate());
                 this.property.value = momentDate.toDate();
             }
         }
@@ -120,7 +122,7 @@ export class CardViewDateItemComponent implements OnInit, OnDestroy {
 
     onDateClear() {
         this.valueDate = null;
-        this.cardViewUpdateService.update(this.property, null);
+        this.cardViewUpdateService.update(<CardViewDateItemModel> { ...this.property }, null);
         this.property.value = null;
         this.property.default = null;
     }

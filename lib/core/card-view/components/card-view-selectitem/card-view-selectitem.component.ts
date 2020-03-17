@@ -21,14 +21,14 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { Observable } from 'rxjs';
 import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces';
 import { MatSelectChange } from '@angular/material';
+import { BaseCardView } from '../base-card-view';
 
 @Component({
     selector: 'adf-card-view-selectitem',
     templateUrl: './card-view-selectitem.component.html',
     styleUrls: ['./card-view-selectitem.component.scss']
 })
-export class CardViewSelectItemComponent implements OnChanges {
-    @Input() property: CardViewSelectItemModel<string>;
+export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string>> implements OnChanges {
 
     @Input() editable: boolean = false;
 
@@ -39,7 +39,9 @@ export class CardViewSelectItemComponent implements OnChanges {
 
     value: string;
 
-    constructor(private cardViewUpdateService: CardViewUpdateService) {}
+    constructor(cardViewUpdateService: CardViewUpdateService) {
+        super(cardViewUpdateService);
+    }
 
     ngOnChanges(): void {
         this.value = this.property.value;
@@ -55,7 +57,7 @@ export class CardViewSelectItemComponent implements OnChanges {
 
     onChange(event: MatSelectChange): void {
         const selectedOption = event.value !== undefined ? event.value : null;
-        this.cardViewUpdateService.update(this.property, selectedOption);
+        this.cardViewUpdateService.update(<CardViewSelectItemModel<string>> { ...this.property }, selectedOption);
         this.property.value = selectedOption;
     }
 
