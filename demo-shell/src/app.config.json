@@ -817,7 +817,7 @@
   "content-metadata": {
     "presets": {
       "default": {
-        "includeAll": true
+        "exif:exif": "*"
       }
     },
     "multi-value-pipe-separator": ", ",
