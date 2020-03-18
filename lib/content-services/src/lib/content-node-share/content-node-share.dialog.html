@@ -7,7 +7,7 @@
         <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p>
 
         <div class="adf-share-link--row">
-            <label class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</label>
+            <div class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</div>
 
             <mat-slide-toggle
                 color="primary"
@@ -40,7 +40,7 @@
             </mat-form-field>
 
             <div class="adf-share-link--row">
-                <label class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</label>
+                <div class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</div>
                 <mat-slide-toggle
                     #slideToggleExpirationDate
                     [disabled]="!canUpdate"
