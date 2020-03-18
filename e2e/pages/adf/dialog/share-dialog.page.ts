@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, TogglePage, BrowserActions, DateTimePickerPage } from '@alfresco/adf-testing';
 import moment = require('moment');
 
@@ -23,17 +23,18 @@ export class ShareDialogPage {
 
     togglePage = new TogglePage();
     dateTimePickerPage = new DateTimePickerPage();
-    shareDialog: ElementFinder = element(by.css('adf-share-dialog'));
-    dialogTitle: ElementFinder = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
-    shareToggle: ElementFinder = element(by.css('[data-automation-id="adf-share-toggle"] label'));
-    shareToggleChecked: ElementFinder = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));
-    shareLink: ElementFinder = element(by.css('[data-automation-id="adf-share-link"]'));
-    closeButton: ElementFinder = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
-    copySharedLinkButton: ElementFinder = element(by.css('.adf-input-action'));
-    expirationDateInput: ElementFinder = element(by.css('input[formcontrolname="time"]'));
-    confirmationDialog: ElementFinder = element(by.css('adf-confirm-dialog'));
-    confirmationCancelButton: ElementFinder = element(by.id('adf-confirm-cancel'));
-    confirmationRemoveButton: ElementFinder = element(by.id('adf-confirm-accept'));
+    shareDialog = element(by.css('adf-share-dialog'));
+    dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
+    shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
+    expireToggle = element(by.css(`[data-automation-id="adf-expire-toggle"] label`));
+    shareToggleChecked = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));
+    shareLink = element(by.css('[data-automation-id="adf-share-link"]'));
+    closeButton = element(by.css('button[data-automation-id="adf-share-dialog-close"]'));
+    copySharedLinkButton = element(by.css('.adf-input-action'));
+    expirationDateInput = element(by.css('input[formcontrolname="time"]'));
+    confirmationDialog = element(by.css('adf-confirm-dialog'));
+    confirmationCancelButton = element(by.id('adf-confirm-cancel'));
+    confirmationRemoveButton = element(by.id('adf-confirm-accept'));
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialogTitle);
@@ -41,6 +42,10 @@ export class ShareDialogPage {
 
     async clickUnShareFile() {
         await this.togglePage.enableToggle(this.shareToggle);
+    }
+
+    async clickExpireToggle() {
+        await this.togglePage.enableToggle(this.expireToggle);
     }
 
     async clickConfirmationDialogCancelButton(): Promise<void> {
