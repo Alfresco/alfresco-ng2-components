@@ -818,7 +818,23 @@
     "presets": {
       "default": {
         "exif:exif": "*"
-      }
+      },
+      "custom-title": [{
+        "title": "Exif",
+        "items": [
+          {
+            "aspect": "exif:exif",
+            "editing": false,
+            "properties": [
+              "exif:pixelXDimension",
+              {
+                "title": "Custom YDimension Name",
+                "name": "exif:pixelYDimension"
+              }
+            ]
+          }
+        ]
+      }]
     },
     "multi-value-pipe-separator": ", ",
     "multi-value-chips": true

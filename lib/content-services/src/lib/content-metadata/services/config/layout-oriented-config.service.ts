@@ -41,7 +41,10 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         const organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
             const flattenedItems = this.flattenItems(layoutBlock.items),
                 properties = flattenedItems.reduce((props, explodedItem) => {
-                    let property = getProperty(propertyGroups, explodedItem.groupName, explodedItem.propertyName) || [];
+                    const isProperty = typeof explodedItem.property  === 'object';
+                    const propertyName = isProperty ? explodedItem.property.name : explodedItem.property;
+                    let  property = getProperty(propertyGroups, explodedItem.groupName, propertyName) || [];
+                    if (isProperty) { property = this.setPropertyTitle(property, explodedItem.property); }
                     property = this.setEditableProperty(property, explodedItem);
                     return props.concat(property);
                 }, []);
@@ -101,13 +104,25 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return propertyGroup;
     }
 
+    private setPropertyTitle(item: Property | Property[], property: Property): Property | Property[] {
+        let properties;
+        if (Array.isArray(item)) {
+            properties =  [ ...item ];
+            const filteredProperty = properties.find((_item) => _item.name === property.name);
+            if (filteredProperty && !!property.title) { filteredProperty.title = property.title; }
+        } else if (item) {
+            properties = { ...item, ...(item.name === property.name && !!property.title) && { title: property.title } };
+        }
+        return properties;
+    }
+
     private flattenItems(items) {
         return items.reduce((accumulator, item) => {
             const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
-            const flattenedProperties = properties.map((propertyName) => {
+            const flattenedProperties = properties.map((property) => {
                 return {
                     groupName: item.aspect || item.type,
-                    propertyName,
+                    property,
                     editable: item.editable
                 };
             });

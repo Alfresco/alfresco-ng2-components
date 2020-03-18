@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
+import { Property } from './property.interface';
+
 export interface LayoutOrientedConfigItem {
     aspect?: string;
     type?: string;
-    properties: string | string[];
+    properties: string | string[] | Property[];
     includeAll?: boolean;
     exclude?: string | string[];
     editable?: boolean;
