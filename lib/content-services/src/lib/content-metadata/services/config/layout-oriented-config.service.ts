@@ -19,7 +19,8 @@ import {
     ContentMetadataConfig,
     LayoutOrientedConfigItem,
     OrganisedPropertyGroup,
-    PropertyGroupContainer
+    PropertyGroupContainer,
+    Property
 } from '../../interfaces/content-metadata.interfaces';
 import { getProperty } from './property-group-reader';
 
@@ -40,7 +41,8 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         const organisedPropertyGroup = layoutBlocks.map((layoutBlock) => {
             const flattenedItems = this.flattenItems(layoutBlock.items),
                 properties = flattenedItems.reduce((props, explodedItem) => {
-                    const property = getProperty(propertyGroups, explodedItem.groupName, explodedItem.propertyName) || [];
+                    let property = getProperty(propertyGroups, explodedItem.groupName, explodedItem.propertyName) || [];
+                    property = this.setEditableProperty(property, explodedItem);
                     return props.concat(property);
                 }, []);
 
@@ -89,13 +91,24 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
         return includeAllProperty !== undefined ? includeAllProperty : false;
     }
 
+    private setEditableProperty(propertyGroup: Property | Property[], itemConfig): Property | Property[] {
+        if (Array.isArray(propertyGroup)) {
+            propertyGroup.map((property) => property.editable = itemConfig.editable !== undefined ? itemConfig.editable : true);
+        } else {
+            propertyGroup.editable = itemConfig.editable !== undefined ? itemConfig.editable : true;
+        }
+
+        return propertyGroup;
+    }
+
     private flattenItems(items) {
         return items.reduce((accumulator, item) => {
             const properties = Array.isArray(item.properties) ? item.properties : [item.properties];
             const flattenedProperties = properties.map((propertyName) => {
                 return {
                     groupName: item.aspect || item.type,
-                    propertyName
+                    propertyName,
+                    editable: item.editable
                 };
             });
 
