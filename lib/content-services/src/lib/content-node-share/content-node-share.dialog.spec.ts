@@ -80,6 +80,8 @@ describe('ShareDialogComponent', () => {
                 properties: {}
             }
         };
+
+        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
     });
 
     afterEach(() => {
@@ -138,7 +140,9 @@ describe('ShareDialogComponent', () => {
     });
 
     it(`should not toggle share action when file has 'sharedId' property`, async () => {
-        spyOn(sharedLinksApiService, 'createSharedLinks');
+        spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({
+            entry: { id: 'sharedId', sharedId: 'sharedId' }
+        }));
         spyOn(renditionService, 'generateRenditionForNode').and.returnValue(empty());
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -161,7 +165,6 @@ describe('ShareDialogComponent', () => {
     it('should open a confirmation dialog when unshare button is triggered', () => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
-        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -182,7 +185,7 @@ describe('ShareDialogComponent', () => {
 
     it('should unshare file when confirmation dialog returns true', fakeAsync(() => {
         spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(true) });
-        spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
+        spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
         component.data = {
@@ -237,7 +240,6 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should reset expiration date when toggle is unchecked', () => {
-        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
         node.entry.allowableOperations = ['update'];
@@ -289,7 +291,6 @@ describe('ShareDialogComponent', () => {
         const date = moment();
         node.entry.allowableOperations = ['update'];
         node.entry.properties['qshare:sharedId'] = 'sharedId';
-        spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
         fixture.componentInstance.form.controls['time'].setValue(null);
 
         component.data = {
@@ -315,7 +316,6 @@ describe('ShareDialogComponent', () => {
 
     describe('datetimepicker type', () => {
         beforeEach(() => {
-            spyOn(nodesApiService, 'updateNode').and.returnValue(of({}));
             spyOn(sharedLinksApiService, 'createSharedLinks').and.returnValue(of({}));
             node.entry.allowableOperations = ['update'];
             component.data = {
