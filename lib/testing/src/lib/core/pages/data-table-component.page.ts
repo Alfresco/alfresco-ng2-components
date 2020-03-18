@@ -125,7 +125,7 @@ export class DataTableComponentPage {
         await BrowserVisibility.waitUntilElementIsVisible(column.first());
         const initialList = [];
 
-        const length = await  column.count();
+        const length = await column.count();
 
         for (let i = 0; i < length; i++) {
             const text = await BrowserActions.getText(column.get(i));
@@ -135,7 +135,7 @@ export class DataTableComponentPage {
         }
 
         let sortedList = [...initialList];
-        sortedList = sortedList.sort();
+        sortedList = sortedList.sort((a, b) => a - b);
         if (sortOrder.toLocaleLowerCase() === 'desc') {
             sortedList = sortedList.reverse();
         }
