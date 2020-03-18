@@ -7,11 +7,12 @@
         <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p>
 
         <div class="adf-share-link--row">
-            <label for="mat-input-1" class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</label>
+            <label id="share-toggle-label" class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</label>
 
             <mat-slide-toggle
                 color="primary"
                 data-automation-id="adf-share-toggle"
+                aria-labelledby="share-toggle-label"
                 [checked]="isFileShared"
                 [disabled]="!canUpdate || isDisabled"
                 (change)="onSlideShareChange($event)">
@@ -39,15 +40,16 @@
             </mat-form-field>
 
             <div class="adf-share-link--row">
-            <label for="mat-input-2" class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</label>
-            <mat-slide-toggle
-                #slideToggleExpirationDate
-                [disabled]="!canUpdate"
-                color="primary"
-                data-automation-id="adf-expire-toggle"
-                [checked]="time.value"
-                (change)="onToggleExpirationDate($event)">
-            </mat-slide-toggle>
+                <label id="expire-toggle-label" class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</label>
+                <mat-slide-toggle
+                    #slideToggleExpirationDate
+                    [disabled]="!canUpdate"
+                    color="primary"
+                    data-automation-id="adf-expire-toggle"
+                    aria-labelledby="expire-toggle-label"
+                    [checked]="time.value"
+                    (change)="onToggleExpirationDate($event)">
+                </mat-slide-toggle>
             </div>
 
             <mat-form-field class="adf-full-width">
