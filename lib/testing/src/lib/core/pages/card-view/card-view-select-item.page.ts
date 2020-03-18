@@ -36,7 +36,7 @@ export class CardSelectItemPage {
     }
 
     async getSelectedOptionText(): Promise<string> {
-        return await this.dropdown.getSelectedOptionText();
+        return this.dropdown.getSelectedOptionText();
     }
 
     async selectDropdownOption(option: string): Promise<void> {
