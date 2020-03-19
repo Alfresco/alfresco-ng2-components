@@ -338,7 +338,9 @@
               "type": "object",
               "required": [
                 "includeAll",
-                "exclude"
+                "exclude",
+                "readOnlyAspects",
+                "readOnlyProperties"
               ],
               "properties": {
                 "includeAll": {
@@ -350,7 +352,20 @@
                     "description": "Property name",
                     "type": "string"
                   }
-
+                },
+                "readOnlyAspects": {
+                  "type": "array",
+                  "items": {
+                    "description": "Disable editing in these aspects",
+                    "type": "string"
+                  }
+                },
+                "readOnlyProperties": {
+                  "type": "array",
+                  "items": {
+                    "description": "Disable editing in these properties",
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -397,7 +412,8 @@
                     "type": "object",
                     "required": [
                       "aspect",
-                      "properties"
+                      "properties",
+                      "editing"
                     ],
                     "properties": {
                       "aspect": {
@@ -407,6 +423,10 @@
                       "properties": {
                         "description": "list of aspect properties",
                         "type": "array"
+                      },
+                      "editing": {
+                        "description": "Enable/disable editing for this aspect",
+                        "type": "boolean"
                       }
                     }
                   },
@@ -892,7 +912,10 @@
                     },
                     "postfix": {
                       "description": "exclude",
-                      "type": ["string","array"]
+                      "type": [
+                        "string",
+                        "array"
+                      ]
                     }
                   }
                 },
@@ -1209,8 +1232,7 @@
               "name"
             ],
             "properties": {
-              "id": {
-              },
+              "id": {},
               "name": {
                 "type": "string"
               },

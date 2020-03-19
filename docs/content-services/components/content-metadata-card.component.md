@@ -309,6 +309,24 @@ example below shows this with an aspect-oriented config:
 },
 ```
 
+### Making aspects and properties read only
+
+Whenever you have properties that you want to protect from users editing their values you can add them to your configuration to make them read only. `readOnlyAspects` will make the whole aspect and its properties non editable. 
+
+If you want to disable the editing for specific properties you will need to add them to the `readOnlyProperties` property. 
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "readOnlyAspects": ["cm:author"],
+            "readOnlyProperties": ["cm:fileVersion"]
+        }
+    }
+},
+```
+
 ## What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect
 
 Nothing - since this aspect is not related to the node, it will simply be ignored and not

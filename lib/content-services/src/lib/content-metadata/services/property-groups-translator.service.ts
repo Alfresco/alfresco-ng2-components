@@ -87,7 +87,7 @@ export class PropertyGroupTranslatorService {
             value: propertyValue,
             key: `${prefix}${property.name}`,
             default: property.defaultValue,
-            editable: property.editable || true
+            editable: property.editable !== undefined ? property.editable : true
         };
         let cardViewItemProperty;
 
