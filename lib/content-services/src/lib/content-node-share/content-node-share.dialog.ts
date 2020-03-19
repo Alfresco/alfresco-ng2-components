@@ -24,13 +24,12 @@ import {
     OnDestroy
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSlideToggleChange } from '@angular/material';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Observable, throwError, Subject } from 'rxjs';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import {
     skip,
     distinctUntilChanged,
     mergeMap,
-    catchError,
     takeUntil
 } from 'rxjs/operators';
 import {
@@ -62,12 +61,9 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     isDisabled: boolean = false;
     form: FormGroup = new FormGroup({
         sharedUrl: new FormControl(''),
-        time: new FormControl({ value: '', disabled: false })
+        time: new FormControl({ value: '', disabled: true })
     });
     type = 'datetime';
-
-    @ViewChild('matDatetimepickerToggle')
-    matDatetimepickerToggle;
 
     @ViewChild('slideToggleExpirationDate')
     slideToggleExpirationDate;
@@ -92,10 +88,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.type = this.appConfigService.get<string>('sharedLinkDateTimePickerType', 'datetime');
 
         if (!this.canUpdate) {
-            this.form.controls['time'].disable();
+            this.time.disable();
         }
 
-        this.form.controls.time.valueChanges
+        this.time.valueChanges
             .pipe(
                 skip(1),
                 distinctUntilChanged(),
@@ -103,9 +99,6 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                     (updates) => this.updateNode(updates),
                     (formUpdates) => formUpdates
                 ),
-                catchError((error) => {
-                    return throwError(error);
-                }),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(updates => this.updateEntryExpiryDate(updates));
@@ -120,10 +113,13 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             } else {
                 this.sharedId = properties['qshare:sharedId'];
                 this.isFileShared = true;
-
                 this.updateForm();
             }
         }
+    }
+
+    get time(): AbstractControl {
+        return this.form.controls['time'];
     }
 
     ngOnDestroy() {
@@ -155,17 +151,16 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
     onToggleExpirationDate(slideToggle: MatSlideToggleChange) {
         if (slideToggle.checked) {
-            this.matDatetimepickerToggle.datetimepicker.open();
+            this.time.enable();
         } else {
-            this.matDatetimepickerToggle.datetimepicker.close();
-            this.form.controls.time.setValue(null);
+            this.time.disable();
         }
     }
 
     onDatetimepickerClosed() {
         this.dateTimePickerInput.nativeElement.blur();
 
-        if (!this.form.controls.time.value) {
+        if (!this.time.value) {
             this.slideToggleExpirationDate.checked = false;
         }
     }
@@ -275,6 +270,12 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             sharedUrl: `${this.baseShareUrl}${this.sharedId}`,
             time: expiryDate ? moment(expiryDate).local() : null
         });
+
+        if (expiryDate) {
+            this.time.enable();
+        } else {
+            this.time.disable();
+        }
     }
 
     private updateNode(date: moment.Moment): Observable<Node> {

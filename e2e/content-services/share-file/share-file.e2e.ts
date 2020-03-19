@@ -121,6 +121,7 @@ describe('Share file', () => {
         it('[C286578] Should disable today option in expiration day calendar', async () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickExpireToggle();
             await shareDialog.clickDateTimePickerButton();
             await shareDialog.calendarTodayDayIsDisabled();
             await BrowserActions.closeMenuAndDialogs();
@@ -129,6 +130,7 @@ describe('Share file', () => {
         it('[C286548] Should be possible to set expiry date for link', async () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickExpireToggle();
             await shareDialog.setDefaultDay();
             await shareDialog.setDefaultHour();
             await shareDialog.setDefaultMinutes();
@@ -142,18 +144,11 @@ describe('Share file', () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
-        it('[C286578] Should disable today option in expiration day calendar', async () => {
-            await contentServicesPage.clickShareButton();
-            await shareDialog.checkDialogIsDisplayed();
-            await shareDialog.clickDateTimePickerButton();
-            await shareDialog.calendarTodayDayIsDisabled();
-            await BrowserActions.closeMenuAndDialogs();
-        });
-
         it('[C310329] Should be possible to set expiry date only for link', async () => {
             await LocalStorageUtil.setConfigField('sharedLinkDateTimePickerType', JSON.stringify('date'));
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
+            await shareDialog.clickExpireToggle();
             await shareDialog.setDefaultDay();
             await shareDialog.dateTimePickerDialogIsClosed();
             const value = await shareDialog.getExpirationDate();

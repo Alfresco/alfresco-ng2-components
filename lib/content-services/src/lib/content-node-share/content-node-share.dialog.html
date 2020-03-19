@@ -7,19 +7,32 @@
         <p class="adf-share-link__info">{{ 'SHARE.DESCRIPTION' | translate }}</p>
 
         <div class="adf-share-link--row">
-            <label for="mat-input-1" class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</label>
+            <div class="adf-share-link__label">{{ 'SHARE.TITLE' | translate }}</div>
 
-            <mat-slide-toggle color="primary" data-automation-id="adf-share-toggle" [checked]="isFileShared"
-                [disabled]="!canUpdate || isDisabled" (change)="onSlideShareChange($event)">
+            <mat-slide-toggle
+                color="primary"
+                data-automation-id="adf-share-toggle"
+                aria-label="{{ 'SHARE.TITLE' | translate }}"
+                [checked]="isFileShared"
+                [disabled]="!canUpdate || isDisabled"
+                (change)="onSlideShareChange($event)">
             </mat-slide-toggle>
         </div>
 
         <form [formGroup]="form">
             <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
-                <input #sharedLinkInput data-automation-id="adf-share-link" class="adf-share-link__input" matInput
-                    cdkFocusInitial placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}" formControlName="sharedUrl"
+                <input
+                    #sharedLinkInput
+                    data-automation-id="adf-share-link"
+                    class="adf-share-link__input"
+                    matInput
+                    cdkFocusInitial
+                    placeholder="{{ 'SHARE.PUBLIC-LINK' | translate }}"
+                    formControlName="sharedUrl"
                     readonly="readonly">
-                <mat-icon class="adf-input-action" matSuffix
+                <mat-icon
+                    class="adf-input-action"
+                    matSuffix
                     [clipboard-notification]="'SHARE.CLIPBOARD-MESSAGE' | translate" [adf-clipboard]
                     [target]="sharedLinkInput">
                     link
@@ -27,16 +40,31 @@
             </mat-form-field>
 
             <div class="adf-share-link--row">
-            <label for="mat-input-2" class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</label>
-            <mat-slide-toggle [disabled]="!canUpdate" #slideToggleExpirationDate color="primary"
-                data-automation-id="adf-expire-toggle" [checked]="form.controls['time'].value"
-                (change)="onToggleExpirationDate($event)">
-            </mat-slide-toggle>
+                <div class="adf-share-link__label">{{ 'SHARE.EXPIRES' | translate }}</div>
+                <mat-slide-toggle
+                    #slideToggleExpirationDate
+                    [disabled]="!canUpdate"
+                    color="primary"
+                    data-automation-id="adf-expire-toggle"
+                    aria-label="{{ 'SHARE.EXPIRES' | translate }}"
+                    [checked]="time.value"
+                    (change)="onToggleExpirationDate($event)">
+                </mat-slide-toggle>
             </div>
 
-            <mat-form-field class="adf-full-width adf-float-label" floatLabel='always'>
-                <mat-datetimepicker-toggle #matDatetimepickerToggle="matDatetimepickerToggle" [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
-                <mat-datetimepicker #datetimePicker (closed)="onDatetimepickerClosed()" [type]="type" timeInterval="1"></mat-datetimepicker>
+            <mat-form-field class="adf-full-width">
+                <mat-datetimepicker-toggle
+                    #matDatetimepickerToggle="matDatetimepickerToggle"
+                    [disabled]="time.disabled"
+                    [for]="datetimePicker"
+                    matSuffix>
+                </mat-datetimepicker-toggle>
+                <mat-datetimepicker
+                    #datetimePicker
+                    (closed)="onDatetimepickerClosed()"
+                    [type]="type"
+                    timeInterval="1">
+                </mat-datetimepicker>
                 <input class="adf-share-link__input"
                     #dateTimePickerInput
                     matInput
