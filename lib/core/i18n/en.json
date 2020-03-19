@@ -276,6 +276,7 @@
       "TOOLTIP": "Content actions"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Actions",
       "SELECT_ALL": "Select all",
       "SELECT_FILE": "Select file",
       "SORT_ASCENDING": "Ascending",
