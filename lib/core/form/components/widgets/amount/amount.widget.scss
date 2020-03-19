@@ -1,28 +1,40 @@
 @import '../form';
 
-.adf {
-    &-amount-widget {
-        width: 100%;
+@mixin adf-amount-widget-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
-        .mat-input-element {
-            margin-left: 13px;
-            margin-right: 13px;
+    .adf {
+        &-amount-widget {
+            width: 100%;
+
+            .mat-input-element {
+                margin-left: 13px;
+                margin-right: 13px;
+            }
+        }
+
+        &-amount-widget__container .mat-form-field-label-wrapper {
+            top: 17px;
+            left: 12px;
+            right: 12px;
+        }
+
+        &-amount-widget__input {
+
+            .mat-focused {
+                transition: none;
+            }
+
+            &:not(.mat-focused):not(.mat-form-field-invalid) {
+                .adf-amount-widget__prefix-spacing {
+                    color: mat-color($foreground, secondary-text);
+                }
+            }
+        }
+
+        &-amount-widget__prefix-spacing {
+            position: absolute;
+            top: 12px;
         }
     }
-
-    &-amount-widget__container .mat-form-field-label-wrapper {
-        top: 17px;
-        left: 12px;
-        right: 12px;
-    }
-
-    &-amount-widget__input .mat-focused {
-        transition: none;
-    }
-
-    &-amount-widget__prefix-spacing {
-        position: absolute;
-        top: 12px;
-    }
 }
-
