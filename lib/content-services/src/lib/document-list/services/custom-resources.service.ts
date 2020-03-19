@@ -132,15 +132,17 @@ export class CustomResourcesService {
      * Gets favorite files for the current user.
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
+     * @param where A string to restrict the returned objects by using a predicate
      * @returns List of favorite files
      */
-    loadFavorites(pagination: PaginationModel, includeFields: string[] = []): Observable<NodePaging> {
+    loadFavorites(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<NodePaging> {
         const includeFieldsRequest = this.getIncludesFields(includeFields);
+        const defaultPredicate = '(EXISTS(target/file) OR EXISTS(target/folder))';
 
         const options = {
             maxItems: pagination.maxItems,
             skipCount: pagination.skipCount,
-            where: '(EXISTS(target/file) OR EXISTS(target/folder))',
+            where: where ? `${where} AND ${defaultPredicate}` : defaultPredicate ,
             include: includeFieldsRequest
         };
 
@@ -181,13 +183,15 @@ export class CustomResourcesService {
     /**
      * Gets sites that the current user is a member of.
      * @param pagination Specifies how to paginate the results
+     * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
      */
-    loadMemberSites(pagination: PaginationModel): Observable<SiteMemberPaging> {
+    loadMemberSites(pagination: PaginationModel, where?: string): Observable<SiteMemberPaging> {
         const options = {
             include: ['properties'],
             maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount
+            skipCount: pagination.skipCount,
+            where
         };
 
         return new Observable((observer) => {
@@ -220,13 +224,15 @@ export class CustomResourcesService {
     /**
      * Gets all sites in the repository.
      * @param pagination Specifies how to paginate the results
+     * @param where A string to restrict the returned objects by using a predicate
      * @returns List of sites
      */
-    loadSites(pagination: PaginationModel): Observable<NodePaging> {
+    loadSites(pagination: PaginationModel, where?: string): Observable<NodePaging> {
         const options = {
             include: ['properties', 'aspectNames'],
             maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount
+            skipCount: pagination.skipCount,
+            where
         };
 
         return new Observable((observer) => {
@@ -272,15 +278,17 @@ export class CustomResourcesService {
      * Gets shared links for the current user.
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
+     * @param where A string to restrict the returned objects by using a predicate
      * @returns List of shared links
      */
-    loadSharedLinks(pagination: PaginationModel, includeFields: string[] = []): Observable<SharedLinkPaging> {
+    loadSharedLinks(pagination: PaginationModel, includeFields: string[] = [], where?: string): Observable<SharedLinkPaging> {
         const includeFieldsRequest = this.getIncludesFields(includeFields);
 
         const options = {
             include: includeFieldsRequest,
             maxItems: pagination.maxItems,
-            skipCount: pagination.skipCount
+            skipCount: pagination.skipCount,
+            where
         };
 
         return from(this.apiService.sharedLinksApi.findSharedLinks(options))
@@ -326,17 +334,17 @@ export class CustomResourcesService {
      * @param includeFields List of data field names to include in the results
      * @returns List of items contained in the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = []): any {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string): any {
         if (nodeId === '-trashcan-') {
             return this.loadTrashcan(pagination, includeFields);
         } else if (nodeId === '-sharedlinks-') {
-            return this.loadSharedLinks(pagination, includeFields);
+            return this.loadSharedLinks(pagination, includeFields, where);
         } else if (nodeId === '-sites-') {
-            return this.loadSites(pagination);
+            return this.loadSites(pagination, where);
         } else if (nodeId === '-mysites-') {
-            return this.loadMemberSites(pagination);
+            return this.loadMemberSites(pagination, where);
         } else if (nodeId === '-favorites-') {
-            return this.loadFavorites(pagination, includeFields);
+            return this.loadFavorites(pagination, includeFields, where);
         } else if (nodeId === '-recent-') {
             return this.getRecentFiles('-me-', pagination);
         }
