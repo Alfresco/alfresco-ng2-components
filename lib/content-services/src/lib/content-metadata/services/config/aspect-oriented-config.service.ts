@@ -114,7 +114,7 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
             if (aspectProperties === '*') {
                 properties = getProperty(propertyGroups, aspectName, aspectProperties);
             } else {
-                properties = (<string[]>aspectProperties)
+                properties = (<string[]> aspectProperties)
                     .map((propertyName) => getProperty(propertyGroups, aspectName, propertyName))
                     .filter((props) => props !== undefined);
             }
