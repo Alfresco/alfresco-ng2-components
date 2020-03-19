@@ -142,10 +142,10 @@ describe('Process list cloud', () => {
             await editProcessFilterCloudComponent.setSortFilterDropDown('Id');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Id', 'NUMBER')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Id')).toBe(true);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id', 'NUMBER')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Id')).toBe(true);
 
         });
 
@@ -169,10 +169,10 @@ describe('Process list cloud', () => {
             await editProcessFilterCloudComponent.setSortFilterDropDown('Initiator');
             await editProcessFilterCloudComponent.setOrderFilterDropDown('ASC');
 
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Initiator', 'NUMBER')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Initiator')).toBe(true);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('DESC');
-            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Initiator', 'NUMBER')).toBe(true);
+            await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Initiator')).toBe(true);
         });
 
         it('[C305054] Should display processes ordered by processdefinitionid date when ProcessDefinitionId is selected from sort dropdown', async () => {
