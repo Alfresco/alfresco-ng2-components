@@ -36,7 +36,7 @@ export class PeopleGroupCloudComponentPage {
     peopleCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
     groupCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
     preselectValidation: ElementFinder = element.all(by.css('mat-checkbox.app-preselect-value')).first();
-    preselectValidationStatus: ElementFinder = element(by.css('mat-checkbox.app-preselect-value label input'));
+    preselectValidationStatus: ElementFinder = element.all(by.css('mat-checkbox.app-preselect-value label input')).first();
     peopleFilterByAppName: ElementFinder = element(by.css('.app-people-control-options mat-radio-button[value="appName"]'));
     groupFilterByAppName: ElementFinder = element(by.css('.app-groups-control-options mat-radio-button[value="appName"]'));
 

@@ -16,13 +16,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, FormValues, AppConfigService, FormOutcomeModel, FormFieldOption, FormModel } from '@alfresco/adf-core';
+import {
+    AlfrescoApiService,
+    FormValues,
+    AppConfigService,
+    FormOutcomeModel,
+    FormFieldOption,
+    FormModel
+} from '@alfresco/adf-core';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { CompleteFormRepresentation } from '@alfresco/js-api';
 import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
+import { FormContent } from '../../services/form-fields.interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -48,7 +56,7 @@ export class FormCloudService extends BaseCloudService {
         return this.getTask(appName, taskId).pipe(
             switchMap(task => {
                 return this.getForm(appName, task.formKey, version).pipe(
-                    map(form => {
+                    map((form: FormContent) => {
                         const flattenForm = {
                             ...form.formRepresentation,
                             ...form.formRepresentation.formDefinition,
@@ -69,6 +77,7 @@ export class FormCloudService extends BaseCloudService {
      * Saves a task form.
      * @param appName Name of the app
      * @param taskId ID of the target task
+     * @param processInstanceId ID of processInstance
      * @param formId ID of the form to save
      * @param values Form values object
      * @returns Updated task details
@@ -97,7 +106,7 @@ export class FormCloudService extends BaseCloudService {
             '',
             nodeId,
             '',
-            {overwrite: true}
+            { overwrite: true }
         )).pipe(
             map((res: any) => res.entry)
         );
@@ -107,14 +116,20 @@ export class FormCloudService extends BaseCloudService {
      * Completes a task form.
      * @param appName Name of the app
      * @param taskId ID of the target task
+     * @param processInstanceId ID of processInstance
      * @param formId ID of the form to complete
      * @param formValues Form values object
      * @param outcome Form outcome
+     * @param version of the form
      * @returns Updated task details
      */
     completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
-        const completeFormRepresentation = <CompleteFormRepresentation> {values: formValues, taskId: taskId, processInstanceId: processInstanceId};
+        const completeFormRepresentation = <CompleteFormRepresentation> {
+            values: formValues,
+            taskId: taskId,
+            processInstanceId: processInstanceId
+        };
         if (outcome) {
             completeFormRepresentation.outcome = outcome;
         }
@@ -171,7 +186,7 @@ export class FormCloudService extends BaseCloudService {
      * @param version Version of the form
      * @returns Form definition
      */
-    getForm(appName: string, formKey: string, version?: number): Observable<any> {
+    getForm(appName: string, formKey: string, version?: number): Observable<FormContent> {
         let url = `${this.getBasePath(appName)}/form/v1/forms/${formKey}`;
 
         if (version) {
