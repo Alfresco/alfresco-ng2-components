@@ -18,6 +18,8 @@ Displays and edits metadata related to a node.
     -   [Properties](#properties)
 -   [Details](#details)
     -   [Application config presets](#application-config-presets)
+    -   [Indifferent config](#indifferent-config)
+    -   [Aspect oriented config](#aspect-oriented-config)
     -   [Layout oriented config](#layout-oriented-config)
     -   [Displaying all properties](#displaying-all-properties)
 -   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
@@ -229,6 +231,31 @@ The result of this config would be two accordion groups with the following prope
 | kitten:favourite-food |
 | kitten:recommended-food |
 
+#### Making properties editable
+
+When using the layout oriented config you can also set whether or not the properties are going to be editable.
+
+```json
+...
+"content-metadata": {
+    "presets": {
+        "kitten-images": [{
+            "title": "TRANSLATABLE_TITLE_FOR_GROUP_1",
+            "items": [
+                { 
+                    "aspect": "custom:aspect", 
+                    "properties": "*", 
+                    "editable": false 
+                }
+            ] 
+        }]
+    }
+}
+...
+```
+
+As seen above in the example the `custom:aspect` aspect will always be on read-only mode since these properties are not editable. If the editable is enabled, then these properties will be able to be edited by the user.
+
 ### Displaying all properties
 
 You can list all the properties by simply adding the `includeAll: boolean` to your config. This config will display all the aspects and properties available for that specific file.
@@ -277,6 +304,24 @@ example below shows this with an aspect-oriented config:
             "includeAll": true,
             "exclude": "exif:exif",
             "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
+        }
+    }
+},
+```
+
+### Making aspects and properties read only
+
+Whenever you have properties that you want to protect from users editing their values you can add them to your configuration to make them read only. `readOnlyAspects` will make the whole aspect and its properties non editable. 
+
+If you want to disable the editing for specific properties you will need to add them to the `readOnlyProperties` property. 
+
+```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "readOnlyAspects": ["cm:author"],
+            "readOnlyProperties": ["cm:fileVersion"]
         }
     }
 },

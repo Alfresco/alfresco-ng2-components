@@ -23,4 +23,5 @@ export interface Property {
     defaultValue?: any;
     mandatory: boolean;
     multiValued: boolean;
+    editable?: boolean;
 }

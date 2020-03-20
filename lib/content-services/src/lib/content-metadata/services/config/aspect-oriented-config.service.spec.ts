@@ -222,5 +222,35 @@ describe('AspectOrientedConfigService', () => {
                 });
             });
         });
+
+        it(`should set as readOnly the properties defined in the config inside readOnlyAspects`, () => {
+            const testCase = {
+                name: 'Not existing property',
+                config: {
+                    includeAll: true,
+                    readOnlyAspects: ['berseria'],
+                    readOnlyProperties: ['property3']
+                },
+                expectations: [
+                    {
+                        title: 'Berseria',
+                        properties: [ property1, property2 ]
+                    },
+                    {
+                        title: 'Zestiria',
+                        properties: [ property3, property4 ]
+                    }
+                ]
+            };
+            configService = createConfigService(testCase.config);
+
+            const organisedPropertyGroups = configService.appendAllPreset(propertyGroups);
+
+            expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
+            expect(organisedPropertyGroups[0].properties[0].editable).toBe(false);
+            expect(organisedPropertyGroups[0].properties[1].editable).toBe(false);
+            expect(organisedPropertyGroups[1].properties[0].editable).toBe(false);
+            expect(organisedPropertyGroups[1].properties[1].editable).toBe(undefined);
+        });
     });
 });

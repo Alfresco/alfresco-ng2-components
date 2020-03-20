@@ -21,6 +21,7 @@ export interface LayoutOrientedConfigItem {
     properties: string | string[];
     includeAll?: boolean;
     exclude?: string | string[];
+    editable?: boolean;
 }
 
 export interface LayoutOrientedConfigLayoutBlock {

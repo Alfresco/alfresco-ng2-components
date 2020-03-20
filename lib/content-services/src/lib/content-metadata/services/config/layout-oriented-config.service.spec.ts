@@ -45,9 +45,11 @@ describe('LayoutOrientedConfigService', () => {
                 groupNameToQuery: 'berseria'
             },
             {
-                config: [{ title: 'Deamons', items: [
-                    { aspect: 'zestiria', properties: '*' }, { aspect: 'berseria', properties: '*' }
-                ]}],
+                config: [{
+                    title: 'Deamons', items: [
+                        { aspect: 'zestiria', properties: '*' }, { aspect: 'berseria', properties: '*' }
+                    ]
+                }],
                 expectation: true,
                 groupNameToQuery: 'berseria'
             },
@@ -98,11 +100,14 @@ describe('LayoutOrientedConfigService', () => {
         const property1 = <Property> { name: 'property1' },
             property2 = <Property> { name: 'property2' },
             property3 = <Property> { name: 'property3' },
-            property4 = <Property> { name: 'property4' };
+            property4 = <Property> { name: 'property4' },
+            property5 = <Property> { name: 'property5' },
+            property6 = <Property> { name: 'property6' };
 
         const propertyGroups: PropertyGroupContainer = {
             berseria: { title: 'Berseria', description: '', name: 'berseria', properties: { property1, property2 } },
-            zestiria: { title: 'Zestiria', description: '', name: 'zestiria', properties: { property3, property4 } }
+            zestiria: { title: 'Zestiria', description: '', name: 'zestiria', properties: { property3, property4 } },
+            otherTales: { title: 'Other tales', description: '', name: 'otherTales', properties: { property5, property6 } }
         };
 
         const testCases: TestCase[] = [
@@ -114,118 +119,155 @@ describe('LayoutOrientedConfigService', () => {
             {
                 name: 'First property of a group in one item',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'berseria', properties: [ 'property1' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'berseria', properties: ['property1'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property1 ] }
+                    { title: 'First group', properties: [property1] }
                 ]
             },
             {
                 name: 'Second property of a group in one item',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'berseria', properties: [ 'property2' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'berseria', properties: ['property2'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property2 ] }
+                    { title: 'First group', properties: [property2] }
+                ]
+            },
+            {
+                name: 'Properties with editable flag',
+                config: [
+                    {
+                        title: 'Editable property', items: [
+                            { aspect: 'otherTales', properties: ['property5'], editable: true },
+                            { aspect: 'otherTales', properties: ['property6'], editable: false }
+
+                        ]
+                    }
+                ],
+                expectations: [
+                    { title: 'Editable property', properties: [property5, property6] }
                 ]
             },
             {
                 name: 'More properties from one group in one item',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'berseria', properties: [ 'property2', 'property1' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'berseria', properties: ['property2', 'property1'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property2, property1 ] }
+                    { title: 'First group', properties: [property2, property1] }
                 ]
             },
             {
                 name: 'First property of the second group in one item',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'zestiria', properties: [ 'property4' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'zestiria', properties: ['property4'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property4 ] }
+                    { title: 'First group', properties: [property4] }
                 ]
             },
             {
                 name: 'One-one properties from multiple groups in one item',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'zestiria', properties: [ 'property4' ] },
-                        { aspect: 'berseria', properties: [ 'property1' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'zestiria', properties: ['property4'] },
+                            { aspect: 'berseria', properties: ['property1'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property4, property1 ] }
+                    { title: 'First group', properties: [property4, property1] }
                 ]
             },
             {
                 name: 'Multiple properties mixed from multiple groups in multiple items',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'zestiria', properties: [ 'property4' ] },
-                        { type: 'berseria', properties: [ 'property1' ] }
-                    ]},
-                    { title: 'Second group', items: [
-                        { aspect: 'zestiria', properties: [ 'property3' ] },
-                        { type: 'berseria', properties: [ 'property2', 'property1' ] },
-                        { aspect: 'zestiria', properties: [ 'property4' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'zestiria', properties: ['property4'] },
+                            { type: 'berseria', properties: ['property1'] }
+                        ]
+                    },
+                    {
+                        title: 'Second group', items: [
+                            { aspect: 'zestiria', properties: ['property3'] },
+                            { type: 'berseria', properties: ['property2', 'property1'] },
+                            { aspect: 'zestiria', properties: ['property4'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property4, property1 ] },
-                    { title: 'Second group', properties: [ property3, property2, property1, property4 ] }
+                    { title: 'First group', properties: [property4, property1] },
+                    { title: 'Second group', properties: [property3, property2, property1, property4] }
                 ]
             },
             {
                 name: 'Multiple properties mixed from multiple groups in multiple items with "*"',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'zestiria', properties: '*' },
-                        { type: 'berseria', properties: [ 'property1' ] }
-                    ]},
-                    { title: 'Second group', items: [
-                        { type: 'berseria', properties: [ 'property2', 'property1' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'zestiria', properties: '*' },
+                            { type: 'berseria', properties: ['property1'] }
+                        ]
+                    },
+                    {
+                        title: 'Second group', items: [
+                            { type: 'berseria', properties: ['property2', 'property1'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property3, property4, property1 ] },
-                    { title: 'Second group', properties: [ property2, property1 ] }
+                    { title: 'First group', properties: [property3, property4, property1] },
+                    { title: 'Second group', properties: [property2, property1] }
                 ]
             },
             {
                 name: 'Not existing property',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'zestiria', properties: '*' },
-                        { type: 'berseria', properties: [ 'not-existing-property' ] },
-                        { type: 'berseria', properties: [ 'property2' ] }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'zestiria', properties: '*' },
+                            { type: 'berseria', properties: ['not-existing-property'] },
+                            { type: 'berseria', properties: ['property2'] }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property3, property4, property2 ] }
+                    { title: 'First group', properties: [property3, property4, property2] }
                 ]
             },
             {
                 name: 'Not existing group',
                 config: [
-                    { title: 'First group', items: [
-                        { aspect: 'zestiria', properties: '*' },
-                        { type: 'not-existing-group', properties: '*' },
-                        { type: 'berseria', properties: [ 'property2' ] },
-                        { type: 'not-existing-group', properties: 'not-existing-property' }
-                    ]}
+                    {
+                        title: 'First group', items: [
+                            { aspect: 'zestiria', properties: '*' },
+                            { type: 'not-existing-group', properties: '*' },
+                            { type: 'berseria', properties: ['property2'] },
+                            { type: 'not-existing-group', properties: 'not-existing-property' }
+                        ]
+                    }
                 ],
                 expectations: [
-                    { title: 'First group', properties: [ property3, property4, property2 ] }
+                    { title: 'First group', properties: [property3, property4, property2] }
                 ]
             }
         ];
@@ -238,7 +280,7 @@ describe('LayoutOrientedConfigService', () => {
 
                 expect(organisedPropertyGroups.length).toBe(testCase.expectations.length, 'Group count should match');
                 testCase.expectations.forEach((expectation, i) => {
-                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match' );
+                    expect(organisedPropertyGroups[i].title).toBe(expectation.title, 'Group\'s title should match');
                     expect(organisedPropertyGroups[i].properties.length).toBe(
                         expectation.properties.length,
                         `Property count for "${organisedPropertyGroups[i].title}" group should match.`

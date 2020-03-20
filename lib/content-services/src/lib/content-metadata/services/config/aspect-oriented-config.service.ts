@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
+import { ContentMetadataConfig, OrganisedPropertyGroup, PropertyGroupContainer, Property } from '../../interfaces/content-metadata.interfaces';
 import { getGroup, getProperty } from './property-group-reader';
 
 export class AspectOrientedConfigService implements ContentMetadataConfig {
@@ -43,17 +43,51 @@ export class AspectOrientedConfigService implements ContentMetadataConfig {
     }
 
     public appendAllPreset(propertyGroups: PropertyGroupContainer): OrganisedPropertyGroup[] {
-        const groups =  Object.keys(propertyGroups)
+        const groups = Object.keys(propertyGroups)
             .map((groupName) => {
                 const propertyGroup = propertyGroups[groupName],
                     properties = propertyGroup.properties;
 
+                if (this.isAspectReadOnly(groupName)) {
+                    Object.keys(properties).map((propertyName) => this.setReadOnlyProperty(properties[propertyName]));
+                }
+
                 return Object.assign({}, propertyGroup, {
-                    properties: Object.keys(properties).map((propertyName) => properties[propertyName])
+                    properties: Object.keys(properties).map((propertyName) => {
+                        if (this.isPropertyReadOnly(propertyName)) {
+                            this.setReadOnlyProperty(properties[propertyName]);
+                        }
+                        return properties[propertyName];
+                    })
                 });
             });
 
         return groups;
+    }
+
+    private setReadOnlyProperty(property: Property) {
+        property.editable = false;
+    }
+
+    private isPropertyReadOnly(propertyName: string): boolean {
+        const readOnlyAspects = this.config.readOnlyProperties;
+
+        if (Array.isArray(readOnlyAspects)) {
+            return readOnlyAspects.includes(propertyName);
+        } else {
+            return readOnlyAspects === propertyName;
+        }
+    }
+
+    private isAspectReadOnly(propertyGroupName: string): boolean {
+        const readOnlyAspects = this.config.readOnlyAspects;
+
+        if (Array.isArray(readOnlyAspects)) {
+            return readOnlyAspects.includes(propertyGroupName);
+        } else {
+            return readOnlyAspects === propertyGroupName;
+        }
+
     }
 
     public filterExcludedPreset(propertyGroups: OrganisedPropertyGroup[]): OrganisedPropertyGroup[] {
