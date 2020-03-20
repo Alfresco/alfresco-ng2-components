@@ -140,8 +140,17 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     addValueToList(newListItem: MatChipInputEvent) {
+        const chipInput = newListItem.input;
+        const chipValue = newListItem.value.trim() || '';
+
         if (typeof this.editedValue !== 'string') {
-            this.editedValue.push(newListItem.value);
+            if (chipValue) {
+                this.editedValue.push(chipValue);
+            }
+
+            if (chipInput) {
+                chipInput.value = '';
+            }
         }
     }
 
