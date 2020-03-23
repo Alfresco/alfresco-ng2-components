@@ -820,7 +820,8 @@
         "exif:exif": "*"
       }
     },
-    "multi-value-pipe-separator": ", "
+    "multi-value-pipe-separator": ", ",
+    "multi-value-chips": true
   },
   "sideNav": {
     "expandedSidenav": true,

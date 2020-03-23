@@ -204,10 +204,10 @@ describe('Edit task filters and task list properties', () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setSortFilterDropDown('Priority');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('ASC');
 
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Priority')).toBe(true);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Priority', 'NUMBER')).toBe(true);
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOrderFilterDropDown('DESC');
-            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Priority')).toBe(true);
+            await expect(await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkListIsSorted('DESC', 'Priority', 'NUMBER')).toBe(true);
         });
 
         it('[C307115] Should display tasks sorted by owner when owner is selected from sort dropdown', async () => {
