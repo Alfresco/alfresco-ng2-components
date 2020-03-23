@@ -474,8 +474,14 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.clickObserver.next(dataRowEvent);
     }
 
-    onRowKeyDown(row: DataRow, e: KeyboardEvent) {
-        const event = new CustomEvent('row-keydown', {
+    onRowEnterKeyDown(row: DataRow, e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            this.onKeyboardNavigate(row, e);
+        }
+    }
+
+    onRowKeyUp(row: DataRow, e: KeyboardEvent) {
+        const event = new CustomEvent('row-keyup', {
             detail: {
                 row: row,
                 keyboardEvent: e,
@@ -488,10 +494,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         if (event.defaultPrevented) {
             e.preventDefault();
-        } else {
-            if (e.key === 'Enter') {
-                this.onKeyboardNavigate(row, e);
-            }
         }
     }
 
