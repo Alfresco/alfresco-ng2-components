@@ -206,7 +206,7 @@ export class TaskFilterCloudService {
                     filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateTaskFilters(deletedFilter.appName, key, filters);
                 }
-                return [];
+                return of([]);
             }),
             map(filters => {
                 this.addFiltersToStream(filters);

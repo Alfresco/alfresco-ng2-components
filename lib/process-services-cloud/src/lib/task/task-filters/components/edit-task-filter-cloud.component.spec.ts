@@ -493,5 +493,49 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(dialog.open).toHaveBeenCalled();
             });
         }));
+
+        it('should call restore default filters service on deletion of last filter', async(() => {
+            component.toggleFilterActions = true;
+            spyOn(service, 'deleteFilter').and.returnValue(of([]));
+            const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
+            fixture.detectChanges();
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            stateElement.click();
+            fixture.detectChanges();
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(deleteButton.disabled).toBe(false);
+                deleteButton.click();
+                expect(service.deleteFilter).toHaveBeenCalled();
+                expect(component.action.emit).toHaveBeenCalled();
+                expect(restoreDefaultFiltersSpy).toHaveBeenCalled();
+            });
+        }));
+
+        it('should not call restore default filters service on deletion of first filter', async(() => {
+            component.toggleFilterActions = true;
+            spyOn(service, 'deleteFilter').and.returnValue(of([{ name: 'mock-filter-name'}]));
+            const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
+            fixture.detectChanges();
+            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+            expansionPanel.click();
+            fixture.detectChanges();
+            const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+            stateElement.click();
+            fixture.detectChanges();
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                expect(deleteButton.disabled).toBe(false);
+                deleteButton.click();
+                expect(service.deleteFilter).toHaveBeenCalled();
+                expect(component.action.emit).toHaveBeenCalled();
+                expect(restoreDefaultFiltersSpy).not.toHaveBeenCalled();
+            });
+        }));
     });
 });
