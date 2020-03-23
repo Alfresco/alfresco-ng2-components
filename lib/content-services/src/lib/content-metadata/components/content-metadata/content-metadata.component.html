@@ -11,7 +11,6 @@
             </mat-expansion-panel-header>
 
             <adf-card-view
-                (keydown)="keyDown($event)"
                 [properties]="basicProperties$ | async"
                 [editable]="editable"
                 [displayEmpty]="displayEmpty">
@@ -31,7 +30,6 @@
                         </mat-expansion-panel-header>
 
                         <adf-card-view
-                            (keydown)="keyDown($event)"
                             [properties]="group.properties"
                             [editable]="editable"
                             [displayEmpty]="displayEmpty">
