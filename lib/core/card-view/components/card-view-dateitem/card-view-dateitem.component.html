@@ -1,5 +1,9 @@
-<div class="adf-sr-only" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">{{'CORE.METADATA.ACCESSIBILITY.DATEPICKER' | translate}}</div>
-<div [attr.data-automation-id]="'card-dateitem-label-' + property.key" class="adf-property-label" *ngIf="showProperty() || isEditable()">{{ property.label | translate }}</div>
+<div
+    *ngIf="showProperty() || isEditable()"
+    [attr.data-automation-id]="'card-dateitem-label-' + property.key"
+    class="adf-property-label"
+>{{ property.label | translate }}</div>
+
 <div class="adf-property-value">
     <span *ngIf="!isEditable()" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
@@ -12,7 +16,10 @@
                 class="adf-datepicker-toggle"
                 [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
                 (click)="showDatePicker()">
-                <span [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key" *ngIf="showProperty(); else elseEmptyValueBlock">{{ property.displayValue }}</span>
+                <span
+                    *ngIf="showProperty(); else elseEmptyValueBlock"
+                    [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key"
+                >{{ property.displayValue }}</span>
             </span>
 
             <mat-icon *ngIf="showClearAction()"
@@ -24,6 +31,7 @@
             </mat-icon>
 
             <mat-datetimepicker-toggle
+                [attr.tabindex]="-1"
                 [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
                 [attr.data-automation-id]="'datepickertoggle-' + property.key"
                 [for]="datetimePicker">
@@ -31,10 +39,10 @@
         </div>
 
         <input class="adf-invisible-date-input"
+            [attr.tabIndex]="-1"
             [matDatetimepicker]="datetimePicker"
             [value]="valueDate"
-            (dateChange)="onDateChanged($event)"
-            [attr.aria-describedby]="'card-' + property.type + '-value-' + property.key">
+            (dateChange)="onDateChanged($event)">
 
         <mat-datetimepicker #datetimePicker
             [type]="property.type"
