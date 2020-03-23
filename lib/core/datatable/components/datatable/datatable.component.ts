@@ -474,8 +474,8 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.clickObserver.next(dataRowEvent);
     }
 
-    onRowKeyUp(row: DataRow, e: KeyboardEvent) {
-        const event = new CustomEvent('row-keyup', {
+    onRowKeyDown(row: DataRow, e: KeyboardEvent) {
+        const event = new CustomEvent('row-keydown', {
             detail: {
                 row: row,
                 keyboardEvent: e,
