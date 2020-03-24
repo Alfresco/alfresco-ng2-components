@@ -377,6 +377,39 @@ describe('ViewerComponent', () => {
         expect(component.fileTitle).toBe('file2');
     }));
 
+    it('should update node only if node name changed', fakeAsync(() => {
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValues(
+            Promise.resolve(new NodeEntry({ entry: { name: 'file1', content: {} } }))
+        );
+        spyOn(alfrescoApiService.contentApi, 'getContentUrl').and.returnValues('http://iam-fake.url');
+        spyOn(component, 'getViewerTypeByExtension').and.returnValue('pdf');
+
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.nodeId = 'id1';
+        fixture.detectChanges();
+        component.ngOnChanges();
+        tick();
+
+        expect(component.fileTitle).toBe('file1');
+
+        alfrescoApiService.nodeUpdated.next(<any> { id: 'id1', name: 'file2' });
+        fixture.detectChanges();
+        expect(component.fileTitle).toBe('file2');
+
+        alfrescoApiService.nodeUpdated.next(<any> { id: 'id1', name: 'file3' });
+        fixture.detectChanges();
+        expect(component.fileTitle).toBe('file3');
+
+        alfrescoApiService.nodeUpdated.next(<any> { id: 'id2', name: 'file4' });
+        fixture.detectChanges();
+        expect(component.fileTitle).toBe('file3');
+        expect(component.nodeId).toBe('id1');
+    }));
+
     describe('Viewer Example Component Rendering', () => {
 
         it('should use custom toolbar', (done) => {
