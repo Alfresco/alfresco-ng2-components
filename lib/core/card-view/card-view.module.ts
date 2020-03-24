@@ -29,7 +29,8 @@ import {
     MatSelectModule,
     MatChipsModule,
     MatMenuModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
 } from '@angular/material';
 import { MatDatetimepickerModule, MatNativeDatetimeModule } from '@mat-datetimepicker/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -64,7 +65,8 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
         MatMenuModule,
         MatCardModule,
         MatDatetimepickerModule,
-        MatNativeDatetimeModule
+        MatNativeDatetimeModule,
+        MatTooltipModule
     ],
     declarations: [
         CardViewComponent,

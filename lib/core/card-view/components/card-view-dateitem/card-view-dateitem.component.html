@@ -1,54 +1,53 @@
-<div
-    *ngIf="showProperty() || isEditable()"
-    [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-    class="adf-property-label"
->{{ property.label | translate }}</div>
+<div *ngIf="showProperty() || isEditable()"
+     [attr.data-automation-id]="'card-dateitem-label-' + property.key"
+     class="adf-property-label">{{ property.label | translate }}</div>
 
 <div class="adf-property-value">
-    <span *ngIf="!isEditable()" [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
+    <span *ngIf="!isEditable()"
+          [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
-            <span *ngIf="showProperty()">{{ property.displayValue }}</span>
+            <span *ngIf="showProperty()"
+                  (dblclick)="copyToClipboard(property.displayValue)"
+                  matTooltipShowDelay="1000"
+                  [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate">{{ property.displayValue }}</span>
         </span>
     </span>
-    <div *ngIf="isEditable()" class="adf-dateitem-editable">
+    <div *ngIf="isEditable()"
+         class="adf-dateitem-editable">
         <div class="adf-dateitem-editable-controls">
-            <span
-                class="adf-datepicker-toggle"
-                [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
-                (click)="showDatePicker()">
-                <span
-                    *ngIf="showProperty(); else elseEmptyValueBlock"
-                    [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key"
-                >{{ property.displayValue }}</span>
+            <span class="adf-datepicker-toggle"
+                  [attr.data-automation-id]="'datepicker-label-toggle-' + property.key"
+                  (click)="showDatePicker()">
+                <span *ngIf="showProperty(); else elseEmptyValueBlock"
+                      [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">{{ property.displayValue }}</span>
             </span>
 
             <mat-icon *ngIf="showClearAction()"
-                class="adf-date-reset-icon"
-                (click)="onDateClear()"
-                [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
-                [attr.data-automation-id]="'datepicker-date-clear-' + property.key">
+                      class="adf-date-reset-icon"
+                      (click)="onDateClear()"
+                      [attr.title]="'CORE.METADATA.ACTIONS.CLEAR' | translate"
+                      [attr.data-automation-id]="'datepicker-date-clear-' + property.key">
                 clear
             </mat-icon>
 
-            <mat-datetimepicker-toggle
-                [attr.tabindex]="-1"
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                [attr.data-automation-id]="'datepickertoggle-' + property.key"
-                [for]="datetimePicker">
+            <mat-datetimepicker-toggle [attr.tabindex]="-1"
+                                       [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                                       [attr.data-automation-id]="'datepickertoggle-' + property.key"
+                                       [for]="datetimePicker">
             </mat-datetimepicker-toggle>
         </div>
 
         <input class="adf-invisible-date-input"
-            [attr.tabIndex]="-1"
-            [matDatetimepicker]="datetimePicker"
-            [value]="valueDate"
-            (dateChange)="onDateChanged($event)">
+               [attr.tabIndex]="-1"
+               [matDatetimepicker]="datetimePicker"
+               [value]="valueDate"
+               (dateChange)="onDateChanged($event)">
 
         <mat-datetimepicker #datetimePicker
-            [type]="property.type"
-            timeInterval="5"
-            [attr.data-automation-id]="'datepicker-' + property.key"
-            [startAt]="valueDate">
+                            [type]="property.type"
+                            timeInterval="5"
+                            [attr.data-automation-id]="'datepicker-' + property.key"
+                            [startAt]="valueDate">
         </mat-datetimepicker>
     </div>
     <ng-template #elseEmptyValueBlock>
