@@ -20,13 +20,15 @@ import { browser } from 'protractor';
 import {
     AppListCloudPage,
     LoginSSOPage,
-    StartProcessCloudPage,
     StringUtil,
     TaskFormCloudComponent,
     ProcessCloudWidgetPage,
     ViewerPage,
     UploadActions,
-    ContentNodeSelectorDialogPage
+    ContentNodeSelectorDialogPage,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    ApiService
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -41,17 +43,18 @@ describe('Process Task - Attache content file', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const processCloudWidget = new ProcessCloudWidgetPage();
-    const startProcessPage = new StartProcessCloudPage();
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
     const viewerPage = new ViewerPage();
-
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const processDefinitionName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
     const uploadWidgetId = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.uploadSingleMultiple.widgets.contentMultipleAttachFileId;
     const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
-    const processName = StringUtil.generateRandomString(10);
     const folderName = StringUtil.generateRandomString(5);
+
+    let processDefinitionService: ProcessDefinitionsService;
+    let processInstancesService: ProcessInstancesService;
     let uploadedFolder: any;
+    let processInstance: any;
 
     const pdfFileOne = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -63,13 +66,19 @@ describe('Process Task - Attache content file', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     };
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.config.bpmHost
-    });
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+    this.alfrescoJsApi = new AlfrescoApi({ provider: 'ECM', hostEcm: browser.params.config.bpmHost });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
+
+        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
+
+        processInstancesService = new ProcessInstancesService(apiService);
+        processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
@@ -83,14 +92,13 @@ describe('Process Task - Attache content file', () => {
     it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
-        await processCloudDemoPage.openNewProcessForm();
-        await startProcessPage.startProcessWithProcessDefinition(processName, processDefinitionName);
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
-        await processCloudDemoPage.processListCloudComponent().selectRow(processName);
+
+        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
+        await processCloudDemoPage.processListCloudComponent().selectRowById(processInstance.entry.id);
 
         await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
@@ -120,7 +128,7 @@ describe('Process Task - Attache content file', () => {
         await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
 
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
-        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
+        await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
     });
 
     async function viewAttachedFile(contentUploadWidget, fileName: string) {
