@@ -244,6 +244,8 @@ In layout oriented configuration, the metadata property title can be overridden 
   }
 ```
 
+Note: The desired property title should be valid. otherwise it will take default value.
+
 ![custom-ptoperty-title](../../docassets/images/content-meta-data-custom-ptoperty-title.png)
 
 The result of this config would be two accordion groups with the following properties:

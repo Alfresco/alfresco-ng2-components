@@ -105,15 +105,10 @@ export class LayoutOrientedConfigService implements ContentMetadataConfig {
     }
 
     private setPropertyTitle(item: Property | Property[], property: Property): Property | Property[] {
-        let properties;
-        if (Array.isArray(item)) {
-            properties =  [ ...item ];
-            const filteredProperty = properties.find((_item) => _item.name === property.name);
-            if (filteredProperty && !!property.title) { filteredProperty.title = property.title; }
-        } else if (item) {
-            properties = { ...item, ...(item.name === property.name && !!property.title) && { title: property.title } };
+        if (!Array.isArray(item)) {
+            return { ...item, ...(item.name === property.name && !!property.title) && { title: property.title } };
         }
-        return properties;
+        return item;
     }
 
     private flattenItems(items) {
