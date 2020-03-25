@@ -352,7 +352,6 @@ describe('ContentMetadataComponent', () => {
             expect(defaultProp.componentInstance.expanded).toBeTruthy();
             expect(exifProp.componentInstance.expanded).toBeFalsy();
             expect(customProp.componentInstance.expanded).toBeFalsy();
-
         }));
 
         it('should not expand anything if input is wrong', async(() => {
@@ -369,6 +368,35 @@ describe('ContentMetadataComponent', () => {
             expect(customProp.componentInstance.expanded).toBeFalsy();
 
         }));
+    });
+
+    describe('events', () => {
+        it('should not propagate the event on left arrows press', () => {
+            fixture.detectChanges();
+            const event = { keyCode: 37, stopPropagation: () => {} };
+            spyOn(event, 'stopPropagation').and.stub();
+            const element = fixture.debugElement.query(By.css('adf-card-view'));
+            element.triggerEventHandler('keydown', event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+        });
+
+        it('should not propagate the event on right arrows press', () => {
+            fixture.detectChanges();
+            const event = { keyCode: 39, stopPropagation: () => {} };
+            spyOn(event, 'stopPropagation').and.stub();
+            const element = fixture.debugElement.query(By.css('adf-card-view'));
+            element.triggerEventHandler('keydown', event);
+            expect(event.stopPropagation).toHaveBeenCalled();
+        });
+
+        it('should propagate the event on other keys press', () => {
+            fixture.detectChanges();
+            const event = { keyCode: 40, stopPropagation: () => {} };
+            spyOn(event, 'stopPropagation').and.stub();
+            const element = fixture.debugElement.query(By.css('adf-card-view'));
+            element.triggerEventHandler('keydown', event);
+            expect(event.stopPropagation).not.toHaveBeenCalled();
+        });
     });
 });
 

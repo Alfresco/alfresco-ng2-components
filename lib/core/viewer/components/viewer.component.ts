@@ -31,6 +31,7 @@ import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
 import { ViewUtilService } from '../services/view-util.service';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-viewer',
@@ -249,7 +250,9 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions.push(
-            this.apiService.nodeUpdated.subscribe((node) => this.onNodeUpdated(node))
+            this.apiService.nodeUpdated.pipe(
+                filter((node) => node && node.id === this.nodeId && node.name !== this.fileName)
+            ).subscribe((node) => this.onNodeUpdated(node))
         );
 
         this.loadExtensions();
