@@ -24,6 +24,7 @@ import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator, CardViewItemIntValidator } from '@alfresco/adf-core';
 import { MatChipsModule } from '@angular/material';
+import { ClipboardService } from '../../../clipboard/clipboard.service';
 
 describe('CardViewTextItemComponent', () => {
 
@@ -328,6 +329,22 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toBe(expectedText);
         });
 
+        it('should copy value to clipboard on double click', () => {
+            const clipboardService = TestBed.get(ClipboardService);
+            spyOn(clipboardService, 'copyContentToClipboard');
+
+            component.property.value = 'myValueToCopy';
+            component.property.icon = 'FAKE_ICON';
+            component.editable = false;
+            fixture.detectChanges();
+
+            const doubleClickEl = fixture.debugElement.query(By.css('span[class*="adf-textitem-value"]'));
+            doubleClickEl.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+
+            fixture.detectChanges();
+            expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('myValueToCopy', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+        });
+
     });
 
     describe('Update', () => {
@@ -495,7 +512,7 @@ describe('CardViewTextItemComponent', () => {
             expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
 
-            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText  });
+            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText });
             fixture.detectChanges();
 
             expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);

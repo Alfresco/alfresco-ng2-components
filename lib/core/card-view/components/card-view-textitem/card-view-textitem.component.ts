@@ -21,6 +21,8 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { AppConfigService } from '../../../app-config/app-config.service';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent } from '@angular/material';
+import { ClipboardService } from '../../../clipboard/clipboard.service';
+import { TranslationService } from '../../../services/translation.service';
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -48,7 +50,9 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     useChipsForMultiValueProperty: boolean;
 
     constructor(cardViewUpdateService: CardViewUpdateService,
-                private appConfig: AppConfigService) {
+                private appConfig: AppConfigService,
+                private clipboardService: ClipboardService,
+                private translateService: TranslationService) {
         super(cardViewUpdateService);
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
         this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips') || CardViewTextItemComponent.DEFAULT_USE_CHIPS;
@@ -164,6 +168,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         } else {
             this.cardViewUpdateService.clicked(this.property);
         }
+    }
+
+    copyToClipboard(valueToCopy: string) {
+        const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+        this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
     }
 
     get isChipViewEnabled(): boolean {

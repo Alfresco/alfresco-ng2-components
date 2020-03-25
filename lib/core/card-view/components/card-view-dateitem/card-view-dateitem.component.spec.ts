@@ -23,6 +23,7 @@ import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { AppConfigService } from '@alfresco/adf-core';
 
 describe('CardViewDateItemComponent', () => {
@@ -218,6 +219,20 @@ describe('CardViewDateItemComponent', () => {
             }
         );
     }));
+
+    it('should copy value to clipboard on double click', () => {
+        const clipboardService = TestBed.get(ClipboardService);
+        spyOn(clipboardService, 'copyContentToClipboard');
+
+        component.editable = false;
+        fixture.detectChanges();
+
+        const doubleClickEl = fixture.debugElement.query(By.css(`[data-automation-id="card-dateitem-${component.property.key}"] span`));
+        doubleClickEl.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
+
+        fixture.detectChanges();
+        expect(clipboardService.copyContentToClipboard).toHaveBeenCalledWith('Jul 10, 2017', 'CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+    });
 
     describe('clear icon', () => {
         it('should render the clear icon in case of displayClearAction:true', () => {

@@ -7,7 +7,11 @@
               [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <span *ngIf="!isChipViewEnabled; else chipListTemplate">
                 <span *ngIf="showProperty()"
-                      [ngClass]="property.multiline?'adf-textitem-multiline':'adf-textitem-scroll'">
+                      [ngClass]="property.multiline?'adf-textitem-multiline':'adf-textitem-scroll'"
+                      (dblclick)="copyToClipboard(property.displayValue)"
+                      class="adf-textitem-value"
+                      matTooltipShowDelay="1000"
+                      [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate">
                     {{ property.displayValue }}
                 </span>
             </span>

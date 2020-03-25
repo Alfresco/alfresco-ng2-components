@@ -30,6 +30,8 @@ import { AppConfigService } from '../../../app-config/app-config.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BaseCardView } from '../base-card-view';
+import { ClipboardService } from '../../../clipboard/clipboard.service';
+import { TranslationService } from '../../../services/translation.service';
 
 @Component({
     providers: [
@@ -67,7 +69,9 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     constructor(cardViewUpdateService: CardViewUpdateService,
                 private dateAdapter: DateAdapter<Moment>,
                 private userPreferencesService: UserPreferencesService,
-                private appConfig: AppConfigService) {
+                private appConfig: AppConfigService,
+                private clipboardService: ClipboardService,
+                private translateService: TranslationService) {
         super(cardViewUpdateService);
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
     }
@@ -127,4 +131,8 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
         this.property.default = null;
     }
 
+    copyToClipboard(valueToCopy: string) {
+        const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+        this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+    }
 }
