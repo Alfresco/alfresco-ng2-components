@@ -20,6 +20,7 @@ import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 
 export class ContentNodeSelectorDialogPage {
     dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
@@ -31,6 +32,7 @@ export class ContentNodeSelectorDialogPage {
     moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
 
     contentList: DocumentListPage = new DocumentListPage(this.dialog);
+    dataTable: DataTableComponentPage = this.contentList.dataTablePage();
     siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
 
     async checkDialogIsDisplayed(): Promise<void> {
@@ -90,7 +92,7 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async numberOfResultsDisplayed(): Promise<number> {
-        return this.contentList.dataTablePage().numberOfRows();
+        return this.dataTable.numberOfRows();
     }
 
     async typeIntoNodeSelectorSearchField(text): Promise<void> {
@@ -99,28 +101,28 @@ export class ContentNodeSelectorDialogPage {
     }
 
     async clickContentNodeSelectorResult(name): Promise<void> {
-        await this.contentList.dataTablePage().clickRowByContent(name);
+        await this.dataTable.clickRowByContent(name);
     }
 
     async doubleClickContentNodeSelectorResult(name): Promise<void> {
         // First click to select from search mode and second click to actually open node
-        await this.contentList.dataTablePage().doubleClickRowByContent(name);
-        await this.contentList.dataTablePage().doubleClickRowByContent(name);
+        await this.dataTable.doubleClickRowByContent(name);
+        await this.dataTable.doubleClickRowByContent(name);
     }
 
-    async attachFileFromContentNode(folderName: string, fileName: string) {
+    async attachFileFromContentNode(folderName: string, fileName: string): Promise<void> {
         await this.checkDialogIsDisplayed();
         await this.checkSearchInputIsDisplayed();
         await this.checkCancelButtonIsDisplayed();
 
-        await this.contentList.dataTablePage().waitForTableBody();
-        await this.contentList.dataTablePage().waitTillContentLoaded();
-        await this.contentList.dataTablePage().checkRowContentIsDisplayed(folderName);
-        await this.contentList.dataTablePage().doubleClickRowByContent(folderName);
+        await this.dataTable.waitForTableBody();
+        await this.dataTable.waitTillContentLoaded();
+        await this.dataTable.checkRowContentIsDisplayed(folderName);
+        await this.dataTable.doubleClickRowByContent(folderName);
 
-        await this.contentList.dataTablePage().waitForTableBody();
-        await this.contentList.dataTablePage().waitTillContentLoaded();
-        await this.contentList.dataTablePage().checkRowContentIsDisplayed(fileName);
+        await this.dataTable.waitForTableBody();
+        await this.dataTable.waitTillContentLoaded();
+        await this.dataTable.checkRowContentIsDisplayed(fileName);
 
         await this.clickContentNodeSelectorResult(fileName);
         await this.checkCopyMoveButtonIsEnabled();

@@ -34,7 +34,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 
-describe('Process Task - Attache content file', () => {
+describe('Process Task - Attach content file', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -131,7 +131,7 @@ describe('Process Task - Attache content file', () => {
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
     });
 
-    async function viewAttachedFile(contentUploadWidget, fileName: string) {
+    async function viewAttachedFile(contentUploadWidget, fileName: string): Promise<void> {
         await contentUploadWidget.checkFileIsAttached(fileName);
         await contentUploadWidget.viewFile(fileName);
 
