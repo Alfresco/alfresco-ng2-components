@@ -16,7 +16,12 @@
  */
 
 import { LayoutOrientedConfigService } from './layout-oriented-config.service';
-import { LayoutOrientedConfig, Property, OrganisedPropertyGroup, PropertyGroupContainer } from '../../interfaces/content-metadata.interfaces';
+import {
+    LayoutOrientedConfig,
+    Property,
+    OrganisedPropertyGroup,
+    PropertyGroupContainer
+} from '../../interfaces/content-metadata.interfaces';
 
 describe('LayoutOrientedConfigService', () => {
 
@@ -269,7 +274,32 @@ describe('LayoutOrientedConfigService', () => {
                 expectations: [
                     { title: 'First group', properties: [property3, property4, property2] }
                 ]
+            },
+            {
+                name: 'Custom Title',
+                config: [
+                    {
+                        title: 'First group',
+                        items: [
+                            { aspect: 'zestiria', properties: 'property3' },
+                            { type: 'berseria', properties: ['property2', <any> { title: 'Custom title', name: 'property1' }] },
+                            { type: 'otherTales', properties: [<any> { title: 'Custom title', name: 'property5' }] }
+                        ]
+                    }
+                ],
+                expectations: [
+                    {
+                        title: 'First group',
+                        properties: [
+                            property3,
+                            property2,
+                            <Property> { name: 'property1', title: 'Custom title', editable: true },
+                            <Property> { name: 'property5', title: 'Custom title', editable: true }
+                        ]
+                    }
+                ]
             }
+
         ];
 
         testCases.forEach((testCase) => {
@@ -287,7 +317,7 @@ describe('LayoutOrientedConfigService', () => {
                     );
 
                     expectation.properties.forEach((property, j) => {
-                        expect(organisedPropertyGroups[i].properties[j]).toBe(property, `Property should match ${property.name}`);
+                        expect(organisedPropertyGroups[i].properties[j]).toEqual(property, `Property should match ${property.name}`);
                     });
                 });
             });
