@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ApiService } from '../api.service';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { Logger } from '../../utils/logger';
 
 export class ModelsActions {
 
-    api: ApiService;
+    api: AlfrescoApi;
 
-    constructor(api: ApiService) {
+    constructor(api: AlfrescoApi) {
         this.api = api;
     }
 
     async deleteVersionModel(modelId) {
         try {
-            return this.api.apiService.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+            return this.api.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
         } catch (error) {
             Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -35,7 +35,7 @@ export class ModelsActions {
 
     async deleteEntireModel(modelId) {
         try {
-            return this.api.apiService.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+            return this.api.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
         } catch (error) {
             Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
