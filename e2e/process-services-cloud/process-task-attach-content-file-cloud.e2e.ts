@@ -89,6 +89,10 @@ describe('Process Task - Attach content file', () => {
         await appListCloudComponent.checkApsContainer();
     });
 
+    afterAll(async () => {
+        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+    });
+
     it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
@@ -139,8 +143,4 @@ describe('Process Task - Attach content file', () => {
         await viewerPage.checkFileNameIsDisplayed(fileName);
         await viewerPage.clickCloseButton();
     }
-
-    afterAll(async () => {
-        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-    });
 });
