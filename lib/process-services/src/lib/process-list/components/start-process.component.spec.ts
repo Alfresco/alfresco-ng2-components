@@ -193,6 +193,33 @@ describe('StartFormComponent', () => {
                     expect(component.values.file[0].id).toBe(1234);
                 });
             }));
+
+            it('if values in input is a collection of nodes should be linked in the process service', async(() => {
+
+                component.values = {};
+                component.values['file'] = [
+                    {
+                        isFile: true,
+                        name: 'example-file-1'
+                    },
+                    {
+                        isFile: true,
+                        name: 'example-fil-2'
+                    },
+                    {
+                        isFile: true,
+                        name: 'example-file-3'
+                    }
+                ];
+
+                component.moveNodeFromCStoPS();
+
+                fixture.whenStable().then(() => {
+                    expect(component.values.file.length).toBe(3);
+                    expect(component.values.file[0].id).toBe(1234);
+                    expect(component.values.file[1].id).toBe(1234);
+                });
+            }));
         });
     });
 
