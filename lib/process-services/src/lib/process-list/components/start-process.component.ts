@@ -214,16 +214,12 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
         for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
-                const currentValue = this.values[key] instanceof Array ? this.values[key] : [this.values[key]];
+                const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue.filter((value: any) => value && value.isFile)
-                                             .map((content: MinimalNode) => this.applyAlfrescoNode(content, accountIdentifier));
+                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => this.values[key] = [...res] );
             }
         }
-    }
-
-    private applyAlfrescoNode(value: MinimalNode, accountIdentifier: string): Observable<RelatedContentRepresentation> {
-        return this.activitiContentService.applyAlfrescoNode(value, null, accountIdentifier);
     }
 
     startProcess(outcome?: string) {
