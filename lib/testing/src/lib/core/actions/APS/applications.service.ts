@@ -35,7 +35,7 @@ export class ApplicationService {
     }
 
     async importPublishDeployApp(appFileLocation, option = {}) {
-        try{
+        try {
             const appCreated = await this.importApplication(appFileLocation, option);
             const publishApp = await this.api.apiService.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
             await this.api.apiService.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
