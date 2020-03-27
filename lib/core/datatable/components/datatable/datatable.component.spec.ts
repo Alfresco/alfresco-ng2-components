@@ -297,6 +297,34 @@ describe('DataTable', () => {
         expect(rows[1].getValue('name')).toEqual('test2');
     });
 
+    it('should double click if keydown "enter key" on row', () => {
+        const event = new KeyboardEvent('keydown', {
+            code: 'Enter',
+            key: 'Enter'
+        } as KeyboardEventInit );
+        const dataRows =
+            [ { name: 'test1'}, { name: 'test2' } ];
+
+        dataTable.data = new ObjectDataTableAdapter([],
+            [new ObjectDataColumn({ key: 'name' })]
+        );
+
+        dataTable.ngOnChanges({
+            rows: new SimpleChange(null, dataRows, false)
+        });
+
+        fixture.detectChanges();
+        dataTable.ngAfterViewInit();
+
+        const rowElement = document.querySelectorAll('.adf-datatable-body .adf-datatable-row')[0];
+
+        spyOn(dataTable.rowDblClick, 'emit');
+
+        rowElement.dispatchEvent(event);
+
+        expect(dataTable.rowDblClick.emit).toHaveBeenCalled();
+    });
+
     it('should set custom sort order', () => {
         const dataSortObj = new DataSorting('dummyName', 'asc');
         const dataRows =
