@@ -71,16 +71,12 @@ describe('Process Task - Attach content file', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-
         await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
-
         processInstancesService = new ProcessInstancesService(apiService);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
