@@ -28,10 +28,11 @@ import { ProcessDefinitionRepresentation } from './../models/process-definition.
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessService } from './../services/process.service';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, forkJoin } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { StartFormComponent } from '../../form';
+import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-start-process',
@@ -213,13 +214,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
         for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
-                const currentValue = this.values[key];
-
-                if (currentValue.isFile) {
-                    this.activitiContentService.applyAlfrescoNode(currentValue, null, accountIdentifier).subscribe((res) => {
-                        this.values[key] = [res];
-                    });
-                }
+                const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
+                const contents = currentValue.filter((value: any) => value && value.isFile)
+                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
+                forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => this.values[key] = [...res] );
             }
         }
     }

@@ -44,6 +44,7 @@ describe('StartFormComponent', () => {
     let getDefinitionsSpy: jasmine.Spy;
     let getStartFormDefinitionSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
+    let applyAlfrescoNodeSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -62,7 +63,7 @@ describe('StartFormComponent', () => {
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
         getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
-        spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
+        applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
     });
 
     afterEach(() => {
@@ -191,6 +192,35 @@ describe('StartFormComponent', () => {
 
                 fixture.whenStable().then(() => {
                     expect(component.values.file[0].id).toBe(1234);
+                    expect(applyAlfrescoNodeSpy).toHaveBeenCalled();
+                });
+            }));
+
+            it('if values in input is a collection of nodes should be linked in the process service', async(() => {
+
+                component.values = {};
+                component.values['file'] = [
+                    {
+                        isFile: true,
+                        name: 'example-file-1'
+                    },
+                    {
+                        isFile: true,
+                        name: 'example-fil-2'
+                    },
+                    {
+                        isFile: true,
+                        name: 'example-file-3'
+                    }
+                ];
+
+                component.moveNodeFromCStoPS();
+
+                fixture.whenStable().then(() => {
+                    expect(component.values.file.length).toBe(3);
+                    expect(component.values.file[0].id).toBe(1234);
+                    expect(component.values.file[1].id).toBe(1234);
+                    expect(applyAlfrescoNodeSpy).toHaveBeenCalledTimes(3);
                 });
             }));
         });
