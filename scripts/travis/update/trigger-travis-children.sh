@@ -2,7 +2,8 @@
 
 eval repos=( "alfresco-modeler-app"
     "alfresco-process-workspace-app"
-    "alfresco-admin-app")
+    "alfresco-admin-app"
+    "alfresco-content-app")
 
 if [ "$#" -lt 3 ] || [ "$#" -ge 7 ]; then
   echo "Wrong number of arguments $# to trigger-travis.sh; run like:"
