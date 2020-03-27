@@ -17,7 +17,7 @@
 
 /* tslint:disable:no-input-rename  */
 
-import { ContentService } from '@alfresco/adf-core';
+import { DownloadService } from '@alfresco/adf-core';
 import { Directive, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { ProcessService } from './../services/process.service';
 
@@ -57,14 +57,11 @@ export class ProcessAuditDirective implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    public audit: any;
-
     /**
-     *
-     * @param translateService
+     * @param downloadService
      * @param processListService
      */
-    constructor(private contentService: ContentService,
+    constructor(private downloadService: DownloadService,
                 private processListService: ProcessService) {
     }
 
@@ -75,10 +72,7 @@ export class ProcessAuditDirective implements OnChanges {
     }
 
     isValidType() {
-        if (this.format && (this.isJsonFormat() || this.isPdfFormat())) {
-            return true;
-        }
-        return false;
+        return this.format && (this.isJsonFormat() || this.isPdfFormat());
     }
 
     setDefaultFormatType(): void {
@@ -92,11 +86,10 @@ export class ProcessAuditDirective implements OnChanges {
         if (this.isPdfFormat()) {
             this.processListService.fetchProcessAuditPdfById(this.processId).subscribe(
                 (blob: Blob) => {
-                    this.audit = blob;
                     if (this.download) {
-                        this.contentService.downloadBlob(this.audit, this.fileName + '.pdf');
+                        this.downloadService.downloadBlob(blob, this.fileName + '.pdf');
                     }
-                    this.clicked.emit({ format: this.format, value: this.audit, fileName: this.fileName });
+                    this.clicked.emit({ format: this.format, value: blob, fileName: this.fileName });
                 },
                 (err) => {
                     this.error.emit(err);
@@ -104,8 +97,7 @@ export class ProcessAuditDirective implements OnChanges {
         } else {
             this.processListService.fetchProcessAuditJsonById(this.processId).subscribe(
                 (res) => {
-                    this.audit = res;
-                    this.clicked.emit({ format: this.format, value: this.audit, fileName: this.fileName });
+                    this.clicked.emit({ format: this.format, value: res, fileName: this.fileName });
                 },
                 (err) => {
                     this.error.emit(err);
