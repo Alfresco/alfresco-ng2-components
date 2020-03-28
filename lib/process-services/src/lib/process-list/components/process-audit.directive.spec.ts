@@ -17,32 +17,31 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ProcessService } from './../services/process.service';
 import { ProcessAuditDirective } from './process-audit.directive';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
-
-declare let jasmine: any;
+import { setupTestBed, CoreModule, DownloadService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-basic-button',
     template: `
     <button id="auditButton"
         adf-process-audit
-        [process-id]="currentProcessId"
+        [process-id]="1234"
         [download]="download"
         [fileName]="fileName"
         [format]="format"
+        (error)="onAuditError($event)"
         (clicked)="onAuditClick($event)">My button
     </button>`
 })
 class BasicButtonComponent {
-
     download: boolean = false;
     fileName: string;
     format: string;
 
     onAuditClick() {}
+    onAuditError() {}
 }
 
 describe('ProcessAuditDirective', () => {
@@ -68,6 +67,7 @@ describe('ProcessAuditDirective', () => {
             'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
         return new Blob([pdfData], {type: 'application/pdf'});
     }
+    const blob = createFakePdfBlob();
 
     setupTestBed({
         imports: [
@@ -84,18 +84,13 @@ describe('ProcessAuditDirective', () => {
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
         service = TestBed.get(ProcessService);
-
-        jasmine.Ajax.install();
     });
 
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
+    afterEach(() => fixture.destroy());
 
     it('should fetch the pdf Blob when the format is pdf', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'pdf';
-        const blob = createFakePdfBlob();
         spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(of(blob));
         spyOn(component, 'onAuditClick').and.callThrough();
 
@@ -109,7 +104,40 @@ describe('ProcessAuditDirective', () => {
         });
 
         button.click();
+    }));
 
+    it('should download the pdf Blob when the format is pdf', fakeAsync(() => {
+        component.fileName = 'FakeAuditName';
+        component.download = true;
+        const downloadService = TestBed.get(DownloadService);
+        spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(of(blob));
+        spyOn(downloadService, 'downloadBlob').and.stub();
+
+        fixture.detectChanges();
+        const button = fixture.nativeElement.querySelector('#auditButton');
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(downloadService.downloadBlob).toHaveBeenCalledWith(blob, 'FakeAuditName.pdf');
+        });
+
+        button.click();
+    }));
+
+    it('should throw error if down audit failed', fakeAsync(() => {
+        const expectedError = 'Failed to get audit';
+        spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(throwError(expectedError));
+        spyOn(component, 'onAuditError').and.stub();
+
+        fixture.detectChanges();
+        const button = fixture.nativeElement.querySelector('#auditButton');
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.onAuditError).toHaveBeenCalledWith(expectedError);
+        });
+
+        button.click();
     }));
 
     it('should fetch the json info when the format is json', fakeAsync(() => {
@@ -145,13 +173,11 @@ describe('ProcessAuditDirective', () => {
         });
 
         button.click();
-
     }));
 
     it('should fetch the pdf Blob as default when the format is UNKNOW', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.format = 'fakeFormat';
-        const blob = createFakePdfBlob();
         spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(of(blob));
         spyOn(component, 'onAuditClick').and.callThrough();
 
@@ -165,6 +191,5 @@ describe('ProcessAuditDirective', () => {
         });
 
         button.click();
-
     }));
 });
