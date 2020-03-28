@@ -106,7 +106,7 @@ describe('ProcessAuditDirective', () => {
         button.click();
     }));
 
-    it('should download the pdf Blob when the format is pdf', fakeAsync(() => {
+    it('should download the audit in PDF format (default mode)', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.download = true;
         const downloadService = TestBed.get(DownloadService);
@@ -124,7 +124,7 @@ describe('ProcessAuditDirective', () => {
         button.click();
     }));
 
-    it('should throw error if down audit failed', fakeAsync(() => {
+    it('should throw error if download audit failed', fakeAsync(() => {
         const expectedError = 'Failed to get audit';
         spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(throwError(expectedError));
         spyOn(component, 'onAuditError').and.stub();

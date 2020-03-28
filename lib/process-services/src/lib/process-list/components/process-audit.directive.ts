@@ -91,17 +91,11 @@ export class ProcessAuditDirective implements OnChanges {
                     }
                     this.clicked.emit({ format: this.format, value: blob, fileName: this.fileName });
                 },
-                (err) => {
-                    this.error.emit(err);
-                });
+                (err) => this.error.emit(err));
         } else {
             this.processListService.fetchProcessAuditJsonById(this.processId).subscribe(
-                (res) => {
-                    this.clicked.emit({ format: this.format, value: res, fileName: this.fileName });
-                },
-                (err) => {
-                    this.error.emit(err);
-                });
+                (res) => this.clicked.emit({ format: this.format, value: res, fileName: this.fileName }),
+                (err) => this.error.emit(err));
         }
     }
 
