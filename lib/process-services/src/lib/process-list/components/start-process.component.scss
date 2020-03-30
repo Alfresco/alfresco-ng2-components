@@ -14,11 +14,11 @@
             width: 100%;
             padding: 16px 0 0;
         }
-        actions {
+        .mat-content-actions {
             text-align: right;
-            .mat-button {
-                text-transform: uppercase !important;
-            }
+        }
+        .mat-button {
+            text-transform: uppercase !important;
         }
     }
     &-process-input-container {
