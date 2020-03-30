@@ -14,7 +14,10 @@
                 (keydown)="keyDown($event)"
                 [properties]="basicProperties$ | async"
                 [editable]="editable"
-                [displayEmpty]="displayEmpty">
+                [displayEmpty]="displayEmpty"
+                [copyToClipboardAction]="copyToClipboardAction"
+                [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+                [multiValueSeparator]="multiValueSeparator">
             </adf-card-view>
         </mat-expansion-panel>
 
@@ -34,7 +37,10 @@
                             (keydown)="keyDown($event)"
                             [properties]="group.properties"
                             [editable]="editable"
-                            [displayEmpty]="displayEmpty">
+                            [displayEmpty]="displayEmpty"
+                            [copyToClipboardAction]="copyToClipboardAction"
+                            [useChipsForMultiValueProperty]="useChipsForMultiValueProperty"
+                            [multiValueSeparator]="multiValueSeparator">
                         </adf-card-view>
                     </mat-expansion-panel>
 

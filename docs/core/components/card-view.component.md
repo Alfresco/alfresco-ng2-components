@@ -109,6 +109,9 @@ Defining properties from Typescript:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | displayClearAction | `boolean` | true | Toggles whether or not to display clear action. |
+| copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
+| useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
+| multiValueSeparator | `string` | ',' | String separator between multi-value property items. |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
 | displayNoneOption | `boolean` | true | Toggles whether or not to display none option. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
@@ -189,6 +192,9 @@ const textItemProperty = new CardViewTextItemModel(options);
 | editable | boolean | false | Toggles whether the item is editable |
 | clickable | boolean | false | Toggles whether the property responds to clicks |
 | clickableCallBack | function | null | Function to execute when click the element |
+| copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
+| useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
+| multiValueSeparator | `string` | ',' | String separator between multi-value property items. |
 | icon | string |  | The material icon to show beside the item if it is clickable |
 | multiline | boolean | false | Single or multiline text |
 | pipes | [`CardViewTextItemPipeProperty`](../../../lib/core/card-view/interfaces/card-view-textitem-pipe-property.interface.ts)\[] | \[] | Pipes to be applied to the text before display |
@@ -242,6 +248,7 @@ const dateItemProperty = new CardViewDateItemModel(options);
 | ---- | ---- | ------- | ----------- |
 | label\* | string |  | Item label |
 | value\* | any |  | The original data value for the item |
+| copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
 | key\* | string |  | Identifying key (important when editing the item) |
 | default | any |  | The default value to display if the value is empty |
 | displayValue\* | any |  | The value to display |

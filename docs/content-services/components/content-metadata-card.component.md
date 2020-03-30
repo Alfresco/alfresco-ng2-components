@@ -393,3 +393,22 @@ To customize the separator used by this card you can set it in your `app.config.
 If you want to display chips fo each value instead of a composed string you just need to enable it in the content-metadata config. 
 
 ![Chips for multi value properties](../../docassets/images/metadata-chips.png)
+
+## Copy to Clipboard on click
+
+For easier interaction with metadata properties you can enable the Copy to Clipboard feature from your configuration in the `app.config.json` file. 
+
+Once you have enabled this feature you will be able to double click on your metadata properties and they will get copied to your clipboard for you to use.
+
+ ```json
+"content-metadata": {
+    "presets": {
+        "default": {
+            "includeAll": true,
+            "exclude": "exif:exif",
+            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
+        }
+    },
+    "copy-to-clipboard-action": true
+}
+```

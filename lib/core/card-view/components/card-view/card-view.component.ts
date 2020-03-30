@@ -17,6 +17,7 @@
 
 import { Component, Input } from '@angular/core';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
+import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
     selector: 'adf-card-view',
@@ -43,4 +44,16 @@ export class CardViewComponent {
     /** Toggles whether or not to display clear action. */
     @Input()
     displayClearAction: boolean = true;
+
+    /** Toggles whether or not to enable copy to clipboard action. */
+    @Input()
+    copyToClipboardAction: boolean = true;
+
+    /** Toggles whether or not to enable chips for multivalued properties. */
+    @Input()
+    useChipsForMultiValueProperty: boolean = true;
+
+    /** String separator between multi-value property items. */
+    @Input()
+    multiValueSeparator: string = DEFAULT_SEPARATOR;
 }
