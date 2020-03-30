@@ -838,7 +838,7 @@
       }]
     },
     "multi-value-pipe-separator": ", ",
-    "multi-value-chips": false,
+    "multi-value-chips": true,
     "copy-to-clipboard-action": true
   },
   "sideNav": {
