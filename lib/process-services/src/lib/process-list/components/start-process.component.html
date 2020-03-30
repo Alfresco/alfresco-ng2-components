@@ -1,10 +1,9 @@
-<mat-card class="adf-start-process">
-    <mat-card-title *ngIf="title">{{ title | translate}}
-    </mat-card-title>
-    <mat-card-content *ngIf="isProcessDefinitionEmpty()">
-        <mat-card-subtitle id="error-message" *ngIf="errorMessageId">
+<div class="adf-start-process">
+    <div class="title" *ngIf="title">{{ title | translate}}</div>
+    <div class="content" *ngIf="isProcessDefinitionEmpty()">
+        <div class="subtitle" id="error-message" *ngIf="errorMessageId">
             {{errorMessageId|translate}}
-        </mat-card-subtitle>
+        </div>
         <mat-form-field class="adf-process-input-container">
             <input
                 matInput
@@ -60,13 +59,13 @@
                 {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
             </button>
         </adf-start-form>
-    </mat-card-content>
-    <mat-card-content *ngIf="hasErrorMessage()">
-        <mat-card-subtitle class="error-message" id="no-process-message">
+    </div>
+    <div class="content" *ngIf="hasErrorMessage()">
+        <div class="subtitle" class="error-message" id="no-process-message">
             {{'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
-        </mat-card-subtitle>
-    </mat-card-content>
-    <mat-card-actions *ngIf="!hasStartForm()">
+        </div>
+    </div>
+    <div class="content-actions" *ngIf="!hasStartForm()">
         <button
             mat-button
             *ngIf="!hasStartForm()"
@@ -85,5 +84,5 @@
             class="btn-start">
             {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
         </button>
-    </mat-card-actions>
-</mat-card>
+    </div>
+</div>
