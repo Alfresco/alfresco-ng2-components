@@ -53,7 +53,8 @@ export class AttachFileWidgetDialogService {
             selected,
             ecmHost,
             context,
-            isSelectionValid: this.isNodeFile.bind(this)
+            isSelectionValid: this.isNodeFile.bind(this),
+            showFilesInResult: true
         };
 
         this.openLoginDialog(data, 'adf-attach-file-widget-dialog', '630px');

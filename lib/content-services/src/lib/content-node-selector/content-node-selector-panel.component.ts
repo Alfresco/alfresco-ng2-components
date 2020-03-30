@@ -56,6 +56,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private showSiteList = true;
     private showSearchField = true;
+    private showFiles = false;
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -161,6 +162,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     get showDropdownSiteList(): boolean {
         return this.showSiteList;
+    }
+
+    /** Shows the files and folders in the search result */
+    @Input()
+    set showFilesInResult(value: boolean) {
+        if (value !== undefined && value !== null) {
+            this.showFiles = value;
+        }
     }
 
     /** Emitted when the user has chosen an item. */
@@ -355,14 +364,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
-                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds)
+                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles)
                             .subscribe(this.showSearchResults.bind(this));
                     },
                     () => {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems)
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
                 .subscribe(this.showSearchResults.bind(this));
         }
     }

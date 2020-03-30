@@ -41,8 +41,9 @@ export class ContentNodeSelectorService {
      * @param [extraNodeIds]  List of extra node ids to search from. This last parameter is necessary when
      * the rootNodeId is one of the supported aliases (e.g. '-my-', '-root-', '-mysites-', etc.)
      * and search is not supported for that alias, but can be performed on its corresponding nodes.
+     * @param [showFiles]   shows the files in the dialog search result
      */
-    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[]): Observable<ResultSetPaging> {
+    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean): Observable<ResultSetPaging> {
 
         let extraParentFiltering = '';
 
@@ -66,7 +67,7 @@ export class ContentNodeSelectorService {
                 skipCount: skipCount
             },
             filterQueries: [
-                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+                { query: `TYPE:'cm:folder'${ showFiles ? " OR TYPE:'cm:content'" : '' }` },
                 { query: 'NOT cm:creator:System' },
                 ...parentFiltering
             ],

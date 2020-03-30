@@ -32,5 +32,6 @@ export interface ContentNodeSelectorComponentData {
     excludeSiteContent?: string[];
     select: Subject<Node[]>;
     showSearch?: boolean;
+    showFilesInResult?: boolean;
     showDropdownSiteList?: boolean;
 }

@@ -54,12 +54,13 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a file browser at a chosen folder location.
+     * shows files and folders in the dialog search result.
      * @param folderNodeId ID of the folder to use
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogByFolderId(folderNodeId: string): Observable<Node[]> {
         return this.documentListService.getFolderNode(folderNodeId).pipe(switchMap((nodeEntry: NodeEntry) => {
-            return this.openUploadFileDialog('Choose', nodeEntry.entry);
+            return this.openUploadFileDialog('Choose', nodeEntry.entry, true);
         }));
     }
 
@@ -91,6 +92,7 @@ export class ContentNodeDialogService {
 
     /**
      * Opens a file browser at a chosen site location.
+     * shows files and folders in the dialog search result.
      * @returns Information about the selected file(s)
      */
     openFileBrowseDialogBySite(): Observable<Node[]> {
@@ -196,9 +198,10 @@ export class ContentNodeDialogService {
      * Opens a dialog to choose a file to upload.
      * @param action Name of the action to show in the title
      * @param contentEntry Item to upload
+     * @param showFilesInResult Show files in dialog search result
      * @returns Information about the chosen file(s)
      */
-    openUploadFileDialog(action: string, contentEntry: Node): Observable<Node[]> {
+    openUploadFileDialog(action: string, contentEntry: Node, showFilesInResult = false): Observable<Node[]> {
         const select = new Subject<Node[]>();
         select.subscribe({
             complete: this.close.bind(this)
@@ -210,7 +213,8 @@ export class ContentNodeDialogService {
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: this.isNodeFile.bind(this),
-            select: select
+            select: select,
+            showFilesInResult
         };
 
         this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
