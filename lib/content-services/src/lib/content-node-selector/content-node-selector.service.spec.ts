@@ -80,10 +80,10 @@ describe('ContentNodeSelectorService', () => {
         expect(search.query.paging.skipCount).toEqual(0);
     });
 
-    it('should filter the search only for folders', () => {
+    it('should filter the search for files and folders', () => {
         service.search('nuka cola quantum');
 
-        expect(search.query.filterQueries).toContain({ query: "TYPE:'cm:folder'" });
+        expect(search.query.filterQueries).toContain({ query: "TYPE:'cm:folder' OR TYPE:'cm:content'" });
     });
 
     it('should filter out the "system-base" entries', () => {
