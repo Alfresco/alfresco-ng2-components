@@ -12,6 +12,7 @@
 @import '../search/components/search-control.component';
 @import '../search/components/search-sorting-picker/search-sorting-picker.component';
 @import '../search/components/search-filter/search-filter.component';
+@import '../search/components/search-chip-list/search-chip-list.component';
 
 @import '../dialogs/folder.dialog';
 
@@ -44,4 +45,5 @@
     @include adf-add-permission-panel-theme($theme);
     @include adf-tree-view-theme($theme);
     @include adf-search-filter-theme($theme);
+    @include adf-search-chip-list-theme($theme);
 }
