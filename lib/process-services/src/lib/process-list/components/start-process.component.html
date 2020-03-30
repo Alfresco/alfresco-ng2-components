@@ -1,5 +1,5 @@
 <mat-card class="adf-start-process">
-    <mat-card-title>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE' | translate}}
+    <mat-card-title *ngIf="title">{{ title | translate}}
     </mat-card-title>
     <mat-card-content *ngIf="isProcessDefinitionEmpty()">
         <mat-card-subtitle id="error-message" *ngIf="errorMessageId">
