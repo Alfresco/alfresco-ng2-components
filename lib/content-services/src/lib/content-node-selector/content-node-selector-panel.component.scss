@@ -23,7 +23,7 @@
                 width: 100%;
 
                 &-icon {
-                    color: mat-color($foreground, disabled-button);
+                    color: mat-color($foreground, icon, 0.54);
                     cursor: pointer;
 
                     &:hover {
