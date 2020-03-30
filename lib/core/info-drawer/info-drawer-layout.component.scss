@@ -24,8 +24,12 @@
             & .mat-tab-label {
                 font-weight: bold;
                 text-align: left;
-                color: mat-color($primary);
+                color: mat-color($accent);
                 text-transform: uppercase;
+
+                &-active {
+                    color: mat-color($primary);
+                }
             }
 
             &-header {
