@@ -66,7 +66,7 @@ export class ContentNodeSelectorService {
                 skipCount: skipCount
             },
             filterQueries: [
-                { query: "TYPE:'cm:folder'" },
+                { query: "TYPE:'cm:folder' OR TYPE:'cm:content'" },
                 { query: 'NOT cm:creator:System' },
                 ...parentFiltering
             ],
