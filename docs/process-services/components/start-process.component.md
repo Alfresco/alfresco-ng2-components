@@ -53,6 +53,7 @@ Starts a process.
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
 | start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
+| processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionRepresentation`](../../../lib/process-services/src/lib/process-list/models/process-definition.model.ts)`>` |  Emitted when process definition selection changes. |
 
 ## Details
 

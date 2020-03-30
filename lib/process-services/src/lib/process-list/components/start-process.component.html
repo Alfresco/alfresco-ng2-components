@@ -30,7 +30,8 @@
                     #auto="matAutocomplete"
                     id="processDefinitionOptions"
                     [displayWith]="displayFn">
-                    <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name">
+                    <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name"
+                    (click)="processDefinitionSelectionChanged(processDef)">
                         {{ processDef.name }}
                     </mat-option>
                 </mat-autocomplete>

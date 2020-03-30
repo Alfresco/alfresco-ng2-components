@@ -88,6 +88,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Output()
     formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
 
+    /** Emitted when process definition selection changes. */
+    @Output()
+    processDefinitionSelection: EventEmitter<ProcessDefinitionCloud> = new EventEmitter<ProcessDefinitionCloud>();
+
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent: ProcessDefinitionCloud;
     errorMessageId: string = '';
@@ -310,6 +314,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     onFormContentClicked(content: ContentLinkModel) {
         this.formContentClicked.emit(content);
+    }
+
+    processDefinitionSelectionChanged(processDefinition) {
+        this.processDefinitionSelection.emit(processDefinition);
     }
 
     ngOnDestroy() {
