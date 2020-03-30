@@ -154,6 +154,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.time.enable();
         } else {
             this.time.disable();
+            this.time.setValue(null);
         }
     }
 
