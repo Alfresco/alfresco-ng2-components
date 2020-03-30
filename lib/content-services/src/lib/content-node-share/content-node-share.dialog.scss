@@ -1,71 +1,75 @@
-@mixin adf-share-link-typography {
+@mixin adf-share-link-typography($foreground) {
     letter-spacing: -0.4px;
     line-height: 2;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
     font-size: 16px;
-    opacity: 0.87;
+    color: mat-color($foreground, text, 0.87);
 }
-.adf-float-label {
-   padding-top: 20px;
-}
-.adf-share-link-dialog {
+@mixin adf-content-node-share-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
-    .adf-share-link {
-        &__dialog-content {
-            display: flex;
-            flex-direction: column;
+    .adf-float-label {
+       padding-top: 20px;
+    }
+    .adf-share-link-dialog {
+
+        .adf-share-link {
+            &__dialog-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            &__label {
+                @include adf-share-link-typography($foreground);
+                flex: 1 1 auto;
+            }
+
+            &__title {
+                @include adf-share-link-typography($foreground);
+            }
+
+            &__info {
+                @include adf-share-link-typography($foreground);
+                color: mat-color($foreground, text, 0.54);
+                font-size: 13px;
+            }
+
+            &--row {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            &__input {
+                color: mat-color($foreground, text, 0.87);
+            }
         }
 
-        &__label {
-            @include adf-share-link-typography;
-            flex: 1 1 auto;
+        .adf-input-action {
+            cursor: pointer;
         }
 
-        &__title {
-            @include adf-share-link-typography;
+        .adf-full-width {
+            width: 100%;
         }
 
-        &__info {
-            @include adf-share-link-typography;
-            opacity: 0.54;
-            font-size: 13px;
+        .mat-form-field-infix {
+            border-top: unset;
         }
 
-        &--row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+        .mat-dialog-actions {
+            justify-content: flex-end;
+
+            & > button {
+                text-transform: uppercase;
+            }
+        }
+
+        .mat-form-field-flex {
             align-items: center;
         }
-
-        &__input {
-            opacity: 0.54;
-        }
-    }
-
-    .adf-input-action {
-        cursor: pointer;
-    }
-
-    .adf-full-width {
-        width: 100%;
-    }
-
-    .mat-form-field-infix {
-        border-top: unset;
-    }
-
-    .mat-dialog-actions {
-        justify-content: flex-end;
-
-        & > button {
-            text-transform: uppercase;
-        }
-    }
-
-    .mat-form-field-flex {
-        align-items: center;
     }
 }
