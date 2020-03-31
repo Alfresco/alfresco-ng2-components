@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
@@ -32,6 +32,7 @@ import {
 } from '../../mock';
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { By } from '@angular/platform-browser';
 
 describe('StartFormComponent', () => {
 
@@ -51,6 +52,19 @@ describe('StartFormComponent', () => {
             ProcessTestingModule
         ]
     });
+
+    const selectOptionByName = (name: string) => {
+
+        const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
+        selectElement.click();
+        fixture.detectChanges();
+        const options: any = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+        const currentOption = options.find( (option: DebugElement) => option.nativeElement.innerHTML.trim() === name );
+
+        if (currentOption) {
+            currentOption.nativeElement.click();
+        }
+    };
 
     beforeEach(() => {
         appConfig = TestBed.get(AppConfigService);
@@ -488,6 +502,15 @@ describe('StartFormComponent', () => {
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
+        });
+
+        it('should emit processDefinitionSelection event when a process definition is selected', (done) => {
+            component.processDefinitionSelection.subscribe((processDefinition) => {
+                expect(processDefinition).toEqual(testProcessDef);
+                done();
+            });
+            fixture.detectChanges();
+            selectOptionByName(testProcessDef.name);
         });
 
         it('should not emit start event when start the process without select a process and name', () => {

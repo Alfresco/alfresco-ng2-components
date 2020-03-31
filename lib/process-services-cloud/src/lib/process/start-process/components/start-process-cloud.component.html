@@ -33,7 +33,8 @@
                     id="processDefinitionName">
                 <div class="adf-process-input-autocomplete">
                     <mat-autocomplete #auto="matAutocomplete" id="processDefinitionOptions" [displayWith]="displayProcessNameOnDropdown" (optionSelected)="setProcessDefinitionOnForm($event.option.value)">
-                        <mat-option *ngFor="let processDef of filteredProcesses" [value]="getProcessDefinitionValue(processDef)">
+                        <mat-option *ngFor="let processDef of filteredProcesses" [value]="getProcessDefinitionValue(processDef)"
+                                    (click)="processDefinitionSelectionChanged(processDef)">
                             {{ getProcessDefinitionValue(processDef) }}
                         </mat-option>
                     </mat-autocomplete>

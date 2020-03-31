@@ -534,5 +534,14 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             expect(processInstanceName.valid).toBeTruthy();
         });
+
+        it('should emit processDefinitionSelection event when a process definition is selected', (done) => {
+            component.processDefinitionSelection.subscribe((processDefinition) => {
+                expect(processDefinition).toEqual(fakeProcessDefinitions[0]);
+                done();
+            });
+            fixture.detectChanges();
+            selectOptionByName(fakeProcessDefinitions[0].name);
+        });
     });
 });

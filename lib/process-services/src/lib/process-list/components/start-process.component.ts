@@ -91,6 +91,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Output()
     error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
+    /** Emitted when process definition selection changes. */
+    @Output()
+    processDefinitionSelection: EventEmitter<ProcessDefinitionRepresentation> = new EventEmitter<ProcessDefinitionRepresentation>();
+
     @ViewChild('startForm')
     startForm: StartFormComponent;
 
@@ -319,5 +323,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     get nameController(): AbstractControl {
         return this.processNameInput;
+    }
+
+    processDefinitionSelectionChanged(processDefinition) {
+        this.processDefinitionSelection.emit(processDefinition);
     }
 }
