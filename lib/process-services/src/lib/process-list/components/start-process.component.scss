@@ -1,6 +1,6 @@
 .adf {
     &-start-process {
-        width: 66%;
+        width: 96%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 10px;
@@ -14,11 +14,11 @@
             width: 100%;
             padding: 16px 0 0;
         }
-        mat-card-actions {
+        .mat-content-actions {
             text-align: right;
-            .mat-button {
-                text-transform: uppercase !important;
-            }
+        }
+        .mat-button {
+            text-transform: uppercase !important;
         }
     }
     &-process-input-container {

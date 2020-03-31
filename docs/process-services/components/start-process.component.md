@@ -39,6 +39,7 @@ Starts a process.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | (optional) Limit the list of processes that can be started to those contained in the specified app. |
+| title | `string` | "" | (optional) Define the header of the component. |
 | name | `string` | "" | (optional) Name to assign to the current process. |
 | processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
@@ -61,6 +62,7 @@ Starts a process.
 ```html
  <adf-start-process 
       [appId]="YOUR_APP_ID"
+      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
       [name]="PROCESS_NAME"
       [processDefinitionName]="PROCESS_DEFINITION_NAME">
  </adf-start-process>		 
