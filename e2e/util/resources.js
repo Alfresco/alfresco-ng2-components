@@ -22,6 +22,7 @@
  * @class util.Resources
  */
 var exports = module.exports = {};
+var path = require('path');
 
 exports.Files = {
 
