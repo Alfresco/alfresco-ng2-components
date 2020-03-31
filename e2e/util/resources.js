@@ -440,7 +440,7 @@ exports.Files = {
 
     DYNAMIC_TABLE_APP: {
         file_location: "/resources/apps/Dynamic Table App.zip",
-        file_path: file_path: path.join(__dirname, '../resources/apps/Dynamic Table App.zip'),
+        file_path: path.join(__dirname, '../resources/apps/Dynamic Table App.zip'),
         title: "Dynamic Table App",
         formName: "Dynamic Table App",
         process_se_name: "DynamicTableProcess"
