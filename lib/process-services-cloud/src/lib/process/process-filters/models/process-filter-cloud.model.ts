@@ -22,7 +22,7 @@ export class ProcessFilterCloudModel {
     icon: string;
     index: number;
     appName: string;
-    appVersion: number;
+    appVersion?: number;
     processName: string;
     processInstanceId: string;
     initiator: string;
