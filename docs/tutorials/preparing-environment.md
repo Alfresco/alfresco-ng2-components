@@ -13,7 +13,7 @@ This document contains the development environment description, along with the d
 
 [Node.js](https://nodejs.org) is a JavaScript runtime built using an event-driven, non-blocking I/O model that makes it lightweight and efficient. [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md).js uses [npm](https://www.npmjs.com/) as a public registry and package system.
 
-Is suggested to use the current long term support version of `node.js` check the LTS version [here](https://nodejs.org/).
+We suggested to use the current long term support version of `node.js` check the LTS version [here](https://nodejs.org/).
 
 To check your running version, run the following command in a terminal. 
 
