@@ -13,10 +13,12 @@ This document contains the development environment description, along with the d
 
 [Node.js](https://nodejs.org) is a JavaScript runtime built using an event-driven, non-blocking I/O model that makes it lightweight and efficient. [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md).js uses [npm](https://www.npmjs.com/) as a public registry and package system.
 
-You need the latest `node.js` from either the `8.x` or `9.x` branch.
-To check the version, run the following command in a terminal. 
+Is suggested to use the current long term support version of `node.js` check the LTS version [here](https://nodejs.org/)
+To check your running version, run the following command in a terminal. 
 
+```sh
     node -v
+````
 
 ## Angular CLI
 
@@ -26,7 +28,9 @@ Version 1.6.6 seems to be the most stable version currently. Earlier and later v
 
 If you already have `Angular CLI` installed check the version by running:
 
+```sh
     ng --version
+```
 
 To globally install `Angular CLI` version globally 1.6.6 run:
 
