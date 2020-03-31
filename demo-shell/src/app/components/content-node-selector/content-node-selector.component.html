@@ -227,5 +227,24 @@
                 </adf-content-node-selector-panel>
             </div>
         </mat-expansion-panel>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2>shows files</h2>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <label class="app-content-node-selector-demo-basic-label">
+                       Shows files in search result
+                    </label>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="app-content-node-selector-demo-basic-table">
+                <adf-content-node-selector-panel
+                    [currentFolderId]="'-root-'"
+                    [showFilesInResult]="true">
+                </adf-content-node-selector-panel>
+            </div>
+        </mat-expansion-panel>
     </mat-accordion>
 </main>

@@ -9,6 +9,7 @@
     <adf-content-node-selector-panel *ngIf="isLoggedIn()"
                                      id="attach-file-content-node"
                                      [isSelectionValid]="data?.isSelectionValid"
+                                     [showFilesInResult]="data?.showFilesInResult"
                                      (select)="onSelect($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>

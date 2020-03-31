@@ -22,8 +22,10 @@ Displays and edits metadata related to a node.
     -   [Aspect oriented config](#aspect-oriented-config)
     -   [Layout oriented config](#layout-oriented-config)
     -   [Displaying all properties](#displaying-all-properties)
+    -   [Making aspects and properties read only](#making-aspects-and-properties-read-only)
 -   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
 -   [Multi value card properties](#multi-value-card-properties)
+    -   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
 
 ## Basic Usage
 

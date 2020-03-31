@@ -46,7 +46,8 @@ export class ContentCloudNodeSelectorService {
       actionName: 'Choose',
       currentFolderId: '-my-',
       select,
-      isSelectionValid: this.isNodeFile.bind(this)
+      isSelectionValid: this.isNodeFile.bind(this),
+      showFilesInResult: true
     };
 
     this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');

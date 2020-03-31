@@ -353,7 +353,7 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
 
-            const defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0) => {
+            const defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0, showFiles = false) => {
 
                 const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'` }] : [];
 
@@ -367,7 +367,7 @@ describe('ContentNodeSelectorComponent', () => {
                         skipCount: skipCount
                     },
                     filterQueries: [
-                        { query: "TYPE:'cm:folder'" },
+                        { query: `TYPE:'cm:folder'${ showFiles ? " OR TYPE:'cm:content'" : '' }` },
                         { query: 'NOT cm:creator:System' },
                         ...parentFiltering
                     ],
@@ -419,6 +419,16 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot'));
             }));
 
+            it('should show files in results by calling the search api on search change', fakeAsync(() => {
+                component.showFilesInResult = true;
+                typeToSearchBox('kakarot');
+
+                tick(debounceSearch);
+                fixture.detectChanges();
+
+                expect(searchSpy).toHaveBeenCalledWith(defaultSearchOptions('kakarot', undefined, 0, true));
+            }));
+
             it('should reset the currently chosen node in case of starting a new search', fakeAsync(() => {
                 component.chosenNode = <Node> {};
                 typeToSearchBox('kakarot');
@@ -452,8 +462,8 @@ describe('ContentNodeSelectorComponent', () => {
 
                 expect(cnSearchSpy).toHaveBeenCalled();
                 expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25, [], false);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
             }));
 
             it('should call the content node selector\'s search with the right parameters on changing the site selectBox value from a custom dropdown menu', fakeAsync(() => {
@@ -470,8 +480,8 @@ describe('ContentNodeSelectorComponent', () => {
 
                 expect(cnSearchSpy).toHaveBeenCalled();
                 expect(cnSearchSpy.calls.count()).toBe(2);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25);
-                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId']);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', undefined, 0, 25, [], false);
+                expect(cnSearchSpy).toHaveBeenCalledWith('vegeta', '-sites-', 0, 25, ['123456testId', '09876543testId'], false);
             }));
 
             it('should get the corresponding node ids on search when a known alias is selected from dropdown', fakeAsync(() => {

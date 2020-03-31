@@ -25,4 +25,5 @@ export interface AttachFileWidgetDialogComponentData {
     ecmHost: string;
     context?: string;
     isSelectionValid?: (entry: Node) => boolean;
+    showFilesInResult?: boolean;
 }
