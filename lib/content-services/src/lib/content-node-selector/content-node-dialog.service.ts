@@ -134,10 +134,8 @@ export class ContentNodeDialogService {
                 complete: this.close.bind(this)
             });
 
-            const title = this.getTitleTranslation(action, contentEntry.name);
-
             const data: ContentNodeSelectorComponentData = {
-                title: title,
+                title: this.getTitleTranslation(action, contentEntry.name),
                 actionName: action,
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
@@ -179,7 +177,7 @@ export class ContentNodeDialogService {
         });
 
         const data: ContentNodeSelectorComponentData = {
-            title: `${action} '${contentEntry.name}' to ...`,
+            title: this.getTitleTranslation(action, contentEntry.name),
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
@@ -205,7 +203,7 @@ export class ContentNodeDialogService {
         });
 
         const data: ContentNodeSelectorComponentData = {
-            title: `${action} '${contentEntry.name}' to ...`,
+            title: this.getTitleTranslation(action, contentEntry.name),
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),

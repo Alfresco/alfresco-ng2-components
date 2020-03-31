@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Cancel",
     "CHOOSE": "Choose",
+    "CHOOSE_ITEM": "Choose '{{ name }}' to...",
     "COPY": "Copy",
     "COPY_ITEM": "Copy '{{ name }}' to...",
     "MOVE": "Move",
