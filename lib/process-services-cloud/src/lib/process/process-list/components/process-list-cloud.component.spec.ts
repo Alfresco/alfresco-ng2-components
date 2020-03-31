@@ -180,7 +180,7 @@ describe('ProcessListCloudComponent', () => {
             expect(component.rows).toBeDefined();
             expect(component.rows.length).toEqual(3);
             expect(component.rows[0].entry['appName']).toBe('easy-peasy-japanesey');
-            expect(component.rows[0].entry['appVersion']).toBe('');
+            expect(component.rows[0].entry['appVersion']).toBe(1);
             expect(component.rows[0].entry['id']).toBe('69eddfa7-d781-11e8-ae24-0a58646001fa');
             expect(component.rows[0].entry['name']).toEqual('starring');
             expect(component.rows[0].entry['processDefinitionId']).toBe('BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa');

@@ -23,7 +23,7 @@ export const fakeProcessCloudList = {
             {
                 entry: {
                     appName: 'easy-peasy-japanesey',
-                    appVersion: '',
+                    appVersion: 1,
                     id: '69eddfa7-d781-11e8-ae24-0a58646001fa',
                     name: 'starring',
                     processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
@@ -40,7 +40,7 @@ export const fakeProcessCloudList = {
             {
                 entry: {
                     appName: 'easy-peasy-japanesey',
-                    appVersion: '',
+                    appVersion: 1,
                     id: '8b3f625f-d781-11e8-ae24-0a58646001fa',
                     name: null,
                     processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
@@ -57,7 +57,7 @@ export const fakeProcessCloudList = {
             {
                 entry: {
                     appName: 'easy-peasy-japanesey',
-                    appVersion: '',
+                    appVersion: 2,
                     id: '87c12637-d783-11e8-ae24-0a58646001fa',
                     name: null,
                     processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
