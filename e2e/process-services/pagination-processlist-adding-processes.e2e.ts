@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -58,7 +58,9 @@ describe('Process List - Pagination when adding processes', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        resultApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
+        resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
         for (i = 0; i < (nrOfProcesses - 5); i++) {
             await apps.startProcess(this.alfrescoJsApi, resultApp);

@@ -27,6 +27,7 @@ exports.Files = {
 
     APP_WITH_DATE_FIELD_FORM: {
         file_location: "/resources/apps/TestDate.zip",
+        file_path: path.join(__dirname, '../resources/apps/TestDate.zip'),
         title: "TestDate",
         process_title: "TestDateField",
         id: -1,
@@ -38,6 +39,7 @@ exports.Files = {
 
     APP_WITH_PROCESSES: {
         file_location: "/resources/apps/App_with_processes.zip",
+        file_path: path.join(__dirname, '../resources/apps/App_with_processes.zip'),
         title: "App_with_processes",
         description: "Description for app",
         process_se_name: "process_with_se",
@@ -47,12 +49,14 @@ exports.Files = {
 
     APP_DYNAMIC_TABLE_DROPDOWN: {
         file_location: "/resources/apps/AppDynamicTableDropdown.zip",
+        file_path: path.join(__dirname, '../resources/apps/AppDynamicTableDropdown.zip'),
         title: "App3576",
         description: "Description for app",
         processName: "Process3576"
     },
     START_PROCESS_ATTACH_FILE: {
         file_location: "/resources/apps/Start_process_attach_file.zip",
+        file_path: path.join(__dirname, '../resources/apps/Start_process_attach_file.zip'),
         title: "start process app",
         description: "Description for app",
         processName: "start process file"
@@ -60,6 +64,7 @@ exports.Files = {
 
     TEST_ASSIGNEE: {
         file_location: "/resources/apps/Assignee.zip",
+        file_path: path.join(__dirname, '../resources/apps/Assignee.zip'),
         title: "Assignee",
         description: "Description for app",
         processNames: ["simple", "candidate-task"],
@@ -75,6 +80,7 @@ exports.Files = {
 
     APP_WITH_USER_WIDGET: {
         file_location: "/resources/apps/appWithUser.zip",
+        file_path: path.join(__dirname, '../resources/apps/appWithUser.zip'),
         title: "appWithUser",
         description: "Description for app",
         processName: "ProcessWithUser",
@@ -85,12 +91,14 @@ exports.Files = {
 
     NO_FORM_APP: {
         file_location: "/resources/apps/No form app.zip",
+        file_path: path.join(__dirname, '../resources/apps/No form app.zip'),
         title: "No form app",
         taskName: "No form task"
     },
 
     SIMPLE_APP_WITH_USER_FORM: {
         file_location: "/resources/apps/Simple App with User Form.zip",
+        file_path: path.join(__dirname, '../resources/apps/Simple App with User Form.zip'),
         title: "Simple App with User Form",
         description: "Simple app with a process having a User task with a form attached.",
         processName: "Simple Process",
@@ -113,6 +121,7 @@ exports.Files = {
 
     WIDGETS_SMOKE_TEST: {
         file_location: "/resources/apps/Widgets smoke test.zip",
+        file_path: path.join(__dirname, '../resources/apps/Widgets smoke test.zip'),
         title: "Widgets smoke test",
         formName: "Widgets smoke test",
         form_fields: {
@@ -141,6 +150,7 @@ exports.Files = {
 
     FORM_ADF: {
         file_location: "/resources/apps/Test-ADF.zip",
+        file_path: path.join(__dirname, '../resources/apps/Test-ADF.zip'),
         title: "Test App",
         formName: "test-1",
         form_fields: {
@@ -163,6 +173,7 @@ exports.Files = {
     WIDGET_CHECK_APP: {
 
         file_location: "/resources/apps/WidgetApps.zip",
+        file_path: path.join(__dirname, '../resources/apps/WidgetApps.zip'),
 
         TEXT: {
             formName: "TextWidgetForm",
@@ -383,6 +394,7 @@ exports.Files = {
 
     MORE_WIDGETS: {
         file_location: "/resources/apps/More Widgets.zip",
+        file_path: path.join(__dirname, '../resources/apps/More Widgets.zip'),
         title: "More Widgets",
         group: { name:  "Users", subgroup: [  { name: "Heros" },  { name: "Villains" }] },
         subGroupUser: { firstName: "Hero", lastName: "User" } ,
@@ -421,12 +433,14 @@ exports.Files = {
 
     STENCIL_PROCESS: {
         file_location: "/resources/apps/Stencil_app.zip",
+        file_path: path.join(__dirname, '../resources/apps/Stencil_app.zipp'),
         processName: 'stencil_process',
         taskName: 'stencil task'
     },
 
     DYNAMIC_TABLE_APP: {
         file_location: "/resources/apps/Dynamic Table App.zip",
+        file_path: file_path: path.join(__dirname, '../resources/apps/Dynamic Table App.zip'),
         title: "Dynamic Table App",
         formName: "Dynamic Table App",
         process_se_name: "DynamicTableProcess"

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -23,7 +23,6 @@ import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
@@ -51,7 +50,6 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 6', dueDate: '03/01/2019' }];
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -63,7 +61,8 @@ describe('Task Filters Sorting', () => {
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(user.email, user.password);
-        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 

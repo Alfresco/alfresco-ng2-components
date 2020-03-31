@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateUtil, LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { DateUtil, LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -79,17 +79,19 @@ describe('Start Task - Custom App', () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
         const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
         appRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, app.title);
 
-        secondAppModel = await apps.importPublishDeployApp(this.alfrescoJsApi, secondApp.file_location);
+        secondAppModel = await applicationsService.importPublishDeployApp(secondApp.file_path);
 
         secondAppRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, secondApp.title);
 

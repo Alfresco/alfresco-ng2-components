@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { FiltersPage } from '../pages/adf/process-services/filters.page';
@@ -60,12 +60,14 @@ describe('Sorting for process filters', () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);

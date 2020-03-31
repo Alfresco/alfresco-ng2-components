@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, Widget } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationService } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
@@ -42,7 +42,6 @@ describe('Form widgets', () => {
 
         beforeAll(async () => {
             const users = new UsersActions();
-            const appsActions = new AppsActions();
 
             alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -55,7 +54,9 @@ describe('Form widgets', () => {
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
+            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
+            appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
@@ -212,7 +213,8 @@ describe('Form widgets', () => {
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
+            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {

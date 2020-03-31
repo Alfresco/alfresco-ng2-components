@@ -21,11 +21,11 @@ import {
     LoginPage, SelectAppsDialog,
     StartProcessDialog,
     StringUtil,
-    Widget
+    Widget,
+    ApplicationService
 } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
@@ -53,7 +53,6 @@ describe('Start Process Component', () => {
     const startProcessDialog = new StartProcessDialog();
     const contentServicesPage = new ContentServicesPage();
     const selectAppsDialog = new SelectAppsDialog();
-    const apps = new AppsActions();
     const widget = new Widget();
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
     const simpleApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
@@ -99,11 +98,13 @@ describe('Start Process Component', () => {
 
                 await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-                const appCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, app.file_location);
+                const applicationsService = new ApplicationService(this.alfrescoJsApiUserTwo);
 
-                simpleAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, simpleApp.file_location);
+                const appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
-                dateFormAppCreated = await apps.importPublishDeployApp(this.alfrescoJsApiUserTwo, dateFormApp.file_location);
+                simpleAppCreated = await applicationsService.importPublishDeployApp(simpleApp.file_path);
+
+                dateFormAppCreated = await applicationsService.importPublishDeployApp(dateFormApp.file_path);
 
                 appId = appCreated.id;
             } catch (error) {
@@ -515,7 +516,9 @@ describe('Start Process Component', () => {
             });
             await this.alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
 
-            const appCreated = await apps.importPublishDeployApp(this.alfrescoJsBPMAdminUser, startProcessAttachFileApp.file_location);
+            const applicationsService = new ApplicationService(this.alfrescoJsBPMAdminUser);
+
+            const appCreated = await applicationsService.importPublishDeployApp(startProcessAttachFileApp.file_path);
             appId = appCreated.id;
 
         });

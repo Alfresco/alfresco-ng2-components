@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, DatePickerCalendarPage, DateUtil } from '@alfresco/adf-testing';
+import { LoginPage, Widget, DatePickerCalendarPage, DateUtil, ApplicationService } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Dynamic Table', () => {
@@ -32,7 +31,6 @@ describe('Dynamic Table', () => {
     const datePicker = new DatePickerCalendarPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    const apps = new AppsActions();
     const users = new UsersActions();
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'BPM',
@@ -68,7 +66,8 @@ describe('Dynamic Table', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(user.email, user.password);
-            const importedApp = await apps.importPublishDeployApp(alfrescoJsApi, app.file_location);
+            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
             await loginPage.loginToProcessServicesUsingUserModel(user);
         });
@@ -128,8 +127,9 @@ describe('Dynamic Table', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationService(this.alfrescoJsApi);
 
-            const importedApp = await apps.importPublishDeployApp(alfrescoJsApi, app.file_location);
+            const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
             await loginPage.loginToProcessServicesUsingUserModel(user);
         });

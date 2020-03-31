@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationService } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -63,12 +63,14 @@ describe('Process List Test', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        appDateModel = await apps.importPublishDeployApp(this.alfrescoJsApi, appWithDateField.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
+        appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
 
         procWithDate = await apps.startProcess(this.alfrescoJsApi, appDateModel, processName.procWithDate);
         completedProcWithDate = await apps.startProcess(this.alfrescoJsApi, appDateModel, processName.completedProcWithDate);
 
-        appUserWidgetModel = await apps.importPublishDeployApp(this.alfrescoJsApi, appWithUserWidget.file_location);
+        appUserWidgetModel = await applicationsService.importPublishDeployApp(appWithUserWidget.file_path);
 
         await apps.startProcess(this.alfrescoJsApi, appUserWidgetModel, processName.procWithUserWidget);
         completedProcWithUserWidget = await apps.startProcess(this.alfrescoJsApi, appUserWidgetModel, processName.completedProcWithUserWidget);

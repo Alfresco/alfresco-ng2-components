@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -42,6 +42,7 @@ describe('Comment component for Processes', () => {
 
         const apps = new AppsActions();
         const users = new UsersActions();
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -51,7 +52,7 @@ describe('Comment component for Processes', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
         const processWithComment = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Comment APS');

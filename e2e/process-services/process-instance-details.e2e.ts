@@ -20,7 +20,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { AppsActions } from '../actions/APS/apps.actions';
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
@@ -55,7 +55,8 @@ describe('Process Instance Details', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        appModel = await applicationsService.importPublishDeployApp(app.file_path);
         const processModel = await apps.startProcess(this.alfrescoJsApi, appModel, 'process');
 
         await loginPage.loginToProcessServicesUsingUserModel(user);

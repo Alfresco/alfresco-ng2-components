@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, FileBrowserUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
@@ -25,7 +25,6 @@ import path = require('path');
 import fs = require('fs');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/file.model';
 
 describe('Attachment list action menu for tasks', () => {
@@ -50,7 +49,6 @@ describe('Attachment list action menu for tasks', () => {
     };
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -63,7 +61,8 @@ describe('Attachment list action menu for tasks', () => {
         tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
-        const { id } = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const { id } = await applicationsService.importPublishDeployApp(app.file_path);
         appId = id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);

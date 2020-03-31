@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { FormFields, LoginPage } from '@alfresco/adf-testing';
+import { FormFields, LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
@@ -51,9 +50,9 @@ describe('Attach Form Component', () => {
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
+        const applicationService = new ApplicationService(this.alfrescoJsApi);
 
         const users = new UsersActions();
-        const appsActions = new AppsActions();
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -63,7 +62,7 @@ describe('Attach Form Component', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const appModel = await appsActions.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const appModel = await applicationService.importPublishDeployApp(app.file_path);
 
         appId = appModel.id;
 

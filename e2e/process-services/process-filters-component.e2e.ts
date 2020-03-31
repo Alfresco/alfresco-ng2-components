@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
@@ -25,7 +25,6 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/process-detail
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
@@ -60,7 +59,6 @@ describe('Process Filters Test', () => {
     };
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -71,7 +69,8 @@ describe('Process Filters Test', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         await this.alfrescoJsApi.login(user.email, user.password);
-        appModel = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.loginToProcessServicesUsingUserModel(user);
     });
 
