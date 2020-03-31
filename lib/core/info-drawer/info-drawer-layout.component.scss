@@ -2,6 +2,7 @@
 
 @mixin adf-info-drawer-theme($theme) {
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
     $adf-info-drawer-layout-background-color: mat-color($background, background) !default;
