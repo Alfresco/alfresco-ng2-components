@@ -127,11 +127,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    removeShare() {
-        this.deleteSharedLink(this.sharedId);
-    }
-
-    onSlideShareChange(event: any) {
+    onSlideShareChange(event: MatSlideToggleChange) {
         if (event.checked) {
             this.createSharedLinks(this.data.node.entry.id);
         } else {
@@ -154,6 +150,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
             this.time.enable();
         } else {
             this.time.disable();
+            this.time.setValue(null);
         }
     }
 
