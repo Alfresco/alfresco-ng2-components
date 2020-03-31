@@ -24,7 +24,8 @@ import {
     LogService,
     CardViewUpdateService,
     AlfrescoApiService,
-    TranslationService
+    TranslationService,
+    AppConfigService
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
@@ -38,6 +39,8 @@ import { switchMap, takeUntil, catchError } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
+
+    static DEFAULT_SEPARATOR = ', ';
 
     protected onDestroy$ = new Subject<boolean>();
 
@@ -75,6 +78,15 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayAspect: string = null;
 
+    /** Toggles whether or not to enable copy to clipboard action. */
+    @Input()
+    copyToClipboardAction: boolean = true;
+
+    /** Toggles whether or not to enable chips for multivalued properties. */
+    @Input()
+    useChipsForMultiValueProperty: boolean = true;
+
+    multiValueSeparator: string;
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
@@ -84,8 +96,12 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         private nodesApiService: NodesApiService,
         private logService: LogService,
         private alfrescoApiService: AlfrescoApiService,
-        private translationService: TranslationService
+        private translationService: TranslationService,
+        private appConfig: AppConfigService
     ) {
+        this.copyToClipboardAction = this.appConfig.get<boolean>('content-metadata.copy-to-clipboard-action');
+        this.multiValueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || ContentMetadataComponent.DEFAULT_SEPARATOR;
+        this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips');
     }
 
     ngOnInit() {

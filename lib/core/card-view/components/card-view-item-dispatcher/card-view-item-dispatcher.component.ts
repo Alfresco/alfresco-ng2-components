@@ -27,6 +27,7 @@ import {
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
+import { DEFAULT_SEPARATOR } from '../card-view-textitem/card-view-textitem.component';
 
 @Component({
     selector: 'adf-card-view-item-dispatcher',
@@ -47,6 +48,15 @@ export class CardViewItemDispatcherComponent implements OnChanges {
 
     @Input()
     displayClearAction: boolean = true;
+
+    @Input()
+    copyToClipboardAction: boolean = true;
+
+    @Input()
+    useChipsForMultiValueProperty: boolean = true;
+
+    @Input()
+    multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @ViewChild(CardViewContentProxyDirective)
     private content: CardViewContentProxyDirective;
@@ -100,6 +110,9 @@ export class CardViewItemDispatcherComponent implements OnChanges {
         this.componentReference.instance.displayEmpty = this.displayEmpty;
         this.componentReference.instance.displayNoneOption = this.displayNoneOption;
         this.componentReference.instance.displayClearAction = this.displayClearAction;
+        this.componentReference.instance.copyToClipboardAction = this.copyToClipboardAction;
+        this.componentReference.instance.useChipsForMultiValueProperty = this.useChipsForMultiValueProperty;
+        this.componentReference.instance.multiValueSeparator = this.multiValueSeparator;
     }
 
     private proxy(methodName, ...args) {

@@ -18,11 +18,12 @@
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
-import { AppConfigService } from '../../../app-config/app-config.service';
 import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent } from '@angular/material';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../services/translation.service';
+
+export const DEFAULT_SEPARATOR = ', ';
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -31,14 +32,20 @@ import { TranslationService } from '../../../services/translation.service';
 })
 export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
 
-    static DEFAULT_SEPARATOR = ', ';
-    static DEFAULT_USE_CHIPS = false;
-
     @Input()
     editable: boolean = false;
 
     @Input()
     displayEmpty: boolean = true;
+
+    @Input()
+    copyToClipboardAction: boolean = true;
+
+    @Input()
+    useChipsForMultiValueProperty: boolean = true;
+
+    @Input()
+    multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     @ViewChild('editorInput')
     private editorInput: any;
@@ -46,16 +53,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     inEdit: boolean = false;
     editedValue: string | string[];
     errorMessages: string[];
-    valueSeparator: string;
-    useChipsForMultiValueProperty: boolean;
 
     constructor(cardViewUpdateService: CardViewUpdateService,
-                private appConfig: AppConfigService,
                 private clipboardService: ClipboardService,
                 private translateService: TranslationService) {
         super(cardViewUpdateService);
-        this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator') || CardViewTextItemComponent.DEFAULT_SEPARATOR;
-        this.useChipsForMultiValueProperty = this.appConfig.get<boolean>('content-metadata.multi-value-chips') || CardViewTextItemComponent.DEFAULT_USE_CHIPS;
     }
 
     ngOnChanges(): void {
@@ -131,7 +133,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     prepareValueForUpload(property: CardViewTextItemModel, value: string | string[]): string | string[] {
         if (property.multivalued && typeof value === 'string') {
-            const listOfValues = value.split(this.valueSeparator.trim()).map((item) => item.trim());
+            const listOfValues = value.split(this.multiValueSeparator.trim()).map((item) => item.trim());
             return listOfValues;
         }
         return value;

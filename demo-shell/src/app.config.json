@@ -819,6 +819,7 @@
       "default": {
         "exif:exif": "*"
       },
+      "all-aspects": "*",
       "custom-title": [{
         "title": "Exif",
         "items": [
@@ -837,7 +838,8 @@
       }]
     },
     "multi-value-pipe-separator": ", ",
-    "multi-value-chips": true
+    "multi-value-chips": true,
+    "copy-to-clipboard-action": true
   },
   "sideNav": {
     "expandedSidenav": true,
