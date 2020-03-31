@@ -158,7 +158,8 @@
       "LAST_MODIFIED": "LastModified",
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
-      "PROCESS_NAME": "ProcessName"
+      "PROCESS_NAME": "ProcessName",
+      "APP_VERSION": "AppReleaseVersion"
     },
     "ERROR": {
       "DATE": "Date format DD/MM/YYYY"

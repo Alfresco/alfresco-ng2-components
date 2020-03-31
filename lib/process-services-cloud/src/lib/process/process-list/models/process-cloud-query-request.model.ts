@@ -19,6 +19,7 @@ import { ProcessListCloudSortingModel } from './process-list-sorting.model';
 
 export class ProcessQueryCloudRequestModel {
    appName: string;
+   appVersion?: number;
    initiator?: null;
    id?: string;
    name?: string;
@@ -36,6 +37,7 @@ export class ProcessQueryCloudRequestModel {
     constructor(obj?: any) {
        if (obj) {
            this.appName = obj.appName;
+           this.appVersion = obj.appVersion;
            this.initiator = obj.initiator;
            this.id = obj.id;
            this.name = obj.name;

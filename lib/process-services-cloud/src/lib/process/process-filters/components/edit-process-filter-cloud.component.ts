@@ -428,6 +428,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return property.type === 'text';
     }
 
+    isNumberType(property: ProcessFilterProperties): boolean {
+        return property.type === 'number';
+    }
+
     hasFormChanged(action: any): boolean {
         if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
@@ -499,6 +503,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 key: 'appName',
                 value: currentProcessFilter.appName || '',
                 options: this.applicationNames
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
+                type: 'number',
+                key: 'appVersion',
+                value: currentProcessFilter.appVersion
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',

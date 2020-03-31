@@ -41,6 +41,13 @@
                                 placeholder="{{processFilterProperty.label | translate}}"
                                 [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
                         </mat-form-field>
+                        <mat-form-field fxFlex="23%" *ngIf="isNumberType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
+                            <input matInput
+                                [formControlName]="processFilterProperty.key"
+                                type="number" min="0"
+                                placeholder="{{processFilterProperty.label | translate}}"
+                                [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key"/>
+                        </mat-form-field>
                         <mat-form-field fxFlex="23%" *ngIf="isDateType(processFilterProperty)" [attr.data-automation-id]="processFilterProperty.key">
                             <mat-label>{{processFilterProperty.label | translate}}</mat-label>
                             <input
