@@ -28,11 +28,13 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 })
 export class ContentNodeSelectorComponent {
 
+    title: string;
     buttonActionName: string;
     chosenNode: Node[];
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.buttonActionName = data.actionName ? `NODE_SELECTOR.${data.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
+        this.title = data.title;
     }
 
     close() {
@@ -41,10 +43,17 @@ export class ContentNodeSelectorComponent {
 
     onSelect(nodeList: Node[]) {
         this.chosenNode = nodeList;
+        this.updateTitle(nodeList[0].name);
     }
 
     onClick(): void {
         this.data.select.next(this.chosenNode);
         this.data.select.complete();
+    }
+
+    private updateTitle(nodeName): void {
+        if (this.data.actionName.toUpperCase() === 'CHOOSE') {
+            this.title = `Choose '${nodeName}' to ...`;
+        }
     }
 }
