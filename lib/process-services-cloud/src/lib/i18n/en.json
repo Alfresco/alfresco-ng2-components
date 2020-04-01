@@ -19,7 +19,8 @@
       "PROCESS_NAME": "Process Name",
       "PARENT_TASK_ID": "Parent Task Id",
       "PROCESS_DEF_ID": "Process Definition Id",
-      "PROCESS_DEF_KEY": "Process Definition Key"
+      "PROCESS_DEF_KEY": "Process Definition Key",
+      "APP_VERSION": "App Release Version"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start Process",
