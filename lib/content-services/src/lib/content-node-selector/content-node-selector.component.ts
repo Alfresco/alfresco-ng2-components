@@ -17,6 +17,7 @@
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 
@@ -28,11 +29,16 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 })
 export class ContentNodeSelectorComponent {
 
+    title: string;
+    action: string;
     buttonActionName: string;
     chosenNode: Node[];
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
-        this.buttonActionName = data.actionName ? `NODE_SELECTOR.${data.actionName.toUpperCase()}` : 'NODE_SELECTOR.CHOOSE';
+    constructor(public translation: TranslationService,
+                @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
+        this.action = data.actionName.toUpperCase();
+        this.buttonActionName = data.actionName ? `NODE_SELECTOR.${this.action}` : 'NODE_SELECTOR.CHOOSE';
+        this.title = data.title;
     }
 
     close() {
@@ -41,10 +47,21 @@ export class ContentNodeSelectorComponent {
 
     onSelect(nodeList: Node[]) {
         this.chosenNode = nodeList;
+        this.updateTitle(nodeList);
     }
 
     onClick(): void {
         this.data.select.next(this.chosenNode);
         this.data.select.complete();
+    }
+
+    updateTitle(nodeList: Node[]): void {
+        if (this.action === 'CHOOSE' && nodeList) {
+            this.title = this.getTitleTranslation(this.action, nodeList[0].name);
+        }
+    }
+
+    getTitleTranslation(action: string, name: string): string {
+        return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name });
     }
 }

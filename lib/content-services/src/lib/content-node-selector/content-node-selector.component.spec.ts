@@ -33,8 +33,8 @@ describe('ContentNodeSelectorDialogComponent', () => {
     let component: ContentNodeSelectorComponent;
     let fixture: ComponentFixture<ContentNodeSelectorComponent>;
     const data: any = {
-        title: 'Move along citizen...',
-        actionName: 'move',
+        title: 'Choose along citizen...',
+        actionName: 'choose',
         select: new EventEmitter<Node>(),
         rowFilter: (shareDataRow: ShareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
         imageResolver: () => 'piccolo',
@@ -71,14 +71,14 @@ describe('ContentNodeSelectorDialogComponent', () => {
         it('should show the INJECTED title', () => {
             const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
             expect(titleElement).not.toBeNull();
-            expect(titleElement.nativeElement.innerText).toBe('Move along citizen...');
+            expect(titleElement.nativeElement.innerText).toBe('Choose along citizen...');
         });
 
         it('should have the INJECTED actionName on the name of the choose button', () => {
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
-            expect(component.buttonActionName).toBe('NODE_SELECTOR.MOVE');
+            expect(component.buttonActionName).toBe('NODE_SELECTOR.CHOOSE');
             expect(actionButton).not.toBeNull();
-            expect(actionButton.nativeElement.innerText).toBe('NODE_SELECTOR.MOVE');
+            expect(actionButton.nativeElement.innerText).toBe('NODE_SELECTOR.CHOOSE');
         });
 
         it('should pass through the injected currentFolderId to the documentList', () => {
@@ -155,5 +155,17 @@ describe('ContentNodeSelectorDialogComponent', () => {
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
             expect(actionButton.nativeElement.disabled).toBeFalsy();
         });
+    });
+
+    describe('Title', () => {
+
+        it('should be updated when a node is chosen', () => {
+            component.onSelect([new Node({ id: 'fake', name: 'fake-node' })]);
+            fixture.detectChanges();
+
+            const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
+            expect(titleElement).not.toBeNull();
+            expect(titleElement.nativeElement.innerText).toBe('NODE_SELECTOR.CHOOSE_ITEM');
+       });
    });
 });
