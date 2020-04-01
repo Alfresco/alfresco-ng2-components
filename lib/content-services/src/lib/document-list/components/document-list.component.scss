@@ -126,20 +126,18 @@
 
         &-this-space-is-empty {
             height: 32px;
-            opacity: 0.26;
             font-size: 24px;
             line-height: 1.33;
             letter-spacing: -1px;
-            color: mat-color($foreground, text);
+            color: mat-color($foreground, text, 0.54);
         }
 
         &-drag-drop {
             min-height: 56px;
-            opacity: 0.54;
             font-size: 53px;
             line-height: 1;
             letter-spacing: -2px;
-            color: mat-color($foreground, text);
+            color: mat-color($foreground, text, 0.72);
             margin-top: 40px;
             word-break: break-all;
             white-space: pre-line;
@@ -151,11 +149,10 @@
 
         &-any-files-here-to-add {
             min-height: 24px;
-            opacity: 0.54;
             font-size: 16px;
             line-height: 1.5;
             letter-spacing: -0.4px;
-            color: mat-color($foreground, text);
+            color: mat-color($foreground, text, 0.72);
             margin-top: 17px;
             word-break: break-all;
             white-space: pre-line;
