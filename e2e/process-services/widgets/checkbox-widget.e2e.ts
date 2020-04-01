@@ -48,7 +48,7 @@ describe('Checkbox Widget', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationService(alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();

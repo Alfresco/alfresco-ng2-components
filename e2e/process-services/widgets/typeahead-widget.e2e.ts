@@ -44,7 +44,7 @@ describe('Typeahead widget', () => {
         user = await usersActions.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationService(alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         await loginPage.loginToProcessServicesUsingUserModel(user);
     });

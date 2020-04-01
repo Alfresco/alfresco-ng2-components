@@ -48,7 +48,7 @@ describe('Document Template widget', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationService(alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp( app.file_path);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();

@@ -66,7 +66,7 @@ describe('Dynamic Table', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationService(alfrescoJsApi);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
             await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -127,7 +127,7 @@ describe('Dynamic Table', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationService(alfrescoJsApi);
 
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;

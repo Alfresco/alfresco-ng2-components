@@ -46,7 +46,7 @@ describe('People and Group widget', () => {
 
         await alfrescoJsApi.login(user.email, user.password);
         try {
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationService(alfrescoJsApi);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         } catch (e) { console.error('failed to deploy the application'); }
         await loginPage.loginToProcessServicesUsingUserModel(user);

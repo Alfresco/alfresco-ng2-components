@@ -50,11 +50,11 @@ describe('Form widgets - People', () => {
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
-
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
