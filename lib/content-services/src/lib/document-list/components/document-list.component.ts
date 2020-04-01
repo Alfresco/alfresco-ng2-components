@@ -843,12 +843,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (err.message) {
             try {
                 if (JSON.parse(err.message).error.statusCode === 403) {
-                    this.setLoadingState(false);
                     this.noPermission = true;
                 }
             } catch (error) {
             }
         }
+        this.setLoadingState(false);
         this.error.emit(err);
 
     }
