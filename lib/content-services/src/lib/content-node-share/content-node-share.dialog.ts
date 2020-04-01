@@ -37,7 +37,7 @@ import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
 import { ContentNodeShareSettings } from './content-node-share.settings';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -101,7 +101,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.time.valueChanges
             .pipe(
-                distinctUntilChanged(),
+                debounceTime(500),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(value => this.onTimeChanged(value));
