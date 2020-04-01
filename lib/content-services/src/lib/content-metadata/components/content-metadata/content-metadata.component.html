@@ -1,9 +1,9 @@
 <div class="adf-metadata-properties">
-    <mat-accordion displayMode="flat" [multi]="multi">
-        <mat-expansion-panel
-            *ngIf="displayDefaultProperties"
-            [expanded]="canExpandProperties()"
-            [attr.data-automation-id]="'adf-metadata-group-properties'" >
+    <mat-accordion displayMode="flat"
+                   [multi]="multi">
+        <mat-expansion-panel *ngIf="displayDefaultProperties"
+                             [expanded]="canExpandProperties()"
+                             [attr.data-automation-id]="'adf-metadata-group-properties'">
             <mat-expansion-panel-header>
                 <mat-panel-title role="heading">
                     {{ 'CORE.METADATA.BASIC.HEADER' | translate }}
@@ -23,10 +23,11 @@
 
         <ng-container *ngIf="expanded">
             <ng-container *ngIf="groupedProperties$ | async; else loading; let groupedProperties">
-                <div *ngFor="let group of groupedProperties; let first = first;" class="adf-metadata-grouped-properties-container">
+                <div *ngFor="let group of groupedProperties; let first = first;"
+                     class="adf-metadata-grouped-properties-container">
                     <mat-expansion-panel *ngIf="showGroup(group) || editable"
-                    [attr.data-automation-id]="'adf-metadata-group-' + group.title"
-                    [expanded]="canExpandTheCard(group) || !displayDefaultProperties && first">
+                                         [attr.data-automation-id]="'adf-metadata-group-' + group.title"
+                                         [expanded]="canExpandTheCard(group) || !displayDefaultProperties && first">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ group.title | translate }}
@@ -51,4 +52,16 @@
             </ng-template>
         </ng-container>
     </mat-accordion>
+
+    <div class="adf-metadata-action-buttons"
+         *ngIf="editable">
+        <button mat-button
+                (click)="cancelChanges()"
+                [disabled]="!hasMetadataChanged">Cancel</button>
+        <button mat-raised-button
+                (click)="saveChanges()"
+                color="primary"
+                [disabled]="!hasMetadataChanged">Save</button>
+    </div>
+
 </div>

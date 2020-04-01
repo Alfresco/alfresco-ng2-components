@@ -1,21 +1,26 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @mixin adf-card-view-textitem-theme($theme) {
     $foreground: map-get($theme, foreground);
     $outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
 
     .adf {
-        &-textitem-icon {
+        &-textitem-icon.mat-icon {
             font-size: 16px;
             width: 16px;
             height: 16px;
-        }
-
-        &-textitem-action {
             color: mat-color($foreground, text, 0.25);
         }
 
-        &-textitem-action:hover, &-textitem-action:focus {
+        &-textitem-action.mat-icon-button {
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            color: mat-color($foreground, text, 0.25);
+        }
+
+        &-textitem-action:hover,
+        &-textitem-action:focus {
             color: mat-color($foreground, text);
         }
 
@@ -32,8 +37,23 @@
             }
         }
 
+        &-textitem-chip-list-container {
+            margin-bottom: 25px !important;
+            margin-top: 6px;
+
+            .mat-form-field-label {
+                margin-top: 6px;
+            }
+        }
+
         &-textitem-clickable {
             cursor: pointer !important;
+            padding-top: 3px;
+
+            .adf-textitem-icon.mat-icon {
+                line-height: 16px;
+            }
+
             &:hover .adf-textitem-action {
                 color: mat-color($foreground, text);
             }
@@ -45,7 +65,6 @@
         }
 
         &-textitem-editable {
-
             &-controls {
                 display: flex;
                 align-items: center;
@@ -147,6 +166,23 @@
 
         &-textitem-multiline {
             display: block;
+        }
+
+        &-property-field .adf-property-clear-value {
+            display: none;
+        }
+
+        &-property-field.adf-card-textitem-field:hover {
+            .adf-textitem-icon {
+                display: none;
+            }
+            .adf-property-clear-value {
+                color: mat-color($foreground, text, 0.25);
+                display: inline;
+            }
+            .adf-property-clear-value:hover {
+                color: mat-color($foreground, text, 1);
+            }
         }
     }
 }

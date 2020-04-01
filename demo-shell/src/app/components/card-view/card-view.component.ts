@@ -82,6 +82,52 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 icon: 'icon',
                 editable: this.isEditable
             }),
+            new CardViewTextItemModel({
+                label: 'CardView Text Item With default value',
+                value: '',
+                key: 'name',
+                default: 'default bar',
+                multiline: false,
+                icon: 'icon',
+                editable: this.isEditable
+            }),
+            new CardViewTextItemModel({
+                label: 'CardView Text Item - Protected value',
+                value: 'Spock',
+                key: 'name',
+                default: 'default bar',
+                multiline: false,
+                icon: 'icon',
+                editable: false
+            }),
+            new CardViewTextItemModel({
+                label: 'CardView Text Item - Multiline',
+                value: 'Spock',
+                key: 'name',
+                default: 'default bar',
+                multiline: true,
+                icon: 'icon',
+                editable: this.isEditable
+            }),
+            new CardViewTextItemModel({
+                label: 'CardView Text Item - Default Value',
+                value: '',
+                key: 'name',
+                default: 'default bar',
+                multiline: false,
+                icon: 'icon',
+                editable: this.isEditable
+            }),
+            new CardViewTextItemModel({
+                label: 'CardView Text Item - Multivalue (chips)',
+                value: [1, 2, 3],
+                key: 'name',
+                default: 'default bar',
+                multiline: true,
+                multivalued: true,
+                icon: 'icon',
+                editable: this.isEditable
+            }),
             new CardViewDateItemModel({
                 label: 'CardView Date Item',
                 value: new Date(1983, 11, 24, 10, 0, 30),
@@ -105,6 +151,13 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 default: false,
                 editable: this.isEditable
             }),
+            new CardViewBoolItemModel({
+                label: 'Agree to all terms and conditions',
+                value: true,
+                key: 'boolean',
+                default: false,
+                editable: this.isEditable
+            }),
             new CardViewIntItemModel({
                 label: 'CardView Int Item',
                 value: 213,
@@ -118,13 +171,19 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 key: 'float',
                 default: 0.0,
                 editable: this.isEditable,
-                pipes: [{ pipe: this.decimalNumberPipe}]
+                pipes: [{ pipe: this.decimalNumberPipe }]
             }),
             new CardViewKeyValuePairsItemModel({
                 label: 'CardView Key-Value Pairs Item',
-                value: [],
+                value: [{ name: 'hey', value: 'you' }, { name: 'hey', value: 'you' }],
                 key: 'key-value-pairs',
                 editable: this.isEditable
+            }),
+            new CardViewKeyValuePairsItemModel({
+                label: 'CardView Key-Value Pairs Item',
+                value: [{ name: 'hey', value: 'you' }, { name: 'hey', value: 'you' }],
+                key: 'key-value-pairs',
+                editable: false
             }),
             new CardViewSelectItemModel({
                 label: 'CardView Select Item',
@@ -146,6 +205,7 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 default: 'click here',
                 editable: this.isEditable,
                 clickable: true,
+                icon: 'close',
                 clickCallBack: () => {
                     this.respondToCardClick();
                 }
@@ -154,14 +214,15 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 label: 'CardView Array of items',
                 value: of([
                     { icon: 'directions_bike', value: 'Zlatan' },
-                    { icon: 'directions_bike', value: 'Lionel Messi'},
-                    { value: 'Mohamed', directions_bike: 'save'},
-                    { value: 'Ronaldo'}
+                    { icon: 'directions_bike', value: 'Lionel Messi' },
+                    { value: 'Mohamed', directions_bike: 'save' },
+                    { value: 'Ronaldo' }
                 ]),
                 key: 'array',
                 icon: 'edit',
                 default: 'Empty',
-                noOfItemsToDisplay: 2
+                noOfItemsToDisplay: 2,
+                editable: this.isEditable
             })
         ];
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
@@ -24,6 +24,13 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../services/translation.service';
 
 export const DEFAULT_SEPARATOR = ', ';
+const templateTypes = {
+    clickableTemplate: 'clickableTemplate',
+    multilineTemplate: 'multilineTemplate',
+    chipsTemplate: 'chipsTemplate',
+    emptyTemplate: 'emptyTemplate',
+    defaultTemplate: 'defaultTemplate'
+};
 
 @Component({
     selector: 'adf-card-view-textitem',
@@ -47,12 +54,10 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
-    @ViewChild('editorInput')
-    private editorInput: any;
-
     inEdit: boolean = false;
     editedValue: string | string[];
     errorMessages: string[];
+    templateType: string;
 
     constructor(cardViewUpdateService: CardViewUpdateService,
                 private clipboardService: ClipboardService,
@@ -62,47 +67,21 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
     ngOnChanges(): void {
         this.resetValue();
+        this.setTemplateType();
     }
 
-    showProperty(): boolean {
-        return this.displayEmpty || !this.property.isEmpty();
-    }
-
-    showClickableIcon(): boolean {
-        return this.hasIcon() && this.editable;
-    }
-
-    isEditable(): boolean {
-        return this.editable && this.property.editable;
-    }
-
-    isClickable(): boolean {
-        return !!this.property.clickable;
-    }
-
-    hasIcon(): boolean {
-        return !!this.property.icon;
-    }
-
-    hasErrors(): boolean {
-        return this.errorMessages && this.errorMessages.length > 0;
-    }
-
-    setEditMode(editStatus: boolean): void {
-        this.inEdit = editStatus;
-        setTimeout(() => {
-            if (this.editorInput) {
-                this.editorInput.nativeElement.click();
+    private setTemplateType() {
+        if (this.showProperty || this.isEditable) {
+            if (this.isClickable) {
+                this.templateType = templateTypes.clickableTemplate;
+            } else if (this.isChipViewEnabled) {
+                this.templateType = templateTypes.chipsTemplate;
+            } else {
+                this.templateType = templateTypes.defaultTemplate;
             }
-        }, 0);
-    }
-
-    reset(event: Event): void {
-        event.stopPropagation();
-
-        this.resetValue();
-        this.setEditMode(false);
-        this.resetErrorMessages();
+        } else {
+            this.templateType = templateTypes.emptyTemplate;
+        }
     }
 
     resetValue() {
@@ -117,14 +96,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         this.errorMessages = [];
     }
 
-    update(event: Event): void {
-        event.stopPropagation();
-
+    update(): void {
         if (this.property.isValid(this.editedValue)) {
             const updatedValue = this.prepareValueForUpload(this.property, this.editedValue);
             this.cardViewUpdateService.update(<CardViewTextItemModel> { ...this.property }, updatedValue);
             this.property.value = updatedValue;
-            this.setEditMode(false);
             this.resetErrorMessages();
         } else {
             this.errorMessages = this.property.getValidationErrors(this.editedValue);
@@ -142,6 +118,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     removeValueFromList(itemIndex: number) {
         if (typeof this.editedValue !== 'string') {
             this.editedValue.splice(itemIndex, 1);
+            this.update();
         }
     }
 
@@ -152,12 +129,12 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         if (typeof this.editedValue !== 'string') {
             if (chipValue) {
                 this.editedValue.push(chipValue);
+                this.update();
             }
 
             if (chipInput) {
                 chipInput.value = '';
-            }
-        }
+            }        }
     }
 
     onTextAreaInputChange() {
@@ -172,9 +149,39 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         }
     }
 
+    clearValue() {
+        this.editedValue = '';
+    }
+
     copyToClipboard(valueToCopy: string) {
-        const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
-        this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+        if (this.copyToClipboard) {
+            const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
+            this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
+        }
+    }
+
+    get showProperty(): boolean {
+        return this.displayEmpty || !this.property.isEmpty();
+    }
+
+    get showClickableIcon(): boolean {
+        return this.hasIcon && this.editable;
+    }
+
+    get isEditable(): boolean {
+        return this.editable && this.property.editable;
+    }
+
+    get isClickable(): boolean {
+        return !!this.property.clickable;
+    }
+
+    get hasIcon(): boolean {
+        return !!this.property.icon;
+    }
+
+    get hasErrors(): boolean {
+        return this.errorMessages && this.errorMessages.length > 0;
     }
 
     get isChipViewEnabled(): boolean {

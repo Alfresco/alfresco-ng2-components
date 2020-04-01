@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @mixin adf-card-view-theme($theme) {
     $primary: map-get($theme, primary);
@@ -8,13 +8,43 @@
         .adf-property {
             margin-bottom: 20px;
 
+            .adf-property-value-padding-top {
+                margin-top: 6px;
+            }
+
+            .adf-property-field {
+                width: 100%;
+                margin-bottom: -25px;
+
+                .mat-form-field-infix {
+                    border-top-width: 0;
+                }
+
+                .mat-form-field-label {
+                    margin-top: 6px;
+                }
+
+                .adf-property-read-only {
+                    .mat-form-field-underline {
+                        display: none;
+                    }
+                }
+            }
+
+            .adf-property-read-only {
+                .mat-form-field-underline {
+                    display: none;
+                }
+            }
+
             .adf-property-label {
                 font-size: 12px;
                 color: mat-color($foreground, text, 0.54);
                 word-wrap: break-word;
             }
 
-            .adf-property-value {
+            .adf-property-value,
+            .mat-form-field-label {
                 font-size: 14px;
                 color: mat-color($foreground, text, 0.87);
             }
