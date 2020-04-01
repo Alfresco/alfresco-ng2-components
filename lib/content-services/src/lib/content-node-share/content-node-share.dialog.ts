@@ -39,7 +39,7 @@ import moment from 'moment-es6';
 import { ContentNodeShareSettings } from './content-node-share.settings';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-type DatePickerType = 'date' | 'time' | 'mont' | 'datetime';
+type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
 @Component({
     selector: 'adf-share-dialog',
