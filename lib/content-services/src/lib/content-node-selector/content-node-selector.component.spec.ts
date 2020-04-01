@@ -155,11 +155,11 @@ describe('ContentNodeSelectorDialogComponent', () => {
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
             expect(actionButton.nativeElement.disabled).toBeFalsy();
         });
-   });
+    });
 
-   describe('Title', () => {
+    describe('Title', () => {
 
-       it('should be updated when a node is chosen', ()=> {
+        it('should be updated when a node is chosen', () => {
             component.onSelect([new Node({ id: 'fake', name: 'fake-node' })]);
             fixture.detectChanges();
 
