@@ -11,7 +11,7 @@ To enable Kerberos SSO and bypass the normal login, set the `withCredentials` pr
 ```json
 {
   "auth": {
-    "withCredentials": "true"
+    "withCredentials": true
   }
 }
 ```
