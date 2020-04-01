@@ -1,4 +1,4 @@
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 
 @mixin adf-card-view-theme($theme) {
     $primary: map-get($theme, primary);
