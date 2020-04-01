@@ -156,7 +156,7 @@ describe('Dynamic Table widget ', () => {
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationService(alfrescoJsApi);
             const application = await applicationsService.importPublishDeployApp(alfrescoJsApi, app.file_path);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();

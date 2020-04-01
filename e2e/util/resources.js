@@ -163,6 +163,7 @@ exports.Files = {
 
     FILE_FORM_ADF: {
         file_location: "/resources/apps/App_file_form.zip",
+        file_path: path.join(__dirname, '../resources/apps/App_file_form.zip'),
         attached_file: "generatedDocument.docx",
         title: "ADF-180-test",
         formName: "ADF-180-test",
@@ -434,7 +435,7 @@ exports.Files = {
 
     STENCIL_PROCESS: {
         file_location: "/resources/apps/Stencil_app.zip",
-        file_path: path.join(__dirname, '../resources/apps/Stencil_app.zipp'),
+        file_path: path.join(__dirname, '../resources/apps/Stencil_app.zip'),
         processName: 'stencil_process',
         taskName: 'stencil task'
     },
