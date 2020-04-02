@@ -272,7 +272,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.siteId = chosenSite.entry.guid;
         this.setTitleIfCustomSite(chosenSite);
         this.updateResults();
-
     }
 
     /**
@@ -296,7 +295,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         } else {
             folderNode = this.documentList.folderNode;
         }
-
         return folderNode;
     }
 
@@ -351,7 +349,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      */
     private querySearch(): void {
         this.loadingSearchResults = true;
-
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
@@ -385,6 +382,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     onFolderChange(): void {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
+        this.breadcrumbFolderTitle = null;
         this.clearSearch();
     }
 
@@ -450,6 +448,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     setTitleIfCustomSite(site: SiteEntry) {
         if (this.customResourcesService.isCustomSource(site.entry.guid)) {
             this.breadcrumbFolderTitle = site.entry.title;
+            if (this.documentList.folderNode.path.elements) {
+                this.breadcrumbFolderNode.name = site.entry.title;
+                this.documentList.folderNode.path.elements = null;
+            }
         } else {
             this.breadcrumbFolderTitle = null;
         }
