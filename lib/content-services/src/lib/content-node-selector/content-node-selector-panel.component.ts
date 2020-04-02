@@ -394,6 +394,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     onFolderChange(): void {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
+        this.breadcrumbFolderTitle = null;
         this.clearSearch();
     }
 
@@ -459,6 +460,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     setTitleIfCustomSite(site: SiteEntry) {
         if (this.customResourcesService.isCustomSource(site.entry.guid)) {
             this.breadcrumbFolderTitle = site.entry.title;
+            if (this.documentList.folderNode.path.elements) {
+                this.breadcrumbFolderNode.name = site.entry.title;
+                this.documentList.folderNode.path.elements = null;
+            }
         } else {
             this.breadcrumbFolderTitle = null;
         }
