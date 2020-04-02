@@ -439,6 +439,12 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.chosenNode).toBeNull();
             }));
 
+            it('should update the breadcrumb when changing to a custom site', fakeAsync(() => {
+                component.siteChanged(<SiteEntry> { entry: { guid: '-mysites-', title: 'My Sites' } });
+
+                expect(component.breadcrumbFolderTitle).toBe('My Sites');
+            }));
+
             it('should call the search api on changing the site selectBox value', fakeAsync(() => {
                 typeToSearchBox('vegeta');
 
