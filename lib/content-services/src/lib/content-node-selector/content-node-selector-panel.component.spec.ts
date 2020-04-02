@@ -442,6 +442,12 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(searchSpy.calls.argsFor(1)).toEqual([defaultSearchOptions('vegeta', 'namek')]);
             }));
 
+            it('should update the breadcrumb when changing to a custom site', fakeAsync(() => {
+                component.siteChanged(<SiteEntry> { entry: { guid: '-mysites-', title: 'My Sites' } });
+
+                expect(component.breadcrumbFolderTitle).toBe('My Sites');
+            }));
+
             it('should call the content node selector\'s search with the right parameters on changing the site selectbox\'s value', fakeAsync(() => {
                 typeToSearchBox('vegeta');
 
