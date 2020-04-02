@@ -26,7 +26,7 @@ import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 
-describe('Form widgets - People', () => {
+describe('Form widgets - People ', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
