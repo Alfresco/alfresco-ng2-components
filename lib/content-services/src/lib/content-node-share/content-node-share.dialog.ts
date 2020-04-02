@@ -37,7 +37,7 @@ import { SharedLinkEntry, Node } from '@alfresco/js-api';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
 import moment from 'moment-es6';
 import { ContentNodeShareSettings } from './content-node-share.settings';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 type DatePickerType = 'date' | 'time' | 'month' | 'datetime';
 
@@ -61,6 +61,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         time: new FormControl({ value: '', disabled: true })
     });
     type: DatePickerType = 'datetime';
+    maxDebounceTime = 500;
 
     @ViewChild('slideToggleExpirationDate')
     slideToggleExpirationDate;
@@ -101,7 +102,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.time.valueChanges
             .pipe(
-                distinctUntilChanged(),
+                debounceTime(this.maxDebounceTime),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(value => this.onTimeChanged(value));
