@@ -16,7 +16,7 @@
  */
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TestBed, fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of, empty } from 'rxjs';
 import {
@@ -65,12 +65,14 @@ describe('ShareDialogComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ShareDialogComponent);
+        component = fixture.componentInstance;
+        component.maxDebounceTime = 0;
+
         matDialog = TestBed.get(MatDialog);
         sharedLinksApiService = TestBed.get(SharedLinksApiService);
         renditionService = TestBed.get(RenditionsService);
         nodesApiService = TestBed.get(NodesApiService);
         appConfigService = TestBed.get(AppConfigService);
-        component = fixture.componentInstance;
 
         node = {
             entry: {
@@ -239,7 +241,7 @@ describe('ShareDialogComponent', () => {
         expect(fixture.nativeElement.querySelector('mat-datetimepicker-toggle button').disabled).toBe(true);
     });
 
-    it('should reset expiration date when toggle is unchecked', () => {
+    it('should reset expiration date when toggle is unchecked', async () => {
         node.entry.properties['qshare:sharedId'] = 'sharedId';
         node.entry.properties['qshare:sharedId'] = '2017-04-15T18:31:37+00:00';
         node.entry.allowableOperations = ['update'];
@@ -255,12 +257,12 @@ describe('ShareDialogComponent', () => {
         fixture.detectChanges();
 
         fixture.nativeElement
-        .querySelector(
-            '.mat-slide-toggle[data-automation-id="adf-expire-toggle"] label'
-        )
-        .dispatchEvent(new MouseEvent('click'));
+            .querySelector('.mat-slide-toggle[data-automation-id="adf-expire-toggle"] label')
+            .dispatchEvent(new MouseEvent('click'));
 
         fixture.detectChanges();
+
+        await fixture.whenStable();
 
         expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
             properties: { 'qshare:expiryDate': null }
@@ -287,7 +289,7 @@ describe('ShareDialogComponent', () => {
             .classList).toContain('mat-disabled');
     });
 
-    it('should update node expiration date with selected date', () => {
+    it('should update node expiration date with selected date', fakeAsync(() => {
         const date = moment();
         node.entry.allowableOperations = ['update'];
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -309,10 +311,12 @@ describe('ShareDialogComponent', () => {
         fixture.componentInstance.form.controls['time'].setValue(date);
         fixture.detectChanges();
 
+        tick(100);
+
         expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
             properties: { 'qshare:expiryDate': date.utc().format() }
         });
-    });
+    }));
 
     describe('datetimepicker type', () => {
         beforeEach(() => {
@@ -324,7 +328,7 @@ describe('ShareDialogComponent', () => {
             };
         });
 
-        it('it should update node with input date and end of day time when type is `date`', () => {
+        it('it should update node with input date and end of day time when type is `date`', fakeAsync(() => {
             const dateTimePickerType = 'date';
             const date = moment('2525-01-01 13:00:00');
             spyOn(appConfigService, 'get').and.callFake(() => dateTimePickerType);
@@ -335,13 +339,14 @@ describe('ShareDialogComponent', () => {
 
             fixture.componentInstance.time.setValue(date);
             fixture.detectChanges();
+            tick(500);
 
             expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
                     properties: { 'qshare:expiryDate': date.endOf('day').utc().format() }
             });
-        });
+        }));
 
-        it('it should update node with input date and time when type is `datetime`', () => {
+        it('it should update node with input date and time when type is `datetime`', fakeAsync(() => {
             const dateTimePickerType = 'datetime';
             const date = moment('2525-01-01 13:00:00');
             spyOn(appConfigService, 'get').and.returnValue(dateTimePickerType);
@@ -352,10 +357,11 @@ describe('ShareDialogComponent', () => {
 
             fixture.componentInstance.time.setValue(date);
             fixture.detectChanges();
+            tick(100);
 
             expect(nodesApiService.updateNode).toHaveBeenCalledWith('nodeId', {
                     properties: { 'qshare:expiryDate': date.utc().format() }
             });
-        });
+        }));
     });
 });

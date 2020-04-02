@@ -61,6 +61,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
         time: new FormControl({ value: '', disabled: true })
     });
     type: DatePickerType = 'datetime';
+    maxDebounceTime = 500;
 
     @ViewChild('slideToggleExpirationDate')
     slideToggleExpirationDate;
@@ -101,7 +102,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
 
         this.time.valueChanges
             .pipe(
-                debounceTime(500),
+                debounceTime(this.maxDebounceTime),
                 takeUntil(this.onDestroy$)
             )
             .subscribe(value => this.onTimeChanged(value));
