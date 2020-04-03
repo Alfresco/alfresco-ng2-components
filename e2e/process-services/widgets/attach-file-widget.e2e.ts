@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, ViewerPage, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ViewerPage, FileBrowserUtil, ApplicationService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AppsActions } from '../../actions/APS/apps.actions';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
@@ -45,7 +44,6 @@ describe('Attach widget - File', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-        const apps = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -56,7 +54,8 @@ describe('Attach widget - File', () => {
         processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
 

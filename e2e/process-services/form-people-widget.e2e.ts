@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ApplicationService } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 
-describe('Form widgets - People', () => {
+describe('Form widgets - People ', () => {
 
     const loginPage = new LoginPage();
     let processUserModel;
@@ -43,7 +42,6 @@ describe('Form widgets - People', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-        const appsActions = new AppsActions();
 
         alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -56,7 +54,9 @@ describe('Form widgets - People', () => {
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        appModel = await appsActions.importPublishDeployApp(alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(alfrescoJsApi);
+
+        appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });

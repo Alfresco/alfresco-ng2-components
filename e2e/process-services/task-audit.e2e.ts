@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationService } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
@@ -23,7 +23,6 @@ import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Task Audit', () => {
 
@@ -39,7 +38,6 @@ describe('Task Audit', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-        const apps = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -52,7 +50,8 @@ describe('Task Audit', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
         this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskTaskApp });
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });

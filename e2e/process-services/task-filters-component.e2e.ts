@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -25,7 +25,6 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
 import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { User } from '../models/APS/user';
@@ -54,14 +53,14 @@ describe('Task', () => {
 
         beforeEach(async () => {
 
-            const apps = new AppsActions();
             const users = new UsersActions();
 
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             user = await users.createTenantAndUser(this.alfrescoJsApi);
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            const { id } = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const { id } = await applicationsService.importPublishDeployApp(app.file_path);
             appId = id;
 
             await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -199,7 +198,6 @@ describe('Task', () => {
         const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async () => {
-            const apps = new AppsActions();
             const users = new UsersActions();
 
             this.alfrescoJsApi = new AlfrescoApi({
@@ -211,7 +209,8 @@ describe('Task', () => {
             user = await users.createTenantAndUser(this.alfrescoJsApi);
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 

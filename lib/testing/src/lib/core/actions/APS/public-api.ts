@@ -15,6 +15,5 @@
  * limitations under the License.
  */
 
-export * from './identity/public-api';
-export * from './APS/public-api';
-export * from './api.service';
+export * from './applications.service';
+export * from './models.service';

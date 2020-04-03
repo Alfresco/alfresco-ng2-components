@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -24,7 +24,6 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/process-detail
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
@@ -43,7 +42,6 @@ describe('Empty Process List Test', () => {
     let user;
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -53,12 +51,14 @@ describe('Empty Process List Test', () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await apps.importPublishDeployApp(this.alfrescoJsApi, appA.file_location);
-        await apps.importPublishDeployApp(this.alfrescoJsApi, appB.file_location);
+        await applicationsService.importPublishDeployApp(appA.file_path);
+        await applicationsService.importPublishDeployApp(appB.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
    });

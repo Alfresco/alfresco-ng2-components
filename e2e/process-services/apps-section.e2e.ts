@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
@@ -36,6 +36,7 @@ describe('Modify applications', () => {
     const apps = new AppsActions();
     const modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
+    let applicationService;
 
     beforeAll(async () => {
         const users = new UsersActions();
@@ -45,14 +46,16 @@ describe('Modify applications', () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
+        applicationService = new ApplicationService(this.alfrescoJsApi);
+
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         const user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        firstApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
-        appVersionToBeDeleted = await apps.importPublishDeployApp(this.alfrescoJsApi, appToBeDeleted.file_location);
+        firstApp = await applicationService.importPublishDeployApp(app.file_path);
+        appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
    });

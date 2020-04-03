@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginPage, StringUtil } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginPage, StringUtil, ApplicationService } from '@alfresco/adf-testing';
 import {
     AlfrescoApiCompatibility as AlfrescoApi,
     AppDefinitionRepresentation,
@@ -26,7 +26,6 @@ import { UsersActions } from '../actions/users.actions';
 import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { AppsActions } from '../actions/APS/apps.actions';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
@@ -38,7 +37,6 @@ describe('Info Drawer', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
-    const apps = new AppsActions();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processFiltersPage = new ProcessFiltersPage();
 
@@ -79,7 +77,8 @@ describe('Info Drawer', () => {
         const processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        appCreated = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });

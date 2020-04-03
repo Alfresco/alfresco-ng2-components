@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -47,7 +46,6 @@ describe('Task List Pagination - Sorting', () => {
     };
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -61,7 +59,9 @@ describe('Task List Pagination - Sorting', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
+        await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskNames[i] });

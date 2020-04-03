@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, FileBrowserUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationService } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
@@ -67,7 +67,9 @@ describe('Attachment list action menu for processes', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+
+        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
         await apps.startProcess(this.alfrescoJsApi, importedApp, processName.completed);
