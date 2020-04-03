@@ -918,6 +918,31 @@ describe('DataTable', () => {
         expect(dataTable.isSelectAllChecked).toBe(true);
     });
 
+    it('should have indeterminate state for "select all" when at least 1 row is selected or not all rows', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ name: '1' }, { name: '2' }],
+            [
+                new ObjectDataColumn({ key: 'name', sortable: false }),
+                new ObjectDataColumn({ key: 'other', sortable: false })
+            ]
+        );
+        const rows = dataTable.data.getRows();
+
+        dataTable.multiselect = true;
+        dataTable.onCheckboxChange(rows[0], <MatCheckboxChange> { checked: true });
+        expect(dataTable.isSelectAllIndeterminate).toBe(true);
+        expect(dataTable.isSelectAllChecked).toBe(false);
+
+        dataTable.onCheckboxChange(rows[1], <MatCheckboxChange> { checked: true });
+        expect(dataTable.isSelectAllIndeterminate).toBe(false);
+        expect(dataTable.isSelectAllChecked).toBe(true);
+
+        dataTable.onCheckboxChange(rows[0], <MatCheckboxChange> { checked: false });
+        dataTable.onCheckboxChange(rows[1], <MatCheckboxChange> { checked: false });
+        expect(dataTable.isSelectAllIndeterminate).toBe(false);
+        expect(dataTable.isSelectAllChecked).toBe(false);
+    });
+
     it('should allow select row when multi-select enabled', () => {
         const data = new ObjectDataTableAdapter([{}, {}], []);
         const rows = data.getRows();
