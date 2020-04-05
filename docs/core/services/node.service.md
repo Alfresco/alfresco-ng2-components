@@ -5,7 +5,9 @@ Status: Active
 Last reviewed: 2018-11-20
 ---
 
-# [Node Service](../../../lib/core/form/services/node.service.ts "Defined in node.service.ts")
+# [Node Service](../../../lib/core/form/services/node.service.ts "Defined in node.service.ts") **Deprecated** 
+
+use [Nodes Api service](./nodes-api.service.md) instead of this Node service.
 
 Gets Alfresco Repository node metadata and creates nodes with metadata. 
 
@@ -28,10 +30,10 @@ Gets Alfresco Repository node metadata and creates nodes with metadata.
     -   _path:_ `string`  - Path to the node
     -   _name:_ `string`  - (Optional) [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) name
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
--   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/form/models/node-metadata.model.ts)`>`<br/>
+-   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>`<br/>
     Get the metadata and the nodeType for a nodeId cleaned by the prefix.
     -   _nodeId:_ `string`  - ID of the target node
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/form/models/node-metadata.model.ts)`>` - Node metadata
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>` - Node metadata
 
 ## Details
 
