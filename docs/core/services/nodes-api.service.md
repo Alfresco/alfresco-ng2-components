@@ -36,6 +36,21 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeBody:_ `any`  - Data for the new node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>` - Details of the new node
+-   **createNodeInsideRoot**(name: `string`, nodeType: `string`, properties: `any`, path: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    Create a new Node inside `-root-` folder
+    -   _name:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) name
+    -   _nodeType:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) type
+    -   _properties:_ `any`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) body properties
+    -   _path:_ `string`  - Path to the node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
+-   **createNodeMetadata**(nodeType: `string`, nameSpace: `any`, data: `any`, path: `string`, name?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>`<br/>
+    Create a new Node from form metadata.
+    -   _nodeType:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) type
+    -   _nameSpace:_ `any`  - Namespace for properties
+    -   _data:_ `any`  - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) data to store in the node under namespace
+    -   _path:_ `string`  - Path to the node
+    -   _name:_ `string`  - (Optional) [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) name
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`>` - The created node
 -   **deleteNode**(nodeId: `string`, options: `any` = `{}`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Moves a node to the trashcan.
     -   _nodeId:_ `string`  - ID of the target node
@@ -51,6 +66,10 @@ Accesses and manipulates ACS document nodes using their node IDs.
     -   _nodeId:_ `string`  - ID of the target node
     -   _options:_ `any`  - Optional parameters supported by JS-API
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of child items from the folder
+-   **getNodeMetadata**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>`<br/>
+    Get the metadata and the nodeType for a nodeId cleaned by the prefix.
+    -   _nodeId:_ `string`  - ID of the target node
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodeMetadata`](../../../lib/core/models/node-metadata.model.ts)`>` - Node metadata
 -   **restoreNode**(nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`MinimalNode`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeMinimalEntry.md)`>`<br/>
     Restores a node previously moved to the trashcan.
     -   _nodeId:_ `string`  - ID of the node to restore

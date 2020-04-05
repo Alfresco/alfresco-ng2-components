@@ -25,7 +25,7 @@ import { NodesApiService } from '../../services/nodes-api.service';
     providedIn: 'root'
 })
 /**
- * @deprecated in 3.8.0, use ContentService instead.
+ * @deprecated in 3.8.0, use NodesApiService instead.
  */
 export class NodeService {
 
