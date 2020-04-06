@@ -15,32 +15,34 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { NodeMetadata } from '../models/node-metadata.model';
-import { map } from 'rxjs/operators';
-import { AlfrescoApiCompatibility, NodeEntry } from '@alfresco/js-api';
+import { Observable } from 'rxjs';
+import { NodeEntry } from '@alfresco/js-api';
+import { NodeMetadata } from '../../models/node-metadata.model';
+import { NodesApiService } from '../../services/nodes-api.service';
 
 @Injectable({
     providedIn: 'root'
 })
+/**
+ * @deprecated in 3.8.0, use NodesApiService instead.
+ */
 export class NodeService {
 
-    constructor(private apiService: AlfrescoApiService) {
-    }
+    constructor(private nodesApiService: NodesApiService) {}
 
     /**
+     * @deprecated in 3.8.0, use NodesApiService instead.
      * Get the metadata and the nodeType for a nodeId cleaned by the prefix.
      * @param nodeId ID of the target node
      * @returns Node metadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return from(this.apiService.getInstance().nodes.getNode(nodeId))
-            .pipe(map(this.cleanMetadataFromSemicolon));
+        return this.nodesApiService.getNodeMetadata(nodeId);
     }
 
     /**
+     * @deprecated in 3.8.0, use NodesApiService instead.
      * Create a new Node from form metadata.
      * @param path Path to the node
      * @param nodeType Node type
@@ -50,17 +52,11 @@ export class NodeService {
      * @returns The created node
      */
     public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<NodeEntry> {
-        const properties = {};
-        for (const key in data) {
-            if (data[key]) {
-                properties[nameSpace + ':' + key] = data[key];
-            }
-        }
-
-        return this.createNode(name || this.generateUuid(), nodeType, properties, path);
+        return this.nodesApiService.createNodeMetadata(nodeType, nameSpace, data, path, name);
     }
 
     /**
+     * @deprecated in 3.8.0, use `createNodeInsideRoot` method from NodesApiService instead.
      * Create a new Node from form metadata
      * @param name Node name
      * @param nodeType Node type
@@ -69,39 +65,6 @@ export class NodeService {
      * @returns The created node
      */
     public createNode(name: string, nodeType: string, properties: any, path: string): Observable<NodeEntry> {
-        const body = {
-            name: name,
-            nodeType: nodeType,
-            properties: properties,
-            relativePath: path
-        };
-
-        const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
-        return from(apiService.nodes.addNode('-root-', body, {}));
-    }
-
-    private generateUuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-
-    private cleanMetadataFromSemicolon(nodeEntry: NodeEntry): NodeMetadata {
-        const metadata = {};
-
-        if (nodeEntry && nodeEntry.entry.properties) {
-            for (const key in nodeEntry.entry.properties) {
-                if (key) {
-                    if (key.indexOf(':') !== -1) {
-                        metadata [key.split(':')[1]] = nodeEntry.entry.properties[key];
-                    } else {
-                        metadata [key] = nodeEntry.entry.properties[key];
-                    }
-                }
-            }
-        }
-
-        return new NodeMetadata(metadata, nodeEntry.entry.nodeType);
+        return this.nodesApiService.createNodeInsideRoot(name, nodeType, properties, path);
     }
 }

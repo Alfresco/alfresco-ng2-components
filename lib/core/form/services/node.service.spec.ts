@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { NodeMetadata } from '../models/node-metadata.model';
+import { NodeMetadata } from '../../models/node-metadata.model';
 import { EcmModelService } from './ecm-model.service';
 import { NodeService } from './node.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
