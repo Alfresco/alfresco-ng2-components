@@ -178,6 +178,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
 
+    isSelectAllIndeterminate: boolean = false;
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
 
@@ -529,6 +530,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     onSelectAllClick(matCheckboxChange: MatCheckboxChange) {
         this.isSelectAllChecked = matCheckboxChange.checked;
+        this.isSelectAllIndeterminate = false;
 
         if (this.multiselect) {
             const rows = this.data.getRows();
@@ -552,6 +554,29 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
         const domEventName = newValue ? 'row-select' : 'row-unselect';
         this.emitRowSelectionEvent(domEventName, row);
+        this.checkSelectAllCheckboxState();
+    }
+
+    checkSelectAllCheckboxState() {
+        if (this.multiselect) {
+            let numberOfSelectedRows: number = 0;
+            const rows = this.data.getRows();
+            rows.forEach((row) => {
+                if (row.isSelected) {
+                    numberOfSelectedRows++;
+                }
+            });
+            if (numberOfSelectedRows === rows.length) {
+                this.isSelectAllChecked = true;
+                this.isSelectAllIndeterminate = false;
+            } else if (numberOfSelectedRows > 0 && numberOfSelectedRows < rows.length) {
+                this.isSelectAllChecked = false;
+                this.isSelectAllIndeterminate = true;
+            } else {
+                this.isSelectAllChecked = false;
+                this.isSelectAllIndeterminate = false;
+            }
+        }
     }
 
     onImageLoadingError(event: Event, row: DataRow) {
