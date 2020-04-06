@@ -5,7 +5,7 @@
     $outline: 1px solid mat-color($alfresco-ecm-blue, A200) !default;
 
     .adf {
-        &-textitem-icon.mat-icon {
+        &-textitem-edit-icon.mat-icon {
             font-size: 16px;
             width: 16px;
             height: 16px;
@@ -50,7 +50,7 @@
             cursor: pointer !important;
             padding-top: 3px;
 
-            .adf-textitem-icon.mat-icon {
+            .adf-textitem-edit-icon.mat-icon {
                 line-height: 16px;
             }
 
@@ -61,7 +61,7 @@
 
         &-textitem-clickable-value {
             cursor: pointer !important;
-            color: mat-color($primary);
+            color: mat-color($primary) !important;
         }
 
         &-textitem-editable {
@@ -173,7 +173,7 @@
         }
 
         &-property-field.adf-card-textitem-field:hover {
-            .adf-textitem-icon {
+            .adf-textitem-edit-icon {
                 display: none;
             }
             .adf-property-clear-value {

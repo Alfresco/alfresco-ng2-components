@@ -53,7 +53,7 @@ describe('CardViewComponent', () => {
 
             const value = fixture.debugElement.query(By.css('.adf-property-value'));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('My value');
+            expect(value.nativeElement.value).toBe('My value');
         });
     }));
 
@@ -112,9 +112,9 @@ describe('CardViewComponent', () => {
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
+            const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('default value');
+            expect(value.nativeElement.value).toBe('default value');
         });
     }));
 
@@ -137,9 +137,9 @@ describe('CardViewComponent', () => {
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('My default label');
 
-            const value = fixture.debugElement.query(By.css('.adf-property-value [data-automation-id="card-textitem-value-some-key"]'));
+            const value = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-some-key"]'));
             expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('default value');
+            expect(value.nativeElement.value).toBe('default value');
         });
     }));
 });

@@ -22,15 +22,15 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
-import { CardViewItemFloatValidator, CardViewItemIntValidator } from '@alfresco/adf-core';
+import { CardViewItemFloatValidator, CardViewItemIntValidator, CardViewIntItemModel, CardViewFloatItemModel } from '@alfresco/adf-core';
 import { MatChipsModule } from '@angular/material';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
+import { DebugElement } from '@angular/core';
 
 describe('CardViewTextItemComponent', () => {
 
     let fixture: ComponentFixture<CardViewTextItemComponent>;
     let component: CardViewTextItemComponent;
-    const mouseEvent = new MouseEvent('click');
 
     setupTestBed({
         imports: [
@@ -42,13 +42,6 @@ describe('CardViewTextItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewTextItemComponent);
         component = fixture.componentInstance;
-        component.property = new CardViewTextItemModel({
-            label: 'Text label',
-            value: 'Lorem ipsum',
-            key: 'textkey',
-            default: 'FAKE-DEFAULT-KEY',
-            editable: false
-        });
     });
 
     afterEach(() => {
@@ -57,34 +50,44 @@ describe('CardViewTextItemComponent', () => {
 
     describe('Rendering', () => {
 
-        it('should render the label and value', () => {
+        beforeEach(() => {
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: 'Lorem ipsum',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                editable: false
+            });
+        });
+
+        it('should render the label and value', async () => {
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const labelValue = fixture.debugElement.query(By.css('.adf-property-label'));
             expect(labelValue).not.toBeNull();
             expect(labelValue.nativeElement.innerText).toBe('Text label');
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('Lorem ipsum');
         });
 
-        it('should render the displayName as value when available', () => {
-            let componentWithDisplayName: CardViewTextItemComponent;
-            componentWithDisplayName = fixture.componentInstance;
-            componentWithDisplayName.property = new CardViewTextItemModel({
+        it('should render the displayName as value when available', async () => {
+            component.property = new CardViewTextItemModel({
                 label: 'Name label',
                 value: { id: 123, displayName: 'User Name' },
                 key: 'namekey'
             });
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('User Name');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('User Name');
         });
 
-        it('should render the default as value if the value is empty, editable is false and displayEmpty is true', () => {
+        it('should render the default as value if the value is empty, editable is false and displayEmpty is true', async () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
@@ -93,14 +96,15 @@ describe('CardViewTextItemComponent', () => {
                 editable: false
             });
             component.displayEmpty = true;
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the default as value if the value is empty and editable true', () => {
+        it('should render the default as value if the value is empty and editable true', async () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: '',
@@ -109,50 +113,57 @@ describe('CardViewTextItemComponent', () => {
                 editable: true
             });
             component.editable = true;
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render value when editable:true', () => {
+        it('should render value when editable:true', async () => {
             component.editable = true;
             component.property.editable = true;
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('Lorem ipsum');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('Lorem ipsum');
         });
 
         it('should render the edit icon in case of editable:true', () => {
             component.editable = true;
             component.property.editable = true;
+            component.ngOnChanges();
             fixture.detectChanges();
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
             expect(editIcon).not.toBeNull('Edit icon should be shown');
         });
 
-        it('should NOT render the edit icon in case of editable:false', () => {
+        it('should NOT render the edit icon in case of editable:false', async () => {
             component.editable = false;
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
+            const editIcon = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
         });
 
-        it('should NOT render the picker and toggle in case of editable:true but (general) editable:false', () => {
+        it('should NOT render the picker and toggle in case of editable:true but (general) editable:false', async () => {
             component.editable = false;
             component.property.editable = true;
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.key}"]`));
             expect(editIcon).toBeNull('Edit icon should NOT be shown');
         });
 
-        it('should render chips for multivalue properties when chips are enabled', () => {
+        it('should render chips for multivalue properties when chips are enabled', async () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],
@@ -164,6 +175,7 @@ describe('CardViewTextItemComponent', () => {
             component.useChipsForMultiValueProperty = true;
             component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const valueChips = fixture.debugElement.queryAll(By.css(`mat-chip`));
             expect(valueChips).not.toBeNull();
@@ -173,7 +185,7 @@ describe('CardViewTextItemComponent', () => {
             expect(valueChips[2].nativeElement.innerText.trim()).toBe('item3');
         });
 
-        it('should render string for multivalue properties when chips are disabled', () => {
+        it('should render string for multivalue properties when chips are disabled', async () => {
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
                 value: ['item1', 'item2', 'item3'],
@@ -186,11 +198,11 @@ describe('CardViewTextItemComponent', () => {
             component.useChipsForMultiValueProperty = false;
             component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const valueChips = fixture.debugElement.query(By.css(`mat-chip-list`));
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('item1,item2,item3');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('item1,item2,item3');
             expect(valueChips).toBeNull();
         });
     });
@@ -201,97 +213,123 @@ describe('CardViewTextItemComponent', () => {
                 label: 'Text label',
                 value: '',
                 key: 'textkey',
-                default: 'FAKE-DEFAULT-KEY'
+                default: 'FAKE-DEFAULT-KEY',
+                editable: false
             });
         });
 
-        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', async () => {
             component.property.clickable = false;
             component.displayEmpty = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should render the default as value if the value is empty and clickable true', () => {
+        it('should render the default as value if the value is empty and clickable true', async () => {
             component.property.clickable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText.trim()).toBe('FAKE-DEFAULT-KEY');
+            const value = getTextFieldValue(component.property.key);
+            expect(value).toBe('FAKE-DEFAULT-KEY');
         });
 
-        it('should not render the edit icon in case of clickable true but edit false', () => {
+        it('should not render the edit icon in case of clickable true but edit false', async () => {
             component.property.clickable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
+            const value = fixture.debugElement.query(By.css('.adf-textitem-edit-icon'));
             expect(value).toBeNull();
         });
 
-        it('should not render the clickable icon in case editable set to false', () => {
+        it('should not render the clickable icon in case editable set to false', async () => {
             component.property.clickable = true;
             component.property.icon = 'create';
             component.editable = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-${component.property.key}"]`));
             expect(value).toBeNull('icon should NOT be shown');
         });
 
-        it('should render the defined clickable icon in case of clickable true and editable input set to true', () => {
+        it('should render the defined clickable icon in case of clickable true and editable input set to true', async () => {
             component.property.clickable = true;
             component.property.icon = 'FAKE_ICON';
             component.editable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-${component.property.key}"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('FAKE_ICON');
         });
 
-        it('should not render clickable icon in case of clickable true and icon undefined', () => {
+        it('should not render clickable icon in case of clickable true and icon undefined', async () => {
             component.property.clickable = true;
             component.editable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-${component.property.key}"]`));
             expect(value).toBeNull('icon should NOT be shown');
         });
 
-        it('should not render the edit icon in case of clickable false and icon defined', () => {
+        it('should not render the edit icon in case of clickable false and icon defined', async () => {
             component.property.clickable = false;
             component.property.icon = 'FAKE_ICON';
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-${component.property.icon}"]`));
             expect(value).toBeNull('Edit icon should NOT be shown');
         });
 
-        it('should call back function when clickable property enabled', () => {
+        it('should call back function when clickable property enabled', async () => {
             const callBackSpy = jasmine.createSpy('callBack');
             component.property.clickable = true;
             component.property.icon = 'FAKE_ICON';
             component.property.clickCallBack = callBackSpy;
             component.editable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-textkey"]`));
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-${component.property.key}"]`));
             expect(value.nativeElement.innerText).toBe('FAKE_ICON');
             value.nativeElement.click();
             expect(callBackSpy).toHaveBeenCalled();
         });
 
-        it('should click event to the event stream when clickable property enabled', () => {
+        it('should click event to the event stream when clickable property enabled', async () => {
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'clicked').and.stub();
 
             component.property.clickable = true;
             component.property.icon = 'FAKE_ICON';
             component.editable = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
@@ -299,46 +337,49 @@ describe('CardViewTextItemComponent', () => {
             expect(cardViewUpdateService.clicked).toHaveBeenCalled();
         });
 
-        it('should update input the value on click of save', () => {
-            component.property.clickable = true;
+        it('should update input the value on input updated', async (done) => {
+            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
 
+            component.property.clickable = true;
             component.property.editable = true;
             component.editable = true;
-            component.editedValue = 'updated-value';
             component.property.isValid = () => true;
             const expectedText = 'changed text';
-            spyOn(component, 'update').and.callThrough();
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
                 expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedText });
                 disposableUpdate.unsubscribe();
+                done();
             });
 
             updateTextField(component.property.key, expectedText);
 
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-
-            expect(component.update).toHaveBeenCalled();
+            component.ngOnChanges();
             fixture.detectChanges();
 
-            expect(getFieldValue(component.property.key)).toEqual(expectedText);
+            expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
         });
 
-        it('should copy value to clipboard on double click', () => {
+        it('should copy value to clipboard on double click', async () => {
             const clipboardService = TestBed.get(ClipboardService);
             spyOn(clipboardService, 'copyContentToClipboard');
 
             component.property.value = 'myValueToCopy';
             component.property.icon = 'FAKE_ICON';
             component.editable = false;
+            component.copyToClipboardAction = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
             fixture.detectChanges();
 
-            const doubleClickEl = fixture.debugElement.query(By.css('span[class*="adf-textitem-value"]'));
+            const doubleClickEl = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
             doubleClickEl.triggerEventHandler('dblclick', new MouseEvent('dblclick'));
 
             fixture.detectChanges();
@@ -348,79 +389,79 @@ describe('CardViewTextItemComponent', () => {
     });
 
     describe('Update', () => {
-        const event = new MouseEvent('click');
 
         beforeEach(() => {
-            component.editable = true;
-            component.property.editable = true;
-            component.inEdit = true;
-            component.editedValue = 'updated-value';
-            fixture.detectChanges();
+            component.property = new CardViewTextItemModel({
+                label: 'Text label',
+                value: 'Lorem ipsum',
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                editable: true
+            });
         });
 
-        it('should call the isValid method with the edited value', () => {
+        it('should call the isValid method with the edited value', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
             spyOn(component.property, 'isValid');
-            component.editedValue = 'updated-value';
-
-            component.update(event);
-
+            updateTextField(component.property.key, 'updated-value');
             expect(component.property.isValid).toHaveBeenCalledWith('updated-value');
         });
 
-        it('should trigger the update event if the editedValue is valid', () => {
+        it('should trigger the update event if the editedValue is valid', async () => {
             component.property.isValid = () => true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
-            spyOn(cardViewUpdateService, 'update');
-            component.editedValue = 'updated-value';
             const property = { ...component.property };
 
-            component.update(event);
-
+            spyOn(cardViewUpdateService, 'update');
+            updateTextField(component.property.key, 'updated-value');
             expect(cardViewUpdateService.update).toHaveBeenCalledWith(property, 'updated-value');
         });
 
-        it('should NOT trigger the update event if the editedValue is invalid', () => {
+        it('should NOT trigger the update event if the editedValue is invalid', async () => {
             component.property.isValid = () => false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+
             spyOn(cardViewUpdateService, 'update');
-
-            component.update(event);
-
+            updateTextField(component.property.key, 'updated-value');
             expect(cardViewUpdateService.update).not.toHaveBeenCalled();
         });
 
-        it('should set the errorMessages properly if the editedValue is invalid', () => {
+        it('should set the errorMessages properly if the editedValue is invalid', async () => {
             const expectedErrorMessages = ['Something went wrong'];
             component.property.isValid = () => false;
             component.property.getValidationErrors = () => expectedErrorMessages;
 
-            component.update(event);
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
+            updateTextField(component.property.key, 'updated-value');
             expect(component.errorMessages).toBe(expectedErrorMessages);
         });
 
-        it('should update the property value after a successful update attempt', async(() => {
+        it('should update the property value after a successful update attempt', async () => {
             component.property.isValid = () => true;
-            component.update(event);
+            component.update();
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+            expect(component.property.value).toBe(component.editedValue);
+        });
 
-            fixture.whenStable().then(() => {
-                expect(component.property.value).toBe(component.editedValue);
-            });
-        }));
-
-        it('should switch back to readonly mode after an update attempt', async(() => {
-            component.property.isValid = () => true;
-            component.update(event);
-
-            fixture.whenStable().then(() => {
-                expect(component.inEdit).toBeFalsy();
-            });
-        }));
-
-        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', (done) => {
-            const functionTestClick = () => {
-                done();
-            };
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', async (done) => {
+            const functionTestClick = () => done();
 
             component.property = new CardViewTextItemModel({
                 label: 'Text label',
@@ -433,18 +474,21 @@ describe('CardViewTextItemComponent', () => {
                 }
             });
             component.displayEmpty = true;
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            value.nativeElement.click();
+            const inputField = getTextField(component.property.key);
+            inputField.nativeElement.click();
         });
 
-        it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
-            component.inEdit = false;
+        it('should trigger an update event on the CardViewUpdateService [integration]', async (done) => {
             component.property.isValid = () => true;
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             const expectedText = 'changed text';
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
                 (updateNotification) => {
@@ -455,135 +499,54 @@ describe('CardViewTextItemComponent', () => {
                 }
             );
 
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
-            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
-            fixture.detectChanges();
-
-            const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
-            editInput.nativeElement.value = expectedText;
-            editInput.nativeElement.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-
-            const updateInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            updateInput.nativeElement.dispatchEvent(new MouseEvent('click'));
+            updateTextField(component.property.key, expectedText);
         });
 
-        it('should update the value using the enter key', async(() => {
-            component.inEdit = false;
+        it('should update the value using the updateItem$ subject', async(async () => {
             component.property.isValid = () => true;
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
             const expectedText = 'changed text';
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(
-                (updateNotification) => {
-                    expect(updateNotification.target).toEqual({ ...component.property });
-                    expect(updateNotification.changed).toEqual({ textkey: expectedText });
-                    disposableUpdate.unsubscribe();
-                }
-            );
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
-            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
-            fixture.detectChanges();
-
-            const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
-            editInput.nativeElement.value = expectedText;
-            editInput.nativeElement.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-
-            const enterKeyboardEvent = new KeyboardEvent('keydown', { 'key': 'Enter' });
-            editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
-            fixture.detectChanges();
-
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
-            expect(component.property.value).toBe(expectedText);
-        }));
-
-        it('should update the value using the updateItem$ subject', async(() => {
-            component.inEdit = false;
-            component.property.isValid = () => true;
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
-            const expectedText = 'changed text';
-            fixture.detectChanges();
-
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
+            let value = getTextFieldValue(component.property.key);
+            expect(value).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
 
             cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText });
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
-            expect(textItemReadOnly.nativeElement.textContent).toEqual(expectedText);
+            value = getTextFieldValue(component.property.key);
+            expect(value).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
         }));
 
-        it('should reset the value using the escape key', async(() => {
-            component.inEdit = false;
-            component.property.isValid = () => true;
-            fixture.detectChanges();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${component.property.key}"]`));
-            editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
-            fixture.detectChanges();
-
-            const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${component.property.key}"]`));
-            editInput.nativeElement.value = 'changed text';
-            editInput.nativeElement.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-
-            const enterKeyboardEvent = new KeyboardEvent('keydown', { 'key': 'Escape' });
-            editInput.nativeElement.dispatchEvent(enterKeyboardEvent);
-            fixture.detectChanges();
-
-            const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${component.property.key}"]`));
-            expect(textItemReadOnly.nativeElement.textContent).toEqual('Lorem ipsum');
-            expect(component.property.value).toBe('Lorem ipsum');
-        }));
-
-        it('should reset the value onclick of clear button', () => {
-            component.inEdit = false;
-            component.property.isValid = () => true;
-            spyOn(component, 'reset').and.callThrough();
-            fixture.detectChanges();
-
-            updateTextField(component.property.key, 'changed text');
-
-            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
-            clearButton.nativeElement.click();
-            expect(component.reset).toHaveBeenCalled();
-
-            fixture.detectChanges();
-
-            expect(getFieldValue(component.property.key)).toEqual('Lorem ipsum');
-            expect(component.property.value).toBe('Lorem ipsum');
-        });
-
-        it('should update multiline input the value on click of save', () => {
-            component.inEdit = false;
+        it('should update multiline input the value on input updated', async (done) => {
             component.property.isValid = () => true;
             component.property.multiline = true;
             const expectedText = 'changed text';
             spyOn(component, 'update').and.callThrough();
             const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
                 expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedText });
                 disposableUpdate.unsubscribe();
+                done();
             });
 
-            updateTextArea(component.property.key, expectedText);
-
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
+            updateTextField(component.property.key, expectedText);
 
             expect(component.update).toHaveBeenCalled();
             fixture.detectChanges();
 
-            expect(getFieldValue(component.property.key)).toEqual(expectedText);
+            expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
             expect(component.property.value).toBe(expectedText);
         });
     });
@@ -592,87 +555,80 @@ describe('CardViewTextItemComponent', () => {
         let cardViewUpdateService: CardViewUpdateService;
 
         beforeEach(() => {
-            component.property.editable = true;
-            component.editable = true;
-            component.inEdit = false;
-            component.property.value = 10;
-            component.property.validators.push(new CardViewItemIntValidator());
-            component.ngOnChanges();
-            fixture.detectChanges();
             cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            component.property = new CardViewIntItemModel({
+                label: 'Text label',
+                value: 10,
+                key: 'textkey',
+                default: 1,
+                editable: true
+            });
+            component.editable = true;
+            component.property.validators.push(new CardViewItemIntValidator());
+
         });
 
-        it('should show validation error when string passed', () => {
-            spyOn(component, 'update').and.callThrough();
+        it('should show validation error when string passed', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             updateTextField(component.property.key, 'update number');
 
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
             fixture.detectChanges();
-            expect(component.update).toHaveBeenCalled();
-
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
             expect(component.property.value).toBe(10);
         });
 
-        it('should show validation error for empty string', () => {
-            spyOn(component, 'update').and.callThrough();
+        it('should show validation error for empty string', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             updateTextField(component.property.key, ' ');
 
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
-
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
-
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.property.value).toBe(10);
             expect(component.property.value).toBe(10);
         });
 
-        it('should show validation error for float number', () => {
-            spyOn(component, 'update').and.callThrough();
+        it('should show validation error for float number', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
-            updateTextField(component.property.key, 0.024);
-
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
+            updateTextField(component.property.key, 123.456);
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
-
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.property.value).toBe(10);
             expect(component.property.value).toBe(10);
         });
 
-        it('should show validation error for exceed the number limit (2147483648)', () => {
-            spyOn(component, 'update').and.callThrough();
+        it('should show validation error for exceed the number limit (2147483648)', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             updateTextField(component.property.key, 2147483648);
 
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
-
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
-
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.INT_VALIDATION_ERROR');
+            expect(component.property.value).toBe(10);
             expect(component.property.value).toBe(10);
         });
 
-        it('should not show validation error for below the number limit (2147483647)', () => {
-            spyOn(component, 'update').and.callThrough();
+        it('should not show validation error for below the number limit (2147483647)', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             updateTextField(component.property.key, 2147483647);
-
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
 
             fixture.detectChanges();
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
@@ -681,48 +637,27 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toBe('2147483647');
         });
 
-        it('should reset the value onclick of clear button', () => {
-            spyOn(component, 'reset').and.callThrough();
-            fixture.detectChanges();
-
-            updateTextField(component.property.key, 20);
-
-            const clearButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-reset-${component.property.key}"]`));
-            clearButton.nativeElement.click();
-            expect(component.reset).toHaveBeenCalled();
-
-            fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error).toBeFalsy();
-
-            expect(getFieldValue(component.property.key)).toEqual('10');
-            expect(component.property.value).toBe(10);
-        });
-
-        it('should update input the value on click of save', () => {
-            component.property.multiline = true;
+        it('should update input the value on input updated', async (done) => {
             const expectedNumber = 2020;
             spyOn(component, 'update').and.callThrough();
+            component.ngOnChanges();
             fixture.detectChanges();
-            expect(component.property.value).not.toEqual(expectedNumber);
+            await fixture.whenStable();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
                 expect(updateNotification.target).toEqual({ ...component.property });
                 expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
                 disposableUpdate.unsubscribe();
+                done();
             });
 
-            updateTextArea(component.property.key, expectedNumber);
-
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
+            updateTextField(component.property.key, expectedNumber);
 
             fixture.detectChanges();
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
 
-            expect(getFieldValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
             expect(component.property.value).toBe(expectedNumber.toString());
         });
     });
@@ -732,99 +667,91 @@ describe('CardViewTextItemComponent', () => {
         const floatValue = 77.33;
 
         beforeEach(() => {
-            component.property.editable = true;
+            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            component.property = new CardViewFloatItemModel({
+                label: 'Text label',
+                value: floatValue,
+                key: 'textkey',
+                default: 'FAKE-DEFAULT-KEY',
+                editable: true
+            });
             component.editable = true;
-            component.inEdit = false;
-            component.property.value = floatValue;
             component.property.validators.push(new CardViewItemFloatValidator());
+        });
+
+        it('should show validation error when string passed', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
-            cardViewUpdateService = TestBed.get(CardViewUpdateService);
-        });
+            await fixture.whenStable();
 
-        it('should show validation error when string passed', () => {
-            spyOn(component, 'update').and.callThrough();
-
-            updateTextField(component.property.key, ' ');
-
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
+            updateTextField(component.property.key, 'hello there');
 
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
-
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
             expect(component.property.value).toBe(floatValue);
         });
 
-        it('should show validation error for empty string', () => {
-            spyOn(component, 'update').and.callThrough();
+        it('should show validation error for empty string', async () => {
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
 
             updateTextField(component.property.key, ' ');
 
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
-
             fixture.detectChanges();
-            const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
-            expect(error.nativeElement.innerText).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
-
+            const error = getTextFieldError(component.property.key);
+            expect(error).toEqual('CORE.CARDVIEW.VALIDATORS.FLOAT_VALIDATION_ERROR');
             expect(component.property.value).toBe(floatValue);
         });
 
-        it('should update input the value on click of save', () => {
-            component.property.multiline = true;
-            const expectedFloat = 88.44;
+        it('should update input the value on input updated', async (done) => {
+            const expectedNumber = 88.44;
             spyOn(component, 'update').and.callThrough();
+            component.ngOnChanges();
             fixture.detectChanges();
+            await fixture.whenStable();
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe((updateNotification) => {
                 expect(updateNotification.target).toEqual({ ...component.property });
-                expect(updateNotification.changed).toEqual({ textkey: expectedFloat.toString() });
+                expect(updateNotification.changed).toEqual({ textkey: expectedNumber.toString() });
                 disposableUpdate.unsubscribe();
+                done();
             });
 
-            updateTextArea(component.property.key, expectedFloat);
-
-            const saveButton = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-update-${component.property.key}"]`));
-            saveButton.nativeElement.click();
-            expect(component.update).toHaveBeenCalled();
+            updateTextField(component.property.key, expectedNumber);
 
             fixture.detectChanges();
             const error = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${component.property.key}"] li`));
             expect(error).toBeFalsy();
 
-            expect(getFieldValue(component.property.key)).toEqual(expectedFloat.toString());
-            expect(component.property.value).toBe(expectedFloat.toString());
+            expect(getTextFieldValue(component.property.key)).toEqual(expectedNumber.toString());
+            expect(component.property.value).toBe(expectedNumber.toString());
         });
     });
 
     function updateTextField(key, value) {
-        const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${key}"]`));
-        editIcon.nativeElement.dispatchEvent(new MouseEvent('click'));
-        fixture.detectChanges();
-
-        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-editinput-${key}"]`));
+        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
         editInput.nativeElement.value = value;
         editInput.nativeElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
     }
 
-    function updateTextArea(key, value) {
-        const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-toggle-${key}"]`));
-        editIcon.nativeElement.dispatchEvent(mouseEvent);
-        fixture.detectChanges();
-
-        const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edittextarea-${key}"]`));
-        editInput.nativeElement.value = value;
-        editInput.nativeElement.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
+    function getTextFieldValue(key): string {
+        const textItemInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
+        expect(textItemInput).not.toBeNull();
+        return textItemInput.nativeElement.value;
     }
 
-    function getFieldValue(key): string {
-        const textItemReadOnly = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
-        return textItemReadOnly.nativeElement.textContent;
+    function getTextField(key): DebugElement {
+        const textItemInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
+        expect(textItemInput).not.toBeNull();
+        return textItemInput;
+    }
+
+    function getTextFieldError(key): string {
+        const textItemInputError = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-error-${key}"] li`));
+        expect(textItemInputError).not.toBeNull();
+        return textItemInputError.nativeElement.innerText;
     }
 });

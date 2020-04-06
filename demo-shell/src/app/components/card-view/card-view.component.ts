@@ -78,17 +78,6 @@ export class CardViewComponent implements OnInit, OnDestroy {
                 value: 'Spock',
                 key: 'name',
                 default: 'default bar',
-                multiline: false,
-                icon: 'icon',
-                editable: this.isEditable
-            }),
-            new CardViewTextItemModel({
-                label: 'CardView Text Item With default value',
-                value: '',
-                key: 'name',
-                default: 'default bar',
-                multiline: false,
-                icon: 'icon',
                 editable: this.isEditable
             }),
             new CardViewTextItemModel({

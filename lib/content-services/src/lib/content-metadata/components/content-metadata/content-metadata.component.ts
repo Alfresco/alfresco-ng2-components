@@ -17,7 +17,7 @@
 
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import {
     CardViewItem,
     NodesApiService,
@@ -25,11 +25,12 @@ import {
     CardViewUpdateService,
     AlfrescoApiService,
     TranslationService,
-    AppConfigService
+    AppConfigService,
+    CardViewBaseItemModel
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -90,8 +91,9 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
-    private changedProperties = {};
+    changedProperties = {};
     hasMetadataChanged = false;
+    private targetProperty: CardViewBaseItemModel;
 
     constructor(
         private contentMetadataService: ContentMetadataService,
@@ -109,11 +111,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(
+                debounceTime(500),
+                takeUntil(this.onDestroy$))
             .subscribe(
                 (updatedNode) => {
                     this.hasMetadataChanged = true;
-                    this.changedProperties = { ...this.changedProperties, ...updatedNode.changed.properties };
+                    this.targetProperty = updatedNode.target;
+                    this.updateChanges(updatedNode.changed);
                 }
             );
 
@@ -155,8 +160,22 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
+    updateChanges(updatedNodeChanges) {
+        Object.keys(updatedNodeChanges).map((propertyGroup: string) => {
+            this.changedProperties[propertyGroup] = {
+                ...this.changedProperties[propertyGroup],
+                ...updatedNodeChanges[propertyGroup]
+            };
+        });
+    }
+
     saveChanges() {
-        this.nodesApiService.updateNode(this.node.id, { properties: this.changedProperties })
+        this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
+            catchError((err) => {
+                this.cardViewUpdateService.updateElement(this.targetProperty);
+                this.handleUpdateError(err);
+                return of(null);
+            }))
             .subscribe((updatedNode) => {
                 if (updatedNode) {
                     this.revertChanges();

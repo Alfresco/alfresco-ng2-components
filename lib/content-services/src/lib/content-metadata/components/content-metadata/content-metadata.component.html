@@ -57,10 +57,12 @@
          *ngIf="editable">
         <button mat-button
                 (click)="cancelChanges()"
+                data-automation-id="reset-metadata"
                 [disabled]="!hasMetadataChanged">Cancel</button>
         <button mat-raised-button
                 (click)="saveChanges()"
                 color="primary"
+                data-automation-id="save-metadata"
                 [disabled]="!hasMetadataChanged">Save</button>
     </div>
 

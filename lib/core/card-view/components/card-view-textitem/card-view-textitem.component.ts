@@ -54,7 +54,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
-    inEdit: boolean = false;
     editedValue: string | string[];
     errorMessages: string[];
     templateType: string;
@@ -88,7 +87,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         if (this.isChipViewEnabled) {
             this.editedValue = this.property.value ? Array.from(this.property.value) : [];
         } else {
-            this.editedValue = this.property.multiline ? this.property.displayValue : this.property.value;
+            this.editedValue = this.property.displayValue;
         }
     }
 
@@ -137,10 +136,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             }        }
     }
 
-    onTextAreaInputChange() {
-        this.errorMessages = this.property.getValidationErrors(this.editedValue);
-    }
-
     clicked(): void {
         if (typeof this.property.clickCallBack === 'function') {
             this.property.clickCallBack();
@@ -173,7 +168,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     get isClickable(): boolean {
-        return !!this.property.clickable;
+        return this.property.clickable;
     }
 
     get hasIcon(): boolean {

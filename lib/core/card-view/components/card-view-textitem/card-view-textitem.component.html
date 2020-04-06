@@ -5,53 +5,55 @@
         {{ property.label | translate }}
     </div>
 
-    <mat-form-field *ngSwitchDefault
-                    class="adf-property-field adf-card-textitem-field"
-                    [ngClass]="{ 'adf-property-read-only': !isEditable }">
-        <input matInput
-               [type]=property.inputType
-               *ngIf="!property.multiline"
-               class="adf-property-value"
-               [placeholder]="property.default"
-               [(ngModel)]="editedValue"
-               (ngModelChange)="update()"
-               [readOnly]="!isEditable"
-               (dblclick)="copyToClipboard(property.displayValue)"
-               matTooltipShowDelay="1000"
-               [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
-               [matTooltipDisabled]="isEditable"
-               [attr.data-automation-id]="'card-textitem-editinput-' + property.key">
-        <textarea matInput
-                  *ngIf="property.multiline"
-                  matTextareaAutosize
-                  matAutosizeMaxRows="1"
-                  matAutosizeMaxRows="5"
-                  class="adf-property-value"
-                  [placeholder]="property.default"
-                  [(ngModel)]="editedValue"
-                  (ngModelChange)="update()"
-                  [readOnly]="!isEditable"
-                  [attr.data-automation-id]="'card-textitem-edittextarea-' + property.key"></textarea>
-        <button mat-button
-                matSuffix
-                class="adf-property-clear-value"
-                *ngIf="isEditable"
-                mat-icon-button
-                aria-label="Clear"
-                (click)="editedValue=''">
-            <mat-icon>cancel</mat-icon>
-        </button>
-        <mat-icon matSuffix
-                  *ngIf="isEditable"
-                  class="adf-textitem-icon">mode_edit</mat-icon>
-        <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key"
-                   class="adf-textitem-editable-error"
-                   *ngIf="hasErrors">
-            <ul>
-                <li *ngFor="let errorMessage of errorMessages">{{ errorMessage | translate }}</li>
-            </ul>
-        </mat-error>
-    </mat-form-field>
+    <div *ngSwitchDefault>
+        <mat-form-field class="adf-property-field adf-card-textitem-field"
+                        [ngClass]="{ 'adf-property-read-only': !isEditable }">
+            <input matInput
+                   *ngIf="!property.multiline"
+                   class="adf-property-value"
+                   [placeholder]="property.default"
+                   [(ngModel)]="editedValue"
+                   (ngModelChange)="update()"
+                   [readOnly]="!isEditable"
+                   (dblclick)="copyToClipboard(property.displayValue)"
+                   matTooltipShowDelay="1000"
+                   [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
+                   [matTooltipDisabled]="isEditable"
+                   [attr.data-automation-id]="'card-textitem-value-' + property.key">
+            <textarea matInput
+                      *ngIf="property.multiline"
+                      matTextareaAutosize
+                      matAutosizeMaxRows="1"
+                      matAutosizeMaxRows="5"
+                      class="adf-property-value"
+                      [placeholder]="property.default"
+                      [(ngModel)]="editedValue"
+                      (ngModelChange)="update()"
+                      [readOnly]="!isEditable"
+                      [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
+            <button mat-button
+                    matSuffix
+                    class="adf-property-clear-value"
+                    *ngIf="isEditable"
+                    mat-icon-button
+                    aria-label="Clear"
+                    (click)="editedValue=''">
+                <mat-icon>cancel</mat-icon>
+            </button>
+            <mat-icon matSuffix
+                      *ngIf="isEditable"
+                      class="adf-textitem-edit-icon">mode_edit</mat-icon>
+
+        </mat-form-field>
+    </div>
+
+    <mat-error [attr.data-automation-id]="'card-textitem-error-' + property.key"
+               class="adf-textitem-editable-error"
+               *ngIf="hasErrors">
+        <ul>
+            <li *ngFor="let errorMessage of errorMessages">{{ errorMessage | translate }}</li>
+        </ul>
+    </mat-error>
 
     <div *ngSwitchCase="'chipsTemplate'"
          class="adf-property-field adf-textitem-chip-list-container">
@@ -77,29 +79,39 @@
                    (matChipInputTokenEnd)="addValueToList($event)"
                    [attr.data-automation-id]="'card-textitem-editchipinput-' + property.key">
             <mat-icon matSuffix
-                      class="adf-textitem-icon">mode_edit</mat-icon>
+                      class="adf-textitem-edit-icon">mode_edit</mat-icon>
         </mat-form-field>
     </div>
 
     <div *ngSwitchCase="'clickableTemplate'"
          role="button"
          class="adf-textitem-clickable"
+         [ngClass]="{ 'adf-property-read-only': !isEditable }"
          [attr.data-automation-id]="'card-textitem-toggle-' + property.key"
          (click)="clicked()"
          fxLayout="row"
          fxLayoutAlign="space-between center">
-        <span class="adf-textitem-clickable-value"
-              [attr.data-automation-id]="'card-textitem-value-' + property.key">
-            <span>{{ property.displayValue }}</span>
-        </span>
-        <button mat-icon-button
-                fxFlex="0 0 auto"
-                *ngIf="showClickableIcon"
-                class="adf-textitem-action"
-                [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
-                [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key">
-            <mat-icon class="adf-textitem-icon">{{ property?.icon }}</mat-icon>
-        </button>
+        <mat-form-field class="adf-property-field adf-card-textitem-field">
+            <input matInput
+                   [type]=property.inputType
+                   class="adf-property-value"
+                   [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
+                   [placeholder]="property.default"
+                   [(ngModel)]="editedValue"
+                   (ngModelChange)="update()"
+                   [readOnly]="!isEditable"
+                   [attr.data-automation-id]="'card-textitem-value-' + property.key">
+            <button mat-icon-button
+                    matSuffix
+                    fxFlex="0 0 auto"
+                    *ngIf="showClickableIcon"
+                    class="adf-textitem-action"
+                    [attr.title]="'CORE.METADATA.ACTIONS.EDIT' | translate"
+                    [attr.data-automation-id]="'card-textitem-clickable-icon-' + property.key">
+                <mat-icon class="adf-textitem-icon">{{ property?.icon }}</mat-icon>
+            </button>
+        </mat-form-field>
+
     </div>
 
     <div *ngSwitchCase="'emptyTemplate'">
