@@ -51,7 +51,7 @@ describe('ContentMetadataComponent', () => {
         updateService = TestBed.get(CardViewUpdateService);
         nodesApiService = TestBed.get(NodesApiService);
 
-        node = <Node> {
+        node = <Node>{
             id: 'node-id',
             aspectNames: [],
             nodeType: '',
@@ -61,7 +61,7 @@ describe('ContentMetadataComponent', () => {
             modifiedByUser: {}
         };
 
-        folderNode = <Node> {
+        folderNode = <Node>{
             id: 'folder-id',
             aspectNames: [],
             nodeType: '',
@@ -110,7 +110,7 @@ describe('ContentMetadataComponent', () => {
     describe('Saving', () => {
         it('itemUpdate', fakeAsync(() => {
             spyOn(component, 'updateChanges').and.callThrough();
-            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
+            const property = <CardViewBaseItemModel>{ key: 'properties.property-key', value: 'original-value' };
             updateService.update(property, 'updated-value');
 
             tick(600);
@@ -138,30 +138,14 @@ describe('ContentMetadataComponent', () => {
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 
-        it('should throw error on unsuccessful save', async () => {
+        it('should throw error on unsuccessful save', async(async (done) => {
             const logService: LogService = TestBed.get(LogService);
             component.changedProperties = { properties: { 'property-key': 'updated-value' } };
             component.hasMetadataChanged = true;
             component.editable = true;
 
-            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-                return throwError(new Error('My bad'));
-            });
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-            saveButton.nativeElement.click();
-            fixture.detectChanges();
-            expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
-        });
-
-        it('should raise error message', async (done) => {
-            component.changedProperties = { properties: { 'property-key': 'updated-value' } };
-            component.hasMetadataChanged = true;
-            component.editable = true;
-
             const sub = contentMetadataService.error.subscribe((err) => {
+                expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
                 expect(err.statusCode).toBe(0);
                 expect(err.message).toBe('METADATA.ERRORS.GENERIC');
                 sub.unsubscribe();
@@ -176,7 +160,8 @@ describe('ContentMetadataComponent', () => {
             await fixture.whenStable();
             const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
             saveButton.nativeElement.click();
-        });
+            fixture.detectChanges();
+        }));
     });
 
     describe('Reseting', () => {

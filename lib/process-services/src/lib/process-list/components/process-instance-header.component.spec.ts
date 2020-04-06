@@ -50,20 +50,22 @@ describe('ProcessInstanceHeaderComponent', () => {
         expect(fixture.debugElement.children.length).toBe(0);
     });
 
-    it('should display status as running when process is not complete', () => {
+    it('should display status as running when process is not complete', async () => {
         component.processInstance.ended = null;
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
-        expect(valueEl.innerText).toBe('Running');
+        expect(valueEl.value).toBe('Running');
     });
 
-    it('should display status as completed when process is complete', () => {
+    it('should display status as completed when process is complete', async () => {
         component.processInstance.ended = new Date('2016-11-03');
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-status"]');
-        expect(valueEl.innerText).toBe('Completed');
+        expect(valueEl.value).toBe('Completed');
     });
 
     it('should display due date', () => {
@@ -82,20 +84,22 @@ describe('ProcessInstanceHeaderComponent', () => {
         expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.END_DATE_DEFAULT');
     });
 
-    it('should display process category', () => {
+    it('should display process category', async () => {
         component.processInstance.processDefinitionCategory = 'Accounts';
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
-        expect(valueEl.innerText).toBe('Accounts');
+        expect(valueEl.value).toBe('Accounts');
     });
 
-    it('should display placeholder if no process category', () => {
+    it('should display placeholder if no process category', async () => {
         component.processInstance.processDefinitionCategory = null;
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-category"]');
-        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT');
+        expect(valueEl.value).toBe('ADF_PROCESS_LIST.PROPERTIES.CATEGORY_DEFAULT');
     });
 
     it('should display created date', () => {
@@ -106,52 +110,58 @@ describe('ProcessInstanceHeaderComponent', () => {
         expect(valueEl.innerText).toBe('Nov 3, 2016');
     });
 
-    it('should display started by', () => {
+    it('should display started by', async () => {
         component.processInstance.startedBy = {firstName:  'Admin', lastName: 'User'};
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
-        expect(valueEl.innerText).toBe('Admin User');
+        expect(valueEl.value).toBe('Admin User');
     });
 
-    it('should display process instance id', () => {
+    it('should display process instance id', async () => {
         component.processInstance.id = '123';
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-id"]');
-        expect(valueEl.innerText).toBe('123');
+        expect(valueEl.value).toBe('123');
     });
 
-    it('should display description', () => {
+    it('should display description', async () => {
         component.processInstance.processDefinitionDescription = 'Test process';
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
-        expect(valueEl.innerText).toBe('Test process');
+        expect(valueEl.value).toBe('Test process');
     });
 
-    it('should display placeholder if no description', () => {
+    it('should display placeholder if no description', async () => {
         component.processInstance.processDefinitionDescription = null;
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-description"]');
-        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT');
+        expect(valueEl.value).toBe('ADF_PROCESS_LIST.PROPERTIES.DESCRIPTION_DEFAULT');
     });
 
-    it('should display businessKey value', () => {
+    it('should display businessKey value', async () => {
         component.processInstance.businessKey = 'fakeBusinessKey';
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
-        expect(valueEl.innerText).toBe('fakeBusinessKey');
+        expect(valueEl.value).toBe('fakeBusinessKey');
     });
 
-    it('should display default key if no businessKey', () => {
+    it('should display default key if no businessKey', async () => {
         component.processInstance.businessKey = null;
         component.ngOnChanges();
         fixture.detectChanges();
+        await fixture.whenStable();
         const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-businessKey"]');
-        expect(valueEl.innerText).toBe('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT');
+        expect(valueEl.value).toBe('ADF_PROCESS_LIST.PROPERTIES.BUSINESS_KEY_DEFAULT');
     });
 
     describe('Config Filtering', () => {

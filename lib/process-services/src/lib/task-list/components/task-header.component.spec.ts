@@ -83,7 +83,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
-            expect(formNameEl.nativeElement.innerText).toBe('Wilbur Adams');
+            expect(formNameEl.nativeElement.value).toBe('Wilbur Adams');
         });
     }));
 
@@ -94,7 +94,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .adf-textitem-clickable-value'));
-            expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
+            expect(valueEl.nativeElement.value).toBe('ADF_TASK_LIST.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
     }));
@@ -106,7 +106,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-            expect(formNameEl.nativeElement.innerText).toBe('27');
+            expect(formNameEl.nativeElement.value).toBe('27');
         });
     }));
 
@@ -287,7 +287,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
-            expect(valueEl.nativeElement.innerText).toBe('test form');
+            expect(valueEl.nativeElement.value).toBe('test form');
         });
     }));
 
@@ -301,8 +301,8 @@ describe('TaskHeaderComponent', () => {
             const clickableForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-clickable-value'));
             expect(clickableForm).toBeNull();
 
-            const readOnlyForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-textitem-scroll'));
-            expect(readOnlyForm.nativeElement.innerText).toBe('test form');
+            const readOnlyForm = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] input'));
+            expect(readOnlyForm.nativeElement.value).toBe('test form');
         });
     }));
 
@@ -335,7 +335,7 @@ describe('TaskHeaderComponent', () => {
 
         fixture.whenStable().then(() => {
             const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-formName"] .adf-property-value'));
-            expect(valueEl.nativeElement.innerText).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
+            expect(valueEl.nativeElement.value).toBe('ADF_TASK_LIST.PROPERTIES.FORM_NAME_DEFAULT');
         });
     }));
 
