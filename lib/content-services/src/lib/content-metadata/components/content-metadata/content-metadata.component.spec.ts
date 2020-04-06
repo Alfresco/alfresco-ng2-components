@@ -156,26 +156,27 @@ describe('ContentMetadataComponent', () => {
             expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
         });
 
-        // xit('should raise error message', async (done) => {
-        //     component.changedProperties = { properties: { 'property-key': 'updated-value' } };
-        //     component.hasMetadataChanged = true;
-        //     component.editable = true;
+        it('should raise error message', async (done) => {
+            component.changedProperties = { properties: { 'property-key': 'updated-value' } };
+            component.hasMetadataChanged = true;
+            component.editable = true;
 
-        //     const sub = contentMetadataService.error.subscribe((err) => {
-        //         expect(err.statusCode).toBe(0);
-        //         expect(err.message).toBe('METADATA.ERRORS.GENERIC');
-        //         sub.unsubscribe();
-        //         done();
-        //     });
+            const sub = contentMetadataService.error.subscribe((err) => {
+                expect(err.statusCode).toBe(0);
+                expect(err.message).toBe('METADATA.ERRORS.GENERIC');
+                sub.unsubscribe();
+                done();
+            });
 
-        //     spyOn(nodesApiService, 'updateNode').and.callFake(() => {
-        //         return throwError(new Error('My bad'));
-        //     });
+            spyOn(nodesApiService, 'updateNode').and.callFake(() => {
+                return throwError(new Error('My bad'));
+            });
 
-        //     fixture.detectChanges();
-        //     const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
-        //     saveButton.nativeElement.click();
-        // });
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const saveButton = fixture.debugElement.query(By.css('[data-automation-id="save-metadata"]'));
+            saveButton.nativeElement.click();
+        });
     });
 
     describe('Reseting', () => {
