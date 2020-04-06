@@ -51,7 +51,7 @@ describe('ContentMetadataComponent', () => {
         updateService = TestBed.get(CardViewUpdateService);
         nodesApiService = TestBed.get(NodesApiService);
 
-        node = <Node>{
+        node = <Node> {
             id: 'node-id',
             aspectNames: [],
             nodeType: '',
@@ -61,7 +61,7 @@ describe('ContentMetadataComponent', () => {
             modifiedByUser: {}
         };
 
-        folderNode = <Node>{
+        folderNode = <Node> {
             id: 'folder-id',
             aspectNames: [],
             nodeType: '',
@@ -110,7 +110,7 @@ describe('ContentMetadataComponent', () => {
     describe('Saving', () => {
         it('itemUpdate', fakeAsync(() => {
             spyOn(component, 'updateChanges').and.callThrough();
-            const property = <CardViewBaseItemModel>{ key: 'properties.property-key', value: 'original-value' };
+            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
             updateService.update(property, 'updated-value');
 
             tick(600);
