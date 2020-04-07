@@ -36,6 +36,7 @@
                 min-width: 0;
                 padding: 0;
                 line-height: 0;
+                color: mat-color($foreground, text, 0.54) !important;
             }
         }
 
