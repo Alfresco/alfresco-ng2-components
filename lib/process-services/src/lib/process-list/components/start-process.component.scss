@@ -14,12 +14,18 @@
             width: 100%;
             padding: 16px 0 0;
         }
+        .mat-form-field-label {
+            color: #bababa;
+        }
         .mat-content-actions {
             text-align: right;
         }
         .mat-button {
             text-transform: uppercase !important;
         }
+    }
+    &-title  {
+        padding-bottom: 1.25em;
     }
     &-process-input-container {
         mat-form-field {
