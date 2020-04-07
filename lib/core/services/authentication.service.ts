@@ -61,6 +61,16 @@ export class AuthenticationService {
         return this.alfrescoApi.getInstance().isLoggedIn();
     }
 
+    isLoggedInWith(provider: string) {
+        if (provider === 'BPM') {
+            return this.isBpmLoggedIn();
+        } else if (provider === 'ECM') {
+            return this.isEcmLoggedIn();
+        } else {
+            return this.isLoggedIn();
+        }
+    }
+
     /**
      * Does the provider support OAuth?
      * @returns True if supported, false otherwise
