@@ -18,7 +18,7 @@
 import {
     DataRowEvent, DataTableAdapter, DataTableSchema, CustomEmptyContentTemplateDirective, CustomLoadingContentTemplateDirective,
     AppConfigService, PaginationComponent, PaginatedComponent,
-    UserPreferencesService, UserPreferenceValues, PaginationModel } from '@alfresco/adf-core';
+    UserPreferencesService, UserPreferenceValues, PaginationModel, DataCellEvent } from '@alfresco/adf-core';
 import {
     AfterContentInit, Component, ContentChild, EventEmitter,
     Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
@@ -122,6 +122,14 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     /** Starting point of the list within the full set of tasks. */
     @Input()
     start: number;
+
+    /** Toggles custom context menu for the component. */
+    @Input()
+    showContextMenu: boolean = false;
+
+    /** Emitted before the context menu is displayed for a row. */
+    @Output()
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
 
     /** Emitted when a task in the list is clicked */
     @Output()
@@ -354,6 +362,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        this.showRowContextMenu.emit(event);
     }
 
     /**

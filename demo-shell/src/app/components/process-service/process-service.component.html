@@ -47,6 +47,8 @@
                         [state]="taskFilter?.filter?.state"
                         [sort]="taskFilter?.filter?.sort"
                         [landingTaskId]="currentTaskId"
+                        [showContextMenu]="taskContextMenu"
+                        (showRowContextMenu)="onShowTaskRowContextMenu($event)"
                         (rowClick)="onTaskRowClick($event)"
                         (success)="onSuccessTaskList()"
                         (row-click)="onRowClick($event)"
@@ -161,6 +163,8 @@
                         [page]="processPage"
                         [size]="paginationPageSize"
                         [sort]="processFilter?.filter?.sort"
+                        [showContextMenu]="processContextMenu"
+                        (showRowContextMenu)="onShowProcessRowContextMenu($event)"
                         (rowClick)="onProcessRowClick($event)"
                         (row-dblclick)="onProcessRowDblClick($event)"
                         [multiselect]="multiSelectProcess"
@@ -279,6 +283,12 @@
                 <div>
                     <mat-slide-toggle id="adf-task-multiselect" [(ngModel)]="multiSelectTask" >Multiselect Task List
                     </mat-slide-toggle>
+                </div>
+                <div>
+                    <mat-slide-toggle id="adf-task-context-menu" [(ngModel)]="taskContextMenu" >Show Task list Context menu</mat-slide-toggle>
+                </div>
+                <div>
+                    <mat-slide-toggle id="adf-process-context-menu" [(ngModel)]="processContextMenu" >Show Process list Context menu</mat-slide-toggle>
                 </div>
                 <br>
                 <mat-radio-group [(ngModel)]="selectionMode">

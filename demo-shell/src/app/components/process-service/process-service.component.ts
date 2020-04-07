@@ -36,7 +36,7 @@ import {
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService
+    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -118,6 +118,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     multiSelectTask = false;
     multiSelectProcess = false;
     selectionMode = 'single';
+    taskContextMenu = false;
+    processContextMenu = false;
 
     private tabs = { tasks: 0, processes: 1, reports: 2 };
 
@@ -526,4 +528,33 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
         this.currentTaskId = null;
     }
 
+    onShowTaskRowContextMenu(event: DataCellEvent) {
+        event.value.actions = [
+            {
+                data: event.value.row['obj'],
+                model: {
+                    key: 'taskDetails',
+                    icon: 'open',
+                    title: 'TASK_LIST_DEMO.TASK_CONTEXT_MENU',
+                    visible: true
+                },
+                subject: new Subject()
+            }
+        ];
+    }
+
+    onShowProcessRowContextMenu(event: DataCellEvent) {
+        event.value.actions = [
+            {
+                data: event.value.row['obj'],
+                model: {
+                    key: 'processDetails',
+                    icon: 'open',
+                    title: 'PROCESS_LIST_DEMO.PROCESS_CONTEXT_MENU',
+                    visible: true
+                },
+                subject: new Subject()
+            }
+        ];
+    }
 }

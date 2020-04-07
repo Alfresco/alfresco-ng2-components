@@ -27,7 +27,8 @@ import {
     PaginatedComponent,
     PaginationComponent,
     PaginationModel,
-    UserPreferencesService
+    UserPreferencesService,
+    DataCellEvent
 } from '@alfresco/adf-core';
 import {
     AfterContentInit,
@@ -109,6 +110,14 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     /** Toggles default selection of the first row */
     @Input()
     selectFirstRow: boolean = true;
+
+    /** Toggles custom context menu for the component. */
+    @Input()
+    showContextMenu: boolean = false;
+
+    /** Emitted before the context menu is displayed for a row. */
+    @Output()
+    showRowContextMenu = new EventEmitter<DataCellEvent>();
 
     /**
      * Resolver function is used to show dynamic complex column objects
@@ -282,6 +291,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
             this.currentInstanceId = event.detail.row.getValue('id');
             this.rowClick.emit(this.currentInstanceId);
         }
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        this.showRowContextMenu.emit(event);
     }
 
     private createRequestNode(): ProcessFilterParamRepresentationModel {
