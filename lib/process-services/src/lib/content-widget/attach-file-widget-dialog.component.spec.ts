@@ -33,8 +33,8 @@ describe('AttachFileWidgetDialogComponent', () => {
     let widget: AttachFileWidgetDialogComponent;
     let fixture: ComponentFixture<AttachFileWidgetDialogComponent>;
     const data: AttachFileWidgetDialogComponentData = {
-        title: 'Move along citizen...',
-        actionName: 'move',
+        title: 'Choose along citizen...',
+        actionName: 'Choose',
         selected: new EventEmitter<any>(),
         ecmHost: 'http://fakeUrl.com/'
     };
@@ -143,6 +143,24 @@ describe('AttachFileWidgetDialogComponent', () => {
                 const chooseButton: HTMLButtonElement = element.querySelector('button[data-automation-id="attach-file-dialog-actions-choose"]');
                 chooseButton.click();
             });
+        });
+
+        it('should update the title when the selected node is a file', () => {
+            const fakeNode: Node = new Node({ id: 'fake', isFile: true});
+            contentNodePanel.componentInstance.select.emit([fakeNode]);
+            fixture.detectChanges();
+            const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
+            expect(titleElement).not.toBeNull();
+            expect(titleElement.nativeElement.innerText).toBe('ATTACH-FILE.ACTIONS.CHOOSE_ITEM');
+        });
+
+        it('should update the title when the selected node is a folder', () => {
+            const fakeNode: Node = new Node({ id: 'fake', isFolder: true});
+            contentNodePanel.componentInstance.select.emit([fakeNode]);
+            fixture.detectChanges();
+            const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
+            expect(titleElement).not.toBeNull();
+            expect(titleElement.nativeElement.innerText).toBe('ATTACH-FILE.ACTIONS.CHOOSE_IN');
         });
    });
 });
