@@ -324,10 +324,15 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG" : {
+      "LOGIN": "Please log in for {{ ecmHost }}"
+    },
     "ACTIONS": {
       "LOGIN": "Login",
       "CANCEL": "Cancel",
-      "CHOOSE": "Choose"
+      "CHOOSE": "Choose",
+      "CHOOSE_ITEM": "Choose {{ name }} to...",
+      "CHOOSE_IN": "Choose file in {{ name }}..."
     }
   }
 }

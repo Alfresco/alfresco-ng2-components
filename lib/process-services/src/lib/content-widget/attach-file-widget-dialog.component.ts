@@ -17,7 +17,7 @@
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent, SitesService, SearchService } from '@alfresco/adf-core';
+import { ExternalAlfrescoApiService, AlfrescoApiService, AuthenticationService, LoginDialogPanelComponent, SitesService, SearchService, TranslationService } from '@alfresco/adf-core';
 import { DocumentListService, ContentNodeSelectorService } from '@alfresco/adf-content-services';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { Node } from '@alfresco/js-api';
@@ -39,13 +39,18 @@ export class AttachFileWidgetDialogComponent {
     @ViewChild('adfLoginPanel')
     loginPanel: LoginDialogPanelComponent;
 
+    title: string;
+    action: string;
+    buttonActionName: string;
     chosenNode: Node[];
-    buttonActionName;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
+    constructor(private translation: TranslationService,
+                @Inject(MAT_DIALOG_DATA) public data: AttachFileWidgetDialogComponentData,
                 private externalApiService: AlfrescoApiService) {
         (<any> externalApiService).init(data.ecmHost, data.context);
-        this.buttonActionName = data.actionName ? `ATTACH-FILE.ACTIONS.${data.actionName.toUpperCase()}` : 'ATTACH-FILE.ACTIONS.CHOOSE';
+        this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
+        this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
+        this.title = data.title;
     }
 
     isLoggedIn() {
@@ -66,6 +71,7 @@ export class AttachFileWidgetDialogComponent {
         } else {
             this.chosenNode = null;
         }
+        this.updateTitle(nodeList);
     }
 
     onClick() {
@@ -73,4 +79,17 @@ export class AttachFileWidgetDialogComponent {
         this.data.selected.complete();
     }
 
+    updateTitle(nodeList: Node[]): void {
+        if (this.action === 'CHOOSE' && nodeList) {
+            if (nodeList[0].isFile) {
+                this.title = this.getTitleTranslation(this.action + '_ITEM', nodeList[0].name);
+            } else if (nodeList[0].isFolder) {
+                this.title = this.getTitleTranslation(this.action + '_IN', nodeList[0].name);
+            }
+        }
+    }
+
+    getTitleTranslation(action: string, name: string): string {
+        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}`, { name });
+    }
 }
