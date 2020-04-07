@@ -138,6 +138,13 @@
           "description": "Custom component id (requires type to be 'custom')",
           "type": "string"
         },
+        "data": {
+          "description": "Custom component data",
+          "type": "object",
+          "patternProperties": {
+            ".*": {}
+          }
+        },
         "children": {
           "description": "Child entries for the container types.",
           "type": "array",
