@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
@@ -27,7 +27,6 @@ import {
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel,
-    FormRenderingService,
     setupTestBed,
     TRANSLATION_PROVIDER,
     WidgetVisibilityService
@@ -46,20 +45,48 @@ import { FormCloudRepresentation } from '../models/form-cloud-representation.mod
 import { FormCloudModule } from '../form-cloud.module';
 import { TranslateService } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CloudFormRenderingService } from './cloud-form-rendering.service';
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
-    let formRenderingService: FormRenderingService;
+    let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
+
+    @Component({
+        selector: 'adf-cloud-custom-widget',
+        template: '<div></div>'
+    })
+    class CustomWidget {
+        typeId = 'CustomWidget';
+    }
+
+    @NgModule({
+        declarations: [CustomWidget],
+        exports: [CustomWidget],
+        entryComponents: [CustomWidget]
+    })
+    class CustomUploadModule {}
+
+    function buildWidget(type: string, injector: Injector): any {
+        const resolver = formRenderingService.getComponentTypeResolver(type);
+        const widgetType = resolver(null);
+
+        const factoryResolver: ComponentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+        const factory = factoryResolver.resolveComponentFactory(widgetType);
+        const componentRef = factory.create(injector);
+
+        return componentRef.instance;
+    }
 
     setupTestBed({
         imports: [
             NoopAnimationsModule,
             CoreModule.forRoot(),
-            FormCloudModule
+            FormCloudModule,
+            CustomUploadModule
         ],
         providers: [
             {
@@ -74,18 +101,81 @@ describe('FormCloudComponent', () => {
     });
 
     beforeEach(async(() => {
-        formRenderingService = TestBed.get(FormRenderingService);
+        formRenderingService = TestBed.get(CloudFormRenderingService);
         formCloudService = TestBed.get(FormCloudService);
-        visibilityService = TestBed.get(WidgetVisibilityService);
+
         translateService = TestBed.get(TranslateService);
+
+        visibilityService = TestBed.get(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
+
         const appConfigService = TestBed.get(AppConfigService);
         spyOn(appConfigService, 'get').and.returnValue([]);
-        spyOn(formRenderingService, 'setComponentTypeResolver').and.returnValue(true);
+
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
         fixture.detectChanges();
    }));
+
+    it('should register custom [upload] widget', () => {
+        const widget = buildWidget('upload', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('AttachFileCloudWidgetComponent');
+    });
+
+    it('should allow to replace custom [upload] widget', () => {
+        formRenderingService.setComponentTypeResolver('upload', () => CustomWidget, true);
+
+        const widget = buildWidget('upload', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
+    });
+
+    it('should register custom [dropdown] widget', () => {
+        const widget = buildWidget('dropdown', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('DropdownCloudWidgetComponent');
+    });
+
+    it('should allow to replace custom [dropdown] widget', () => {
+        formRenderingService.setComponentTypeResolver('dropdown', () => CustomWidget, true);
+
+        const widget = buildWidget('dropdown', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
+    });
+
+    it('should register custom [date] widget', () => {
+        const widget = buildWidget('date', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('DateCloudWidgetComponent');
+    });
+
+    it('should allow to replace custom [date] widget', () => {
+        formRenderingService.setComponentTypeResolver('date', () => CustomWidget, true);
+
+        const widget = buildWidget('date', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
+    });
+
+    it('should register custom [people] widget', () => {
+        const widget = buildWidget('people', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('PeopleCloudWidgetComponent');
+    });
+
+    it('should allow to replace custom [people] widget', () => {
+        formRenderingService.setComponentTypeResolver('people', () => CustomWidget, true);
+
+        const widget = buildWidget('people', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
+    });
+
+    it('should register custom [functional-group] widget', () => {
+        const widget = buildWidget('functional-group', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('GroupCloudWidgetComponent');
+    });
+
+    it('should allow to replace custom [functional-group] widget', () => {
+        formRenderingService.setComponentTypeResolver('functional-group', () => CustomWidget, true);
+
+        const widget = buildWidget('functional-group', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
+    });
 
     it('should check form', () => {
         expect(formComponent.hasForm()).toBeFalsy();

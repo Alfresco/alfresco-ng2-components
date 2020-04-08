@@ -32,6 +32,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
+    typeId = 'DropdownCloudWidgetComponent';
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(public formService: FormService,

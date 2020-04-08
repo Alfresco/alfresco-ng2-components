@@ -39,16 +39,15 @@ import {
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
-import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.widget';
-import { AttachFileCloudWidgetComponent } from './widgets/attach-file/attach-file-cloud-widget.component';
-import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
-import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget';
-import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
+import { CloudFormRenderingService } from './cloud-form-rendering.service';
 
 @Component({
     selector: 'adf-cloud-form',
-    templateUrl: './form-cloud.component.html'
+    templateUrl: './form-cloud.component.html',
+    providers: [
+        { provide: FormRenderingService, useClass: CloudFormRenderingService }
+    ]
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
 
@@ -113,21 +112,15 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
                 private notificationService: NotificationService,
-                private formRenderingService: FormRenderingService,
                 protected visibilityService: WidgetVisibilityService,
                 private appConfigService: AppConfigService) {
         super();
 
         this.formService.formContentClicked
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe((content) => {
-            this.formContentClicked.emit(content);
-        });
-        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((content) => {
+                this.formContentClicked.emit(content);
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {

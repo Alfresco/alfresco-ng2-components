@@ -16,7 +16,7 @@
  */
 
 import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
@@ -29,32 +29,26 @@ import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 describe('FormComponent', () => {
 
-    let formService: FormService;
+    let fixture: ComponentFixture<FormComponent>;
     let formComponent: FormComponent;
+
+    let formService: FormService;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
     let formRenderingService: ProcessFormRenderingService;
 
     @Component({
-        selector: 'adf-custom-upload-widget',
+        selector: 'adf-custom-widget',
         template: '<div></div>'
     })
-    class CustomUploadWidget {
-        typeId = 'CustomUploadWidget';
-    }
-
-    @Component({
-        selector: 'adf-custom-select-folder-widget',
-        template: '<div></div>'
-    })
-    class CustomSelectFolderWidget {
-        typeId = 'CustomSelectFolderWidget';
+    class CustomWidget {
+        typeId = 'CustomWidget';
     }
 
     @NgModule({
-        declarations: [CustomUploadWidget, CustomSelectFolderWidget],
-        exports: [CustomUploadWidget, CustomSelectFolderWidget],
-        entryComponents: [CustomUploadWidget, CustomSelectFolderWidget]
+        declarations: [CustomWidget],
+        exports: [CustomWidget],
+        entryComponents: [CustomWidget]
     })
     class CustomUploadModule {}
 
@@ -87,44 +81,32 @@ describe('FormComponent', () => {
         nodeService = TestBed.get(NodeService);
         formRenderingService = TestBed.get(ProcessFormRenderingService);
 
-        const fixture = TestBed.createComponent(FormComponent);
+        fixture = TestBed.createComponent(FormComponent);
         formComponent = fixture.componentInstance;
     });
 
-    it('should register own upload widget', () => {
-        const fixture = TestBed.createComponent(FormComponent);
-        expect(fixture.componentInstance).toBeDefined();
-
+    it('should register custom [upload] widget', () => {
         const widget = buildWidget('upload', fixture.componentRef.injector);
         expect(widget['typeId']).toBe('AttachFileWidgetComponent');
     });
 
-    it('should register own select-folder widget', () => {
-        const fixture = TestBed.createComponent(FormComponent);
-        expect(fixture.componentInstance).toBeDefined();
-
+    it('should register custom [select-folder] widget', () => {
         const widget = buildWidget('select-folder', fixture.componentRef.injector);
         expect(widget['typeId']).toBe('AttachFolderWidgetComponent');
     });
 
-    it('should allow to replace custom upload widget', () => {
-        formRenderingService.setComponentTypeResolver('upload', () => CustomUploadWidget, true);
-
-        const fixture = TestBed.createComponent(FormComponent);
-        expect(fixture.componentInstance).toBeDefined();
+    it('should allow to replace custom [upload] widget', () => {
+        formRenderingService.setComponentTypeResolver('upload', () => CustomWidget, true);
 
         const widget = buildWidget('upload', fixture.componentRef.injector);
-        expect(widget['typeId']).toBe('CustomUploadWidget');
+        expect(widget['typeId']).toBe('CustomWidget');
     });
 
-    it('should allow to replace custom select-folder widget', () => {
-        formRenderingService.setComponentTypeResolver('select-folder', () => CustomSelectFolderWidget, true);
-
-        const fixture = TestBed.createComponent(FormComponent);
-        expect(fixture.componentInstance).toBeDefined();
+    it('should allow to replace custom [select-folder] widget', () => {
+        formRenderingService.setComponentTypeResolver('select-folder', () => CustomWidget, true);
 
         const widget = buildWidget('select-folder', fixture.componentRef.injector);
-        expect(widget['typeId']).toBe('CustomSelectFolderWidget');
+        expect(widget['typeId']).toBe('CustomWidget');
     });
 
     it('should check form', () => {

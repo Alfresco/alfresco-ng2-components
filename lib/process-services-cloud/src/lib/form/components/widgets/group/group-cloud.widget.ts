@@ -33,6 +33,7 @@ export class GroupCloudWidgetComponent extends WidgetComponent implements OnInit
 
     private onDestroy$ = new Subject<boolean>();
 
+    typeId = 'GroupCloudWidgetComponent';
     roles: string[];
     mode: string;
     title: string;
