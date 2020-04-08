@@ -24,6 +24,7 @@ var docsFolderPath = path.resolve('docs');
 var libFolders = ['core', 'content-services', 'extensions', 'insights', 'process-services', 'process-services-cloud'];
 libsearch(srcData, path.resolve(libFolder));
 var authToken = process.env.graphAuthToken;
+console.log('process.env.graphAuthToken' + process.env.graphAuthToken);
 var client = new graphql_request_1.GraphQLClient('https://api.github.com/graphql', {
     headers: {
         Authorization: 'Bearer ' + authToken
@@ -33,21 +34,25 @@ var query = "query commitHistory($path: String) {\n  repository(name: \"alfresco
 var docFiles = getDocFilePaths(docsFolderPath);
 var docNames = rxjs_1.of(docFiles);
 console.log("'Name','Review date','Commits since review','Score'");
-docNames.subscribe(function (x) {
-    var key = path.basename(x, '.md');
-    if (!srcData[key]) {
-        return;
-    }
-    var vars = {
-        'path': 'lib/' + srcData[key].path
-    };
-    client.request(query, vars).then(function (data) {
-        var nodes = data['repository'].ref.target.history.nodes;
-        var lastReviewDate = getDocReviewDate(x); // (key + ".md");
-        var numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
-        var dateString = lastReviewDate.format('YYYY-MM-DD');
-        var score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
-        console.log("'" + key + "','" + dateString + "','" + numUsefulCommits + "','" + score + "'");
+docNames.subscribe(function (docs) {
+    docs.forEach(function (x) {
+        var key = path.basename(x, '.md');
+        if (!srcData[key]) {
+            return;
+        }
+        var vars = {
+            'path': 'lib/' + srcData[key].path
+        };
+        client.request(query, vars).then(function (data) {
+            var nodes = data['repository'].ref.target.history.nodes;
+            var lastReviewDate = getDocReviewDate(x); // (key + ".md");
+            var numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
+            if (numUsefulCommits > 0) {
+                var dateString = lastReviewDate.format('YYYY-MM-DD');
+                var score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
+                console.log("'" + key + "','" + dateString + "','" + numUsefulCommits + "','" + score + "'");
+            }
+        });
     });
 });
 function priorityScore(reviewDate, numCommits) {

@@ -25,3 +25,9 @@ changes in functionality (and therefore don't need documenting).
 The script sends comma-separated text to the command line. You can copy/paste
 this into a spreadsheet or redirect the output to a text file with a ".csv"
 suffix.
+
+To use this tool you need before to set graphAuthToken variable with you github access token:
+
+export graphAuthToken=GITHUB_TOKEN
+
+npm run review-checker

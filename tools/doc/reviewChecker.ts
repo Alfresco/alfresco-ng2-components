@@ -29,16 +29,16 @@ const stoplist = new Stoplist(stoplistFilePath);
 
 const docsFolderPath = path.resolve('docs');
 
-const libFolders = ['core', 'content-services', 'extensions', 'insights', 'process-services',  'process-services-cloud'];
+const libFolders = ['core', 'content-services', 'extensions', 'insights', 'process-services', 'process-services-cloud'];
 
 libsearch(srcData, path.resolve(libFolder));
 
 const authToken = process.env.graphAuthToken;
 
 const client = new GraphQLClient('https://api.github.com/graphql', {
-  headers: {
-    Authorization: 'Bearer ' + authToken
-  }
+    headers: {
+        Authorization: 'Bearer ' + authToken
+    }
 });
 
 const query = `query commitHistory($path: String) {
@@ -64,99 +64,104 @@ const docNames = of(docFiles);
 
 console.log("'Name','Review date','Commits since review','Score'");
 
-docNames.subscribe(x => {
-  const key = path.basename(x, '.md');
+docNames.subscribe(docs => {
 
-  if (!srcData[key]) {
-    return;
-  }
+    docs.forEach(x => {
+        const key = path.basename(x, '.md');
 
-  const vars = {
-    'path': 'lib/' + srcData[key].path
-  };
+        if (!srcData[key]) {
+            return;
+        }
 
-  client.request(query, vars).then(data => {
-      const nodes = data['repository'].ref.target.history.nodes;
+        const vars = {
+            'path': 'lib/' + srcData[key].path
+        };
 
-      const lastReviewDate = getDocReviewDate(x); // (key + ".md");
+        client.request(query, vars).then(data => {
+            const nodes = data['repository'].ref.target.history.nodes;
 
-      const numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
-      const dateString = lastReviewDate.format('YYYY-MM-DD');
-      const score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
+            const lastReviewDate = getDocReviewDate(x); // (key + ".md");
 
-      console.log(`'${key}','${dateString}','${numUsefulCommits}','${score}'`);
-  });
+            const numUsefulCommits = extractCommitInfo(nodes, lastReviewDate, stoplist);
+            if (numUsefulCommits > 0) {
+                const dateString = lastReviewDate.format('YYYY-MM-DD');
+                const score = priorityScore(lastReviewDate, numUsefulCommits).toPrecision(3);
+
+                console.log(`'${key}','${dateString}','${numUsefulCommits}','${score}'`);
+            }
+        });
+    });
 });
 
 function priorityScore(reviewDate, numCommits) {
-  const daysSinceReview = moment().diff(reviewDate, 'days');
-  const commitScore = 2 + numCommits * commitWeight;
-  return Math.pow(commitScore, daysSinceReview / scoreTimeBase);
+    const daysSinceReview = moment().diff(reviewDate, 'days');
+    const commitScore = 2 + numCommits * commitWeight;
+    return Math.pow(commitScore, daysSinceReview / scoreTimeBase);
 }
 
 function getDocReviewDate(docFileName) {
-  const mdFilePath = path.resolve(docsFolderPath, docFileName);
+    const mdFilePath = path.resolve(docsFolderPath, docFileName);
 
-  const mdText = fs.readFileSync(mdFilePath);
-  const tree = remark().use(frontMatter, ['yaml']).parse(mdText);
+    const mdText = fs.readFileSync(mdFilePath);
+    const tree = remark().use(frontMatter, ['yaml']).parse(mdText);
 
-  let lastReviewDate = moment(adf20StartDate);
+    let lastReviewDate = moment(adf20StartDate);
 
-  if (tree.children[0].type === 'yaml') {
-    const metadata = yaml.load(tree.children[0].value);
+    if (tree.children[0].type === 'yaml') {
+        const metadata = yaml.load(tree.children[0].value);
 
-    if (metadata['Last reviewed']) {
-      lastReviewDate = moment(metadata['Last reviewed']);
+        if (metadata['Last reviewed']) {
+            lastReviewDate = moment(metadata['Last reviewed']);
+        }
     }
-  }
 
-  return lastReviewDate;
+    return lastReviewDate;
 }
 
 function extractCommitInfo(commitNodes, cutOffDate, stoplist) {
-  let numUsefulCommits = 0;
+    let numUsefulCommits = 0;
 
-  commitNodes.forEach(element => {
-    if (!stoplist.isRejected(element.message)) {
-     // const abbr = element.message.substr(0, 15);
+    commitNodes.forEach(element => {
+        if (!stoplist.isRejected(element.message)) {
+            // const abbr = element.message.substr(0, 15);
 
-      const commitDate = moment(element.pushedDate);
+            const commitDate = moment(element.pushedDate);
 
-      if (commitDate.isAfter(cutOffDate)) {
-        numUsefulCommits++;
-      }
-    }
-  });
+            if (commitDate.isAfter(cutOffDate)) {
+                numUsefulCommits++;
+            }
+        }
+    });
 
-  return numUsefulCommits;
+    return numUsefulCommits;
 }
 
 function getDocFilePaths(folderPath) {
-  const result = [];
+    const result = [];
 
-  libFolders.forEach(element => {
-    const libPath = path.resolve(folderPath, element);
-    addItemsRecursively(libPath, result);
-  });
-
-  return result;
-
-  function addItemsRecursively(elementPath: string, resultList: string[]) {
-    const items = fs.readdirSync(elementPath);
-
-    items.forEach(item => {
-      const fullItemPath = path.resolve(elementPath, item);
-      const itemInfo = fs.statSync(fullItemPath);
-
-      if (itemInfo.isDirectory()) {
-        addItemsRecursively(fullItemPath, resultList);
-      } else if (
-        (path.extname(fullItemPath) === '.md') &&
-        (item !== 'README.md') &&
-        (item.match(angFilePattern))
-      ) {
-        resultList.push(fullItemPath);
-      }
+    libFolders.forEach(element => {
+        const libPath = path.resolve(folderPath, element);
+        addItemsRecursively(libPath, result);
     });
-  }
+
+    return result;
+
+    function addItemsRecursively(elementPath: string, resultList: string[]) {
+        const items = fs.readdirSync(elementPath);
+
+        items.forEach(item => {
+            const fullItemPath = path.resolve(elementPath, item);
+            const itemInfo = fs.statSync(fullItemPath);
+
+            if (itemInfo.isDirectory()) {
+                addItemsRecursively(fullItemPath, resultList);
+            } else if (
+                (path.extname(fullItemPath) === '.md') &&
+                (item !== 'README.md') &&
+                (item.match(angFilePattern))
+            ) {
+                resultList.push(fullItemPath);
+            }
+        });
+    }
 }

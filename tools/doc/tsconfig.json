@@ -18,6 +18,7 @@
     "tools/sourceLinker.ts",
     "tools/tsInfo.ts",
     "tools/tutorialIndex.ts",
-    "tools/typeLinker.ts"
+    "tools/typeLinker.ts",
+    "reviewChecker.ts"
   ]
 }
