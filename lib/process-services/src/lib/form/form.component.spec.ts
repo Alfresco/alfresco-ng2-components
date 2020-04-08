@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
-    FormService, WidgetVisibilityService, NodeService, LogService, ContainerModel, fakeForm, FormRenderingService } from '@alfresco/adf-core';
-
+    FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
+    FormRenderingService, setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormModule } from './form.module';
+import { ContentWidgetModule } from '../content-widget/content-widget.module';
 
 describe('FormComponent', () => {
 
@@ -28,17 +32,59 @@ describe('FormComponent', () => {
     let formComponent: FormComponent;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
-    let logService: LogService;
     let formRenderingService: FormRenderingService;
 
+    @Component({
+        selector: 'adf-custom-upload-widget',
+        template: '<div></div>'
+    })
+    class CustomUploadWidget {
+        id = 'test-id';
+    }
+
+    @NgModule({
+        declarations: [CustomUploadWidget],
+        exports: [CustomUploadWidget],
+        entryComponents: [CustomUploadWidget]
+    })
+    class CustomUploadModule {}
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            FormModule,
+            ContentWidgetModule,
+            CustomUploadModule
+        ]
+    });
+
     beforeEach(() => {
-        logService = new LogService(null);
-        visibilityService = new WidgetVisibilityService(null, logService);
+        visibilityService = TestBed.get(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formService = new FormService(null, null, logService);
-        nodeService = new NodeService(null);
-        formRenderingService = new FormRenderingService();
-        formComponent = new FormComponent(formService, visibilityService, null, nodeService, formRenderingService);
+
+        formService = TestBed.get(FormService);
+        nodeService = TestBed.get(NodeService);
+        formRenderingService = TestBed.get(FormRenderingService);
+
+        const fixture = TestBed.createComponent(FormComponent);
+        formComponent = fixture.componentInstance;
+    });
+
+    it('should allow registering custom upload widget', () => {
+        formRenderingService.setComponentTypeResolver('upload', () => CustomUploadWidget, true);
+
+        const fixture = TestBed.createComponent(FormComponent);
+        expect(fixture.componentInstance).toBeDefined();
+
+        const resolver = formRenderingService.getComponentTypeResolver('upload');
+        const widgetType = resolver(null);
+
+        const factoryResolver: ComponentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+        const factory = factoryResolver.resolveComponentFactory(widgetType);
+        const componentRef = factory.create(TestBed.get(Injector));
+
+        expect(componentRef.instance['id']).toBe('test-id');
     });
 
     it('should check form', () => {
