@@ -76,6 +76,11 @@ describe('AuthenticationService', () => {
             expect(apiService.getInstance).toHaveBeenCalled();
         });
 
+        it('should check if loggedin on ECM in case the provider is ECM', () => {
+            spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
+            expect(authService.isLoggedInWith('ECM')).toBe(true);
+        });
+
         it('should require remember me set for ECM check', () => {
             spyOn(cookie, 'isEnabled').and.returnValue(true);
             spyOn(authService, 'isRememberMeSet').and.returnValue(false);
@@ -196,6 +201,11 @@ describe('AuthenticationService', () => {
 
             expect(authService.isBpmLoggedIn()).toBeFalsy();
             expect(apiService.getInstance).not.toHaveBeenCalled();
+        });
+
+        it('should check if loggedin on BPM in case the provider is BPM', () => {
+            spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
+            expect(authService.isLoggedInWith('BPM')).toBe(true);
         });
 
         it('should not require cookie service enabled for BPM check', () => {
