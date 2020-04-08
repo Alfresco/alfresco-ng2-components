@@ -34,9 +34,13 @@ describe('TagList', () => {
                 'maxItems': 100
             },
             'entries': [{
-                'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
-            }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
-                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
+                'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2', 'count': 1}
+            }, {
+                'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597', 'count': 2}
+            }, {
+                'entry': {'tag': 'test3', 'id': 'e9593eee-a291-44ce-8db8-f881a7048f89', 'count': 1}
+            }, {
+                'entry': {'tag': 'test4', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}
             }]
         }
     };
@@ -69,7 +73,7 @@ describe('TagList', () => {
     });
 
     describe('Rendering tests', () => {
-        it('Tag list relative a single node should be rendered', (done) => {
+        it('should render all tags with one reference or more', (done) => {
             component.result.subscribe(() => {
                 fixture.detectChanges();
 
@@ -81,6 +85,10 @@ describe('TagList', () => {
             });
 
             component.ngOnInit();
+        });
+
+        it('should not render tag without reference', () => {
+            expect(element.querySelector('tag_name_3')).toBeNull();
         });
     });
 });
