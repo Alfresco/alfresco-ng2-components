@@ -37,7 +37,6 @@ import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 @Component({
     selector: 'adf-start-process',
     templateUrl: './start-process.component.html',
-    styleUrls: ['./start-process.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
