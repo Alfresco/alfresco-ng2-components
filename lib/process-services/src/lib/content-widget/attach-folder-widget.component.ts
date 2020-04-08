@@ -45,6 +45,7 @@ import { Node } from '@alfresco/js-api';
 })
 export class AttachFolderWidgetComponent extends WidgetComponent implements OnInit {
 
+    typeId = 'AttachFolderWidgetComponent';
     hasFolder: boolean = false;
     selectedFolderName: string = '';
 

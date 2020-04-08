@@ -30,12 +30,16 @@ import {
 } from '@angular/core';
 import { FormComponent } from './form.component';
 import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, FormOutcomeModel } from '@alfresco/adf-core';
+import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 @Component({
     selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
     styleUrls: ['./start-form.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+    ]
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -70,10 +74,8 @@ export class StartFormComponent extends FormComponent implements OnChanges, OnIn
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
-    constructor(formService: FormService,
-                visibilityService: WidgetVisibilityService,
-                formRenderingService: FormRenderingService) {
-        super(formService, visibilityService, null, null, formRenderingService);
+    constructor(formService: FormService, visibilityService: WidgetVisibilityService) {
+        super(formService, visibilityService, null, null);
         this.showTitle = false;
     }
 

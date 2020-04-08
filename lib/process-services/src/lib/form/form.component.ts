@@ -16,18 +16,21 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { AttachFileWidgetComponent, AttachFolderWidgetComponent } from '../content-widget';
 import { EcmModelService, NodeService, WidgetVisibilityService,
     FormService, FormRenderingService, FormBaseComponent, FormOutcomeModel,
     FormEvent, FormErrorEvent, FormFieldModel,
     FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 @Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+    ]
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
 
@@ -86,11 +89,8 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     constructor(protected formService: FormService,
                 protected visibilityService: WidgetVisibilityService,
                 protected ecmModelService: EcmModelService,
-                protected nodeService: NodeService,
-                protected formRenderingService: FormRenderingService) {
+                protected nodeService: NodeService) {
         super();
-        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
     }
 
     ngOnInit() {
