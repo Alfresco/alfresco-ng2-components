@@ -76,7 +76,7 @@ describe('AuthenticationService', () => {
             expect(apiService.getInstance).toHaveBeenCalled();
         });
 
-        it('should check if loggedin on ECM in case the priveder is ECM', () => {
+        it('should check if loggedin on ECM in case the provider is ECM', () => {
             spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
             expect(authService.isLoggedInWith('ECM')).toBe(true);
         });
@@ -203,7 +203,7 @@ describe('AuthenticationService', () => {
             expect(apiService.getInstance).not.toHaveBeenCalled();
         });
 
-        it('should check if loggedin on BPM in case the priveder is BPM', () => {
+        it('should check if loggedin on BPM in case the provider is BPM', () => {
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
             expect(authService.isLoggedInWith('BPM')).toBe(true);
         });

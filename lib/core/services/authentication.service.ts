@@ -61,7 +61,7 @@ export class AuthenticationService {
         return this.alfrescoApi.getInstance().isLoggedIn();
     }
 
-    isLoggedInWith(provider: string) {
+    isLoggedInWith(provider: string): boolean {
         if (provider === 'BPM') {
             return this.isBpmLoggedIn();
         } else if (provider === 'ECM') {
