@@ -11,7 +11,7 @@ var imageFolderPath = path.resolve('docs', 'docassets', 'images');
 // and filenames is enough to trap errors like missing out the 'images'
 // folder in the path. Keeping it low avoids crazy suggestions.
 var maxImagePathLevDistance = 7;
-function processDocs(mdCache, aggData, errorMessages) {
+function processDocs(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
     var classlessDocs = [];
     var linkRefs = {};

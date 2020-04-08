@@ -5,7 +5,7 @@ var path = require("path");
 var fs = require("fs");
 var unist_util_select_1 = require("unist-util-select");
 var suffixesNotToCheck = /\.ts/;
-function processDocs(mdCache, aggData, errorMessages) {
+function processDocs(mdCache, aggData) {
     var pathnames = Object.keys(mdCache);
     var linkSet = new LinkSet(pathnames);
     var imageFolderPath = path.resolve(aggData['rootFolder'], 'docs', 'docassets', 'images');

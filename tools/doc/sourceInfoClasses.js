@@ -16,7 +16,7 @@ var PropInfo = /** @class */ (function () {
         this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : '';
         this.defaultValue = this.defaultValue.replace(/\|/, '\\|');
         this.type = sourceData.syntax['return'].type || '';
-        this.type = this.type.toString().replace(/\|/, '\\|');
+        this.type = this.type.toString().replace(/\|/, '\\|').replace('unknown', '');
         if (sourceData.tags) {
             var depTag = sourceData.tags.find(function (tag) { return tag.name === 'deprecated'; });
             if (depTag) {

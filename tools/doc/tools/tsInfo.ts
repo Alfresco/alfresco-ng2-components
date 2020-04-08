@@ -50,10 +50,10 @@ function updateFile(tree, pathname, aggData, errorMessages) {
 
         // Copy docs back from the .md file when the JSDocs are empty.
         const inputMD = getPropDocsFromMD(tree, 'Properties', 3);
-
-        console.log("inputMD"  + JSON.stringify(inputMD));
-
         const outputMD = getPropDocsFromMD(tree, 'Events', 2);
+
+
+
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
 
         if (classType === 'service') {

@@ -27,7 +27,7 @@ export class PropInfo {
         this.defaultValue = tempDefaultVal ? tempDefaultVal.toString() : '';
         this.defaultValue = this.defaultValue.replace(/\|/, '\\|');
         this.type = sourceData.syntax['return'].type || '';
-        this.type = this.type.toString().replace(/\|/, '\\|');
+        this.type = this.type.toString().replace(/\|/, '\\|').replace('unknown', '');
 
         if (sourceData.tags) {
             const depTag = sourceData.tags.find(tag => tag.name === 'deprecated');
