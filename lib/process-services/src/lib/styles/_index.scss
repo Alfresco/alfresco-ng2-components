@@ -10,6 +10,7 @@
 @import '../app-list/apps-list.component';
 @import '../content-widget/attach-file-widget-dialog.component';
 @import '../form/start-form.component';
+@import '../process-list/components/start-process.component';
 
 @mixin adf-process-services-theme($theme) {
     @include adf-process-filters-theme($theme);
@@ -24,4 +25,5 @@
     @include adf-task-standalone-component-theme($theme);
     @include adf-attach-file-widget-dialog-component-theme($theme);
     @include adf-start-form-component-theme($theme);
+    @include adf-process-services-create-theme($theme);
  }
