@@ -332,6 +332,7 @@ export class CustomResourcesService {
      * @param nodeId ID of the target folder node
      * @param pagination Specifies how to paginate the results
      * @param includeFields List of data field names to include in the results
+     * @param where  Filters the Node list using the *where* condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.
      * @returns List of items contained in the folder
      */
     loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[] = [], where?: string): any {

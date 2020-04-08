@@ -41,34 +41,34 @@ Manages Document List information that is specific to a user.
     Is the folder ID a "-my", "-root-", or "-shared-" alias?
     -   _folderId:_ `string`  - Folder ID name to check
     -   **Returns** `boolean` - True if the ID is one of the supported sources, false otherwise
--   **loadFavorites**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`, where? string): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **loadFavorites**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets favorite files for the current user.
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
-    -   _where:_ (Optional) `string`  - A string to restrict the returned objects by using a predicate
+    -   _where:_ `string`  - (Optional) A string to restrict the returned objects by using a predicate
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of favorite files
--   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: string): `any`<br/>
+-   **loadFolderByNodeId**(nodeId: `string`, pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: `string`): `any`<br/>
     Gets a folder's contents.
     -   _nodeId:_ `string`  - ID of the target folder node
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
-    -   _where:_ (Optional) `string`  - A string to restrict the returned objects by using a predicate
+    -   _where:_ `string`  - (Optional) Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information.
     -   **Returns** `any` - List of items contained in the folder
--   **loadMemberSites**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), where?: string): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SiteMemberPaging.md)`>`<br/>
+-   **loadMemberSites**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SiteMemberPaging.md)`>`<br/>
     Gets sites that the current user is a member of.
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
-    -   _where:_ (Optional) `string`  - A string to restrict the returned objects by using a predicate
+    -   _where:_ `string`  - (Optional) A string to restrict the returned objects by using a predicate
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SiteMemberPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SiteMemberPaging.md)`>` - List of sites
--   **loadSharedLinks**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: string): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkPaging.md)`>`<br/>
+-   **loadSharedLinks**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`, where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkPaging.md)`>`<br/>
     Gets shared links for the current user.
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
     -   _includeFields:_ `string[]`  - List of data field names to include in the results
-    -   _where:_ (Optional)`string`  - A string to restrict the returned objects by using a predicate
+    -   _where:_ `string`  - (Optional) A string to restrict the returned objects by using a predicate
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SharedLinkPaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/SharedLinkPaging.md)`>` - List of shared links
--   **loadSites**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), where?: string): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **loadSites**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), where?: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets all sites in the repository.
     -   _pagination:_ [`PaginationModel`](../../../lib/core/models/pagination.model.ts)  - Specifies how to paginate the results
-    -   _where:_ (Optional)`string`  - A string to restrict the returned objects by using a predicate
+    -   _where:_ `string`  - (Optional) A string to restrict the returned objects by using a predicate
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of sites
 -   **loadTrashcan**(pagination: [`PaginationModel`](../../../lib/core/models/pagination.model.ts), includeFields: `string[]` = `[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`DeletedNodesPaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/DeletedNodesPaging.md)`>`<br/>
     Gets all items currently in the trash.

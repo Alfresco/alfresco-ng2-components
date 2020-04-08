@@ -35,7 +35,7 @@ backend services have been tested with each released version of ADF.
 
 <!--v370 start-->
 
-No new components has been added in this release
+-   [Cancel process directive](process-services-cloud/directives/cancel-process.directive.md)
 
 <!--v370 end-->
 

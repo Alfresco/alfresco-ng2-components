@@ -13,7 +13,7 @@ const imageFolderPath = path.resolve('docs', 'docassets', 'images');
 // folder in the path. Keeping it low avoids crazy suggestions.
 const maxImagePathLevDistance = 7;
 
-export function processDocs(mdCache, aggData, errorMessages) {
+export function processDocs(mdCache, aggData) {
     const pathnames = Object.keys(mdCache);
 
     const classlessDocs = [];

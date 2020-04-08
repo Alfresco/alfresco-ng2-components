@@ -74,7 +74,7 @@ pushed to the right by a spacer:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| color | `string` |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
+| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Toolbar color. Can be changed to empty value (default), `primary`, `accent` or `warn`. |
 | title | `string` | "" | Toolbar title. |
 
 ## Details

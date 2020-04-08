@@ -8,19 +8,19 @@ Below is a list of the high level feature themes planned for the forthcoming ver
 
 Last updated 26 Feb 2019:
 
-- Continue with the Activiti features.
-- Accessibility (508 compliance and automatic tests).
-- Search highlighting.
-- Better metadata viewer (whitelisting by default).
-- Support for languages that are written right-to-left (such as Arabic).
-- Continue with Governance features into ADF.
-- Better experience in plugin/extensions.
-- Application dashboards.
-- Permission driven menus.
-- Experimental features:
-    - Artificial Intelligence plugins/components.
-    - Web components for ADF to be framework agnostic.
-    - Rapid Application Development.
+-   Continue with the Activiti features.
+-   Accessibility (508 compliance and automatic tests).
+-   Search highlighting.
+-   Better metadata viewer (whitelisting by default).
+-   Support for languages that are written right-to-left (such as Arabic).
+-   Continue with Governance features into ADF.
+-   Better experience in plugin/extensions.
+-   [`Application`](../lib/testing/src/lib/core/structure/application.ts) dashboards.
+-   Permission driven menus.
+-   Experimental features:
+    -   Artificial Intelligence plugins/components.
+    -   Web components for ADF to be framework agnostic.
+    -   Rapid [`Application`](../lib/testing/src/lib/core/structure/application.ts) Development.
 
 **Disclaimer**: The list above may change in the future and it does not
 represent an official promise about features to be implemented. The purpose of this public roadmap is to share infomation openly with our ecosystem of customers, partners and enthusiasts.

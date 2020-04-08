@@ -18,14 +18,13 @@ Displays and edits metadata related to a node.
     -   [Properties](#properties)
 -   [Details](#details)
     -   [Application config presets](#application-config-presets)
-    -   [Indifferent config](#indifferent-config)
-    -   [Aspect oriented config](#aspect-oriented-config)
     -   [Layout oriented config](#layout-oriented-config)
     -   [Displaying all properties](#displaying-all-properties)
     -   [Making aspects and properties read only](#making-aspects-and-properties-read-only)
 -   [What happens when there is a whitelisted aspect in the config but the given node doesn't relate to that aspect](#what-happens-when-there-is-a-whitelisted-aspect-in-the-config-but-the-given-node-doesnt-relate-to-that-aspect)
 -   [Multi value card properties](#multi-value-card-properties)
     -   [Use chips for multi value properties](#use-chips-for-multi-value-properties)
+-   [Copy to Clipboard on click](#copy-to-clipboard-on-click)
 
 ## Basic Usage
 
@@ -402,15 +401,15 @@ For easier interaction with metadata properties you can enable the Copy to Clipb
 
 Once you have enabled this feature you will be able to double click on your metadata properties and they will get copied to your clipboard for you to use.
 
- ```json
+```json
 "content-metadata": {
-    "presets": {
-        "default": {
-            "includeAll": true,
-            "exclude": "exif:exif",
-            "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
-        }
-    },
-    "copy-to-clipboard-action": true
+   "presets": {
+       "default": {
+           "includeAll": true,
+           "exclude": "exif:exif",
+           "exif:exif": [ "exif:pixelXDimension", "exif:pixelYDimension"]
+       }
+   },
+   "copy-to-clipboard-action": true
 }
 ```

@@ -18,7 +18,7 @@ Provides access to various APIs related to file upload features.
     -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files to queue
     -   **Returns** [`FileModel`](../../../lib/core/models/file.model.ts)`[]` - Array of files that were not blocked from upload by the ignore list
 -   **cancelUpload**(files: [`FileModel`](../../../lib/core/models/file.model.ts)`[]`)<br/>
-    Cancels uploading of files.
+    Cancels uploading of files. If the file is smaller than 1 MB the file will be uploaded and then the node deleted to prevent having files that were aborted but still uploaded.
     -   _files:_ [`FileModel`](../../../lib/core/models/file.model.ts)`[]`  - One or more separate parameters or an array of files specifying uploads to cancel
 -   **clearQueue**()<br/>
     Clears the upload queue

@@ -108,14 +108,14 @@ Defining properties from Typescript:
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| displayClearAction | `boolean` | true | Toggles whether or not to display clear action. |
 | copyToClipboardAction | `boolean` | true | Toggles whether or not to enable copy to clipboard action. |
-| useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
-| multiValueSeparator | `string` | ',' | String separator between multi-value property items. |
+| displayClearAction | `boolean` | true | Toggles whether or not to display clear action. |
 | displayEmpty | `boolean` | true | Toggles whether or not to show empty items in non-editable mode. |
 | displayNoneOption | `boolean` | true | Toggles whether or not to display none option. |
 | editable | `boolean` |  | Toggles whether or not the items can be edited. |
+| multiValueSeparator | `string` | DEFAULT_SEPARATOR | String separator between multi-value property items. |
 | properties | [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)`[]` |  | (**required**) Items to show in the card view. |
+| useChipsForMultiValueProperty | `boolean` | true | Toggles whether or not to enable chips for multivalued properties. |
 
 ## Details
 

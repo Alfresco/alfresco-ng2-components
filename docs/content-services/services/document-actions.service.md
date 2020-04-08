@@ -95,7 +95,7 @@ export class MyView {
 ```
 
 You will probably want to set up all your custom actions at the application root level or
-with a custom application service.
+with a custom [application service](../../../lib/testing/src/lib/core/actions/APS/applications.service.ts).
 
 ## See also
 

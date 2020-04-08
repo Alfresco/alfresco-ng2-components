@@ -8,6 +8,7 @@ var jsyaml = require("js-yaml");
 var remark = require("remark");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
+var minimatch = require("Minimatch");
 
 var si = require("./sourceInfoClasses");
 
@@ -20,13 +21,28 @@ var defaultFolder = path.resolve("docs");
 var sourceInfoFolder = path.resolve("docs", "sourceinfo");
 
 
+function filterFiles(filePath) {
+    let isAllowed = true;
+
+    this.excludedFileList = aggData['config'].exclude;
+
+    if (this.excludedFileList) {
+        isAllowed = this.excludedFileList.filter((pattern) => {
+            return minimatch(filePath, pattern.toString(), {
+                nocase: true
+            });
+        }).length === 0;
+    }
+
+    return isAllowed;
+}
+
+
 function updatePhase(mdCache, aggData) {
-    var errorMessages;
 
     toolList.forEach(toolName => {
-        errorMessages = [];
         console.log(`Tool: ${toolName}`);
-        toolModules[toolName].processDocs(mdCache, aggData, errorMessages);
+        toolModules[toolName].processDocs(mdCache, aggData);
     });
 
     var filenames = Object.keys(mdCache);
@@ -51,26 +67,19 @@ function updatePhase(mdCache, aggData) {
                 console.log(`Modified: ${pathname}`);
             }
 
-            fs.writeFileSync(filenames[i], remark().use(frontMatter, {type: 'yaml', fence: '---'}).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
+            fs.writeFileSync(filenames[i], remark().use(frontMatter, {
+                type: 'yaml',
+                fence: '---'
+            }).data("settings", {paddedTable: false, gfm: false}).stringify(tree));
         }
     }
 }
-
-
-function deepCopy(obj) {
-    // Despite how it looks, this technique is apparently quite efficient
-    // because the JSON routines are implemented in C code and faster
-    // than the equivalent JavaScript loops ;-)
-    return JSON.parse(JSON.stringify(obj));
-}
-
 
 function minimiseTree(tree) {
     let minPropsTree = JSON.parse(JSON.stringify(tree, (key, value) => key === "position" ? undefined : value));
     mdCompact(minPropsTree);
     return minPropsTree;
 }
-
 
 function loadToolModules() {
     var mods = {};
@@ -103,7 +112,7 @@ function getAllDocFilePaths(docFolder, files) {
         var itemPath = path.resolve(docFolder, items[i]);
         var itemInfo = fs.statSync(itemPath);
 
-        if (itemInfo.isFile()){
+        if (itemInfo.isFile()) {
             files.push(itemPath);
         } else if (itemInfo.isDirectory()) {
             getAllDocFilePaths(itemPath, files);
@@ -145,16 +154,13 @@ function initClassInfo(aggData) {
     });
 }
 
-
-
-
 program
-.usage("[options] <source>")
-.option("-p, --profile [profileName]", "Select named config profile", "default")
-.option("-j, --json", "Output JSON data for Markdown syntax tree")
-.option("-v, --verbose", "Log doc files as they are processed")
-.option("-t, --timing", "Output time taken for run")
-.parse(process.argv);
+    .usage("[options] <source>")
+    .option("-p, --profile [profileName]", "Select named config profile", "default")
+    .option("-j, --json", "Output JSON data for Markdown syntax tree")
+    .option("-v, --verbose", "Log doc files as they are processed")
+    .option("-t, --timing", "Output time taken for run")
+    .parse(process.argv);
 
 var startTime;
 
@@ -179,7 +185,7 @@ aggData['config'] = config;
 
 var toolList;
 
-if (config.profiles[program.profile]){
+if (config.profiles[program.profile]) {
     toolList = config.profiles[program.profile];
     var toolListText = toolList.join(", ");
     console.log(`Using '${program.profile}' profile: ${toolListText}`);
@@ -194,15 +200,14 @@ if (sourceInfo.isDirectory()) {
     getAllDocFilePaths(sourcePath, files);
     aggData['rootFolder'] = path.dirname(sourcePath);
 } else if (sourceInfo.isFile()) {
-    files = [ sourcePath ];
+    files = [sourcePath];
 }
 
 files = files.filter(filename =>
     (filename !== undefined) &&
     (path.extname(filename) === ".md") &&
-    (filename !== "README.md")
+    (filename !== "README.md") && filterFiles(filename)
 );
-
 
 var mdCache = initMdCache(files);
 
