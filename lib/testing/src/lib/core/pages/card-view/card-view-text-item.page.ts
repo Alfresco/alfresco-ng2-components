@@ -23,7 +23,7 @@ export class CardTextItemPage {
     textField: Locator = by.css('input[data-automation-id*="card-textitem-editinput"]');
     saveButton: Locator = by.css('button[data-automation-id*="card-textitem-update"]');
     clearButton: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
-    field: Locator = by.css('span[data-automation-id*="card-textitem-value"] span');
+    field: Locator = by.css('[data-automation-id*="card-textitem-value"]');
     labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
     toggle: Locator = by.css('div[data-automation-id*="card-textitem-toggle"]');
     editButton: Locator = by.css('button.adf-textitem-action[title*=Edit]');
@@ -36,7 +36,7 @@ export class CardTextItemPage {
 
     async getFieldValue(): Promise<string> {
         const fieldElement = this.rootElement.all(this.field).first();
-        return BrowserActions.getText(fieldElement);
+        return BrowserActions.getInputValue(fieldElement);
     }
 
     async checkLabelIsPresent(): Promise<void> {
@@ -71,7 +71,7 @@ export class CardTextItemPage {
         return BrowserActions.getText(errorField);
     }
 
-    async checkElementIsReadonly(): Promise <void> {
+    async checkElementIsReadonly(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.clickableElement));
         await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.editButton));
     }

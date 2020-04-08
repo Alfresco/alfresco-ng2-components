@@ -23,15 +23,15 @@ export class MetadataViewPage {
     title: ElementFinder = element(by.css(`div[info-drawer-title]`));
     expandedAspect: ElementFinder = element(by.css(`mat-expansion-panel-header[aria-expanded='true']`));
     aspectTitle = by.css(`mat-panel-title`);
-    name: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-name'] span`));
-    creator: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-createdByUser.displayName'] span`));
+    name: ElementFinder = element(by.css(`[data-automation-id='card-textitem-value-name']`));
+    creator: ElementFinder = element(by.css(`[data-automation-id='card-textitem-value-createdByUser.displayName']`));
     createdDate: ElementFinder = element(by.css(`span[data-automation-id='card-dateitem-createdAt'] span`));
-    modifier: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-modifiedByUser.displayName'] span`));
+    modifier: ElementFinder = element(by.css(`[data-automation-id='card-textitem-value-modifiedByUser.displayName']`));
     modifiedDate: ElementFinder = element(by.css(`span[data-automation-id='card-dateitem-modifiedAt'] span`));
-    mimetypeName: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-content.mimeTypeName']`));
-    size: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-content.sizeInBytes']`));
-    description: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:description'] span`));
-    author: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:author'] span`));
+    mimetypeName: ElementFinder = element(by.css(`[data-automation-id='card-textitem-value-content.mimeTypeName']`));
+    size: ElementFinder = element(by.css(`[data-automation-id='card-textitem-value-content.sizeInBytes']`));
+    description: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:description']`));
+    author: ElementFinder = element(by.css(`[data-automation-id='card-textitem-value-properties.cm:author']`));
     titleProperty: ElementFinder = element(by.css(`span[data-automation-id='card-textitem-value-properties.cm:title'] span`));
     editIcon: ElementFinder = element(by.css(`button[data-automation-id='meta-data-card-toggle-edit']`));
     informationButton: ElementFinder = element(by.css(`button[data-automation-id='meta-data-card-toggle-expand']`));
@@ -45,6 +45,8 @@ export class MetadataViewPage {
     closeButton: ElementFinder = element(by.cssContainingText('button.mat-button span', 'Close'));
     displayAspect: ElementFinder = element(by.css(`input[placeholder='Display Aspect']`));
     applyAspect: ElementFinder = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
+    saveMetadataButton: ElementFinder = element(by.css(`[data-automation-id='save-metadata']`));
+    resetMetadataButton: ElementFinder = element(by.css(`[data-automation-id='reset-metadata']`));
 
     async getTitle(): Promise<string> {
         return BrowserActions.getText(this.title);
@@ -55,11 +57,11 @@ export class MetadataViewPage {
     }
 
     async getName(): Promise<string> {
-        return BrowserActions.getText(this.name);
+        return BrowserActions.getInputValue(this.name);
     }
 
     async getCreator(): Promise<string> {
-        return BrowserActions.getText(this.creator);
+        return BrowserActions.getInputValue(this.creator);
     }
 
     async getCreatedDate(): Promise<string> {
@@ -67,7 +69,7 @@ export class MetadataViewPage {
     }
 
     async getModifier(): Promise<string> {
-        return BrowserActions.getText(this.modifier);
+        return BrowserActions.getInputValue(this.modifier);
     }
 
     async getModifiedDate(): Promise<string> {
@@ -75,19 +77,19 @@ export class MetadataViewPage {
     }
 
     async getMimetypeName(): Promise<string> {
-        return BrowserActions.getText(this.mimetypeName);
+        return BrowserActions.getInputValue(this.mimetypeName);
     }
 
     async getSize(): Promise<string> {
-        return BrowserActions.getText(this.size);
+        return BrowserActions.getInputValue(this.size);
     }
 
     async getDescription(): Promise<string> {
-        return BrowserActions.getText(this.description);
+        return BrowserActions.getInputValue(this.description);
     }
 
     async getAuthor(): Promise<string> {
-        return BrowserActions.getText(this.author);
+        return BrowserActions.getInputValue(this.author);
     }
 
     async getTitleProperty(): Promise<string> {
@@ -136,27 +138,18 @@ export class MetadataViewPage {
     }
 
     async editPropertyIconIsDisplayed(propertyName: string) {
-        const editPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        const editPropertyIcon: ElementFinder = element(by.css('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon'));
         await BrowserVisibility.waitUntilElementIsPresent(editPropertyIcon);
     }
 
-    async updatePropertyIconIsDisplayed(propertyName: string) {
-        const updatePropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(updatePropertyIcon);
-    }
-
-    async clickUpdatePropertyIcon(propertyName: string): Promise<void> {
-        const updatePropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-update-' + propertyName + '"]'));
-        await BrowserActions.click(updatePropertyIcon);
-    }
-
-    async clickClearPropertyIcon(propertyName: string): Promise<void> {
-        const clearPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
+    async clickResetButton(): Promise<void> {
+        // await browser.actions().mouseMove(this.involvePeopleButton).click().perform();
+        const clearPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="reset-metadata"]'));
         await BrowserActions.click(clearPropertyIcon);
     }
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
-        const textField: ElementFinder = element(by.css('input[data-automation-id="card-textitem-editinput-' + propertyName + '"]'));
+        const textField: ElementFinder = element(by.css('input[data-automation-id="card-textitem-value-' + propertyName + '"]'));
         await BrowserActions.clearSendKeys(textField, text.toString());
     }
 
@@ -168,29 +161,19 @@ export class MetadataViewPage {
     }
 
     async enterDescriptionText(text: string): Promise<void> {
-        const textField: ElementFinder = element(by.css('textarea[data-automation-id="card-textitem-edittextarea-properties.cm:description"]'));
+        const textField: ElementFinder = element(by.css('textarea[data-automation-id="card-textitem-value-properties.cm:description"]'));
         await BrowserActions.clearSendKeys(textField, text);
     }
 
     async getPropertyText(propertyName: string, type?: string): Promise<string> {
         const propertyType = type || 'textitem';
-        const textField: ElementFinder = element(by.css('span[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
+        const textField: ElementFinder = element(by.css('[data-automation-id="card-' + propertyType + '-value-' + propertyName + '"]'));
 
-        return BrowserActions.getText(textField);
-    }
-
-    async clearPropertyIconIsDisplayed(propertyName: string): Promise<void> {
-        const clearPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-reset-' + propertyName + '"]'));
-        await BrowserVisibility.waitUntilElementIsVisible(clearPropertyIcon);
-    }
-
-    async clickEditPropertyIcons(propertyName: string): Promise<void> {
-        const editPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
-        await BrowserActions.click(editPropertyIcon);
+        return BrowserActions.getInputValue(textField);
     }
 
     async getPropertyIconTooltip(propertyName: string): Promise<string> {
-        const editPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-edit-icon-' + propertyName + '"]'));
+        const editPropertyIcon: ElementFinder = element(by.css('[data-automation-id="header-' + propertyName + '"] .adf-textitem-edit-icon'));
         return editPropertyIcon.getAttribute('title');
     }
 
@@ -246,5 +229,13 @@ export class MetadataViewPage {
 
     async clickApplyAspect(): Promise<void> {
         await BrowserActions.click(this.applyAspect);
+    }
+
+    async clickSaveMetadata(): Promise<void> {
+        await BrowserActions.click(this.saveMetadataButton);
+    }
+
+    async clickResetMetadata(): Promise<void> {
+        await BrowserActions.click(this.resetMetadataButton);
     }
 }

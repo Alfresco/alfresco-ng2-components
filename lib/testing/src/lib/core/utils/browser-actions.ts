@@ -65,6 +65,15 @@ export class BrowserActions {
         }
     }
 
+    static async getInputValue(elementFinder: ElementFinder): Promise<string> {
+        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        if (present) {
+            return elementFinder.getAttribute('value');
+        } else {
+            return '';
+        }
+    }
+
     static async getArrayText(elementFinders: ElementArrayFinder): Promise<string> {
         return elementFinders.getText();
     }

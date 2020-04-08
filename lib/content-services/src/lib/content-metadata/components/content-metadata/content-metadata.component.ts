@@ -162,10 +162,14 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
 
     updateChanges(updatedNodeChanges) {
         Object.keys(updatedNodeChanges).map((propertyGroup: string) => {
-            this.changedProperties[propertyGroup] = {
-                ...this.changedProperties[propertyGroup],
-                ...updatedNodeChanges[propertyGroup]
-            };
+            if (typeof updatedNodeChanges[propertyGroup] === 'object') {
+                this.changedProperties[propertyGroup] = {
+                    ...this.changedProperties[propertyGroup],
+                    ...updatedNodeChanges[propertyGroup]
+                };
+            } else {
+                this.changedProperties[propertyGroup] = updatedNodeChanges[propertyGroup];
+            }
         });
     }
 
