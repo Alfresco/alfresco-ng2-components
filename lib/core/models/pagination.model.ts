@@ -19,6 +19,7 @@ import { Pagination } from '@alfresco/js-api';
 
 export class PaginationModel extends Pagination {
     merge?: boolean;
+    include?: string[];
 
     constructor(input?: any) {
         super(input);
@@ -26,6 +27,7 @@ export class PaginationModel extends Pagination {
             this.count = input.count;
             this.hasMoreItems = input.hasMoreItems ? input.hasMoreItems : false;
             this.merge = input.merge ? input.merge : false;
+            this.include = input.include ? input.include : [];
             this.totalItems = input.totalItems;
             this.skipCount = input.skipCount;
             this.maxItems = input.maxItems;

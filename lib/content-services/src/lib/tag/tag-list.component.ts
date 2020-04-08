@@ -64,7 +64,8 @@ export class TagListComponent implements OnInit, OnDestroy {
         this.defaultPagination = {
             skipCount: 0,
             maxItems: this.size,
-            hasMoreItems: false
+            hasMoreItems: false,
+            include: ['count']
         };
 
         this.pagination = this.defaultPagination;
@@ -102,7 +103,8 @@ export class TagListComponent implements OnInit, OnDestroy {
 
             this.refreshTag({
                 skipCount: this.pagination.skipCount + this.pagination.count,
-                maxItems: this.size
+                maxItems: this.size,
+                include: ['count']
             });
         }
     }

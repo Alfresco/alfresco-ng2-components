@@ -1,6 +1,6 @@
 <mat-chip-list class="adf-tag-chips-list">
     <div class="adf-list-tag" *ngFor="let currentEntry of tagsEntries; let idx = index">
-        <mat-chip class="adf-primary-background-color">
+        <mat-chip class="adf-primary-background-color" *ngIf="currentEntry.entry.count">
             <span id="tag_name_{{idx}}">{{currentEntry.entry.tag}}</span>
         </mat-chip>
     </div>
