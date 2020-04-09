@@ -13,7 +13,7 @@ const templateFolder = path.resolve('tools', 'doc', 'templates');
 
 let nameExceptions;
 
-export function processDocs(mdCache, aggData, _errorMessages) {
+export function processDocs(mdCache, aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
 
     const pathnames = Object.keys(mdCache);
@@ -51,6 +51,9 @@ function updateFile(tree, pathname, aggData, errorMessages) {
         // Copy docs back from the .md file when the JSDocs are empty.
         const inputMD = getPropDocsFromMD(tree, 'Properties', 3);
         const outputMD = getPropDocsFromMD(tree, 'Events', 2);
+
+
+
         updatePropDocsFromMD(compData, inputMD, outputMD, errorMessages);
 
         if (classType === 'service') {

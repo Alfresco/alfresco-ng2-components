@@ -49,6 +49,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Input()
     appId: number;
 
+    /** (optional) Define the header of the component. */
     @Input()
     title: string;
 

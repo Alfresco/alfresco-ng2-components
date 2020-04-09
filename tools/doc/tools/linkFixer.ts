@@ -7,7 +7,7 @@ import { MDAST } from 'mdast';
 
 const suffixesNotToCheck = /\.ts/;
 
-export function processDocs(mdCache, aggData, errorMessages) {
+export function processDocs(mdCache, aggData) {
     const pathnames = Object.keys(mdCache);
 
     const linkSet = new LinkSet(pathnames);

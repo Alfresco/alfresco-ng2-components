@@ -41,7 +41,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | excludeSiteContent | `string[]` |  | Custom list of site content componentIds. Used to filter out the corresponding items from the displayed nodes |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom row filter function. See the [Row Filter Model](row-filter.model.md) page for more information. |
 | showDropdownSiteList | `boolean` |  | Toggle sites list dropdown rendering |
-| showFilesInResult | `boolean` |  | Shows the files and folders in the search result |
+| showFilesInResult | `void` |  | Shows the files and folders in the search result |
 | showSearch | `boolean` |  | Toggle search input rendering |
 
 ### Events

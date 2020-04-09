@@ -26,7 +26,7 @@ var initialVersion = "v2.0.0";
 var templateFolder = path.resolve("tools", "doc", "templates");
 
 
-function processDocs(mdCache, aggData, errorMessages) {
+function processDocs(mdCache, aggData) {
     initPhase(aggData);
     readPhase(mdCache, aggData);
     aggPhase(aggData);

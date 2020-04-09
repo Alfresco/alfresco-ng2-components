@@ -15,7 +15,7 @@ Manages Local Storage preferences.
 
 -   **createPreference**(\_: `string`, key: `string`, newPreference: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Creates local preference.
-    -   _\_:_ `string`  - 
+    -   _\_:_ `string`  - Name of the target app
     -   _key:_ `string`  - Key of the target preference
     -   _newPreference:_ `any`  - Details of new local preference
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Observable of created local preferences
@@ -26,13 +26,13 @@ Manages Local Storage preferences.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Observable of preferences without deleted preference
 -   **getPreferenceByKey**(\_: `string`, key: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets local preference.
-    -   _\_:_ `string`  - 
+    -   _\_:_ `string`  - Name of the target app
     -   _key:_ `string`  - Key of the target preference
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Observable of local preference
 -   **getPreferences**(\_: `string`, key: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Gets local preferences
-    -   _\_:_ `string`  - 
-    -   _key:_ `string`  - (Optional) 
+    -   _\_:_ `string`  - Name of the target app
+    -   _key:_ `string`  - Key of the target preference
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - List of local preferences
 -   **prepareLocalPreferenceResponse**(key: `string`): `any`<br/>
 
@@ -41,7 +41,7 @@ Manages Local Storage preferences.
 
 -   **updatePreference**(\_: `string`, key: `string`, updatedPreference: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
     Updates local preference.
-    -   _\_:_ `string`  - 
+    -   _\_:_ `string`  - Name of the target app
     -   _key:_ `string`  - Key of the target preference
     -   _updatedPreference:_ `any`  - Details of updated preference
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Observable of updated local preferences

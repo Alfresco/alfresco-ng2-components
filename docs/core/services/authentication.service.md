@@ -66,6 +66,11 @@ Provides authentication to ACS and APS.
 -   **isLoggedIn**(): `boolean`<br/>
     Checks if the user logged in.
     -   **Returns** `boolean` - True if logged in, false otherwise
+-   **isLoggedInWith**(provider: `string`): `boolean`<br/>
+
+    -   _provider:_ `string`  - 
+    -   **Returns** `boolean` - 
+
 -   **isOauth**(): `boolean`<br/>
     Does the provider support OAuth?
     -   **Returns** `boolean` - True if supported, false otherwise

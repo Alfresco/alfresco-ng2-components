@@ -28,7 +28,7 @@ Provides a universal way of rendering registered and named icons.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| color | `ThemePalette` |  | Theme color palette for the component. |
+| color | [`ThemePalette`](https://github.com/angular/components/blob/master/src/material/core/common-behaviors/color.ts) |  | Theme color palette for the component. |
 | value | `string` |  | Icon value, which can be either a ligature name or a custom icon in the format `[namespace]:[name]`. |
 
 ## Details

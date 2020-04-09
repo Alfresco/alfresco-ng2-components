@@ -39,11 +39,11 @@ Starts a process.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | (optional) Limit the list of processes that can be started to those contained in the specified app. |
-| title | `string` | "" | (optional) Define the header of the component. |
 | name | `string` | "" | (optional) Name to assign to the current process. |
 | processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
+| title | `string` |  | (optional) Define the header of the component. |
 | values | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md). |
 
@@ -53,8 +53,8 @@ Starts a process.
 | ---- | ---- | ----------- |
 | cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
+| processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`>` | Emitted when process definition selection changes. |
 | start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
-| processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionRepresentation`](../../../lib/process-services/src/lib/process-list/models/process-definition.model.ts)`>` |  Emitted when process definition selection changes. |
 
 ## Details
 

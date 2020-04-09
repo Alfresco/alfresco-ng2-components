@@ -10,7 +10,7 @@ var mdNav_1 = require("../mdNav");
 var ngHelpers_1 = require("../ngHelpers");
 var templateFolder = path.resolve('tools', 'doc', 'templates');
 var nameExceptions;
-function processDocs(mdCache, aggData, _errorMessages) {
+function processDocs(mdCache, aggData) {
     nameExceptions = aggData.config.typeNameExceptions;
     var pathnames = Object.keys(mdCache);
     var internalErrors;
