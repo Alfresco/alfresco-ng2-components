@@ -148,6 +148,22 @@ describe('StartFormComponent', () => {
                 });
             }));
 
+            it('should have labels for process name and type', async(() => {
+                component.processDefinitionInput.setValue('My Default Name');
+                component.processNameInput.setValue('claim');
+                const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container mat-label');
+                expect(inputLabelsNodes.length).toBe(2);
+            }));
+
+            it('should have floating labels for process name and type', async(() => {
+                component.processDefinitionInput.setValue('My Default Name');
+                component.processNameInput.setValue('claim');
+                const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container');
+                inputLabelsNodes.forEach(labelNode => {
+                    expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('always');
+                });
+            }));
+
             it('should load start form from service', async(() => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {

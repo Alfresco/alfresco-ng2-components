@@ -1,54 +1,61 @@
-.adf {
-    &-start-process {
-        width: 96%;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 10px;
-        .mat-select-trigger {
-            font-size: 14px !important;
+@mixin adf-process-services-create-theme($theme) {
+    .adf {
+        &-start-process {
+            width: 96%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+            .mat-select-trigger {
+                font-size: 14px !important;
+            }
+            mat-form-field {
+                width: 100%;
+            }
+            mat-select {
+                width: 100%;
+                padding: 16px 0 0;
+            }
+            .mat-form-field-label {
+                color: mat-color($mat-grey, A400);
+            }
+            .mat-content-actions {
+                text-align: right;
+            }
+            .mat-button {
+                text-transform: uppercase !important;
+            }
         }
-        mat-form-field {
-            width: 100%;
+        &-title {
+            padding-bottom: 1.25em;
         }
-        mat-select {
-            width: 100%;
-            padding: 16px 0 0;
+        &-process-input-container {
+            mat-form-field {
+                width: 100%;
+            }
         }
-        .mat-content-actions {
-            text-align: right;
+        &-process-input-autocomplete {
+            display: flex;
+            button {
+                position: absolute;
+                right: -14px;
+                top: 0;
+            }
         }
-        .mat-button {
-            text-transform: uppercase !important;
+        &-start-form-container {
+            .mat-card {
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+        }
+        &-start-form-actions {
+            text-align: right !important;
         }
     }
-    &-process-input-container {
-        mat-form-field {
-            width: 100%;
+    @media (max-width: 600px) {
+        .adf-start-process {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
         }
-    }
-    &-process-input-autocomplete {
-        display: flex;
-        button {
-            position: absolute;
-            right: -14px;
-            top: 0;
-        }
-    }
-    &-start-form-container {
-        .mat-card {
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-    }
-    &-start-form-actions {
-        text-align: right !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .adf-start-process {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
     }
 }

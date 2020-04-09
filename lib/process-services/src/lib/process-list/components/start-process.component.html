@@ -1,24 +1,13 @@
 <div class="adf-start-process">
-    <div class="title" *ngIf="title">{{ title | translate}}</div>
+    <div class="adf-title" *ngIf="title">{{ title | translate}}</div>
     <div class="content" *ngIf="isProcessDefinitionEmpty()">
         <div class="subtitle" id="error-message" *ngIf="errorMessageId">
             {{errorMessageId|translate}}
         </div>
-        <mat-form-field class="adf-process-input-container">
-            <input
-                matInput
-                placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}"
-                [formControl]="processNameInput"
-                id="processName"
-                required/>
-                <mat-error *ngIf="nameController.hasError('maxlength')">
-                    {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxProcessNameLength } }}
-                </mat-error>
-        </mat-form-field>
-        <mat-form-field class="adf-process-input-container">
+        <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+            <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate}}</mat-label>
             <input
                 type="text"
-                placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE'|translate}}"
                 matInput
                 [formControl]="processDefinitionInput"
                 [matAutocomplete]="auto"
@@ -42,6 +31,18 @@
                     <mat-icon>arrow_drop_down</mat-icon>
                 </button>
             </div>
+        </mat-form-field>
+
+        <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+            <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}</mat-label>
+            <input
+                matInput
+                [formControl]="processNameInput"
+                id="processName"
+                required/>
+            <mat-error *ngIf="nameController.hasError('maxlength')">
+                {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxProcessNameLength } }}
+            </mat-error>
         </mat-form-field>
 
         <adf-start-form
