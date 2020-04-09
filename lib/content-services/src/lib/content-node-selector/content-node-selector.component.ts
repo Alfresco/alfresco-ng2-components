@@ -36,8 +36,8 @@ export class ContentNodeSelectorComponent {
 
     constructor(public translation: TranslationService,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
-        this.action = data.actionName.toUpperCase();
-        this.buttonActionName = data.actionName ? `NODE_SELECTOR.${this.action}` : 'NODE_SELECTOR.CHOOSE';
+        this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
+        this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
     }
 

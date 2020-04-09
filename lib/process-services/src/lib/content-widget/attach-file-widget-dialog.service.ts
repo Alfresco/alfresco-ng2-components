@@ -17,6 +17,7 @@
 
 import { MatDialog } from '@angular/material';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { TranslationService } from '@alfresco/adf-core';
 import { Subject, Observable } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { Node } from '@alfresco/js-api';
@@ -31,7 +32,8 @@ export class AttachFileWidgetDialogService {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog,
+                private translation: TranslationService) {
     }
 
     /**
@@ -41,19 +43,18 @@ export class AttachFileWidgetDialogService {
      * @returns Information about the chosen file(s)
      */
     openLogin(ecmHost: string, actionName?: string, context?: string): Observable<Node[]> {
-        const titleString: string = `Please log in for ${ecmHost}`;
         const selected = new Subject<Node[]>();
         selected.subscribe({
             complete: this.close.bind(this)
         });
 
         const data: AttachFileWidgetDialogComponentData = {
-            title : titleString,
+            title : this.getLoginTitleTranslation(ecmHost),
             actionName,
             selected,
             ecmHost,
             context,
-            isSelectionValid: this.isNodeFile.bind(this),
+            isSelectionValid: this.isNodeValid.bind(this),
             showFilesInResult: true
         };
 
@@ -70,8 +71,11 @@ export class AttachFileWidgetDialogService {
         this.dialog.closeAll();
     }
 
-    private isNodeFile(entry: Node): boolean {
-        return entry.isFile;
+    private isNodeValid(entry: Node): boolean {
+        return entry.isFile || entry.isFolder;
     }
 
+    private getLoginTitleTranslation(ecmHost: string): string {
+        return this.translation.instant(`ATTACH-FILE.DIALOG.LOGIN`, { ecmHost });
+    }
 }
