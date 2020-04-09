@@ -26,9 +26,9 @@ import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, Valid
 import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 @Component({
@@ -100,6 +100,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     isLoading = false;
     isFormCloudLoaded = false;
     formCloud: FormModel;
+    currentCreatedProcess: any;
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(private startProcessCloudService: StartProcessCloudService,
@@ -118,6 +119,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             .subscribe((processDefinitionName) => {
                 this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
             });
+
+        this.processForm.valueChanges
+        .pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            filter(() => this.isProcessFormValid() ),
+            switchMap(() => this.generateProcessInstance())
+        ).pipe(takeUntil(this.onDestroy$))
+        .subscribe((res) => {
+            this.currentCreatedProcess = res;
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -142,6 +154,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     private getMaxNameLength(): number {
         return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
             StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
+    }
+
+    private generateProcessInstance(): Observable <ProcessInstanceCloud> {
+        this.buildProcessCloudPayload();
+        return this.startProcessCloudService.createProcess(this.appName, this.processPayloadCloud);
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
@@ -219,9 +236,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return this.processDefinitionList.length === 0;
     }
 
-    startProcess() {
-        this.isLoading = true;
-
+    buildProcessCloudPayload() {
         this.processPayloadCloud.name = this.processInstanceName.value;
         if (this.variables) {
             this.processPayloadCloud.variables = this.variables;
@@ -230,8 +245,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         if (this.hasForm()) {
             this.processPayloadCloud.variables = Object.assign(this.processPayloadCloud.variables, this.formCloud.values);
         }
+    }
 
-        this.startProcessCloudService.startProcess(this.appName, this.processPayloadCloud).subscribe(
+    startProcess() {
+        this.isLoading = true;
+
+        this.buildProcessCloudPayload();
+
+        this.startProcessCloudService.startCreatedProcess(this.appName, this.currentCreatedProcess.id).subscribe(
             (res) => {
                 this.success.emit(res);
                 this.isLoading = false;
@@ -245,6 +266,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     cancelStartProcess() {
+        this.currentCreatedProcess = null;
         this.cancel.emit();
     }
 

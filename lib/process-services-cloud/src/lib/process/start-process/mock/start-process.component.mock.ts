@@ -31,6 +31,18 @@ export let fakeProcessInstance = new ProcessInstanceCloud({
     processDefinitionKey: 'BasicProcess'
 });
 
+export let fakeCreatedProcessInstance = new ProcessInstanceCloud({
+    appName: 'simple-app',
+    appVersion: '',
+    id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',
+    name: 'My Process Name',
+    startDate: null,
+    initiator: 'usermock',
+    status: 'CREATED',
+    processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
+    processDefinitionKey: 'BasicProcess'
+});
+
 export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
     new ProcessDefinitionCloud({
         appName: 'myApp',

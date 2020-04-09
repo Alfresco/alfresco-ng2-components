@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import {
-    setupTestBed, CoreModule,
+    setupTestBed,
     AlfrescoApiService,
     AppConfigService,
     LogService,
@@ -27,16 +27,15 @@ import {
 import { StartProcessCloudService } from './start-process-cloud.service';
 import { fakeProcessPayload } from '../mock/start-process.component.mock';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
-import { ProcessCloudModule } from '../../process-cloud.module';
 
 describe('StartProcessCloudService', () => {
 
     let service: StartProcessCloudService;
 
     setupTestBed({
-        imports: [CoreModule.forRoot(), ProcessCloudModule],
+        imports: [HttpClientModule],
         providers: [StartProcessCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService]
     });
 
@@ -105,6 +104,34 @@ describe('StartProcessCloudService', () => {
                     expect(error.status).toEqual(404);
                     expect(error.statusText).toEqual('Not Found');
                     expect(error.error).toEqual('Mock Error');
+                }
+            );
+    });
+
+    it('should be able to create a new process instance without starting it', (done) => {
+        spyOn(service, 'createProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'CREATED' }));
+        service.createProcess('appName1', fakeProcessPayload)
+            .subscribe(
+                (res: ProcessInstanceCloud) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual('fake-id');
+                    expect(res.name).toEqual('fake-name');
+                    expect(res.status).toEqual('CREATED');
+                    done();
+                }
+            );
+    });
+
+    it('should be able to start a created new process instance', (done) => {
+        spyOn(service, 'startCreatedProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'RUNNING' }));
+        service.startCreatedProcess('appName1', 'fake-id')
+            .subscribe(
+                (res: ProcessInstanceCloud) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual('fake-id');
+                    expect(res.name).toEqual('fake-name');
+                    expect(res.status).toEqual('RUNNING');
+                    done();
                 }
             );
     });

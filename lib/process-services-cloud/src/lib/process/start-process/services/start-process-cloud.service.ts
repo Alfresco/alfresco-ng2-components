@@ -56,6 +56,35 @@ export class StartProcessCloudService extends BaseCloudService {
     }
 
     /**
+     * Create a process based on a process definition, name, form values or variables.
+     * @param appName name of the Application
+     * @param payload Details of the process (definition key, name, variables, etc)
+     * @returns Details of the process instance just created
+     */
+    createProcess(appName: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
+        const url = `${this.getBasePath(appName)}/rb/v1/process-instances/create`;
+
+        return this.post(url, payload).pipe(
+            map((result: any) => result.entry),
+            map(processInstance => new ProcessInstanceCloud(processInstance))
+        );
+    }
+
+    /**
+     * Starts an already created process using the process instance id.
+     * @param createdProcessInstanceId process instance id of the process previously created
+     * @returns Details of the process instance just started
+     */
+    startCreatedProcess(appName: string, createdProcessInstanceId: string): Observable<ProcessInstanceCloud> {
+        const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${createdProcessInstanceId}/start`;
+
+        return this.post(url).pipe(
+            map((result: any) => result.entry),
+            map(processInstance => new ProcessInstanceCloud(processInstance.entry))
+        );
+    }
+
+    /**
      * Starts a process based on a process definition, name, form values or variables.
      * @param appName name of the Application
      * @param payload Details of the process (definition key, name, variables, etc)
