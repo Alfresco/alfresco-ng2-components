@@ -80,10 +80,10 @@ describe('StartProcessCloudComponent', () => {
             MatInputModule,
             MatRippleModule,
             FormCloudModule,
-            TranslateModule.forChild(),
+            TranslateModule.forChild()
         ],
-        declarations:[StartProcessCloudComponent],
-        providers:[
+        declarations: [StartProcessCloudComponent],
+        providers: [
             { provide: TranslationService, useClass: TranslationMock },
             TranslateStore,
             StorageService,
