@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow, DataCellEvent } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask, paginatedTask } from '../../mock';
 import { TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { TaskListModule } from '../task-list.module';
 
 declare let jasmine: any;
@@ -806,4 +806,113 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
             done();
         });
     });
+});
+
+@Component({
+    template: `
+    <adf-tasklist
+    [showContextMenu]="true"
+    (showRowContextMenu)="onShowRowContextMenu($event)"
+    #taskList>
+        <data-columns>
+            <data-column key="name" title="ADF_TASK_LIST.PROPERTIES.NAME" class="full-width name-column"></data-column>
+            <data-column key="created" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="hidden"></data-column>
+            <data-column key="startedBy" title="ADF_TASK_LIST.PROPERTIES.CREATED" class="desktop-only dw-dt-col-3 ellipsis-cell">
+                <ng-template let-entry="$implicit">
+                    <div>{{entry.row?.obj?.startedBy | fullName}}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
+    </adf-tasklist>`
+})
+
+class TaskListContextMenuComponent implements OnInit {
+
+    @Output()
+    contextAction = new EventEmitter<any>();
+    private performAction$ = new Subject<any>();
+
+    ngOnInit() {
+        this.performContextActions();
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        event.value.actions = [
+            {
+                data: event.value.row['obj'],
+                model:
+                {
+                    key: 'taskDetails',
+                    icon: 'open',
+                    title: 'View Task Details',
+                    visible: true
+                },
+                subject: this.performAction$
+            },
+            {
+                data: event.value.row['obj'],
+                model:
+                {
+                    key: 'cancel',
+                    icon: 'open',
+                    title: 'Cancel Process',
+                    visible: true
+                },
+                subject: this.performAction$
+            }
+        ];
+    }
+
+    performContextActions() {
+        this.performAction$
+          .subscribe((action: any) => {
+            this.contextAction.emit(action.data);
+          });
+    }
+}
+
+describe('TaskListContextMenuComponent', () => {
+    let fixture: ComponentFixture<TaskListContextMenuComponent>;
+    let customComponent: TaskListContextMenuComponent;
+    let taskListService: TaskListService;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [CoreModule.forRoot()],
+        declarations: [TaskListComponent, TaskListContextMenuComponent],
+        providers: [TaskListService]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TaskListContextMenuComponent);
+        customComponent = fixture.componentInstance;
+        element = fixture.nativeElement;
+        taskListService = TestBed.get(TaskListService);
+        spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        const event = new KeyboardEvent('keydown', {
+          bubbles : true, cancelable : true, key : 'Escape'
+        });
+        document.querySelector('.cdk-overlay-backdrop').dispatchEvent(event);
+        fixture.detectChanges();
+    });
+
+    it('Should be able to show context menu on task list', async () => {
+        const contextMenu =  element.querySelector(`[data-automation-id="text_${fakeGlobalTask.data[0].name}"]`);
+        const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
+        contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const contextActions = document.querySelectorAll('.mat-menu-item');
+
+        expect(contextActions.length).toBe(2);
+        expect(contextActions[0]['disabled']).toBe(false, 'View Task Details action not enabled');
+        expect(contextActions[1]['disabled']).toBe(false, 'Cancel Task action not enabled');
+        contextActions[0].dispatchEvent(new Event('click'));
+        fixture.detectChanges();
+        expect(contextActionSpy).toHaveBeenCalled();
+      });
 });

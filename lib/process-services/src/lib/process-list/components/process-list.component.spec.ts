@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, SimpleChange, ViewChild } from '@angular/core';
+import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessInstanceListComponent } from './process-list.component';
 import {
     AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRow, DataColumn,
-    DataRowEvent, ObjectDataRow, ObjectDataTableAdapter
+    DataRowEvent, ObjectDataRow, ObjectDataTableAdapter, DataCellEvent
 } from '@alfresco/adf-core';
 import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessCustomSchema } from '../../mock';
 import { ProcessService } from '../services/process.service';
@@ -526,4 +526,116 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
             done();
         });
     });
+});
+
+@Component({
+    template: `
+    <adf-process-instance-list
+    [appId]="appId"
+    [showContextMenu]="true"
+    (showRowContextMenu)="onShowRowContextMenu($event)"
+    #processlistComponentInstance>
+        <data-columns>
+            <data-column key="name" title="ADF_PROCESS_LIST.PROPERTIES.NAME" class="adf-full-width adf-name-column"></data-column>
+            <data-column key="created" title="ADF_PROCESS_LIST.PROPERTIES.END_DATE" class="adf-hidden"></data-column>
+            <data-column key="startedBy" title="ADF_PROCESS_LIST.PROPERTIES.CREATED" class="adf-desktop-only dw-dt-col-3 adf-ellipsis-cell">
+                <ng-template let-entry="$implicit">
+                    <div>{{entry.row.obj.startedBy | fullName}}</div>
+                </ng-template>
+            </data-column>
+        </data-columns>
+    </adf-process-instance-list>`
+})
+
+class ProcessListContextMenuComponent implements OnInit {
+
+    appId: number;
+    @Output()
+    contextAction = new EventEmitter<any>();
+    private performAction$ = new Subject<any>();
+
+    ngOnInit() {
+        this.performContextActions();
+    }
+
+    onShowRowContextMenu(event: DataCellEvent) {
+        event.value.actions = [
+            {
+                data: event.value.row['obj'],
+                model:
+                {
+                    key: 'processDetails',
+                    icon: 'open',
+                    title: 'View Process Details',
+                    visible: true
+                },
+                subject: this.performAction$
+            },
+            {
+                data: event.value.row['obj'],
+                model:
+                {
+                    key: 'cancel',
+                    icon: 'open',
+                    title: 'Cancel Process',
+                    visible: true
+                },
+                subject: this.performAction$
+            }
+        ];
+    }
+
+    performContextActions() {
+        this.performAction$
+          .subscribe((action: any) => {
+            this.contextAction.emit(action.data);
+          });
+    }
+}
+
+describe('ProcessListContextMenuComponent', () => {
+    let fixture: ComponentFixture<ProcessListContextMenuComponent>;
+    let customComponent: ProcessListContextMenuComponent;
+    let processService: ProcessService;
+    let element: HTMLElement;
+
+    setupTestBed({
+        imports: [CoreModule.forRoot()],
+        declarations: [ProcessInstanceListComponent, ProcessListContextMenuComponent],
+        providers: [ProcessService]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ProcessListContextMenuComponent);
+        customComponent = fixture.componentInstance;
+        element = fixture.nativeElement;
+        processService = TestBed.get(ProcessService);
+        customComponent.appId = 12345;
+        spyOn(processService, 'getProcesses').and.returnValue(of(fakeProcessInstance));
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        const event = new KeyboardEvent('keydown', {
+          bubbles : true, cancelable : true, key : 'Escape'
+        });
+        document.querySelector('.cdk-overlay-backdrop').dispatchEvent(event);
+        fixture.detectChanges();
+    });
+
+    it('Should be able to show context menu on process list', async () => {
+        const contextMenu =  element.querySelector(`[data-automation-id="text_${fakeProcessInstance.data[0].name}"]`);
+        const contextActionSpy = spyOn(customComponent.contextAction, 'emit').and.callThrough();
+        contextMenu.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true }));
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const contextActions = document.querySelectorAll('.mat-menu-item');
+
+        expect(contextActions.length).toBe(2);
+        expect(contextActions[0]['disabled']).toBe(false, 'View Process Details action not enabled');
+        expect(contextActions[1]['disabled']).toBe(false, 'Cancel Process action not enabled');
+        contextActions[0].dispatchEvent(new Event('click'));
+        fixture.detectChanges();
+        expect(contextActionSpy).toHaveBeenCalled();
+      });
 });
