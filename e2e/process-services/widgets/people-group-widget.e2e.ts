@@ -74,7 +74,8 @@ describe('People and Group widget', () => {
 
         await widget.groupWidget().insertGroup(groupVisibilityForm.FIELD.widget_id, groupVisibilityForm.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
-        await expect(await widget.groupWidget().getDropDownList()).toEqual([ 'Heros', 'Users' ]);
+        const suggestions = await widget.groupWidget().getDropDownList();
+        await expect(suggestions.sort()).toEqual([ 'Heros', 'Users' ]);
         await widget.groupWidget().selectGroupFromDropDown('Users');
         await taskPage.taskDetails().clickCompleteFormTask();
     });
