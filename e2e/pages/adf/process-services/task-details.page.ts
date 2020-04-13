@@ -30,7 +30,7 @@ export class TaskDetailsPage {
     categoryField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-category"] '));
     parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
     parentTaskIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-parentTaskId"] '));
-    durationField: ElementFinder = element(by.css('span[data-automation-id*="duration"] span'));
+    durationField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-duration"] '));
     endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
     idField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
@@ -77,16 +77,6 @@ export class TaskDetailsPage {
     async checkEditableFormIsNotDisplayed(): Promise<void> {
         const editableForm = element(by.css('[data-automation-id="card-textitem-value-formName"][class*="clickable"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(editableForm);
-    }
-
-    async checkEditDescriptionButtonIsNotDisplayed(): Promise<void> {
-        const editDescriptionButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-description"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(editDescriptionButton);
-    }
-
-    async checkEditPriorityButtonIsNotDisplayed(): Promise<void> {
-        const editPriorityButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-priority"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(editPriorityButton);
     }
 
     async checkDueDatePickerButtonIsNotDisplayed(): Promise<void> {
@@ -197,7 +187,7 @@ export class TaskDetailsPage {
     }
 
     getDuration(): Promise<string> {
-        return BrowserActions.getText(this.durationField);
+        return BrowserActions.getInputValue(this.durationField);
     }
 
     getEndDate(): Promise<string> {

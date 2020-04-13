@@ -323,8 +323,6 @@ describe('Task Details component', () => {
 
         await taskPage.taskDetails().checkEditableAssigneeIsNotDisplayed();
         await taskPage.taskDetails().checkEditableFormIsNotDisplayed();
-        await taskPage.taskDetails().checkEditDescriptionButtonIsNotDisplayed();
-        await taskPage.taskDetails().checkEditPriorityButtonIsNotDisplayed();
         await taskPage.taskDetails().checkDueDatePickerButtonIsNotDisplayed();
     });
 });

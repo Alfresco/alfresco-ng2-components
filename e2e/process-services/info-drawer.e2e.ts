@@ -330,7 +330,6 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
         await expect(await taskPage.taskDetails().getParentName()).toEqual(taskDetails.parentName);
         await taskPage.taskDetails().checkDueDatePickerButtonIsNotDisplayed();
-        await taskPage.taskDetails().checkEditDescriptionButtonIsNotDisplayed();
 
         await taskPage.taskDetails().clickCompleteFormTask();
     });
