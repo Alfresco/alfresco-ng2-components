@@ -131,10 +131,10 @@ describe('NotificationService', () => {
         promise.afterDismissed().subscribe(() => {
             expect(translationService.instant).toHaveBeenCalledTimes(2);
             done();
-        })
+        });
 
         fixture.detectChanges();
-    })
+    });
 
     it('should open a message notification bar', (done) => {
         const promise = fixture.componentInstance.sendMessage();
