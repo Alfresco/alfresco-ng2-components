@@ -104,10 +104,11 @@ export class NotificationService {
 
     private dispatchNotification(message: string, action?: string, config?: number | MatSnackBarConfig, interpolateArgs?: any):  MatSnackBarRef<any> {
             const translatedMessage: string = this.translationService.instant(message, interpolateArgs);
+            const translatedAction: string = this.translationService.instant(action, interpolateArgs);
             const createNotification = this.getNotificationCreator(config);
             this.notifications$.next(createNotification(translatedMessage));
 
-            return this.snackBar.open(translatedMessage, action, {
+            return this.snackBar.open(translatedMessage, translatedAction, {
                 duration: (typeof config === 'number') ? config : this.DEFAULT_DURATION_MESSAGE,
                 panelClass: INFO_SNACK_CLASS,
                 ...( (typeof config === 'object') ? config : {} )
