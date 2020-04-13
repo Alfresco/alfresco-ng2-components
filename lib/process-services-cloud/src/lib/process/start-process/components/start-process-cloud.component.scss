@@ -1,42 +1,61 @@
-.adf {
-    &-start-process {
-        .mat-select-trigger {
-            font-size: 14px !important;
-        }
-        mat-form-field {
-            width: 100%;
-        }
-        mat-select {
-            width: 100%;
-            padding: 16px 0 0;
-        }
-        mat-card-actions {
-            text-align: right;
-            .mat-button {
-                text-transform: uppercase !important;
+@mixin adf-cloud-start-service-theme($theme) {
+    .adf {
+        &-start-process {
+            .mat-select-trigger {
+                font-size: 14px !important;
+            }
+
+            mat-form-field {
+                width: 100%;
+            }
+
+            mat-select {
+                width: 100%;
+                padding: 16px 0 0;
+            }
+
+            .mat-form-field-label {
+                color: mat-color($mat-grey, A400);
+            }
+
+            mat-card-actions {
+                text-align: right;
+
+                .mat-button {
+                    text-transform: uppercase !important;
+                }
             }
         }
-    }
-    &-process-input-container {
-        mat-form-field {
-            width: 100%;
+        &-title  {
+            padding-bottom: 1.25em;
+        }
+
+        &-process-input-container {
+            mat-form-field {
+                width: 100%;
+            }
+        }
+
+        &-process-input-autocomplete {
+            display: flex;
+
+            button {
+                position: absolute;
+                right: -14px;
+                top: 0;
+            }
+        }
+
+        &-start-form-container {
+            .mat-card {
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+        }
+
+        &-start-form-actions {
+            text-align: right !important;
         }
     }
-    &-process-input-autocomplete {
-        display: flex;
-        button {
-            position: absolute;
-            right: -14px;
-            top: 0;
-        }
-    }
-    &-start-form-container {
-        .mat-card {
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-    }
-    &-start-form-actions {
-        text-align: right !important;
-    }
+
 }

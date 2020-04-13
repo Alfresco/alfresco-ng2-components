@@ -386,6 +386,26 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
+        it('should have labels for process name and type', async(() => {
+            component.appName = 'myApp';
+            component.processDefinitionName = 'NewProcess 2';
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container mat-label');
+            expect(inputLabelsNodes.length).toBe(2);
+        }));
+
+        it('should have floating labels for process name and type', async(() => {
+            component.appName = 'myApp';
+            component.processDefinitionName = 'NewProcess 2';
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container');
+            inputLabelsNodes.forEach(labelNode => {
+                expect(labelNode.getAttribute('ng-reflect-float-label')).toBe('always');
+            });
+        }));
+
         it('should reload processes when appName input changed', async(() => {
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();

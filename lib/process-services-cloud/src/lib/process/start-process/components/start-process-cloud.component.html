@@ -1,6 +1,6 @@
 <mat-card class="adf-start-process">
 
-    <mat-card-title>{{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.TITLE' | translate}}
+    <mat-card-title class="adf-title">{{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.TITLE' | translate}}
     </mat-card-title>
 
     <mat-card-content *ngIf="!isProcessDefinitionsEmpty(); else emptyProcessDefinitionsList">
@@ -9,21 +9,7 @@
         </mat-card-subtitle>
 
         <form [formGroup]="processForm">
-            <mat-form-field class="adf-process-input-container">
-                <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.NAME' | translate }}</mat-label>
-                <input
-                    matInput
-                    formControlName="processInstanceName"
-                    id="processName">
-                <mat-error id="adf-start-process-required-error" *ngIf="processInstanceName.hasError('required')">
-                    {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
-                </mat-error>
-                <mat-error id="adf-start-process-maxlength-error" *ngIf="processInstanceName.hasError('maxlength')">
-                    {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="adf-process-input-container">
+            <mat-form-field class="adf-process-input-container"  [floatLabel]="'always'">
                 <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.TYPE' | translate }}</mat-label>
                 <input
                     #inputAutocomplete
@@ -42,9 +28,23 @@
                         <mat-icon>arrow_drop_down</mat-icon>
                     </button>
                 </div>
-                <mat-error *ngIf="processDefinition.hasError('required')">
+                <mat-error *ngIf="processDefinition.hasError('required')" class="adf-error-pb">
                         {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_DEFINITION_REQUIRED' | translate }}
                     </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="adf-process-input-container"  [floatLabel]="'always'">
+                <mat-label>{{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.LABEL.NAME' | translate }}</mat-label>
+                <input
+                    matInput
+                    formControlName="processInstanceName"
+                    id="processName">
+                <mat-error id="adf-start-process-required-error" *ngIf="processInstanceName.hasError('required')">
+                    {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                </mat-error>
+                <mat-error id="adf-start-process-maxlength-error" *ngIf="processInstanceName.hasError('maxlength')">
+                    {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxNameLength } }}
+                </mat-error>
             </mat-form-field>
         </form>
 
