@@ -213,4 +213,8 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     getFilterIcon(icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
+
+    isActiveFilter(filter: any): boolean {
+        return this.currentFilter.name === filter.name;
+    }
 }
