@@ -17,10 +17,10 @@
 
 import { async } from '@angular/core/testing';
 import { mockError, fakeProcessFilters } from '../../mock';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from './process-filter.service';
 import { AlfrescoApiServiceMock, AlfrescoApiService, AppConfigService,
     setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
+import { UserProcessInstanceFilterRepresentation, AlfrescoApiCompatibility } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -28,7 +28,7 @@ describe('Process filter', () => {
 
     let service: ProcessFilterService;
     let apiService: AlfrescoApiService;
-    let alfrescoApi: any;
+    let alfrescoApi: AlfrescoApiCompatibility;
 
     setupTestBed({
         imports: [
@@ -73,7 +73,7 @@ describe('Process filter', () => {
 
             it('should return the task filter by id', (done) => {
                 service.getProcessFilterById(333).subscribe(
-                    (processFilter: FilterProcessRepresentationModel) => {
+                    (processFilter) => {
                         expect(processFilter).toBeDefined();
                         expect(processFilter.id).toEqual(333);
                         expect(processFilter.name).toEqual('Running');
@@ -86,7 +86,7 @@ describe('Process filter', () => {
 
             it('should return the task filter by name', (done) => {
                 service.getProcessFilterByName('Running').subscribe(
-                    (res: FilterProcessRepresentationModel) => {
+                    (res) => {
                         expect(res).toBeDefined();
                         expect(res.id).toEqual(333);
                         expect(res.name).toEqual('Running');
@@ -106,7 +106,7 @@ describe('Process filter', () => {
             }));
 
             it('should return the default filters', (done) => {
-                service.createDefaultFilters(1234).subscribe((res: FilterProcessRepresentationModel []) => {
+                service.createDefaultFilters(1234).subscribe((res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
                     expect(res[0].name).toEqual('Running');
@@ -161,7 +161,7 @@ describe('Process filter', () => {
             beforeEach(() => {
                 createFilter = spyOn(alfrescoApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter')
                 .and
-                .callFake((processfilter: FilterProcessRepresentationModel) => Promise.resolve(processfilter));
+                .callFake((processfilter: UserProcessInstanceFilterRepresentation) => Promise.resolve(processfilter));
             });
 
             const filter = fakeProcessFilters.data[0];
@@ -172,7 +172,7 @@ describe('Process filter', () => {
             });
 
             it('should return the created filter', async(() => {
-                service.addProcessFilter(filter).subscribe((createdFilter: FilterProcessRepresentationModel) => {
+                service.addProcessFilter(filter).subscribe((createdFilter) => {
                     expect(createdFilter).toBe(filter);
                 });
             }));

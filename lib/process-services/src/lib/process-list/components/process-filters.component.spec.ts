@@ -18,7 +18,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { from } from 'rxjs';
-import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -26,6 +25,7 @@ import { By } from '@angular/platform-browser';
 import { fakeProcessFilters } from '../../mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -49,19 +49,19 @@ describe('ProcessFiltersComponent', () => {
         filterList = fixture.componentInstance;
 
         fakeGlobalFilterPromise = Promise.resolve([
-            new FilterProcessRepresentationModel({
+            new UserProcessInstanceFilterRepresentation({
                 id: 10,
                 name: 'FakeCompleted',
                 icon: 'glyphicon-th',
                 filter: { state: 'open', assignment: 'fake-involved' }
             }),
-            new FilterProcessRepresentationModel({
+            new UserProcessInstanceFilterRepresentation({
                 id: 20,
                 name: 'FakeAll',
                 icon: 'glyphicon-random',
                 filter: { state: 'open', assignment: 'fake-assignee' }
             }),
-            new FilterProcessRepresentationModel({
+            new UserProcessInstanceFilterRepresentation({
                 id: 30,
                 name: 'Running',
                 icon: 'glyphicon-ok-sign',
@@ -115,7 +115,7 @@ describe('ProcessFiltersComponent', () => {
 
     it('should emit an event when a filter is selected', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        filterList.filterParam = new FilterProcessRepresentationModel({ id: 10 });
+        filterList.filterParam = new UserProcessInstanceFilterRepresentation({ id: 10 });
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -133,7 +133,7 @@ describe('ProcessFiltersComponent', () => {
     it('should reset selection when filterParam is a filter that does not exist', async () => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         filterList.currentFilter = fakeProcessFilters.data[0];
-        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'non-existing-filter' });
+        filterList.filterParam = new UserProcessInstanceFilterRepresentation({ name: 'non-existing-filter' });
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
@@ -193,13 +193,13 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        const currentFilter = new FilterProcessRepresentationModel({
+        const currentFilter = new UserProcessInstanceFilterRepresentation({
             id: 10,
             name: 'FakeCompleted',
             filter: { state: 'open', assignment: 'fake-involved' }
         });
 
-        filterList.filterClick.subscribe((filter: FilterProcessRepresentationModel) => {
+        filterList.filterClick.subscribe((filter: UserProcessInstanceFilterRepresentation) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);
@@ -240,7 +240,7 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        const filter = new FilterProcessRepresentationModel({
+        const filter = new UserProcessInstanceFilterRepresentation({
             name: 'FakeAll',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
@@ -252,7 +252,7 @@ describe('ProcessFiltersComponent', () => {
     it('should select the filter passed as input by id', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        filterList.filterParam = new FilterProcessRepresentationModel({ id: 20 });
+        filterList.filterParam = new UserProcessInstanceFilterRepresentation({ id: 20 });
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
@@ -272,7 +272,7 @@ describe('ProcessFiltersComponent', () => {
     it('should select the filter passed as input by name', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeAll' });
+        filterList.filterParam = new UserProcessInstanceFilterRepresentation({ name: 'FakeAll' });
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
@@ -285,6 +285,26 @@ describe('ProcessFiltersComponent', () => {
             expect(filterList.filters.length).toEqual(3);
             expect(filterList.currentFilter).toBeDefined();
             expect(filterList.currentFilter.name).toEqual('FakeAll');
+            done();
+        });
+    });
+
+    it('should select first filter if filterParam is empty', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+
+        filterList.filterParam = new UserProcessInstanceFilterRepresentation({});
+
+        const appId = 1;
+        const change = new SimpleChange(null, appId, true);
+
+        filterList.ngOnChanges({ 'appId': change });
+
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(filterList.filters).toBeDefined();
+            expect(filterList.filters.length).toEqual(3);
+            expect(filterList.currentFilter).toBeDefined();
+            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
             done();
         });
     });
