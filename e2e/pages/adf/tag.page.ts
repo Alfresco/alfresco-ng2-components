@@ -135,7 +135,7 @@ export class TagPage {
 
     async checkListIsSorted(sortOrder, locator): Promise<boolean> {
         const tagList: ElementArrayFinder = element.all(locator);
-        await BrowserVisibility.waitUntilElementIsVisible(tagList.first());
+        await BrowserVisibility.waitUntilElementIsPresent(tagList.last());
         const initialList = [];
         await tagList.each(async (currentElement) => {
             const text = await BrowserActions.getText(currentElement);
