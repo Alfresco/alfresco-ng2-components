@@ -24,12 +24,17 @@
 @mixin adf-dialog-theme($theme) {
 
     $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
 
     .adf-dialog-buttons button {
         text-transform: uppercase;
     }
+
     .adf-dialog-action-button:enabled {
         color: mat-color($primary);
     }
 
+    .adf-dialog-action-button:disabled > span {
+        color: mat-color($foreground, text, 0.54);
+    }
 }
