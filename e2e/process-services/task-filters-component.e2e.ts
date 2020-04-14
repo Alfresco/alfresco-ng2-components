@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -59,7 +59,7 @@ describe('Task', () => {
             user = await users.createTenantAndUser(this.alfrescoJsApi);
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             const { id } = await applicationsService.importPublishDeployApp(app.file_path);
             appId = id;
 
@@ -209,7 +209,7 @@ describe('Task', () => {
             user = await users.createTenantAndUser(this.alfrescoJsApi);
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;

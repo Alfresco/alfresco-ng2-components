@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFields, LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { FormFields, LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -50,7 +50,7 @@ describe('Attach Form Component', () => {
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
-        const applicationService = new ApplicationService(this.alfrescoJsApi);
+        const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
 
         const users = new UsersActions();
 

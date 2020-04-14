@@ -17,7 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { User } from '../models/APS/user';
@@ -55,7 +55,7 @@ describe('Stencil', () => {
         user = await usersActions.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationService(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.loginToProcessServicesUsingUserModel(user);
     });

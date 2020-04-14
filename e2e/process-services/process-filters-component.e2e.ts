@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationsUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
@@ -69,7 +69,7 @@ describe('Process Filters Test', () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         await this.alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.loginToProcessServicesUsingUserModel(user);
     });

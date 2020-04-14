@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, StringUtil, Widget, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsActions } from '../actions/APS/apps.actions';
@@ -175,7 +175,7 @@ describe('Task Details - Form', () => {
         beforeAll(async () => {
             app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
             appActions = new AppsActions();
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             await applicationsService.importPublishDeployApp(app.file_path);
         });
 

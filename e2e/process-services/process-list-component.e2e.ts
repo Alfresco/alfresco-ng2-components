@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationsUtil } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -63,7 +63,7 @@ describe('Process List Test', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
 

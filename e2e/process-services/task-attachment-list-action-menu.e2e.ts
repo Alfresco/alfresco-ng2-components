@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
@@ -61,7 +61,7 @@ describe('Attachment list action menu for tasks', () => {
         tenantId = user.tenantId;
 
         await this.alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         const { id } = await applicationsService.importPublishDeployApp(app.file_path);
         appId = id;
 

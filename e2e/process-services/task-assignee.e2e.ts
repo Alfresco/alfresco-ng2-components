@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
@@ -65,7 +65,7 @@ describe('Task Assignee', () => {
             } catch (e) {}
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             try {
                 await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
             } catch (e) {
@@ -144,7 +144,7 @@ describe('Task Assignee', () => {
             } catch (e) {}
 
             await this.alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationService(this.alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
             await apps.startProcess(this.alfrescoJsApi, appModel, app.processNames[1]);
         });

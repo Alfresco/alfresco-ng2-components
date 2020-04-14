@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, ViewerPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ViewerPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import { FileModel } from '../models/ACS/file.model';
@@ -45,7 +45,7 @@ describe('Start Task - Task App', () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        const applicationService = new ApplicationService(this.alfrescoJsApi);
+        const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 

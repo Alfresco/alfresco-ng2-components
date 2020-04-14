@@ -22,7 +22,7 @@ import {
     StartProcessDialog,
     StringUtil,
     Widget,
-    ApplicationService
+    ApplicationsUtil
 } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
@@ -98,7 +98,7 @@ describe('Start Process Component', () => {
 
                 await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-                const applicationsService = new ApplicationService(this.alfrescoJsApiUserTwo);
+                const applicationsService = new ApplicationsUtil(this.alfrescoJsApiUserTwo);
 
                 const appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -516,7 +516,7 @@ describe('Start Process Component', () => {
             });
             await this.alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
 
-            const applicationsService = new ApplicationService(this.alfrescoJsBPMAdminUser);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsBPMAdminUser);
 
             const appCreated = await applicationsService.importPublishDeployApp(startProcessAttachFileApp.file_path);
             appId = appCreated.id;

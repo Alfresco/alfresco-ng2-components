@@ -25,7 +25,7 @@ import { AppsActions } from '../actions/APS/apps.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
-import { LoginPage, BrowserActions, StringUtil, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 
@@ -63,7 +63,7 @@ describe('Task Details component', () => {
         processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
