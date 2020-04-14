@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { TaskFilterRepresentation, UserTaskFilterRepresentation, TaskQueryRepresentation } from '@alfresco/js-api';
+import { UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 export class AppDefinitionRepresentationModel {
-    defaultAppId: string;
-    deploymentId: string;
-    name: string;
-    description: string;
-    theme: string;
-    icon: string;
-    id: number;
-    modelId: number;
-    tenantId: number;
+    defaultAppId?: string;
+    deploymentId?: string;
+    name?: string;
+    description?: string;
+    theme?: string;
+    icon?: string;
+    id?: number;
+    modelId?: number;
+    tenantId?: number;
 
     constructor(obj?: any) {
         if (obj) {
@@ -44,9 +44,9 @@ export class AppDefinitionRepresentationModel {
 }
 
 export class FilterParamsModel {
-    id: number;
-    name: string;
-    index: number;
+    id?: number;
+    name?: string;
+    index?: number;
 
     constructor(obj?: any) {
         if (obj) {
@@ -57,32 +57,12 @@ export class FilterParamsModel {
     }
 }
 
-export class FilterRepresentationModel implements UserTaskFilterRepresentation {
-    id: number;
-    appId: number;
-    name: string;
-    recent: boolean;
-    icon: string;
-    filter: TaskFilterRepresentation;
-    index: number;
-
+export class FilterRepresentationModel extends UserTaskFilterRepresentation {
     constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.appId = obj.appId || null;
-            this.name = obj.name || null;
-            this.recent = !!obj.recent;
-            this.icon = obj.icon || null;
-            this.filter = new UserTaskFilterRepresentation(obj.filter);
-            this.index = obj.index;
-        }
+        super(obj);
     }
 
     hasFilter(): boolean {
         return !!this.filter;
     }
-}
-
-export class TaskQueryRequestRepresentationModel extends TaskQueryRepresentation {
-
 }

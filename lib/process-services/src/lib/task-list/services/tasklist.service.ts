@@ -19,7 +19,7 @@ import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { Observable, from, forkJoin, throwError, of } from 'rxjs';
 import { map, catchError, switchMap, flatMap, filter } from 'rxjs/operators';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { Form } from '../models/form.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListModel } from '../models/task-list.model';
@@ -57,14 +57,14 @@ export class TaskListService {
      * @param filter The filter to use
      * @returns The search query
      */
-    private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
+    private generateTaskRequestNodeFromFilter(filterModel: FilterRepresentationModel): TaskQueryRepresentation {
         const requestNode = {
             appDefinitionId: filterModel.appId,
             assignment: filterModel.filter.assignment,
             state: filterModel.filter.state,
             sort: filterModel.filter.sort
         };
-        return new TaskQueryRequestRepresentationModel(requestNode);
+        return new TaskQueryRepresentation(requestNode);
     }
 
     /**
@@ -89,7 +89,7 @@ export class TaskListService {
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
-    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
+    getTasks(requestNode: TaskQueryRepresentation): Observable<TaskListModel> {
         return from(this.callApiTasksFiltered(requestNode))
             .pipe(
                 catchError((err) => this.handleError(err))
@@ -102,7 +102,7 @@ export class TaskListService {
      * @param state Task state. Can be "open" or "completed".
      * @returns List of tasks
      */
-    findTasksByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
+    findTasksByState(requestNode: TaskQueryRepresentation, state?: string): Observable<TaskListModel> {
         if (state) {
             requestNode.state = state;
         }
@@ -116,7 +116,7 @@ export class TaskListService {
      * @param state Task state. Can be "open" or "completed".
      * @returns List of tasks
      */
-    findAllTaskByState(requestNode: TaskQueryRequestRepresentationModel, state?: string): Observable<TaskListModel> {
+    findAllTaskByState(requestNode: TaskQueryRepresentation, state?: string): Observable<TaskListModel> {
         if (state) {
             requestNode.state = state;
         }
@@ -134,7 +134,7 @@ export class TaskListService {
      * @param requestNode Query to search for tasks
      * @returns List of tasks
      */
-    findAllTasksWithoutState(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskListModel> {
+    findAllTasksWithoutState(requestNode: TaskQueryRepresentation): Observable<TaskListModel> {
         return forkJoin(
             this.findTasksByState(requestNode, 'open'),
             this.findAllTaskByState(requestNode, 'completed'),
@@ -274,7 +274,7 @@ export class TaskListService {
      * @param requestNode Query to search for tasks
      * @returns Number of tasks
      */
-    public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
+    getTotalTasks(requestNode: TaskQueryRepresentation): Observable<any> {
         requestNode.size = 0;
         return from(this.callApiTasksFiltered(requestNode))
             .pipe(

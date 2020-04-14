@@ -17,9 +17,10 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, from, throwError } from 'rxjs';
+import { Observable, forkJoin, from, of } from 'rxjs';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { map, catchError } from 'rxjs/operators';
+import { UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -30,56 +31,52 @@ export class TaskFilterService {
                 private logService: LogService) {
     }
 
+    private get userFiltersApi(): UserFiltersApi {
+        return this.apiService.getInstance().activiti.userFiltersApi;
+    }
+
     /**
      * Creates and returns the default filters for a process app.
      * @param appId ID of the target app
      * @returns Array of default filters just created
      */
-    public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
-        const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
-        const myTaskObservable = this.addFilter(myTasksFilter);
 
+    createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
         const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId, 1);
-        const involvedObservable = this.addFilter(involvedTasksFilter);
-
+        const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
         const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId, 2);
-        const queuedObservable = this.addFilter(queuedTasksFilter);
-
         const completedTasksFilter = this.getCompletedTasksFilterInstance(appId, 3);
-        const completeObservable = this.addFilter(completedTasksFilter);
 
-        return new Observable((observer) => {
-            forkJoin([
-                    myTaskObservable,
-                    involvedObservable,
-                    queuedObservable,
-                    completeObservable
-                ]
-            ).subscribe(
-                (res) => {
-                    const filters: FilterRepresentationModel[] = [];
-                    res.forEach((filter) => {
+        return forkJoin(
+            this.addFilter(involvedTasksFilter),
+            this.addFilter(myTasksFilter),
+            this.addFilter(queuedTasksFilter),
+            this.addFilter(completedTasksFilter)
+        ).pipe(
+            map(entries => {
+                const result: FilterRepresentationModel[] = [];
+
+                entries
+                    .filter(entry => entry)
+                    .forEach((filter) => {
                         if (filter.name === involvedTasksFilter.name) {
                             involvedTasksFilter.id = filter.id;
-                            filters.push(involvedTasksFilter);
+                            result.push(involvedTasksFilter);
                         } else if (filter.name === myTasksFilter.name) {
                             myTasksFilter.id = filter.id;
-                            filters.push(myTasksFilter);
+                            result.push(myTasksFilter);
                         } else if (filter.name === queuedTasksFilter.name) {
                             queuedTasksFilter.id = filter.id;
-                            filters.push(queuedTasksFilter);
+                            result.push(queuedTasksFilter);
                         } else if (filter.name === completedTasksFilter.name) {
                             completedTasksFilter.id = filter.id;
-                            filters.push(completedTasksFilter);
+                            result.push(completedTasksFilter);
                         }
                     });
-                    observer.next(filters);
-                    observer.complete();
-                },
-                (err: any) => {
-                    this.logService.error(err);
-                });
-        });
+
+                return result;
+            })
+        );
     }
 
     /**
@@ -98,7 +95,10 @@ export class TaskFilterService {
                     });
                     return filters;
                 }),
-                catchError((err) => this.handleError(err))
+                catchError((err) => {
+                    this.logService.error(err);
+                    return of([]);
+                })
             );
     }
 
@@ -108,10 +108,13 @@ export class TaskFilterService {
      * @param appId ID of the app for the filter
      * @returns Details of task filter
      */
-    getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel> {
+    getTaskFilterById(filterId: number, appId?: number): Observable<FilterRepresentationModel | null> {
         return from(this.callApiTaskFilters(appId)).pipe(
             map((response) => response.data.find((filter) => filter.id === filterId)),
-            catchError((err) => this.handleError(err))
+            catchError((err) => {
+                this.logService.error(err);
+                return of(null);
+            })
         );
     }
 
@@ -121,10 +124,13 @@ export class TaskFilterService {
      * @param appId ID of the app for the filter
      * @returns Details of task filter
      */
-    getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel> {
+    getTaskFilterByName(taskName: string, appId?: number): Observable<FilterRepresentationModel | null> {
         return from(this.callApiTaskFilters(appId)).pipe(
             map((response) => response.data.find((filter) => filter.name === taskName)),
-            catchError((err) => this.handleError(err))
+            catchError((err) => {
+                this.logService.error(err);
+                return of(null);
+            })
         );
     }
 
@@ -133,13 +139,13 @@ export class TaskFilterService {
      * @param filter The new filter to add
      * @returns Details of task filter just added
      */
-    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
-        return from(this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter))
+    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel | null> {
+        return from(this.userFiltersApi.createUserTaskFilter(filter))
             .pipe(
-                map((response: FilterRepresentationModel) => {
-                    return response;
-                }),
-                catchError((err) => this.handleError(err))
+                catchError((err) => {
+                    this.logService.error(err);
+                    return of(null);
+                })
             );
     }
 
@@ -150,9 +156,9 @@ export class TaskFilterService {
      */
     callApiTaskFilters(appId?: number): Promise<any> {
         if (appId) {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
+            return this.userFiltersApi.getUserTaskFilters({appId: appId});
         } else {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters();
+            return this.userFiltersApi.getUserTaskFilters();
         }
     }
 
@@ -223,10 +229,4 @@ export class TaskFilterService {
             index
         });
     }
-
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
-    }
-
 }

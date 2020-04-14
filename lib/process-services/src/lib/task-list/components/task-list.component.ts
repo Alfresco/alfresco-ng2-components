@@ -24,13 +24,13 @@ import {
     Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskListModel } from '../models/task-list.model';
 import { taskPresetsDefaultModel } from '../models/task-preset.model';
 import { TaskListService } from './../services/tasklist.service';
 import moment from 'moment-es6';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskQueryRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-tasklist',
@@ -47,7 +47,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
-    requestNode: TaskQueryRequestRepresentationModel;
+    requestNode: TaskQueryRepresentation;
 
     /** The id of the app. */
     @Input()
@@ -391,8 +391,8 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
         return instances;
     }
 
-    private createRequestNode() {
-        const requestNode = {
+    private createRequestNode(): TaskQueryRepresentation {
+        return new TaskQueryRepresentation({
             appDefinitionId: this.appId,
             dueAfter: this.dueAfter ? moment(this.dueAfter).toDate() : null,
             dueBefore: this.dueBefore ? moment(this.dueBefore).toDate() : null,
@@ -407,8 +407,7 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             start: this.start,
             taskId: this.taskId,
             includeProcessInstance: this.includeProcessInstance
-        };
-        return new TaskQueryRequestRepresentationModel(requestNode);
+        });
     }
 
     updatePagination(params: PaginationModel) {

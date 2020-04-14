@@ -38,9 +38,9 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
+import { UserRepresentation, TaskQueryRepresentation } from '@alfresco/js-api';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
 
@@ -305,7 +305,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
      * @param processDefinitionId
      */
     private loadNextTask(processInstanceId: string, processDefinitionId: string): void {
-        const requestNode = new TaskQueryRequestRepresentationModel(
+        const requestNode = new TaskQueryRepresentation(
             {
                 processInstanceId: processInstanceId,
                 processDefinitionId: processDefinitionId

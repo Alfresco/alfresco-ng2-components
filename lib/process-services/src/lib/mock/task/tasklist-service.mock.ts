@@ -19,6 +19,7 @@ import {
     AppDefinitionRepresentationModel,
     FilterRepresentationModel
 } from '../../task-list/models/filter.model';
+import { TaskQueryRepresentation } from '@alfresco/js-api';
 
 export let fakeFilters = {
     size: 2, total: 2, start: 0,
@@ -60,9 +61,9 @@ export let fakeApps = {
     ]
 };
 
-export let fakeFilter = {
+export const fakeFilter = new TaskQueryRepresentation({
     sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
-};
+});
 
 export let fakeUser1 = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
 

@@ -32,7 +32,7 @@ import {
     fakeUser2,
     secondFakeTaskList
 } from '../../mock';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './tasklist.service';
 import { TaskUpdateRepresentation } from '@alfresco/js-api';
@@ -63,7 +63,7 @@ describe('Activiti TaskList Service', () => {
     describe('Content tests', () => {
 
         it('should return the task list filtered', (done) => {
-            service.getTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
+            service.getTasks(fakeFilter).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.start).toEqual(0);
@@ -87,7 +87,7 @@ describe('Activiti TaskList Service', () => {
             spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
-            service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe((res) => {
+            service.findAllTaskByState(fakeFilter, 'open').subscribe((res) => {
 
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
@@ -106,7 +106,7 @@ describe('Activiti TaskList Service', () => {
             spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
-            service.findAllTaskByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
+            service.findAllTaskByState(fakeFilter).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.start).toEqual(0);
@@ -121,7 +121,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered by state', (done) => {
-            service.findTasksByState(<TaskQueryRequestRepresentationModel> fakeFilter, 'open').subscribe((res) => {
+            service.findTasksByState(fakeFilter, 'open').subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.start).toEqual(0);
@@ -142,7 +142,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the task list filtered', (done) => {
-            service.findTasksByState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
+            service.findTasksByState(fakeFilter).subscribe((res) => {
                 expect(res.size).toEqual(1);
                 expect(res.start).toEqual(0);
                 expect(res.data).toBeDefined();
@@ -165,7 +165,7 @@ describe('Activiti TaskList Service', () => {
             spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
-            service.findAllTasksWithoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
+            service.findAllTasksWithoutState(fakeFilter).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.data).toBeDefined();
                 expect(res.data.length).toEqual(2);
@@ -185,7 +185,7 @@ describe('Activiti TaskList Service', () => {
         it('Should return both open and completed task', (done) => {
             spyOn(service, 'findTasksByState').and.returnValue(of(fakeOpenTaskList));
             spyOn(service, 'findAllTaskByState').and.returnValue(of(fakeCompletedTaskList));
-            service.findAllTasksWithoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
+            service.findAllTasksWithoutState(fakeFilter).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.data).toBeDefined();
                 expect(res.data.length).toEqual(4);
@@ -202,7 +202,7 @@ describe('Activiti TaskList Service', () => {
             spyOn(service, 'getTasks').and.returnValue(of(fakeTaskList));
             spyOn(service, 'getTotalTasks').and.returnValue(of(fakeTaskList));
 
-            service.findAllTasksWithoutState(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res) => {
+            service.findAllTasksWithoutState(fakeFilter).subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.data).toBeDefined();
                 expect(res.data.length).toEqual(2);
@@ -311,7 +311,7 @@ describe('Activiti TaskList Service', () => {
         });
 
         it('should return the total number of tasks', (done) => {
-            service.getTotalTasks(<TaskQueryRequestRepresentationModel> fakeFilter).subscribe((res: any) => {
+            service.getTotalTasks(fakeFilter).subscribe((res: any) => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.total).toEqual(1);
