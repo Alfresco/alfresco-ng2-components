@@ -189,14 +189,13 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             )
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(
-                (data) => {
-                    this.formCloudRepresentationJSON = data[0];
-
-                    this.formCloudRepresentationJSON.processVariables = data[1];
-                    this.data = data[1];
+                ([formData, taskVariables]) => {
+                    this.formCloudRepresentationJSON = formData;
+                    this.formCloudRepresentationJSON.processVariables = taskVariables;
+                    this.data = taskVariables;
 
                     const parsedForm = this.parseForm(this.formCloudRepresentationJSON);
-                    this.visibilityService.refreshVisibility(<any> parsedForm);
+                    this.visibilityService.refreshVisibility(parsedForm);
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';

@@ -23,8 +23,8 @@ import {
     FormOutcomeModel,
     FormModel
 } from '@alfresco/adf-core';
-import { Observable, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { CompleteFormRepresentation } from '@alfresco/js-api';
 import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
@@ -154,11 +154,7 @@ export class FormCloudService extends BaseCloudService {
     getProcessStorageFolderTask(appName: string, taskId: string, processInstanceId: string): Observable<ProcessStorageCloudModel> {
         const apiUrl = this.buildFolderTask(appName, taskId, processInstanceId);
 
-        return this.get(apiUrl).pipe(
-            map((res: any) => {
-                return new ProcessStorageCloudModel(res);
-            })
-        );
+        return this.get<ProcessStorageCloudModel>(apiUrl);
     }
 
     /**
@@ -172,8 +168,9 @@ export class FormCloudService extends BaseCloudService {
 
         return this.get(apiUrl).pipe(
             map((res: any) => {
-                return res.list.entries.map((variable) => new TaskVariableCloud(variable.entry));
-            })
+                return res.list.entries.map((variable) => variable.entry);
+            }),
+            catchError(() => of([]))
         );
     }
 

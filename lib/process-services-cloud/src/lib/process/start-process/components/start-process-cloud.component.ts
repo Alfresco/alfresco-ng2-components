@@ -86,11 +86,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     /** Emitted when form content is clicked. */
     @Output()
-    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter();
+    formContentClicked = new EventEmitter<ContentLinkModel>();
 
     /** Emitted when process definition selection changes. */
     @Output()
-    processDefinitionSelection: EventEmitter<ProcessDefinitionCloud> = new EventEmitter<ProcessDefinitionCloud>();
+    processDefinitionSelection = new EventEmitter<ProcessDefinitionCloud>();
 
     processDefinitionList: ProcessDefinitionCloud[] = [];
     processDefinitionCurrent: ProcessDefinitionCloud;

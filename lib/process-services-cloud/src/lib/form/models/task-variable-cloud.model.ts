@@ -15,24 +15,13 @@
  * limitations under the License.
  */
 
-export class TaskVariableCloud {
+export interface TaskVariableCloud {
     name: string;
     value: any;
-    constructor(obj) {
-        this.name = obj.name || null;
-        this.value = obj.value || null;
-    }
 }
 
-export class ProcessStorageCloudModel {
-
+export interface ProcessStorageCloudModel {
     nodeId: string;
     path: string;
     type: string;
-
-    constructor(obj) {
-        this.nodeId = obj.nodeId || null;
-        this.path = obj.path || null;
-        this.type = obj.type || null;
-    }
 }
