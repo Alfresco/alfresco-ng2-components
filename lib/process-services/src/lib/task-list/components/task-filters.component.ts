@@ -38,15 +38,15 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
+    filterClick = new EventEmitter<FilterRepresentationModel>();
 
     /** Emitted when the list is loaded. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when an error occurs during loading. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Display filters available to the current user for the application with the specified ID. */
     @Input()
@@ -61,9 +61,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     showIcon: boolean;
 
     filter$: Observable<FilterRepresentationModel>;
-
     currentFilter: FilterRepresentationModel;
-
     filters: FilterRepresentationModel [] = [];
 
     private iconsMDL: IconModel;

@@ -123,41 +123,41 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
-    formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formSaved = new EventEmitter<FormModel>();
 
     /** Emitted when the form is submitted with the `Complete` outcome. */
     @Output()
-    formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formCompleted = new EventEmitter<FormModel>();
 
     /** Emitted when the form field content is clicked. */
     @Output()
-    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+    formContentClicked = new EventEmitter<ContentLinkModel>();
 
     /** Emitted when the form is loaded or reloaded. */
     @Output()
-    formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+    formLoaded = new EventEmitter<FormModel>();
 
     /** Emitted when a checklist task is created. */
     @Output()
-    taskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
+    taskCreated = new EventEmitter<TaskDetailsModel>();
 
     /** Emitted when a checklist task is deleted. */
     @Output()
-    taskDeleted: EventEmitter<string> = new EventEmitter<string>();
+    taskDeleted = new EventEmitter<string>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     /** Emitted when any outcome is executed. Default behaviour can be prevented
      * via `event.preventDefault()`.
      */
     @Output()
-    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+    executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
     /** Emitted when a task is assigned. */
     @Output()
-    assignTask: EventEmitter<void> = new EventEmitter<void>();
+    assignTask = new EventEmitter<void>();
 
     /** Emitted when a task is claimed. */
     @Output()

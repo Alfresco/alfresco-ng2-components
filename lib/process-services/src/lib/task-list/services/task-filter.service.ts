@@ -75,7 +75,8 @@ export class TaskFilterService {
                     });
 
                 return result;
-            })
+            }),
+            catchError(() => of([]))
         );
     }
 

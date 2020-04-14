@@ -17,10 +17,10 @@
 
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Observable, from, forkJoin, throwError } from 'rxjs';
+import { Observable, from, forkJoin, of } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { map, catchError } from 'rxjs/operators';
-import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation, UserFiltersApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +28,10 @@ import { ResultListDataRepresentationUserProcessInstanceFilterRepresentation } f
 export class ProcessFilterService {
 
     constructor(private alfrescoApiService: AlfrescoApiService) {
+    }
+
+    private get userFiltersApi(): UserFiltersApi {
+        return this.alfrescoApiService.getInstance().activiti.userFiltersApi;
     }
 
     /**
@@ -46,7 +50,7 @@ export class ProcessFilterService {
                     });
                     return filters;
                 }),
-                catchError((err) => this.handleProcessError(err))
+                catchError(() => of([]))
             );
     }
 
@@ -56,13 +60,13 @@ export class ProcessFilterService {
      * @param appId ID of the target app
      * @returns Details of the filter
      */
-    getProcessFilterById(filterId: number, appId?: number): Observable<FilterProcessRepresentationModel> {
+    getProcessFilterById(filterId: number, appId?: number): Observable<FilterProcessRepresentationModel | null> {
         return from(this.callApiProcessFilters(appId))
             .pipe(
                 map((response: any) => {
                     return response.data.find((filter) => filter.id === filterId);
                 }),
-                catchError((err) => this.handleProcessError(err))
+                catchError(() => of(null))
             );
     }
 
@@ -72,13 +76,13 @@ export class ProcessFilterService {
      * @param appId ID of the target app
      * @returns Details of the filter
      */
-    getProcessFilterByName(filterName: string, appId?: number): Observable<FilterProcessRepresentationModel> {
+    getProcessFilterByName(filterName: string, appId?: number): Observable<FilterProcessRepresentationModel | null> {
         return from(this.callApiProcessFilters(appId))
             .pipe(
                 map((response: any) => {
                     return response.data.find((filter) => filter.name === filterName);
                 }),
-                catchError((err) => this.handleProcessError(err))
+                catchError(() => of(null))
             );
     }
 
@@ -87,44 +91,40 @@ export class ProcessFilterService {
      * @param appId ID of the target app
      * @returns Default filters just created
      */
-    public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
+
+    createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         const runningFilter = this.getRunningFilterInstance(appId, 0);
-        const runningObservable = this.addProcessFilter(runningFilter);
-
         const completedFilter = this.getCompletedFilterInstance(appId, 1);
-        const completedObservable = this.addProcessFilter(completedFilter);
-
         const allFilter = this.getAllFilterInstance(appId, 2);
-        const allObservable = this.addProcessFilter(allFilter);
 
-        return new Observable((observer) => {
-            forkJoin([
-                    runningObservable,
-                    completedObservable,
-                    allObservable
-                ]
-            ).subscribe(
-                (res) => {
-                    const filters: FilterProcessRepresentationModel[] = [];
-                    res.forEach((filter) => {
+        return forkJoin(
+            this.addProcessFilter(runningFilter),
+            this.addProcessFilter(completedFilter),
+            this.addProcessFilter(allFilter)
+        )
+        .pipe(
+            map(entries => {
+                const result: FilterProcessRepresentationModel[] = [];
+
+                entries
+                    .filter(entry => entry)
+                    .forEach(filter => {
                         if (filter.name === runningFilter.name) {
                             runningFilter.id = filter.id;
-                            filters.push(runningFilter);
+                            result.push(runningFilter);
                         } else if (filter.name === completedFilter.name) {
                             completedFilter.id = filter.id;
-                            filters.push(completedFilter);
+                            result.push(completedFilter);
                         } else if (filter.name === allFilter.name) {
                             allFilter.id = filter.id;
-                            filters.push(allFilter);
+                            result.push(allFilter);
                         }
                     });
-                    observer.next(filters);
-                    observer.complete();
-                },
-                (err: any) => {
-                    this.handleProcessError(err);
-                });
-        });
+
+                return result;
+            }),
+            catchError(() => of([]))
+        );
     }
 
     /**
@@ -134,7 +134,7 @@ export class ProcessFilterService {
      * @returns Filter just created
      */
     public getRunningFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
-        return  new FilterProcessRepresentationModel({
+        return new FilterProcessRepresentationModel({
             'name': 'Running',
             'appId': appId,
             'recent': true,
@@ -183,14 +183,9 @@ export class ProcessFilterService {
      * @param filter The filter to add
      * @returns The filter just added
      */
-    addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
-        return from(this.alfrescoApiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter))
-            .pipe(
-                map((response: FilterProcessRepresentationModel) => {
-                    return response;
-                }),
-                catchError((err) => this.handleProcessError(err))
-            );
+    addProcessFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel | null> {
+        return from(this.userFiltersApi.createUserProcessInstanceFilter(filter))
+            .pipe(catchError(() => of(null)));
     }
 
     /**
@@ -200,13 +195,9 @@ export class ProcessFilterService {
      */
     callApiProcessFilters(appId?: number): Promise<ResultListDataRepresentationUserProcessInstanceFilterRepresentation> {
         if (appId) {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
+            return this.userFiltersApi.getUserProcessInstanceFilters({ appId: appId });
         } else {
-            return this.alfrescoApiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters();
+            return this.userFiltersApi.getUserProcessInstanceFilters();
         }
-    }
-
-    private handleProcessError(error: any) {
-        return throwError(error || 'Server error');
     }
 }
