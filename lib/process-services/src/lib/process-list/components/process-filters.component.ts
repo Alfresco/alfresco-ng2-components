@@ -69,6 +69,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     currentFilter: ProcessInstanceFilterRepresentation;
 
     filters: UserProcessInstanceFilterRepresentation [] = [];
+    active = false;
 
     private iconsMDL: IconModel;
 
@@ -147,6 +148,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     selectFilter(filter: ProcessInstanceFilterRepresentation) {
         this.currentFilter = filter;
+        this.active = true;
         this.filterClick.emit(filter);
     }
 
@@ -210,5 +212,9 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     getFilterIcon(icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
+    }
+
+    isActiveFilter(filter: any): boolean {
+        return this.currentFilter.name === filter.name;
     }
 }

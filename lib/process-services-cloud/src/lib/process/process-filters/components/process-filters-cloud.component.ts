@@ -175,4 +175,8 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
+
+    isActiveFilter(filter: any): boolean {
+        return this.currentFilter.name === filter.name;
+    }
 }
