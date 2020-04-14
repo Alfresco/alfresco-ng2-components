@@ -14,7 +14,7 @@
                    [placeholder]="property.default"
                    [(ngModel)]="editedValue"
                    (ngModelChange)="update()"
-                   [readOnly]="!isEditable"
+                   [disabled]="!isEditable"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
                    [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
@@ -29,7 +29,7 @@
                       [placeholder]="property.default"
                       [(ngModel)]="editedValue"
                       (ngModelChange)="update()"
-                      [readOnly]="!isEditable"
+                      [disabled]="!isEditable"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
             <button mat-button
                     matSuffix
@@ -100,7 +100,7 @@
                    [placeholder]="property.default"
                    [(ngModel)]="editedValue"
                    (ngModelChange)="update()"
-                   [readOnly]="!isEditable"
+                   [disabled]="!isEditable"
                    [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <button mat-icon-button
                     matSuffix

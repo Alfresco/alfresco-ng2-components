@@ -307,7 +307,6 @@ describe('Info Drawer', () => {
 
         await taskPage.taskDetails().updateDescription('Good Bye');
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
-        await taskPage.taskDetails().updateDescription();
         await expect(await taskPage.taskDetails().getDescription()).toEqual('No description');
 
         await taskPage.taskDetails().clickCompleteFormTask();
