@@ -460,7 +460,7 @@ describe('CardViewTextItemComponent', () => {
             expect(component.property.value).toBe(component.editedValue);
         });
 
-        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', async (done) => {
+        it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', async(async (done) => {
             const functionTestClick = () => done();
 
             component.property = new CardViewTextItemModel({
@@ -480,7 +480,7 @@ describe('CardViewTextItemComponent', () => {
 
             const inputField = getTextField(component.property.key);
             inputField.nativeElement.click();
-        });
+        }));
 
         it('should trigger an update event on the CardViewUpdateService [integration]', async (done) => {
             component.property.isValid = () => true;
