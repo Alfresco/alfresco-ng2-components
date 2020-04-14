@@ -66,12 +66,4 @@ export class ApplicationsUtil {
             Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
-
-    async deleteAppDefinition(appDefinitionId): Promise<void> {
-        try {
-            await this.api.activiti.appsApi.deleteAppDefinition(appDefinitionId);
-        } catch (error) {
-            Logger.error('Delete AppDefinition - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
-    }
 }
