@@ -182,14 +182,19 @@ export class DocumentListService implements DocumentListLoader {
     private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
         return forkJoin(
             this.getFolderNode(nodeId, includeFields),
-            this.getFolder(null, {
-                maxItems: pagination.maxItems,
-                skipCount: pagination.skipCount,
-                rootFolderId: nodeId,
-                where: where
-            }, includeFields)).pipe(
-                map((results) => new DocumentLoaderNode(results[0], results[1]))
-            );
+            this.getFolder(
+                null,
+                {
+                    maxItems: pagination.maxItems,
+                    skipCount: pagination.skipCount,
+                    rootFolderId: nodeId,
+                    where: where
+                },
+                includeFields
+            )
+        ).pipe(
+            map(([currentNode, children]) => new DocumentLoaderNode(currentNode, children))
+        );
     }
 
     private handleError(error: any) {

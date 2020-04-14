@@ -54,7 +54,7 @@ export class NodeRestoreDirective {
         this.restoreProcessStatus = this.processStatus();
     }
 
-    private recover(selection: any) {
+    private recover(selection: DeletedNodeEntry[]) {
         if (!selection.length) {
             return;
         }
@@ -95,7 +95,7 @@ export class NodeRestoreDirective {
         return forkJoin(batch.map((node) => this.restoreNode(node)));
     }
 
-    private getNodesWithPath(selection): DeletedNodeEntry[] {
+    private getNodesWithPath(selection: DeletedNodeEntry[]): DeletedNodeEntry[] {
         return selection.filter((node) => node.entry.path);
     }
 
@@ -106,7 +106,7 @@ export class NodeRestoreDirective {
         return from(promise);
     }
 
-    private restoreNode(node): Observable<any> {
+    private restoreNode(node: DeletedNodeEntry): Observable<any> {
         const { entry } = node;
 
         const promise = this.alfrescoApiService.getInstance().nodes.restoreNode(entry.id);
