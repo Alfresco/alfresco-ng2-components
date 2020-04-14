@@ -124,6 +124,18 @@ describe('NotificationService', () => {
         fixture.detectChanges();
     });
 
+    it('should translate the action', (done) => {
+        spyOn(translationService, 'instant').and.callThrough();
+
+        const promise = fixture.componentInstance.sendMessageAction();
+        promise.afterDismissed().subscribe(() => {
+            expect(translationService.instant).toHaveBeenCalledTimes(2);
+            done();
+        });
+
+        fixture.detectChanges();
+    });
+
     it('should open a message notification bar', (done) => {
         const promise = fixture.componentInstance.sendMessage();
         promise.afterDismissed().subscribe(() => {
