@@ -60,7 +60,7 @@ BRANCH="ADF-update-beta-$VERSION"
 git checkout -b $BRANCH
 
 if $GNU; then
-    if [ $NAME_REPO == 'Alfresco/generator-alfresco-adf-app' ] || [ $NAME_REPO == 'Alfresco/alfresco-modeler-app' ]; then
+    if [ $NAME_REPO == 'Alfresco/generator-alfresco-adf-app' ] || [ $NAME_REPO == 'Alfresco/alfresco-modeler-app' ] || [ $NAME_REPO == 'Alfresco/alfresco-content-app' ]; then
         ./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
     else
         npm install @alfresco/adf-cli@alpha --no-save
