@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppConfigService, AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { from, of } from 'rxjs';
-import { FilterParamsModel, FilterRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
@@ -164,7 +164,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the task filter based on the input by name param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({ name: 'FakeMyTasks1' });
+        component.filterParam = { name: 'FakeMyTasks1' };
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
 
@@ -179,10 +179,29 @@ describe('TaskFiltersComponent', () => {
         });
    });
 
+    it('should select the default task filter if filter input does not exist', (done) => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+
+        component.filterParam = { name: 'UnexistableFilter' };
+
+        const appId = '1';
+        const change = new SimpleChange(null, appId, true);
+
+        fixture.detectChanges();
+        component.ngOnChanges({ 'appId': change });
+
+        component.success.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.currentFilter).toBeDefined();
+            expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
+            done();
+        });
+   });
+
     it('should select the task filter based on the input by index param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({ index: 2 });
+        component.filterParam = { index: 2 };
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
@@ -201,7 +220,7 @@ describe('TaskFiltersComponent', () => {
     it('should select the task filter based on the input by id param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        component.filterParam = new FilterParamsModel({ id: 10 });
+        component.filterParam = { id: 10 };
 
         const appId = '1';
         const change = new SimpleChange(null, appId, true);

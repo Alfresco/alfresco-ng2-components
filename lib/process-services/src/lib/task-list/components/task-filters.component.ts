@@ -229,7 +229,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
     /**
      * Return current filter icon
      */
-    getFilterIcon(icon): string {
+    getFilterIcon(icon: string): string {
         return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(icon);
     }
 }

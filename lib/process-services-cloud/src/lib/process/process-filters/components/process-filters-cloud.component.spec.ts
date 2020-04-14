@@ -25,7 +25,6 @@ import { ProcessFiltersCloudComponent } from './process-filters-cloud.component'
 import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
-import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -194,7 +193,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by name param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ name: 'FakeRunningProcesses' });
+        component.filterParam = { name: 'FakeRunningProcesses' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -212,7 +211,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by key param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ key: 'completed-processes' });
+        component.filterParam = { key: 'completed-processes' };
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
 
@@ -228,10 +227,30 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
    });
 
+    it('should select the default filter if filter input does not exist', (done) => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
+
+        component.filterParam = { name: 'UnexistableFilter' };
+
+        const appName = 'my-app-1';
+        const change = new SimpleChange(null, appName, true);
+
+        fixture.detectChanges();
+
+        component.filterClick.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.currentFilter).toBeDefined();
+            expect(component.currentFilter.name).toEqual('FakeAllProcesses');
+            done();
+        });
+
+        component.ngOnChanges({ 'appName': change });
+   });
+
     it('should select the filter based on the input by index param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ index: 2 });
+        component.filterParam = { index: 2 };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -250,7 +269,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should select the filter based on the input by id param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ id: '12' });
+        component.filterParam = { id: '12' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);
@@ -269,7 +288,7 @@ describe('ProcessFiltersCloudComponent', () => {
     it('should emit an event when a filter is selected', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 
-        component.filterParam = new FilterParamsModel({ id: '10' });
+        component.filterParam = { id: '10' };
 
         const appName = 'my-app-1';
         const change = new SimpleChange(null, appName, true);

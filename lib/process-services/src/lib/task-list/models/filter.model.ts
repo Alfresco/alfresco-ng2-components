@@ -43,18 +43,10 @@ export class AppDefinitionRepresentationModel {
     }
 }
 
-export class FilterParamsModel {
+export interface FilterParamsModel {
     id?: number;
     name?: string;
     index?: number;
-
-    constructor(obj?: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.name = obj.name || null;
-            this.index = obj.index;
-        }
-    }
 }
 
 export class FilterRepresentationModel extends UserTaskFilterRepresentation {
