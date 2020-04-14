@@ -40,12 +40,12 @@ import {
     Output,
     SimpleChanges
 } from '@angular/core';
-import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { processPresetsDefaultModel } from '../models/process-preset.model';
 import { ProcessService } from '../services/process.service';
 import { BehaviorSubject } from 'rxjs';
 import { ProcessListModel } from '../models/process-list.model';
 import { finalize } from 'rxjs/operators';
+import { ProcessFilterRequestRepresentation } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-process-instance-list',
@@ -142,7 +142,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Output()
     error = new EventEmitter<any>();
 
-    requestNode: ProcessFilterParamRepresentationModel;
+    requestNode: ProcessFilterRequestRepresentation;
     currentInstanceId: string;
     isLoading: boolean = true;
     rows: any[] = [];
@@ -227,7 +227,7 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         this.load(this.requestNode);
     }
 
-    private load(requestNode: ProcessFilterParamRepresentationModel) {
+    private load(requestNode: ProcessFilterRequestRepresentation) {
         this.isLoading = true;
         this.processService.getProcesses(requestNode)
             .pipe(finalize(() => this.isLoading = false))
@@ -306,8 +306,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
         this.showRowContextMenu.emit(event);
     }
 
-    private createRequestNode(): ProcessFilterParamRepresentationModel {
-        return new ProcessFilterParamRepresentationModel({
+    private createRequestNode(): ProcessFilterRequestRepresentation {
+        return new ProcessFilterRequestRepresentation({
             appDefinitionId: this.appId,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,

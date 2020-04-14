@@ -17,11 +17,11 @@
 
 import { async } from '@angular/core/testing';
 import { exampleProcess, fakeProcessInstances, mockError, fakeProcessDef, fakeTasksList } from '../../mock';
-import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from './process.service';
 import { AlfrescoApiService, AlfrescoApiServiceMock, AppConfigService,
     setupTestBed, CoreModule, StorageService } from '@alfresco/adf-core';
+import { ProcessFilterRequestRepresentation } from '@alfresco/js-api';
 
 declare let moment: any;
 
@@ -47,7 +47,7 @@ describe('ProcessService', () => {
 
         let getProcessInstances: jasmine.Spy;
 
-        const filter: ProcessFilterParamRepresentationModel = new ProcessFilterParamRepresentationModel({
+        const filter = new ProcessFilterRequestRepresentation({
             processDefinitionId: '1',
             appDefinitionId: '1',
             page: 1,

@@ -17,10 +17,9 @@
 
 import { AlfrescoApiService, FormValues } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { RestVariable, ProcessInstanceRepresentation } from '@alfresco/js-api';
+import { RestVariable, ProcessInstanceRepresentation, ProcessFilterRequestRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError, of } from 'rxjs';
 import { TaskDetailsModel } from '../../task-list';
-import { ProcessFilterParamRepresentationModel } from '../models/filter-process.model';
 import { ProcessDefinitionRepresentation } from '../models/process-definition.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessInstance } from '../models/process-instance.model';
@@ -44,7 +43,7 @@ export class ProcessService {
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of process instances
      */
-    getProcessInstances(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
+    getProcessInstances(requestNode: ProcessFilterRequestRepresentation, processDefinitionKey?: string): Observable<ProcessListModel> {
         return from(this.alfrescoApiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .pipe(
                 map((res: any) => {
@@ -66,7 +65,7 @@ export class ProcessService {
      * @param processDefinitionKey Limits returned instances to a process definition
      * @returns List of processes
      */
-    getProcesses(requestNode: ProcessFilterParamRepresentationModel, processDefinitionKey?: string): Observable<ProcessListModel> {
+    getProcesses(requestNode: ProcessFilterRequestRepresentation, processDefinitionKey?: string): Observable<ProcessListModel> {
         return this.getProcessInstances(requestNode, processDefinitionKey)
             .pipe(
                 map(response => {

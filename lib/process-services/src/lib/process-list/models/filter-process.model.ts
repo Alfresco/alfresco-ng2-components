@@ -15,58 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    ProcessFilterRequestRepresentation,
-    ProcessInstanceFilterRepresentation,
-    UserProcessInstanceFilterRepresentation
-} from '@alfresco/js-api';
+import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 
-export class FilterProcessRepresentationModel implements UserProcessInstanceFilterRepresentation {
-    appId: number;
-    filter: ProcessInstanceFilterRepresentation;
-    icon: string;
-    id: number;
-    index: number;
-    name: string;
-    recent: boolean;
-
+export class FilterProcessRepresentationModel extends UserProcessInstanceFilterRepresentation {
     constructor(obj: any) {
-        if (obj) {
-            this.id = obj.id || null;
-            this.appId = obj.appId || null;
-            this.name = obj.name || null;
-            this.recent = !!obj.recent;
-            this.icon = obj.icon || null;
-            this.filter = obj.filter || null;
-            this.index = obj.index;
-        }
+        super(obj);
     }
 
-    hasFilter() {
+    hasFilter(): boolean {
         return !!this.filter;
-    }
-}
-
-/**
- * This object represent the parameters of a process filter.
- */
-export class ProcessFilterParamRepresentationModel implements ProcessFilterRequestRepresentation {
-
-    processDefinitionId?: string;
-    processInstanceId?: string;
-    appDefinitionId?: number;
-    state?: any;
-    sort?: any;
-    page?: number;
-    size?: number;
-
-    constructor(obj?: any) {
-        this.processDefinitionId = obj.processDefinitionId || null;
-        this.appDefinitionId = obj.appDefinitionId || null;
-        this.processInstanceId = obj.processInstanceId || null;
-        this.state = obj.state || null;
-        this.sort = obj.sort || null;
-        this.page = obj.page || null;
-        this.size = obj.size || null;
     }
 }
