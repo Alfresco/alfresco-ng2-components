@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Starting page"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Task List Context Menu"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Insert App ID",
       "APP_ID_TYPE_ERROR": "App ID must be a number",
       "NUMBER_GREATER_THAN": "Value must be greater than or equal to {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Process List Context Menu"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION ONE",
   "GROUP-TITLE2-TRANSLATION-KEY": "CUSTOM TITLE TRANSLATION TWO",

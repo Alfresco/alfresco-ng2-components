@@ -73,6 +73,7 @@ when the task list is empty:
 | start | `number` |  | Starting point of the list within the full set of tasks. |
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
 | taskId | `string` |  | The id of a task |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 
 ### Events
 
@@ -82,6 +83,7 @@ when the task list is empty:
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
@@ -227,6 +229,50 @@ typical tasklist:
 ### DataColumn Features
 
 You can customize the styling of a column and also add features like tooltips and automatic translation of column titles. See the [Data Column component](../../core/components/data-column.component.md) page for more information about these features.
+
+#### showRowContextMenu event
+
+Emitted before the context menu is displayed for a row.
+
+Note that the TaskListComponent itself does not populate the context menu with items.
+You can provide all necessary content via the handler.
+
+```html
+<adf-tasklist
+    [contextMenu]="true"
+    (showRowContextMenu)="onShowRowContextMenu($event)">
+</adf-tasklist>
+```
+
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    col: DataColumn,
+    actions: []
+}
+```
+
+Handler example:
+
+```ts
+onShowRowContextMenu(event: DataCellEvent) {
+    event.value.actions = [
+        {  title: 'Task List Context Menu' },
+        { ... }
+    ]
+}
+```
+
+![](../../docassets/images/task-list-context-menu.png)
+
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
+
+The TaskListComponent will automatically render the supplied menu items.
+
+See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
+documentation for more details on the format and behavior of context actions.
 
 ## See also
 

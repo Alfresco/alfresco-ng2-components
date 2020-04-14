@@ -8,6 +8,8 @@
             [loading]="isLoading"
             [multiselect]="multiselect"
             [selectionMode]="selectionMode"
+            [contextMenu]="showContextMenu"
+            (showRowContextMenu)="onShowRowContextMenu($event)"
             (row-select)="onRowSelect($event)"
             (row-unselect)="onRowUnselect($event)"
             (rowClick)="onRowClick($event)"

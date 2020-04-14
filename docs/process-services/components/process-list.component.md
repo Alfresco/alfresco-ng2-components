@@ -64,6 +64,7 @@ when the process list is empty:
 | size | `number` |  | The number of processes to fetch in each page. |
 | sort | `string` |  | Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc`. |
 | state | `string` |  | Defines the state of the processes. Possible values are `running`, `completed` and `all` |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 
 ### Events
 
@@ -72,6 +73,7 @@ when the process list is empty:
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 
@@ -185,6 +187,48 @@ The Process Instance List also supports pagination:
     #processListPagination>
 </adf-pagination>
 ```
+
+#### showRowContextMenu event
+
+Emitted before the context menu is displayed for a row.
+
+Note that the ProcessInstanceListComponent itself does not populate the context menu with items. You can provide all necessary content via the handler.
+
+```html
+<adf-process-instance-list
+    [contextMenu]="true"
+    (showRowContextMenu)="onShowRowContextMenu($event)">
+</adf-process-instance-list>
+```
+
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    col: DataColumn,
+    actions: []
+}
+```
+
+Handler example:
+
+```ts
+onShowRowContextMenu(event: DataCellEvent) {
+    event.value.actions = [
+        {  title: 'Process List Context Menu' },
+        { ... }
+    ]
+}
+```
+![](../../docassets/images/process-instance-list-context-menu.png)
+
+This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
+
+The ProcessInstanceList will automatically render the supplied menu items.
+
+See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
+documentation for more details on the format and behavior of context actions.
 
 ## See also
 

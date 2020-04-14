@@ -7,6 +7,8 @@
     [selectionMode]="selectionMode"
     [multiselect]="multiselect"
     [resolverFn]="resolverFn"
+    [contextMenu]="showContextMenu"
+    (showRowContextMenu)="onShowRowContextMenu($event)"
     (rowClick)="onRowClick($event)"
     (row-keyup)="onRowKeyUp($event)">
     <adf-loading-content-template>
