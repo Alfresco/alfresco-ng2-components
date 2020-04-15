@@ -17,3 +17,4 @@
 
 export * from './applications.service';
 export * from './models.service';
+export * from './integration.service';

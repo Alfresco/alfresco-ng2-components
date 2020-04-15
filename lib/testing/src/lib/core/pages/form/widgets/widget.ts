@@ -36,6 +36,7 @@ import { TabPage } from './tab.page';
 import { DocumentWidgetPage } from './document-widget.page';
 import { GroupWidgetPage } from './group-widget.page';
 import { TypeaheadWidgetPage } from './typeahead-widget.page';
+import { AttachFolderWidgetPage } from './attach-folder-widget.page';
 
 export class Widget {
 
@@ -53,6 +54,10 @@ export class Widget {
 
     attachFileWidget(): AttachFileWidgetPage {
         return new AttachFileWidgetPage();
+    }
+
+    attachFolderWidget(): AttachFolderWidgetPage {
+        return new AttachFolderWidgetPage();
     }
 
     displayValueWidget(): DisplayValueWidgetPage {

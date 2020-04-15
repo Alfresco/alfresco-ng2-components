@@ -391,6 +391,13 @@ exports.Files = {
                 searchTerm: 'One',
                 result: [ '123456789 - Customer Number One' ]
             }
+        },
+
+        UPLOAD_FOLDER_FORM_CS: {
+            formName: "upload-folder-cs",
+            FIELD: {
+                widget_id: 'attachfolder',
+            }
         }
     },
 
