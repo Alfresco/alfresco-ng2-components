@@ -74,7 +74,7 @@ describe('People Groups Cloud Component', () => {
 
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, 
+            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`,
                 `${testUser.idIdentityService}`, `${devopsUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
