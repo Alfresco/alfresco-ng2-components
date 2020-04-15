@@ -218,7 +218,7 @@ describe('Info Drawer', () => {
         });
 
         await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
-        await BrowserActions.click(taskPage.taskDetails().assigneeField);
+        await BrowserActions.click(taskPage.taskDetails().assigneeButton);
         const cancelSearch = element(by.css('button[id="close-people-search"]'));
         await BrowserVisibility.waitUntilElementIsPresent(cancelSearch);
         await BrowserActions.click(cancelSearch);
@@ -231,7 +231,7 @@ describe('Info Drawer', () => {
         });
 
         await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
-        await BrowserActions.click(taskPage.taskDetails().assigneeField);
+        await BrowserActions.click(taskPage.taskDetails().assigneeButton);
         const addPeople = element(by.css('button[id="add-people"]'));
         await BrowserVisibility.waitUntilElementIsPresent(addPeople);
         await BrowserActions.click(addPeople);
@@ -305,9 +305,10 @@ describe('Info Drawer', () => {
             formName: app.formName
         });
 
+        await taskPage.taskDetails().updateDescription('');
+        await expect(await taskPage.taskDetails().getDescription()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
-        await expect(await taskPage.taskDetails().getDescription()).toEqual('No description');
 
         await taskPage.taskDetails().clickCompleteFormTask();
     });

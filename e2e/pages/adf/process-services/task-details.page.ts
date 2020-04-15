@@ -25,7 +25,9 @@ export class TaskDetailsPage {
 
     formContent: ElementFinder = element(by.css('adf-form'));
     formNameField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
+    formNameButton: ElementFinder = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
     assigneeField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
+    assigneeButton: ElementFinder = element(by.css('[data-automation-id="card-textitem-toggle-assignee"]'));
     statusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
     categoryField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-category"] '));
     parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
@@ -151,7 +153,7 @@ export class TaskDetailsPage {
 
     async clickForm(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.formNameField);
+        await BrowserActions.click(this.formNameButton);
     }
 
     async checkStandaloneNoFormMessageIsDisplayed(): Promise<void> {
@@ -234,7 +236,7 @@ export class TaskDetailsPage {
     }
 
     async updateAssignee(fullName: string): Promise<void> {
-        await BrowserActions.click(this.assigneeField);
+        await BrowserActions.click(this.assigneeButton);
         await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
         await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
         await BrowserActions.click(element(by.css('button[id="add-people"]')));
