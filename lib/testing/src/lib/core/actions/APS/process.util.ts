@@ -72,4 +72,16 @@ export class ProcessUtil {
             Logger.error('Get ProcessDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
+
+    async getProcessTaskId(processId: string): Promise<string> {
+        const taskList = await this.api.activiti.taskApi.listTasks({});
+        let wantedtask;
+
+        taskList.data.forEach((task) => {
+            if (task.processInstanceId === processId) {
+                wantedtask = task;
+            }
+        });
+        return wantedtask? wantedtask : 'null';
+    }
 }

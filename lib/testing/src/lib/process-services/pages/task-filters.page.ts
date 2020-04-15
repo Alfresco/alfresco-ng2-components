@@ -44,7 +44,7 @@ export class TaskFiltersPage {
         await this.filtersPage.clickFilterButton(this.involvedTask);
     }
 
-    async isMyTaskFilterHighlighted(): Promise<boolean> {
+    async isMyTasksFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted('My Tasks');
     }
 

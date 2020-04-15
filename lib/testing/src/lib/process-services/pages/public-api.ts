@@ -19,6 +19,7 @@ export * from './form-fields.page';
 export * from './filters.page';
 export * from './process-filters.page';
 export * from './process-list.page';
+export * from './task-list.page';
 export * from './task-filters.page';
 export * from './start-process-dialog.page';
 export * from './select-apps-dialog.page';

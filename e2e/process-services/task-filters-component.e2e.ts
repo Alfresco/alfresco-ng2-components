@@ -112,11 +112,6 @@ describe('Task', () => {
             await taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed();
             await taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
 
-            await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
-            await taskFiltersDemoPage.queuedTasksFilter().checkTaskFilterIsDisplayed();
-            await taskFiltersDemoPage.involvedTasksFilter().checkTaskFilterIsDisplayed();
-            await taskFiltersDemoPage.completedTasksFilter().checkTaskFilterIsDisplayed();
-
             const task = await tasksPage.createNewTask();
             await task.addName('Test');
             await task.clickStartButton();
