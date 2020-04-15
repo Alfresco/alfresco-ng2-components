@@ -40,6 +40,10 @@ export class TaskStandaloneComponent {
 
     /** Toggles rendering of the `Complete` button. */
     @Input()
+    showAttacheFormButton: boolean = true;
+
+    /** Toggles rendering of the `Complete` button. */
+    @Input()
     hasCompletePermission: boolean = true;
 
     // TODO: rename all with show prefix
@@ -78,7 +82,7 @@ export class TaskStandaloneComponent {
     }
 
     hasAttachFormButton(): boolean {
-        return !this.isCompleted;
+        return this.showAttacheFormButton && !this.isCompleted;
     }
 
     onShowAttachForm() {

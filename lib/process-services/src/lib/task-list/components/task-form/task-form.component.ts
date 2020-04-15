@@ -16,12 +16,13 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormModel, ContentLinkModel, FormRenderingService, FormFieldValidator, FormOutcomeEvent, AuthenticationService } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel, FormRenderingService, FormFieldValidator, FormOutcomeEvent, AuthenticationService, TranslationService } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { AttachFileWidgetComponent } from '../../../content-widget/attach-file-widget.component';
 import { AttachFolderWidgetComponent } from '../../../content-widget/attach-folder-widget.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'adf-task-form',
@@ -33,10 +34,6 @@ export class TaskFormComponent implements OnInit {
   /** (**required**) The id of the task whose details we are asking for. */
   @Input()
   taskId: string;
-
-  /** Automatically renders the next task when the current one is completed. */
-  @Input()
-  showNextTask: boolean = true;
 
   /** Toggles rendering of the form title. */
   @Input()
@@ -64,6 +61,10 @@ export class TaskFormComponent implements OnInit {
   @Input()
   fieldValidators: FormFieldValidator[] = [];
 
+  /** Toggles rendering of the `Complete` button. */
+  @Input()
+  showAttacheFormButton: boolean = true;
+
   /** Emitted when the form is submitted with the `Save` or custom outcomes. */
   @Output()
   formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -86,6 +87,16 @@ export class TaskFormComponent implements OnInit {
   @Output()
   executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+  @Output()
+  cancel: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  executeNoFormOutcome: EventEmitter<void> = new EventEmitter<void>();
+
+  /** Emitted when the form associated with the form task is attached. */
+  @Output()
+  showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+
   /** Emitted when an error occurs. */
   @Output()
   error: EventEmitter<any> = new EventEmitter<any>();
@@ -93,11 +104,13 @@ export class TaskFormComponent implements OnInit {
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
   loading: boolean = false;
+  completedTaskMessage: string;
 
   constructor(
     private taskListService: TaskListService,
     private authService: AuthenticationService,
-    private formRenderingService: FormRenderingService
+    private formRenderingService: FormRenderingService,
+    private translationService: TranslationService
   ) {
     this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
     this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
@@ -160,7 +173,7 @@ export class TaskFormComponent implements OnInit {
     return (this.taskDetails && (!!this.taskDetails.formKey));
   }
 
-  hasProcessDefinitionId() {
+  isProcessTask() {
     return !!this.taskDetails.processDefinitionId;
   }
 
@@ -218,8 +231,12 @@ export class TaskFormComponent implements OnInit {
     return this.hasSaveButton() && (!this.canInitiatorComplete() || this.isAssignedToMe());
   }
 
-  onCompleteTask() {
+  onStandaloneTaskComplete() {
+    this.taskListService.completeTask(this.taskDetails.id).subscribe(() => this.executeNoFormOutcome.emit());
+  }
 
+  onCancelButtonClick() {
+    this.cancel.emit();
   }
 
   canCompleteTask(): boolean {
@@ -228,5 +245,13 @@ export class TaskFormComponent implements OnInit {
 
   hasSaveButton(): boolean {
       return this.showFormSaveButton;
+  }
+
+  onShowAttachForm() {
+    this.showAttachForm.emit();
+  }
+
+  getCompletedTaskTranslatedMessage(): Observable<string> {
+    return this.translationService.get('ADF_TASK_FORM.COMPLETED_TASK.TITLE', { taskName: this.taskDetails.name });
   }
 }
