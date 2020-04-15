@@ -82,6 +82,6 @@ export class ProcessUtil {
                 wantedtask = task;
             }
         });
-        return wantedtask? wantedtask : 'null';
+        return wantedtask ? wantedtask : 'null';
     }
 }

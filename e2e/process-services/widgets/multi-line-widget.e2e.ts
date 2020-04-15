@@ -16,9 +16,8 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -30,7 +29,6 @@ describe('Multi-line Widget', () => {
     const taskPage = new TasksPage();
     const widget = new Widget();
     let alfrescoJsApi;
-    const appsActions = new AppsActions();
     let appModel;
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
     let deployedApp, process;
@@ -55,7 +53,7 @@ describe('Multi-line Widget', () => {
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 

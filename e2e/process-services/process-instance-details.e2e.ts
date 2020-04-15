@@ -19,8 +19,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { AppsActions } from '../actions/APS/apps.actions';
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
@@ -41,7 +40,6 @@ describe('Process Instance Details', () => {
     const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -57,7 +55,7 @@ describe('Process Instance Details', () => {
 
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        const processModel = await apps.startProcess(this.alfrescoJsApi, appModel, 'process');
+        const processModel = await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(appModel.name, 'process');
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 

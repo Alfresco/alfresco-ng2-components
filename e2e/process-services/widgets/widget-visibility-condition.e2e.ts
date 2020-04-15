@@ -16,11 +16,10 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { LoginPage, Widget, BrowserActions, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
-import { AppsActions } from '../../actions/APS/apps.actions';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 
 const widgets = {
@@ -53,7 +52,6 @@ describe('Process-Services - Visibility conditions', () => {
     const taskPage = new TasksPage();
     const widget = new Widget();
     let alfrescoJsApi;
-    const appsActions = new AppsActions();
     let appModel;
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
     let deployedApp, process;
@@ -78,7 +76,7 @@ describe('Process-Services - Visibility conditions', () => {
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
 

@@ -49,25 +49,6 @@ export class AppsActions {
         return appDefinitionId;
     }
 
-    async importPublishDeployApp(alfrescoJsApi, appFileLocation, option = {}) {
-        const appCreated = await this.importApp(alfrescoJsApi, appFileLocation, option);
-
-        const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
-
-        await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
-
-        return appCreated;
-    }
-
-    async importApp(alfrescoJsApi, appFileLocation, options = {}) {
-        browser.setFileDetector(new remote.FileDetector());
-
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
-        const file = fs.createReadStream(pathFile);
-
-        return alfrescoJsApi.activiti.appsDefinitionApi.importAppDefinition(file, options);
-    }
-
     async publishDeployApp(alfrescoJsApi, appId) {
         browser.setFileDetector(new remote.FileDetector());
 
@@ -92,32 +73,4 @@ export class AppsActions {
 
         return appCreated;
     }
-
-    async startProcess(alfrescoJsApi, app, processName?: string) {
-        browser.setFileDetector(new remote.FileDetector());
-
-        const appDefinitionsList = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-
-        const appDefinition = appDefinitionsList.data.filter((currentApp) => {
-            return currentApp.name === app.name;
-        });
-
-        const processDefinitionList = await alfrescoJsApi.activiti.processApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
-
-        const chosenProcess = processDefinitionList.data.find( (processDefinition) => {
-            return processDefinition.name === processName;
-        });
-
-        const processDefinitionIdToStart = chosenProcess ? chosenProcess.id : processDefinitionList.data[0].id;
-
-        const startProcessOptions: any = { processDefinitionId: processDefinitionIdToStart };
-
-        if (typeof processName !== 'undefined') {
-            startProcessOptions.name = processName;
-        }
-
-        return alfrescoJsApi.activiti.processApi.startNewProcessInstance(startProcessOptions);
-
-    }
-
 }

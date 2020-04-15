@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 
@@ -51,7 +50,6 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -72,11 +70,12 @@ describe('Attachment list action menu for processes', () => {
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await apps.startProcess(this.alfrescoJsApi, importedApp, processName.completed);
-        await apps.startProcess(this.alfrescoJsApi, importedApp, processName.active);
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', processName.taskApp);
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', processName.emptyList);
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', processName.dragDrop);
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        await processUtil.startProcessByDefinitionName(importedApp.name, processName.completed);
+        await processUtil.startProcessByDefinitionName(importedApp.name, processName.active);
+        await processUtil.startProcessByDefinitionName('Task App', processName.taskApp);
+        await processUtil.startProcessByDefinitionName('Task App', processName.emptyList);
+        await processUtil.startProcessByDefinitionName('Task App', processName.dragDrop);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
     });

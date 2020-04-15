@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { DateUtil, LoginPage, PaginationPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { DateUtil, LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
 import { UsersActions } from '../actions/users.actions';
 import { Tenant } from '../models/APS/tenant';
@@ -68,7 +67,6 @@ describe('Start Task - Custom App', () => {
     };
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const appsRuntime = new AppsRuntimeActions();
         const users = new UsersActions();
 
@@ -95,10 +93,11 @@ describe('Start Task - Custom App', () => {
 
         secondAppRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, secondApp.title);
 
-        processDefinitionId = await apps.startProcess(this.alfrescoJsApi, appModel);
-        await apps.startProcess(this.alfrescoJsApi, appModel);
-        await apps.startProcess(this.alfrescoJsApi, secondAppModel);
-        await apps.startProcess(this.alfrescoJsApi, secondAppModel);
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
+        await processUtil.startProcessOfApp(appModel.name);
+        await processUtil.startProcessOfApp(secondAppModel.name);
+        await processUtil.startProcessOfApp(secondAppModel.name);
 
         for (let i = 1; i < paginationTasksName.length; i++) {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': paginationTasksName[i] });

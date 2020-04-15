@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, StringUtil, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { FormModelActions } from '../actions/APS/form-model.actions';
 import { UsersActions } from '../actions/users.actions';
 import { StandaloneTask } from '../models/APS/standalone-task';
@@ -170,11 +169,10 @@ describe('Task Details - Form', () => {
         };
 
         const formActions = new FormModelActions();
-        let app, appActions: AppsActions;
+        let app;
 
         beforeAll(async () => {
             app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-            appActions = new AppsActions();
             const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             await applicationsService.importPublishDeployApp(app.file_path);
         });
@@ -344,7 +342,7 @@ describe('Task Details - Form', () => {
         });
 
         it('[C315197] Should be able to complete a process task with visible tab with empty value for field', async () => {
-            await appActions.startProcess(this.alfrescoJsApi, app, app.visibilityProcess.name);
+            await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(app.name, app.visibilityProcess.name);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
@@ -378,7 +376,7 @@ describe('Task Details - Form', () => {
         });
 
         it('[C212922] Should a User task form be refreshed, saved or completed.', async () => {
-            await appActions.startProcess(this.alfrescoJsApi, app, app.processName);
+            await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(app.name, app.processName);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
