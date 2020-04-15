@@ -23,12 +23,12 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel, FormService } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, merge } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 @Component({
@@ -104,32 +104,43 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(private startProcessCloudService: StartProcessCloudService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private formService: FormService) {
     }
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
             processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
-            processDefinition: new FormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
+            processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
+
+        const innerFormValues =  this.formService.formEvents.pipe(
+            filter((formEvent: Event) => formEvent.type === 'input')
+        ).pipe(takeUntil(this.onDestroy$));
 
         this.processDefinition.valueChanges
             .pipe(debounceTime(300))
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
-                this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
-            });
+                this.selectProcessDefinitionByProcesDefinitionName(processDefinitionName);
+        });
 
-        this.processForm.valueChanges
+        merge(this.processForm.valueChanges, innerFormValues)
         .pipe(
-            debounceTime(300),
+            debounceTime(400),
             distinctUntilChanged(),
-            filter(() => this.isProcessFormValid() ),
+            filter(() => this.isProcessSelectionValid()),
             switchMap(() => this.generateProcessInstance())
         ).pipe(takeUntil(this.onDestroy$))
         .subscribe((res) => {
             this.currentCreatedProcess = res;
         });
+
+        if (this.processDefinitionName) {
+            this.processDefinition.setValue(this.processDefinitionName);
+            this.processDefinition.markAsDirty();
+            this.processDefinition.markAsTouched();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -151,6 +162,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.formCloud = form;
     }
 
+    private isProcessSelectionValid(): boolean {
+        return this.isProcessFormValid() && this.isProcessPayloadValid();
+    }
+
     private getMaxNameLength(): number {
         return this.maxNameLength > StartProcessCloudComponent.MAX_NAME_LENGTH ?
             StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
@@ -159,6 +174,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     private generateProcessInstance(): Observable <ProcessInstanceCloud> {
         this.buildProcessCloudPayload();
         return this.startProcessCloudService.createProcess(this.appName, this.processPayloadCloud);
+    }
+
+    private selectProcessDefinitionByProcesDefinitionName(processDefinitionName: string): void {
+        this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
+        if (this.isProcessFormValid() &&
+            this.filteredProcesses && this.filteredProcesses.length === 1) {
+            this.setProcessDefinitionOnForm(this.filteredProcesses[0].name);
+        }
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
@@ -225,6 +248,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         } else {
             return this.processForm.valid || this.isLoading;
         }
+    }
+
+    private isProcessPayloadValid(): boolean {
+        return !!this.processPayloadCloud.processDefinitionKey;
     }
 
     private getProcessDefinition(option: ProcessDefinitionCloud, processDefinition: string): boolean {

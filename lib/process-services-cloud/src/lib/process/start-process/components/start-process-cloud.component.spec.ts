@@ -17,7 +17,7 @@
 
 import { SimpleChange, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { setupTestBed, StorageService, LogService, TranslationService, TranslationMock } from '@alfresco/adf-core';
+import { setupTestBed, StorageService, LogService, TranslationService, TranslationMock, FormService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -85,6 +85,7 @@ describe('StartProcessCloudComponent', () => {
         declarations: [StartProcessCloudComponent],
         providers: [
             { provide: TranslationService, useClass: TranslationMock },
+            FormService,
             TranslateStore,
             StorageService,
             LogService
@@ -122,7 +123,7 @@ describe('StartProcessCloudComponent', () => {
             typeValueInto('#processDefinitionName', 'processwithoutform2');
             fixture.detectChanges();
             fixture.whenStable();
-            tick(350);
+            tick(450);
 
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(false);
@@ -279,10 +280,10 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should create a process instance if the selection is valid and the form is valid', fakeAsync(() => {
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
-            component.name = '';
-            component.processDefinitionName = '';
+            component.name = 'testFormWithProcess';
+            component.processDefinitionName = 'processwithoutform2';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             fixture.detectChanges();
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
@@ -290,7 +291,7 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
             fixture.whenStable();
-            tick(350);
+            tick(450);
 
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(false);
