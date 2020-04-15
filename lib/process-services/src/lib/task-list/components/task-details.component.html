@@ -22,51 +22,22 @@
 
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
-                <adf-form *ngIf="isFormComponentVisible()" #activitiForm
+                <adf-task-form *ngIf="isFormComponentVisible()"
                           [taskId]="taskDetails.id"
-                          [showTitle]="showFormTitle"
-                          [showRefreshButton]="showFormRefreshButton"
-                          [showCompleteButton]="showFormCompleteButton"
-                          [disableCompleteButton]="!isCompleteButtonEnabled()"
-                          [showSaveButton]="isSaveButtonVisible()"
-                          [readOnly]="internalReadOnlyForm"
+                          [noFormCustomOutcomeTemplate]="attacheFormTemplate"
+                          [showFormTitle]="showFormTitle"
+                          [showFormRefreshButton]="showFormRefreshButton"
+                          [showFormSaveButton]="isSaveButtonVisible()"
+                          [readOnlyForm]="internalReadOnlyForm"
                           [fieldValidators]="fieldValidators"
                           (formSaved)='onFormSaved($event)'
                           (formCompleted)='onFormCompleted($event)'
                           (formContentClicked)='onFormContentClick($event)'
                           (formLoaded)='onFormLoaded($event)'
-                          (error)='onFormError($event)'
-                          (executeOutcome)='onFormExecuteOutcome($event)'>
-                </adf-form>
-                <adf-task-standalone *ngIf="isTaskStandaloneComponentVisible()"
-                                     [taskName]="taskDetails.name"
-                                     [taskId]="taskDetails.id"
-                                     [isCompleted]="isCompletedTask()"
-                                     [hasCompletePermission]="isCompleteButtonEnabled()"
-                                     [hideCancelButton]="true"
-                                     (complete)="onComplete()"
-                                     (showAttachForm)="onShowAttachForm()">
-                </adf-task-standalone>
-
-                <mat-card class="adf-message-card" *ngIf="!isTaskStandaloneComponentVisible() && !isCompletedTask() && !isFormComponentVisible()" >
-                    <mat-card-content>
-                        <div class="adf-no-form-message-container">
-                            <div class="adf-no-form-message-list">
-                                <div *ngIf="!isCompletedTask()" class="adf-no-form-message">
-                                    <span id="adf-no-form-message">{{'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE' | translate}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-card-content>
-
-                    <mat-card-actions class="adf-no-form-mat-card-actions">
-                        <div>
-                            <button mat-button id="adf-no-form-complete-button" color="primary" (click)="onComplete()">{{ 'ADF_TASK_LIST.DETAILS.BUTTON.COMPLETE' | translate }}</button>
-                        </div>
-                    </mat-card-actions>
-
-                </mat-card>
-
+                          (complete)="onComplete()"
+                          (executeOutcome)='onFormExecuteOutcome($event)'
+                          (error)='onFormError($event)' #activitiTaskForm>
+                </adf-task-form>
                 <adf-attach-form *ngIf="isShowAttachForm()"
                                  [taskId]="taskDetails.id"
                                  [formKey]="taskDetails.formKey"
@@ -146,3 +117,12 @@
     </ng-template>
 
 </div>
+
+<ng-template #attacheFormTemplate>
+    <button mat-button 
+        *ngIf="showAttachFormButton() && !showAttachForm"
+        id="adf-no-form-attach-form-button"
+        (click)="onShowAttachForm()">
+        {{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}
+    </button>
+</ng-template>

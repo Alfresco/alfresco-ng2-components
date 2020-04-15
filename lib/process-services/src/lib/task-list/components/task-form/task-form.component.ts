@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormModel, ContentLinkModel, FormRenderingService, FormFieldValidator, FormOutcomeEvent, AuthenticationService, TranslationService } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
@@ -47,6 +47,9 @@ export class TaskFormComponent implements OnInit {
   @Input()
   showFormSaveButton: boolean = true;
 
+  /** Toggle rendering of the `Cancel` button. */
+  showCancelButton: boolean = true;
+
   /** Toggles read-only state of the form. All form widgets render as read-only
    * if enabled.
    */
@@ -65,41 +68,43 @@ export class TaskFormComponent implements OnInit {
   @Input()
   showAttacheFormButton: boolean = true;
 
+  @Input()
+  taskFormCustomOutcomeTemplate: TemplateRef<any>;
+
+  @Input()
+  noFormCustomOutcomeTemplate: TemplateRef<any>;
+
   /** Emitted when the form is submitted with the `Save` or custom outcomes. */
   @Output()
-  formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+  formSaved = new EventEmitter<FormModel>();
 
   /** Emitted when the form is submitted with the `Complete` outcome. */
   @Output()
-  formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+  formCompleted = new EventEmitter<FormModel>();
 
   /** Emitted when the form field content is clicked. */
   @Output()
-  formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+  formContentClicked = new EventEmitter<ContentLinkModel>();
 
   /** Emitted when the form is loaded or reloaded. */
   @Output()
-  formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+  formLoaded = new EventEmitter<FormModel>();
 
   /** Emitted when any outcome is executed. Default behaviour can be prevented
    * via `event.preventDefault()`.
    */
   @Output()
-  executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+  executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
   @Output()
-  cancel: EventEmitter<void> = new EventEmitter<void>();
+  cancel = new EventEmitter<void>();
 
   @Output()
-  executeNoFormOutcome: EventEmitter<void> = new EventEmitter<void>();
-
-  /** Emitted when the form associated with the form task is attached. */
-  @Output()
-  showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+  complete = new EventEmitter<void>();
 
   /** Emitted when an error occurs. */
   @Output()
-  error: EventEmitter<any> = new EventEmitter<any>();
+  error = new EventEmitter<any>();
 
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
@@ -120,22 +125,21 @@ export class TaskFormComponent implements OnInit {
     this.authService.getBpmLoggedUser().subscribe(user => {
       this.currentLoggedUser = user;
     });
-    if (this.taskId) {
-        this.loadTask();
-    }
+    this.loadTask(this.taskId);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     const taskId = changes['taskId'];
     if (taskId && taskId.currentValue) {
-        this.loadTask();
+        this.loadTask(this.taskId);
         return;
     }
   }
 
-  loadTask() {
+  loadTask(taskId: string) {
     this.loading = true;
-    this.taskListService.getTaskDetails(this.taskId).subscribe(
+    if (taskId) {
+      this.taskListService.getTaskDetails(taskId).subscribe(
         (res: TaskDetailsModel) => {
             this.taskDetails = res;
 
@@ -147,6 +151,7 @@ export class TaskFormComponent implements OnInit {
             this.readOnlyForm = !!(endDate && !isNaN(endDate.getTime()));
             this.loading = false;
         });
+    }
   }
 
   onFormSaved(savedForm: FormModel) {
@@ -167,6 +172,14 @@ export class TaskFormComponent implements OnInit {
 
   onFormExecuteOutcome(outcome: FormOutcomeEvent) {
     this.executeOutcome.emit(outcome);
+  }
+
+  onCompleteTask() {
+    this.taskListService.completeTask(this.taskDetails.id).subscribe(() => this.complete.emit());
+  }
+
+  onCancel() {
+    this.cancel.emit();
   }
 
   hasFormKey(): boolean {
@@ -203,12 +216,12 @@ export class TaskFormComponent implements OnInit {
 
   isAssignedToMe(): boolean {
       return this.isAssigned() && this.hasEmailAddress() ?
-          this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
+          this.isEmailEqual() :
           this.isExternalIdEqual();
   }
 
-  private isEmailEqual(assigneeMail: string, currentLoggedEmail: string): boolean {
-    return assigneeMail.toLocaleLowerCase() === currentLoggedEmail.toLocaleLowerCase();
+  private isEmailEqual(): boolean {
+    return (this.taskDetails.assignee && this.currentLoggedUser) && ( this.taskDetails.assignee.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase());
   }
 
   private isExternalIdEqual(): boolean {
@@ -228,27 +241,11 @@ export class TaskFormComponent implements OnInit {
   }
 
   isSaveButtonVisible(): boolean {
-    return this.hasSaveButton() && (!this.canInitiatorComplete() || this.isAssignedToMe());
-  }
-
-  onStandaloneTaskComplete() {
-    this.taskListService.completeTask(this.taskDetails.id).subscribe(() => this.executeNoFormOutcome.emit());
-  }
-
-  onCancelButtonClick() {
-    this.cancel.emit();
+    return this.showFormSaveButton && (!this.canInitiatorComplete() || this.isAssignedToMe());
   }
 
   canCompleteTask(): boolean {
     return !this.isCompletedTask() && this.isAssignedToMe();
-  }
-
-  hasSaveButton(): boolean {
-      return this.showFormSaveButton;
-  }
-
-  onShowAttachForm() {
-    this.showAttachForm.emit();
   }
 
   getCompletedTaskTranslatedMessage(): Observable<string> {

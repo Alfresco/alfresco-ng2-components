@@ -1,5 +1,5 @@
 <ng-container *ngIf="!loading; else loadingTemplate">
-  <adf-form *ngIf="hasFormKey(); else noFormTemplate"
+  <adf-form *ngIf="hasFormKey(); else withoutForm"
     [taskId]="taskDetails?.id"
     [showTitle]="showFormTitle"
     [showRefreshButton]="showFormRefreshButton"
@@ -14,9 +14,12 @@
     (formLoaded)='onFormLoaded($event)'
     (error)='onFormError($event)'
     (executeOutcome)='onFormExecuteOutcome($event)'>
+    <adf-form-custom-outcomes>
+        <ng-template *ngIf="taskFormCustomOutComeTemplate" [ngTemplateOutlet]="taskFormCustomOutComeTemplate"></ng-template>
+    </adf-form-custom-outcomes>
   </adf-form>
-  <ng-template #noFormTemplate>
-      <ng-container *ngIf="isProcessTask(); else standaloneTaskEmptyTemplate">
+  <ng-template #withoutForm>
+      <ng-container>
         <mat-card class="adf-task-form-container">
             <mat-card-header>
                 <mat-card-title>
@@ -45,25 +48,16 @@
                 </ng-template>
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
-                <button mat-button *ngIf="!isCompletedTask()" color="primary" (click)="onCompleteTask()" id="adf-form-complete">
+                <ng-template  *ngIf="noFormOutcomeTemplate" [ngTemplateOutlet]="noFormOutcomeTemplate"></ng-template>
+                <button id="adf-no-task-form-cancel" mat-button *ngIf="showCancelButton" (click)="onCancel()">
+                    {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+                </button>
+                <button mat-button *ngIf="!isCompletedTask()" color="primary" (click)="onCompleteTask()" id="adf-no-task-form-complete">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                 </button>
             </mat-card-actions>
         </mat-card>
       </ng-container>
-      <ng-template #standaloneTaskEmptyTemplate>
-        <adf-task-standalone
-            [taskName]="taskDetails.name"
-            [taskId]="taskDetails.id"
-            [isCompleted]="isCompletedTask()"
-            [hasCompletePermission]="canCompleteTask()"
-            [showAttacheFormButton]="false"
-            [hideCancelButton]="false"
-            (complete)="onStandaloneTaskComplete()"
-            (cancel)="onCancelButtonClick()"
-            (showAttachForm)="onShowAttachForm()">
-        </adf-task-standalone>
-      </ng-template>
   </ng-template>
 </ng-container>
 <ng-template #loadingTemplate>

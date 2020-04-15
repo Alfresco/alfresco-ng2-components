@@ -44,6 +44,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { catchError, share, takeUntil } from 'rxjs/operators';
+import { TaskFormComponent } from './task-form/task-form.component';
 
 @Component({
     selector: 'adf-task-details',
@@ -60,6 +61,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
+
+    @ViewChild('activitiTaskForm')
+    taskFormComponent: TaskFormComponent;
 
     /** Toggles debug mode. */
     @Input()
@@ -249,6 +253,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         return this.showAttachForm;
     }
 
+    showAttachFormButton() {
+        return !this.taskDetails.endDate;
+    }
     /**
      * Reset the task details
      */
@@ -395,9 +402,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
      * Complete button clicked
      */
     onComplete(): void {
-        this.taskListService
-            .completeTask(this.taskId)
-            .subscribe(() => this.onFormCompleted(null));
+        this.onFormCompleted(null);
     }
 
     onShowAttachForm() {
@@ -410,7 +415,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     onCompleteAttachForm() {
         this.showAttachForm = false;
-        this.loadDetails(this.taskId);
+        this.taskFormComponent.loadTask(this.taskId);
     }
 
     onFormContentClick(content: ContentLinkModel): void {
