@@ -27,7 +27,7 @@ export class AttachFolderWidgetPage {
 
     async clickWidget(fieldId: string): Promise<void> {
         browser.setFileDetector(new remote.FileDetector());
-        const widget = await this.formFields.getWidget(fieldId);
+        const widget = await this.formFields.getWidget(fieldId).element(by.css(`button[id="folder-${fieldId}-button"]`));
         await BrowserActions.click(widget);
     }
 
