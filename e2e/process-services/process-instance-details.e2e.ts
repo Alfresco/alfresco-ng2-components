@@ -55,7 +55,7 @@ describe('Process Instance Details', () => {
 
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        const processModel = await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(appModel.name, 'process');
+        const processModel = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
 

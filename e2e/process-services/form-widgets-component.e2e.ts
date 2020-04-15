@@ -219,7 +219,7 @@ describe('Form widgets', () => {
                 return currentApp.modelId === appModel.id;
             });
             const processUtil = new ProcessUtil(alfrescoJsApi);
-            process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
+            process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         });
