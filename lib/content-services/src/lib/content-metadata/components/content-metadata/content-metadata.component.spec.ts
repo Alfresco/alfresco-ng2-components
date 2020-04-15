@@ -119,14 +119,16 @@ describe('ContentMetadataComponent', () => {
             expect(component.changedProperties).toEqual({ properties: { 'property-key': 'updated-value' } });
         }));
 
-        it('should save changedProperties on save click', async(async () => {
-            component.changedProperties = { properties: { 'property-key': 'updated-value' } };
-            component.hasMetadataChanged = true;
+        it('should save changedProperties on save click', fakeAsync(async () => {
             component.editable = true;
+            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
             const expectedNode = Object.assign({}, node, { name: 'some-modified-value' });
             spyOn(nodesApiService, 'updateNode').and.callFake(() => {
                 return of(expectedNode);
             });
+
+            updateService.update(property, 'updated-value');
+            tick(600);
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -138,11 +140,12 @@ describe('ContentMetadataComponent', () => {
             expect(nodesApiService.updateNode).toHaveBeenCalled();
         }));
 
-        it('should throw error on unsuccessful save', async(async (done) => {
+        it('should throw error on unsuccessful save', fakeAsync(async (done) => {
             const logService: LogService = TestBed.get(LogService);
-            component.changedProperties = { properties: { 'property-key': 'updated-value' } };
-            component.hasMetadataChanged = true;
             component.editable = true;
+            const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
+            updateService.update(property, 'updated-value');
+            tick(600);
 
             const sub = contentMetadataService.error.subscribe((err) => {
                 expect(logService.error).toHaveBeenCalledWith(new Error('My bad'));
