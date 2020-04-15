@@ -63,8 +63,6 @@ export class DiscoveryApiService {
     public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
         return from(this.systemPropertiesApi.getProperties())
             .pipe(
-                map((res) => res
-                ),
                 catchError((err) => throwError(err.error))
             );
     }
