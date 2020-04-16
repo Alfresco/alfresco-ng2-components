@@ -43,13 +43,19 @@
             <mat-error *ngIf="nameController.hasError('maxlength')">
                 {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxProcessNameLength } }}
             </mat-error>
+            <mat-error *ngIf="nameController.hasError('required')">
+                {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+            </mat-error>
+            <mat-error *ngIf="nameController.hasError('pattern')">
+                {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
+            </mat-error>
         </mat-form-field>
 
         <adf-start-form
             #startForm
             *ngIf="hasStartForm()"
             [data]="values"
-            [disableStartProcessButton]="!hasProcessName()"
+            [disableStartProcessButton]="!validateForm()"
             [processDefinitionId]="selectedProcessDef.id"
             (outcomeClick)="onOutcomeClick($event)"
             [showRefreshButton]="false">
