@@ -20,6 +20,10 @@ import { from, throwError, Observable } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { map, catchError } from 'rxjs/operators';
+import {
+    SystemPropertiesRepresentation,
+    Activiti
+  } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +53,17 @@ export class DiscoveryApiService {
             .pipe(
                 map((res) => new BpmProductVersionModel(res)),
                 catchError((err) => throwError(err))
+            );
+    }
+
+    private get systemPropertiesApi(): Activiti.SystemPropertiesApi {
+        return this.apiService.getInstance().activiti.systemPropertiesApi;
+    }
+
+    public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
+        return from(this.systemPropertiesApi.getProperties())
+            .pipe(
+                catchError((err) => throwError(err.error))
             );
     }
 }

@@ -21,6 +21,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { SystemPropertiesRepresentation } from '@alfresco/js-api';
 
 declare let jasmine: any;
 
@@ -86,6 +87,18 @@ const fakeBPMDiscoveryResponse: any = {
         'majorVersion': '1',
         'minorVersion': '6'
     };
+
+const fakeBPMDiscoverySystemPropertyResponse: any = {
+    'allowInvolveByEmail': true,
+    'disableJavaScriptEventsInFormEditor': false,
+    'logoutDisabled': false,
+    'authConfiguration': {
+        'authUrl': 'fakeAuthUrl',
+        'realm': 'fakeRealm',
+        'clientId': 'fakeClient',
+        'useBrowserLogout': true
+    }
+};
 
 describe('Discovery Api Service', () => {
 
@@ -170,6 +183,43 @@ describe('Discovery Api Service', () => {
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
+            });
+        });
+
+        it('Should retrieve the system properties for BPM', (done) => {
+            service.getBPMSystemProperties().subscribe((data: SystemPropertiesRepresentation) => {
+                expect(data).not.toBeNull();
+                expect(data.allowInvolveByEmail).toBe(true);
+                expect(data.disableJavaScriptEventsInFormEditor).toBe(false);
+                expect(data.logoutDisabled).toBe(false);
+                expect(data.authConfiguration.authUrl).toBe('fakeAuthUrl');
+                expect(data.authConfiguration.realm).toBe('fakeRealm');
+                expect(data.authConfiguration.clientId).toBe('fakeClient');
+                expect(data.authConfiguration.useBrowserLogout).toBe(true);
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: fakeBPMDiscoverySystemPropertyResponse
+            });
+        });
+
+        it('Should retrieve the system properties for BPM', (done) => {
+            service.getBPMSystemProperties().subscribe(
+                () => {
+                    fail('expected an error, bpm not running');
+                },
+                (error) => {
+                    expect(error.response.statusCode).toEqual(404);
+                    expect(error.response.statusText).toEqual('Not Found');
+                    done();
+                });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 404,
+                statusText: 'Not Found'
             });
         });
     });

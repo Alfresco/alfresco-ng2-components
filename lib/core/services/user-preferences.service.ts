@@ -21,7 +21,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
 import { LanguageItem } from '../language-menu/language.interface';
 import { StorageService } from './storage.service';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { AlfrescoApiService } from './alfresco-api.service';
 
 export enum UserPreferenceValues {
@@ -51,7 +51,7 @@ export class UserPreferencesService {
                 private appConfig: AppConfigService,
                 private storage: StorageService,
                 private alfrescoApiService: AlfrescoApiService) {
-        this.alfrescoApiService.alfrescoApiInitialized.subscribe(this.initUserPreferenceStatus.bind(this));
+        this.alfrescoApiService.alfrescoApiInitialized.pipe(filter(status => status)).subscribe(this.initUserPreferenceStatus.bind(this));
         this.onChangeSubject = new BehaviorSubject(this.userPreferenceStatus);
         this.onChange = this.onChangeSubject.asObservable();
     }
