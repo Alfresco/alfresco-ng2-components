@@ -16,7 +16,7 @@
  */
 
 import {
-    ApplicationService,
+    ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     IntegrationService,
     LoginPage,
@@ -37,7 +37,7 @@ describe('Attach Folder', () => {
         hostBpm: browser.params.testConfig.adf_aps.host
     });
     const integrationService = new IntegrationService(this.alfrescoJsApi);
-    const applicationService = new ApplicationService(this.alfrescoJsApi);
+    const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
 
     const users = new UsersActions();
     const loginPage = new LoginPage();
