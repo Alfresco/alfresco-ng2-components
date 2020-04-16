@@ -1,24 +1,6 @@
-<!-- <div class="menu-container">
-  <mat-list class="adf-menu-list" *ngIf="filters$ | async as filterList; else loading">
-      <mat-list-item (click)="selectFilterAndEmit({id: filter.id})" *ngFor="let filter of filterList"
-                     class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
-          <mat-icon *ngIf="showIcons && filter.icon" matListIcon class="adf-filters__entry-icon">{{filter.icon}}
-          </mat-icon>
-          <span matLine [attr.data-automation-id]="filter.key + '-filter'">{{filter.name | translate}}</span>
-      </mat-list-item>
-  </mat-list>
-  <ng-template #loading>
-      <ng-container>
-          <div class="adf-app-list-spinner">
-              <mat-spinner></mat-spinner>
-          </div>
-      </ng-container>
-  </ng-template>
-</div> -->
-
 <ng-container *ngIf="filters$ | async as filterList; else loading">
-    <div *ngFor="let filter of filterList" class="item">
-        <button (click)="selectFilterAndEmit(filter)" [ngClass]="{ 'adf-active': isActiveFilter(filter) }"
+    <div *ngFor="let filter of filterList" class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
+        <button (click)="selectFilterAndEmit(filter)"
           [attr.aria-label]="filter.name | translate"
           [id]="filter.id"
           [attr.data-automation-id]="filter.id"

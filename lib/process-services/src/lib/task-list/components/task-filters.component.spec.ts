@@ -321,7 +321,7 @@ describe('TaskFiltersComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.filters.length).toBe(3);
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
             expect(filters.length).toBe(3);
             expect(filters[0].nativeElement.innerText).toContain('format_align_left');
             expect(filters[1].nativeElement.innerText).toContain('check_circle');

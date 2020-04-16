@@ -2,59 +2,31 @@
     $primary: map-get($theme, primary);
 
     .adf {
-
         &-filters__entry {
+            padding: 12px 0 !important;
+            height: 24px;
+            width: 100%;
             cursor: pointer;
-            font-size: 14px!important;
+            font-size: 14px !important;
             font-weight: bold;
             opacity: 0.54;
-            padding-left: 30px;
 
-            .mat-list-item-content {
-                height: 34px;
+            .full-width {
+                display: flex;
+                width: 100%;
             }
-            &.adf-active, &:hover {
+
+            .action-button .action-button__label {
+                padding-left: 20px;
+                margin: 0 8px !important;
+            }
+        }
+        &-filters__entry {
+            &.adf-active,
+            &:hover {
                 color: mat-color($primary);
                 opacity: 1;
             }
         }
-
-        &-filters__entry-icon {
-            padding-right: 12px !important;
-            padding-left: 0 !important;
-        }
-
-        &-menu-list {
-            padding-top: 0 !important;
-        }
     }
-
-    .item {
-        padding: 12px 0;
-        height: 24px;
-        width: 100%;
-        cursor: pointer;
-        font-size: 14px!important;
-        font-weight: bold;
-        opacity: 0.54;
-        &:hover {
-            color: mat-color($primary);
-            opacity: 1;
-        }
-
-        .adf-active {
-            color: mat-color($primary);
-            opacity: 1;
-        }
-
-        .full-width {
-            display: flex;
-            width: 100%;
-          }
-
-          .action-button .action-button__label {
-            padding-left: 20px;
-            margin: 0 8px !important;
-          }
-      }
 }

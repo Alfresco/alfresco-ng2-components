@@ -151,8 +151,4 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.filters = [];
         this.currentFilter = undefined;
     }
-
-    isActiveFilter(filter: any): boolean {
-        return this.currentFilter.name === filter.name;
-    }
 }

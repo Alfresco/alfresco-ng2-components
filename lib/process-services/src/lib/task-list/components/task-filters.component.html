@@ -1,21 +1,13 @@
-<!-- <div class="menu-container">
-    <mat-list class="adf-menu-list">
-        <mat-list-item (click)="selectFilterAndEmit(filter)" *ngFor="let filter of filters"
-                      class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
-            <mat-icon *ngIf="showIcon" matListIcon class="adf-filters__entry-icon">{{getFilterIcon(filter.icon)}}</mat-icon>
-            <span matLine [attr.data-automation-id]="filter.name + '_filter'">{{filter.name}}</span>
-        </mat-list-item>
-    </mat-list>
-</div> -->
-
-<div *ngFor="let filter of filters" class="item">
-    <button (click)="selectFilterAndEmit(filter)" [class.adf-active]="currentFilter === filter"
+<div *ngFor="let filter of filters" class="adf-filters__entry" [class.adf-active]="currentFilter === filter">
+    <button (click)="selectFilterAndEmit(filter)"
       [attr.aria-label]="filter.name | translate"
       [id]="filter.id"
       [attr.data-automation-id]="filter.id"
       mat-button
       class="action-button full-width" fxLayout="row" fxLayoutAlign="space-between center">
-      <adf-icon *ngIf="showIcon" [value]="getFilterIcon(filter.icon)"></adf-icon>
+      <ng-container *ngIf="showIcon">
+        <adf-icon [value]="getFilterIcon(filter.icon)"></adf-icon>
+      </ng-container>
       <span class="action-button__label">{{ filter.name | translate }}</span>
     </button>
 </div>

@@ -99,7 +99,7 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.filters.length).toBe(3);
-            const filters = fixture.nativeElement.querySelectorAll('.adf-filters__entry-icon');
+            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
             expect(filters.length).toBe(3);
             expect(filters[0].innerText).toContain('adjust');
             expect(filters[1].innerText).toContain('inbox');
@@ -131,7 +131,7 @@ describe('ProcessFiltersCloudComponent', () => {
         component.showIcons = true;
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters = fixture.debugElement.queryAll(By.css('mat-list-item[class*="adf-filters__entry"]'));
+            const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
             expect(component.filters.length).toBe(3);
             expect(filters.length).toBe(3);
             expect(filters[0].nativeElement.innerText).toContain('FakeAllProcesses');
@@ -274,11 +274,11 @@ describe('ProcessFiltersCloudComponent', () => {
         component.filterClick.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeRunningProcesses');
+            expect(component.currentFilter.name).toEqual('FakeAllProcesses');
             done();
         });
 
-        const filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="FakeRunningProcesses_filter"]');
+        const filterButton = fixture.debugElement.nativeElement.querySelector('button[data-automation-id="10"]');
         filterButton.click();
     });
 
