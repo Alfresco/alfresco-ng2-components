@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
         "START": "Couldn't start new process instance, check you have access.",
-        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max."
+        "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
+        "SPACE_VALIDATOR": "Space is not allowed in the beginning or the end of the text.",
+        "PROCESS_NAME_REQUIRED": "Process name is required."
       }
     },
     "PROCESS-ATTACHMENT": {
