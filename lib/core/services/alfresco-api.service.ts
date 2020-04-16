@@ -102,7 +102,7 @@ export class AlfrescoApiService {
     constructor(
         protected appConfig: AppConfigService,
         protected storageService: StorageService) {
-        this.alfrescoApiInitializedSubject = new BehaviorSubject(false);
+        this.alfrescoApiInitializedSubject = new BehaviorSubject(null);
         this.alfrescoApiInitialized = this.alfrescoApiInitializedSubject.asObservable();
     }
 
