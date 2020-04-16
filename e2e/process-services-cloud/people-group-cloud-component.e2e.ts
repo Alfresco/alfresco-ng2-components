@@ -38,6 +38,7 @@ describe('People Groups Cloud Component', () => {
 
         let apsUser;
         let testUser;
+        let devopsUser;
         let activitiUser;
         let noRoleUser;
         let groupUser;
@@ -56,6 +57,7 @@ describe('People Groups Cloud Component', () => {
             testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            devopsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_DEVOPS]);
             noRoleUser = await identityService.createIdentityUser();
 
             rolesService = new RolesService(apiService);
@@ -72,7 +74,8 @@ describe('People Groups Cloud Component', () => {
 
             groupNoRole = await groupIdentityService.createIdentityGroup();
 
-            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`, `${testUser.idIdentityService}`];
+            users = [`${apsUser.idIdentityService}`, `${activitiUser.idIdentityService}`, `${noRoleUser.idIdentityService}`,
+                `${testUser.idIdentityService}`, `${devopsUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
@@ -121,10 +124,11 @@ describe('People Groups Cloud Component', () => {
                 await peopleGroupCloudComponentPage.enterPeopleRoles(`["${identityService.ROLES.ACTIVITI_USER}"]`);
                 await peopleCloudComponent.searchAssignee(apsUser.lastName);
                 await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
-                await peopleCloudComponent.searchAssignee(testUser.lastName);
+                await peopleCloudComponent.searchAssignee(devopsUser.lastName);
+                await peopleCloudComponent.checkUserIsNotDisplayed(`${devopsUser.firstName} ${devopsUser.lastName}`);
                 await peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
-                await peopleCloudComponent.checkUserIsNotDisplayed(`${testUser.firstName} ${testUser.lastName}`);
                 await peopleCloudComponent.searchAssignee(noRoleUser.lastName);
+                await browser.sleep(5000);
                 await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
             });
 
