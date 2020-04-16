@@ -27,6 +27,7 @@
                 text-align: left;
                 color: mat-color($accent);
                 text-transform: uppercase;
+                opacity: 1;
 
                 &-active {
                     color: mat-color($primary);
