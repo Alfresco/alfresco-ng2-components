@@ -42,11 +42,11 @@ export class ProcessUtil {
         }
     }
 
-    async startProcessOfApp(appName: string): Promise<any> {
+    async startProcessOfApp(appName: string, processName?: string): Promise<any> {
         try {
             const appDefinition = await new ApplicationsUtil(this.api).getAppDefinitionByName(appName);
             const processDefinitionList = await this.api.activiti.processApi.getProcessDefinitions({ deploymentId: appDefinition.deploymentId });
-            const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: StringUtil.generateRandomString(5).toLowerCase() };
+            const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
             return this.api.activiti.processApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
             Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);

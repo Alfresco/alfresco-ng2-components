@@ -53,7 +53,7 @@ describe('Document Template widget', () => {
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
+        process = await new ProcessUtil(alfrescoJsApi).startProcessOfApp(appModel.name);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 

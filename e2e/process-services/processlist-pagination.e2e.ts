@@ -50,7 +50,6 @@ describe('Process List - Pagination', () => {
     const nrOfProcesses = 20;
     let page;
     let totalPages;
-    const processNameBase = 'process';
 
     beforeAll(async () => {
         const users = new UsersActions();
@@ -85,7 +84,7 @@ describe('Process List - Pagination', () => {
             await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
-                await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(deployedTestApp.name, processNameBase + (i < 10 ? `0${i}` : i));
+                await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
             }
 
         });
