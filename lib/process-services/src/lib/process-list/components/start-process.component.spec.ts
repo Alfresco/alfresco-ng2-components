@@ -129,6 +129,17 @@ describe('StartFormComponent', () => {
                     expect(startBtn.disabled).toBe(true);
                 });
             }));
+
+            it('should have start button disabled process name has a space as the first or last character.', async(() => {
+                component.processNameInput.setValue(' Space in the beginning');
+                component.processDefinitionInput.setValue(testProcessDef.name);
+                fixture.detectChanges();
+                const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(startBtn.disabled).toBe(true);
+                component.processNameInput.setValue('Space in the end ');
+                fixture.detectChanges();
+                expect(startBtn.disabled).toBe(true);
+            }));
         });
 
         describe('with start form', () => {
