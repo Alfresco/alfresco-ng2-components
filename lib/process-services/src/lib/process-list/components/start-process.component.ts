@@ -117,7 +117,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
 
     ngOnInit() {
-        this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength)]);
+        this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
         this.processDefinitionInput = new FormControl();
 
         this.loadStartProcess();
