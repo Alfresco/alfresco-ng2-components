@@ -114,9 +114,6 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
                     (paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
                 ));
         }
-        if (!this.currentFilter) {
-            this.selectDefaultTaskFilter();
-        }
     }
 
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {

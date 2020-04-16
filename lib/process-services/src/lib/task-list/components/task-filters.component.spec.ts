@@ -144,23 +144,6 @@ describe('TaskFiltersComponent', () => {
         component.ngOnInit();
     });
 
-    it('should select the first filter as default', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-
-        const appId = '1';
-        const change = new SimpleChange(null, appId, true);
-
-        fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
-
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
-            done();
-        });
-   });
-
     it('should be able to fetch and select the default if the input filter is not valid', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalEmptyFilterPromise));
         spyOn(component, 'createFiltersByAppId').and.stub();
@@ -190,25 +173,6 @@ describe('TaskFiltersComponent', () => {
             expect(res).toBeDefined();
             expect(component.currentFilter).toBeDefined();
             expect(component.currentFilter.name).toEqual('FakeMyTasks1');
-            done();
-        });
-   });
-
-    it('should select the default task filter if filter input does not exist', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-
-        component.filterParam = new FilterParamsModel({ name: 'UnexistableFilter' });
-
-        const appId = '1';
-        const change = new SimpleChange(null, appId, true);
-
-        fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
-
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
             done();
         });
    });

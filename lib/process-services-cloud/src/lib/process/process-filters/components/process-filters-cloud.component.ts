@@ -113,9 +113,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
                 paramFilter.index === index;
             });
         }
-        if (!this.currentFilter) {
-            this.selectDefaultProcessFilter();
-        }
     }
 
     /**

@@ -166,9 +166,6 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
                     (newFilter.name.toLocaleLowerCase() === filter.name.toLocaleLowerCase())
                 ));
         }
-        if (!this.currentFilter) {
-            this.selectDefaultTaskFilter();
-        }
     }
 
     public selectFilterAndEmit(newFilter: FilterParamsModel) {
