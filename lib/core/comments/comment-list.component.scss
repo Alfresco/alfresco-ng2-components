@@ -2,6 +2,7 @@
 
 @mixin adf-task-list-comment-list-theme($theme) {
     $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
     $primaryColor: mat-color($primary, 100);
     $rippleColor: mat-color($primary, 300);
 
@@ -47,6 +48,7 @@
             padding: 10px 5px;
             width: 30px;
             background-color: mat-color($primary);
+            color: mat-contrast($primary, default);
             border-radius: 50%;
             font-size: 16px;
             text-align: center;
@@ -73,7 +75,7 @@
             font-size: 14px;
             letter-spacing: -0.2px;
             line-height: 1.43;
-            opacity: 0.54;
+            color: mat-color($foreground, secondary-text);
         }
 
         &-comment-message-time {
@@ -81,7 +83,7 @@
             width: calc(100% - 10%);
             padding: 2px 10px;
             font-size: 12px !important;
-            opacity: 0.54;
+            color: mat-color($foreground, secondary-text);
         }
 
         &-comment-contents {
