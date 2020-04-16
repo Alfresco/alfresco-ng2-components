@@ -37,7 +37,7 @@
             background-color: mat-color($background, background);
             display: flex;
             justify-content: flex-end;
-            color: mat-color($foreground, secondary-text);
+            color: mat-color($foreground, text, 0.72);
 
             button {
                 text-transform: uppercase;
@@ -47,7 +47,7 @@
             .adf-choose-action {
 
                 &[disabled] {
-                    opacity: 0.6;
+                    color: mat-color($foreground, secondary-text);
                 }
 
                 &:enabled {
