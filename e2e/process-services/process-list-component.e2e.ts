@@ -68,13 +68,13 @@ describe('Process List Test', () => {
         appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        procWithDate = await processUtil.startProcessOfApp(appDateModel.name);
-        completedProcWithDate = await processUtil.startProcessOfApp(appDateModel.name);
+        procWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.procWithDate);
+        completedProcWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.completedProcWithDate);
 
         appUserWidgetModel = await applicationsService.importPublishDeployApp(appWithUserWidget.file_path);
 
-        await processUtil.startProcessOfApp(appUserWidgetModel.name);
-        completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name);
+        await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
+        completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
         appWithDateFieldId = await apps.getAppDefinitionId(this.alfrescoJsApi, appDateModel.id);
 

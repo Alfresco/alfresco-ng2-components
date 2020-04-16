@@ -32,6 +32,7 @@ describe('Comment component for Processes', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let user, tenantId, appId, processInstanceId, addedComment;
+    const processName = 'Comment APS';
 
     beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -53,7 +54,7 @@ describe('Comment component for Processes', () => {
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp('Task App');
+        const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp('Task App', processName);
         processInstanceId = processWithComment.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -71,7 +72,7 @@ describe('Comment component for Processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
-        await processFiltersPage.selectFromProcessList('Comment APS');
+        await processFiltersPage.selectFromProcessList(processName);
 
         addedComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
@@ -89,7 +90,7 @@ describe('Comment component for Processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
-        await processFiltersPage.selectFromProcessList('Comment APS');
+        await processFiltersPage.selectFromProcessList(processName);
 
         const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
 
@@ -109,7 +110,7 @@ describe('Comment component for Processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
-        await processFiltersPage.selectFromProcessList('Comment APS');
+        await processFiltersPage.selectFromProcessList(processName);
 
         const addedTaskComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
