@@ -119,6 +119,10 @@ export class EditProcessFilterCloudComponentPage {
         await this.setProperty('processInstanceId', option);
     }
 
+    async setProcessName(option): Promise<void> {
+        await this.setProperty('processName', option);
+    }
+
     async getProcessInstanceId(): Promise<string> {
         return this.getProperty('processInstanceId');
     }

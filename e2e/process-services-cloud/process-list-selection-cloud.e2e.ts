@@ -92,7 +92,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
-
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+            await processCloudDemoPage.editProcessFilterCloudComponent().setOrderFilterDropDown('ASC');
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkNoRowIsSelected();
         });

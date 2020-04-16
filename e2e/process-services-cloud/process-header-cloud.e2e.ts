@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, EditProcessFilterCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -32,6 +32,7 @@ describe('Process Header cloud component', () => {
         const formatDate = 'MMM D, YYYY';
 
         const processHeaderCloudPage = new ProcessHeaderCloudPage();
+        const editProcessFilterCloudComponentPage = new EditProcessFilterCloudComponentPage();
 
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -104,9 +105,10 @@ describe('Process Header cloud component', () => {
             await appListCloudComponent.goToApp(simpleApp);
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await editProcessFilterCloudComponentPage.openFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
 
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();

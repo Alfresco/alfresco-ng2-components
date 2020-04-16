@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    AppListCloudPage,
+    GroupIdentityService,
+    IdentityService,
+    LoginSSOPage,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    StringUtil
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -54,13 +63,19 @@ describe('Process list cloud', () => {
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
-            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
+            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 
-        afterAll(async() => {
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
 
@@ -89,6 +104,8 @@ describe('Process list cloud', () => {
         });
 
         it('[C315236] Should be able to see and execute custom action menu', async () => {
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(editProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(editProcess.entry.id);
@@ -97,11 +114,14 @@ describe('Process list cloud', () => {
             await expect(await processCloudDemoPage.processListCloudComponent().getNumberOfOptions()).toBe(3);
             await processCloudDemoPage.processListCloudComponent().clickOnCustomActionMenu('edit');
             await processCloudDemoPage.checkActionExecuted(editProcess.entry.id, 'edit');
+
+            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(deleteProcess.entry.name);
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().rightClickOnRow(deleteProcess.entry.id);
             await expect(await processCloudDemoPage.processListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
             await expect(await processCloudDemoPage.processListCloudComponent().getNumberOfOptions()).toBe(3);
             await processCloudDemoPage.processListCloudComponent().clickContextMenuActionNamed('delete');
             await processCloudDemoPage.checkActionExecuted(deleteProcess.entry.id, 'delete');
         });
-   });
+    });
 });
