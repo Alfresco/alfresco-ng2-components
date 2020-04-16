@@ -131,7 +131,7 @@
         }
 
         .adf-login-button-label {
-            color: rgb(255, 255, 255);
+            color: mat-contrast($accent, default);
         }
 
         .adf-login-button.adf-isChecking {
@@ -139,12 +139,12 @@
         }
 
         .adf-login-button.adf-isChecking .adf-login-button-label {
-            color: #00bcd4;
+            color: mat-color($primary);
         }
 
         .adf-login-button.adf-isWelcome {
-            background-color: #00bcd4;
-            color: #ffffff;
+            background-color: mat-color($primary);
+            color: mat-contrast($primary, default);
         }
 
         .adf-login-button.adf-isWelcome .adf-welcome-icon {
