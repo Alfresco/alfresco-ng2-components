@@ -64,11 +64,11 @@ export class DiscoveryApiService {
         return from(this.systemPropertiesApi.getProperties())
             .pipe(
                 map( (res) => {
-                    if ("string" === typeof(res)) {
+                    if ('string' === typeof(res)) {
                         throw new Error('Not valid response');
                        }
-                       return res;
-                })
+                    return res;
+                }),
                 catchError((err) => throwError(err.error))
             );
     }
