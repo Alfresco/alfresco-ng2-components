@@ -31,6 +31,8 @@ const SCREENSHOT_URL = process.env.SCREENSHOT_URL || process.env.URL_HOST_ADF;
 const SCREENSHOT_PASSWORD = process.env.SCREENSHOT_PASSWORD || process.env.PASSWORD_ADF;
 const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERNAME_ADF;
 
+const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
+
 const appConfig = {
     "bpmHost": BPM_HOST,
     "identityHost": IDENTITY_HOST,
@@ -180,6 +182,34 @@ module.exports = {
          * @config main.protocol {String}
          */
         host: PROXY || HOST,
+
+        /**
+         * The port where the app runs.
+         * @config main.port {String}
+         */
+        port: "",
+
+        /**
+         * The ECM API context required for calls
+         * @config adf.ACSAPIContextRoot {String}
+         */
+        apiContextRoot: "/alfresco/api/-default-/public",
+
+        clientIdSso: "alfresco",
+    },
+
+    adf_external_acs: {
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
+         */
+        protocol: "http",
+
+        /**
+         * The protocol where the app runs.
+         * @config main.protocol {String}
+         */
+        host: EXTERNAL_ACS_HOST,
 
         /**
          * The port where the app runs.

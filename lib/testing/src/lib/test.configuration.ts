@@ -58,6 +58,14 @@ export interface TestConfiguration {
         clientIdSso: string;
     };
 
+    adf_external_acs: {
+        protocol: string;
+        host: string;
+        port: string;
+        apiContextRoot: string;
+        clientIdSso: string;
+    };
+
     adf_aps: {
         protocol: string;
         host: string;

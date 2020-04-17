@@ -17,16 +17,6 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-export interface IntegrationType {
-    name: string;
-    tenantId: number;
-    alfrescoTenantId: string;
-    repositoryUrl: string;
-    shareUrl: string;
-    version: string;
-    useShareConnector: boolean;
-}
-
 export class IntegrationService {
     api: AlfrescoApi;
 
@@ -34,14 +24,22 @@ export class IntegrationService {
         this.api = api;
     }
 
-    addCSIntegration(body: IntegrationType): Promise<any> {
+    addCSIntegration({ name, tenantId, host }): Promise<any> {
+        const repository = {
+            name,
+            tenantId,
+            alfrescoTenantId: '',
+            repositoryUrl: `${host}/alfresco`,
+            shareUrl: `${host}/share`,
+            version: '4.2',
+            useShareConnector: false
+        };
         return this.api.activiti.integrationAccountApi.apiClient.callApi('app/rest/integration/alfresco', 'POST',
-            {}, {}, {}, {}, body, [], [], Object);
+            {}, {}, {}, {}, repository, [], [], Object);
     }
 
-    authenticateRepositary(id: number, body: { username: string, password: string }): Promise<any> {
+    authenticateRepository(id: number, body: { username: string, password: string }): Promise<any> {
         return this.api.activiti.integrationAccountApi.apiClient.callApi(`app/rest/integration/alfresco/${id}/account`, 'POST',
             {}, {}, {}, body, {}, [], []);
     }
-
 }

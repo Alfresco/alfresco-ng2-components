@@ -56,18 +56,8 @@ describe('Attach Folder', () => {
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs });
 
-        const repository = {
-            name: 'adf dev',
-            tenantId: user.tenantId,
-            alfrescoTenantId: '',
-            repositoryUrl: `${browser.params.testConfig.adf_acs.host}/alfresco`,
-            shareUrl: `${browser.params.testConfig.adf_acs.host}/share`,
-            version: '4.2',
-            useShareConnector: false
-        };
-
-        await integrationService.addCSIntegration(repository);
         await this.alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.loginToAllUsingUserModel(user);

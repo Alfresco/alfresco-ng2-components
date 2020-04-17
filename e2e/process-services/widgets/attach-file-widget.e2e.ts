@@ -83,7 +83,7 @@ describe('Attach widget - File', () => {
     });
 
     it('[C268067] Should be able to preview, download and remove attached files from an active form', async () => {
-        await widget.attachFileWidget().toggleAttachedFileMenu();
+        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().checkAttachFileOptionsActiveForm();
 
         await widget.attachFileWidget().viewAttachedFile();
@@ -91,11 +91,11 @@ describe('Attach widget - File', () => {
         await viewerPage.checkCloseButtonIsDisplayed();
         await viewerPage.clickCloseButton();
 
-        await widget.attachFileWidget().toggleAttachedFileMenu();
+        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().downloadFile();
         await FileBrowserUtil.isFileDownloaded(pdfFile.name);
 
-        await widget.attachFileWidget().toggleAttachedFileMenu();
+        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().removeAttachedFile();
         await widget.attachFileWidget().attachFileWidgetDisplayed();
     });
@@ -109,7 +109,7 @@ describe('Attach widget - File', () => {
         await tasksListPage.checkTaskListIsLoaded();
         await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
-        await widget.attachFileWidget().toggleAttachedFileMenu();
+        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().checkAttachFileOptionsCompletedForm();
 
         await widget.attachFileWidget().viewAttachedFile();
@@ -117,7 +117,7 @@ describe('Attach widget - File', () => {
         await viewerPage.checkCloseButtonIsDisplayed();
         await viewerPage.clickCloseButton();
 
-        await widget.attachFileWidget().toggleAttachedFileMenu();
+        await widget.attachFileWidget().toggleAttachedFileMenu(appFields.attachFile_id, pdfFile.name);
         await widget.attachFileWidget().downloadFile();
         await FileBrowserUtil.isFileDownloaded(pdfFile.name);
     });
