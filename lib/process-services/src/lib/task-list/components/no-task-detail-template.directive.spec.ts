@@ -17,19 +17,14 @@
 
 import { NoTaskDetailsTemplateDirective } from './no-task-detail-template.directive';
 import { TaskDetailsComponent } from './task-details.component';
-import { AuthenticationService } from '@alfresco/adf-core';
-import { of } from 'rxjs';
 
 describe('NoTaskDetailsTemplateDirective', () => {
 
     let component: NoTaskDetailsTemplateDirective;
     let detailsComponent: TaskDetailsComponent;
-    let authService: AuthenticationService;
 
     beforeEach(() => {
-        authService = new AuthenticationService(null, null, null, null, null);
-        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
-        detailsComponent = new TaskDetailsComponent(null, authService, null, null, null, null);
+        detailsComponent = new TaskDetailsComponent(null, null, null, null, null);
         component = new NoTaskDetailsTemplateDirective(detailsComponent);
     });
 

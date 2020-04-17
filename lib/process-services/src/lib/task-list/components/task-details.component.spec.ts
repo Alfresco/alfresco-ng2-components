@@ -36,8 +36,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
     taskDetailsMock,
-    standaloneTaskWithForm,
-    standaloneTaskWithoutForm,
     taskFormMock,
     tasksMock,
     taskDetailsWithOutAssigneeMock
@@ -170,42 +168,6 @@ describe('TaskDetailsComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('adf-form'))).toBeNull();
-        });
-    }));
-
-    it('should display task standalone component when the task does not have an associated form', async(() => {
-        component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithoutForm));
-
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.isStandaloneTaskWithoutForm()).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
-        });
-    }));
-
-    it('should not display task standalone component when the task has a form', async(() => {
-        component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).toBeDefined();
-            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
-        });
-    }));
-
-    it('should display the AttachFormComponent when standaloneTaskWithForm and click on attach button', async(() => {
-        component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
-        fixture.detectChanges();
-        component.onShowAttachForm();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('adf-attach-form'))).toBeDefined();
         });
     }));
 

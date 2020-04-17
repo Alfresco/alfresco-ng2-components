@@ -22,7 +22,7 @@
         [isCompleted]="isCompletedTask()"
         [hasCompletePermission]="isCompleteButtonVisible()"
         [hideCancelButton]="showCancelButton"
-        (complete)="onComplete()"
+        (complete)="onCompleteTask()"
         (showAttachForm)="onShowAttachForm()">
     </adf-task-standalone>
       <ng-template #emptyFormMessage>
