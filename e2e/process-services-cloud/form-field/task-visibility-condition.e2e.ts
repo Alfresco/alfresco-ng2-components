@@ -89,7 +89,7 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
     });
 
-    it('[C315169] Should be able to start a process with visibility condition for number widgets', async () => {
+    it('[C315169] Should be able to start a process with visibility condition for number widgets ', async () => {
 
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
