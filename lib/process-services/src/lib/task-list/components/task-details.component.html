@@ -22,19 +22,20 @@
 
         <div class="adf-task-details-core-form">
             <div *ngIf="isAssigned()">
-                <adf-task-form *ngIf="isFormComponentVisible()"
+                <adf-task-form
                           [taskId]="taskDetails.id"
-                          [noFormCustomOutcomeTemplate]="attacheFormTemplate"
                           [showFormTitle]="showFormTitle"
                           [showFormRefreshButton]="showFormRefreshButton"
                           [showFormSaveButton]="isSaveButtonVisible()"
                           [readOnlyForm]="internalReadOnlyForm"
+                          [showCancelButton]="true"
                           [fieldValidators]="fieldValidators"
                           (formSaved)='onFormSaved($event)'
                           (formCompleted)='onFormCompleted($event)'
                           (formContentClicked)='onFormContentClick($event)'
                           (formLoaded)='onFormLoaded($event)'
                           (complete)="onComplete()"
+                          (showAttachForm)="onShowAttachForm()"
                           (executeOutcome)='onFormExecuteOutcome($event)'
                           (error)='onFormError($event)' #activitiTaskForm>
                 </adf-task-form>
@@ -117,12 +118,3 @@
     </ng-template>
 
 </div>
-
-<ng-template #attacheFormTemplate>
-    <button mat-button 
-        *ngIf="showAttachFormButton() && !showAttachForm"
-        id="adf-no-form-attach-form-button"
-        (click)="onShowAttachForm()">
-        {{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}
-    </button>
-</ng-template>

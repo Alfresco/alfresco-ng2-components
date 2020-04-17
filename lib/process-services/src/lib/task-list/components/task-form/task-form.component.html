@@ -14,12 +14,18 @@
     (formLoaded)='onFormLoaded($event)'
     (error)='onFormError($event)'
     (executeOutcome)='onFormExecuteOutcome($event)'>
-    <adf-form-custom-outcomes>
-        <ng-template *ngIf="taskFormCustomOutComeTemplate" [ngTemplateOutlet]="taskFormCustomOutComeTemplate"></ng-template>
-    </adf-form-custom-outcomes>
   </adf-form>
   <ng-template #withoutForm>
-      <ng-container>
+    <adf-task-standalone *ngIf="isStandaloneTask(); else emptyFormMessage"
+        [taskName]="taskDetails.name"
+        [taskId]="taskDetails.id"
+        [isCompleted]="isCompletedTask()"
+        [hasCompletePermission]="isCompleteButtonVisible()"
+        [hideCancelButton]="showCancelButton"
+        (complete)="onComplete()"
+        (showAttachForm)="onShowAttachForm()">
+    </adf-task-standalone>
+      <ng-template #emptyFormMessage>
         <mat-card class="adf-task-form-container">
             <mat-card-header>
                 <mat-card-title>
@@ -48,7 +54,6 @@
                 </ng-template>
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
-                <ng-template  *ngIf="noFormOutcomeTemplate" [ngTemplateOutlet]="noFormOutcomeTemplate"></ng-template>
                 <button id="adf-no-task-form-cancel" mat-button *ngIf="showCancelButton" (click)="onCancel()">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
                 </button>
@@ -57,7 +62,7 @@
                 </button>
             </mat-card-actions>
         </mat-card>
-      </ng-container>
+      </ng-template>
   </ng-template>
 </ng-container>
 <ng-template #loadingTemplate>

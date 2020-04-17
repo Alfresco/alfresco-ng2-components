@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, TemplateRef } from '@angular/core';
-import { FormModel, ContentLinkModel, FormRenderingService, FormFieldValidator, FormOutcomeEvent, AuthenticationService, TranslationService } from '@alfresco/adf-core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import {
+  FormModel,
+  ContentLinkModel,
+  FormRenderingService,
+  FormFieldValidator,
+  FormOutcomeEvent,
+  AuthenticationService,
+  TranslationService
+} from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
@@ -48,6 +56,7 @@ export class TaskFormComponent implements OnInit {
   showFormSaveButton: boolean = true;
 
   /** Toggle rendering of the `Cancel` button. */
+  @Input()
   showCancelButton: boolean = true;
 
   /** Toggles read-only state of the form. All form widgets render as read-only
@@ -67,12 +76,6 @@ export class TaskFormComponent implements OnInit {
   /** Toggles rendering of the `Complete` button. */
   @Input()
   showAttacheFormButton: boolean = true;
-
-  @Input()
-  taskFormCustomOutcomeTemplate: TemplateRef<any>;
-
-  @Input()
-  noFormCustomOutcomeTemplate: TemplateRef<any>;
 
   /** Emitted when the form is submitted with the `Save` or custom outcomes. */
   @Output()
@@ -102,6 +105,10 @@ export class TaskFormComponent implements OnInit {
   @Output()
   complete = new EventEmitter<void>();
 
+    /** Emitted when the form associated with the form task is attached. */
+  @Output()
+  showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+
   /** Emitted when an error occurs. */
   @Output()
   error = new EventEmitter<any>();
@@ -110,6 +117,7 @@ export class TaskFormComponent implements OnInit {
   currentLoggedUser: UserRepresentation;
   loading: boolean = false;
   completedTaskMessage: string;
+  internalReadOnlyForm: boolean = false;
 
   constructor(
     private taskListService: TaskListService,
@@ -148,7 +156,7 @@ export class TaskFormComponent implements OnInit {
             }
 
             const endDate: any = res.endDate;
-            this.readOnlyForm = !!(endDate && !isNaN(endDate.getTime()));
+            this.readOnlyForm = endDate ? !!(endDate && !isNaN(endDate.getTime())) : this.readOnlyForm;
             this.loading = false;
         });
     }
@@ -174,6 +182,10 @@ export class TaskFormComponent implements OnInit {
     this.executeOutcome.emit(outcome);
   }
 
+  onFormError(error: any) {
+    this.error.emit(error);
+  }
+
   onCompleteTask() {
     this.taskListService.completeTask(this.taskDetails.id).subscribe(() => this.complete.emit());
   }
@@ -182,12 +194,16 @@ export class TaskFormComponent implements OnInit {
     this.cancel.emit();
   }
 
+  onShowAttachForm() {
+    this.showAttachForm.emit();
+  }
+
   hasFormKey(): boolean {
     return (this.taskDetails && (!!this.taskDetails.formKey));
   }
 
-  isProcessTask() {
-    return !!this.taskDetails.processDefinitionId;
+  isStandaloneTask(): boolean {
+    return !(this.taskDetails && (!!this.taskDetails.processDefinitionId));
   }
 
   isTaskLoaded(): boolean {
@@ -237,7 +253,7 @@ export class TaskFormComponent implements OnInit {
   }
 
   isReadOnlyForm(): boolean {
-      return this.readOnlyForm || !(this.isAssignedToMe() || this.canInitiatorComplete());
+      return this.internalReadOnlyForm || !(this.isAssignedToMe() || this.canInitiatorComplete());
   }
 
   isSaveButtonVisible(): boolean {
