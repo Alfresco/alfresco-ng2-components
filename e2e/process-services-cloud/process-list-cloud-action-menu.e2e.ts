@@ -116,7 +116,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.checkActionExecuted(editProcess.entry.id, 'edit');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(deleteProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await browser.sleep(1000);
             await processCloudDemoPage.processListCloudComponent().rightClickOnRow(deleteProcess.entry.id);
             await expect(await processCloudDemoPage.processListCloudComponent().isCustomActionEnabled('disabledaction')).toBe(false);
             await expect(await processCloudDemoPage.processListCloudComponent().getNumberOfOptions()).toBe(3);
