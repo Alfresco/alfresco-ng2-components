@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, TasksService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    AppListCloudPage,
+    GroupIdentityService,
+    IdentityService,
+    LoginSSOPage,
+    StringUtil,
+    ProcessDefinitionsService,
+    ProcessInstancesService,
+    QueryService,
+    TasksService,
+    EditProcessFilterCloudComponentPage
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -29,6 +41,7 @@ describe('Process filters cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const editProcessFilterCloudComponentPage = new EditProcessFilterCloudComponentPage();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -59,9 +72,15 @@ describe('Process filters cloud', () => {
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             processInstancesService = new ProcessInstancesService(apiService);
-            runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+                'name': StringUtil.generateRandomString(),
+                'businessKey': StringUtil.generateRandomString()
+            });
             queryService = new QueryService(apiService);
 
             await browser.sleep(4000); // eventual consistency query
@@ -80,7 +99,7 @@ describe('Process filters cloud', () => {
 
         });
 
-        beforeEach(async() => {
+        beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(candidateBaseApp);
@@ -97,28 +116,36 @@ describe('Process filters cloud', () => {
 
         it('[C290043] Should display process in Running Processes List when process is started', async () => {
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+            await editProcessFilterCloudComponentPage.openFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(runningProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
         });
 
         it('[C290044] Should display process in Completed Processes List when process is completed', async () => {
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+            await editProcessFilterCloudComponentPage.openFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(completedProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
+            await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
         });

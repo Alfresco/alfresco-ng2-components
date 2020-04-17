@@ -107,6 +107,8 @@ describe('Start Process', () => {
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(processName);
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
    });

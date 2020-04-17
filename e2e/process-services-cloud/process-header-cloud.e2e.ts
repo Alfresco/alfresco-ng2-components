@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
+import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 
 describe('Process Header cloud component', () => {
 
@@ -38,6 +39,8 @@ describe('Process Header cloud component', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
+        const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
+        const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
         const apiService = new ApiService(
             browser.params.config.oauth2.clientId,
             browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
@@ -87,6 +90,7 @@ describe('Process Header cloud component', () => {
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 
         afterAll(async() => {
@@ -104,9 +108,10 @@ describe('Process Header cloud component', () => {
             await appListCloudComponent.goToApp(simpleApp);
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcess.entry.name);
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
 
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
@@ -128,6 +133,8 @@ describe('Process Header cloud component', () => {
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
+            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
