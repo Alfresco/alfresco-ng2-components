@@ -63,6 +63,7 @@
             text-overflow: ellipsis;
             display: inline-block;
             width: 75%;
+            color: mat-color($foreground, text, 0.72);
         }
 
         &-dropdown-breadcrumb-path-option.mat-option {
