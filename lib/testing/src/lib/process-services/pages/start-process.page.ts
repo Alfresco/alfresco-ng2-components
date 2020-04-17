@@ -16,7 +16,10 @@
  */
 
 import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions, FormFields, DropdownPage } from '@alfresco/adf-testing';
+import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../core/utils/browser-actions';
+import { DropdownPage } from '../../material/pages/dropdown.page';
+import { FormFields } from '../../core/pages/form/form-fields';
 
 export class StartProcessPage {
 
@@ -28,7 +31,7 @@ export class StartProcessPage {
     startProcessButton: ElementFinder = element(by.css('button[data-automation-id="btn-start"]'));
     noProcess: ElementFinder = element(by.id('no-process-message'));
     processDefinition: ElementFinder = element(by.css('input[id="processDefinitionName"]'));
-    processDefinitionOptionsPanel: ElementFinder = element(by.css('div[class*="processDefinitionOptions"]'));
+    processDefinitionOptionsPanel: ElementFinder = element(by.css('div[class*="mat-autocomplete-panel"]'));
 
     dropdownPage = new DropdownPage();
 

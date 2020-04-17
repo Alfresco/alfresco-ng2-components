@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';

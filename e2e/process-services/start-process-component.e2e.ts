@@ -19,10 +19,11 @@ import CONSTANTS = require('../util/constants');
 import {
     FileBrowserUtil,
     LoginPage, SelectAppsDialog,
-    StartProcessDialog,
+    ProcessInstanceTasksPage,
     StringUtil,
     Widget,
-    ApplicationsUtil
+    ApplicationsUtil,
+    StartProcessPage
 } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
@@ -35,7 +36,6 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/process-detail
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { UsersActions } from '../actions/users.actions';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -50,7 +50,7 @@ describe('Start Process Component', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
-    const startProcessDialog = new StartProcessDialog();
+    const processInstanceTasksPage = new ProcessInstanceTasksPage();
     const contentServicesPage = new ContentServicesPage();
     const selectAppsDialog = new SelectAppsDialog();
     const widget = new Widget();
@@ -469,12 +469,12 @@ describe('Start Process Component', () => {
 
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('DateFormProcess');
-                await processDetailsPage.clickOnStartForm();
-                await startProcessDialog.checkStartProcessDialogIsDisplayed();
-                await expect(await startProcessDialog.getTitle()).toBe('Start Form');
+                await processInstanceTasksPage.clickOnStartForm();
+                await processInstanceTasksPage.checkStartProcessDialogIsDisplayed();
+                await expect(await processInstanceTasksPage.getTitle()).toBe('Start Form');
                 await expect(await (await widget.dateWidget()).getDateInput('testdate')).toBe('15-7-2019');
-                await startProcessDialog.clickCloseButton();
-                await startProcessDialog.checkStartProcessDialogIsNotDisplayed();
+                await processInstanceTasksPage.clickCloseButton();
+                await processInstanceTasksPage.checkStartProcessDialogIsNotDisplayed();
             });
         });
     });
