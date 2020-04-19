@@ -14,7 +14,7 @@ require('ts-node').register({
 const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
 
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
-const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
+const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
 
 const projectRoot = path.resolve(__dirname);
@@ -234,18 +234,10 @@ exports.config = {
                 hostEcm: TestConfig.adf_acs.host
             });
 
-            alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
             try {
                 await uploadScreenshot(alfrescoJsApi, retryCount);
             } catch (error) {
                 console.error('Error saving screenshot', error);
-            }
-
-            try {
-                await saveReport(alfrescoJsApi, retryCount);
-            } catch (error) {
-                console.error('Error saving Report', error);
             }
         }
 
