@@ -81,6 +81,5 @@ async function cleanReportFolder() {
 
 module.exports = {
     uploadScreenshot: uploadScreenshot,
-    cleanReportFolder: cleanReportFolder,
-    saveReport: saveReport
+    cleanReportFolder: cleanReportFolder
 };
