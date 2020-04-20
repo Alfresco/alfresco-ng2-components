@@ -140,7 +140,7 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onProcessFilterAction(filterAction: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
+        this.cloudLayoutService.setCurrentProcessFilterParam({ index: 0 });
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filterAction.filter });
         }

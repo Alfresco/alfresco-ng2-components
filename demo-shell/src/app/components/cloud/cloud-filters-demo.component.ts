@@ -69,9 +69,7 @@ export class CloudFiltersDemoComponent implements OnInit {
     }
 
     onProcessFilterSelected(filter) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({id: filter && filter.id ? filter.id : ''});
-        const currentFilter = Object.assign({}, filter);
-        this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: currentFilter });
+        this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filter });
     }
 
     onTaskFilterOpen(): boolean {
