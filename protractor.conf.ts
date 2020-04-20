@@ -2,7 +2,6 @@ const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
-const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const SmartRunner = require('protractor-smartrunner');
@@ -14,7 +13,7 @@ require('ts-node').register({
 const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
 
 const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
-const { uploadScreenshot, saveReport, cleanReportFolder } = require('./e2e/protractor/save-remote');
+const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
 
 const projectRoot = path.resolve(__dirname);
@@ -228,24 +227,10 @@ exports.config = {
             if (argv.retry) {
                 retryCount = ++argv.retry;
             }
-
-            let alfrescoJsApi = new AlfrescoApi({
-                provider: 'ECM',
-                hostEcm: TestConfig.adf_acs.host
-            });
-
-            alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
-
             try {
-                await uploadScreenshot(alfrescoJsApi, retryCount);
+                await uploadScreenshot(retryCount);
             } catch (error) {
                 console.error('Error saving screenshot', error);
-            }
-
-            try {
-                await saveReport(alfrescoJsApi, retryCount);
-            } catch (error) {
-                console.error('Error saving Report', error);
             }
         }
 

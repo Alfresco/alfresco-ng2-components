@@ -188,7 +188,6 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "protractor": "^5.4.2",
     "protractor-browser-logs": "1.0.456",
-    "protractor-html-reporter-2": "1.0.4",
     "protractor-retry": "^1.2.9",
     "protractor-smartrunner": "^0.1.1",
     "puppeteer": "1.17.0",

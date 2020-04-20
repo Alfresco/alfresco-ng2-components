@@ -75,7 +75,6 @@ describe('Task Header cloud component', () => {
     let groupIdentityService: GroupIdentityService;
 
     beforeAll(async () => {
-
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
@@ -183,7 +182,7 @@ describe('Task Header cloud component', () => {
             .toEqual(isValueInvalid(subTask.entry.parentTaskId) ? '' : subTask.entry.parentTaskId);
     });
 
-    it('[C309698] - Should validate the Priority field', async () => {
+    it('[C309698] Should validate the Priority field', async () => {
         const myTaskName = `Test_C309698_${StringUtil.generateRandomString()}`;
         await tasksCloudDemoPage.clickStartNewTaskButton();
         await startTaskCloudPage.addName(myTaskName);
@@ -206,7 +205,7 @@ describe('Task Header cloud component', () => {
         await expect(currentValue).toBe('600');
     });
 
-    it('[C309698] - Should validate the Priority field', async () => {
+    it('[C309698] Should validate the Priority field', async () => {
         await tasksCloudDemoPage.editTaskFilterCloud.openFilter();
         await tasksCloudDemoPage.editTaskFilterCloud.setStatusFilterDropDown('ALL');
         await tasksCloudDemoPage.editTaskFilterCloud.clearAssignee();
@@ -219,7 +218,7 @@ describe('Task Header cloud component', () => {
         await taskHeaderCloudPage.statusCardTextItem.checkElementIsReadonly();
     });
 
-    it('[C291991] - Should be able to assign a task only to the users that have access to the selected app', async () => {
+    it('[C291991] Should be able to assign a task only to the users that have access to the selected app', async () => {
         await tasksCloudDemoPage.clickStartNewTaskButton();
         const currentAssignee = await peopleCloudComponentPage.getChipAssignee();
         await expect(currentAssignee).toContain(testUser.firstName, 'Invalid Assignee first name set for the new task');

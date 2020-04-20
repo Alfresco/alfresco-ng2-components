@@ -118,7 +118,7 @@ describe('Delete Directive', () => {
             await contentServicesPage.waitForTableBody();
         });
 
-        it('[C260188] - Delete multiple content', async () => {
+        it('[C260188] Delete multiple content', async () => {
             await contentListPage.selectRowWithKeyboard(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
             await contentListPage.selectRowWithKeyboard(file0BytesModel.name);
@@ -140,7 +140,7 @@ describe('Delete Directive', () => {
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', folderSecond.name);
         });
 
-        it('[C260192] - Delete file and folder with hierarchy', async () => {
+        it('[C260192] Delete file and folder with hierarchy', async () => {
             await contentListPage.selectRowWithKeyboard(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', txtFileModel.name);
             await contentListPage.selectRowWithKeyboard(folderInfo.name);
@@ -150,7 +150,7 @@ describe('Delete Directive', () => {
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', folderInfo.name);
         });
 
-        it('[C260193] - Delete file when different selections are set', async () => {
+        it('[C260193] Delete file when different selections are set', async () => {
             await contentServicesPage.chooseSelectionMode('None');
             await contentListPage.selectRow(txtFileModel.name);
             await contentListPage.dataTable.checkRowIsNotSelected('Display name', txtFileModel.name);
@@ -192,7 +192,7 @@ describe('Delete Directive', () => {
             await contentServicesPage.waitForTableBody();
         });
 
-        it('[C260191] - Delete content selected from different pages', async () => {
+        it('[C260191] Delete content selected from different pages', async () => {
             await contentServicesPage.sortByName('ASC');
             await paginationPage.selectItemsPerPage('5');
 
@@ -252,7 +252,7 @@ describe('Delete Directive', () => {
             } catch (error) {}
         });
 
-        it('[C216426] - Delete file without delete permissions', async () => {
+        it('[C216426] Delete file without delete permissions', async () => {
             await contentListPage.selectRowWithKeyboard(filePdf.entry.name);
             await contentListPage.dataTable.checkRowIsSelected('Display name', filePdf.entry.name);
             await contentServicesPage.checkToolbarDeleteIsDisabled();

@@ -12,6 +12,7 @@ const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 const PROXY = process.env.PROXY_HOST_ADF;
 const LOG = process.env.LOG;
+
 const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
 const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
 const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || "alfresco";
@@ -19,10 +20,16 @@ const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || "alfresco";
 const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
 const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
+const IDENTITY_USERNAME_ADF = process.env.IDENTITY_USERNAME_ADF || "defaultuser";
+const IDENTITY_PASSWORD_ADF = process.env.IDENTITY_PASSWORD_ADF;
 
-const USERNAME_ADF = process.env.USERNAME_ADF || process.env.IDENTITY_USERNAME_ADF || "defaultuser";
-const PASSWORD_ADF = process.env.PASSWORD_ADF || process.env.IDENTITY_PASSWORD_ADF || "defaultuserpassword";
+const USERNAME_ADF = process.env.USERNAME_ADF || "defaultuser";
+const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
 const EMAIL = process.env.EMAIL_ADF || USERNAME_ADF;
+
+const SCREENSHOT_URL = process.env.SCREENSHOT_URL || process.env.URL_HOST_ADF;
+const SCREENSHOT_PASSWORD = process.env.SCREENSHOT_PASSWORD || process.env.PASSWORD_ADF;
+const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERNAME_ADF;
 
 const appConfig = {
     "bpmHost": BPM_HOST,
@@ -71,13 +78,19 @@ module.exports = {
     },
 
     identityUser: {
-        email: USERNAME_ADF,
-        password: PASSWORD_ADF
+        email: IDENTITY_USERNAME_ADF,
+        password: IDENTITY_PASSWORD_ADF
     },
 
     hrUser: {
         email: process.env.HR_USER,
         password: process.env.HR_USER_PASSWORD
+    },
+
+    screenshot: {
+        url: SCREENSHOT_URL,
+        password: SCREENSHOT_PASSWORD,
+        username: SCREENSHOT_USERNAME
     },
 
     adf: {
