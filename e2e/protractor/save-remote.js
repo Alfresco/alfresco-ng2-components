@@ -3,6 +3,7 @@ const rimraf = require('rimraf');
 const path = require('path');
 const projectRoot = path.resolve(__dirname, '../../');
 const TestConfig = require('../test.config');
+const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 
 function buildNumber() {
     let buildNumber = process.env.TRAVIS_BUILD_NUMBER;
@@ -18,7 +19,12 @@ async function uploadScreenshot(alfrescoJsApi, retryCount) {
 
     if (files && files.length > 0) {
 
-        alfrescoJsApi.login(TestConfig.adf.adminEmail, TestConfig.adf.adminPassword);
+        let alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: TestConfig.screenshot.url
+        });
+
+        await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
 
         let folder;
 

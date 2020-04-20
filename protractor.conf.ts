@@ -2,7 +2,6 @@ const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
-const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 const TestConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const SmartRunner = require('protractor-smartrunner');
@@ -228,14 +227,8 @@ exports.config = {
             if (argv.retry) {
                 retryCount = ++argv.retry;
             }
-
-            let alfrescoJsApi = new AlfrescoApi({
-                provider: 'ECM',
-                hostEcm: TestConfig.adf_acs.host
-            });
-
             try {
-                await uploadScreenshot(alfrescoJsApi, retryCount);
+                await uploadScreenshot(retryCount);
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }

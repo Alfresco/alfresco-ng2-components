@@ -35,7 +35,7 @@ show_help() {
     echo "-m --maxInstances max instances parallel for tests"
     echo "-log or --log print all the browser log"
     echo "-db or --debug run the debugger"
-    echo "-ud build and run dist"
+    echo "-ud run dist"
     echo "-vjsapi install different version from npm of JS-API defined in the package.json"
     echo "-h or --help"
 }

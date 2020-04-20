@@ -35,7 +35,7 @@ export class CardTextItemPage {
     }
 
     async getFieldValue(): Promise<string> {
-        const fieldElement = this.rootElement.element(this.field);
+        const fieldElement = this.rootElement.all(this.field).first();
         return BrowserActions.getText(fieldElement);
     }
 
