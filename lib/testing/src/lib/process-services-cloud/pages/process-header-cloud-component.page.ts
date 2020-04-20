@@ -20,29 +20,29 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessHeaderCloudPage {
 
-    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span span')).first();
-    nameField: ElementFinder = element.all(by.css('span[data-automation-id*="name"] span span')).first();
-    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span span'));
-    initiatorField: ElementFinder = element(by.css('span[data-automation-id*="initiator"] span span'));
-    startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span span')).first();
-    lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span span')).first();
-    parentIdField: ElementFinder = element(by.css('span[data-automation-id*="parentId"] span span'));
-    businessKeyField: ElementFinder = element.all(by.css('span[data-automation-id*="businessKey"] span span')).first();
+    idField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
+    nameField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-name"]')).first();
+    statusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
+    initiatorField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-initiator"]'));
+    startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
+    lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
+    parentIdField: ElementFinder = element(by.css('[data-automation-id*="parentId"]'));
+    businessKeyField: ElementFinder = element.all(by.css('[data-automation-id*="businessKey"]')).first();
 
     async getId(): Promise<string> {
-        return BrowserActions.getText(this.idField);
+        return BrowserActions.getInputValue(this.idField);
     }
 
     async getName(): Promise<string> {
-        return BrowserActions.getText(this.nameField);
+        return BrowserActions.getInputValue(this.nameField);
     }
 
     async getStatus(): Promise<string> {
-        return BrowserActions.getText(this.statusField);
+        return BrowserActions.getInputValue(this.statusField);
     }
 
     async getInitiator(): Promise<string> {
-        return BrowserActions.getText(this.initiatorField);
+        return BrowserActions.getInputValue(this.initiatorField);
     }
 
     async getStartDate(): Promise<string> {
@@ -54,11 +54,11 @@ export class ProcessHeaderCloudPage {
     }
 
     async getParentId(): Promise<string> {
-        return BrowserActions.getText(this.parentIdField);
+        return BrowserActions.getInputValue(this.parentIdField);
     }
 
     async getBusinessKey(): Promise<string> {
-        return BrowserActions.getText(this.businessKeyField);
+        return BrowserActions.getInputValue(this.businessKeyField);
     }
 
 }

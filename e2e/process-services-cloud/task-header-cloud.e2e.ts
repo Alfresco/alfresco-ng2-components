@@ -209,14 +209,12 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(myTaskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
-        await taskHeaderCloudPage.priorityCardTextItem.clickOnEditButton();
         await taskHeaderCloudPage.priorityCardTextItem.enterTextField('$$%£W21');
-        await taskHeaderCloudPage.priorityCardTextItem.clickOnSaveButton();
         const errorMessage = await taskHeaderCloudPage.priorityCardTextItem.getErrorMessage();
         await expect(errorMessage).toBe('Enter a different value');
 
         await taskHeaderCloudPage.priorityCardTextItem.enterTextField('600');
-        await taskHeaderCloudPage.priorityCardTextItem.clickOnSaveButton();
+        await browser.sleep(500);
         const currentValue = await taskHeaderCloudPage.priorityCardTextItem.getFieldValue();
         await expect(currentValue).toBe('600');
     });
