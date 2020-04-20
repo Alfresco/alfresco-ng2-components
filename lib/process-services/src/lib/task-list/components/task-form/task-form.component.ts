@@ -23,7 +23,8 @@ import {
   FormFieldValidator,
   FormOutcomeEvent,
   AuthenticationService,
-  TranslationService
+  TranslationService,
+  FormFieldModel
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
@@ -69,6 +70,10 @@ export class TaskFormComponent implements OnInit {
   @Input()
   showFormRefreshButton: boolean = true;
 
+  /** Toggle rendering of the validation icon next to the form title. */
+  @Input()
+  showFormValidationIcon: boolean = true;
+
   /** Field validators for use with the form. */
   @Input()
   fieldValidators: FormFieldValidator[] = [];
@@ -93,6 +98,10 @@ export class TaskFormComponent implements OnInit {
   @Output()
   formLoaded = new EventEmitter<FormModel>();
 
+  /** Emitted when the form associated with the form task is attached. */
+  @Output()
+  showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+
   /** Emitted when any outcome is executed. Default behaviour can be prevented
    * via `event.preventDefault()`.
    */
@@ -100,18 +109,18 @@ export class TaskFormComponent implements OnInit {
   executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
   @Output()
-  cancel = new EventEmitter<void>();
+  completed = new EventEmitter<void>();
 
+  /** Emitted when the supplied form values have a validation error. */
   @Output()
-  complete = new EventEmitter<void>();
-
-    /** Emitted when the form associated with the form task is attached. */
-  @Output()
-  showAttachForm: EventEmitter<void> = new EventEmitter<void>();
+  formError: EventEmitter<FormFieldModel[]> = new EventEmitter<FormFieldModel[]>();
 
   /** Emitted when an error occurs. */
   @Output()
   error = new EventEmitter<any>();
+
+  @Output()
+  cancel = new EventEmitter<void>();
 
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
@@ -156,7 +165,11 @@ export class TaskFormComponent implements OnInit {
             }
 
             const endDate: any = res.endDate;
-            this.readOnlyForm = endDate ? !!(endDate && !isNaN(endDate.getTime())) : this.readOnlyForm;
+            if (endDate && !isNaN(endDate.getTime())) {
+              this.internalReadOnlyForm = true;
+            } else {
+                this.internalReadOnlyForm = this.readOnlyForm;
+            }
             this.loading = false;
         });
     }
@@ -183,11 +196,17 @@ export class TaskFormComponent implements OnInit {
   }
 
   onFormError(error: any) {
+    this.formError.emit(error);
+  }
+
+  onError(error: any) {
     this.error.emit(error);
   }
 
   onCompleteTask() {
-    this.taskListService.completeTask(this.taskDetails.id).subscribe(() => this.complete.emit());
+    this.taskListService.completeTask(this.taskDetails.id).subscribe(
+      () => this.completed.emit(),
+      (error) => this.error.emit(error));
   }
 
   onCancel() {

@@ -2,6 +2,7 @@
   <adf-form *ngIf="hasFormKey(); else withoutForm"
     [taskId]="taskDetails?.id"
     [showTitle]="showFormTitle"
+    [showValidationIcon]="showFormValidationIcon"
     [showRefreshButton]="showFormRefreshButton"
     [showCompleteButton]="showFormCompleteButton"
     [disableCompleteButton]="!isCompleteButtonEnabled()"
@@ -12,7 +13,8 @@
     (formCompleted)='onFormCompleted($event)'
     (formContentClicked)='onFormContentClick($event)'
     (formLoaded)='onFormLoaded($event)'
-    (error)='onFormError($event)'
+    (formError)='onFormError($event)'
+    (error)='onError($event)'
     (executeOutcome)='onFormExecuteOutcome($event)'>
   </adf-form>
   <ng-template #withoutForm>

@@ -32,7 +32,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskListService } from '../../services/tasklist.service';
 import { TranslateStore } from '@ngx-translate/core';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import {
     taskFormMock,
     taskDetailsMock,
@@ -55,6 +55,7 @@ describe('TaskFormComponent', () => {
     let completeTaskSpy: jasmine.Spy;
     let element: HTMLElement;
     let authService: AuthenticationService;
+    let getBpmLoggedUserSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -81,7 +82,7 @@ describe('TaskFormComponent', () => {
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
         authService = TestBed.get(AuthenticationService);
-        spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
+        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
     });
 
     afterEach(async() => {
@@ -99,6 +100,8 @@ describe('TaskFormComponent', () => {
 
         it('Should be able to display task form', async () => {
             component.taskId = '123';
+            taskDetailsMock.formKey = '4';
+            component.currentLoggedUser = taskDetailsMock.assignee;
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
             fixture.detectChanges();
             await fixture.whenStable();
@@ -113,22 +116,23 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should be able to complete assigned task', async () => {
-            component.taskId = '123';
+            getBpmLoggedUserSpy.and.returnValue(of({ id: 1001, firstName: 'Wilbur', lastName: 'Adams', email: 'wilbur@app.activiti.com' }));
             getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
+            const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
+            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
+            component.taskId = '123';
+            component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
-            const activitFormSelector = element.querySelector('adf-form');
-            const inputFieldOne = fixture.debugElement.nativeElement.querySelector('#text1');
-            const inputFieldTwo = fixture.debugElement.nativeElement.querySelector('#text2');
-            const inputFieldThree = fixture.debugElement.nativeElement.querySelector('#text3');
-            expect(activitFormSelector).toBeDefined();
-            expect(inputFieldOne['disabled']).toEqual(false);
-            expect(inputFieldTwo['disabled']).toEqual(false);
-            expect(inputFieldThree['disabled']).toEqual(false);
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
+            expect(completeButton['disabled']).toEqual(false);
+            completeButton.click();
+            expect(completeTaskFormSpy).toHaveBeenCalled();
+            expect(formCompletedSpy).toHaveBeenCalled();
         });
 
         it('Should be able to complete the task as a process initiator', async () => {
-            const emitSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
+            const formCompletedSpy: jasmine.Spy = spyOn(component.formCompleted, 'emit');
             const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
             getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
             component.taskId = '123';
@@ -140,8 +144,25 @@ describe('TaskFormComponent', () => {
             expect(completeButton['disabled']).toEqual(false);
             completeButton.click();
             expect(completeTaskFormSpy).toHaveBeenCalled();
-            expect(emitSpy).toHaveBeenCalled();
+            expect(formCompletedSpy).toHaveBeenCalled();
         });
+
+        it('Should emit error event in case form complete service fails', async () => {
+            const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
+            const completeTaskFormSpy = spyOn(formService, 'completeTaskForm').and.returnValue(throwError({message: 'servce failed'}));
+            getTaskDetailsSpy.and.returnValue(of(initiatorCanCompleteTaskDetailsMock));
+            component.taskId = '123';
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const activitFormSelector = element.querySelector('adf-form');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
+            expect(activitFormSelector).toBeDefined();
+            expect(completeButton['disabled']).toEqual(false);
+            completeButton.click();
+            expect(completeTaskFormSpy).toHaveBeenCalled();
+            expect(errorSpy).toHaveBeenCalled();
+        });
+
     });
 
     describe('change detection', () => {
@@ -224,7 +245,7 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should emit a complete event when complete button clicked and task completed', () => {
-            const completeSpy: jasmine.Spy = spyOn(component.complete, 'emit');
+            const completeSpy: jasmine.Spy = spyOn(component.completed, 'emit');
             component.onCompleteTask();
             expect(completeSpy).toHaveBeenCalled();
         });
@@ -236,8 +257,14 @@ describe('TaskFormComponent', () => {
         });
 
         it('Should emit an error event when form error occurs', () => {
-            const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
+            const formErrorSpy: jasmine.Spy = spyOn(component.formError, 'emit');
             component.onFormError({});
+            expect(formErrorSpy).toHaveBeenCalled();
+        });
+
+        it('Should emit an error event when form services fails', () => {
+            const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
+            component.onError({});
             expect(errorSpy).toHaveBeenCalled();
         });
     });
@@ -328,6 +355,20 @@ describe('TaskFormComponent', () => {
             const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-complete');
             completeButtonElement.click();
             expect(completeTaskSpy).toHaveBeenCalledWith('91');
+        });
+
+        it('Should emit error event in case complete task service fails', async () => {
+            const errorSpy: jasmine.Spy = spyOn(component.error, 'emit');
+            completeTaskSpy.and.returnValue(throwError({message: 'servce failed'}));
+            component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const activitFormSelector = element.querySelector('adf-form');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-complete');
+            expect(activitFormSelector).toBeDefined();
+            expect(completeButtonElement['disabled']).toEqual(false);
+            completeButtonElement.click();
+            expect(errorSpy).toHaveBeenCalled();
         });
 
         it('Should be able to emit cancel event on task with no-form when cancel button is clicked', async () => {
