@@ -78,10 +78,6 @@ export class TaskFormComponent implements OnInit {
   @Input()
   fieldValidators: FormFieldValidator[] = [];
 
-  /** Toggles rendering of the `Complete` button. */
-  @Input()
-  showAttacheFormButton: boolean = true;
-
   /** Emitted when the form is submitted with the `Save` or custom outcomes. */
   @Output()
   formSaved = new EventEmitter<FormModel>();
@@ -108,6 +104,7 @@ export class TaskFormComponent implements OnInit {
   @Output()
   executeOutcome = new EventEmitter<FormOutcomeEvent>();
 
+  /** Emitted when the form associated with the task is completed. */
   @Output()
   completed = new EventEmitter<void>();
 
@@ -119,6 +116,7 @@ export class TaskFormComponent implements OnInit {
   @Output()
   error = new EventEmitter<any>();
 
+  /** Emitted when the "Cancel" button is clicked. */
   @Output()
   cancel = new EventEmitter<void>();
 

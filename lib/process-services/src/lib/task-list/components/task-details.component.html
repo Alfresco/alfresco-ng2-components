@@ -26,7 +26,6 @@
                           [taskId]="taskDetails.id"
                           [showFormTitle]="showFormTitle"
                           [showFormRefreshButton]="showFormRefreshButton"
-                          [readOnlyForm]="internalReadOnlyForm"
                           [showCancelButton]="true"
                           [fieldValidators]="fieldValidators"
                           (formSaved)='onFormSaved($event)'
@@ -36,7 +35,8 @@
                           (completed)="onComplete()"
                           (showAttachForm)="onShowAttachForm()"
                           (executeOutcome)='onFormExecuteOutcome($event)'
-                          (error)='onFormError($event)' #activitiTaskForm>
+                          (formError)="onFormError($event)"
+                          (error)='onError($event)' #activitiTaskForm>
                 </adf-task-form>
                 <adf-attach-form *ngIf="isShowAttachForm()"
                                  [taskId]="taskDetails.id"

@@ -376,6 +376,11 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         this.error.emit(error);
     }
 
+    onError(error: any): void {
+        this.errorDialogRef = this.dialog.open(this.errorDialog, { width: '500px' });
+        this.error.emit(error);
+    }
+
     onFormExecuteOutcome(event: FormOutcomeEvent): void {
         this.executeOutcome.emit(event);
     }

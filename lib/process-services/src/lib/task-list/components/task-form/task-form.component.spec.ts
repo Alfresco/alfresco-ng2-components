@@ -297,8 +297,8 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('.adf-no-task-form-complete');
-            const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-cancel');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
+            const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             const completedFormMessage = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__title');
             const subMessage = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__subtitle');
             expect(completeButtonElement).toBeNull();
@@ -312,7 +312,7 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(completedTaskDetailsMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('.adf-no-task-form-complete');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
             expect(completeButtonElement).toBeNull();
         });
     });
@@ -328,11 +328,11 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('.adf-no-task-form-complete');
-            const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-cancel');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
+            const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             const completedFormMessage = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__title');
             const subMessage = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__subtitle');
-            expect(completeButtonElement).toBeNull();
+            expect(completeButtonElement).not.toBeNull();
             expect(cancelButtonElement).not.toBeNull();
             expect(completedFormMessage.innerText).toContain('ADF_TASK_FORM.EMPTY_FORM.TITLE');
             expect(subMessage.innerText).toContain('ADF_TASK_FORM.EMPTY_FORM.SUBTITLE');
@@ -342,7 +342,7 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-complete');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
             expect(completeButtonElement).not.toBeNull();
             expect(completeButtonElement['disabled']).toEqual(false);
         });
@@ -352,7 +352,7 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-complete');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
             completeButtonElement.click();
             expect(completeTaskSpy).toHaveBeenCalledWith('91');
         });
@@ -364,7 +364,7 @@ describe('TaskFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const activitFormSelector = element.querySelector('adf-form');
-            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-complete');
+            const completeButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-complete-button');
             expect(activitFormSelector).toBeDefined();
             expect(completeButtonElement['disabled']).toEqual(false);
             completeButtonElement.click();
@@ -377,7 +377,7 @@ describe('TaskFormComponent', () => {
             component.taskDetails = new TaskDetailsModel(taskDetailsWithOutFormMock);
             fixture.detectChanges();
             await fixture.whenStable();
-            const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-task-form-cancel');
+            const cancelButtonElement = fixture.debugElement.nativeElement.querySelector('#adf-no-form-cancel-button');
             cancelButtonElement.click();
             expect(cancelSpy).toHaveBeenCalled();
         });
