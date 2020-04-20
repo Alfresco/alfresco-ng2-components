@@ -8,6 +8,7 @@
 @import './../task/start-task/components/start-task-cloud.component.scss';
 @import './../task/task-filters/components/edit-task-filter-cloud.component.scss';
 @import './../task/task-filters/components/task-filters-cloud.component.scss';
+@import './../process/start-process/components/start-process-cloud.component';
 
 
 @mixin adf-process-services-cloud-theme($theme) {
@@ -21,4 +22,5 @@
     @include adf-cloud-people-theme($theme);
     @include adf-cloud-group-theme($theme);
     @include adf-cloud-task-form-theme($theme);
+    @include adf-cloud-start-service-theme($theme);
 }

@@ -34,7 +34,6 @@ import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.mode
 @Component({
     selector: 'adf-cloud-start-process',
     templateUrl: './start-process-cloud.component.html',
-    styleUrls: ['./start-process-cloud.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy {
