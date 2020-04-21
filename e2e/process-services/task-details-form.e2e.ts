@@ -27,11 +27,13 @@ import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page
 import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
 import CONSTANTS = require('../util/constants');
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
+    const attachFormPage = new AttachFormPage();
     const taskPage = new TasksPage();
     const filtersPage = new FiltersPage();
     const widget = new Widget();
@@ -101,25 +103,27 @@ describe('Task Details - Form', () => {
         await tasksListPage.selectRow(task.name);
         await taskDetailsPage.clickForm();
 
-        await taskDetailsPage.checkAttachFormDropdownIsDisplayed();
-        await taskDetailsPage.checkAttachFormButtonIsDisabled();
+        await attachFormPage.checkFormDropdownIsDisplayed();
+        await attachFormPage.checkAttachFormButtonIsDisabled();
 
-        await taskDetailsPage.selectAttachFormOption(newForm.name);
+        await attachFormPage.selectAttachFormOption(newForm.name);
         await taskDetailsPage.checkSelectedForm(newForm.name);
-        await taskDetailsPage.checkAttachFormButtonIsEnabled();
+        await attachFormPage.checkAttachFormButtonIsDisplayed();
 
-        await taskDetailsPage.checkCancelAttachFormIsDisplayed();
-        await taskDetailsPage.clickCancelAttachForm();
+        await attachFormPage.checkCancelButtonIsDisplayed();
+        await attachFormPage.clickCancelButton();
 
         await taskDetailsPage.checkFormIsAttached(attachedForm.name);
 
         await taskDetailsPage.clickForm();
 
-        await taskDetailsPage.checkAttachFormDropdownIsDisplayed();
-        await taskDetailsPage.selectAttachFormOption(newForm.name);
+        await attachFormPage.checkFormDropdownIsDisplayed();
+        await attachFormPage.checkAttachFormButtonIsDisabled();
+        await attachFormPage.selectAttachFormOption(newForm.name);
+        await taskDetailsPage.checkSelectedForm(newForm.name);
 
-        await taskDetailsPage.checkAttachFormButtonIsDisplayed();
-        await taskDetailsPage.clickAttachFormButton();
+        await attachFormPage.checkAttachFormButtonIsDisplayed();
+        await attachFormPage.clickAttachFormButton();
 
         await taskDetailsPage.checkFormIsAttached(newForm.name);
     });
