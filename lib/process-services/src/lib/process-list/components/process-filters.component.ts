@@ -164,9 +164,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
                 }
             });
         }
-        if (this.isCurrentFilterEmpty()) {
-            this.selectDefaultTaskFilter();
-        }
     }
 
     /**
@@ -206,10 +203,6 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
     private resetFilter() {
         this.filters = [];
         this.currentFilter = undefined;
-    }
-
-    private isCurrentFilterEmpty(): boolean {
-        return this.currentFilter === undefined || null;
     }
 
     /**

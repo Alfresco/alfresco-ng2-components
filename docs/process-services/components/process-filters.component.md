@@ -36,7 +36,7 @@ Collection of criteria used to filter process instances, which may be customized
 | ---- | ---- | ------------- | ----------- |
 | appId | `number` |  | Display filters available to the current user for the application with the specified ID. |
 | appName | `string` |  | Display filters available to the current user for the application with the specified name. |
-| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match then the default one (ie, the first filter in the list) is selected. |
+| filterParam | [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) |  | The parameters to filter the task filter. If there is no match no filter is selected by default. |
 | showIcon | `boolean` | true | Toggle to show or hide the filter's icon. |
 
 ### Events

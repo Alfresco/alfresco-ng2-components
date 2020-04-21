@@ -37,6 +37,7 @@ import { Pagination } from '@alfresco/js-api';
 export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
 
     public static ACTION_SAVE_AS = 'saveAs';
+    public static ACTION_DELETE = 'delete';
     static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
     @ViewChild('processCloud')
@@ -140,7 +141,12 @@ export class ProcessesCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onProcessFilterAction(filterAction: any) {
-        this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
+        if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_DELETE) {
+            this.cloudLayoutService.setCurrentProcessFilterParam({ index: 0 });
+        } else {
+            this.cloudLayoutService.setCurrentProcessFilterParam({ id: filterAction.filter.id });
+        }
+
         if (filterAction.actionType === ProcessesCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.appName}/processes/`], { queryParams: filterAction.filter });
         }

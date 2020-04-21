@@ -30,6 +30,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TasksCloudDemoComponent implements OnInit, OnDestroy {
 
     public static ACTION_SAVE_AS = 'saveAs';
+    public static ACTION_DELETE = 'delete';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
     @ViewChild('taskCloud')
@@ -133,7 +134,13 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     }
 
     onTaskFilterAction(filterAction: any) {
-        this.cloudLayoutService.setCurrentTaskFilterParam({ id: filterAction.filter.id });
+
+        if (filterAction.actionType === TasksCloudDemoComponent.ACTION_DELETE) {
+            this.cloudLayoutService.setCurrentTaskFilterParam({ index: 0 });
+        } else {
+            this.cloudLayoutService.setCurrentTaskFilterParam({ id: filterAction.filter.id });
+        }
+
         if (filterAction.actionType === TasksCloudDemoComponent.ACTION_SAVE_AS) {
             this.router.navigate([`/cloud/${this.appName}/tasks/`], { queryParams: filterAction.filter });
         }

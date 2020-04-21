@@ -78,7 +78,7 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
         if (appName && appName.currentValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilter(filter.currentValue);
+            this.selectFilterAndEmit(filter.currentValue);
         }
     }
 
@@ -112,9 +112,6 @@ export class ProcessFiltersCloudComponent implements OnInit, OnChanges, OnDestro
                 (paramFilter.key && (paramFilter.key === filter.key)) ||
                 paramFilter.index === index;
             });
-        }
-        if (!this.currentFilter) {
-            this.selectDefaultProcessFilter();
         }
     }
 

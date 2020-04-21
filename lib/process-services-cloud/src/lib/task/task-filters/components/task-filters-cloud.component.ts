@@ -76,7 +76,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
         if (appName && appName.currentValue !== appName.previousValue) {
             this.getFilters(appName.currentValue);
         } else if (filter && filter.currentValue !== filter.previousValue) {
-            this.selectFilter(filter.currentValue);
+            this.selectFilterAndEmit(filter.currentValue);
         }
     }
 
@@ -113,9 +113,6 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
                 (paramFilter.name &&
                     (paramFilter.name.toLocaleLowerCase() === this.translationService.instant(filter.name).toLocaleLowerCase())
                 ));
-        }
-        if (!this.currentFilter) {
-            this.selectDefaultTaskFilter();
         }
     }
 
