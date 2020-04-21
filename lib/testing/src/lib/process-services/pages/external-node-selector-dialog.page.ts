@@ -26,12 +26,17 @@ export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPag
     txtPassword: ElementFinder = element(by.css('input[id="password"]'));
     loginElement: ElementFinder = element(by.css('[data-automation-id="attach-file-dialog-actions-login"]'));
     title: ElementFinder = element(by.css('[data-automation-id="content-node-selector-title"]'));
-    dialog = element(by.css(`adf-content-node-selector-panel`));
-    header: ElementFinder = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-    searchInputElement: ElementFinder = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-    selectedRow: ElementFinder = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
-    contentList: DocumentListPage = new DocumentListPage(this.dialog);
     moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id="attach-file-dialog-actions-choose"]`));
+
+    constructor() {
+        super();
+        this.dialog = element(by.css(`adf-content-node-selector-panel`));
+        this.contentList = new DocumentListPage(this.dialog);
+        this.dataTable = this.contentList.dataTablePage();
+        this.header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
+        this.searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
+        this.selectedRow = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
+    }
 
     async getTitle(): Promise<string> {
         return this.title.getText();

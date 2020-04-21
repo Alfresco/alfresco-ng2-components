@@ -129,6 +129,11 @@ export class ContentNodeSelectorDialogPage {
         await this.clickMoveCopyButton();
     }
 
+    async searchAndSelectResult(searchText: string, name: string) {
+        await this.typeIntoNodeSelectorSearchField(searchText);
+        await this.clickContentNodeSelectorResult(name);
+    }
+
     contentListPage(): DocumentListPage {
         return this.contentList;
     }

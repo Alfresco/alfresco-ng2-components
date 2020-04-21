@@ -43,11 +43,6 @@ describe('Attach File - Content service', () => {
         hostEcm: browser.params.testConfig.adf_external_acs.host
     });
 
-    const integrationService = new IntegrationService(this.alfrescoJsApi);
-    const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
-    const users = new UsersActions();
-
     const loginPage = new LoginPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
@@ -67,11 +62,17 @@ describe('Attach File - Content service', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     };
-    const externalFile = 'Project Contract.pdf';
+
+    const externalFile = 'Project Overview.ppt';
     const csIntegrations = ['adf dev', 'adf master'];
     let user: User;
 
     beforeAll(async () => {
+        const integrationService = new IntegrationService(this.alfrescoJsApi);
+        const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
+        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        const users = new UsersActions();
+
         await this.alfrescoJsApi.login(adminEmail, adminPassword);
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
@@ -105,7 +106,7 @@ describe('Attach File - Content service', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await taskPage.createTask({ name, formName: 'Upload multiple files' });
+        await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().attachFile(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.location);
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.name);
@@ -114,9 +115,7 @@ describe('Attach File - Content service', () => {
 
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
         await contentNodeSelector.checkDialogIsDisplayed();
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(pdfFileTwo.name);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(pdfFileTwo.name);
-        await contentNodeSelector.clickContentNodeSelectorResult(pdfFileTwo.name);
+        await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
     });
@@ -126,7 +125,7 @@ describe('Attach File - Content service', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await taskPage.createTask({ name, formName: 'Upload multiple files' });
+        await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().attachFile(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.location);
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.name);
@@ -139,7 +138,7 @@ describe('Attach File - Content service', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await taskPage.createTask({ name, formName: 'Upload multiple files' });
+        await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
@@ -148,9 +147,7 @@ describe('Attach File - Content service', () => {
         await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.checkDialogIsDisplayed();
-        await externalNodeSelector.typeIntoNodeSelectorSearchField(externalFile);
-        await externalNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(externalFile);
-        await externalNodeSelector.clickContentNodeSelectorResult(externalFile);
+        await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
     });
@@ -159,15 +156,13 @@ describe('Attach File - Content service', () => {
         const name = 'Attach file - multiple repo';
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        await taskPage.createTask({ name, formName: 'Upload multiple files' });
+        await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
 
         await contentNodeSelector.checkDialogIsDisplayed();
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(pdfFileTwo.name);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(pdfFileTwo.name);
-        await contentNodeSelector.clickContentNodeSelectorResult(pdfFileTwo.name);
+        await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();
 
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
@@ -184,9 +179,7 @@ describe('Attach File - Content service', () => {
         await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.checkDialogIsDisplayed();
-        await externalNodeSelector.typeIntoNodeSelectorSearchField(externalFile);
-        await externalNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(externalFile);
-        await externalNodeSelector.clickContentNodeSelectorResult(externalFile);
+        await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
 

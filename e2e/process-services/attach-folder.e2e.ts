@@ -78,15 +78,11 @@ describe('Attach Folder', () => {
 
         await contentNodeSelector.checkDialogIsDisplayed();
 
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(user.email);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(user.email);
-        await contentNodeSelector.clickContentNodeSelectorResult(user.email);
+        await contentNodeSelector.searchAndSelectResult(user.email, user.email);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(meetingNotes);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(meetingNotes);
-        await contentNodeSelector.clickContentNodeSelectorResult(meetingNotes);
+        await contentNodeSelector.searchAndSelectResult(meetingNotes, meetingNotes);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
 
@@ -96,9 +92,7 @@ describe('Attach Folder', () => {
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
         await contentNodeSelector.checkDialogIsDisplayed();
 
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(user.email);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(user.email);
-        await contentNodeSelector.clickContentNodeSelectorResult(user.email);
+        await contentNodeSelector.searchAndSelectResult(user.email, user.email);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
