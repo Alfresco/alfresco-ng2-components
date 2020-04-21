@@ -55,6 +55,7 @@ import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.servi
 })
 export class AttachFileWidgetComponent extends UploadWidgetComponent implements OnInit, OnDestroy {
 
+    typeId = 'AttachFileWidgetComponent';
     repositoryList = [];
     private tempFilesList = [];
     private onDestroy$ = new Subject<boolean>();

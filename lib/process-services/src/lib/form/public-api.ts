@@ -17,4 +17,5 @@
 
 export * from './form.component';
 export * from './start-form.component';
+export * from './process-form-rendering.service';
 export * from './form.module';

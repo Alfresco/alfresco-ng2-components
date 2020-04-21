@@ -33,6 +33,7 @@ export class PeopleCloudWidgetComponent extends WidgetComponent implements OnIni
 
     private onDestroy$ = new Subject<boolean>();
 
+    typeId = 'PeopleCloudWidgetComponent';
     appName: string;
     roles: string[];
     mode: string;

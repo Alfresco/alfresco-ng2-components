@@ -15,30 +15,98 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
+import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component } from '@angular/core';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
-    FormService, WidgetVisibilityService, NodeService, LogService, ContainerModel, fakeForm, FormRenderingService } from '@alfresco/adf-core';
-
+    FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
+    setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormModule } from './form.module';
+import { ContentWidgetModule } from '../content-widget/content-widget.module';
+import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 describe('FormComponent', () => {
 
-    let formService: FormService;
+    let fixture: ComponentFixture<FormComponent>;
     let formComponent: FormComponent;
+
+    let formService: FormService;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
-    let logService: LogService;
-    let formRenderingService: FormRenderingService;
+    let formRenderingService: ProcessFormRenderingService;
+
+    @Component({
+        selector: 'adf-custom-widget',
+        template: '<div></div>'
+    })
+    class CustomWidget {
+        typeId = 'CustomWidget';
+    }
+
+    @NgModule({
+        declarations: [CustomWidget],
+        exports: [CustomWidget],
+        entryComponents: [CustomWidget]
+    })
+    class CustomUploadModule {}
+
+    setupTestBed({
+        imports: [
+            NoopAnimationsModule,
+            CoreModule.forRoot(),
+            FormModule,
+            ContentWidgetModule,
+            CustomUploadModule
+        ]
+    });
+
+    function buildWidget(type: string, injector: Injector): any {
+        const resolver = formRenderingService.getComponentTypeResolver(type);
+        const widgetType = resolver(null);
+
+        const factoryResolver: ComponentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+        const factory = factoryResolver.resolveComponentFactory(widgetType);
+        const componentRef = factory.create(injector);
+
+        return componentRef.instance;
+    }
 
     beforeEach(() => {
-        logService = new LogService(null);
-        visibilityService = new WidgetVisibilityService(null, logService);
+        visibilityService = TestBed.get(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formService = new FormService(null, null, logService);
-        nodeService = new NodeService(null);
-        formRenderingService = new FormRenderingService();
-        formComponent = new FormComponent(formService, visibilityService, null, nodeService, formRenderingService);
+
+        formService = TestBed.get(FormService);
+        nodeService = TestBed.get(NodeService);
+        formRenderingService = TestBed.get(ProcessFormRenderingService);
+
+        fixture = TestBed.createComponent(FormComponent);
+        formComponent = fixture.componentInstance;
+    });
+
+    it('should register custom [upload] widget', () => {
+        const widget = buildWidget('upload', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('AttachFileWidgetComponent');
+    });
+
+    it('should register custom [select-folder] widget', () => {
+        const widget = buildWidget('select-folder', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('AttachFolderWidgetComponent');
+    });
+
+    it('should allow to replace custom [upload] widget', () => {
+        formRenderingService.setComponentTypeResolver('upload', () => CustomWidget, true);
+
+        const widget = buildWidget('upload', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
+    });
+
+    it('should allow to replace custom [select-folder] widget', () => {
+        formRenderingService.setComponentTypeResolver('select-folder', () => CustomWidget, true);
+
+        const widget = buildWidget('select-folder', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
     });
 
     it('should check form', () => {

@@ -42,6 +42,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     implements OnInit {
     static ACS_SERVICE = 'alfresco-content';
 
+    typeId = 'AttachFileCloudWidgetComponent';
+
     constructor(
         formService: FormService,
         logger: LogService,

@@ -201,15 +201,11 @@ export abstract class FormBaseComponent {
         this.error.emit(err);
     }
 
-    abstract onRefreshClicked();
+    abstract onRefreshClicked(): void;
+    abstract saveTaskForm(): void;
+    abstract completeTaskForm(outcome?: string): void;
 
-    abstract saveTaskForm();
-
-    abstract completeTaskForm(outcome?: string);
-
-    protected abstract onTaskSaved(form: FormModel);
-
-    protected abstract storeFormAsMetadata();
-
-    protected abstract onExecuteOutcome(outcome: FormOutcomeModel);
+    protected abstract onTaskSaved(form: FormModel): void;
+    protected abstract storeFormAsMetadata(): void;
+    protected abstract onExecuteOutcome(outcome: FormOutcomeModel): boolean;
 }

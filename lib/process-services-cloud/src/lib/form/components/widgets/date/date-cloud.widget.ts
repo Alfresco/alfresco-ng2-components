@@ -38,6 +38,7 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter, baseHost, WidgetComponent,
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {
 
+    typeId = 'DateCloudWidgetComponent';
     DATE_FORMAT_CLOUD = 'YYYY-MM-DD';
 
     minDate: Moment;
