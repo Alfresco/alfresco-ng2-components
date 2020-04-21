@@ -175,9 +175,7 @@ describe('Task filters cloud', () => {
                     .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
                 const processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-
                 taskAssigned = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
-
                 await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             });
 
@@ -185,9 +183,6 @@ describe('Task filters cloud', () => {
                 await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
                 await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
                 await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('SUSPENDED');
-
-                await expect(true).toEqual(false);
-
                 await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskAssigned.list.entries[0].entry.name);
             });
         });
