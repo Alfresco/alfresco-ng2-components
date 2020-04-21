@@ -184,7 +184,7 @@ describe('Info Drawer', () => {
 
     it('[C260329] Task with no form', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> { ...taskDetails, formName: '', name });
+        await taskPage.createTask(<any>{ ...taskDetails, formName: '', name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -202,7 +202,7 @@ describe('Info Drawer', () => {
 
     it('[C260320] Assign user to the task', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> { ...taskDetails, formName: app.formName, name });
+        await taskPage.createTask(<any>{ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -308,7 +308,7 @@ describe('Info Drawer', () => {
         await taskPage.taskDetails().updateDescription('');
         await expect(await taskPage.taskDetails().getDescription()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
-        await browser.sleep(500);
+        await browser.sleep(1000);
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
 
         await taskPage.taskDetails().clickCompleteFormTask();
