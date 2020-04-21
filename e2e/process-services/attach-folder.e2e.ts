@@ -56,18 +56,8 @@ describe('Attach Folder', () => {
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs });
 
-        const repository = {
-            name: 'adf dev',
-            tenantId: user.tenantId,
-            alfrescoTenantId: '',
-            repositoryUrl: `${browser.params.testConfig.adf_acs.host}/alfresco`,
-            shareUrl: `${browser.params.testConfig.adf_acs.host}/share`,
-            version: '4.2',
-            useShareConnector: false
-        };
-
-        await integrationService.addCSIntegration(repository);
         await this.alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.loginToAllUsingUserModel(user);
@@ -88,15 +78,11 @@ describe('Attach Folder', () => {
 
         await contentNodeSelector.checkDialogIsDisplayed();
 
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(user.email);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(user.email);
-        await contentNodeSelector.clickContentNodeSelectorResult(user.email);
+        await contentNodeSelector.searchAndSelectResult(user.email, user.email);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(meetingNotes);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(meetingNotes);
-        await contentNodeSelector.clickContentNodeSelectorResult(meetingNotes);
+        await contentNodeSelector.searchAndSelectResult(meetingNotes, meetingNotes);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
 
@@ -106,9 +92,7 @@ describe('Attach Folder', () => {
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
         await contentNodeSelector.checkDialogIsDisplayed();
 
-        await contentNodeSelector.typeIntoNodeSelectorSearchField(user.email);
-        await contentNodeSelector.contentListPage().dataTablePage().checkRowContentIsDisplayed(user.email);
-        await contentNodeSelector.clickContentNodeSelectorResult(user.email);
+        await contentNodeSelector.searchAndSelectResult(user.email, user.email);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 

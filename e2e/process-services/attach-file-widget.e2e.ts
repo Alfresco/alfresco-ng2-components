@@ -23,8 +23,15 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { User } from '../models/APS/user';
 
 describe('Start Task - Task App', () => {
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
+    const users = new UsersActions();
+    const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
 
     const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
@@ -32,41 +39,26 @@ describe('Start Task - Task App', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let processUserModel;
+    let user: User;
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const wordFile = new FileModel({
+        name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        location: browser.params.testConfig.main.rootPath + browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+    });
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        const users = new UsersActions();
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
-        const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await this.alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
-
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
    });
 
     afterAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {
@@ -87,5 +79,22 @@ describe('Start Task - Task App', () => {
         await viewerPage.checkCloseButtonIsDisplayed();
         await viewerPage.clickCloseButton();
         await taskPage.tasksListPage().checkContentIsDisplayed('View file');
+    });
+
+    it('[C260418] Uploading single file form', async () => {
+        const name = 'View Doc file';
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
+        await taskPage.createTask({ name, formName: app.formName });
+
+        await widget.attachFileWidget().attachFile(appFields.attachFile_id, wordFile.location);
+        await widget.attachFileWidget().checkUploadIsNotVisible(appFields.attachFile_id);
+        await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, wordFile.name);
+        await taskPage.taskDetails().clickCompleteFormTask();
+
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
+        await taskPage.tasksListPage().selectRow(name);
+        await widget.attachFileWidget().checkUploadIsNotVisible(appFields.attachFile_id);
+        await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, wordFile.name);
     });
 });

@@ -398,6 +398,13 @@ exports.Files = {
             FIELD: {
                 widget_id: 'attachfolder',
             }
+        },
+
+        UPLOAD_FILE_FORM_CS: {
+            formName: "Upload multiple files",
+            FIELD: {
+                widget_id: 'attachfile',
+            }
         }
     },
 

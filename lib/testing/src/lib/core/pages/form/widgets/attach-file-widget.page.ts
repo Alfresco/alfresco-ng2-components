@@ -58,8 +58,14 @@ export class AttachFileWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.attachFileWidget);
     }
 
-    async toggleAttachedFileMenu(): Promise<void> {
-        await BrowserActions.click(this.attachedFileMenu);
+    async toggleAttachedFileMenu(fieldId: string, fileName: string): Promise<void> {
+        await BrowserActions.closeMenuAndDialogs();
+        const widget = await this.formFields.getWidget(fieldId);
+        const fileAttached = await widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', fileName));
+        await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
+        const id = await fileAttached.getAttribute('id');
+        const optionMenu = widget.element(by.css(`button[id='${id}-option-menu']`));
+        await BrowserActions.click(optionMenu);
     }
 
     async checkAttachFileOptionsActiveForm(): Promise <void> {
@@ -86,5 +92,37 @@ export class AttachFileWidgetPage {
 
     async removeAttachedFile(): Promise<void> {
         await BrowserActions.click(this.removeFileOptionButton);
+    }
+
+    async viewFileEnabled(): Promise<boolean> {
+        return this.viewFileOptionButton.isEnabled();
+    }
+
+    async downloadFileEnabled(): Promise<boolean> {
+        return this.downloadFileOptionButton.isEnabled();
+    }
+
+    async removeFileEnabled(): Promise<boolean> {
+        return this.removeFileOptionButton.isEnabled();
+    }
+
+    async checkUploadIsNotVisible(fieldId): Promise<void> {
+        browser.setFileDetector(new remote.FileDetector());
+        const widget = await this.formFields.getWidget(fieldId);
+        const uploadButton = await widget.element(this.uploadLocator);
+        await BrowserVisibility.waitUntilElementIsNotPresent(uploadButton);
+    }
+
+    async selectUploadSource(name: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.attachedFileOptions);
+        await BrowserActions.click(element(by.css(`button[id="attach-${name}"]`)));
+    }
+
+    async clickUploadButton(fieldId): Promise<void> {
+        browser.setFileDetector(new remote.FileDetector());
+        await BrowserActions.closeMenuAndDialogs();
+        const widget = await this.formFields.getWidget(fieldId);
+        const uploadButton = await widget.element(this.uploadLocator);
+        await BrowserActions.click(uploadButton);
     }
 }
