@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginPage, StringUtil, ApplicationService } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginPage, StringUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import {
     AlfrescoApiCompatibility as AlfrescoApi,
     AppDefinitionRepresentation,
@@ -77,7 +77,7 @@ describe('Info Drawer', () => {
         const processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);

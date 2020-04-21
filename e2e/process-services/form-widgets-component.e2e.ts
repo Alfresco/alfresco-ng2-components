@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, Widget, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
 const formInstance = new FormDefinitionModel();
@@ -54,7 +53,7 @@ describe('Form widgets', () => {
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-            const applicationsService = new ApplicationService(alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -195,7 +194,6 @@ describe('Form widgets', () => {
 
     describe('with fields involving other people', () => {
 
-        const appsActions = new AppsActions();
         const app = browser.params.resources.Files.FORM_ADF;
         let deployedApp, process;
         const appFields = app.form_fields;
@@ -213,14 +211,15 @@ describe('Form widgets', () => {
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationService(alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
-            process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+            const processUtil = new ProcessUtil(alfrescoJsApi);
+            process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         });

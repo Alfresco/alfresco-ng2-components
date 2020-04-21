@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -66,7 +66,7 @@ describe('Start Task - Custom App', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 

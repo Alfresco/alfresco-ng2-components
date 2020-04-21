@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
@@ -51,7 +50,6 @@ describe('Process List - Pagination', () => {
     const nrOfProcesses = 20;
     let page;
     let totalPages;
-    const processNameBase = 'process';
 
     beforeAll(async () => {
         const users = new UsersActions();
@@ -67,7 +65,7 @@ describe('Process List - Pagination', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -77,7 +75,6 @@ describe('Process List - Pagination', () => {
     describe('With processes Pagination', () => {
 
         beforeAll(async () => {
-            const apps = new AppsActions();
 
             this.alfrescoJsApi = new AlfrescoApi({
                 provider: 'BPM',
@@ -87,7 +84,7 @@ describe('Process List - Pagination', () => {
             await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
-                await apps.startProcess(this.alfrescoJsApi, deployedTestApp, processNameBase + (i < 10 ? `0${i}` : i));
+                await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
             }
 
         });

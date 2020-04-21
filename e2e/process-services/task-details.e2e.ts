@@ -21,11 +21,10 @@ import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');
 import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');
-import { AppsActions } from '../actions/APS/apps.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
-import { LoginPage, BrowserActions, StringUtil, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 
@@ -37,7 +36,6 @@ describe('Task Details component', () => {
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const TASK_DATE_FORMAT = 'll';
     let formModel;
-    let apps;
 
     const taskFormModel = {
         'name': StringUtil.generateRandomString(),
@@ -51,7 +49,6 @@ describe('Task Details component', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-        apps = new AppsActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'BPM',
@@ -63,7 +60,7 @@ describe('Task Details component', () => {
         processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
@@ -140,7 +137,7 @@ describe('Task Details component', () => {
     });
 
     it('[C286706] Should display task details for task - Task App', async () => {
-        await apps.startProcess(this.alfrescoJsApi, appModel);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 
@@ -174,7 +171,7 @@ describe('Task Details component', () => {
     });
 
     it('[C286705] Should display task details for task - Custom App', async () => {
-        await apps.startProcess(this.alfrescoJsApi, appModel);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -245,7 +242,7 @@ describe('Task Details component', () => {
     it('[C286707] Should display task details for subtask - Custom App', async () => {
         const checklistName = 'CustomAppChecklist';
 
-        await apps.startProcess(this.alfrescoJsApi, appModel);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 

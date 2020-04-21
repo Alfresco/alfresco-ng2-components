@@ -17,7 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, StringUtil, Widget, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { User } from '../../models/APS/user';
@@ -46,7 +46,7 @@ describe('People and Group widget', () => {
 
         await alfrescoJsApi.login(user.email, user.password);
         try {
-            const applicationsService = new ApplicationService(alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         } catch (e) { console.error('failed to deploy the application'); }
         await loginPage.loginToProcessServicesUsingUserModel(user);

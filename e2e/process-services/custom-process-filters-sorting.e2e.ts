@@ -17,13 +17,12 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { FiltersPage } from '../pages/adf/process-services/filters.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Sorting for process filters', () => {
 
@@ -31,8 +30,6 @@ describe('Sorting for process filters', () => {
     const navigationBarPage = new NavigationBarPage();
     const processFiltersPage = new ProcessFiltersPage();
     const filtersPage = new FiltersPage();
-
-    const apps = new AppsActions();
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let tenantId, appId, user, processesQuery;
@@ -60,7 +57,7 @@ describe('Sorting for process filters', () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         tenantId = user.tenantId;
@@ -86,9 +83,10 @@ describe('Sorting for process filters', () => {
             'appId': null, 'name': processFilter.running_old_first, 'icon': 'glyphicon-random',
             'filter': { 'sort': 'created-asc', 'name': '', 'state': 'running' }
         });
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc =  await processUtil.startProcessOfApp('Task App');
+        const secondProc =  await processUtil.startProcessOfApp('Task App');
+        const thirdProc =  await processUtil.startProcessOfApp('Task App');
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -97,9 +95,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 1');
-        await expect(processesQuery.data[1].name).toEqual('Process 2');
-        await expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[0].name).toEqual(firstProc.name);
+        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
     });
 
     it('[C260477] Should be able to create a filter on APS for completed processes - Oldest first and check on ADF', async () => {
@@ -108,9 +106,10 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-asc', 'name': '', 'state': 'completed' }
         });
 
-        const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc =  await processUtil.startProcessOfApp('Task App');
+        const secondProc =  await processUtil.startProcessOfApp('Task App');
+        const thirdProc =  await processUtil.startProcessOfApp('Task App');
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -125,9 +124,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 1');
-        await expect(processesQuery.data[1].name).toEqual('Process 2');
-        await expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[0].name).toEqual(firstProc.name);
+        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
     });
 
     it('[C260478] Should be able to create a filter on APS for all processes - Oldest first and check on ADF', async () => {
@@ -136,17 +135,18 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-asc', 'name': '', 'state': 'all' }
         });
 
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc =  await processUtil.startProcessOfApp('Task App');
+        const secondProc =  await processUtil.startProcessOfApp('Task App');
+        const thirdProc =  await processUtil.startProcessOfApp('Task App');
 
-        const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 4');
-        const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 5');
-        const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 6');
+        const deleteFirstProc = await processUtil.startProcessOfApp('Task App');
+        const deleteSecondProc = await processUtil.startProcessOfApp('Task App');
+        const deleteThirdProc = await processUtil.startProcessOfApp('Task App');
 
-        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
-        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
-        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
+        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteFirstProc.id);
+        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteSecondProc.id);
+        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteThirdProc.id);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -157,12 +157,12 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 1');
-        await expect(processesQuery.data[1].name).toEqual('Process 2');
-        await expect(processesQuery.data[2].name).toEqual('Process 3');
-        await expect(processesQuery.data[3].name).toEqual('Process 4');
-        await expect(processesQuery.data[4].name).toEqual('Process 5');
-        await expect(processesQuery.data[5].name).toEqual('Process 6');
+        await expect(processesQuery.data[0].name).toEqual(firstProc.name);
+        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
+        await expect(processesQuery.data[3].name).toEqual(deleteFirstProc.name);
+        await expect(processesQuery.data[4].name).toEqual(deleteSecondProc.name);
+        await expect(processesQuery.data[5].name).toEqual(deleteThirdProc.name);
     });
 
     it('[C260479] Should be able to create a filter on APS for running processes - Newest first and check on ADF', async () => {
@@ -171,9 +171,10 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
 
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc = await processUtil.startProcessOfApp('Task App');
+        const secondProc = await processUtil.startProcessOfApp('Task App');
+        const thirdProc = await processUtil.startProcessOfApp('Task App');
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -184,9 +185,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'running', 'sort': 'created-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 3');
-        await expect(processesQuery.data[1].name).toEqual('Process 2');
-        await expect(processesQuery.data[2].name).toEqual('Process 1');
+        await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
+        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[2].name).toEqual(firstProc.name);
     });
 
     it('[C260480] Should be able to create a filter on APS for completed processes - Newest first and check on ADF', async () => {
@@ -195,9 +196,10 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' }
         });
 
-        const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc = await processUtil.startProcessOfApp('Task App');
+        const secondProc = await processUtil.startProcessOfApp('Task App');
+        const thirdProc = await processUtil.startProcessOfApp('Task App');
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -211,9 +213,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'created-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 3');
-        await expect(processesQuery.data[1].name).toEqual('Process 2');
-        await expect(processesQuery.data[2].name).toEqual('Process 1');
+        await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
+        await expect(processesQuery.data[1].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[2].name).toEqual(firstProc.name);
     });
 
     it('[C260481] Should be able to create a filter on APS for all processes - Newest first and check on ADF', async () => {
@@ -222,17 +224,18 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' }
         });
 
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc = await processUtil.startProcessOfApp('Task App');
+        const secondProc = await processUtil.startProcessOfApp('Task App');
+        const thirdProc = await processUtil.startProcessOfApp('Task App');
 
-        const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 4');
-        const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 5');
-        const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 6');
+        const deleteFirstProc = await processUtil.startProcessOfApp('Task App');
+        const deleteSecondProc = await processUtil.startProcessOfApp('Task App');
+        const deleteThirdProc = await processUtil.startProcessOfApp('Task App');
 
-        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
-        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
-        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(thirdProc.id);
+        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteFirstProc.id);
+        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteSecondProc.id);
+        await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteThirdProc.id);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -243,12 +246,12 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'all', 'sort': 'created-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 6');
-        await expect(processesQuery.data[1].name).toEqual('Process 5');
-        await expect(processesQuery.data[2].name).toEqual('Process 4');
-        await expect(processesQuery.data[3].name).toEqual('Process 3');
-        await expect(processesQuery.data[4].name).toEqual('Process 2');
-        await expect(processesQuery.data[5].name).toEqual('Process 1');
+        await expect(processesQuery.data[0].name).toEqual(deleteThirdProc.name);
+        await expect(processesQuery.data[1].name).toEqual(deleteSecondProc.name);
+        await expect(processesQuery.data[2].name).toEqual(deleteFirstProc.name);
+        await expect(processesQuery.data[3].name).toEqual(thirdProc.name);
+        await expect(processesQuery.data[4].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[5].name).toEqual(firstProc.name);
     });
 
     it('[C272815] Should be able to create a filter on APS for completed processes - Completed most recently and check on ADF', async () => {
@@ -257,9 +260,10 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'ended-asc', 'name': '', 'state': 'completed' }
         });
 
-        const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc = await processUtil.startProcessOfApp('Task App');
+        const secondProc = await processUtil.startProcessOfApp('Task App');
+        const thirdProc = await processUtil.startProcessOfApp('Task App');
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
@@ -274,9 +278,9 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-asc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 2');
-        await expect(processesQuery.data[1].name).toEqual('Process 1');
-        await expect(processesQuery.data[2].name).toEqual('Process 3');
+        await expect(processesQuery.data[0].name).toEqual(secondProc.name);
+        await expect(processesQuery.data[1].name).toEqual(firstProc.name);
+        await expect(processesQuery.data[2].name).toEqual(thirdProc.name);
     });
 
     it('[C272816] Should be able to create a filter on APS for completed processes - Completed least recently and check on ADF', async () => {
@@ -285,9 +289,10 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'ended-desc', 'name': '', 'state': 'completed' }
         });
 
-        const firstProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 1');
-        const secondProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 2');
-        const thirdProc = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Process 3');
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const firstProc = await processUtil.startProcessOfApp('Task App');
+        const secondProc = await processUtil.startProcessOfApp('Task App');
+        const thirdProc = await processUtil.startProcessOfApp('Task App');
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
@@ -302,8 +307,8 @@ describe('Sorting for process filters', () => {
         processesQuery = await this.alfrescoJsApi.activiti.processApi.getProcessInstances({
             'processDefinitionId': null, 'appDefinitionId': null, 'state': 'completed', 'sort': 'ended-desc'
         });
-        await expect(processesQuery.data[0].name).toEqual('Process 3');
-        await expect(processesQuery.data[1].name).toEqual('Process 1');
-        await expect(processesQuery.data[2].name).toEqual('Process 2');
+        await expect(processesQuery.data[0].name).toEqual(thirdProc.name);
+        await expect(processesQuery.data[1].name).toEqual(firstProc.name);
+        await expect(processesQuery.data[2].name).toEqual(secondProc.name);
     });
 });

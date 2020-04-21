@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -51,7 +50,6 @@ describe('Task List Pagination', () => {
     };
 
     beforeAll(async () => {
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         this.alfrescoJsApi = new AlfrescoApi({
@@ -63,11 +61,11 @@ describe('Task List Pagination', () => {
         processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         const resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await apps.startProcess(this.alfrescoJsApi, resultApp);
+            await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(resultApp.name);
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);

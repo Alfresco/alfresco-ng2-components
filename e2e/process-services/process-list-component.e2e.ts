@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -63,17 +63,18 @@ describe('Process List Test', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
 
-        procWithDate = await apps.startProcess(this.alfrescoJsApi, appDateModel, processName.procWithDate);
-        completedProcWithDate = await apps.startProcess(this.alfrescoJsApi, appDateModel, processName.completedProcWithDate);
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        procWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.procWithDate);
+        completedProcWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.completedProcWithDate);
 
         appUserWidgetModel = await applicationsService.importPublishDeployApp(appWithUserWidget.file_path);
 
-        await apps.startProcess(this.alfrescoJsApi, appUserWidgetModel, processName.procWithUserWidget);
-        completedProcWithUserWidget = await apps.startProcess(this.alfrescoJsApi, appUserWidgetModel, processName.completedProcWithUserWidget);
+        await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
+        completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
         appWithDateFieldId = await apps.getAppDefinitionId(this.alfrescoJsApi, appDateModel.id);
 

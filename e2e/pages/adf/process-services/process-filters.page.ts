@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, DataTableComponentPage, StartProcessPage } from '@alfresco/adf-testing';
 import { by, element, ElementFinder, Locator } from 'protractor';
-import { StartProcessPage } from './start-process.page';
 
 export class ProcessFiltersPage {
 

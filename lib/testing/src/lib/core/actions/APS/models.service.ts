@@ -27,7 +27,7 @@ export class ModelsActions {
 
     async deleteVersionModel(modelId) {
         try {
-            return this.api.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+            return await this.api.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
         } catch (error) {
             Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -35,7 +35,7 @@ export class ModelsActions {
 
     async deleteEntireModel(modelId) {
         try {
-            return this.api.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+            return await this.api.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
         } catch (error) {
             Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }

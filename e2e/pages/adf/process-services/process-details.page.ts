@@ -39,7 +39,6 @@ export class ProcessDetailsPage {
     auditLogEmptyListMessage: ElementFinder = element(by.css('.app-empty-list-header'));
     cancelProcessButton: ElementFinder = element(by.css('div[data-automation-id="header-status"] > button'));
     activeTask: ElementFinder = element(by.css('div[data-automation-id="active-tasks"]'));
-    startForm: ElementFinder = element(by.css('div[data-automation-id="start-form"]'));
     completedTask: ElementFinder = element(by.css('div[data-automation-id="completed-tasks"]'));
     taskTitle: ElementFinder = element(by.css('h2[class="adf-activiti-task-details__header"]'));
 
@@ -135,10 +134,6 @@ export class ProcessDetailsPage {
 
     async clickOnActiveTask(): Promise<void> {
         await BrowserActions.click(this.activeTask);
-    }
-
-    async clickOnStartForm(): Promise<void> {
-        await BrowserActions.click(this.startForm);
     }
 
     async clickOnCompletedTask(): Promise<void> {

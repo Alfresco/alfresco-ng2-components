@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -37,8 +36,6 @@ describe('Items per page set to 15 and adding of tasks', () => {
     const totalPages = 2;
     let i;
     let resultApp;
-
-    const apps = new AppsActions();
 
     const itemsPerPage = {
         fifteen: '15',
@@ -59,12 +56,13 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
         for (i = 0; i < (nrOfTasks - 5); i++) {
-            await apps.startProcess(this.alfrescoJsApi, resultApp);
+            await processUtil.startProcessOfApp(resultApp.name);
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
@@ -81,8 +79,9 @@ describe('Items per page set to 15 and adding of tasks', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
 
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
         for (i; i < nrOfTasks; i++) {
-            await apps.startProcess(this.alfrescoJsApi, resultApp);
+            await processUtil.startProcessOfApp(resultApp.name);
         }
 
         currentPage++;

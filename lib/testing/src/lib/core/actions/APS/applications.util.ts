@@ -26,7 +26,7 @@ export class AppPublish {
     force: boolean = true;
 }
 
-export class ApplicationService {
+export class ApplicationsUtil {
 
     api: AlfrescoApi;
 
@@ -52,6 +52,18 @@ export class ApplicationService {
             return await this.api.activiti.appsDefinitionApi.importAppDefinition(file, options);
         } catch (error) {
             Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+        }
+    }
+
+    async getAppDefinitionByName(appName): Promise<any> {
+        try {
+            const appDefinitionsList = await this.api.activiti.appsApi.getAppDefinitions();
+            const appDefinition = appDefinitionsList.data.filter((currentApp) => {
+                return currentApp.name === appName;
+            });
+            return appDefinition;
+        } catch (error) {
+            Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
 }

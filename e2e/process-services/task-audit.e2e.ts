@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
@@ -50,7 +50,7 @@ describe('Task Audit', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
         this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskTaskApp });
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);

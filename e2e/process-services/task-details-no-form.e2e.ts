@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
@@ -23,7 +23,6 @@ import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Task Details - No form', () => {
 
@@ -33,7 +32,6 @@ describe('Task Details - No form', () => {
     const app = browser.params.resources.Files.NO_FORM_APP;
     const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
-    const apps = new AppsActions();
     let importedApp;
 
     beforeAll(async () => {
@@ -48,9 +46,9 @@ describe('Task Details - No form', () => {
         processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-        await apps.startProcess(this.alfrescoJsApi, importedApp);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(importedApp.name);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 

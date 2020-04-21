@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
-export * from './applications.service';
+export * from './applications.util';
+export * from './process.util';
 export * from './models.service';
 export * from './integration.service';

@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
@@ -41,7 +40,6 @@ describe('Process List - Pagination when adding processes', () => {
     const nrOfProcesses = 25;
     let page, totalPages;
     let i;
-    const apps = new AppsActions();
     let resultApp;
 
     beforeAll(async () => {
@@ -58,12 +56,13 @@ describe('Process List - Pagination when adding processes', () => {
 
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
         for (i = 0; i < (nrOfProcesses - 5); i++) {
-            await apps.startProcess(this.alfrescoJsApi, resultApp);
+            await processUtil.startProcessOfApp(resultApp.name);
         }
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
@@ -89,8 +88,9 @@ describe('Process List - Pagination when adding processes', () => {
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
         for (i; i < nrOfProcesses; i++) {
-            await apps.startProcess(this.alfrescoJsApi, resultApp);
+            await processUtil.startProcessOfApp(resultApp.name);
         }
 
         page++;

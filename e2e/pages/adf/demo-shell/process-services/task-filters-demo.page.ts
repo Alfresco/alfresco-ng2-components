@@ -50,5 +50,4 @@ export class TaskFiltersDemoPage {
     async checkActiveFilterActive(): Promise<string> {
         return BrowserActions.getText(this.activeFilter);
     }
-
 }

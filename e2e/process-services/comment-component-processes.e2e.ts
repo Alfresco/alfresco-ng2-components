@@ -16,13 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Comment component for Processes', () => {
 
@@ -33,6 +32,7 @@ describe('Comment component for Processes', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let user, tenantId, appId, processInstanceId, addedComment;
+    const processName = 'Comment APS';
 
     beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
@@ -40,9 +40,8 @@ describe('Comment component for Processes', () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        const apps = new AppsActions();
         const users = new UsersActions();
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -55,7 +54,7 @@ describe('Comment component for Processes', () => {
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        const processWithComment = await apps.startProcess(this.alfrescoJsApi, 'Task App', 'Comment APS');
+        const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp('Task App', processName);
         processInstanceId = processWithComment.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -73,7 +72,7 @@ describe('Comment component for Processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
-        await processFiltersPage.selectFromProcessList('Comment APS');
+        await processFiltersPage.selectFromProcessList(processName);
 
         addedComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
@@ -91,7 +90,7 @@ describe('Comment component for Processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
-        await processFiltersPage.selectFromProcessList('Comment APS');
+        await processFiltersPage.selectFromProcessList(processName);
 
         const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
 
@@ -111,7 +110,7 @@ describe('Comment component for Processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
-        await processFiltersPage.selectFromProcessList('Comment APS');
+        await processFiltersPage.selectFromProcessList(processName);
 
         const addedTaskComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 

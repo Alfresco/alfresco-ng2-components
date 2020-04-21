@@ -17,14 +17,13 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 
 describe('Comment component for Processes', () => {
 
@@ -48,7 +47,6 @@ describe('Comment component for Processes', () => {
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        const apps = new AppsActions();
         const users = new UsersActions();
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -61,7 +59,7 @@ describe('Comment component for Processes', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const importedApp = await apps.importPublishDeployApp(this.alfrescoJsApi, app.file_location);
+        const importedApp = await new ApplicationsUtil(this.alfrescoJsApi).importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);

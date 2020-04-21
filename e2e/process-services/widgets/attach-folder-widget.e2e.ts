@@ -16,9 +16,8 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AppsActions } from '../../actions/APS/apps.actions';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -29,7 +28,6 @@ describe('Attach Folder widget', () => {
     const taskPage = new TasksPage();
     const widget = new Widget();
     let alfrescoJsApi;
-    const appsActions = new AppsActions();
     let appModel;
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.ATTACH_FOLDER;
     let deployedApp, process;
@@ -47,14 +45,15 @@ describe('Attach Folder widget', () => {
         processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationService(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
         const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await appsActions.startProcess(alfrescoJsApi, appModel, app.processName);
+        const processUtil = new ProcessUtil(alfrescoJsApi);
+        process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 

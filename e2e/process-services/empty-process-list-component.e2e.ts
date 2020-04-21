@@ -16,13 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
@@ -51,7 +50,7 @@ describe('Empty Process List Test', () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        const applicationsService = new ApplicationService(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         user = await users.createTenantAndUser(this.alfrescoJsApi);
 

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, ApplicationService } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { StartProcessPage } from '../pages/adf/process-services/start-process.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -54,7 +53,7 @@ describe('Form widgets - People ', () => {
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationService(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
