@@ -341,6 +341,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     onCompleteAttachForm() {
         this.showAttachForm = false;
         this.taskFormComponent.loadTask(this.taskId);
+        this.loadDetails(this.taskId);
     }
 
     onFormContentClick(content: ContentLinkModel): void {
