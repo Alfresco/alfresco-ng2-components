@@ -26,7 +26,6 @@ export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPag
     txtPassword: ElementFinder = element(by.css('input[id="password"]'));
     loginElement: ElementFinder = element(by.css('[data-automation-id="attach-file-dialog-actions-login"]'));
     title: ElementFinder = element(by.css('[data-automation-id="content-node-selector-title"]'));
-    moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id="attach-file-dialog-actions-choose"]`));
 
     constructor() {
         super();
@@ -36,9 +35,11 @@ export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPag
         this.header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
         this.searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
         this.selectedRow = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
+        this.moveCopyButton = element(by.css(`button[data-automation-id="attach-file-dialog-actions-choose"]`));
     }
 
     async getTitle(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.title);
         return this.title.getText();
     }
 
@@ -67,5 +68,4 @@ export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPag
         await this.enterPassword(password);
         await this.clickLoginButton();
     }
-
 }
