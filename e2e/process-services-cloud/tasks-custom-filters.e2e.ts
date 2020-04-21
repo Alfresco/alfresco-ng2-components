@@ -92,7 +92,6 @@ describe('Task filters cloud', () => {
 
             queryService = new QueryService(apiService);
 
-            await browser.sleep(4000); // eventual consistency query
             await queryService.getProcessInstanceTasks(secondProcessInstance.entry.id, simpleApp);
             await processInstancesService.suspendProcessInstance(processInstance.entry.id, simpleApp);
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);

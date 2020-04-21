@@ -71,7 +71,6 @@ describe('Form Field Component - Dropdown Widget', () => {
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
         queryService = new QueryService(apiService);
 
-        await browser.sleep(4000); // eventual consistency query
         tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
         task = await tasklist.list.entries[0];
         tasksService = new TasksService(apiService);

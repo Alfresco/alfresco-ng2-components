@@ -12,7 +12,6 @@ require('ts-node').register({
 });
 const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
 
-const { beforeAllRewrite, afterAllRewrite, beforeEachAllRewrite, afterEachAllRewrite } = require('./e2e/protractor/override-jasmine');
 const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
 
@@ -160,11 +159,6 @@ exports.config = {
     },
 
     onPrepare() {
-        afterEachAllRewrite();
-        beforeEachAllRewrite();
-        afterAllRewrite();
-        beforeAllRewrite();
-
         retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;

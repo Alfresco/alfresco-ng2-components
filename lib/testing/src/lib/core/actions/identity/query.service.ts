@@ -17,6 +17,7 @@
 
 import { ApiService } from '../api.service';
 import { Logger } from '../../utils/logger';
+import { ApiUtil } from '../../structure/api.util';
 
 export class QueryService {
 
@@ -27,74 +28,114 @@ export class QueryService {
     }
 
     async getProcessInstanceTasks(processInstanceId, appName): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
-            const method = 'GET';
+        const predicate = (result: any) => {
+            return result.list && result.list.entries.length > 0;
+        };
 
-            const queryParams = {}, postBody = {};
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+                const method = 'GET';
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('get process-instances Service error');
-        }
+                const queryParams = {}, postBody = {};
+
+                return this.api.performBpmOperation(path, method, queryParams, postBody);
+            } catch (error) {
+                Logger.error('get process-instances tasks Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
     }
 
     async getProcessInstance(processInstanceId, appName): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId;
-            const method = 'GET';
+        const predicate = (result: any) => {
+            return !!result;
+        };
 
-            const queryParams = {}, postBody = {};
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId;
+                const method = 'GET';
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('get process-instance Service error');
-        }
+                const queryParams = {}, postBody = {};
+
+                return this.api.performBpmOperation(path, method, queryParams, postBody);
+            } catch (error) {
+                Logger.error('get process-instances Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
     }
 
     async getProcessInstanceSubProcesses(processInstanceId, appName): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
-            const method = 'GET';
+        const predicate = (result: any) => {
+            return result.list && result.list.entries.length > 0;
+        };
 
-            const queryParams = {};
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/subprocesses';
+                const method = 'GET';
 
-            return this.api.performBpmOperation(path, method, queryParams, {});
-        } catch (error) {
-            Logger.error('get subprocesses process-instances Service error');
-        }
+                const queryParams = {}, postBody = {};
+
+                return this.api.performBpmOperation(path, method, queryParams, postBody);
+            } catch (error) {
+                Logger.error('get subprocesses process-instances Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
     }
 
     async getTaskByName(taskName, processInstanceId, appName): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
-            const method = 'GET';
+        const predicate = (result: any) => {
+            return !!result;
+        };
 
-            const queryParams = {}, postBody = {};
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+                const method = 'GET';
 
-            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-            for (let i = 0; i < data.list.entries.length; i++) {
-                if (data.list.entries[i].entry.name === taskName) {
-                    return data.list.entries[i];
+                const queryParams = {}, postBody = {};
+
+                const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                for (let i = 0; i < data.list.entries.length; i++) {
+                    if (data.list.entries[i].entry.name === taskName) {
+                        return data.list.entries[i];
+                    }
                 }
+
+            } catch (error) {
+                Logger.error('Get Task By Name - Service error');
             }
-        } catch (error) {
-            Logger.error('Get Task By Name - Service error');
-        }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
     }
 
     async getProcessInstanceId(processName: string, appName: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/process-instances';
-            const method = 'GET';
+        const predicate = (result: any) => {
+            return !!result;
+        };
 
-            const queryParams = { name: processName }, postBody = {};
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances';
+                const method = 'GET';
 
-            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-            return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
-        } catch (error) {
-            Logger.error('Get Process Instance Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+                const queryParams = { name: processName }, postBody = {};
+
+                const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
+            } catch (error) {
+                Logger.error('Get Process Instance Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
     }
-
 }
