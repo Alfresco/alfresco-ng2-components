@@ -115,7 +115,7 @@ describe('ProcessFiltersComponent', () => {
 
     it('should emit an event when a filter is selected', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
-        filterList.filterParam = new UserProcessInstanceFilterRepresentation({ id: 10 });
+        filterList.filterParam = { id: 10 };
         const appId = '1';
         const change = new SimpleChange(null, appId, true);
         filterList.ngOnChanges({ 'appId': change });
