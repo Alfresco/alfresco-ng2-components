@@ -159,11 +159,6 @@ exports.config = {
     },
 
     onPrepare() {
-        // afterEachAllRewrite();
-        // beforeEachAllRewrite();
-        // afterAllRewrite();
-        // beforeAllRewrite();
-
         retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
