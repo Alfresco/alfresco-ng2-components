@@ -20,11 +20,11 @@ import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-t
 
 export class AttachFormPage {
 
-    noFormMessage: ElementFinder = element(by.id('adf-no-form-message'));
-    attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
-    completeButton: ElementFinder = element(by.id('adf-no-form-complete-button'));
+    noFormMessage: ElementFinder = element(by.css('.adf-empty-content__title'));
+    attachFormButton: ElementFinder = element(by.id('adf-attach-form-attach-button'));
+    completeButton: ElementFinder = element(by.id('adf-attach-form-complete-button'));
     formDropdown: ElementFinder = element(by.id('form_id'));
-    cancelButton: ElementFinder = element(by.id('adf-no-form-cancel-button'));
+    cancelButton: ElementFinder = element(by.id('adf-attach-form-cancel-button'));
     defaultTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title mat-card-title"]'));
     attachFormDropdown = new DropdownPage(element(by.css("div[class='adf-attach-form-row']")));
 
@@ -66,6 +66,6 @@ export class AttachFormPage {
     }
 
     async checkAttachFormButtonIsDisabled(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-no-form-attach-form-button"][disabled]')));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css('button[id="adf-attach-form-attach-button"][disabled]')));
     }
 }

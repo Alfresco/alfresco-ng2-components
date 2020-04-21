@@ -22,12 +22,14 @@ import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach Form Component', () => {
 
     const loginPage = new LoginPage();
     const taskPage = new TasksPage();
+    const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
@@ -113,7 +115,7 @@ describe('Attach Form Component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.tasksListPage().selectRow(testNames.taskName);
 
-        await attachFormPage.clickAttachFormButton();
+        await taskDetailsPage.clickAttachFormButton();
         await attachFormPage.selectAttachFormOption(testNames.formName);
         await attachFormPage.clickAttachFormButton();
 

@@ -107,12 +107,14 @@ describe('Start Task - Task App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         await taskPage.formFields().noFormIsDisplayed();
+        await taskPage.taskDetails().clickAttachFormButton();
 
         const formFields = await taskPage.formFields();
-        await formFields.clickOnAttachFormButton();
         await formFields.selectForm(app.formName);
         await formFields.clickOnAttachFormButton();
 
+        await taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.taskDetails().checkCompleteFormButtonIsDisplayed();
         await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
     });
 

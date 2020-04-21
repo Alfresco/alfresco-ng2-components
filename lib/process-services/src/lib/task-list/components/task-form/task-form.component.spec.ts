@@ -334,7 +334,7 @@ describe('TaskFormComponent', () => {
             const subMessage = fixture.debugElement.nativeElement.querySelector('.adf-empty-content__subtitle');
             expect(completeButtonElement).not.toBeNull();
             expect(cancelButtonElement).not.toBeNull();
-            expect(completedFormMessage.innerText).toContain('ADF_TASK_FORM.EMPTY_FORM.TITLE');
+            expect(completedFormMessage.innerText).toContain('ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE');
             expect(subMessage.innerText).toContain('ADF_TASK_FORM.EMPTY_FORM.SUBTITLE');
         });
 
