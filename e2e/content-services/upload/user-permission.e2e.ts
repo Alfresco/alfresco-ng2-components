@@ -37,17 +37,17 @@ describe('Upload - User permission', () => {
 
     const emptyFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const pdfFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
     beforeAll(async () => {

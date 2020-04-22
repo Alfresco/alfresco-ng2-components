@@ -250,7 +250,7 @@ describe('Document List Component', () => {
     it('[C272775] Should be able to upload a file in new folder', async () => {
         const testFile = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */

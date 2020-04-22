@@ -47,23 +47,23 @@ describe('Upload component', () => {
     });
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     const fileWithSpecificSize = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
     });
     const emptyFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     beforeAll(async () => {

@@ -35,7 +35,7 @@ describe('Document List - Selection', () => {
     const folderModel = new FolderModel({ name: 'folder' });
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const displayColumnName = 'Display name';
 

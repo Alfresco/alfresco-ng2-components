@@ -44,12 +44,12 @@ describe('Upload component', async () => {
 
     const mediumFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_location
     });
 
     const largeFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
 
     beforeAll(async () => {

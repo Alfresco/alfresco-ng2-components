@@ -46,15 +46,15 @@ describe('Upload component', () => {
     });
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModelTwo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
     const pngFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -65,7 +65,7 @@ describe('Upload component', () => {
 
     const parentFolder = new FolderModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_path
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
     });
 
     const fileInsideParentFolder = new FolderModel({
@@ -74,7 +74,7 @@ describe('Upload component', () => {
     });
     const subFolder = new FolderModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_path
+        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
     });
 
     const fileInsideSubFolder = new FolderModel({
@@ -84,7 +84,7 @@ describe('Upload component', () => {
 
     const adfBigFolder = new FolderModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_path
+        location: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_location
     });
 
     beforeAll(async () => {
