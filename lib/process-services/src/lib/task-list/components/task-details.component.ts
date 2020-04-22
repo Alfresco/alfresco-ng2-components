@@ -40,7 +40,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { UserRepresentation, TaskQueryRepresentation } from '@alfresco/js-api';
+import { TaskQueryRepresentation } from '@alfresco/js-api';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
 
