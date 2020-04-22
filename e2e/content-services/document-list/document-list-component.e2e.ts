@@ -305,7 +305,7 @@ describe('Document List Component', () => {
         });
         const testFileB = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_lpath
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
