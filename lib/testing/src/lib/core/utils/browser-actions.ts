@@ -98,7 +98,7 @@ export class BrowserActions {
 
         for (let i = 0; i < keys.length; i++) {
             await elementFinder.sendKeys(keys[i]);
-            browser.sleep(delay);
+            await browser.sleep(delay);
         }
     }
 
