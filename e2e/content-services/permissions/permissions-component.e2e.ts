@@ -49,15 +49,16 @@ describe('Permissions Component', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
+    const fileModelLocation = browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path;
 
     const testFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const groupBody = {
@@ -319,7 +320,7 @@ describe('Permissions Component', () => {
             await contentList.checkActionMenuIsNotDisplayed();
             await contentServicesPage.metadataContent('RoleConsumer' + fileModel.name);
             await notificationHistoryPage.checkNotifyContains('You don\'t have access to do this.');
-            await contentServicesPage.uploadFile(fileModel.location);
+            await contentServicesPage.uploadFile(fileModelLocation);
             await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
 

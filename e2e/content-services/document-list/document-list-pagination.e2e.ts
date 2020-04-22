@@ -73,7 +73,7 @@ describe('Document List - Pagination', () => {
 
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
 
     beforeAll(async () => {
