@@ -17,6 +17,8 @@
 
 import { ApiService } from '../api.service';
 import { StringUtil } from '../../utils/string.util';
+import { ApiUtil } from '../../structure/api.util';
+import { Logger } from '../../utils/logger';
 import { browser } from 'protractor';
 
 export class GroupIdentityService {
@@ -58,12 +60,24 @@ export class GroupIdentityService {
     }
 
     async getGroupInfoByGroupName(groupName: string): Promise<any> {
-        const path = `/groups`;
-        const method = 'GET';
-        const queryParams = { search: groupName }, postBody = {};
+        const predicate = (result: any) => {
+            return !!result;
+        };
 
-        const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
-        return data[0];
+        const apiCall = async () => {
+            try {
+                const path = `/groups`;
+                const method = 'GET';
+                const queryParams = { search: groupName }, postBody = {};
+
+                const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+                return data[0];
+            } catch (error) {
+                Logger.error('Group not found');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
     }
 
     async assignRole(groupId: string, roleId: string, roleName: string): Promise<any> {

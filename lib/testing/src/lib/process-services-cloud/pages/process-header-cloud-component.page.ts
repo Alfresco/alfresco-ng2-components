@@ -20,14 +20,14 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessHeaderCloudPage {
 
-    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span')).first();
-    nameField: ElementFinder = element.all(by.css('span[data-automation-id*="name"] span')).first();
-    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span'));
-    initiatorField: ElementFinder = element(by.css('span[data-automation-id*="initiator"] span'));
-    startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
-    lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
-    parentIdField: ElementFinder = element(by.css('span[data-automation-id*="parentId"] span'));
-    businessKeyField: ElementFinder = element.all(by.css('span[data-automation-id*="businessKey"] span')).first();
+    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span span')).first();
+    nameField: ElementFinder = element.all(by.css('span[data-automation-id*="name"] span span')).first();
+    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span span'));
+    initiatorField: ElementFinder = element(by.css('span[data-automation-id*="initiator"] span span'));
+    startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span span')).first();
+    lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span span')).first();
+    parentIdField: ElementFinder = element(by.css('span[data-automation-id*="parentId"] span span'));
+    businessKeyField: ElementFinder = element.all(by.css('span[data-automation-id*="businessKey"] span span')).first();
 
     async getId(): Promise<string> {
         return BrowserActions.getText(this.idField);
