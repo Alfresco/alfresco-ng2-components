@@ -227,26 +227,6 @@ describe('ProcessFiltersCloudComponent', () => {
         component.ngOnChanges({ 'appName': change });
    });
 
-    it('should select the default filter if filter input does not exist', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
-
-        component.filterParam = { name: 'UnexistableFilter' };
-
-        const appName = 'my-app-1';
-        const change = new SimpleChange(null, appName, true);
-
-        fixture.detectChanges();
-
-        component.filterClick.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeAllProcesses');
-            done();
-        });
-
-        component.ngOnChanges({ 'appName': change });
-   });
-
     it('should select the filter based on the input by index param', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(fakeGlobalFilterObservable);
 

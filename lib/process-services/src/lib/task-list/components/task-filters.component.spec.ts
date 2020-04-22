@@ -179,25 +179,6 @@ describe('TaskFiltersComponent', () => {
         });
    });
 
-    it('should select the default task filter if filter input does not exist', (done) => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
-
-        component.filterParam = { name: 'UnexistableFilter' };
-
-        const appId = '1';
-        const change = new SimpleChange(null, appId, true);
-
-        fixture.detectChanges();
-        component.ngOnChanges({ 'appId': change });
-
-        component.success.subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(component.currentFilter).toBeDefined();
-            expect(component.currentFilter.name).toEqual('FakeInvolvedTasks');
-            done();
-        });
-   });
-
     it('should select the task filter based on the input by index param', (done) => {
         spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
 

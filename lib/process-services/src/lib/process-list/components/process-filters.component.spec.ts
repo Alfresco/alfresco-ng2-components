@@ -289,26 +289,6 @@ describe('ProcessFiltersComponent', () => {
         });
     });
 
-    it('should select first filter if filterParam is empty', (done) => {
-        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
-
-        filterList.filterParam = new UserProcessInstanceFilterRepresentation({});
-
-        const appId = 1;
-        const change = new SimpleChange(null, appId, true);
-
-        filterList.ngOnChanges({ 'appId': change });
-
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(filterList.filters).toBeDefined();
-            expect(filterList.filters.length).toEqual(3);
-            expect(filterList.currentFilter).toBeDefined();
-            expect(filterList.currentFilter.name).toEqual('FakeInvolvedTasks');
-            done();
-        });
-    });
-
     it('should attach specific icon for each filter if hasIcon is true', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
         filterList.showIcon = true;
