@@ -33,7 +33,7 @@ describe('Viewer', () => {
 
     const excelFolderInfo = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',

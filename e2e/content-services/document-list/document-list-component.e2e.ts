@@ -62,19 +62,19 @@ describe('Document List Component', () => {
         let folderName;
         const pdfFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
         });
         const docxFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
         });
         const timeAgoFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
         const mediumFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
 
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
@@ -161,17 +161,17 @@ describe('Document List Component', () => {
 
         const fakeFileA = new FileModel({
             name: 'A',
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         const fakeFileB = new FileModel({
             name: 'B',
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         const fakeFileC = new FileModel({
             name: 'C',
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         let fileANode, fileBNode, fileCNode;
@@ -250,7 +250,7 @@ describe('Document List Component', () => {
     it('[C272775] Should be able to upload a file in new folder', async () => {
         const testFile = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
@@ -301,11 +301,11 @@ describe('Document List Component', () => {
     it('[C269086] Should display Islocked field for files', async () => {
         const testFileA = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
         const testFileB = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_lpath
         });
         acsUser = new AcsUserModel();
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -358,7 +358,7 @@ describe('Document List Component', () => {
 
         const file0BytesModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+            location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
         });
 
         let file;

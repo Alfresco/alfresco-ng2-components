@@ -46,11 +46,11 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
             'name': `${randomName}.jpg`
         });
         const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
             'name': `${randomName}.txt`
         });
 
@@ -136,11 +136,11 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
             'name': `${randomName}.jpg`
         });
         const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
             'name': `${randomName}.txt`
         });
 
@@ -198,7 +198,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
             'name': `${randomName}.txt`
         });
 

@@ -37,7 +37,7 @@ describe('Version component actions', () => {
 
     const txtFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const fileModelVersionTwo = new FileModel({

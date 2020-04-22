@@ -38,22 +38,22 @@ describe('Upload component - Excluded Files', () => {
 
     const iniExcludedFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_path
     });
 
     const txtFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const folderUpload = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_path
     });
 
     const acceptedFileInsideFolder = new FolderModel({

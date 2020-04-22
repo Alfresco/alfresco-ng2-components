@@ -44,27 +44,27 @@ describe('Content Services Viewer', () => {
         'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
         'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
         'password': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_path
     });
     const docxFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path,
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
         'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.first_page_text
     });
     const jpgFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
         'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
     const mp4File = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_path,
         'name': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
     const unsupportedFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
         'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const pptFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_path,
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
         'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });

@@ -63,21 +63,21 @@ describe('Search Filters', () => {
 
     const pngFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const txtFileModel1 = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
         'name': `${uniqueFileName1}.txt`
     });
 
     const jpgFileModel = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
         'name': `${uniqueFileName2}.jpg`
     });
 
     const txtFileModel2 = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
         'name': `${uniqueFileName3}.txt`
     });
 

@@ -38,12 +38,12 @@ describe('Viewer', () => {
 
     const imgFolderInfo = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_path
     });
 
     const imgRenditionFolderInfo = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_path
     });
 
     beforeAll(async () => {

@@ -465,10 +465,12 @@ exports.Files = {
     ADF_DOCUMENTS: {
         JS: {
             file_location: "/resources/adf/a_js_file.js",
+            file_path: path.join(__dirname, '../resources/adf/a_js_file.js'),
             file_name: "a_js_file.js"
         },
         PDF: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.pdf",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_file_supported.pdf'),
             file_name: "a_file_supported.pdf",
             short_file_name: "a_file",
             first_page_text: "one",
@@ -478,14 +480,17 @@ exports.Files = {
         },
         PDF_B: {
             file_location: "/resources/adf/allFileTypes/b_file_supported.pdf",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/b_file_supported.pdf'),
             file_name: "b_file_supported.pdf"
         },
         PDF_ALL: {
             file_location: "/resources/adf/allFileTypes/pdf_all_properties.pdf",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/pdf_all_properties.pdf'),
             file_name: "pdf_all_properties.pdf"
         },
         PDF_PROTECTED: {
             file_location: "/resources/adf/allFileTypes/a_file_protected.pdf",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_file_protected.pdf'),
             file_name: "a_file_protected.pdf",
             first_page_text: "A Journey into Test Frameworks",
             second_page_text: "After looking into Spock’s GitHub",
@@ -495,18 +500,22 @@ exports.Files = {
         },
         LARGE_FILE: {
             file_location: "/resources/adf/BigFile.zip",
+            file_path: path.join(__dirname, '../resources/adf/BigFile.zip'),
             file_name: "BigFile.zip"
         },
         MEDIUM_FILE: {
             file_location: "/resources/adf/MediumFile.zip",
+            file_path: path.join(__dirname, '../resources/adf/MediumFile.zip'),
             file_name: "MediumFile.zip"
         },
         EXCEL: {
             file_location: "/resources/adf/allFileTypes/a_excel_file.xlsx",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_excel_file.xlsx'),
             file_name: "a_excel_file.xlsx"
         },
         DOCX: {
             file_location: "/resources/adf/allFileTypes/a_file_supported.docx",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_file_supported.docx'),
             file_name: "a_file_supported.docx",
             first_page_text: "A Journey into Test Frameworks",
             second_page_text: "After looking into Spock’s GitHub",
@@ -515,127 +524,158 @@ exports.Files = {
         },
         FOLDER_ONE: {
             folder_location: "/resources/adf/folderOne",
+            folder_path: path.join(__dirname, '../resources/adf/folderOne'),
             folder_name: "folderOne"
         },
         FOLDER_TWO: {
             folder_location: "/resources/adf/folderTwo",
+            folder_path: path.join(__dirname, '../resources/adf/folderTwo'),
             folder_name: "folderTwo"
         },
         FOLDER_EXCLUDED: {
             folder_location: "/resources/adf/folderExcluded",
+            folder_path: path.join(__dirname, '../resources/adf/folderExcluded'),
             folder_name: "folderExcluded"
         },
         FILE_INSIDE_FOLDER_ONE: {
             file_location: "/resources/adf/folderOne/share_profile_pic.png",
+            file_path: path.join(__dirname, '../resources/adf/folderOne/share_profile_pic.png'),
             file_name: "share_profile_pic.png"
         },
         FILE_INSIDE_FOLDER_TWO: {
             file_location: "/resources/adf/folderOne/a_file.txt",
+            file_path: path.join(__dirname, '../resources/adf/folderOne/a_file.txt'),
             file_name: "a_file.txt"
         },
         JPG: {
             file_location: "/resources/adf/allFileTypes/a_jpg_file.jpg",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_jpg_file.jpg'),
             file_name: "a_jpg_file.jpg"
         },
         MP4: {
             file_location: "/resources/adf/allFileTypes/a_mp4_file.mp4",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_mp4_file.mp4'),
             file_name: "a_mp4_file.mp4"
         },
         MP4_B: {
             file_location: "/resources/adf/allFileTypes/b_mp4_file.mp4",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/b_mp4_file.mp4'),
             file_name: "b_mp4_file.mp4"
         },
         PNG: {
             file_location: "/resources/adf/allFileTypes/a_png_file.png",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_png_file.png'),
             file_name: "a_png_file.png"
         },
         PNG_B: {
             file_location: "/resources/adf/allFileTypes/b_png_file.png",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/b_png_file.png'),
             file_name: "b_png_file.png"
         },
         PNG_C: {
             file_location: "/resources/adf/allFileTypes/c_png_file.png",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/c_png_file.png'),
             file_name: "c_png_file.png"
         },
         PNG_D: {
             file_location: "/resources/adf/allFileTypes/d_png_file.png",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/d_png_file.png'),
             file_name: "d_png_file.png"
         },
         PPT: {
             file_location: "/resources/adf/allFileTypes/a_ppt_file.pptx",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_ppt_file.pptx'),
             file_name: "a_ppt_file.pptx",
             first_page_text: "PPTX test file"
         },
         TEST: {
             file_location: "/resources/adf/allFileTypes/testExtension.test",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/testExtension.test'),
             file_name: "testExtension.test"
         },
         TXT: {
             file_location: "/resources/adf/allFileTypes/a_txt_file.rtf",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/a_txt_file.rtf'),
             file_name: "a_txt_file.rtf"
         },
         TXT_400B: {
             file_location: "/resources/adf/allFileTypes/file400Bytes.txt",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/file400Bytes.txt'),
             file_name: "file400Bytes.txt"
         },
         TXT_0B: {
             file_location: "/resources/adf/allFileTypes/zeroBytesFile.txt",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/zeroBytesFile.txt'),
             file_name: "zeroBytesFile.txt"
         },
         PAGES: {
             file_location: "/resources/adf/allFileTypes/file_unsupported.pages",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/file_unsupported.pages'),
             file_name: "file_unsupported.pages"
         },
         UNSUPPORTED: {
             file_location: "/resources/adf/allFileTypes/file_unsupported.3DS",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/file_unsupported.3DS'),
             file_name: "file_unsupported.3DS"
         },
         INI: {
             file_location: "/resources/adf/allFileTypes/desktop.ini",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/desktop.ini'),
             file_name: "desktop.ini"
         },
         ARCHIVE_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/archive",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/archive'),
             folder_name: "archive"
         },
         EXCEL_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/excel",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/excel'),
             folder_name: "excel"
         },
         OTHER_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/other",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/other'),
             folder_name: "other"
         },
         PPT_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/ppt",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/ppt'),
             folder_name: "ppt"
         },
         TEXT_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/text",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/text'),
             folder_name: "text"
         },
         FILE_ACCEPTED_INSIDE_TEXT_FOLDER: {
             file_location: "/resources/adf/allFileTypes/documents/text/a_odt_file.odt",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/text/a_odt_file.odt'),
             file_name: "a_odt_file.odt"
         },
         FILE_EXCLUDED_INSIDE_TEXT_FOLDER: {
             file_location: "/resources/adf/allFileTypes/documents/text/a_cpio_file.cpio",
+            file_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/text/a_cpio_file.cpio'),
             file_name: "a_cpio_file.cpio"
         },
         WORD_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/documents/word",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/documents/word'),
             folder_name: "word"
         },
         IMG_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/images",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/images'),
             folder_name: "images"
         },
         IMG_RENDITION_FOLDER: {
             folder_location: "/resources/adf/allFileTypes/images-rendition",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/images-rendition'),
             folder_name: "images-rendition"
         },
         ADF_FOLDER: {
             folder_location: "/resources/adf",
+            folder_path: path.join(__dirname, '../resources/adf'),
             folder_name: "adf"
         },
     },
@@ -643,10 +683,12 @@ exports.Files = {
     PROFILE_IMAGES: {
         ECM: {
             file_location: "/resources/adf/share_profile_pic.jpg",
+            file_path: path.join(__dirname, '../resources/adf/share_profile_pic.jpg'),
             file_name: "share_profile_pic.jpg"
         },
         BPM: {
             file_location: "/resources/adf/activiti_profile_pic.png",
+            file_path: path.join(__dirname, '../resources/adf/activiti_profile_pic.png'),
             file_name: "activiti_profile_pic.png"
         }
     }

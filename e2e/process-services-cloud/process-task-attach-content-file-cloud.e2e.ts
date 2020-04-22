@@ -58,12 +58,12 @@ describe('Process Task - Attach content file', () => {
 
     const pdfFileOne = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     };
 
     const pdfFileTwo = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
     const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');

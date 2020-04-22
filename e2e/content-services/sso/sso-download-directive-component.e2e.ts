@@ -45,12 +45,12 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     const firstPdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     });
 
     const pngFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     let pdfUploadedFile, pngUploadedFile, folder;

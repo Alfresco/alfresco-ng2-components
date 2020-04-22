@@ -54,17 +54,17 @@ describe('Permissions Component', () => {
 
     const fileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     const testFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const newVersionFile = new FileModel({

@@ -39,7 +39,7 @@ describe('Viewer', () => {
 
     const txtFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     beforeAll(async () => {

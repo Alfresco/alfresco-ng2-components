@@ -38,7 +38,7 @@ describe('Comment Component', () => {
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',

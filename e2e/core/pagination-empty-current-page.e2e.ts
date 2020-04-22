@@ -55,7 +55,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
     const pngFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     beforeAll(async () => {

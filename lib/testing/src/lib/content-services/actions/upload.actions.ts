@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import * as path from 'path';
 import * as fs from 'fs';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -29,8 +28,7 @@ export class UploadActions {
     }
 
     async uploadFile(fileLocation, fileName, parentFolderId): Promise<any> {
-        const pathFile = path.join(browser.params.rootPath + '/e2e' + fileLocation);
-        const file = fs.createReadStream(pathFile);
+        const file = fs.createReadStream(fileLocation);
 
         return this.alfrescoJsApi.upload.uploadFile(
             file,
@@ -70,8 +68,7 @@ export class UploadActions {
     }
 
     async uploadFolder(sourcePath, folder) {
-        const absolutePath = 'e2e/' + sourcePath;
-        const files = fs.readdirSync(path.join(browser.params.rootPath, absolutePath));
+        const files = fs.readdirSync(sourcePath);
         let uploadedFiles;
         const promises = [];
 

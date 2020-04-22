@@ -71,7 +71,7 @@ describe('Search component - Search Page', () => {
 
         firstFileModel = new FileModel({
             'name': search.active.firstFile,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

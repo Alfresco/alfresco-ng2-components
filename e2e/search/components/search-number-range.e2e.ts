@@ -40,12 +40,12 @@ describe('Search Number Range Filter', () => {
 
     const file2BytesModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path
     });
 
     const file0BytesModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     let file2Bytes, file0Bytes;
