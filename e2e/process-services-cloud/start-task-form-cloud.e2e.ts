@@ -325,10 +325,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C310358] Should be able to attach a file to a form from local', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(uploadLocalFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadLocalFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadLocalFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: uploadLocalFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(uploadLocalFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
@@ -342,10 +341,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311285] Should be able to attach a file to a form from acs repository', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: uploadContentFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
@@ -368,10 +366,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311287] Content node selector default location when attaching a file to a form from acs repository', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(uploadDefaultFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadDefaultFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadDefaultFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: uploadDefaultFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(uploadDefaultFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
@@ -394,10 +391,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311288] No file should be attached when canceling the content node selector', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(cancelUploadFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(cancelUploadFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', cancelUploadFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: cancelUploadFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(cancelUploadFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
@@ -418,10 +414,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311289] Should be able to attach single file', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: uploadContentFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
 
@@ -441,10 +436,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311292] Attached file is not displayed anymore after release if the form is not saved', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: uploadContentFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
 
@@ -468,10 +462,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311293] Attached file is displayed after release if the form was saved', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(uploadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', uploadContentFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: uploadContentFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
 
@@ -494,10 +487,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C311295] Attached file is displayed after complete', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(completeUploadFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(completeUploadFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', completeUploadFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: completeUploadFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(completeUploadFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
@@ -527,10 +519,9 @@ describe('Start Task Form', () => {
         });
 
         it('[C315292] Should be able to download attached file from acs repository', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(downloadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(downloadContentFileProcess.entry.name);
-            await processCloudDemoPage.processListCloudComponent().getDataTable().selectRow('Name', downloadContentFileProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: downloadContentFileProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+            await processCloudDemoPage.processListCloudComponent().selectRow(downloadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
             await taskFormCloudComponent.clickClaimButton();
