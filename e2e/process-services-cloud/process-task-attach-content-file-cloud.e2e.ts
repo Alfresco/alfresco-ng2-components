@@ -18,17 +18,17 @@
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import {
+    ApiService,
     AppListCloudPage,
-    LoginSSOPage,
-    StringUtil,
-    TaskFormCloudComponent,
-    ProcessCloudWidgetPage,
-    ViewerPage,
-    UploadActions,
     ContentNodeSelectorDialogPage,
+    LoginSSOPage,
+    ProcessCloudWidgetPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    ApiService
+    StringUtil,
+    TaskFormCloudComponent,
+    UploadActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -75,18 +75,21 @@ describe('Process Task - Attach content file', () => {
         processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
         processInstancesService = new ProcessInstancesService(apiService);
-        processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
         await this.alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
     });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+    });
+
+    beforeEach(async () => {
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
     });
 
     it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {
@@ -95,6 +98,9 @@ describe('Process Task - Attach content file', () => {
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName('upload process');
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
 
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
@@ -126,6 +132,10 @@ describe('Process Task - Attach content file', () => {
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
         await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
+
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
+        await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName('upload process');
+        await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
 
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);

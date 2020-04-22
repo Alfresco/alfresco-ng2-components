@@ -47,7 +47,6 @@ describe('Process list cloud', () => {
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
 
         beforeAll(async () => {
-
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
@@ -73,7 +72,6 @@ describe('Process list cloud', () => {
         afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeEach(async () => {
@@ -108,8 +106,8 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
 
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfSelectedRows()).toEqual(1);
@@ -124,8 +122,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsSelectedById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().selectRowWithKeyboard(processInstances[1]);
@@ -141,8 +139,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[1]);
@@ -158,8 +156,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
             await browser.sleep(1000);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
@@ -182,8 +180,8 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
             await processCloudDemoPage.processListCloudComponent().checkRowIsCheckedById(processInstances[0]);
             await processDetailsCloudDemoPage.checkListedSelectedProcessInstance(processInstances[0]);

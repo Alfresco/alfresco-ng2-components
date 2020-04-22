@@ -96,7 +96,6 @@ describe('Process Header cloud component', () => {
         afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeEach(async () => {
@@ -110,11 +109,10 @@ describe('Process Header cloud component', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(runningProcess.entry.name);
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: runningProcess.entry.name });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);
 
-            await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRow(runningProcess.entry.name);
             await expect(await processHeaderCloudPage.getId()).toEqual(runningProcess.entry.id);
             await expect(await processHeaderCloudPage.getName()).toEqual(runningProcess.entry.name);
@@ -133,8 +131,9 @@ describe('Process Header cloud component', () => {
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
-            await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-            await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
+
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ initiator: testUser.username });
+            await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(childCompleteProcess.entry.name);
 
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();

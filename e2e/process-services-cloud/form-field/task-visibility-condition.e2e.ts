@@ -15,13 +15,22 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, AppListCloudPage, IdentityService, GroupIdentityService, ApiService, StringUtil, StartTasksCloudPage, TaskFormCloudComponent, EditProcessFilterCloudComponentPage, StartProcessPage } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    AppListCloudPage,
+    IdentityService,
+    GroupIdentityService,
+    ApiService,
+    StringUtil,
+    StartTasksCloudPage,
+    TaskFormCloudComponent,
+    StartProcessPage
+} from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-services/process-cloud-demo.page';
-import { ProcessDetailsCloudDemoPage } from '../../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 
 describe('Task cloud visibility', async () => {
 
@@ -32,8 +41,6 @@ describe('Task cloud visibility', async () => {
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const startProcessPage = new StartProcessPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
-    const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
-    const editProcessFilterCloudComponentPage = new EditProcessFilterCloudComponentPage();
     const loginSSOPage = new LoginSSOPage();
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
@@ -74,6 +81,7 @@ describe('Task cloud visibility', async () => {
         await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.requirednumbervisibility.name);
 
         await startTask.clickStartButton();
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
@@ -90,7 +98,6 @@ describe('Task cloud visibility', async () => {
     });
 
     it('[C315169] Should be able to start a process with visibility condition for number widgets ', async () => {
-
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
@@ -98,9 +105,10 @@ describe('Task cloud visibility', async () => {
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.clickStartProcessButton();
 
-        await editProcessFilterCloudComponentPage.openFilter();
-        await editProcessFilterCloudComponentPage.setProcessName(processName);
-        await processDetailsCloudDemoPage.selectProcessTaskByName(processName);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });
+        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+        await processCloudDemoPage.processListCloudComponent().selectRow(processName);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow('number_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
@@ -122,16 +130,16 @@ describe('Task cloud visibility', async () => {
     });
 
     it('[C315232] Should be able to complete a process with visibility condition for boolean widgets', async () => {
-
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.booleanvisibilityprocess);
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.clickStartProcessButton();
 
-        await editProcessFilterCloudComponentPage.openFilter();
-        await editProcessFilterCloudComponentPage.setProcessName(processName);
-        await processDetailsCloudDemoPage.selectProcessTaskByName(processName);
+        await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });
+        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
+        await processCloudDemoPage.processListCloudComponent().selectRow(processName);
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow('boolean_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
@@ -154,6 +162,7 @@ describe('Task cloud visibility', async () => {
         await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.booleanvisibility.name);
 
         await startTask.clickStartButton();
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox2');

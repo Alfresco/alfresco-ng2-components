@@ -189,4 +189,14 @@ export class EditProcessFilterCloudComponentPage {
         await BrowserActions.click(this.saveButton);
     }
 
+    async setFilter({ name = '', status = '', sort = '', order = '', initiator = '', processName = '' }): Promise<void> {
+        await this.openFilter();
+        if (name)   { await this.setProcessName(name);            }
+        if (status) { await this.setStatusFilterDropDown(status); }
+        if (sort)   { await this.setSortFilterDropDown(sort);     }
+        if (order)  { await this.setOrderFilterDropDown(order);   }
+        if (initiator)  { await this.setProperty('initiator', initiator);   }
+        if (processName)  { await this.setProcessName(processName);   }
+        await this.openFilter();
+    }
 }
