@@ -91,7 +91,7 @@ export class BrowserActions {
         await elementFinder.sendKeys(text);
     }
 
-    static async clearSendKeysSlowType(elementFinder: ElementFinder, keys: string, delay: number = 100) {
+    static async clearSendKeysSlowType(elementFinder: ElementFinder, keys: string, delay: number = 500) {
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
