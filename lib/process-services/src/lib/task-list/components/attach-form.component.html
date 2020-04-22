@@ -1,7 +1,7 @@
 <div class="adf-attach-form">
     <mat-card>
         <mat-card-content>
-            <div class="adf-no-form-message-container">
+            <div class="adf-attache-form-message-container">
                 <mat-card-title class="mat-card-title">
                     <h4 class="adf-form-title">{{ 'ADF_TASK_LIST.ATTACH_FORM.SELECT_FORM' | translate }}</h4>
                 </mat-card-title>
@@ -23,13 +23,13 @@
             </div>
         </mat-card-content>
 
-        <mat-card-actions class="adf-no-form-mat-card-actions">
+        <mat-card-actions class="adf-attach-form-mat-card-actions">
             <div>
-                <button mat-button id="adf-no-form-remove-button" color="warn" *ngIf="formKey" (click)="onRemoveButtonClick()">{{ 'ADF_TASK_LIST.ATTACH_FORM.REMOVE_FORM' | translate }}</button>
+                <button mat-button id="adf-attach-form-remove-button" color="warn" *ngIf="formKey" (click)="onRemoveButtonClick()">{{ 'ADF_TASK_LIST.ATTACH_FORM.REMOVE_FORM' | translate }}</button>
             </div>
             <div>
-                <button mat-button id="adf-no-form-cancel-button" (click)="onCancelButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
-                <button mat-button id="adf-no-form-attach-form-button" [disabled]="disableSubmit" color="primary" (click)="onAttachFormButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
+                <button mat-button id="adf-attach-form-cancel-button" (click)="onCancelButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.ACTION.CANCEL' | translate }}</button>
+                <button mat-button id="adf-attach-form-attach-button" [disabled]="disableSubmit" color="primary" (click)="onAttachFormButtonClick()">{{ 'ADF_TASK_LIST.START_TASK.FORM.LABEL.ATTACHFORM' | translate }}</button>
             </div>
         </mat-card-actions>
     </mat-card>

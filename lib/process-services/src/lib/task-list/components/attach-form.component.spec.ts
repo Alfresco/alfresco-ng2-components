@@ -51,7 +51,7 @@ describe('AttachFormComponent', () => {
     it('should show the attach button disabled', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            const attachButton = fixture.debugElement.query(By.css('#adf-attach-form-attach-button'));
             expect(attachButton.nativeElement.disabled).toBeTruthy();
         });
     }));
@@ -60,7 +60,7 @@ describe('AttachFormComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const emitSpy = spyOn(component.cancelAttachForm, 'emit');
-            const el = fixture.nativeElement.querySelector('#adf-no-form-cancel-button');
+            const el = fixture.nativeElement.querySelector('#adf-attach-form-cancel-button');
             el.click();
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -72,8 +72,8 @@ describe('AttachFormComponent', () => {
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            expect(element.querySelector('#adf-no-form-attach-form-button')).toBeDefined();
-            const el = fixture.nativeElement.querySelector('#adf-no-form-attach-form-button');
+            expect(element.querySelector('#adf-attach-form-attach-button')).toBeDefined();
+            const el = fixture.nativeElement.querySelector('#adf-attach-form-attach-button');
             el.click();
             expect(taskService.attachFormToATask).toHaveBeenCalledWith(1, 2);
         });
@@ -87,7 +87,7 @@ describe('AttachFormComponent', () => {
         spyOn(taskService, 'attachFormToATask').and.returnValue(of(true));
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            const attachButton = fixture.debugElement.query(By.css('#adf-attach-form-attach-button'));
             expect(attachButton.nativeElement.disabled).toBeFalsy();
         });
     }));
@@ -103,7 +103,7 @@ describe('AttachFormComponent', () => {
             fixture.detectChanges();
             component.attachFormControl.setValue(2);
             fixture.detectChanges();
-            const attachButton = fixture.debugElement.query(By.css('#adf-no-form-attach-form-button'));
+            const attachButton = fixture.debugElement.query(By.css('#adf-attach-form-attach-button'));
             expect(attachButton.nativeElement.disabled).toBeTruthy();
         });
     }));
@@ -140,8 +140,8 @@ describe('AttachFormComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            expect(element.querySelector('#adf-no-form-remove-button')).toBeDefined();
-            const el = fixture.nativeElement.querySelector('#adf-no-form-remove-button');
+            expect(element.querySelector('#adf-attach-form-remove-button')).toBeDefined();
+            const el = fixture.nativeElement.querySelector('#adf-attach-form-remove-button');
             el.click();
             expect(component.formId).toBeNull();
         });
@@ -163,7 +163,7 @@ describe('AttachFormComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const emitSpy = spyOn(component.success, 'emit');
-            const el = fixture.nativeElement.querySelector('#adf-no-form-attach-form-button');
+            const el = fixture.nativeElement.querySelector('#adf-attach-form-attach-button');
             el.click();
             expect(emitSpy).toHaveBeenCalled();
         });

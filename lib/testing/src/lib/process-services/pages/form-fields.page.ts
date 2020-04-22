@@ -28,9 +28,9 @@ export class FormFieldsPage {
     saveButton: ElementFinder = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
     valueLocator: Locator = by.css('input');
     labelLocator: Locator = by.css('label');
-    noFormMessage: ElementFinder = element(by.css('span[id*="no-form-message"]'));
+    noFormMessage: ElementFinder = element(by.css('.adf-empty-content__title'));
     completedTaskNoFormMessage: ElementFinder = element(by.css('div[id*="completed-form-message"] p'));
-    attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
+    attachFormButton: ElementFinder = element(by.id('adf-attach-form-attach-button'));
     completeButton: ElementFinder = element(by.id('adf-form-complete'));
     errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 

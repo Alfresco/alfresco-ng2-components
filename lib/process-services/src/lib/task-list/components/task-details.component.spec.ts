@@ -36,8 +36,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import {
     noDataMock,
     taskDetailsMock,
-    standaloneTaskWithForm,
-    standaloneTaskWithoutForm,
     taskFormMock,
     tasksMock,
     taskDetailsWithOutAssigneeMock
@@ -64,7 +62,6 @@ describe('TaskDetailsComponent', () => {
     let getTaskDetailsSpy: jasmine.Spy;
     let getTasksSpy: jasmine.Spy;
     let assignTaskSpy: jasmine.Spy;
-    let completeTaskSpy: jasmine.Spy;
     let logService: LogService;
     let commentProcessService: CommentProcessService;
     let peopleProcessService: PeopleProcessService;
@@ -99,7 +96,6 @@ describe('TaskDetailsComponent', () => {
 
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeUser));
-        completeTaskSpy = spyOn(service, 'completeTask').and.returnValue(of({}));
         commentProcessService = TestBed.get(CommentProcessService);
 
         authService = TestBed.get(AuthenticationService);
@@ -175,42 +171,6 @@ describe('TaskDetailsComponent', () => {
         });
     }));
 
-    it('should display task standalone component when the task does not have an associated form', async(() => {
-        component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithoutForm));
-
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.isStandaloneTaskWithoutForm()).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
-        });
-    }));
-
-    it('should not display task standalone component when the task has a form', async(() => {
-        component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).toBeDefined();
-            expect(fixture.debugElement.query(By.css('adf-task-standalone'))).not.toBeNull();
-        });
-    }));
-
-    it('should display the AttachFormComponent when standaloneTaskWithForm and click on attach button', async(() => {
-        component.taskId = '123';
-        getTaskDetailsSpy.and.returnValue(of(standaloneTaskWithForm));
-        fixture.detectChanges();
-        component.onShowAttachForm();
-        fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(component.isStandaloneTaskWithForm()).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('adf-attach-form'))).toBeDefined();
-        });
-    }));
-
     it('should display the claim message when the task is not assigned', async(() => {
         component.taskDetails = taskDetailsWithOutAssigneeMock;
         fixture.detectChanges();
@@ -228,86 +188,6 @@ describe('TaskDetailsComponent', () => {
             expect(claimMessage).toBeNull();
         });
     }));
-
-    describe('and form with visiblity', () => {
-
-        beforeEach(async () => {
-            component.taskId = '123';
-            spyOn(formService, 'completeTaskForm').and.returnValue(of({}));
-            taskDetailsMock.formKey = '4';
-            getTaskDetailsSpy.and.returnValue(of(taskDetailsMock));
-            fixture.detectChanges();
-            await fixture.whenStable();
-        });
-
-        it('[C312410] - Should be possible to complete a task that has an invisible field on a form with a value', async (done) => {
-            component.formCompleted.subscribe((form: FormModel) => {
-                expect(form.id).toBe(taskFormMock.id);
-                done();
-            });
-            component.taskDetails.initiatorCanCompleteTask = true;
-            component.showNextTask = false;
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const inputTextOne: HTMLInputElement = fixture.nativeElement.querySelector('#text1');
-            expect(inputTextOne).toBeDefined();
-            expect(inputTextOne).not.toBeNull();
-            const inputTextTwo: HTMLInputElement = fixture.nativeElement.querySelector('#text2');
-            expect(inputTextTwo).toBeDefined();
-            expect(inputTextTwo).not.toBeNull();
-            let inputTextThree: HTMLInputElement = fixture.nativeElement.querySelector('#text3');
-            expect(inputTextThree).toBeDefined();
-            expect(inputTextThree).not.toBeNull();
-
-            inputTextOne.value = 'a';
-            inputTextOne.dispatchEvent(new Event('input'));
-            inputTextTwo.value = 'a';
-            inputTextTwo.dispatchEvent(new Event('input'));
-            inputTextThree.value = 'a';
-            inputTextThree.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            await fixture.whenStable();
-            inputTextThree = fixture.nativeElement.querySelector('#text3');
-            expect(inputTextThree).toBeDefined();
-            expect(inputTextThree).not.toBeNull();
-
-            inputTextOne.value = 'b';
-            inputTextOne.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const inputThreeContainer = fixture.nativeElement.querySelector('#field-text3-container');
-            expect(inputThreeContainer.hidden).toBe(true);
-            const completeOutcomeButton: HTMLButtonElement = fixture.nativeElement.querySelector('#adf-form-complete');
-            expect(completeOutcomeButton.hidden).toBe(false);
-            completeOutcomeButton.click();
-            fixture.detectChanges();
-        });
-
-        it('[C277278] - Should show if the form is valid via the validation icon', async () => {
-            const numberInput: HTMLInputElement = fixture.nativeElement.querySelector('#numberField');
-            let validationForm = fixture.nativeElement.querySelector('#adf-valid-form-icon');
-
-            expect(numberInput).toBeDefined();
-            expect(numberInput).not.toBeNull();
-            expect(validationForm.textContent).toBe('check_circle');
-
-            numberInput.value = 'a';
-            numberInput.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const invalidForm = fixture.nativeElement.querySelector('#adf-invalid-form-icon');
-            expect(invalidForm).not.toBeNull();
-            expect(invalidForm.textContent).toBe('error');
-
-            numberInput.value = '4';
-            numberInput.dispatchEvent(new Event('input'));
-            fixture.detectChanges();
-            await fixture.whenStable();
-            validationForm = fixture.nativeElement.querySelector('#adf-valid-form-icon');
-            expect(validationForm.textContent).toBe('check_circle');
-        });
-    });
 
     describe('change detection', () => {
 
@@ -412,11 +292,6 @@ describe('TaskDetailsComponent', () => {
             component.showNextTask = false;
             component.onComplete();
             expect(getTasksSpy).not.toHaveBeenCalled();
-        });
-
-        it('should call service to complete task when complete button clicked', () => {
-            component.onComplete();
-            expect(completeTaskSpy).toHaveBeenCalled();
         });
 
         it('should emit a complete event when complete button clicked and task completed', () => {

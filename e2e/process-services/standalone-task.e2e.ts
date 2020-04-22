@@ -81,7 +81,7 @@ describe('Start Task - Task App', () => {
         await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
         await taskPage.taskDetails().checkAttachFormButtonIsEnabled();
         await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
     });
 
     it('[C268910] Should a standalone task be displayed in completed tasks when completing it', async () => {
@@ -107,17 +107,20 @@ describe('Start Task - Task App', () => {
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[2]);
         await taskPage.formFields().noFormIsDisplayed();
+        await taskPage.taskDetails().clickAttachFormButton();
 
         const formFields = await taskPage.formFields();
-        await formFields.clickOnAttachFormButton();
         await formFields.selectForm(app.formName);
         await formFields.clickOnAttachFormButton();
 
+        await taskPage.formFields().checkFormIsDisplayed();
+        await taskPage.taskDetails().checkCompleteFormButtonIsDisplayed();
         await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
         const task = await taskPage.createNewTask();
+        const taskDetails = await taskPage.taskDetails();
         await task.addName(tasks[3]);
         await task.selectForm(app.formName);
         await task.clickStartButton();
@@ -134,6 +137,6 @@ describe('Start Task - Task App', () => {
 
         await taskPage.formFields().noFormIsDisplayed();
         await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
-        await expect(await taskPage.formFields().getNoFormMessage()).toEqual(noFormMessage);
+        await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
     });
 });

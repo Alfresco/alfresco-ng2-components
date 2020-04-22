@@ -99,6 +99,7 @@ describe('Attach Folder', () => {
         await contentNodeSelector.clickMoveCopyButton();
         await widget.attachFolderWidget().checkFolderIsAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
         await widget.attachFolderWidget().removeFolder(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
+        await taskPage.formFields().checkWidgetIsVisible(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
         await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
     });
 });

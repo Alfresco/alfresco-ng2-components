@@ -1,0 +1,74 @@
+<ng-container *ngIf="!loading; else loadingTemplate">
+  <adf-form *ngIf="hasFormKey(); else withoutForm"
+    [taskId]="taskDetails?.id"
+    [showTitle]="showFormTitle"
+    [showValidationIcon]="showFormValidationIcon"
+    [showRefreshButton]="showFormRefreshButton"
+    [showCompleteButton]="showFormCompleteButton"
+    [disableCompleteButton]="!isCompleteButtonEnabled()"
+    [showSaveButton]="isSaveButtonVisible()"
+    [readOnly]="isReadOnlyForm()"
+    [fieldValidators]="fieldValidators"
+    (formSaved)='onFormSaved($event)'
+    (formCompleted)='onFormCompleted($event)'
+    (formContentClicked)='onFormContentClick($event)'
+    (formLoaded)='onFormLoaded($event)'
+    (formError)='onFormError($event)'
+    (error)='onError($event)'
+    (executeOutcome)='onFormExecuteOutcome($event)'>
+  </adf-form>
+  <ng-template #withoutForm>
+    <adf-task-standalone *ngIf="isStandaloneTask(); else emptyFormMessage"
+        [taskName]="taskDetails.name"
+        [taskId]="taskDetails.id"
+        [isCompleted]="isCompletedTask()"
+        [hasCompletePermission]="isCompleteButtonVisible()"
+        [hideCancelButton]="showCancelButton"
+        (complete)="onCompleteTask()"
+        (showAttachForm)="onShowAttachForm()">
+    </adf-task-standalone>
+      <ng-template #emptyFormMessage>
+        <mat-card class="adf-task-form-container">
+            <mat-card-header>
+                <mat-card-title>
+                    <h4>
+                        <span class="adf-form-title">
+                            {{taskDetails.name}}
+                            <ng-container *ngIf="!taskDetails.name">
+                                {{'FORM.FORM_RENDERER.NAMELESS_TASK' | translate}}
+                            </ng-container>
+                        </span>
+                    </h4>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <adf-empty-content *ngIf="isCompletedTask(); else emptyFormTemplate"
+                    [icon]="'description'"
+                    [title]="getCompletedTaskTranslatedMessage() | async"
+                    [subtitle]="'ADF_TASK_FORM.COMPLETED_TASK.SUBTITLE'">
+                </adf-empty-content>
+                <ng-template #emptyFormTemplate>
+                    <adf-empty-content
+                        [icon]="'description'"
+                        [title]="'ADF_TASK_LIST.STANDALONE_TASK.NO_FORM_MESSAGE'"
+                        [subtitle]="'ADF_TASK_FORM.EMPTY_FORM.SUBTITLE'">
+                    </adf-empty-content>
+                </ng-template>
+            </mat-card-content>
+            <mat-card-actions class="adf-task-form-actions">
+                <button id="adf-no-form-cancel-button" mat-button *ngIf="showCancelButton" (click)="onCancel()">
+                    {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+                </button>
+                <button mat-button *ngIf="!isCompletedTask()" color="primary" (click)="onCompleteTask()" id="adf-no-form-complete-button">
+                    {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
+                </button>
+            </mat-card-actions>
+        </mat-card>
+      </ng-template>
+  </ng-template>
+</ng-container>
+<ng-template #loadingTemplate>
+  <div fxLayout="row" fxLayoutAlign="center stretch">
+      <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

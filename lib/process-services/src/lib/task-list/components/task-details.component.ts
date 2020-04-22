@@ -17,7 +17,6 @@
 
 import {
     PeopleProcessService, UserProcessModel,
-    AuthenticationService,
     CardViewUpdateService,
     ClickNotification,
     LogService,
@@ -42,8 +41,8 @@ import { Observable, Observer, of, Subject } from 'rxjs';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
-import { UserRepresentation } from '@alfresco/js-api';
 import { catchError, share, takeUntil } from 'rxjs/operators';
+import { TaskFormComponent } from './task-form/task-form.component';
 
 @Component({
     selector: 'adf-task-details',
@@ -60,6 +59,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
+
+    @ViewChild('activitiTaskForm')
+    taskFormComponent: TaskFormComponent;
 
     /** Toggles debug mode. */
     @Input()
@@ -179,11 +181,9 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     peopleSearch: Observable<UserProcessModel[]>;
 
-    currentLoggedUser: UserRepresentation;
     data: any;
 
     constructor(private taskListService: TaskListService,
-                private authService: AuthenticationService,
                 private peopleProcessService: PeopleProcessService,
                 private logService: LogService,
                 private cardViewUpdateService: CardViewUpdateService,
@@ -192,9 +192,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         this.peopleSearch = new Observable<UserProcessModel[]>((observer) => this.peopleSearchObserver = observer).pipe(share());
-        this.authService.getBpmLoggedUser().subscribe(user => {
-            this.currentLoggedUser = user;
-        });
 
         if (this.taskId) {
             this.loadDetails(this.taskId);
@@ -225,26 +222,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    isStandaloneTask(): boolean {
-        return !(this.taskDetails && (!!this.taskDetails.processDefinitionId));
-    }
-
-    isStandaloneTaskWithForm(): boolean {
-        return this.isStandaloneTask() && this.hasFormKey();
-    }
-
-    isStandaloneTaskWithoutForm(): boolean {
-        return this.isStandaloneTask() && !this.hasFormKey();
-    }
-
-    isFormComponentVisible(): boolean {
-        return this.hasFormKey() && !this.isShowAttachForm();
-    }
-
-    isTaskStandaloneComponentVisible(): boolean {
-        return this.isStandaloneTaskWithoutForm() && !this.isShowAttachForm();
-    }
-
     isShowAttachForm(): boolean {
         return this.showAttachForm;
     }
@@ -254,13 +231,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
      */
     private reset() {
         this.taskDetails = null;
-    }
-
-    /**
-     * Check if the task has a form
-     */
-    hasFormKey(): boolean {
-        return (this.taskDetails && (!!this.taskDetails.formKey));
     }
 
     isTaskActive() {
@@ -329,44 +299,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
         return !!this.taskDetails.assignee;
     }
 
-    private hasEmailAddress(): boolean {
-        return this.taskDetails.assignee.email ? true : false;
-    }
-
-    isAssignedToMe(): boolean {
-        return this.isAssigned() && this.hasEmailAddress() ?
-            this.isEmailEqual(this.taskDetails.assignee.email, this.currentLoggedUser.email) :
-            this.isExternalIdEqual(this.taskDetails.assignee.externalId, this.currentLoggedUser.externalId);
-    }
-
-    private isEmailEqual(assigneeMail: string, currentLoggedEmail: string): boolean {
-        return assigneeMail.toLocaleLowerCase() === currentLoggedEmail.toLocaleLowerCase();
-    }
-
-    private isExternalIdEqual(assigneeExternalId: string, currentUserExternalId: string): boolean {
-        return assigneeExternalId.toLocaleLowerCase() === currentUserExternalId.toLocaleLowerCase();
-    }
-
-    isCompleteButtonEnabled(): boolean {
-        return this.isAssignedToMe() || this.canInitiatorComplete();
-    }
-
-    isCompleteButtonVisible(): boolean {
-        return !this.hasFormKey() && this.isTaskActive() && this.isCompleteButtonEnabled();
-    }
-
-    canInitiatorComplete(): boolean {
-        return this.taskDetails.initiatorCanCompleteTask;
-    }
-
-    isSaveButtonVisible(): boolean {
-        return this.hasSaveButton() && (!this.canInitiatorComplete() || this.isAssignedToMe());
-    }
-
-    hasSaveButton(): boolean {
-        return this.showFormSaveButton;
-    }
-
     /**
      * Retrieve the next open task
      * @param processInstanceId
@@ -395,9 +327,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
      * Complete button clicked
      */
     onComplete(): void {
-        this.taskListService
-            .completeTask(this.taskId)
-            .subscribe(() => this.onFormCompleted(null));
+        this.onFormCompleted(null);
     }
 
     onShowAttachForm() {
@@ -410,6 +340,7 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
     onCompleteAttachForm() {
         this.showAttachForm = false;
+        this.taskFormComponent.loadTask(this.taskId);
         this.loadDetails(this.taskId);
     }
 
@@ -462,10 +393,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     onUnclaimAction(taskId: string): void {
         this.unClaimedTask.emit(taskId);
         this.loadDetails(taskId);
-    }
-
-    isCompletedTask(): boolean {
-        return this.taskDetails && this.taskDetails.endDate ? true : undefined;
     }
 
     searchUser(searchedWord: string) {

@@ -336,5 +336,20 @@
       "CHOOSE_ITEM": "Choose {{ name }} to...",
       "CHOOSE_IN": "Choose file in {{ name }}..."
     }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Attach a form that can be viewed later",
+      "COMPLETE-TASK-MESSAGE": "Task {{taskName}} completed",
+      "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
+      "BUTTONS": {
+        "COMPLETE": "COMPLETE",
+        "CANCEL": "CANCEL"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Task {{taskName}} completed",
+      "SUBTITLE": "No forms to be added"
+    }
   }
 }

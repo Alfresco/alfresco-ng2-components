@@ -31,6 +31,7 @@ import { NoTaskDetailsTemplateDirective } from './components/no-task-detail-temp
 import { StartTaskComponent } from './components/start-task.component';
 import { TaskAuditDirective } from './components/task-audit.directive';
 import { TaskDetailsComponent } from './components/task-details.component';
+import { TaskFormComponent } from './components/task-form/task-form.component';
 import { TaskFiltersComponent } from './components/task-filters.component';
 import { TaskHeaderComponent } from './components/task-header.component';
 import { TaskListComponent } from './components/task-list.component';
@@ -56,6 +57,7 @@ import { FormModule } from '../form/form.module';
         TaskFiltersComponent,
         TaskListComponent,
         TaskDetailsComponent,
+        TaskFormComponent,
         TaskAuditDirective,
         ChecklistComponent,
         TaskHeaderComponent,
@@ -68,6 +70,7 @@ import { FormModule } from '../form/form.module';
         TaskFiltersComponent,
         TaskListComponent,
         TaskDetailsComponent,
+        TaskFormComponent,
         TaskAuditDirective,
         ChecklistComponent,
         TaskHeaderComponent,

@@ -20,6 +20,7 @@ export * from './components/checklist.component';
 export * from './components/task-header.component';
 export * from './components/no-task-detail-template.directive';
 export * from './components/task-filters.component';
+export * from './components/task-form/task-form.component';
 export * from './components/task-details.component';
 export * from './components/task-audit.directive';
 export * from './components/start-task.component';

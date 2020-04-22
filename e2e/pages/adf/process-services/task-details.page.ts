@@ -55,10 +55,11 @@ export class TaskDetailsPage {
     involvePeopleHeader: ElementFinder = element(by.css('div[class="adf-search-text-header"]'));
     removeInvolvedPeople: ElementFinder = element(by.css('button[data-automation-id="Remove"]'));
     peopleTitle: ElementFinder = element(by.id('people-title'));
+    noFormMessage: ElementFinder = element(by.css('span[id*="no-form-message"]'));
     cancelAttachForm: ElementFinder = element(by.id('adf-no-form-cancel-button'));
     attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
     disabledAttachFormButton: ElementFinder = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
-    removeAttachForm: ElementFinder = element(by.id('adf-no-form-remove-button'));
+    removeAttachForm: ElementFinder = element(by.id('adf-attach-form-remove-button'));
     attachFormName: ElementFinder = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
     emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
     priority: ElementFinder = element(by.css('span[data-automation-id*="priority"] span'));
@@ -161,6 +162,14 @@ export class TaskDetailsPage {
     async clickForm(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.formNameField);
+    }
+
+    async checkStandaloneNoFormMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noFormMessage);
+    }
+
+    async getNoFormMessage(): Promise<string> {
+        return BrowserActions.getText(this.noFormMessage);
     }
 
     getAssignee(): Promise<string> {
