@@ -32,7 +32,7 @@ const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
 
 @Injectable({
-    providedIn: "root",
+    providedIn: 'root'
 })
 export class UploadService {
     private cache: { [key: string]: any } = {};
@@ -78,24 +78,24 @@ export class UploadService {
         private appConfigService: AppConfigService
     ) {
         this.appConfigService
-            .select("files.excluded")
+            .select('files.excluded')
             .subscribe(
                 (fileExcludedList) =>
-                    (this.excludedFileList = <string[]>fileExcludedList)
+                    (this.excludedFileList = <string[]> fileExcludedList)
             );
         this.appConfigService
-            .select("files.match-options")
+            .select('files.match-options')
             .subscribe(
                 (matchingOptions) => (this.matchingOptions = matchingOptions)
             );
         this.appConfigService
-            .select("folders.excluded")
+            .select('folders.excluded')
             .subscribe(
                 (excludedFoldersList) =>
-                    (this.excludedFoldersList = <string[]>excludedFoldersList)
+                    (this.excludedFoldersList = <string[]> excludedFoldersList)
             );
         this.appConfigService
-            .select("folders.match-options")
+            .select('folders.match-options')
             .subscribe(
                 (folderMatchingOptions) =>
                     (this.folderMatchingOptions = folderMatchingOptions)
@@ -243,8 +243,8 @@ export class UploadService {
      */
     getUploadPromise(file: FileModel): any {
         const opts: any = {
-            renditions: "doclib",
-            include: ["allowableOperations"],
+            renditions: 'doclib',
+            include: ['allowableOperations']
         };
 
         if (file.options.newVersion === true) {
@@ -280,27 +280,27 @@ export class UploadService {
     private beginUpload(file: FileModel, emitter: EventEmitter<any>): any {
         const promise = this.getUploadPromise(file);
         promise
-            .on("progress", (progress: FileUploadProgress) => {
+            .on('progress', (progress: FileUploadProgress) => {
                 this.onUploadProgress(file, progress);
             })
-            .on("abort", () => {
+            .on('abort', () => {
                 this.onUploadAborted(file);
                 if (emitter) {
-                    emitter.emit({ value: "File aborted" });
+                    emitter.emit({ value: 'File aborted' });
                 }
             })
-            .on("error", (err) => {
+            .on('error', (err) => {
                 this.onUploadError(file, err);
                 if (emitter) {
-                    emitter.emit({ value: "Error file uploaded" });
+                    emitter.emit({ value: 'Error file uploaded' });
                 }
             })
-            .on("success", (data) => {
+            .on('success', (data) => {
                 if (this.abortedFile === file.name) {
                     this.onUploadAborted(file);
                     this.deleteAbortedNode(data.entry.id);
                     if (emitter) {
-                        emitter.emit({ value: "File deleted" });
+                        emitter.emit({ value: 'File deleted' });
                     }
                 } else {
                     this.onUploadComplete(file, data);
@@ -415,7 +415,7 @@ export class UploadService {
         const actions = {
             [FileUploadStatus.Pending]: () => this.onUploadCancelled(file),
             [FileUploadStatus.Deleted]: () => this.onUploadDeleted(file),
-            [FileUploadStatus.Error]: () => this.onUploadError(file, null),
+            [FileUploadStatus.Error]: () => this.onUploadError(file, null)
         };
 
         return actions[file.status];
