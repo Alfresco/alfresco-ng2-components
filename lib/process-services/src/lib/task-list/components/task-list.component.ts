@@ -127,6 +127,10 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
     @Input()
     showContextMenu: boolean = false;
 
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
+
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();

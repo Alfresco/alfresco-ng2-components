@@ -74,6 +74,7 @@ when the task list is empty:
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
 | taskId | `string` |  | The id of a task |
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 

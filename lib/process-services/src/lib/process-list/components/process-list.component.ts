@@ -111,6 +111,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
     @Input()
     selectFirstRow: boolean = true;
 
+    /** Toggles the sticky header mode. */
+    @Input()
+    stickyHeader: boolean = false;
+
     /** Toggles custom context menu for the component. */
     @Input()
     showContextMenu: boolean = false;

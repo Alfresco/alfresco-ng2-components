@@ -65,6 +65,7 @@ when the process list is empty:
 | sort | `string` |  | Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc`. |
 | state | `string` |  | Defines the state of the processes. Possible values are `running`, `completed` and `all` |
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
+| stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
 
