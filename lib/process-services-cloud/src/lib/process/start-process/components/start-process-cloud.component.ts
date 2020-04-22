@@ -23,12 +23,12 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel, ContentLinkModel, FormService } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
-import { Subject, Observable, merge } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 @Component({
@@ -104,8 +104,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(private startProcessCloudService: StartProcessCloudService,
-                private formBuilder: FormBuilder,
-                private formService: FormService) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -114,10 +113,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             processDefinition: new FormControl('', [Validators.required, this.processDefinitionNameValidator()])
         });
 
-        const innerFormValues =  this.formService.formEvents.pipe(
-            filter((formEvent: Event) => formEvent.type === 'input')
-        ).pipe(takeUntil(this.onDestroy$));
-
         this.processDefinition.valueChanges
             .pipe(debounceTime(300))
             .pipe(takeUntil(this.onDestroy$))
@@ -125,7 +120,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                 this.selectProcessDefinitionByProcesDefinitionName(processDefinitionName);
         });
 
-        merge(this.processForm.valueChanges, innerFormValues)
+        this.processForm.valueChanges
         .pipe(
             debounceTime(400),
             distinctUntilChanged(),
