@@ -77,13 +77,5 @@ describe('Document List Component', () => {
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
         });
-
-        it('[C279925] Should display translated message when accessing a file without permissions if language is changed', async () => {
-            await navBar.openLanguageMenu();
-            await navBar.chooseLanguage('Italiano');
-            await browser.sleep(2000);
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
-            await expect(await errorPage.getErrorDescription()).toBe('Accesso alla risorsa sul server non consentito.');
-        });
    });
 });

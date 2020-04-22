@@ -27,13 +27,13 @@ export class BrowserActions {
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
-          try {
-            await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
-            await browser.executeScript(`arguments[0].click();`, elementFinder);
-          } catch (jsErr) {
-              Logger.error(`click error element ${elementFinder.locator()}`);
-              throw jsErr;
-          }
+            try {
+                await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
+                await browser.executeScript(`arguments[0].click();`, elementFinder);
+            } catch (jsErr) {
+                Logger.error(`click error element ${elementFinder.locator()}`);
+                throw jsErr;
+            }
         }
     }
 
@@ -89,6 +89,17 @@ export class BrowserActions {
         await elementFinder.sendKeys('');
         await elementFinder.clear();
         await elementFinder.sendKeys(text);
+    }
+
+    static async clearSendKeysSlowType(elementFinder: ElementFinder, keys: string, delay: number = 100) {
+        await this.click(elementFinder);
+        await elementFinder.sendKeys('');
+        await elementFinder.clear();
+
+        for (let i = 0; i < keys.length; i++) {
+            await elementFinder.sendKeys(keys[i]);
+            browser.sleep(delay);
+        }
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {

@@ -30,7 +30,7 @@ export class PeopleCloudComponentPage {
     assigneeChipList: ElementFinder = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
 
     async clearAssignee(): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
+        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, ' ');
         await this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
     }
 
@@ -40,16 +40,16 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssigneeAndSelect(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, name);
         await this.selectAssigneeFromList(name);
     }
 
     async searchAssignee(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, name);
     }
 
     async searchAssigneeToExisting(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, name);
     }
 
     async selectAssigneeFromList(name: string): Promise<void> {
@@ -142,7 +142,7 @@ export class PeopleCloudComponentPage {
     async checkPeopleActiveField(name): Promise <boolean> {
         const activePeopleField = element(by.css('people-cloud-widget .adf-readonly'));
         try {
-            await BrowserActions.clearSendKeys(activePeopleField, name);
+            await BrowserActions.clearSendKeysSlowType(activePeopleField, name);
             return true;
         } catch {
             return false;
