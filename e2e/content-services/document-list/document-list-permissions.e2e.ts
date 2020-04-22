@@ -26,7 +26,6 @@ describe('Document List Component', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const navBar = new NavigationBarPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -54,15 +53,11 @@ describe('Document List Component', () => {
             privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         });
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
             await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
-            await navBar.openLanguageMenu();
-            await navBar.chooseLanguage('English');
-
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {

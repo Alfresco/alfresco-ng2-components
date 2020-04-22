@@ -333,6 +333,7 @@ describe('Document List Component', () => {
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             let folderName = '';
             let folder = null;
+
             for (let i = 0; i < 20; i++) {
                 folderName = `MEESEEKS_000${i}`;
                 folder = await uploadActions.createFolder(folderName, '-my-');
@@ -342,7 +343,9 @@ describe('Document List Component', () => {
 
         afterAll(async () => {
             for (let i = 0; i <= folderCreated.length; i++) {
-                await uploadActions.deleteFileOrFolder(folderCreated[i].entry.id);
+                if (folderCreated[i]) {
+                    await uploadActions.deleteFileOrFolder(folderCreated[i].entry.id);
+                }
             }
         });
 

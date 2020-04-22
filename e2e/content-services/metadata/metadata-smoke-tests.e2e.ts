@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, BrowserActions, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import {
+    LoginPage,
+    LocalStorageUtil,
+    BrowserActions,
+    UploadActions,
+    ViewerPage,
+    StringUtil
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -48,7 +55,7 @@ describe('Metadata component', () => {
 
     const acsUser = new AcsUserModel();
 
-    const folderName = 'Metadata Folder';
+    const folderName = StringUtil.generateRandomString();
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,

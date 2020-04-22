@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { LoginPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
@@ -47,7 +47,7 @@ describe('Create folder directive', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await contentServicesPage.goToDocumentList();
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -55,11 +55,11 @@ describe('Create folder directive', () => {
 
     beforeEach(async () => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-   });
+    });
 
     afterEach(async () => {
         await browser.actions().sendKeys(Key.ESCAPE).perform();
-   });
+    });
 
     it('[C260154] Should not create the folder if cancel button is clicked', async () => {
         const folderName = 'cancelFolder';
@@ -106,7 +106,7 @@ describe('Create folder directive', () => {
     });
 
     it('[C260158] Should be possible add a folder description when create a new folder', async () => {
-        const folderName = 'folderDescription';
+        const folderName = StringUtil.generateRandomString();
         const description = 'this is the description';
 
         await contentServicesPage.clickOnCreateNewFolder();

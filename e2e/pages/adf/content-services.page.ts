@@ -58,10 +58,10 @@ export class ContentServicesPage {
     errorSnackBar: ElementFinder = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
     emptyPagination: ElementFinder = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     dragAndDrop: ElementFinder = element.all(by.css('adf-upload-drag-area div')).first();
-    nameHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_name"] > span'));
-    sizeHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span'));
-    createdByHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span'));
-    createdHeader: ElementFinder = element(by.css('div[data-automation-id="auto_id_createdAt"] > span'));
+    nameHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_name"] > span')).first();
+    sizeHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span')).first();
+    createdByHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span')).first();
+    createdHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_createdAt"] > span')).first();
     recentFiles: ElementFinder = element(by.css('.app-container-recent'));
     recentFilesExpanded: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header.mat-expanded'));
     recentFilesClosed: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header'));
@@ -87,7 +87,7 @@ export class ContentServicesPage {
     markedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
     notMarkedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
     multiSelectToggle: ElementFinder = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
-    selectAllCheckbox: ElementFinder = element(by.css('.adf-checkbox-sr-only'));
+    selectAllCheckbox: ElementFinder = element.all(by.css('.adf-checkbox-sr-only')).first();
     selectionModeDropdown: ElementFinder = element(by.css('.mat-select[aria-label="Selection Mode"]'));
     selectedNodesList: ElementArrayFinder = element.all(by.css('.app-content-service-settings li'));
 
