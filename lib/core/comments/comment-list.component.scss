@@ -48,7 +48,7 @@
             padding: 10px 5px;
             width: 30px;
             background-color: mat-color($primary);
-            color: mat-contrast($primary, default);
+            color: mat-color($primary, default-contrast);
             border-radius: 50%;
             font-size: 16px;
             text-align: center;
