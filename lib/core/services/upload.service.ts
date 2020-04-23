@@ -73,33 +73,8 @@ export class UploadService {
     >();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    constructor(
-        protected apiService: AlfrescoApiService,
-        private appConfigService: AppConfigService
-    ) {
-        this.appConfigService
-            .select('files.excluded')
-            .subscribe(
-                (fileExcludedList) =>
-                    (this.excludedFileList = <string[]> fileExcludedList)
-            );
-        this.appConfigService
-            .select('files.match-options')
-            .subscribe(
-                (matchingOptions) => (this.matchingOptions = matchingOptions)
-            );
-        this.appConfigService
-            .select('folders.excluded')
-            .subscribe(
-                (excludedFoldersList) =>
-                    (this.excludedFoldersList = <string[]> excludedFoldersList)
-            );
-        this.appConfigService
-            .select('folders.match-options')
-            .subscribe(
-                (folderMatchingOptions) =>
-                    (this.folderMatchingOptions = folderMatchingOptions)
-            );
+    constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
+
     }
 
     /**
@@ -133,13 +108,17 @@ export class UploadService {
     }
 
     private filterElement(file: FileModel) {
+        this.excludedFileList = <string[]> this.appConfigService.get('files.excluded');
+        this.excludedFoldersList = <string[]> this.appConfigService.get('folders.excluded');
         let isAllowed = true;
 
         if (this.excludedFileList) {
+            this.matchingOptions = this.appConfigService.get('files.match-options');
             isAllowed = this.isFileNameAllowed(file);
         }
 
         if (isAllowed && this.excludedFoldersList) {
+            this.folderMatchingOptions = this.appConfigService.get('folders.match-options');
             isAllowed = this.isParentFolderAllowed(file);
         }
         return isAllowed;
@@ -154,10 +133,7 @@ export class UploadService {
                     return currentFile.webkitRelativePath
                         .split('/')
                         .some((pathElement) => {
-                            const minimatch = new Minimatch(
-                                folderToExclude,
-                                this.folderMatchingOptions
-                            );
+                            const minimatch = new Minimatch(folderToExclude, this.folderMatchingOptions);
                             return minimatch.match(pathElement);
                         });
                 }).length === 0;

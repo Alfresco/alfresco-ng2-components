@@ -38,14 +38,8 @@ describe('UploadService', () => {
     });
 
     beforeEach(() => {
-        jasmine.Ajax.install();
         const appConfig: AppConfigService = TestBed.get(AppConfigService);
-        service = TestBed.get(UploadService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
-        service.queue = [];
-        service.activeTask = null;
-
-        const geppo = {
+        appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             files: {
                 excluded: ['.DS_Store', 'desktop.ini', '.git', '*.git', '*.SWF'],
@@ -55,7 +49,7 @@ describe('UploadService', () => {
                 }
             },
             folders: {
-                excluded: ['rollingPanda'],
+                excluded: ['ROLLINGPANDA'],
                 'match-options': {
                     /* cspell:disable-next-line */
                     nocase: true
@@ -63,7 +57,11 @@ describe('UploadService', () => {
             }
         };
 
-        appConfig.onLoadSubject.next(geppo);
+        service = TestBed.get(UploadService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service.queue = [];
+        service.activeTask = null;
+        jasmine.Ajax.install();
     });
 
     afterEach(() => {
@@ -100,22 +98,6 @@ describe('UploadService', () => {
     it('should match the extension in case insensitive way', () => {
         const file1 = new FileModel(new File([''], 'test.swf'));
         const file2 = new FileModel(new File([''], 'readme.md'));
-        const result = service.addToQueue(file1, file2);
-        expect(result.length).toBe(1);
-        expect(result[0]).toBe(file2);
-    });
-
-    it('should skip files if they are in an excluded folder', () => {
-        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
-        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
-        const result = service.addToQueue(file1, file2);
-        expect(result.length).toBe(1);
-        expect(result[0]).toBe(file2);
-    });
-
-    it('should match the folder in case insensitive way', () => {
-        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/ROLLINGPANDA/' }};
-        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
         const result = service.addToQueue(file1, file2);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file2);
@@ -342,6 +324,22 @@ describe('UploadService', () => {
         const result = service.addToQueue(file1, file2, file3, file4, file5);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file4);
+    });
+
+    it('should skip files if they are in an excluded folder', () => {
+        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
+        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
+    });
+
+    it('should match the folder in case insensitive way', () => {
+        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
+        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
     });
 
     it('should call onUploadDeleted if file was deleted', async(() => {

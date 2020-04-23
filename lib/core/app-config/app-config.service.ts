@@ -18,7 +18,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ObjectUtils } from '../utils/object-utils';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
 /* spellchecker: disable */
@@ -67,11 +67,11 @@ export class AppConfigService {
     };
 
     status: Status = Status.INIT;
-    onLoadSubject: BehaviorSubject<any>;
+    protected onLoadSubject: Subject<any>;
     onLoad: Observable<any>;
 
     constructor(private http: HttpClient) {
-        this.onLoadSubject = new BehaviorSubject(this.config);
+        this.onLoadSubject = new Subject();
         this.onLoad = this.onLoadSubject.asObservable();
     }
 
@@ -83,7 +83,7 @@ export class AppConfigService {
     select(property: string): Observable<any> {
         return this.onLoadSubject
             .pipe(
-                map((config) => ObjectUtils.getValue(config, property)),
+                map((config) => config[property]),
                 distinctUntilChanged()
             );
     }
