@@ -105,6 +105,7 @@ export class ProcessListCloudComponentPage {
     async clickOptionsButton(content: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Id', content);
+        await browser.sleep(1000);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
     }
