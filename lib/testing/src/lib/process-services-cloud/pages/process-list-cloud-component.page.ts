@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder, Locator, browser } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessListCloudComponentPage {
