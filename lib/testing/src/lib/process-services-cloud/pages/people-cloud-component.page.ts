@@ -30,7 +30,7 @@ export class PeopleCloudComponentPage {
     assigneeChipList: ElementFinder = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
 
     async clearAssignee(): Promise<void> {
-        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, ' ');
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
         await this.peopleCloudSearch.sendKeys(protractor.Key.BACK_SPACE);
     }
 
@@ -40,16 +40,16 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssigneeAndSelect(name: string): Promise<void> {
-        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
         await this.selectAssigneeFromList(name);
     }
 
     async searchAssignee(name: string): Promise<void> {
-        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 
     async searchAssigneeToExisting(name: string): Promise<void> {
-        await BrowserActions.clearSendKeysSlowType(this.peopleCloudSearch, name);
+        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 
     async selectAssigneeFromList(name: string): Promise<void> {
@@ -68,9 +68,14 @@ export class PeopleCloudComponentPage {
         return this.assigneeChipList.all(by.css('mat-chip')).first().getText();
     }
 
-    async checkUserIsDisplayed(name: string): Promise<void> {
-        const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
-        await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
+    async checkUserIsDisplayed(name: string): Promise<boolean> {
+        try {
+            const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
+            await BrowserVisibility.waitUntilElementIsVisible(assigneeRow);
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     async checkUserIsNotDisplayed(name: string): Promise<void> {
@@ -78,12 +83,12 @@ export class PeopleCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }
 
-    async checkOptionIsDisplayed(): Promise <void> {
+    async checkOptionIsDisplayed(): Promise<void> {
         const optionList = element(by.css('.adf-people-cloud-list'));
         await BrowserVisibility.waitUntilElementIsVisible(optionList);
     }
 
-    async checkOptionIsNotDisplayed(): Promise <void> {
+    async checkOptionIsNotDisplayed(): Promise<void> {
         const optionList = element(by.css('.adf-people-cloud-list'));
         await BrowserVisibility.waitUntilElementIsNotVisible(optionList);
     }
@@ -129,7 +134,7 @@ export class PeopleCloudComponentPage {
         await BrowserActions.click(peopleInput);
     }
 
-    async checkPeopleWidgetIsReadOnly (): Promise <boolean> {
+    async checkPeopleWidgetIsReadOnly(): Promise<boolean> {
         const readOnlyAttribute = element(by.css('people-cloud-widget .adf-readonly'));
         try {
             await BrowserVisibility.waitUntilElementIsVisible(readOnlyAttribute);
@@ -139,10 +144,10 @@ export class PeopleCloudComponentPage {
         }
     }
 
-    async checkPeopleActiveField(name): Promise <boolean> {
+    async checkPeopleActiveField(name): Promise<boolean> {
         const activePeopleField = element(by.css('people-cloud-widget .adf-readonly'));
         try {
-            await BrowserActions.clearSendKeysSlowType(activePeopleField, name);
+            await BrowserActions.clearSendKeys(activePeopleField, name);
             return true;
         } catch {
             return false;

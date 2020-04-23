@@ -108,7 +108,9 @@ describe('Process Header cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
+
             await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: runningProcess.entry.name });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcess.entry.name);

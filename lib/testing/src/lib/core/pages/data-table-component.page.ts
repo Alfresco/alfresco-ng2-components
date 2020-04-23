@@ -275,6 +275,7 @@ export class DataTableComponentPage {
     }
 
     async waitTillContentLoaded(): Promise<void> {
+        await browser.driver.sleep(500);
         await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
     }
 

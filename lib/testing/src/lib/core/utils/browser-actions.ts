@@ -91,17 +91,6 @@ export class BrowserActions {
         await elementFinder.sendKeys(text);
     }
 
-    static async clearSendKeysSlowType(elementFinder: ElementFinder, keys: string, delay: number = 500) {
-        await this.click(elementFinder);
-        await elementFinder.sendKeys('');
-        await elementFinder.clear();
-
-        for (let i = 0; i < keys.length; i++) {
-            await elementFinder.sendKeys(keys[i]);
-            await browser.sleep(delay);
-        }
-    }
-
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const valueCheck = await elementFinder.getAttribute('disabled');
