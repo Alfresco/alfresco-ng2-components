@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { from, Observable } from 'rxjs';
 
 export interface CallApiParams {
@@ -35,8 +35,6 @@ export interface CallApiParams {
 
 export class BaseCloudService {
 
-    protected contextRoot: string;
-
     protected defaultParams: CallApiParams = {
         path: '',
         httpMethod: '',
@@ -45,7 +43,9 @@ export class BaseCloudService {
         returnType: Object
     };
 
-    constructor(protected apiService: AlfrescoApiService) {}
+    constructor(
+        protected apiService: AlfrescoApiService,
+        protected appConfigService: AppConfigService) {}
 
     getBasePath(appName: string): string {
         return appName
@@ -112,5 +112,9 @@ export class BaseCloudService {
                 params.contextRoot,
                 params.responseType
             );
+    }
+
+    protected get contextRoot() {
+        return this.appConfigService.get('bpmHost', '');
     }
 }

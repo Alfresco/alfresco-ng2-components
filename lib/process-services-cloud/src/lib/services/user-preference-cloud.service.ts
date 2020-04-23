@@ -28,8 +28,7 @@ export class UserPreferenceCloudService extends BaseCloudService implements Pref
     apiService: AlfrescoApiService,
     appConfigService: AppConfigService,
     private logService: LogService) {
-    super(apiService);
-    this.contextRoot = appConfigService.get('bpmHost', '');
+    super(apiService, appConfigService);
   }
 
   /**

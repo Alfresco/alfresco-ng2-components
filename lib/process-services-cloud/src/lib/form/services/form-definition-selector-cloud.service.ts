@@ -29,8 +29,7 @@ export class FormDefinitionSelectorCloudService extends BaseCloudService {
 
     constructor(apiService: AlfrescoApiService,
                 appConfigService: AppConfigService) {
-        super(apiService);
-        this.contextRoot = appConfigService.get('bpmHost', '');
+        super(apiService, appConfigService);
     }
 
     /**

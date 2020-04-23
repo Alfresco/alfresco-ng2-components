@@ -41,8 +41,7 @@ export class FormCloudService extends BaseCloudService {
         apiService: AlfrescoApiService,
         appConfigService: AppConfigService
     ) {
-        super(apiService);
-        this.contextRoot = appConfigService.get('bpmHost', '');
+        super(apiService, appConfigService);
     }
 
     /**

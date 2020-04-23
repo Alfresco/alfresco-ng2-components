@@ -32,8 +32,7 @@ export class StartProcessCloudService extends BaseCloudService {
     constructor(apiService: AlfrescoApiService,
                 private logService: LogService,
                 appConfigService: AppConfigService) {
-        super(apiService);
-        this.contextRoot = appConfigService.get('bpmHost', '');
+        super(apiService, appConfigService);
     }
 
     /**
