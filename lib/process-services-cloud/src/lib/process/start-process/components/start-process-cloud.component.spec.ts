@@ -279,7 +279,7 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should create a process instance if the selection is valid and the form is valid', fakeAsync(() => {
+        it('should create a process instance if the selection is valid', fakeAsync(() => {
             component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
             component.name = 'testFormWithProcess';
             component.processDefinitionName = 'processwithoutform2';

@@ -158,7 +158,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private isProcessSelectionValid(): boolean {
-        return this.isProcessFormValid() && this.isProcessPayloadValid();
+        return this.processForm.valid && this.isProcessPayloadValid();
     }
 
     private getMaxNameLength(): number {
