@@ -46,12 +46,12 @@ describe('Search Sorting Picker', () => {
 
     const pngAModel = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     };
 
     const pngDModel = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     };
 
     let pngA, pngD;

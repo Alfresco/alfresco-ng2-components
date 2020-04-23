@@ -43,7 +43,7 @@ describe('Viewer', () => {
     let jsFileUploaded;
     const jsFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_path
     });
 
     beforeAll(async () => {

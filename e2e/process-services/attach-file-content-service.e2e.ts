@@ -55,12 +55,12 @@ describe('Attach File - Content service', () => {
 
     const pdfFileOne = {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.testConfig.main.rootPath  + browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     };
 
     const pdfFileTwo = {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
     const externalFile = 'Project Overview.ppt';

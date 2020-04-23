@@ -51,12 +51,12 @@ describe('Version component permissions', () => {
 
     const lockFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_path
     });
 
     const differentCreatorFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     });
 
     this.alfrescoJsApi = new AlfrescoApi({
@@ -120,7 +120,7 @@ describe('Version component permissions', () => {
 
         const sameCreatorFile = new FileModel({
             'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
         });
 
         beforeAll(async () => {
@@ -194,7 +194,7 @@ describe('Version component permissions', () => {
     describe('Contributor', () => {
         const sameCreatorFile = new FileModel({
             'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
         });
 
         beforeAll(async () => {
@@ -250,7 +250,7 @@ describe('Version component permissions', () => {
     describe('Collaborator', () => {
         const sameCreatorFile = new FileModel({
             'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+            'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
         });
 
         beforeAll(async () => {

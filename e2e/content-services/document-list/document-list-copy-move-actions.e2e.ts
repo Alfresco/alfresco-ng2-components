@@ -51,12 +51,12 @@ describe('Document List Component', () => {
 
     const pdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const testFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
     beforeAll(async () => {

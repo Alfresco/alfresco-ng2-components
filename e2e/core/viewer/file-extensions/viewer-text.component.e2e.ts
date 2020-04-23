@@ -38,7 +38,7 @@ describe('Viewer', () => {
 
     const textFolderInfo = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_path
     });
 
     beforeAll(async () => {

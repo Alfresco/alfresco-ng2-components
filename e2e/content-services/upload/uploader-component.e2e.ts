@@ -43,7 +43,7 @@ describe('Upload component', () => {
 
     const firstPdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     });
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,

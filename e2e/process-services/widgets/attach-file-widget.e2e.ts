@@ -69,7 +69,7 @@ describe('Attach widget - File', () => {
         await newTask.selectForm(app.formName);
         await newTask.clickStartButton();
 
-        await widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
+        await widget.attachFileWidget().attachFile(appFields.attachFile_id, pdfFile.location);
         await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
     });
 

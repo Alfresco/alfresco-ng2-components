@@ -41,7 +41,7 @@ describe('Viewer', () => {
 
     const wordFolderInfo = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_path
     });
 
     beforeAll(async () => {

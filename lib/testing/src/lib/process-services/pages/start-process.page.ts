@@ -96,6 +96,10 @@ export class StartProcessPage {
         await BrowserActions.click(this.cancelProcessButton);
     }
 
+    async isCancelProcessButtonEnabled(): Promise<boolean> {
+        return this.cancelProcessButton.isEnabled();
+    }
+
     async clickFormStartProcessButton(): Promise<void> {
         await BrowserActions.click(this.formStartProcessButton);
     }

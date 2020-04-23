@@ -44,12 +44,12 @@ describe('Viewer', () => {
 
     const pngFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const wordFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
     });
 
     let pngFileShared, wordFileUploaded;

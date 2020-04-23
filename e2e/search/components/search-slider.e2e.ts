@@ -40,7 +40,7 @@ describe('Search Slider Filter', () => {
 
     const file2BytesModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_location
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path
     });
 
     let file2Bytes;

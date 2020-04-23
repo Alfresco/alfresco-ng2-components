@@ -43,7 +43,7 @@ describe('Favorite directive', () => {
     });
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const uploadActions = new UploadActions(this.alfrescoJsApi);

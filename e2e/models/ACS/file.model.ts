@@ -26,7 +26,7 @@ export class FileModel {
     id = StringUtil.generateRandomString();
     name = StringUtil.generateRandomString();
     shortName = this.name;
-    location = browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location;
+    location = browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path;
     tooltip = this.name;
     version = '';
     firstPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text;

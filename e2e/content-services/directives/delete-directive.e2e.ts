@@ -42,37 +42,37 @@ describe('Delete Directive', () => {
 
     const txtFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const file0BytesModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     const pdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const secondPdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     });
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const secondPngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
     });
 
     const folderInfo = new FolderModel({
         name: 'myFolder',
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_path
     });
 
     const folderSecond = new FolderModel({
