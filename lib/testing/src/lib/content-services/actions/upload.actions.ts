@@ -19,6 +19,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
+import { ApiUtil } from '../../core/structure/api.util';
+import { Logger } from '../../core/utils/logger';
 
 export class UploadActions {
     alfrescoJsApi: AlfrescoApi = null;
@@ -64,7 +66,15 @@ export class UploadActions {
     }
 
     async deleteFileOrFolder(nodeId) {
-        return this.alfrescoJsApi.node.deleteNode(nodeId, { permanent: true });
+        const apiCall = async () => {
+            try {
+                return this.alfrescoJsApi.node.deleteNode(nodeId, { permanent: true });
+            } catch (error) {
+                Logger.error('Error delete file or folder');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, () => true);
     }
 
     async uploadFolder(sourcePath, folder) {

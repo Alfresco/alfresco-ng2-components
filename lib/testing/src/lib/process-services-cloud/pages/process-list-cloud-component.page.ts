@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder, Locator, browser } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessListCloudComponentPage {
@@ -105,6 +105,7 @@ export class ProcessListCloudComponentPage {
     async clickOptionsButton(content: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row: ElementFinder = this.dataTable.getRow('Id', content);
+        await browser.sleep(1000);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
     }

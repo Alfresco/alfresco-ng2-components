@@ -74,42 +74,55 @@ describe('Task Header cloud component', () => {
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
 
+    const createCompletedTask = async function () {
+        const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
+            simpleApp, { priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate });
+        await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
+        await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
+        return tasksService.getTask(completedTaskId.entry.id, simpleApp);
+    };
+
+    const createSubTask = async function (createdTaskId) {
+        const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
+        await tasksService.claimTask(subTaskId.entry.id, simpleApp);
+        return  tasksService.getTask(subTaskId.entry.id, simpleApp);
+    };
+
+    const createTask = async function () {
+        const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
+        await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
+        basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
+        basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
+        return createdTaskId;
+    };
+
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
         tasksService = new TasksService(apiService);
 
-        const createdTaskId = await tasksService.createStandaloneTask(basicCreatedTaskName, simpleApp);
         unclaimedTask = await tasksService.createStandaloneTask(unclaimedTaskName, simpleApp);
 
-        await tasksService.claimTask(createdTaskId.entry.id, simpleApp);
+        const createdTaskId = await createTask();
 
-        basicCreatedTask = await tasksService.getTask(createdTaskId.entry.id, simpleApp);
+        completedTask = await createCompletedTask();
 
-        basicCreatedDate = moment(basicCreatedTask.entry.createdDate).format(formatDate);
-
-        const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
-            simpleApp, { priority: priority, description: description, dueDate: basicCreatedTask.entry.createdDate });
-        await tasksService.claimTask(completedTaskId.entry.id, simpleApp);
-        await tasksService.completeTask(completedTaskId.entry.id, simpleApp);
-        completedTask = await tasksService.getTask(completedTaskId.entry.id, simpleApp);
         completedCreatedDate = moment(completedTask.entry.createdDate).format(formatDate);
-        dueDate = moment(completedTask.entry.createdDate).format(dateTimeFormat);
+        dueDate = moment(completedTask.entry.dueDate).format(dateTimeFormat);
         completedEndDate = moment(completedTask.entry.endDate).format(formatDate);
         defaultDate = moment(completedTask.entry.createdDate).format(defaultFormat);
 
-        const subTaskId = await tasksService.createStandaloneSubtask(createdTaskId.entry.id, simpleApp, StringUtil.generateRandomString());
-        await tasksService.claimTask(subTaskId.entry.id, simpleApp);
-        subTask = await tasksService.getTask(subTaskId.entry.id, simpleApp);
+        subTask = await createSubTask(createdTaskId);
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
+        await browser.sleep(3000);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
     });
 
@@ -128,6 +141,7 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
+
         await expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(basicCreatedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
@@ -147,6 +161,7 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+
         await expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(completedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
@@ -166,6 +181,7 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
+
         await expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(subTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
@@ -209,11 +225,14 @@ describe('Task Header cloud component', () => {
         await tasksCloudDemoPage.editTaskFilterCloud.openFilter();
         await tasksCloudDemoPage.editTaskFilterCloud.setStatusFilterDropDown('ALL');
         await tasksCloudDemoPage.editTaskFilterCloud.clearAssignee();
+
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unclaimedTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(unclaimedTask.entry.name);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
         const currentAssignee = await taskHeaderCloudPage.assigneeCardTextItem.getFieldValue();
         await expect(currentAssignee).toBe('No assignee');
+
         await taskHeaderCloudPage.priorityCardTextItem.checkElementIsReadonly();
         await taskHeaderCloudPage.statusCardTextItem.checkElementIsReadonly();
     });

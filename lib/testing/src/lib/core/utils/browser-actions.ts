@@ -27,13 +27,13 @@ export class BrowserActions {
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
-          try {
-            await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
-            await browser.executeScript(`arguments[0].click();`, elementFinder);
-          } catch (jsErr) {
-              Logger.error(`click error element ${elementFinder.locator()}`);
-              throw jsErr;
-          }
+            try {
+                await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
+                await browser.executeScript(`arguments[0].click();`, elementFinder);
+            } catch (jsErr) {
+                Logger.error(`click error element ${elementFinder.locator()}`);
+                throw jsErr;
+            }
         }
     }
 

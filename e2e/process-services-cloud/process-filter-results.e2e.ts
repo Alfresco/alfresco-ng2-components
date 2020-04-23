@@ -170,7 +170,6 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setAppNameDropDown('subprocessapp');
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
 
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 
@@ -213,7 +212,6 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(runningProcessInstance.entry.name);
 
-        await browser.driver.sleep(1000);
         await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().getNumberOfRows()).toBe(1);
 
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('processInstanceId', anotherProcessInstance.entry.id);
@@ -345,7 +343,6 @@ describe('Process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedFrom', afterDate);
         await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('lastModifiedTo', afterDate);
-        await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
     });
 });

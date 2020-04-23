@@ -61,7 +61,7 @@ export class DateTimeWidgetPage {
     }
 
     async selectTime(time): Promise<void> {
-        const selectedTime = element(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time));
+        const selectedTime = element.all(by.cssContainingText('div[class*="mat-datetimepicker-clock-cell"]', time)).first();
         await BrowserActions.click(selectedTime);
     }
 
