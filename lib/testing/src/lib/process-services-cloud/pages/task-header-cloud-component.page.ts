@@ -39,10 +39,6 @@ export class TaskHeaderCloudPage {
         return this.assigneeCardTextItem.getFieldValue();
     }
 
-    async clickOnAssignee(): Promise<void> {
-        await this.assigneeCardTextItem.clickOnToggleTextField();
-    }
-
     async getStatus(): Promise<string> {
         return this.statusCardTextItem.getFieldValue();
     }

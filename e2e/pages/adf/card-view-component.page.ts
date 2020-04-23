@@ -49,10 +49,6 @@ export class CardViewComponentPage {
         return this.nameCardTextItem.getFieldValue();
     }
 
-    async clickOnNameTextField(): Promise<void> {
-        await this.nameCardTextItem.clickOnToggleTextField();
-    }
-
     async enterNameTextField(text: string): Promise<void> {
         await this.nameCardTextItem.enterTextField(text);
     }
