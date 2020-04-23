@@ -36,8 +36,7 @@ export class TaskCloudService extends BaseCloudService {
         private logService: LogService,
         private identityUserService: IdentityUserService
     ) {
-        super(apiService);
-        this.contextRoot = appConfigService.get('bpmHost', '');
+        super(apiService, appConfigService);
     }
 
     /**
