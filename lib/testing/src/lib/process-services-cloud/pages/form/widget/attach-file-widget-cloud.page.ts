@@ -37,7 +37,7 @@ export class AttachFileWidgetCloudPage {
         await browser.setFileDetector(new remote.FileDetector());
         const uploadButton = this.widget.element(by.css(`a input`));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
-        await uploadButton.sendKeys(browser.params.rootPath + '/e2e' + fileLocation);
+        await uploadButton.sendKeys(fileLocation);
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
     }
 

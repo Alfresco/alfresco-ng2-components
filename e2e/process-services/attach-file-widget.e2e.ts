@@ -44,7 +44,7 @@ describe('Start Task - Task App', () => {
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const wordFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        location: browser.params.testConfig.main.rootPath + browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
     });
     const appFields = app.form_fields;
 
@@ -71,7 +71,7 @@ describe('Start Task - Task App', () => {
         await newTask.selectForm(app.formName);
         await newTask.clickStartButton();
 
-        await widget.attachFileWidget().attachFile(appFields.attachFile_id, browser.params.testConfig.main.rootPath + pdfFile.location);
+        await widget.attachFileWidget().attachFile(appFields.attachFile_id, pdfFile.location);
         await widget.attachFileWidget().checkFileIsAttached(appFields.attachFile_id, pdfFile.name);
 
         await widget.attachFileWidget().viewFile(pdfFile.name);
