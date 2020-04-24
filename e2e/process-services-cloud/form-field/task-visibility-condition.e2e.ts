@@ -103,6 +103,7 @@ describe('Task cloud visibility', async () => {
         await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
 
         await startProcessPage.enterProcessName(processName);
+        await browser.sleep(400);
         await startProcessPage.clickStartProcessButton();
 
         await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });
@@ -134,6 +135,7 @@ describe('Task cloud visibility', async () => {
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.booleanvisibilityprocess);
         await startProcessPage.enterProcessName(processName);
+        await browser.sleep(400);
         await startProcessPage.clickStartProcessButton();
 
         await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });

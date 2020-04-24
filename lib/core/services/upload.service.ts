@@ -35,13 +35,14 @@ const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
     providedIn: 'root'
 })
 export class UploadService {
-
     private cache: { [key: string]: any } = {};
     private totalComplete: number = 0;
     private totalAborted: number = 0;
     private totalError: number = 0;
     private excludedFileList: string[] = [];
+    private excludedFoldersList: string[] = [];
     private matchingOptions: any = null;
+    private folderMatchingOptions: any = null;
     private abortedFile: string;
 
     activeTask: Promise<any> = null;
@@ -49,16 +50,31 @@ export class UploadService {
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadStarting: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadProgress: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadAborted: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<FileUploadErrorEvent>();
-    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
-    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
+    fileUploadStarting: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+    >();
+    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+    >();
+    fileUploadProgress: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+    >();
+    fileUploadAborted: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+    >();
+    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<
+        FileUploadErrorEvent
+    >();
+    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<
+        FileUploadCompleteEvent
+    >();
+    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<
+        FileUploadDeleteEvent
+    >();
     fileDeleted: Subject<string> = new Subject<string>();
 
     constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
+
     }
 
     /**
@@ -83,26 +99,56 @@ export class UploadService {
      * @returns Array of files that were not blocked from upload by the ignore list
      */
     addToQueue(...files: FileModel[]): FileModel[] {
-        const allowedFiles = files.filter((currentFile) => this.filterElement(currentFile));
+        const allowedFiles = files.filter((currentFile) =>
+            this.filterElement(currentFile)
+        );
         this.queue = this.queue.concat(allowedFiles);
         this.queueChanged.next(this.queue);
         return allowedFiles;
     }
 
     private filterElement(file: FileModel) {
+        this.excludedFileList = <string[]> this.appConfigService.get('files.excluded');
+        this.excludedFoldersList = <string[]> this.appConfigService.get('folders.excluded');
         let isAllowed = true;
 
-        this.excludedFileList = <string[]> this.appConfigService.get('files.excluded');
         if (this.excludedFileList) {
-
             this.matchingOptions = this.appConfigService.get('files.match-options');
+            isAllowed = this.isFileNameAllowed(file);
+        }
 
-            isAllowed = this.excludedFileList.filter((pattern) => {
-                const minimatch = new Minimatch(pattern, this.matchingOptions);
-                return minimatch.match(file.name);
-            }).length === 0;
+        if (isAllowed && this.excludedFoldersList) {
+            this.folderMatchingOptions = this.appConfigService.get('folders.match-options');
+            isAllowed = this.isParentFolderAllowed(file);
         }
         return isAllowed;
+    }
+
+    private isParentFolderAllowed(file: FileModel): boolean {
+        let isAllowed: boolean = true;
+        const currentFile: any = file.file;
+        const fileRelativePath = currentFile.webkitRelativePath ? currentFile.webkitRelativePath : file.options.path;
+        if (currentFile && fileRelativePath) {
+            isAllowed =
+                this.excludedFoldersList.filter((folderToExclude) => {
+                    return fileRelativePath
+                        .split('/')
+                        .some((pathElement) => {
+                            const minimatch = new Minimatch(folderToExclude, this.folderMatchingOptions);
+                            return minimatch.match(pathElement);
+                        });
+                }).length === 0;
+        }
+        return isAllowed;
+    }
+
+    private isFileNameAllowed(file: FileModel): boolean {
+        return (
+            this.excludedFileList.filter((pattern) => {
+                const minimatch = new Minimatch(pattern, this.matchingOptions);
+                return minimatch.match(file.name);
+            }).length === 0
+        );
     }
 
     /**
@@ -111,7 +157,9 @@ export class UploadService {
      */
     uploadFilesInTheQueue(emitter?: EventEmitter<any>): void {
         if (!this.activeTask) {
-            const file = this.queue.find((currentFile) => currentFile.status === FileUploadStatus.Pending);
+            const file = this.queue.find(
+                (currentFile) => currentFile.status === FileUploadStatus.Pending
+            );
             if (file) {
                 this.onUploadStarting(file);
 
@@ -150,7 +198,6 @@ export class UploadService {
                 this.abortedFile = file.name;
                 delete this.cache[file.name];
                 promise.next();
-
             } else {
                 const performAction = this.getAction(file);
                 performAction();
@@ -191,28 +238,28 @@ export class UploadService {
         }
 
         if (file.id) {
-            return this.apiService.getInstance().node.updateNodeContent(
-                file.id,
-                file.file,
-                opts
-            );
+            return this.apiService
+                .getInstance()
+                .node.updateNodeContent(file.id, file.file, opts);
         } else {
-            return this.apiService.getInstance().upload.uploadFile(
-                file.file,
-                file.options.path,
-                file.options.parentId,
-                file.options,
-                opts
-            );
+            return this.apiService
+                .getInstance()
+                .upload.uploadFile(
+                    file.file,
+                    file.options.path,
+                    file.options.parentId,
+                    file.options,
+                    opts
+                );
         }
     }
 
     private beginUpload(file: FileModel, emitter: EventEmitter<any>): any {
-
         const promise = this.getUploadPromise(file);
-        promise.on('progress', (progress: FileUploadProgress) => {
-            this.onUploadProgress(file, progress);
-        })
+        promise
+            .on('progress', (progress: FileUploadProgress) => {
+                this.onUploadProgress(file, progress);
+            })
             .on('abort', () => {
                 this.onUploadAborted(file);
                 if (emitter) {
@@ -239,7 +286,7 @@ export class UploadService {
                     }
                 }
             })
-            .catch(() => { });
+            .catch(() => {});
 
         return promise;
     }
@@ -253,7 +300,10 @@ export class UploadService {
         }
     }
 
-    private onUploadProgress(file: FileModel, progress: FileUploadProgress): void {
+    private onUploadProgress(
+        file: FileModel,
+        progress: FileUploadProgress
+    ): void {
         if (file) {
             file.progress = progress;
             file.status = FileUploadStatus.Progress;
@@ -275,7 +325,11 @@ export class UploadService {
                 delete this.cache[file.name];
             }
 
-            const event = new FileUploadErrorEvent(file, error, this.totalError);
+            const event = new FileUploadErrorEvent(
+                file,
+                error,
+                this.totalError
+            );
             this.fileUpload.next(event);
             this.fileUploadError.next(event);
         }
@@ -291,7 +345,12 @@ export class UploadService {
                 delete this.cache[file.name];
             }
 
-            const event = new FileUploadCompleteEvent(file, this.totalComplete, data, this.totalAborted);
+            const event = new FileUploadCompleteEvent(
+                file,
+                this.totalComplete,
+                data,
+                this.totalAborted
+            );
             this.fileUpload.next(event);
             this.fileUploadComplete.next(event);
         }
@@ -340,12 +399,16 @@ export class UploadService {
     }
 
     private deleteAbortedNode(nodeId: string) {
-        this.apiService.getInstance().core.nodesApi.deleteNode(nodeId, { permanent: true })
-            .then(() => this.abortedFile = undefined);
-
+        this.apiService
+            .getInstance()
+            .core.nodesApi.deleteNode(nodeId, { permanent: true })
+            .then(() => (this.abortedFile = undefined));
     }
 
     private isSaveToAbortFile(file: FileModel): boolean {
-        return file.size > MIN_CANCELLABLE_FILE_SIZE && file.progress.percent < MAX_CANCELLABLE_FILE_PERCENTAGE;
+        return (
+            file.size > MIN_CANCELLABLE_FILE_SIZE &&
+            file.progress.percent < MAX_CANCELLABLE_FILE_PERCENTAGE
+        );
     }
 }

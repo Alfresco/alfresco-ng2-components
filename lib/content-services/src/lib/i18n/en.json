@@ -342,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "No nodeId provided!"
+    "MISSING-ID": "No nodeId provided!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Toggle {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

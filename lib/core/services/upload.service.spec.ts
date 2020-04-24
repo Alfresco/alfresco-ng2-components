@@ -47,6 +47,13 @@ describe('UploadService', () => {
                     /* cspell:disable-next-line */
                     nocase: true
                 }
+            },
+            folders: {
+                excluded: ['ROLLINGPANDA'],
+                'match-options': {
+                    /* cspell:disable-next-line */
+                    nocase: true
+                }
             }
         };
 
@@ -317,6 +324,30 @@ describe('UploadService', () => {
         const result = service.addToQueue(file1, file2, file3, file4, file5);
         expect(result.length).toBe(1);
         expect(result[0]).toBe(file4);
+    });
+
+    it('should skip files if they are in an excluded folder', () => {
+        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
+        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
+    });
+
+    it('should match the folder in case insensitive way', () => {
+        const file1: any = { name: 'readmetoo.md', file : { webkitRelativePath: '/rollingPanda/' }};
+        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
+    });
+
+    it('should skip files if they are in an excluded folder when path is in options', () => {
+        const file1: any = { name: 'readmetoo.md', file : {}, options: { path: '/rollingPanda/'}};
+        const file2: any = { name: 'readme.md', file : { webkitRelativePath: '/test/' }};
+        const result = service.addToQueue(file1, file2);
+        expect(result.length).toBe(1);
+        expect(result[0]).toBe(file2);
     });
 
     it('should call onUploadDeleted if file was deleted', async(() => {

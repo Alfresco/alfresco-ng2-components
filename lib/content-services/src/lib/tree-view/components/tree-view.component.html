@@ -8,13 +8,15 @@
     <mat-tree-node class="adf-tree-view-node"
         id="{{treeNode.name + '-tree-child-node'}}" *matTreeNodeDef="let treeNode; when: hasChild"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
-        <button id="{{'button-'+treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
-                mat-icon-button [attr.aria-label]="'toggle ' + treeNode.filename" matTreeNodeToggle>
+        <button matTreeNodeToggle id="{{'button-'+treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
+                mat-icon-button [attr.aria-label]="'ADF-TREE-VIEW.ACCESSIBILITY.ARIA_LABEL' | translate: {
+                    name:  treeNode.name
+                }">
             <mat-icon class="adf-tree-view-icon">
                 {{treeControl.isExpanded(treeNode) ? 'folder_open' : 'folder'}}
             </mat-icon>
         </button>
-        {{treeNode.name}}
+        <span class="adf-tree-view-label" matTreeNodeToggle (click)="onNodeClicked(treeNode.node)">{{treeNode.name}}</span>
     </mat-tree-node>
 </mat-tree>
 <ng-template #missingNodeId>

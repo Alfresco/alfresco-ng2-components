@@ -103,6 +103,7 @@ describe('Start Process', () => {
         await startProcessPage.clearField(startProcessPage.processNameInput);
         await startProcessPage.enterProcessName(processName);
         await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
+        await browser.sleep(400);
         await startProcessPage.clickStartProcessButton();
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
