@@ -69,10 +69,6 @@ describe('ProcessFiltersComponent', () => {
             })
         ]);
 
-        mockErrorFilterPromise = Promise.reject({
-            error: 'wrong request'
-        });
-
         processFilterService = TestBed.get(ProcessFilterService);
         appsProcessService = TestBed.get(AppsProcessService);
     });
@@ -153,6 +149,9 @@ describe('ProcessFiltersComponent', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
+        mockErrorFilterPromise = Promise.reject({
+            error: 'wrong request'
+        });
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(mockErrorFilterPromise));
 
         const appId = '1';
