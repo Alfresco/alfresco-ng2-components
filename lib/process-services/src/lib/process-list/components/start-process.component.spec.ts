@@ -210,7 +210,7 @@ describe('StartFormComponent', () => {
                     'alfrescoRepositoryName': null
                 });
 
-                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
+                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1');
             });
 
             it('alfrescoRepositoryName configuration property should be fetched', () => {
