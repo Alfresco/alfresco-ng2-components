@@ -127,10 +127,11 @@ export class UploadService {
     private isParentFolderAllowed(file: FileModel): boolean {
         let isAllowed: boolean = true;
         const currentFile: any = file.file;
-        if (currentFile && currentFile.webkitRelativePath) {
+        const fileRelativePath = currentFile.webkitRelativePath ? currentFile.webkitRelativePath : file.options.path;
+        if (currentFile && fileRelativePath) {
             isAllowed =
                 this.excludedFoldersList.filter((folderToExclude) => {
-                    return currentFile.webkitRelativePath
+                    return fileRelativePath
                         .split('/')
                         .some((pathElement) => {
                             const minimatch = new Minimatch(folderToExclude, this.folderMatchingOptions);
