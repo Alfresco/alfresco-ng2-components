@@ -45,7 +45,8 @@ describe('Info Drawer', () => {
 
     const date = {
         form: '12/08/2017',
-        header: 'Aug 12, 2017'
+        header: 'Aug 12, 2017',
+        dateFormat: 'll'
     };
 
     const taskDetails = {
@@ -65,19 +66,19 @@ describe('Info Drawer', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-        this.alfrescoJsApi = new AlfrescoApi({
+        this.alfrescoApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-        const assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        await this.alfrescoApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        newTenant = await this.alfrescoApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const assigneeUserModel = await users.createApsUser(this.alfrescoApi, newTenant.id);
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
-        const processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        const processUserModel = await users.createApsUser(this.alfrescoApi, newTenant.id);
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await this.alfrescoApi.login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(this.alfrescoApi);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
@@ -85,8 +86,8 @@ describe('Info Drawer', () => {
 
     afterAll(async () => {
         await this.alfrescoApi.activiti.modelsApi.deleteModel(appCreated.id);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(newTenant.id);
+        await this.alfrescoApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoApi.activiti.adminTenantsApi.deleteTenant(newTenant.id);
     });
 
     beforeEach(async () => {
@@ -306,10 +307,8 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDescription('');
-        await browser.sleep(1000);
         await expect(await taskPage.taskDetails().getDescriptionPlaceholder()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
-        await browser.sleep(1000);
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
 
         await taskPage.taskDetails().clickCompleteFormTask();

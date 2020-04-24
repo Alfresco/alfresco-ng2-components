@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, Key } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
@@ -223,17 +223,21 @@ export class TaskDetailsPage {
 
     async updatePriority(priority?: string): Promise<void> {
         await BrowserActions.click(this.priority);
+        await BrowserActions.clearWithBackSpace(this.priority);
         await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority ? priority : ' ');
+        await this.priority.sendKeys(Key.TAB);
     }
 
     async updateDueDate(): Promise<void> {
         await BrowserActions.click(this.dueDateField);
-        await BrowserActions.click(element(by.css('.mat-datetimepicker-calendar-body-cell')));
+        await BrowserActions.click(element.all(by.css('.mat-datetimepicker-calendar-body-cell')).first());
     }
 
     async updateDescription(description?: string): Promise<void> {
         await BrowserActions.click(this.descriptionField);
+        await BrowserActions.clearWithBackSpace(this.descriptionField);
         await BrowserActions.clearSendKeys(element(by.css('[data-automation-id="card-textitem-value-description"]')), description ? description : '');
+        await this.descriptionField.sendKeys(Key.TAB);
     }
 
     async updateAssignee(fullName: string): Promise<void> {
