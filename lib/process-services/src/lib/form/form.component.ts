@@ -34,6 +34,8 @@ import { ProcessFormRenderingService } from './process-form-rendering.service';
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
 
+    hello = 'world';
+
     /** Underlying form model instance. */
     @Input()
     form: FormModel;

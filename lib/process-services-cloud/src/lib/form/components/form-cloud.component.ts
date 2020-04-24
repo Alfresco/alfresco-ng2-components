@@ -51,6 +51,8 @@ import { CloudFormRenderingService } from './cloud-form-rendering.service';
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
 
+    hello = 'world';
+
     /** App name to fetch corresponding form and values. */
     @Input()
     appName: string = '';
