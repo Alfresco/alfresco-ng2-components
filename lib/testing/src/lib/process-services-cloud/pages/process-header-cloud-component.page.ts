@@ -26,8 +26,8 @@ export class ProcessHeaderCloudPage {
     initiatorField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-initiator"]'));
     startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
     lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
-    parentIdField: ElementFinder = element(by.css('[data-automation-id*="parentId"]'));
-    businessKeyField: ElementFinder = element.all(by.css('[data-automation-id*="businessKey"]')).first();
+    parentIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-parentId"]'));
+    businessKeyField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
 
     async getId(): Promise<string> {
         return BrowserActions.getInputValue(this.idField);

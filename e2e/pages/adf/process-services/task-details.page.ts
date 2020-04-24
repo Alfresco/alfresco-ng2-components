@@ -228,11 +228,7 @@ export class TaskDetailsPage {
 
     async updateDescription(description?: string): Promise<void> {
         await BrowserActions.click(this.descriptionField);
-        const input = '[data-automation-id="card-textitem-value-description"]';
-        await BrowserActions.clearSendKeys(element(by.css(input)), description ? description : '');
-        if (!description) {
-            await browser.executeScript(`document.querySelector('${input}').dispatchEvent(new Event('input'))`);
-        }
+        await BrowserActions.clearSendKeys(element(by.css('[data-automation-id="card-textitem-value-description"]')), description ? description : '');
     }
 
     async updateAssignee(fullName: string): Promise<void> {
