@@ -213,7 +213,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         if (!alfrescoRepositoryName) {
             alfrescoRepositoryName = 'alfresco-1';
         }
-        return alfrescoRepositoryName + 'Alfresco';
+        return alfrescoRepositoryName;
     }
 
     moveNodeFromCStoPS(): void {
