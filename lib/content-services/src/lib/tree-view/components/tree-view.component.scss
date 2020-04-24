@@ -14,14 +14,8 @@
             align-items: baseline;
         }
 
-        &-tree-view-button .mat-button-wrapper {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
         &-tree-view-label {
-            padding: 0 4px;
+            cursor: pointer;
         }
     }
 }
