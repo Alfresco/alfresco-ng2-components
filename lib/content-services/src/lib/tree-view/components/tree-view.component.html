@@ -9,7 +9,7 @@
         id="{{treeNode.name + '-tree-child-node'}}" *matTreeNodeDef="let treeNode; when: hasChild"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
         <button class="adf-tree-view-button" id="{{'button-' + treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
-                mat-button [attr.aria-label]="'toggle ' + treeNode.filename" matTreeNodeToggle>
+                mat-button [attr.aria-label]="'toggle ' + treeNode.name" matTreeNodeToggle>
             <mat-icon class="adf-tree-view-icon">
                 {{treeControl.isExpanded(treeNode) ? 'folder_open' : 'folder'}}
             </mat-icon>
