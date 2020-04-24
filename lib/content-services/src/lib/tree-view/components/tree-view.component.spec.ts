@@ -188,6 +188,16 @@ describe('TreeViewComponent', () => {
                 });
             });
         }));
+
+        it('should show the subfolders when the label is clicked', async(() => {
+            const rootLabel: HTMLButtonElement = <HTMLButtonElement> element.querySelector('.adf-tree-view-label');
+            rootLabel.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(element.querySelector('#fake-child-name-tree-child-node')).not.toBeNull();
+                expect(element.querySelector('#fake-second-name-tree-child-node')).not.toBeNull();
+            });
+        }));
     });
 
     describe('When no nodeId is given', () => {
