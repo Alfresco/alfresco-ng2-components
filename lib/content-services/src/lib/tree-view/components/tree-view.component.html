@@ -8,8 +8,10 @@
     <mat-tree-node class="adf-tree-view-node"
         id="{{treeNode.name + '-tree-child-node'}}" *matTreeNodeDef="let treeNode; when: hasChild"
         matTreeNodePadding [matTreeNodePaddingIndent]="15">
-        <button class="adf-tree-view-button" id="{{'button-' + treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
-                mat-button [attr.aria-label]="'toggle ' + treeNode.name" matTreeNodeToggle>
+        <button matTreeNodeToggle class="adf-tree-view-button" id="{{'button-' + treeNode.name}}" (click)="onNodeClicked(treeNode.node)"
+                mat-button [attr.aria-label]="'ADF-TREE-VIEW.ACCESSIBILITY.ARIA_LABEL' | translate: {
+                    name:  treeNode.name
+                }">
             <mat-icon class="adf-tree-view-icon">
                 {{treeControl.isExpanded(treeNode) ? 'folder_open' : 'folder'}}
             </mat-icon>
