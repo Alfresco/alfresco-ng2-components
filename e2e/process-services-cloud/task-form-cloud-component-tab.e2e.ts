@@ -26,7 +26,11 @@ import {
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    IdentityService, GroupIdentityService, ProcessCloudWidgetPage, FormCloudService
+    IdentityService,
+    GroupIdentityService,
+    ProcessCloudWidgetPage,
+    BrowserActions,
+    FormCloudService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -150,8 +154,8 @@ describe('Task form cloud component', () => {
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }
-        await browser.executeScript('window.sessionStorage.clear();');
-        await browser.executeScript('window.localStorage.clear();');
+        await BrowserActions.clearSessionStorage();
+        await BrowserActions.clearLocalStorage();
     });
 
     describe('Complete task with form - cloud directive', () => {

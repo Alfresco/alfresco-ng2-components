@@ -24,6 +24,14 @@ import * as fs from 'fs';
 
 export class BrowserActions {
 
+    static async clearLocalStorage(): Promise<void> {
+        await browser.executeScript('window.localStorage.clear();');
+    }
+
+    static async clearSessionStorage(): Promise<void> {
+        await browser.executeScript('window.sessionStorage.clear();');
+    }
+
     static async click(elementFinder: ElementFinder): Promise<void> {
         try {
             Logger.info(`Click element: ${elementFinder.locator().toString()}`);

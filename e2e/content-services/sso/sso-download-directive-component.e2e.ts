@@ -26,7 +26,8 @@ import {
     SettingsPage,
     StringUtil,
     FileBrowserUtil,
-    ViewerPage
+    ViewerPage,
+    BrowserActions
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { UsersActions } from '../../actions/users.actions';
@@ -90,9 +91,10 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
                 await identityService.deleteIdentityUser(acsUser.email);
             } catch (error) {
             }
+
             await apiService.getInstance().logout();
-            await browser.executeScript('window.sessionStorage.clear();');
-            await browser.executeScript('window.localStorage.clear();');
+            await BrowserActions.clearSessionStorage();
+            await BrowserActions.clearLocalStorage();
         });
 
         afterEach(async () => {
