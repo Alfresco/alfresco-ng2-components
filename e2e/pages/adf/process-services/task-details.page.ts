@@ -208,7 +208,7 @@ export class TaskDetailsPage {
         return BrowserActions.getInputValue(this.descriptionField);
     }
 
-    async getDescriptionPlacehoder(): Promise<string> {
+    async getDescriptionPlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(this.descriptionField);
         return this.descriptionField.getAttribute('placeholder');
     }
