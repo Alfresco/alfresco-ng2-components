@@ -208,6 +208,11 @@ export class TaskDetailsPage {
         return BrowserActions.getInputValue(this.descriptionField);
     }
 
+    async getDescriptionPlacehoder(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.descriptionField);
+        return this.descriptionField.getAttribute('placeholder');
+    }
+
     getDueDate(): Promise<string> {
         return BrowserActions.getText(this.dueDateField);
     }

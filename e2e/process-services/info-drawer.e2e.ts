@@ -306,7 +306,8 @@ describe('Info Drawer', () => {
         });
 
         await taskPage.taskDetails().updateDescription('');
-        await expect(await taskPage.taskDetails().getDescription()).toEqual('No description');
+        await browser.sleep(1000);
+        await expect(await taskPage.taskDetails().getDescriptionPlacehoder()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
         await browser.sleep(1000);
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
