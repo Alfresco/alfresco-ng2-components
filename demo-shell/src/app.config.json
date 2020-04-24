@@ -463,6 +463,14 @@
       "nocase": true
     }
   },
+  "folders": {
+    "excluded": [
+      ".git"
+    ],
+    "match-options": {
+      "nocase": true
+    }
+  },
   "logLevel": "trace",
   "activiti": {
     "rest": {

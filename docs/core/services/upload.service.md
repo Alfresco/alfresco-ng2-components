@@ -87,6 +87,25 @@ node module.
     }
 }
 ```
+From vesion 3.8.0 It's  possible filter also for the folder whilst uploading a whole folder.
 
-Note that all standard glob patterns work and you can end patterns with a forward
-slash `/` character to specify a directory.
+**app.config.json**
+
+```json
+{
+    "ecmHost": "http://localhost:3000/ecm",
+    "bpmHost": "http://localhost:3000/bpm",
+    "application": {
+        "name": "Alfresco"
+    },
+    "folders": {
+          "excluded": [".git"],
+          "match-options": {
+            "nocase": true
+          }
+    }
+}
+```
+
+In this way all the files present in the .git folder won't be uploaded. 
+Please note that the filtering options available for the folders is the same as the one for the files.
