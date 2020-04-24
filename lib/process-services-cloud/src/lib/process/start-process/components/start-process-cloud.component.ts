@@ -108,7 +108,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), this.whitespaceValidator]),
+            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
             processDefinition: new FormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
         });
 
@@ -295,12 +295,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     getProcessDefinitionValue(process: ProcessDefinitionCloud): string {
         return !!process.name ? process.name : process.key;
-    }
-
-    public whitespaceValidator(control: FormControl) {
-        const isWhitespace = (control.value || '').trim().length === 0;
-        const isValid = !isWhitespace;
-        return isValid ? null : { 'whitespace': true };
     }
 
     get processInstanceName(): AbstractControl {
