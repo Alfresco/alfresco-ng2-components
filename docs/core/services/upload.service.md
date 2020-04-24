@@ -87,7 +87,7 @@ node module.
     }
 }
 ```
-It is now possible filter also for the folder whilst uploading a whole folder.
+From vesion 3.8.0 It's  possible filter also for the folder whilst uploading a whole folder.
 
 **app.config.json**
 
