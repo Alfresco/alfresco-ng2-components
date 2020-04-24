@@ -19,8 +19,8 @@ import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, Ide
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-//tslint:disable
-fdescribe('Start Process', () => {
+
+describe('Start Process', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -94,7 +94,7 @@ fdescribe('Start Process', () => {
         await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(false);
     });
 
-    fit('[C291860] Should be able to start a process', async () => {
+    it('[C291860] Should be able to start a process', async () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
         await processCloudDemoPage.openNewProcessForm();
