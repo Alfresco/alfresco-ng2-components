@@ -734,6 +734,7 @@ describe('CardViewTextItemComponent', () => {
         const editInput = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-value-${key}"]`));
         editInput.nativeElement.value = value;
         editInput.nativeElement.dispatchEvent(new Event('input'));
+        editInput.nativeElement.dispatchEvent(new Event('blur'));
         fixture.detectChanges();
     }
 

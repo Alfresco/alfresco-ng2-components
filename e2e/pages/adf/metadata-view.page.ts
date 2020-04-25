@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Key } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class MetadataViewPage {
@@ -143,19 +143,18 @@ export class MetadataViewPage {
     }
 
     async clickResetButton(): Promise<void> {
-        // await browser.actions().mouseMove(this.involvePeopleButton).click().perform();
         const clearPropertyIcon: ElementFinder = element(by.css('button[data-automation-id="reset-metadata"]'));
         await BrowserActions.click(clearPropertyIcon);
     }
 
     async enterPropertyText(propertyName: string, text: string | number): Promise<void> {
         const textField: ElementFinder = element(by.css('input[data-automation-id="card-textitem-value-' + propertyName + '"]'));
-        await BrowserActions.clearSendKeys(textField, text.toString());
+        await BrowserActions.clearSendKeysAndEnterKey(textField, text.toString());
     }
 
     async enterPresetText(text: string): Promise<void> {
         const presetField: ElementFinder = element(by.css('input[data-automation-id="adf-text-custom-preset"]'));
-        await BrowserActions.clearSendKeys(presetField, text);
+        await BrowserActions.clearSendKeysAndEnterKey(presetField, text);
         const applyButton: ElementFinder = element(by.css('button[id="adf-metadata-aplly"]'));
         await BrowserActions.click(applyButton);
     }
@@ -163,6 +162,7 @@ export class MetadataViewPage {
     async enterDescriptionText(text: string): Promise<void> {
         const textField: ElementFinder = element(by.css('textarea[data-automation-id="card-textitem-value-properties.cm:description"]'));
         await BrowserActions.clearSendKeys(textField, text);
+        await textField.sendKeys(Key.TAB);
     }
 
     async getPropertyText(propertyName: string, type?: string): Promise<string> {

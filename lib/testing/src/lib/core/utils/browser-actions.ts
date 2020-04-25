@@ -100,6 +100,11 @@ export class BrowserActions {
         await elementFinder.sendKeys(text);
     }
 
+    static async clearSendKeysAndEnterKey(elementFinder: ElementFinder, text: string): Promise<void> {
+        await this.clearSendKeys(elementFinder, text);
+        await elementFinder.sendKeys(protractor.Key.ENTER);
+    }
+
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const valueCheck = await elementFinder.getAttribute('disabled');

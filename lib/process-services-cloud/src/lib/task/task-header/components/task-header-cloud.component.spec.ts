@@ -115,6 +115,7 @@ describe('TaskHeaderCloudComponent', () => {
                 const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
                 formPriorityEl.nativeElement.value = 'stringValue';
                 formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
+                formPriorityEl.nativeElement.dispatchEvent(new Event('blur'));
                 fixture.detectChanges();
 
                 const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
@@ -160,6 +161,7 @@ describe('TaskHeaderCloudComponent', () => {
                 const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
                 inputEl.nativeElement.value = 'updated description';
                 inputEl.nativeElement.dispatchEvent(new Event('input'));
+                inputEl.nativeElement.dispatchEvent(new Event('blur'));
 
                 fixture.detectChanges();
                 expect(taskCloudService.updateTask).toHaveBeenCalled();
@@ -177,6 +179,7 @@ describe('TaskHeaderCloudComponent', () => {
             const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
             inputEl.nativeElement.value = 'updated description';
             inputEl.nativeElement.dispatchEvent(new Event('input'));
+            inputEl.nativeElement.dispatchEvent(new Event('blur'));
 
             fixture.detectChanges();
             expect(taskCloudService.updateTask).toHaveBeenCalled();
