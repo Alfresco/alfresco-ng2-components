@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, Key, ElementFinder } from 'protractor';
+import { element, by, Key, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -110,5 +110,6 @@ export class StartTasksCloudPage {
     async typePriorityOf(priorityValue: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.priorityStartTaskField);
         await BrowserActions.clearSendKeys(this.priorityStartTaskField, priorityValue);
+        await this.priorityStartTaskField.sendKeys(protractor.Key.ENTER);
     }
 }
