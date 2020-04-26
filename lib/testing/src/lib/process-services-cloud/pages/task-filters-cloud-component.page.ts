@@ -33,7 +33,7 @@ export class TaskFiltersCloudComponentPage {
     async clickTaskFilter(filterName): Promise<void> {
         this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsClickable(this.filter);
-        await BrowserActions.click(this.filter)
+        await BrowserActions.click(this.filter);
         await browser.sleep(500);
     }
 
