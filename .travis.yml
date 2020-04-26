@@ -40,7 +40,7 @@ stages:
   - name: Trigger ADF child build
     if: (branch = development AND type = push) OR type = api
   - name: Deploy PR
-    if: type = pull_request && commit_message !~ /\[create peview\]/
+    if: type = pull_request && commit_message =~ /\[create peview\]/
 
 addons:
     chrome: stable
