@@ -15,4 +15,4 @@ node ./scripts/travis/deploy/move-dist-folder.js --base-href $TRAVIS_BUILD_NUMBE
 echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --environment_name $REPO_RANCHER_ADF_NAME
 
 # Deploy PR in Rancher env
-(node --no-deprecation ./scripts/travis/deploy/rancher-pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "docker:$REPO_DOCKER/adf/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
+(node --no-deprecation ./scripts/travis/deploy/rancher-pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "alfresco/demo-shell:$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
