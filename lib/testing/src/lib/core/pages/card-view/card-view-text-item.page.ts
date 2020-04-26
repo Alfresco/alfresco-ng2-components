@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder, Locator, Key } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 export class CardTextItemPage {
 
@@ -46,6 +46,7 @@ export class CardTextItemPage {
     async enterTextField(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.textField));
         await BrowserActions.clearSendKeys(this.rootElement.element(this.textField), text);
+        await this.rootElement.element(this.textField).sendKeys(Key.TAB);
     }
 
     async clickOnSaveButton(): Promise<void> {
