@@ -50,6 +50,7 @@ describe('EditProcessFilterCloudComponent', () => {
         id: 'mock-process-filter-id',
         status: 'RUNNING',
         appName: 'mock-app-name',
+        appVersion: 1,
         processDefinitionId: 'process-def-id',
         order: 'ASC',
         sort: 'id'
@@ -342,6 +343,25 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(getRunningApplicationsSpy).toHaveBeenCalled();
             expect(appController).toBeDefined();
             expect(appController.value).toEqual('mock-app-name');
+        });
+    }));
+
+    it('should fetch applications when appName and appVersion input is set', async(() => {
+        fixture.detectChanges();
+        component.filterProperties = ['appName', 'processName', 'appVersion'];
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const appController = component.editProcessFilterForm.get('appName');
+        const appVersionController = component.editProcessFilterForm.get('appVersion');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(getRunningApplicationsSpy).toHaveBeenCalled();
+            expect(appController).toBeDefined();
+            expect(appController.value).toEqual('mock-app-name');
+            expect(appVersionController).toBeDefined();
+            expect(appVersionController.value).toEqual(1);
         });
     }));
 
