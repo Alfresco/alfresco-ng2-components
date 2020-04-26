@@ -300,7 +300,7 @@ describe('Start Task Form', () => {
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
 
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
@@ -511,7 +511,7 @@ describe('Start Task Form', () => {
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
@@ -546,7 +546,7 @@ describe('Start Task Form', () => {
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);

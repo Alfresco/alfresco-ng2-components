@@ -79,10 +79,6 @@ export class StartTasksCloudPage {
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
-    async validateAssignee(error: string): Promise<void> {
-        await this.checkValidationErrorIsDisplayed(error, '.adf-start-task-cloud-error');
-    }
-
     async validateDate(error: string): Promise<void> {
         await this.checkValidationErrorIsDisplayed(error, '.adf-error-text');
     }
@@ -110,6 +106,6 @@ export class StartTasksCloudPage {
     async typePriorityOf(priorityValue: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.priorityStartTaskField);
         await BrowserActions.clearSendKeys(this.priorityStartTaskField, priorityValue);
-        await this.priorityStartTaskField.sendKeys(protractor.Key.ENTER);
+        await this.priorityStartTaskField.sendKeys(protractor.Key.TAB);
     }
 }

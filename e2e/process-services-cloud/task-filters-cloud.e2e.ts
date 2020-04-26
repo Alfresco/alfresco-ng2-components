@@ -69,11 +69,11 @@ describe('Task filters cloud', () => {
             const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
@@ -86,11 +86,11 @@ describe('Task filters cloud', () => {
             await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
 
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
