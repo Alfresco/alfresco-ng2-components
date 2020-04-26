@@ -1,21 +1,45 @@
-.adf-card-view {
-    &__key-value-pairs {
-        &__col {
-            display: inline-block;
-            width: 39%;
+@mixin adf-card-view-keyvaluepairsitem-theme($theme) {
+    $foreground: map-get($theme, foreground);
 
-            .mat-form-field {
+    .adf-card-view {
+        &__key-value-pairs {
+            &__row {
+                display: flex;
+                justify-content: center;
+            }
+
+            &__col {
                 width: 100%;
-            }
-        }
 
-        &__read-only {
-            .mat-table {
-                box-shadow: none;
+                .mat-form-field {
+                    width: 100%;
+                    font-size: 14px;
+                }
+
+                .mat-form-field-appearance-legacy .mat-form-field-label {
+                    color: mat-color($foreground, text, 0.4) !important;
+                }
             }
 
-            .mat-header-row, .mat-row {
-                padding: 0;
+            &__add-btn-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            &__add-btn.mat-button {
+                margin-bottom: 20px;
+            }
+
+            &__read-only {
+                padding-bottom: 20px;
+
+                .mat-table {
+                    box-shadow: none;
+                }
+
+                .mat-header-row, .mat-row {
+                    padding: 0;
+                }
             }
         }
     }

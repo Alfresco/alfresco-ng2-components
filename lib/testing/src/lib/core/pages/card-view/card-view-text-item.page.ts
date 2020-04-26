@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder, Locator, Key } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 export class CardTextItemPage {
 
     rootElement: ElementFinder;
-    textField: Locator = by.css('input[data-automation-id*="card-textitem-editinput"]');
+    textField: Locator = by.css('[data-automation-id*="card-textitem-value"]');
     saveButton: Locator = by.css('button[data-automation-id*="card-textitem-update"]');
     clearButton: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
-    field: Locator = by.css('span[data-automation-id*="card-textitem-value"] span');
+    field: Locator = by.css('[data-automation-id*="card-textitem-value"]');
     labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
-    toggle: Locator = by.css('div[data-automation-id*="card-textitem-toggle"]');
-    editButton: Locator = by.css('button.adf-textitem-action[title*=Edit]');
     errorMessage: Locator = by.css('.adf-textitem-editable-error');
     clickableElement: Locator = by.css('.adf-textitem-clickable');
+    readOnlyField: Locator = by.css('.adf-property-read-only');
 
     constructor(label: string = 'assignee') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-textitem`));
@@ -36,7 +35,7 @@ export class CardTextItemPage {
 
     async getFieldValue(): Promise<string> {
         const fieldElement = this.rootElement.all(this.field).first();
-        return BrowserActions.getText(fieldElement);
+        return BrowserActions.getInputValue(fieldElement);
     }
 
     async checkLabelIsPresent(): Promise<void> {
@@ -44,14 +43,10 @@ export class CardTextItemPage {
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 
-    async clickOnToggleTextField(): Promise<void> {
-        const toggleText: ElementFinder = this.rootElement.element(this.toggle);
-        await BrowserActions.click(toggleText);
-    }
-
     async enterTextField(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.textField));
         await BrowserActions.clearSendKeys(this.rootElement.element(this.textField), text);
+        await this.rootElement.element(this.textField).sendKeys(Key.TAB);
     }
 
     async clickOnSaveButton(): Promise<void> {
@@ -62,17 +57,12 @@ export class CardTextItemPage {
         await BrowserActions.click(this.rootElement.element(this.clearButton));
     }
 
-    async clickOnEditButton(): Promise<void> {
-        await BrowserActions.click(this.rootElement.element(this.editButton));
-    }
-
     async getErrorMessage(): Promise<string> {
         const errorField = this.rootElement.element(this.errorMessage);
         return BrowserActions.getText(errorField);
     }
 
-    async checkElementIsReadonly(): Promise <void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.clickableElement));
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.editButton));
+    async checkElementIsReadonly(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.readOnlyField));
     }
 }

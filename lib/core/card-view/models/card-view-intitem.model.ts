@@ -23,6 +23,7 @@ import { CardViewItemIntValidator } from '../validators/card-view.validators';
 
 export class CardViewIntItemModel extends CardViewTextItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'int';
+    inputType: string = 'number';
 
     constructor(cardViewTextItemProperties: CardViewTextItemProperties) {
         super(cardViewTextItemProperties);

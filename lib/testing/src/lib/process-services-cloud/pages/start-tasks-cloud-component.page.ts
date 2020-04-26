@@ -79,10 +79,6 @@ export class StartTasksCloudPage {
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
-    async validateAssignee(error: string): Promise<void> {
-        await this.checkValidationErrorIsDisplayed(error, '.adf-start-task-cloud-error');
-    }
-
     async validateDate(error: string): Promise<void> {
         await this.checkValidationErrorIsDisplayed(error, '.adf-error-text');
     }

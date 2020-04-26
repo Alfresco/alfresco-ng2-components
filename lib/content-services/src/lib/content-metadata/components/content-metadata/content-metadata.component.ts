@@ -25,11 +25,12 @@ import {
     CardViewUpdateService,
     AlfrescoApiService,
     TranslationService,
-    AppConfigService
+    AppConfigService,
+    CardViewBaseItemModel
 } from '@alfresco/adf-core';
 import { ContentMetadataService } from '../../services/content-metadata.service';
 import { CardViewGroup } from '../../interfaces/content-metadata.interfaces';
-import { switchMap, takeUntil, catchError } from 'rxjs/operators';
+import { takeUntil, debounceTime, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-content-metadata',
@@ -90,6 +91,10 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     basicProperties$: Observable<CardViewItem[]>;
     groupedProperties$: Observable<CardViewGroup[]>;
 
+    changedProperties = {};
+    hasMetadataChanged = false;
+    private targetProperty: CardViewBaseItemModel;
+
     constructor(
         private contentMetadataService: ContentMetadataService,
         private cardViewUpdateService: CardViewUpdateService,
@@ -107,23 +112,13 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     ngOnInit() {
         this.cardViewUpdateService.itemUpdated$
             .pipe(
-                switchMap((changes) =>
-                    this.saveNode(changes).pipe(
-                        catchError((err) => {
-                            this.cardViewUpdateService.updateElement(changes.target);
-                            this.handleUpdateError(err);
-                            return of(null);
-                        })
-                    )
-                ),
-                takeUntil(this.onDestroy$)
-            )
+                debounceTime(500),
+                takeUntil(this.onDestroy$))
             .subscribe(
                 (updatedNode) => {
-                    if (updatedNode) {
-                        Object.assign(this.node, updatedNode);
-                        this.alfrescoApiService.nodeUpdated.next(this.node);
-                    }
+                    this.hasMetadataChanged = true;
+                    this.targetProperty = updatedNode.target;
+                    this.updateChanges(updatedNode.changed);
                 }
             );
 
@@ -165,8 +160,43 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private saveNode({ changed: nodeBody }): Observable<Node> {
-        return this.nodesApiService.updateNode(this.node.id, nodeBody);
+    updateChanges(updatedNodeChanges) {
+        Object.keys(updatedNodeChanges).map((propertyGroup: string) => {
+            if (typeof updatedNodeChanges[propertyGroup] === 'object') {
+                this.changedProperties[propertyGroup] = {
+                    ...this.changedProperties[propertyGroup],
+                    ...updatedNodeChanges[propertyGroup]
+                };
+            } else {
+                this.changedProperties[propertyGroup] = updatedNodeChanges[propertyGroup];
+            }
+        });
+    }
+
+    saveChanges() {
+        this.nodesApiService.updateNode(this.node.id, this.changedProperties).pipe(
+            catchError((err) => {
+                this.cardViewUpdateService.updateElement(this.targetProperty);
+                this.handleUpdateError(err);
+                return of(null);
+            }))
+            .subscribe((updatedNode) => {
+                if (updatedNode) {
+                    this.revertChanges();
+                    Object.assign(this.node, updatedNode);
+                    this.alfrescoApiService.nodeUpdated.next(this.node);
+                }
+            });
+    }
+
+    revertChanges() {
+        this.changedProperties = {};
+        this.hasMetadataChanged = false;
+    }
+
+    cancelChanges() {
+        this.revertChanges();
+        this.loadProperties(this.node);
     }
 
     showGroup(group: CardViewGroup): boolean {
@@ -195,5 +225,4 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
             event.stopPropagation();
         }
     }
-
 }

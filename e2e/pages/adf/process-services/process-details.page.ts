@@ -21,14 +21,14 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class ProcessDetailsPage {
     processTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title"]'));
     processDetailsMessage: ElementFinder = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
-    processStatusField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-status"]'));
+    processStatusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
     processEndDateField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
-    processCategoryField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-category"]'));
-    processBusinessKeyField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-businessKey"]'));
-    processCreatedByField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-assignee"]'));
+    processCategoryField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-category"]'));
+    processBusinessKeyField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
+    processCreatedByField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
     processCreatedField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"]'));
-    processIdField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-id"]'));
-    processDescription: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-description"]'));
+    processIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-id"]'));
+    processDescription: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-description"]'));
     showDiagramButtonDisabled: ElementFinder = element(by.css('button[id="show-diagram-button"][disabled]'));
     propertiesList: ElementFinder = element(by.css('div[class="adf-property-list"]'));
     showDiagramButton: ElementFinder = element(by.id('show-diagram-button'));
@@ -67,7 +67,7 @@ export class ProcessDetailsPage {
     }
 
     getProcessStatus(): Promise<string> {
-        return BrowserActions.getText(this.processStatusField);
+        return BrowserActions.getInputValue(this.processStatusField);
     }
 
     getEndDate(): Promise<string> {
@@ -75,15 +75,15 @@ export class ProcessDetailsPage {
     }
 
     getProcessCategory(): Promise<string> {
-        return BrowserActions.getText(this.processCategoryField);
+        return BrowserActions.getInputValue(this.processCategoryField);
     }
 
     getBusinessKey(): Promise<string> {
-        return BrowserActions.getText(this.processBusinessKeyField);
+        return BrowserActions.getInputValue(this.processBusinessKeyField);
     }
 
     getCreatedBy(): Promise<string> {
-        return BrowserActions.getText(this.processCreatedByField);
+        return BrowserActions.getInputValue(this.processCreatedByField);
     }
 
     getCreated(): Promise<string> {
@@ -91,11 +91,11 @@ export class ProcessDetailsPage {
     }
 
     getId(): Promise<string> {
-        return BrowserActions.getText(this.processIdField);
+        return BrowserActions.getInputValue(this.processIdField);
     }
 
     getProcessDescription(): Promise<string> {
-        return BrowserActions.getText(this.processDescription);
+        return BrowserActions.getInputValue(this.processDescription);
     }
 
     async clickShowDiagram(): Promise<void> {

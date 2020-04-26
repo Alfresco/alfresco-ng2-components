@@ -1,21 +1,20 @@
-<div [attr.data-automation-id]="'card-key-value-pairs-label-' + property.key" class="adf-property-label">{{ property.label | translate }}</div>
-<div class="adf-property-value">
+<div [attr.data-automation-id]="'card-key-value-pairs-label-' + property.key"
+     class="adf-property-label">{{ property.label | translate }}</div>
+<div class="adf-property-field">
 
-    <div *ngIf="isEditable()">
-        {{ 'CORE.CARDVIEW.KEYVALUEPAIRS.ADD' | translate }}
-        <button (click)="add()" mat-icon-button class="adf-card-view__key-value-pairs__add-btn" [attr.data-automation-id]="'card-key-value-pairs-button-' + property.key">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
-
-    <div *ngIf="!isEditable()" class="adf-card-view__key-value-pairs__read-only">
-        <mat-table #table [dataSource]="matTableValues" class="mat-elevation-z8">
+    <div *ngIf="!isEditable()"
+         class="adf-card-view__key-value-pairs__read-only adf-property-value">
+        <mat-table #table
+                   [dataSource]="matTableValues"
+                   class="mat-elevation-z8">
             <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}
+                </mat-header-cell>
                 <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="value">
-                <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}
+                </mat-header-cell>
                 <mat-cell *matCellDef="let item">{{item.value}}</mat-cell>
             </ng-container>
 
@@ -25,15 +24,17 @@
     </div>
 
 
-    <div class="adf-card-view__key-value-pairs" *ngIf="isEditable() && values && values.length">
+    <div class="adf-card-view__key-value-pairs adf-property-value"
+         *ngIf="isEditable() && values && values.length">
         <div class="adf-card-view__key-value-pairs__row">
             <div class="adf-card-view__key-value-pairs__col">{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}</div>
             <div class="adf-card-view__key-value-pairs__col">{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}</div>
         </div>
 
-        <div class="adf-card-view__key-value-pairs__row" *ngFor="let item of values; let i = index">
+        <div class="adf-card-view__key-value-pairs__row"
+             *ngFor="let item of values; let i = index">
             <div class="adf-card-view__key-value-pairs__col">
-                <mat-form-field class="adf-example-full-width">
+                <mat-form-field>
                     <input matInput
                            placeholder="{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.NAME' | translate }}"
                            (blur)="onBlur(item.value)"
@@ -42,17 +43,30 @@
                 </mat-form-field>
             </div>
             <div class="adf-card-view__key-value-pairs__col">
-                <mat-form-field class="adf-example-full-width">
+                <mat-form-field>
                     <input matInput
                            placeholder="{{ 'CORE.CARDVIEW.KEYVALUEPAIRS.VALUE' | translate }}"
                            (blur)="onBlur(item.value)"
                            [attr.data-automation-id]="'card-'+ property.key +'-value-input-' + i"
                            [(ngModel)]="values[i].value">
+                    <button matSuffix
+                            mat-icon-button
+                            (click)="remove(i)"
+                            class="adf-card-view__key-value-pairs__remove-btn">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </mat-form-field>
             </div>
-            <button mat-icon-button (click)="remove(i)" class="adf-card-view__key-value-pairs__remove-btn">
-                <mat-icon>close</mat-icon>
-            </button>
         </div>
+    </div>
+    <div *ngIf="isEditable()"
+         class="adf-property-value adf-card-view__key-value-pairs__add-btn-container">
+        <button (click)="add()"
+                mat-button
+                class="adf-card-view__key-value-pairs__add-btn"
+                [attr.data-automation-id]="'card-key-value-pairs-button-' + property.key">
+            {{ 'CORE.CARDVIEW.KEYVALUEPAIRS.ADD' | translate }}
+            <mat-icon>add</mat-icon>
+        </button>
     </div>
 </div>

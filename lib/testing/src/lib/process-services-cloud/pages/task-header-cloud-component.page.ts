@@ -26,10 +26,10 @@ export class TaskHeaderCloudPage {
     statusCardTextItem: CardTextItemPage = new CardTextItemPage('status');
     priorityCardTextItem: CardTextItemPage = new CardTextItemPage('priority');
     dueDateField: ElementFinder = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
-    categoryField: ElementFinder = element.all(by.css('span[data-automation-id*="category"] span')).first();
+    categoryCardTextItem: CardTextItemPage = new CardTextItemPage('category');
     createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
-    parentTaskIdField: ElementFinder = element(by.css('span[data-automation-id*="parentTaskId"] span'));
+    parentNameCardTextItem: CardTextItemPage = new CardTextItemPage('parentName');
+    parentTaskIdCardTextItem: CardTextItemPage = new CardTextItemPage('parentTaskId');
     endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     idCardTextItem: CardTextItemPage = new CardTextItemPage('id');
     descriptionCardTextItem: CardTextItemPage = new CardTextItemPage('description');
@@ -37,10 +37,6 @@ export class TaskHeaderCloudPage {
 
     async getAssignee(): Promise<string> {
         return this.assigneeCardTextItem.getFieldValue();
-    }
-
-    async clickOnAssignee(): Promise<void> {
-        await this.assigneeCardTextItem.clickOnToggleTextField();
     }
 
     async getStatus(): Promise<string> {
@@ -52,15 +48,15 @@ export class TaskHeaderCloudPage {
     }
 
     async getCategory(): Promise<string> {
-        return BrowserActions.getText(this.categoryField);
+        return this.categoryCardTextItem.getFieldValue();
     }
 
     async getParentName(): Promise<string> {
-        return BrowserActions.getText(this.parentNameField);
+        return this.parentNameCardTextItem.getFieldValue();
     }
 
     async getParentTaskId(): Promise<string> {
-        return BrowserActions.getText(this.parentTaskIdField);
+        return this.parentTaskIdCardTextItem.getFieldValue();
     }
 
     async getEndDate(): Promise<string> {

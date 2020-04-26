@@ -1,4 +1,6 @@
 @mixin adf-card-view-dateitem-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
     .adf {
         &-invisible-date-input {
             height: 2px;
@@ -13,6 +15,8 @@
 
         &-dateitem-editable {
             cursor: pointer;
+            border-bottom: 1px solid mat-color($foreground, text, 0.42);
+            padding-bottom: 6px;
 
             &-controls {
                 display: flex;

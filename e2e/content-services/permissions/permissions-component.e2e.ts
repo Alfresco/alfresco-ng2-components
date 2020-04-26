@@ -359,9 +359,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.editIconIsDisplayed();
             await metadataViewPage.editIconClick();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle1');
-            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle1');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(fileLocation);
@@ -383,9 +381,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.editIconIsDisplayed();
             await metadataViewPage.editIconClick();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle2');
-            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle2');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(testFileModel.location);
@@ -407,9 +403,7 @@ describe('Permissions Component', () => {
             await metadataViewPage.editIconIsDisplayed();
             await metadataViewPage.editIconClick();
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle3');
-            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle3');
             await metadataViewPage.clickCloseButton();
             await contentServicesPage.uploadFile(pngFileModel.location);

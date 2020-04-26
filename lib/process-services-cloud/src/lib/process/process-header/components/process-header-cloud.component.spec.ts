@@ -75,8 +75,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-id"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('00fcc4ab-4290-11e9-b133-0a586460016a');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-id"]'));
+            expect(formNameEl.nativeElement.value).toBe('00fcc4ab-4290-11e9-b133-0a586460016a');
         });
     }));
 
@@ -85,8 +85,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-name"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('new name');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-name"]'));
+            expect(formNameEl.nativeElement.value).toBe('new name');
         });
     }));
 
@@ -96,8 +96,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-name"] span'));
-            expect(valueEl.nativeElement.innerText).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT');
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-name"]'));
+            expect(valueEl.nativeElement.value).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NAME_DEFAULT');
         });
 
     }));
@@ -107,8 +107,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('RUNNING');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
+            expect(formNameEl.nativeElement.value).toBe('RUNNING');
         });
     }));
 
@@ -117,8 +117,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-initiator"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('devopsuser');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-initiator"]'));
+            expect(formNameEl.nativeElement.value).toBe('devopsuser');
         });
     }));
 
@@ -147,8 +147,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentId"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('00fcc4ab-4290-11e9-b133-0a586460016b');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentId"]'));
+            expect(formNameEl.nativeElement.value).toBe('00fcc4ab-4290-11e9-b133-0a586460016b');
         });
     }));
 
@@ -158,8 +158,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentId"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentId"]'));
+            expect(formNameEl.nativeElement.value).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE');
         });
     }));
 
@@ -168,8 +168,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-businessKey"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('MyBusinessKey');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-businessKey"]'));
+            expect(formNameEl.nativeElement.value).toBe('MyBusinessKey');
         });
     }));
 
@@ -179,8 +179,8 @@ describe('ProcessHeaderCloudComponent', () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-businessKey"] span'));
-            expect(formNameEl.nativeElement.innerText).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE');
+            const formNameEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-businessKey"]'));
+            expect(formNameEl.nativeElement.value).toBe('ADF_CLOUD_PROCESS_HEADER.PROPERTIES.NONE');
         });
     }));
 

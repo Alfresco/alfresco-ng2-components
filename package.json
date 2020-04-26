@@ -242,7 +242,7 @@
     },
     {
       "path": "./lib/dist/testing/bundles/adf-testing.umd.min.js",
-      "maxSize": "40 kb"
+      "maxSize": "50 kb"
     }
   ],
   "engines": {

@@ -127,7 +127,7 @@ describe('Process Task - Attach content file', () => {
         await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(taskName);
 
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();

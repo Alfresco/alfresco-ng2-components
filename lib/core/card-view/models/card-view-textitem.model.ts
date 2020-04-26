@@ -22,6 +22,7 @@ import { CardViewTextItemPipeProperty, CardViewTextItemProperties } from '../int
 
 export class CardViewTextItemModel extends CardViewBaseItemModel implements CardViewItem, DynamicComponentModel {
     type: string = 'text';
+    inputType: string = 'text';
     multiline?: boolean;
     multivalued?: boolean;
     pipes?: CardViewTextItemPipeProperty[];

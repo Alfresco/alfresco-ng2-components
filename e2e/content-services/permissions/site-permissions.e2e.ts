@@ -287,10 +287,8 @@ describe('Permissions Component', () => {
             await metadataViewPage.editIconClick();
 
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:title');
-            await metadataViewPage.clickEditPropertyIcons('properties.cm:title');
 
             await metadataViewPage.enterPropertyText('properties.cm:title', 'newTitle');
-            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:title');
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:title')).toEqual('newTitle');
             await metadataViewPage.clickCloseButton();
@@ -321,10 +319,8 @@ describe('Permissions Component', () => {
             await metadataViewPage.editIconClick();
 
             await metadataViewPage.editPropertyIconIsDisplayed('properties.cm:description');
-            await metadataViewPage.clickEditPropertyIcons('properties.cm:description');
             await metadataViewPage.enterDescriptionText('newDescription');
-
-            await metadataViewPage.clickUpdatePropertyIcon('properties.cm:description');
+            await metadataViewPage.clickSaveMetadata();
 
             await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('newDescription');
 

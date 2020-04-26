@@ -45,7 +45,8 @@ describe('Info Drawer', () => {
 
     const date = {
         form: '12/08/2017',
-        header: 'Aug 12, 2017'
+        header: 'Aug 12, 2017',
+        dateFormat: 'll'
     };
 
     const taskDetails = {
@@ -65,19 +66,19 @@ describe('Info Drawer', () => {
 
     beforeAll(async () => {
         const users = new UsersActions();
-        this.alfrescoJsApi = new AlfrescoApi({
+        this.alfrescoApi = new AlfrescoApi({
             provider: 'BPM',
             hostBpm: browser.params.testConfig.adf_aps.host
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-        const assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        await this.alfrescoApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        newTenant = await this.alfrescoApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const assigneeUserModel = await users.createApsUser(this.alfrescoApi, newTenant.id);
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
-        const processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        const processUserModel = await users.createApsUser(this.alfrescoApi, newTenant.id);
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await this.alfrescoApi.login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(this.alfrescoApi);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
@@ -85,8 +86,8 @@ describe('Info Drawer', () => {
 
     afterAll(async () => {
         await this.alfrescoApi.activiti.modelsApi.deleteModel(appCreated.id);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(newTenant.id);
+        await this.alfrescoApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoApi.activiti.adminTenantsApi.deleteTenant(newTenant.id);
     });
 
     beforeEach(async () => {
@@ -96,7 +97,7 @@ describe('Info Drawer', () => {
 
     it('[C260319] New Task - displayed details', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask({...taskDetails, formName: app.formName, name});
+        await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -122,7 +123,7 @@ describe('Info Drawer', () => {
 
     it('[C260323] Priority - Editing field', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask({...taskDetails, formName: app.formName, name});
+        await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -141,7 +142,7 @@ describe('Info Drawer', () => {
 
     it('[C260325] Due Date - Changing', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask({...taskDetails, formName: app.formName, name});
+        await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -184,7 +185,7 @@ describe('Info Drawer', () => {
 
     it('[C260329] Task with no form', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> {...taskDetails, formName: '', name});
+        await taskPage.createTask(<any> { ...taskDetails, formName: '', name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -202,7 +203,7 @@ describe('Info Drawer', () => {
 
     it('[C260320] Assign user to the task', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> {...taskDetails, formName: app.formName, name});
+        await taskPage.createTask(<any> { ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -218,7 +219,7 @@ describe('Info Drawer', () => {
         });
 
         await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
-        await BrowserActions.click(taskPage.taskDetails().assigneeField);
+        await BrowserActions.click(taskPage.taskDetails().assigneeButton);
         const cancelSearch = element(by.css('button[id="close-people-search"]'));
         await BrowserVisibility.waitUntilElementIsPresent(cancelSearch);
         await BrowserActions.click(cancelSearch);
@@ -231,7 +232,7 @@ describe('Info Drawer', () => {
         });
 
         await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
-        await BrowserActions.click(taskPage.taskDetails().assigneeField);
+        await BrowserActions.click(taskPage.taskDetails().assigneeButton);
         const addPeople = element(by.css('button[id="add-people"]'));
         await BrowserVisibility.waitUntilElementIsPresent(addPeople);
         await BrowserActions.click(addPeople);
@@ -289,7 +290,7 @@ describe('Info Drawer', () => {
 
     it('[C260328] Description - Editing field', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask({...taskDetails, formName: app.formName, name});
+        await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -305,10 +306,10 @@ describe('Info Drawer', () => {
             formName: app.formName
         });
 
+        await taskPage.taskDetails().updateDescription('');
+        await expect(await taskPage.taskDetails().getDescriptionPlaceholder()).toEqual('No description');
         await taskPage.taskDetails().updateDescription('Good Bye');
         await expect(await taskPage.taskDetails().getDescription()).toEqual('Good Bye');
-        await taskPage.taskDetails().updateDescription();
-        await expect(await taskPage.taskDetails().getDescription()).toEqual('No description');
 
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -317,7 +318,7 @@ describe('Info Drawer', () => {
         await LocalStorageUtil.setConfigField('adf-task-header', JSON.stringify(infoDrawerConfiguration));
 
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask({...taskDetails, formName: app.formName, name});
+        await taskPage.createTask({ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -330,12 +331,11 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
         await expect(await taskPage.taskDetails().getParentName()).toEqual(taskDetails.parentName);
         await taskPage.taskDetails().checkDueDatePickerButtonIsNotDisplayed();
-        await taskPage.taskDetails().checkEditDescriptionButtonIsNotDisplayed();
 
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
-    async function shouldHaveInfoDrawerDetails({description, status, priority, category, parentName, dateFormat, formName, fullName, dueDate}) {
+    async function shouldHaveInfoDrawerDetails({ description, status, priority, category, parentName, dateFormat, formName, fullName, dueDate }) {
         await expect(await taskPage.taskDetails().getAssignee()).toEqual(fullName);
         await expect(await taskPage.taskDetails().getDescription()).toEqual(description);
         await expect(await taskPage.taskDetails().getStatus()).toEqual(status);

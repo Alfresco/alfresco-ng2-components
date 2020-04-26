@@ -41,6 +41,8 @@
 
         &-property-value {
             .mat-chip-list {
+                width: 100%;
+                padding-top: 6px;
                 cursor: pointer;
             }
             .mat-chip {

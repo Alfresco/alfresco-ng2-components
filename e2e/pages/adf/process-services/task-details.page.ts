@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, Key } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
@@ -24,18 +24,20 @@ export class TaskDetailsPage {
     appSettingsTogglesClass = new AppSettingsTogglesPage();
 
     formContent: ElementFinder = element(by.css('adf-form'));
-    formNameField: ElementFinder = element(by.css('span[data-automation-id*="formName"] span'));
-    assigneeField: ElementFinder = element(by.css('span[data-automation-id*="assignee"] span'));
-    statusField: ElementFinder = element(by.css('span[data-automation-id*="status"] span'));
-    categoryField: ElementFinder = element(by.css('span[data-automation-id*="category"] span'));
+    formNameField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
+    formNameButton: ElementFinder = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
+    assigneeField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
+    assigneeButton: ElementFinder = element(by.css('[data-automation-id="card-textitem-toggle-assignee"]'));
+    statusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
+    categoryField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-category"] '));
     parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
-    parentTaskIdField: ElementFinder = element(by.css('span[data-automation-id*="parentTaskId"] span'));
-    durationField: ElementFinder = element(by.css('span[data-automation-id*="duration"] span'));
+    parentTaskIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-parentTaskId"] '));
+    durationField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-duration"] '));
     endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
     createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    idField: ElementFinder = element.all(by.css('span[data-automation-id*="id"] span')).first();
-    descriptionField: ElementFinder = element(by.css('span[data-automation-id*="description"] span'));
-    dueDateField: ElementFinder = element(by.css('span[data-automation-id*="dueDate"] span'));
+    idField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
+    descriptionField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-description"]'));
+    dueDateField: ElementFinder = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
     activitiesTitle: ElementFinder = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
     commentField: ElementFinder = element(by.id('comment-input'));
     addCommentButton: ElementFinder = element(by.css('[data-automation-id="comments-input-add"]'));
@@ -62,8 +64,8 @@ export class TaskDetailsPage {
     removeAttachForm: ElementFinder = element(by.id('adf-attach-form-remove-button'));
     attachFormName: ElementFinder = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
     emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
-    priority: ElementFinder = element(by.css('span[data-automation-id*="priority"] span'));
-    editableAssignee = element(by.css('span[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
+    priority: ElementFinder = element(by.css('[data-automation-id*="card-textitem-value-priority"]'));
+    editableAssignee = element(by.css('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
     claimElement = element(by.css('[data-automation-id="header-claim-button"]'));
     releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
     saveFormButton = element(by.css('button[id="adf-form-save"]'));
@@ -75,18 +77,8 @@ export class TaskDetailsPage {
     }
 
     async checkEditableFormIsNotDisplayed(): Promise<void> {
-        const editableForm = element(by.css('span[data-automation-id="card-textitem-value-formName"][class*="clickable"]'));
+        const editableForm = element(by.css('[data-automation-id="card-textitem-value-formName"][class*="clickable"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(editableForm);
-    }
-
-    async checkEditDescriptionButtonIsNotDisplayed(): Promise<void> {
-        const editDescriptionButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-description"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(editDescriptionButton);
-    }
-
-    async checkEditPriorityButtonIsNotDisplayed(): Promise<void> {
-        const editPriorityButton = element(by.css('button[data-automation-id="card-textitem-edit-icon-priority"]'));
-        await BrowserVisibility.waitUntilElementIsNotVisible(editPriorityButton);
     }
 
     async checkDueDatePickerButtonIsNotDisplayed(): Promise<void> {
@@ -151,17 +143,17 @@ export class TaskDetailsPage {
     }
 
     async checkFormIsAttached(formName): Promise<void> {
-        const attachedFormName = await BrowserActions.getText(this.formNameField);
+        const attachedFormName = await BrowserActions.getInputValue(this.formNameField);
         await expect(attachedFormName).toEqual(formName);
     }
 
     getFormName(): Promise<string> {
-        return BrowserActions.getText(this.formNameField);
+        return BrowserActions.getInputValue(this.formNameField);
     }
 
     async clickForm(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.click(this.formNameField);
+        await BrowserActions.click(this.formNameButton);
     }
 
     async checkStandaloneNoFormMessageIsDisplayed(): Promise<void> {
@@ -173,7 +165,7 @@ export class TaskDetailsPage {
     }
 
     getAssignee(): Promise<string> {
-        return BrowserActions.getText(this.assigneeField);
+        return BrowserActions.getInputValue(this.assigneeField);
     }
 
     isAssigneeClickable(): Promise<string> {
@@ -181,11 +173,11 @@ export class TaskDetailsPage {
     }
 
     getStatus(): Promise<string> {
-        return BrowserActions.getText(this.statusField);
+        return BrowserActions.getInputValue(this.statusField);
     }
 
     getCategory(): Promise<string> {
-        return BrowserActions.getText(this.categoryField);
+        return BrowserActions.getInputValue(this.categoryField);
     }
 
     getParentName(): Promise<string> {
@@ -193,11 +185,11 @@ export class TaskDetailsPage {
     }
 
     getParentTaskId(): Promise<string> {
-        return BrowserActions.getText(this.parentTaskIdField);
+        return BrowserActions.getInputValue(this.parentTaskIdField);
     }
 
     getDuration(): Promise<string> {
-        return BrowserActions.getText(this.durationField);
+        return BrowserActions.getInputValue(this.durationField);
     }
 
     getEndDate(): Promise<string> {
@@ -209,11 +201,16 @@ export class TaskDetailsPage {
     }
 
     getId(): Promise<string> {
-        return BrowserActions.getText(this.idField);
+        return BrowserActions.getInputValue(this.idField);
     }
 
     getDescription(): Promise<string> {
-        return BrowserActions.getText(this.descriptionField);
+        return BrowserActions.getInputValue(this.descriptionField);
+    }
+
+    async getDescriptionPlaceholder(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.descriptionField);
+        return this.descriptionField.getAttribute('placeholder');
     }
 
     getDueDate(): Promise<string> {
@@ -221,32 +218,30 @@ export class TaskDetailsPage {
     }
 
     getPriority(): Promise<string> {
-        return BrowserActions.getText(this.priority);
+        return BrowserActions.getInputValue(this.priority);
     }
 
     async updatePriority(priority?: string): Promise<void> {
         await BrowserActions.click(this.priority);
-        await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-editinput-priority"]')), priority ? priority : ' ');
-        await BrowserActions.click(element(by.css('button[data-automation-id="card-textitem-update-priority"]')));
+        await BrowserActions.clearWithBackSpace(this.priority);
+        await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority ? priority : ' ');
+        await this.priority.sendKeys(Key.TAB);
     }
 
     async updateDueDate(): Promise<void> {
         await BrowserActions.click(this.dueDateField);
-        await BrowserActions.click(element(by.css('.mat-datetimepicker-calendar-body-cell')));
+        await BrowserActions.click(element.all(by.css('.mat-datetimepicker-calendar-body-cell')).first());
     }
 
     async updateDescription(description?: string): Promise<void> {
         await BrowserActions.click(this.descriptionField);
-        const input = 'textarea[data-automation-id="card-textitem-edittextarea-description"]';
-        await BrowserActions.clearSendKeys(element(by.css(input)), description ? description : '');
-        if (!description) {
-            await browser.executeScript(`document.querySelector('${input}').dispatchEvent(new Event('input'))`);
-        }
-        await BrowserActions.click(element(by.css('button[data-automation-id="card-textitem-update-description"]')));
+        await BrowserActions.clearWithBackSpace(this.descriptionField);
+        await BrowserActions.clearSendKeys(element(by.css('[data-automation-id="card-textitem-value-description"]')), description ? description : '');
+        await this.descriptionField.sendKeys(Key.TAB);
     }
 
     async updateAssignee(fullName: string): Promise<void> {
-        await BrowserActions.click(this.assigneeField);
+        await BrowserActions.click(this.assigneeButton);
         await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
         await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
         await BrowserActions.click(element(by.css('button[id="add-people"]')));

@@ -194,7 +194,7 @@ describe('Start Task', () => {
 
         await browser.driver.sleep(1000);
 
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
 
         await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
     });

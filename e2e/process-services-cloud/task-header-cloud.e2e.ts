@@ -138,7 +138,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291943] Should display task details for assigned task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
 
@@ -158,7 +158,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291944] Should display task details for completed task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
 
@@ -178,7 +178,7 @@ describe('Task Header cloud component', () => {
     });
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
 
@@ -204,19 +204,16 @@ describe('Task Header cloud component', () => {
         await startTaskCloudPage.addName(myTaskName);
         await startTaskCloudPage.typePriorityOf('50');
         await startTaskCloudPage.clickStartButton();
-        await tasksCloudDemoPage.taskFilterCloudComponent.clickMyTasksFilter();
+        await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(myTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(myTaskName);
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
-        await taskHeaderCloudPage.priorityCardTextItem.clickOnEditButton();
         await taskHeaderCloudPage.priorityCardTextItem.enterTextField('$$%£W21');
-        await taskHeaderCloudPage.priorityCardTextItem.clickOnSaveButton();
         const errorMessage = await taskHeaderCloudPage.priorityCardTextItem.getErrorMessage();
         await expect(errorMessage).toBe('Enter a different value');
 
         await taskHeaderCloudPage.priorityCardTextItem.enterTextField('600');
-        await taskHeaderCloudPage.priorityCardTextItem.clickOnSaveButton();
         const currentValue = await taskHeaderCloudPage.priorityCardTextItem.getFieldValue();
         await expect(currentValue).toBe('600');
     });
@@ -263,7 +260,7 @@ describe('Task Header cloud component', () => {
         });
 
         it('[C311280] Should pick up the default date format from the app configuration', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickCompletedTasksFilter();
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();

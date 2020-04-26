@@ -1,8 +1,10 @@
-<div *ngIf="showProperty() || isEditable()"
+<div class="adf-property-label"
      [attr.data-automation-id]="'card-dateitem-label-' + property.key"
-     class="adf-property-label">{{ property.label | translate }}</div>
+     *ngIf="showProperty() || isEditable()">
+    {{ property.label | translate }}
+</div>
 
-<div class="adf-property-value">
+<div class="adf-property-value adf-property-value-padding-top">
     <span *ngIf="!isEditable()"
           [attr.data-automation-id]="'card-' + property.type + '-value-' + property.key">
         <span [attr.data-automation-id]="'card-dateitem-' + property.key">
