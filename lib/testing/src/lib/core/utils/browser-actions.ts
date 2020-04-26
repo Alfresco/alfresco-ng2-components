@@ -84,12 +84,13 @@ export class BrowserActions {
         return webElem.getCssValue('color');
     }
 
-    static async clearWithBackSpace(elementFinder: ElementFinder) {
+    static async clearWithBackSpace(elementFinder: ElementFinder, sleepTime: number = 0) {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await elementFinder.click();
         const value = await elementFinder.getAttribute('value');
         for (let i = value.length; i >= 0; i--) {
             await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
+            await browser.sleep(sleepTime);
         }
     }
 

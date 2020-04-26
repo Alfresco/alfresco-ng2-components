@@ -78,6 +78,7 @@ describe('Task claim/release', () => {
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
+            await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
@@ -85,6 +86,7 @@ describe('Task claim/release', () => {
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.hrUser.email);
 
             await taskFormCloudComponent.clickReleaseButton();
+            await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
@@ -134,6 +136,7 @@ describe('Task claim/release', () => {
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
+            await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
@@ -141,6 +144,7 @@ describe('Task claim/release', () => {
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.hrUser.email);
 
             await taskFormCloudComponent.clickReleaseButton();
+            await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();
@@ -160,6 +164,7 @@ describe('Task claim/release', () => {
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual('No assignee');
 
             await taskFormCloudComponent.clickClaimButton();
+            await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
@@ -167,6 +172,7 @@ describe('Task claim/release', () => {
             await expect(await taskHeaderCloudPage.getAssignee()).toEqual(candidate.username);
 
             await taskFormCloudComponent.clickReleaseButton();
+            await browser.refresh();
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await taskFormCloudComponent.checkClaimButtonIsDisplayed();

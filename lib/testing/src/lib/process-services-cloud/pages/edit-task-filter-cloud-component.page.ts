@@ -183,7 +183,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async clearAssignee(): Promise<void> {
-        await BrowserActions.clearWithBackSpace(this.assignee);
+        await BrowserActions.clearWithBackSpace(this.assignee,200);
         await browser.driver.sleep(1000);
     }
 
