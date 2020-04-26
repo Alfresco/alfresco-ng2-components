@@ -114,7 +114,7 @@ jobs:
 
         - stage: Deploy PR
           name: Deploy PR
-          script: ./scripts/travis/deploy/deploy_pr.sh
+          script: ./scripts/travis/deploy/deploy-pr.sh
 
 
         - stage: Check bundle
