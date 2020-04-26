@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by, ElementFinder, browser } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
@@ -77,6 +77,7 @@ export class TaskFormCloudComponent {
 
     async clickCompleteButton(): Promise<void> {
         await BrowserActions.click(this.completeButton);
+        await browser.sleep(500);
     }
 
     async checkFormOutcomeButtonIsDisplayedByName(name: string): Promise<void> {

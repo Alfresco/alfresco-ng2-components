@@ -174,8 +174,6 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
 
             await taskFormCloudComponent.clickCompleteButton();
-            await browser.sleep(1000);
-            await browser.refresh();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[0].entry.name);
@@ -213,8 +211,6 @@ describe('Task form cloud component', () => {
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldField);
 
             await taskFormCloudComponent.clickCompleteButton();
-            await browser.sleep(1000);
-            await browser.refresh();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[1].entry.name);
@@ -251,8 +247,6 @@ describe('Task form cloud component', () => {
             await widget.textWidget().setValue(widgets.textOneId, value.notDisplayTab);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldVar);
             await taskFormCloudComponent.clickCompleteButton();
-            await browser.sleep(1000);
-            await browser.refresh();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
@@ -280,8 +274,6 @@ describe('Task form cloud component', () => {
             await widget.textWidget().isWidgetNotVisible(widgets.textTwoId);
 
             await taskFormCloudComponent.clickCompleteButton();
-            await browser.sleep(1000);
-            await browser.refresh();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
@@ -331,8 +323,6 @@ describe('Task form cloud component', () => {
             await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
 
             await taskFormCloudComponent.clickCompleteButton();
-            await browser.sleep(1000);
-            await browser.refresh();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[5].entry.name);
