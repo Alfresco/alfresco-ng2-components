@@ -639,6 +639,18 @@ describe('StartProcessCloudComponent', () => {
             expect(processInstanceName.valid).toBeTruthy();
         });
 
+        it('should have start button disabled process name has a space as the first or last character.', async(() => {
+            component.appName = 'myApp';
+            component.processDefinitionName = ' Space in the beginning';
+            component.ngOnChanges({});
+            fixture.detectChanges();
+            const startBtn = fixture.nativeElement.querySelector('#button-start');
+            expect(startBtn.disabled).toBe(true);
+            component.processDefinitionName = 'Space in the end ';
+            fixture.detectChanges();
+            expect(startBtn.disabled).toBe(true);
+        }));
+
         it('should emit processDefinitionSelection event when a process definition is selected', (done) => {
             component.processDefinitionSelection.subscribe((processDefinition) => {
                 expect(processDefinition).toEqual(fakeProcessDefinitions[0]);
