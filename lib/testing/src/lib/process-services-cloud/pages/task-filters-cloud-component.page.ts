@@ -34,7 +34,7 @@ export class TaskFiltersCloudComponentPage {
         this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
-        await browser.sleep(500);
+        await browser.sleep(1000);
     }
 
     async checkTaskFilterNotDisplayed(filterName: string): Promise<void> {
