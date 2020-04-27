@@ -132,9 +132,9 @@ export class ContentNodeSelectorDialogPage {
     async searchAndSelectResult(searchText: string, name: string) {
         await this.typeIntoNodeSelectorSearchField(searchText);
         try {
-            await this.contentListPage().dataTablePage().waitTillContentLoaded();
             await this.contentListPage().dataTablePage().checkRowContentIsDisplayed(name);
         } catch (e) {
+            console.error(`failed to get search result :: ${name}`);
         }
         await this.clickContentNodeSelectorResult(name);
     }
