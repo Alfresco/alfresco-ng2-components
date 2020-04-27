@@ -115,6 +115,7 @@ describe('Attach File - Content service', () => {
 
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
         await contentNodeSelector.checkDialogIsDisplayed();
+        await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
