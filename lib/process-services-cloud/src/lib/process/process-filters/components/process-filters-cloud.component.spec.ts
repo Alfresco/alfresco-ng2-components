@@ -117,7 +117,7 @@ describe('ProcessFiltersCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
             expect(filters.length).toBe(0);
             done();
         });
@@ -278,7 +278,7 @@ describe('ProcessFiltersCloudComponent', () => {
             done();
         });
 
-        const filterButton = fixture.debugElement.nativeElement.querySelector('button[data-automation-id="10"]');
+        const filterButton = fixture.debugElement.nativeElement.querySelector('button[data-automation-id="FakeRunningProcesses_filter"]');
         filterButton.click();
     });
 

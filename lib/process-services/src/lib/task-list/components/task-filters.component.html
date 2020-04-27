@@ -2,7 +2,7 @@
     <button (click)="selectFilterAndEmit(filter)"
       [attr.aria-label]="filter.name | translate"
       [id]="filter.id"
-      [attr.data-automation-id]="filter.id"
+      [attr.data-automation-id]="filter.name + '_filter'"
       mat-button
       class="adf-action-button adf-full-width" fxLayout="row" fxLayoutAlign="space-between center">
       <ng-container *ngIf="showIcon">

@@ -304,7 +304,7 @@ describe('ProcessFiltersComponent', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
             expect(filters.length).toBe(0);
             done();
         });
