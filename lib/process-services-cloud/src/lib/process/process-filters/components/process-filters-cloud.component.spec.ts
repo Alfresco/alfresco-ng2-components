@@ -278,7 +278,7 @@ describe('ProcessFiltersCloudComponent', () => {
             done();
         });
 
-        const filterButton = fixture.debugElement.nativeElement.querySelector('button[data-automation-id="FakeRunningProcesses_filter"]');
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalFilter[0].name}_filter"]`);
         filterButton.click();
     });
 
