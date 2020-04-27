@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-eval GNU=false
-
 set -e
 TEMP_GENERATOR_DIR=".tmp-generator";
 VERSION=$(npm view @alfresco/adf-core@beta version)
@@ -14,12 +12,6 @@ show_help() {
     echo "-n or --name  Github name of the project"
     echo "-v or --version  ADF version if not passed will use the beta"
     echo "-vjs or --vjs  JS API version if not passed will use the beta"
-    echo "-gnu for gnu"
-}
-
-gnu_mode() {
-    echo "====== GNU MODE ====="
-    GNU=true
 }
 
 token() {
@@ -42,7 +34,6 @@ while [[ $1 == -* ]]; do
     case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -n|--name|-\?)  name_repo $2; shift 2;;
-      -gnu) gnu_mode; shift;;
       -t|--token)  token $2; shift 2;;
       -v|--version)  version $2; shift 2;;
       -vjs|--vjs)  vjs $2; shift 2;;
@@ -59,16 +50,7 @@ git checkout development
 BRANCH="ADF-update-beta-$VERSION"
 git checkout -b $BRANCH
 
-if $GNU; then
-    if [ $NAME_REPO == 'Alfresco/generator-alfresco-adf-app' ] || [ $NAME_REPO == 'Alfresco/alfresco-modeler-app' ] || [ $NAME_REPO == 'Alfresco/alfresco-content-app' ]; then
-        ./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
-    else
-        npm install @alfresco/adf-cli@alpha --no-save
-        npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION
-    fi
-else
-    npx adf-cli update-version --pathPackage "$(pwd)" --version $VERSION --vjs $JS_VERSION --skipGnu
-fi
+./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
 
 git add .
 git commit -m "Update ADF packages version $VERSION"
