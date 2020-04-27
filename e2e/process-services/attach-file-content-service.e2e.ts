@@ -112,10 +112,8 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.name);
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
-
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
-        await contentNodeSelector.checkDialogIsDisplayed();
-        await contentNodeSelector.contentListPage().dataTablePage().waitTillContentLoaded();
+
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
@@ -147,7 +145,6 @@ describe('Attach File - Content service', () => {
         await expect(await externalNodeSelector.getTitle()).toEqual(`Please log in for ${browser.params.testConfig.adf_external_acs.host}`);
         await externalNodeSelector.login(user.email, user.password);
 
-        await externalNodeSelector.checkDialogIsDisplayed();
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
@@ -162,7 +159,6 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
 
-        await contentNodeSelector.checkDialogIsDisplayed();
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();
 
@@ -179,7 +175,6 @@ describe('Attach File - Content service', () => {
         await expect(await externalNodeSelector.getTitle()).toEqual(`Please log in for ${browser.params.testConfig.adf_external_acs.host}`);
         await externalNodeSelector.login(user.email, user.password);
 
-        await externalNodeSelector.checkDialogIsDisplayed();
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
