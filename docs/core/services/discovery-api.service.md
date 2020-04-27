@@ -13,6 +13,10 @@ Gets version and license information for Process Services and Content Services.
 
 ### Methods
 
+-   **getBPMSystemProperties**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/systemPropertiesRepresentation.ts)`>`<br/>
+
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`SystemPropertiesRepresentation`](../../../node_modules/@alfresco/js-api/src/api/activiti-rest-api/model/systemPropertiesRepresentation.ts)`>` - 
+
 -   **getBpmProductInfo**(): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>`<br/>
     Gets product information for Process Services.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`BpmProductVersionModel`](../../../lib/core/models/product-version.model.ts)`>` - ProductVersionModel containing product details

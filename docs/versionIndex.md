@@ -436,6 +436,7 @@ backend services have been tested with each released version of ADF.
 -   [Task details component](process-services/components/task-details.component.md)
 -   [Task filter service](process-services/services/task-filter.service.md)
 -   [Task filters component](process-services/components/task-filters.component.md)
+-   [Task form component](process-services/components/task-form.component.md)
 -   [Task header component](process-services/components/task-header.component.md)
 -   [Task list component](process-services/components/task-list.component.md)
 -   [Task standalone component](process-services/components/task-standalone.component.md)
