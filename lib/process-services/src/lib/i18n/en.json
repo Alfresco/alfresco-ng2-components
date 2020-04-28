@@ -289,7 +289,7 @@
         "LOAD_PROCESS_DEFS": "Couldn't load process definitions, check you have access.",
         "START": "Couldn't start new process instance, check you have access.",
         "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Space is not allowed in the beginning or the end of the text.",
+        "SPACE_VALIDATOR": "Cannot begin or end with a space.",
         "PROCESS_NAME_REQUIRED": "Process name is required."
       }
     },
@@ -327,14 +327,13 @@
   },
   "ATTACH-FILE": {
     "DIALOG" : {
-      "LOGIN": "Please log in for {{ ecmHost }}"
+      "LOGIN": "Sign into '{{ ecmHost }}'"
     },
     "ACTIONS": {
       "LOGIN": "Login",
       "CANCEL": "Cancel",
-      "CHOOSE": "Choose",
-      "CHOOSE_ITEM": "Choose {{ name }} to...",
-      "CHOOSE_IN": "Choose file in {{ name }}..."
+      "CHOOSE": "Select",
+      "CHOOSE_ITEM": "Select content to attach from '{{ name }}'"
     }
   },
   "ADF_TASK_FORM": {
