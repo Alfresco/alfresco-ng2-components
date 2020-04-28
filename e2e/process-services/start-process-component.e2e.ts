@@ -464,7 +464,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.enterProcessName('DateFormProcess');
                 await startProcessPage.formFields().checkWidgetIsVisible('testdate');
                 await widget.dateWidget().setDateInput('testdate', '15-7-2019');
-                await startProcessPage.checkStartFormProcessButtonIsEnabled();
+                await expect(await startProcessPage.isStartFormProcessButtonEnabled()).toEqual(true);
                 await startProcessPage.clickFormStartProcessButton();
 
                 await processFiltersPage.clickRunningFilterButton();

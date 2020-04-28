@@ -104,8 +104,9 @@ export class StartProcessPage {
         await BrowserActions.click(this.formStartProcessButton);
     }
 
-    async checkStartFormProcessButtonIsEnabled() {
-        await expect(await this.formStartProcessButton.isEnabled()).toBe(true);
+    async isStartFormProcessButtonEnabled() {
+        await BrowserVisibility.waitUntilElementIsVisible(this.formStartProcessButton);
+        return this.formStartProcessButton.isEnabled();
     }
 
     async checkStartProcessButtonIsEnabled() {
