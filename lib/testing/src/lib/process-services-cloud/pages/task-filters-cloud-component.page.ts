@@ -42,6 +42,28 @@ export class TaskFiltersCloudComponentPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.filter);
     }
 
+    async clickMyTasksFilter(): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName('my-tasks');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        await BrowserActions.click(this.filter);
+    }
+
+    async clickCompletedTasksFilter(): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName('completed-tasks');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
+        await BrowserActions.click(this.filter);
+    }
+
+    async checkMyTasksFilterIsDisplayed(): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName('my-tasks');
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    }
+
+    async checkCompletedTasksFilterIsDisplayed(): Promise<void> {
+        this.filter = this.getTaskFilterLocatorByFilterName('completed-tasks');
+        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
+    }
+
     async clickOnTaskFilters(): Promise<void> {
         await BrowserActions.click(this.taskFilters);
     }
