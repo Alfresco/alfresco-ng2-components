@@ -70,8 +70,8 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "Cancel",
-    "CHOOSE": "Choose",
-    "CHOOSE_ITEM": "Choose '{{ name }}' to...",
+    "CHOOSE": "Select",
+    "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
     "COPY": "Copy",
     "COPY_ITEM": "Copy '{{ name }}' to...",
     "MOVE": "Move",
