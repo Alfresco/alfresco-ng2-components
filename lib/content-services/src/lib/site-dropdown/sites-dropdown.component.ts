@@ -142,8 +142,8 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
                     if (!this.hideMyFiles) {
                         const siteEntry = new SiteEntry({
                             entry: {
-                                id: '-my-',
-                                guid: '-my-',
+                                id: this.MY_FILES_VALUE,
+                                guid: this.MY_FILES_VALUE,
                                 title: 'DROPDOWN.MY_FILES_OPTION'
                             }
                         });
@@ -151,7 +151,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
                         this.siteList.list.entries.unshift(siteEntry);
 
                         if (!this.value) {
-                            this.value = '-my-';
+                            this.value = this.MY_FILES_VALUE;
                         }
                     }
 
@@ -163,6 +163,10 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
                 }
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
+
+                if (!this.selected) {
+                    this.loadSiteList();
+                }
 
                 this.loading = false;
             },
