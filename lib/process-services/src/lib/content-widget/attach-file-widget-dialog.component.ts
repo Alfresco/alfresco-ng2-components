@@ -50,7 +50,7 @@ export class AttachFileWidgetDialogComponent {
         (<any> externalApiService).init(data.ecmHost, data.context);
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `ATTACH-FILE.ACTIONS.${this.action}`;
-        this.title = data.title;
+        this.updateTitle('DROPDOWN.MY_FILES_OPTION');
     }
 
     isLoggedIn() {
@@ -66,12 +66,11 @@ export class AttachFileWidgetDialogComponent {
     }
 
     onSelect(nodeList: Node[]) {
-        if (nodeList && nodeList[0].isFile) {
-            this.chosenNode = nodeList;
-        } else {
-            this.chosenNode = null;
-        }
-        this.updateTitle(nodeList);
+        this.chosenNode = nodeList;
+    }
+
+    onSiteChange(siteTitle: string) {
+        this.updateTitle(siteTitle);
     }
 
     onClick() {
@@ -79,17 +78,14 @@ export class AttachFileWidgetDialogComponent {
         this.data.selected.complete();
     }
 
-    updateTitle(nodeList: Node[]): void {
-        if (this.action === 'CHOOSE' && nodeList) {
-            if (nodeList[0].isFile) {
-                this.title = this.getTitleTranslation(this.action + '_ITEM', nodeList[0].name);
-            } else if (nodeList[0].isFolder) {
-                this.title = this.getTitleTranslation(this.action + '_IN', nodeList[0].name);
-            }
+    updateTitle(siteTitle: string) {
+        if (this.action === 'CHOOSE' && siteTitle) {
+            this.title = this.getTitleTranslation(this.action, siteTitle);
         }
     }
 
-    getTitleTranslation(action: string, name: string): string {
-        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}`, { name });
+    getTitleTranslation(action: string, name?: string): string {
+        const translatedName = this.translation.instant(name);
+        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}_IN`, { name: translatedName });
     }
 }
