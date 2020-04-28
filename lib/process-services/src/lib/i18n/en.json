@@ -332,13 +332,8 @@
     "ACTIONS": {
       "LOGIN": "Login",
       "CANCEL": "Cancel",
-<<<<<<< HEAD
       "CHOOSE": "Select",
       "CHOOSE_ITEM": "Select content to attach from '{{ name }}'"
-=======
-      "CHOOSE": "Choose",
-      "CHOOSE_IN": "Choose file in '{{ name }}'..."
->>>>>>> [AAE-2200] Minor fixes on attach-file-widget-dialog
     }
   },
   "ADF_TASK_FORM": {

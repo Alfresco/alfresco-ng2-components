@@ -85,7 +85,6 @@ export class AttachFileWidgetDialogComponent {
     }
 
     getTitleTranslation(action: string, name?: string): string {
-        const translatedName = this.translation.instant(name);
-        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}_IN`, { name: translatedName });
+        return this.translation.instant(`ATTACH-FILE.ACTIONS.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 }
