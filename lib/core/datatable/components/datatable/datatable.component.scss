@@ -111,6 +111,10 @@
                 }
             }
 
+            .adf-datatable-cell--image {
+                margin-left: 8px;
+            }
+
             .adf-datatable-cell {
                 text-align: left;
                 flex: 0 1 24%;
@@ -144,6 +148,7 @@
                 height: 42px !important;
                 width: 42px !important;
                 right: 0;
+                top: 4px;
             }
 
             .adf-image-table-cell {
