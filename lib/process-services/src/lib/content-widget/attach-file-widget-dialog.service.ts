@@ -54,7 +54,7 @@ export class AttachFileWidgetDialogService {
             selected,
             ecmHost,
             context,
-            isSelectionValid: this.isNodeValid.bind(this),
+            isSelectionValid: this.isNodeFile.bind(this),
             showFilesInResult: true
         };
 
@@ -71,8 +71,8 @@ export class AttachFileWidgetDialogService {
         this.dialog.closeAll();
     }
 
-    private isNodeValid(entry: Node): boolean {
-        return entry.isFile || entry.isFolder;
+    private isNodeFile(entry: Node): boolean {
+        return entry.isFile;
     }
 
     private getLoginTitleTranslation(ecmHost: string): string {
