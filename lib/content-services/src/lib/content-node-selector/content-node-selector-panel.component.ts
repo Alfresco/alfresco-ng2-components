@@ -21,7 +21,10 @@ import {
     UserPreferencesService,
     PaginationModel,
     UserPreferenceValues,
-    InfinitePaginationComponent, PaginatedComponent
+    InfinitePaginationComponent, PaginatedComponent,
+    ActivitiContentService,
+    NodesApiService,
+    SitesService
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
@@ -176,6 +179,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     select: EventEmitter<Node[]> = new EventEmitter<Node[]>();
 
+    @Output()
+    siteChange: EventEmitter<string> = new EventEmitter<string>();
+
     @ViewChild('documentList')
     documentList: DocumentListComponent;
 
@@ -191,6 +197,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     _chosenNode: Node = null;
     folderIdToShow: string | null = null;
     breadcrumbFolderTitle: string | null = null;
+    startSiteGuid: string | null = null;
 
     pagination: PaginationModel = this.DEFAULT_PAGINATION;
 
@@ -207,7 +214,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
-                private userPreferencesService: UserPreferencesService) {
+                private userPreferencesService: UserPreferencesService,
+                private activitiContentService: ActivitiContentService,
+                private nodesApiService: NodesApiService,
+                private sitesService: SitesService) {
     }
 
     set chosenNode(value: Node) {
@@ -238,6 +248,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
+        if (this.currentFolderId) {
+            this.getStartSite();
+        }
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
@@ -246,6 +259,19 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    private getStartSite() {
+        this.nodesApiService.getNode(this.currentFolderId).subscribe((startNodeEntry) => {
+            this.startSiteGuid = this.activitiContentService.getSiteNameFromNodePath(startNodeEntry);
+            if (this.startSiteGuid) {
+                this.sitesService.getSite(this.startSiteGuid).subscribe((startSiteEntry) => {
+                    if (startSiteEntry instanceof SiteEntry) {
+                        this.siteChange.emit(startSiteEntry.entry.title);
+                    }
+                });
+            }
+        });
     }
 
     private createRowFilter(filter?: RowFilter) {
@@ -280,8 +306,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
         this.setTitleIfCustomSite(chosenSite);
+        this.siteChange.next(chosenSite.entry.title);
         this.updateResults();
-
     }
 
     /**

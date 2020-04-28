@@ -110,9 +110,9 @@ export class ActivitiContentService {
             );
     }
 
-    private getSiteNameFromNodePath(node: MinimalNode): string {
+    getSiteNameFromNodePath(node: MinimalNode): string {
         let siteName = '';
-        if (node.path) {
+        if (node.path && node.path.elements) {
             const foundNode = node.path
                 .elements.find((pathNode: MinimalNode) =>
                     pathNode.nodeType === 'st:site' &&
