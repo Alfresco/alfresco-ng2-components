@@ -179,7 +179,7 @@ export class ContentNodeDialogService {
         });
 
         const data: ContentNodeSelectorComponentData = {
-            title: this.getTitleTranslation(action, contentEntry.name),
+            title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
@@ -206,7 +206,7 @@ export class ContentNodeDialogService {
         });
 
         const data: ContentNodeSelectorComponentData = {
-            title: this.getTitleTranslation(action, contentEntry.name),
+            title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
