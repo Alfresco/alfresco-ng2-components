@@ -23,7 +23,7 @@ export class TaskFiltersCloudComponentPage {
 
     filter: ElementFinder;
     taskFilters: ElementFinder = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
-    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
+    activeFilter: ElementFinder = element(by.css('.adf-active'));
 
     async checkTaskFilterIsDisplayed(filterName: string): Promise<void> {
         this.filter = this.getTaskFilterLocatorByFilterName(filterName);
@@ -51,7 +51,7 @@ export class TaskFiltersCloudComponentPage {
     }
 
     getTaskFilterLocatorByFilterName(filterName: string): ElementFinder {
-        return element(by.css(`span[data-automation-id="${filterName}-filter"]`));
+        return element(by.css(`button[data-automation-id="${filterName}-filter"]`));
     }
 
 }

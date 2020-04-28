@@ -21,9 +21,9 @@ import { by, element, ElementFinder, Locator } from 'protractor';
 export class ProcessFiltersPage {
 
     dataTable = new DataTableComponentPage();
-    runningFilter: ElementFinder = element(by.css('span[data-automation-id="Running_filter"]'));
-    completedFilter: ElementFinder = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
-    allFilter: ElementFinder = element(by.css('span[data-automation-id="All_filter"]'));
+    runningFilter: ElementFinder = element(by.css('button[data-automation-id="Running_filter"]'));
+    completedFilter: ElementFinder = element(by.css('button[data-automation-id="Completed_filter"]'));
+    allFilter: ElementFinder = element(by.css('button[data-automation-id="All_filter"]'));
     createProcessButton: ElementFinder = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
     newProcessButton: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"]'));
     processesPage: ElementFinder = element(by.css('div[class="app-grid"] > div[class="app-grid-item app-processes-menu"]'));
@@ -33,7 +33,7 @@ export class ProcessFiltersPage {
     rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
     tableBody: ElementFinder = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
     nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
-    processIcon: Locator = by.xpath('ancestor::div[@class="mat-list-item-content"]/mat-icon');
+    processIcon: ElementFinder =  element(by.css('.adf-icon'));
 
     async startProcess(): Promise<StartProcessPage> {
         await this.clickCreateProcessButton();
@@ -78,7 +78,7 @@ export class ProcessFiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName): Promise<void> {
-        const processNameHighlighted: ElementFinder = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
+        const processNameHighlighted: ElementFinder = element(by.css(`.adf-filters__entry.adf-active button[data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 
@@ -104,25 +104,25 @@ export class ProcessFiltersPage {
     }
 
     async checkFilterIsDisplayed(name): Promise<void> {
-        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
     }
 
     async checkFilterHasNoIcon(name): Promise<void> {
-        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName.element(this.processIcon));
     }
 
     async getFilterIcon(name): Promise<string> {
-        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
         return BrowserActions.getText(icon);
     }
 
     async checkFilterIsNotDisplayed(name): Promise<void> {
-        const filterName: ElementFinder = element(by.css(`span[data-automation-id='${name}_filter']`));
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 

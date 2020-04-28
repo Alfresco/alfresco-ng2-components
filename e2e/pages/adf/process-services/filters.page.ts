@@ -20,7 +20,7 @@ import { by, element, ElementFinder } from 'protractor';
 
 export class FiltersPage {
 
-    activeFilter: ElementFinder = element(by.css('mat-list-item[class*="active"]'));
+    activeFilter: ElementFinder = element(by.css('.adf-active'));
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     async getActiveFilter(): Promise<string> {
@@ -29,7 +29,7 @@ export class FiltersPage {
 
     async goToFilter(filterName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickExecuteScript(`span[data-automation-id="${filterName}_filter"]`);
+        await BrowserActions.clickExecuteScript(`button[data-automation-id="${filterName}_filter"]`);
     }
 
     async sortByName(sortOrder: string): Promise<void> {
@@ -41,7 +41,7 @@ export class FiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter: ElementFinder = element(by.css(`mat-list-item.adf-active span[data-automation-id='${filterName}_filter']`));
+        const highlightedFilter: ElementFinder = element(by.css(`.adf-filters__entry.adf-active button[data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }

@@ -22,9 +22,9 @@ export class ProcessFiltersPage {
 
     filtersPage = new FiltersPage();
 
-    runningFilter: ElementFinder = element(by.css('span[data-automation-id="Running_filter"]'));
-    completedFilter: ElementFinder = element(by.css('div[class="mat-list-text"] > span[data-automation-id="Completed_filter"]'));
-    allFilter: ElementFinder = element(by.css('span[data-automation-id="All_filter"]'));
+    runningFilter: ElementFinder = element(by.css('button[data-automation-id="Running_filter"]'));
+    completedFilter: ElementFinder = element(by.css('button[data-automation-id="Completed_filter"]'));
+    allFilter: ElementFinder = element(by.css('button[data-automation-id="All_filter"]'));
     accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
 
     async clickRunningFilterButton(): Promise<void> {

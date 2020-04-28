@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder, Locator } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessFiltersCloudComponentPage {
 
     filter: ElementFinder;
-    filterIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    filterIcon: ElementFinder = element(by.css('.adf-icon'));
 
     processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
-    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active'] span"));
+    activeFilter: ElementFinder = element(by.css('.adf-active'));
     processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
 
     async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
@@ -106,6 +106,6 @@ export class ProcessFiltersCloudComponentPage {
     }
 
     getProcessFilterLocatorByFilterName(filterName: string): ElementFinder {
-        return element(by.css(`span[data-automation-id="${filterName}_filter"]`));
+        return element(by.css(`button[data-automation-id="${filterName}_filter"]`));
     }
 }

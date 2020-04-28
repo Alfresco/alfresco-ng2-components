@@ -21,11 +21,11 @@ import { TaskFiltersPage } from '../../process-services/task-filters.page';
 
 export class TaskFiltersDemoPage {
 
-    myTasks: ElementFinder = element(by.css('span[data-automation-id="My Tasks_filter"]'));
-    queuedTask: ElementFinder = element(by.css('span[data-automation-id="Queued Tasks_filter"]'));
-    completedTask: ElementFinder = element(by.css('span[data-automation-id="Completed Tasks_filter"]'));
-    involvedTask: ElementFinder = element(by.css('span[data-automation-id="Involved Tasks_filter"]'));
-    activeFilter: ElementFinder = element(by.css("mat-list-item[class*='active']"));
+    myTasks: ElementFinder = element(by.css('button[data-automation-id="My Tasks_filter"]'));
+    queuedTask: ElementFinder = element(by.css('button[data-automation-id="Queued Tasks_filter"]'));
+    completedTask: ElementFinder = element(by.css('button[data-automation-id="Completed Tasks_filter"]'));
+    involvedTask: ElementFinder = element(by.css('button[data-automation-id="Involved Tasks_filter"]'));
+    activeFilter: ElementFinder = element(by.css('.adf-filters__entry.adf.active'));
 
     myTasksFilter(): TaskFiltersPage {
         return new TaskFiltersPage(this.myTasks);
@@ -44,7 +44,7 @@ export class TaskFiltersDemoPage {
     }
 
     customTaskFilter(filterName): TaskFiltersPage {
-        return new TaskFiltersPage(element(by.css(`span[data-automation-id="${filterName}_filter"]`)));
+        return new TaskFiltersPage(element(by.css(`button[data-automation-id="${filterName}_filter"]`)));
     }
 
     async checkActiveFilterActive(): Promise<string> {
