@@ -61,10 +61,10 @@ when the process list is empty:
 | resolverFn | `Function` | null | Resolver function is used to show dynamic complex column objects see the docs to learn how to configure a resolverFn. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | size | `number` |  | The number of processes to fetch in each page. |
 | sort | `string` |  | Defines the sort ordering of the list. Possible values are `created-desc`, `created-asc`, `ended-desc`, `ended-asc`. |
 | state | `string` |  | Defines the state of the processes. Possible values are `running`, `completed` and `all` |
-| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
 ### Events
@@ -73,8 +73,8 @@ when the process list is empty:
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs while loading the list of process instances from the server. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a row in the process list is clicked. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessListModel`](../../../lib/process-services/src/lib/process-list/models/process-list.model.ts)`>` | Emitted when the list of process instances has been loaded successfully from the server. |
 
 ## Details
 
@@ -193,7 +193,7 @@ The Process Instance List also supports pagination:
 
 Emitted before the context menu is displayed for a row.
 
-Note that the ProcessInstanceListComponent itself does not populate the context menu with items. You can provide all necessary content via the handler.
+Note that the [ProcessInstanceListComponent](../../../lib/process-services/src/lib/process-list/components/process-list.component.ts) itself does not populate the context menu with items. You can provide all necessary content via the handler.
 
 ```html
 <adf-process-instance-list
@@ -222,6 +222,7 @@ onShowRowContextMenu(event: DataCellEvent) {
     ]
 }
 ```
+
 ![](../../docassets/images/process-instance-list-context-menu.png)
 
 This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.

@@ -52,6 +52,7 @@ when the process list is empty:
 | ---- | ---- | ------------- | ----------- |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
 | appName | `string` | "" | The name of the application. |
+| appVersion | `number` |  | The release version of the application. |
 | businessKey | `string` | "" | Filter the processes to display only the ones with this businessKey value. |
 | id | `string` | "" | Filter the processes to display only the ones with this ID. |
 | initiator | `string` | "" | Name of the initiator of the process. |
