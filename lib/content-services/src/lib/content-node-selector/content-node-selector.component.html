@@ -18,7 +18,8 @@
         [showSearch]="data?.showSearch"
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
-        (select)="onSelect($event)">
+        (select)="onSelect($event)"
+        (siteChange)="onSiteChange($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>
 

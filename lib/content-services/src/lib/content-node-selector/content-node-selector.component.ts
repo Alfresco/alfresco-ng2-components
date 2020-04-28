@@ -34,7 +34,7 @@ export class ContentNodeSelectorComponent {
     buttonActionName: string;
     chosenNode: Node[];
 
-    constructor(public translation: TranslationService,
+    constructor(private translation: TranslationService,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
@@ -47,7 +47,10 @@ export class ContentNodeSelectorComponent {
 
     onSelect(nodeList: Node[]) {
         this.chosenNode = nodeList;
-        this.updateTitle(nodeList);
+    }
+
+    onSiteChange(siteTitle: string) {
+        this.updateTitle(siteTitle);
     }
 
     onClick(): void {
@@ -55,13 +58,13 @@ export class ContentNodeSelectorComponent {
         this.data.select.complete();
     }
 
-    updateTitle(nodeList: Node[]): void {
-        if (this.action === 'CHOOSE' && nodeList) {
-            this.title = this.getTitleTranslation(this.action, nodeList[0].name);
+    updateTitle(siteTitle: string) {
+        if (this.action === 'CHOOSE' && siteTitle) {
+            this.title = this.getTitleTranslation(this.action, siteTitle);
         }
     }
 
     getTitleTranslation(action: string, name: string): string {
-        return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name });
+        return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 }
