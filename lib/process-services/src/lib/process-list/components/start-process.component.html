@@ -55,7 +55,7 @@
             #startForm
             *ngIf="hasStartForm()"
             [data]="values"
-            [disableStartProcessButton]="!validateForm()"
+            [disableStartProcessButton]="this.processNameInput.invalid"
             [processDefinitionId]="selectedProcessDef.id"
             (outcomeClick)="onOutcomeClick($event)"
             [showRefreshButton]="false">

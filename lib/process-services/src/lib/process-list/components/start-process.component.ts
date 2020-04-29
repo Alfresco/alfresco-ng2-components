@@ -296,10 +296,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.resetErrorMessage();
     }
 
-    hasProcessName(): boolean {
-        return this.name ? true : false;
-    }
-
     displayFn(process: any): string {
         if (process) {
             let processName = process;
