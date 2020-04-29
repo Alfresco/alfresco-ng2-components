@@ -235,7 +235,7 @@ You can customize the styling of a column and also add features like tooltips an
 
 Emitted before the context menu is displayed for a row.
 
-Note that the [TaskListComponent](../../process-services/components/task-list.component.md) itself does not populate the context menu with items.
+Note that the [`TaskListComponent`](../../process-services/components/task-list.component.md) itself does not populate the context menu with items.
 You can provide all necessary content via the handler.
 
 ```html
@@ -270,7 +270,7 @@ onShowRowContextMenu(event: DataCellEvent) {
 
 This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
-The [TaskListComponent](../../process-services/components/task-list.component.md) will automatically render the supplied menu items.
+The [`TaskListComponent`](../../process-services/components/task-list.component.md) will automatically render the supplied menu items.
 
 See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
 documentation for more details on the format and behavior of context actions.

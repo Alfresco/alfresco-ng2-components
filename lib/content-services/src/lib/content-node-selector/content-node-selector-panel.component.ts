@@ -179,6 +179,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Output()
     select: EventEmitter<Node[]> = new EventEmitter<Node[]>();
 
+    /** Emitted when the select site changes. */
     @Output()
     siteChange: EventEmitter<string> = new EventEmitter<string>();
 
