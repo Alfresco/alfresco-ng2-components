@@ -114,6 +114,7 @@ export class StartProcessCloudPage {
         await this.clearField(this.processNameInput);
         await this.enterProcessName(processName);
         await this.selectFromProcessDropdown(processDefinition);
+        await browser.sleep(4000); // remove this once AAE-2505 is fixed
         await this.checkStartProcessButtonIsEnabled();
         await this.clickStartProcessButton();
     }
