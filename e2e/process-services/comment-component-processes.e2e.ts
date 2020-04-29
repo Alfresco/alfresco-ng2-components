@@ -54,7 +54,7 @@ describe('Comment component for Processes', () => {
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp('Task App', processName);
+        const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(importedApp.name, processName);
         processInstanceId = processWithComment.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);

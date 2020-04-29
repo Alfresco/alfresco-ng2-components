@@ -36,7 +36,7 @@ describe('Start Task - Custom App', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
     const secondApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
-    let appModel, secondAppModel;
+    let appModel;
     const completedTasks = [];
     const paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
     const completedTasksName = ['completed01', 'completed02', 'completed03'];
@@ -89,15 +89,15 @@ describe('Start Task - Custom App', () => {
 
         appRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, app.title);
 
-        secondAppModel = await applicationsService.importPublishDeployApp(secondApp.file_path);
+        await applicationsService.importPublishDeployApp(secondApp.file_path);
 
         secondAppRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, secondApp.title);
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
         processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
-        await processUtil.startProcessOfApp(secondAppModel.name);
-        await processUtil.startProcessOfApp(secondAppModel.name);
+        await processUtil.startProcessOfApp(appModel.name);
+        await processUtil.startProcessOfApp(appModel.name);
 
         for (let i = 1; i < paginationTasksName.length; i++) {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': paginationTasksName[i] });

@@ -40,4 +40,15 @@ export class ModelsActions {
             Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
+
+    async getModels(opts: any) {
+        const options = opts || {};
+        let models;
+        try {
+            models = await this.api.activiti.modelsApi.getModels(options);
+        } catch (error) {
+            Logger.error('Get Models - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+        }
+        return models;
+    }
 }
