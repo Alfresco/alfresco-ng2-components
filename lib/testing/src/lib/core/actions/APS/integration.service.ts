@@ -31,8 +31,8 @@ export class IntegrationService {
             alfrescoTenantId: '',
             repositoryUrl: `${host}/alfresco`,
             shareUrl: `${host}/share`,
-            version: '4.2',
-            useShareConnector: false
+            version: '6.1.1',
+            authenticationType: 'basic'
         };
         return this.api.activiti.integrationAccountApi.apiClient.callApi('app/rest/integration/alfresco', 'POST',
             {}, {}, {}, {}, repository, [], [], Object);
