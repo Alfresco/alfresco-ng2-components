@@ -24,7 +24,7 @@ import {
     StringUtil,
     StartTasksCloudPage,
     TaskFormCloudComponent,
-    StartProcessPage
+    StartProcessCloudPage
 } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
@@ -39,7 +39,7 @@ describe('Task cloud visibility', async () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const startProcessPage = new StartProcessPage();
+    const startProcessPage = new StartProcessCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const loginSSOPage = new LoginSSOPage();
 
@@ -103,7 +103,7 @@ describe('Task cloud visibility', async () => {
         await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
 
         await startProcessPage.enterProcessName(processName);
-        await browser.sleep(400);
+        await startProcessPage.checkStartProcessButtonIsEnabled();
         await startProcessPage.clickStartProcessButton();
 
         await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName });
