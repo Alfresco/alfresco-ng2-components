@@ -17,9 +17,9 @@
 
 /* tslint:disable:component-selector no-input-rename */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { baseHost, WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'checkbox-widget',
@@ -27,10 +27,23 @@ import { baseHost , WidgetComponent } from './../widget.component';
     host: baseHost,
     encapsulation: ViewEncapsulation.None
 })
-export class CheckboxWidgetComponent extends WidgetComponent {
+export class CheckboxWidgetComponent extends WidgetComponent implements OnInit {
+    checkboxValue: boolean;
 
     constructor(public formService: FormService) {
         super(formService);
     }
 
+    ngOnInit() {
+        this.checkboxValue = this.parseValue(this.field.value);
+    }
+
+    parseValue(value: any) {
+        return value === true || value === 'true';
+    }
+
+    onCheckboxToggled() {
+        this.field.value = this.checkboxValue;
+        this.onFieldChanged(this.field);
+    }
 }

@@ -25,6 +25,7 @@ import { FormBaseModule } from 'core/form/form-base.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateService, TranslateStore, TranslateLoader } from '@ngx-translate/core';
 import { TranslateLoaderService } from 'core/services';
+import { MatCheckboxModule } from '@angular/material';
 
 describe('CheckboxWidgetComponent', () => {
 
@@ -35,7 +36,8 @@ describe('CheckboxWidgetComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            FormBaseModule
+            FormBaseModule,
+            MatCheckboxModule
         ],
         providers: [
             TranslateStore,
@@ -62,12 +64,67 @@ describe('CheckboxWidgetComponent', () => {
                 readOnly: false,
                 required: true
             });
-            fixture.detectChanges();
         });
 
         it('should be marked as invalid when required', async(() => {
+            fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(element.querySelector('.adf-invalid')).not.toBeNull();
+            });
+        }));
+
+        it('should be checked if boolean true is passed', async(() => {
+            widget.field.value = true;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
+                expect(checkbox.getAttribute('aria-checked')).toBe('true');
+                expect(widget.checkboxValue).toBe(true);
+            });
+        }));
+
+        it('should be checked if string "true" is passed', async(() => {
+            widget.field.value = 'true';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
+                expect(checkbox.getAttribute('aria-checked')).toBe('true');
+                expect(widget.checkboxValue).toBe(true);
+            });
+        }));
+
+        it('should not be checked if boolean false is passed', async(() => {
+            widget.field.value = false;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
+                expect(checkbox.getAttribute('aria-checked')).toBe('false');
+                expect(widget.checkboxValue).toBe(false);
+            });
+        }));
+
+        it('should not be checked if string "false" is passed', async(() => {
+            widget.field.value = 'false';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
+                expect(checkbox.getAttribute('aria-checked')).toBe('false');
+                expect(widget.checkboxValue).toBe(false);
+            });
+        }));
+
+        it('should not be checked if null is passed', async(() => {
+            widget.field.value = null;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
+                expect(checkbox.getAttribute('aria-checked')).toBe('false');
+                expect(widget.checkboxValue).toBe(false);
             });
         }));
    });
