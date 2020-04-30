@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging } from '@alfresco/js-api';
-import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
+import { SearchService, SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -53,6 +53,7 @@ describe('ContentNodeSelectorComponent', () => {
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let contentNodeSelectorService: ContentNodeSelectorService;
     let searchService: SearchService;
+    let nodeService: NodesApiService;
     let searchSpy: jasmine.Spy;
     let cnSearchSpy: jasmine.Spy;
 
@@ -82,7 +83,11 @@ describe('ContentNodeSelectorComponent', () => {
             component.debounceSearch = 0;
 
             searchService = TestBed.get(SearchService);
+            nodeService = TestBed.get(NodesApiService);
             contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
+            spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node', path: {
+                elements: [{ type: 'node'}]
+            },  allowableOperations: ['updatePermissions']}));
             cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
             searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
                 return new Observable((observer: Observer<NodePaging>) => {
@@ -348,6 +353,28 @@ describe('ContentNodeSelectorComponent', () => {
                     done();
                 });
             });
+        });
+
+        describe('Site selection', () => {
+            let sitesService: SitesService;
+
+            beforeEach(() => {
+                sitesService = TestBed.get(SitesService);
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                spyOn(sitesService, 'getSite').and.returnValue(of({ entry: { title: 'nuku-nuku' } }));
+
+                component.currentFolderId = 'cat-girl-nuku-nuku';
+            });
+
+            it('should trigger site change when site is selected', async ((done) => {
+                component.siteChange.subscribe((siteTitle: string) => {
+                    expect(siteTitle).toBe('nuku-nuku');
+                    done();
+                });
+
+                component.ngOnInit();
+                fixture.detectChanges();
+            }));
         });
 
         describe('Search functionality', () => {
