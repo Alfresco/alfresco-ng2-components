@@ -26,7 +26,7 @@ import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, Valid
 import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { Subject, Observable, concat } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
@@ -122,6 +122,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
         this.processForm.valueChanges
         .pipe(
+            tap(() => this.currentCreatedProcess = undefined),
             debounceTime(400),
             distinctUntilChanged(),
             filter(() => this.isProcessSelectionValid()),
