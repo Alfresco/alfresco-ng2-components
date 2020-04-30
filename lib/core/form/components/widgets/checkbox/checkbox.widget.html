@@ -5,8 +5,8 @@
         color="primary"
         [required]="field.required"
         [disabled]="field.readOnly || readOnly"
-        [(ngModel)]="field.value"
-        (ngModelChange)="onFieldChanged(field)">
+        [(ngModel)]="checkboxValue"
+        (ngModelChange)="onCheckboxToggled()">
         {{field.name | translate }}
         <span *ngIf="field.required">*</span>
     </mat-checkbox>
