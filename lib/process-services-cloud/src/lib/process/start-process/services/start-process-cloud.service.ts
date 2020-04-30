@@ -63,6 +63,7 @@ export class StartProcessCloudService extends BaseCloudService {
      */
     createProcess(appName: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/create`;
+        payload.payloadType = 'StartProcessPayload';
 
         return this.post(url, payload).pipe(
             map((result: any) => result.entry),
@@ -92,8 +93,25 @@ export class StartProcessCloudService extends BaseCloudService {
      */
     startProcess(appName: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances`;
+        payload.payloadType = 'StartProcessPayload';
 
         return this.post(url, payload).pipe(
+            map(processInstance => new ProcessInstanceCloud(processInstance))
+        );
+    }
+
+    /**
+     * Update an existing process instance
+     * @param appName name of the Application
+     * @param processInstanceId process instance to update
+     * @param payload Details of the process (definition key, name, variables, etc)
+     * @returns Details of the process instance just started
+     */
+    updateProcess(appName: string, processInstanceId: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
+        const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
+        payload.payloadType = 'UpdateProcessPayload';
+
+        return this.put(url, payload).pipe(
             map(processInstance => new ProcessInstanceCloud(processInstance))
         );
     }

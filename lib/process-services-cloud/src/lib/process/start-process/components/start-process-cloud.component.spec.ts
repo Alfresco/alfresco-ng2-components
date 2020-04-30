@@ -33,6 +33,7 @@ import { fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
     fakeProcessInstance, fakeNoNameProcessDefinitions,
     fakeSingleProcessDefinition, fakeCreatedProcessInstance } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
+import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -99,6 +100,7 @@ describe('StartProcessCloudComponent', () => {
         component = fixture.componentInstance;
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(fakeProcessDefinitions));
+        spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startCreatedProcess').and.returnValue(of(fakeProcessInstance));
         createProcessSpy = spyOn(processService, 'createProcess').and.returnValue(of(fakeCreatedProcessInstance));
     });
@@ -128,7 +130,8 @@ describe('StartProcessCloudComponent', () => {
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(false);
             expect(component.isProcessFormValid()).toBe(true);
-            expect(createProcessSpy).toHaveBeenCalledWith('MyApp', component.processPayloadCloud);
+            expect(createProcessSpy).toHaveBeenCalledWith('MyApp', new ProcessPayloadCloud({name: 'OLE',
+                                                                    processDefinitionKey: fakeProcessDefinitions[1].key}));
             expect(component.currentCreatedProcess.status).toBe('CREATED');
             expect(component.currentCreatedProcess.startDate).toBeNull();
         }));
@@ -297,7 +300,8 @@ describe('StartProcessCloudComponent', () => {
             expect(startBtn.disabled).toBe(false);
             expect(component.formCloud.isValid).toBe(true);
             expect(component.isProcessFormValid()).toBe(true);
-            expect(createProcessSpy).toHaveBeenCalledWith('MyApp', component.processPayloadCloud);
+            expect(createProcessSpy).toHaveBeenCalledWith('MyApp', new ProcessPayloadCloud({name: 'testFormWithProcess',
+                                                                processDefinitionKey: fakeProcessDefinitions[1].key}));
             expect(component.currentCreatedProcess.status).toBe('CREATED');
             expect(component.currentCreatedProcess.startDate).toBeNull();
         }));

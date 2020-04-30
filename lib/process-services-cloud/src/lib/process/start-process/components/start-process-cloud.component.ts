@@ -28,7 +28,7 @@ import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, concat } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 
 @Component({
@@ -167,8 +167,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private generateProcessInstance(): Observable <ProcessInstanceCloud> {
-        this.buildProcessCloudPayload();
-        return this.startProcessCloudService.createProcess(this.appName, this.processPayloadCloud);
+        const createPayload: ProcessPayloadCloud = new ProcessPayloadCloud({
+            name: this.processInstanceName.value,
+            processDefinitionKey: this.processPayloadCloud.processDefinitionKey
+        });
+        return this.startProcessCloudService.createProcess(this.appName, createPayload);
     }
 
     private selectProcessDefinitionByProcesDefinitionName(processDefinitionName: string): void {
@@ -271,10 +274,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     startProcess() {
         this.isLoading = true;
-
         this.buildProcessCloudPayload();
-
-        this.startProcessCloudService.startCreatedProcess(this.appName, this.currentCreatedProcess.id).subscribe(
+        concat(
+            this.startProcessCloudService.updateProcess(this.appName, this.currentCreatedProcess.id, this.processPayloadCloud),
+            this.startProcessCloudService.startCreatedProcess(this.appName, this.currentCreatedProcess.id)
+        ).subscribe(
             (res) => {
                 this.success.emit(res);
                 this.isLoading = false;
