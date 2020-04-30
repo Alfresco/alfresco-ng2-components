@@ -131,7 +131,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.currentCreatedProcess = res;
         });
 
-        // this.processDefinitionName = 'start-visibility-form';
         if (this.processDefinitionName) {
             this.processDefinition.setValue(this.processDefinitionName);
             this.processDefinition.markAsDirty();
