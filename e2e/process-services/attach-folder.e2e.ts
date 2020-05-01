@@ -77,8 +77,6 @@ describe('Attach Folder', () => {
         const contentFileWidget = widget.attachFolderWidget();
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
 
-        await contentNodeSelector.checkDialogIsDisplayed();
-
         await contentNodeSelector.searchAndSelectResult(user.email, user.email);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);

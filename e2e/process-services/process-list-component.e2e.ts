@@ -119,6 +119,7 @@ describe('Process List Test', () => {
         await processListDemoPage.checkNoProcessFoundIsDisplayed();
 
         await processListDemoPage.addAppId(appWithDateFieldId);
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
         await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
@@ -129,6 +130,7 @@ describe('Process List Test', () => {
 
     it('[C282015] Should be able to filter by Process Definition ID', async () => {
         await processListDemoPage.addProcessDefinitionId(procWithDate.processDefinitionId);
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
         await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
@@ -139,6 +141,7 @@ describe('Process List Test', () => {
 
     it('[C282016] Should be able to filter by Process Instance ID', async () => {
         await processListDemoPage.addProcessInstanceId(procWithDate.id);
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         await processListDemoPage.checkProcessIsDisplayed(processName.procWithDate);
 
@@ -149,6 +152,7 @@ describe('Process List Test', () => {
 
     it('[C282017] Should be able to filter by Status', async () => {
         await processListDemoPage.selectStateFilter('Active');
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithDate);
         await processListDemoPage.checkProcessIsNotDisplayed(processName.completedProcWithUserWidget);
@@ -165,6 +169,7 @@ describe('Process List Test', () => {
         await processListDemoPage.checkProcessIsNotDisplayed(processName.procWithUserWidget);
 
         await processListDemoPage.selectStateFilter('All');
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithDate);
         await processListDemoPage.checkProcessIsDisplayed(processName.completedProcWithUserWidget);
@@ -174,6 +179,7 @@ describe('Process List Test', () => {
 
     it('[C282010] Should be able to sort by creation date', async () => {
         await processListDemoPage.selectSorting('asc');
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         const sortedProcessListNamesAsc = await processListDemoPage.getDisplayedProcessesNames();
 
