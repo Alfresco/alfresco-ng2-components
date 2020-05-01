@@ -70,7 +70,8 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "Cancelar",
-    "CHOOSE": "Elegir",
+    "CHOOSE": "Seleccionar",
+    "CHOOSE_ITEM": "Seleccione el contenido que adjuntar de '{{ name }}'",
     "COPY": "Copiar",
     "COPY_ITEM": "Copiar '{{ name }}' a...",
     "MOVE": "Mover",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Haga clic en el siguiente enlace para copiar al portapapeles.",
     "TITLE": "Enlace para compartir",
     "EXPIRES": "Caduca el",
+    "EXPIRATION-LABEL": "Fecha de caducidad",
     "CLIPBOARD-MESSAGE": "Enlace copiado al portapapeles",
     "CLOSE": "Cerrar",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "No se ha especificado un ID de nodo."
+    "MISSING-ID": "No se ha especificado un ID de nodo.",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Alternar {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

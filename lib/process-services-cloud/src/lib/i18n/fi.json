@@ -19,7 +19,8 @@
       "PROCESS_NAME": "Prosessin nimi",
       "PARENT_TASK_ID": "Ylätason tehtävän tunnus",
       "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
-      "PROCESS_DEF_KEY": "Prosessimääritelmäavain"
+      "PROCESS_DEF_KEY": "Prosessimääritelmäavain",
+      "APP_VERSION": "Sovelluksen julkaisuversio"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Käynnistä prosessi",
@@ -41,7 +42,8 @@
         "START": "Uuden prosessiesiintymän käynnistäminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
         "PROCESS_NAME_REQUIRED": "Prosessin nimi on pakollinen",
         "PROCESS_DEFINITION_REQUIRED": "Prosessimääritelmä on pakollinen",
-        "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä."
+        "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
+        "SPACE_VALIDATOR": "Ei voi alkaa välilyönnillä tai päättyä siihen."
       }
     }
   },
@@ -158,7 +160,8 @@
       "LAST_MODIFIED": "Muokattu viimeksi",
       "LAST_MODIFIED_DATE_FORM": "Muokattu viimeksi kohteesta",
       "LAST_MODIFIED_TO": "Muokattu viimeksi kohteeseen",
-      "PROCESS_NAME": "Prosessin nimi"
+      "PROCESS_NAME": "Prosessin nimi",
+      "APP_VERSION": "Sovelluksen julkaisuversio"
     },
     "ERROR": {
       "DATE": "Päivämäärämuoto: PP/KK/VVVV"

@@ -198,14 +198,18 @@
         "SAVE": "Opslaan",
         "CANCEL": "Annuleren",
         "CLEAR": "Wissen",
-        "TOGGLE": "Waarde in-/uitschakelen"
+        "TOGGLE": "Waarde in-/uitschakelen",
+        "COPY_TO_CLIPBOARD": "Dubbelklikken om waarde te kopiëren"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Gebruik de pijltoetsen om te navigeren tussen datums. Met pijl-omhoog en pijl-omlaag gaat u naar dezelfde dag in de  volgende of vorige week. Met pijl-links en pijl-rechts gaat u naar de volgende of vorige dag. Druk op Enter of Return om een datum te selecteren."
+        "EDIT": "Knop Bewerken",
+        "DATEPICKER": "Gebruik de pijltoetsen om te navigeren tussen datums. Met pijl-omhoog en pijl-omlaag gaat u naar dezelfde dag in de  volgende of vorige week. Met pijl-links en pijl-rechts gaat u naar de volgende of vorige dag. Druk op Enter of Return om een datum te selecteren.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Waarde gekopieerd naar klembord"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Schakelen tussen resultaten in oplopende en aflopende volgorde"
+      "TOGGLE_ASC_DESC_ORDER": "Schakelen tussen resultaten in oplopende en aflopende volgorde",
+      "SORT_BY": "Sorteren op"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Content-acties"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Acties",
       "SELECT_ALL": "Alles selecteren",
       "SELECT_FILE": "een bestand selecteren",
       "SORT_ASCENDING": "Oplopend",
@@ -496,6 +501,6 @@
   },
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Klik om te kopiëren",
-    "SUCCESS_COPY": "Tekst gekopieerd naar Klembord"
+    "SUCCESS_COPY": "Tekst gekopieerd naar klembord"
   }
 }

@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan ikke laste prosessdefinisjoner, kontroller om du har tilgang.",
         "START": "Kan ikke start nytt prosesstilfelle, kontroller om du har tilgang.",
-        "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn."
+        "MAXIMUM_LENGTH": "Lengde overskredet, maks {{characters}} tegn.",
+        "SPACE_VALIDATOR": "Kan ikke begynne eller slutte med et mellomrom.",
+        "PROCESS_NAME_REQUIRED": "Prosessnavn er påkrevd."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Logg inn på '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Logg på",
       "CANCEL": "Avbryt",
-      "CHOOSE": "Velg"
+      "CHOOSE": "Velg",
+      "CHOOSE_ITEM": "Velg innhold du vil legge ved fra '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Legg til et skjema som kan vises senere",
+      "COMPLETE-TASK-MESSAGE": "Oppgaven {{taskName}} er fullført",
+      "COMPLETE-TASK-SUB-MESSAGE": "Ingen skjemaer å legge til",
+      "BUTTONS": {
+        "COMPLETE": "Fullfør",
+        "CANCEL": "Avbryt"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Oppgaven {{taskName}} er fullført",
+      "SUBTITLE": "Ingen skjemaer å legge til"
     }
   }
 }

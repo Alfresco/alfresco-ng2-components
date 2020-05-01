@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "无法加载流程定义，请确定您是否有访问权限。",
         "START": "无法启动新流程实例，请确定您是否有访问权限。",
-        "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符"
+        "MAXIMUM_LENGTH": "超出长度，最多 {{characters}} 字符",
+        "SPACE_VALIDATOR": "不能以空格开头或结尾。",
+        "PROCESS_NAME_REQUIRED": "流程名称为必填项。"
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "登录 '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "登录",
       "CANCEL": "取消",
-      "CHOOSE": "选择"
+      "CHOOSE": "选择",
+      "CHOOSE_ITEM": "从 '{{ name }}'中选择要附加的内容"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "附加可以稍后查看的表单",
+      "COMPLETE-TASK-MESSAGE": "已完成任务 {{taskName}}",
+      "COMPLETE-TASK-SUB-MESSAGE": "没有要添加的表单",
+      "BUTTONS": {
+        "COMPLETE": "完成",
+        "CANCEL": "取消"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "已完成任务 {{taskName}}",
+      "SUBTITLE": "没有要添加的表单"
     }
   }
 }

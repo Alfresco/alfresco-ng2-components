@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Avbryt",
     "CHOOSE": "Välj",
+    "CHOOSE_ITEM": "Välj innehåll att bifoga från '{{ name }}'",
     "COPY": "Kopiera",
     "COPY_ITEM": "Kopiera '{{ name }}' till...",
     "MOVE": "Flytta",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Klicka på länken nedan för att kopiera den till urklipp",
     "TITLE": "Länk att dela",
     "EXPIRES": "Löper ut den",
+    "EXPIRATION-LABEL": "Sista giltighetsdatum",
     "CLIPBOARD-MESSAGE": "Länk kopierad till urklipp",
     "CLOSE": "Stäng",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Ingen nod-ID tillhandahållen!"
+    "MISSING-ID": "Ingen nod-ID tillhandahållen!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Växla {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

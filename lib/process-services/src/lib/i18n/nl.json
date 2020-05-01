@@ -21,7 +21,7 @@
       "MESSAGES": {
         "TITLE": "Geen taken gevonden",
         "SUBTITLE": "Maak een nieuwe taak die u later gemakkelijk wilt kunnen vinden",
-        "NONE": "Geen takenlijsten gevonden"
+        "NONE": "Geen lijsten met taken gevonden"
       }
     },
     "PROPERTIES": {
@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kan procesdefinities niet laden, controleer of u over toegang beschikt.",
         "START": "Kan geen nieuwe procesinstance starten, controleer of u over toegang beschikt.",
-        "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens."
+        "MAXIMUM_LENGTH": "Lengte overschreden, max. {{characters}} tekens.",
+        "SPACE_VALIDATOR": "Mag niet beginnen of eindigen met een spatie.",
+        "PROCESS_NAME_REQUIRED": "Procesnaam is vereist."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Aanmelden bij '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Aanmelden",
       "CANCEL": "Annuleren",
-      "CHOOSE": "Kiezen"
+      "CHOOSE": "Selecteren",
+      "CHOOSE_ITEM": "Selecteer content om bij te voegen vanuit '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Voeg een formulier bij dat later kan worden weergegeven",
+      "COMPLETE-TASK-MESSAGE": "Taak {{taskName}} voltooid",
+      "COMPLETE-TASK-SUB-MESSAGE": "Geen formulieren om toe te voegen",
+      "BUTTONS": {
+        "COMPLETE": "Voltooid",
+        "CANCEL": "Annuleren"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Taak {{taskName}} voltooid",
+      "SUBTITLE": "Geen formulieren om toe te voegen"
     }
   }
 }

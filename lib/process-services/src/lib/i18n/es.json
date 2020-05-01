@@ -20,7 +20,7 @@
     "LIST": {
       "MESSAGES": {
         "TITLE": "Ninguna tarea encontrada",
-        "SUBTITLE": "Crear una nueva tarea que desee encontrar fácilmente después",
+        "SUBTITLE": "Cree una nueva tarea que desee encontrar fácilmente más adelante",
         "NONE": "No se han encontrado listas de tareas"
       }
     },
@@ -30,7 +30,7 @@
       "DURATION": "Duración",
       "PARENT_TASK_ID": "ID de tarea primaria",
       "NAME": "Nombre",
-      "ASSIGNEE": "Asignado a",
+      "ASSIGNEE": "Usuario asignado",
       "ASSIGNEE_DEFAULT": "Sin asignado",
       "PRIORITY": "Prioridad",
       "DUE_DATE": "Fecha de vencimiento",
@@ -60,7 +60,7 @@
         "INFO_DRAWER_TITLE": "Actividades",
         "INFO_DRAWER_TAB_ACTIVITY_TITLE": "Actividad",
         "INFO_DRAWER_TAB_DETAILS_TITLE": "Detalles",
-        "ASSIGNEE": "Asignado a",
+        "ASSIGNEE": "Usuario asignado",
         "DUE": "Vencimiento",
         "FORM": "Formulario",
         "PEOPLE": "Personas con las que se comparte esta tarea",
@@ -123,7 +123,7 @@
           "NAME": "Nombre",
           "DESCRIPTION": "Descripción",
           "ATTACHFORM": "Adjuntar formulario",
-          "ASSIGNEE": "Asignado a",
+          "ASSIGNEE": "Usuario asignado",
           "FORM": "Formulario",
           "DATE": "Elegir fecha"
         },
@@ -140,7 +140,7 @@
       }
     },
     "PEOPLE": {
-      "ASSIGNEE": "Asignado a",
+      "ASSIGNEE": "Usuario asignado",
       "DIALOG_CLOSE": "Cerrar",
       "ADD_USER": "Añadir",
       "ADD_ASSIGNEE": "Asignar",
@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "No se han podido cargar las definiciones de procesos; compruebe que tiene acceso.",
         "START": "No se ha podido iniciar una nueva instancia de proceso; compruebe que tiene acceso.",
-        "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx."
+        "MAXIMUM_LENGTH": "Longitud excedida, {{characters}} caracteres como máx.",
+        "SPACE_VALIDATOR": "No puede comenzar ni terminar con un espacio.",
+        "PROCESS_NAME_REQUIRED": "Se requiere el nombre del proceso."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Iniciar sesión en '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Iniciar sesión",
       "CANCEL": "Cancelar",
-      "CHOOSE": "Elegir"
+      "CHOOSE": "Seleccionar",
+      "CHOOSE_ITEM": "Seleccione el contenido que adjuntar de '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Adjunte un formulario que pueda verse más tarde",
+      "COMPLETE-TASK-MESSAGE": "Tarea {{taskName}} finalizada",
+      "COMPLETE-TASK-SUB-MESSAGE": "No se han añadido formularios",
+      "BUTTONS": {
+        "COMPLETE": "Completar",
+        "CANCEL": "Cancelar"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Tarea {{taskName}} finalizada",
+      "SUBTITLE": "No se han añadido formularios"
     }
   }
 }

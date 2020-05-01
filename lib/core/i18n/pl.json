@@ -198,14 +198,18 @@
         "SAVE": "Zapisz",
         "CANCEL": "Anuluj",
         "CLEAR": "Wyczyść",
-        "TOGGLE": "Przełącz wartość"
+        "TOGGLE": "Przełącz wartość",
+        "COPY_TO_CLIPBOARD": "Kliknij dwa razy, aby skopiować wartość"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę."
+        "EDIT": "Przycisk Edytuj",
+        "DATEPICKER": "Użyj klawiszy strzałek, aby przełączać między datami. Strzałki w górę i w dół przełączają na ten sam dzień w następnym lub poprzednim tygodniu. Natomiast strzałki w lewo i w prawo przełączają na następny lub poprzedni dzień. Naciśnij Enter lub Return, aby wybrać datę.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Wartość skopiowano do schowka"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Przełącz kolejność sortowania wyników między rosnącą a malejącą"
+      "TOGGLE_ASC_DESC_ORDER": "Przełącz kolejność sortowania wyników między rosnącą a malejącą",
+      "SORT_BY": "Sortuj wg"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Czynności dotyczące zawartości"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Czynności",
       "SELECT_ALL": "Wybierz wszystko",
       "SELECT_FILE": "Wybierz plik",
       "SORT_ASCENDING": "Rosnąco",

@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossibile caricare le definizioni di processo, verifica di disporre dell'accesso.",
         "START": "Impossibile avviare nuova istanza di processo, verifica di disporre dell'accesso.",
-        "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri."
+        "MAXIMUM_LENGTH": "Lunghezza superata, massimo {{characters}} caratteri.",
+        "SPACE_VALIDATOR": "Non può iniziare o terminare con uno spazio.",
+        "PROCESS_NAME_REQUIRED": "Nome processo obbligatorio."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Accedi in \"{{ ecmHost }}\""
+    },
     "ACTIONS": {
       "LOGIN": "Login",
       "CANCEL": "Annulla",
-      "CHOOSE": "Scegli"
+      "CHOOSE": "Seleziona",
+      "CHOOSE_ITEM": "Selezionare il contenuto da allegare da \"{{ name }}\""
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Allegare un modulo da visualizzare più tardi",
+      "COMPLETE-TASK-MESSAGE": "Compito {{taskName}} completato",
+      "COMPLETE-TASK-SUB-MESSAGE": "Nessun modulo da aggiungere",
+      "BUTTONS": {
+        "COMPLETE": "Completa",
+        "CANCEL": "Annulla"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Compito {{taskName}} completato",
+      "SUBTITLE": "Nessun modulo da aggiungere"
     }
   }
 }

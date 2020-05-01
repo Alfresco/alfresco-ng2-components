@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Aloitussivu"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Tehtäväluettelon pikavalikko"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Lisää sovellustunnus",
       "APP_ID_TYPE_ERROR": "Sovellustunnuksen täytyy olla numero",
       "NUMBER_GREATER_THAN": "Arvon täytyy olla yhtä suuri tai suurempi kuin {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Prosessiluettelon pikavalikko"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Oma otsikkokäännös yksi",
   "GROUP-TITLE2-TRANSLATION-KEY": "Oma otsikkokäännös kaksi",

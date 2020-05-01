@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Der kunne ikke indlæses nogen procesdefinitioner. Kontrollér, om du har adgang til dem.",
         "START": "Der kunne ikke startes en ny procesforekomst. Kontrollér, om du har adgang.",
-        "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn."
+        "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",
+        "SPACE_VALIDATOR": "Må ikke starte eller slutte med et mellemrum.",
+        "PROCESS_NAME_REQUIRED": "Procesnavn er påkrævet."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Log på '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Log ind",
       "CANCEL": "Annuller",
-      "CHOOSE": "Vælg"
+      "CHOOSE": "Vælg",
+      "CHOOSE_ITEM": "Vælg indhold der skal  vedhæftes fra '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Vedhæft en formular, der kan blive vist senere",
+      "COMPLETE-TASK-MESSAGE": "Opgaven {{taskName}} er fuldført",
+      "COMPLETE-TASK-SUB-MESSAGE": "Der er ikke tilføjet nogen formularer",
+      "BUTTONS": {
+        "COMPLETE": "Fuldført",
+        "CANCEL": "Annuller"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Opgaven {{taskName}} er fuldført",
+      "SUBTITLE": "Der er ikke tilføjet nogen formularer"
     }
   }
 }

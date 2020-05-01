@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Počáteční strana"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Místní nabídka Seznam úkolů"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Vložit ID aplikace",
       "APP_ID_TYPE_ERROR": "ID aplikace musí být číslo",
       "NUMBER_GREATER_THAN": "Hodnota musí být rovna nebo větší než {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Místní nabídka Seznam procesů"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Vlastní překlad názvu 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Vlastní překlad názvu 2",

@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annuller",
     "CHOOSE": "Vælg",
+    "CHOOSE_ITEM": "Vælg indhold der skal  vedhæftes fra '{{ name }}'",
     "COPY": "Kopiér",
     "COPY_ITEM": "Kopiér '{{ name }}' til...",
     "MOVE": "Flyt",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Klik på linket nedenfor for at kopiere det til udklipsholderen.",
     "TITLE": "Link til deling",
     "EXPIRES": "Udløber den",
+    "EXPIRATION-LABEL": "Udløbsdato",
     "CLIPBOARD-MESSAGE": "Link kopieret til udklipsholderen",
     "CLOSE": "Luk",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Der er ikke angivet et node-id!"
+    "MISSING-ID": "Der er ikke angivet et node-id!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Skift {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

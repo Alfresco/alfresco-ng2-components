@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Anuluj",
     "CHOOSE": "Wybierz",
+    "CHOOSE_ITEM": "Wybierz treść do dołączenia z „{{ name }}”",
     "COPY": "Kopiuj",
     "COPY_ITEM": "Kopiuj '{{ name }}' do...",
     "MOVE": "Przenieś",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Kliknij link poniżej, aby skopiować go do schowka.",
     "TITLE": "Link do udostępnienia",
     "EXPIRES": "Wygasa",
+    "EXPIRATION-LABEL": "Data ważności",
     "CLIPBOARD-MESSAGE": "Link został skopiowany do schowka.",
     "CLOSE": "Zamknij",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Nie określono identyfikatora węzła!"
+    "MISSING-ID": "Nie określono identyfikatora węzła!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Przełącz {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

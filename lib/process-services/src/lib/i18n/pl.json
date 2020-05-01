@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Nie można wczytać definicji procesu. Sprawdź, czy masz dostęp.",
         "START": "Nie można rozpocząć nowego wystąpienia procesu. Sprawdź, czy masz dostęp.",
-        "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków"
+        "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków",
+        "SPACE_VALIDATOR": "Spacje na początku lub końcu są zabronione.",
+        "PROCESS_NAME_REQUIRED": "Nazwa procesu jest wymagana."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Zaloguj do „{{ ecmHost }}”"
+    },
     "ACTIONS": {
       "LOGIN": "Zaloguj",
       "CANCEL": "Anuluj",
-      "CHOOSE": "Wybierz"
+      "CHOOSE": "Wybierz",
+      "CHOOSE_ITEM": "Wybierz treść do dołączenia z „{{ name }}”"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Dołącz formularz do wyświetlania później",
+      "COMPLETE-TASK-MESSAGE": "Zadanie {{taskName}} zostało zakończone.",
+      "COMPLETE-TASK-SUB-MESSAGE": "Brak formularzy do dodania.",
+      "BUTTONS": {
+        "COMPLETE": "Zakończ",
+        "CANCEL": "Anuluj"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Zadanie {{taskName}} zostało zakończone.",
+      "SUBTITLE": "Brak formularzy do dodania."
     }
   }
 }

@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "開始ページ"
-    }
+    },
+    "TASK_CONTEXT_MENU": "タスクリストのコンテキストメニュー"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "アプリケーション ID を挿入してください",
       "APP_ID_TYPE_ERROR": "アプリケーション ID は数字でなければなりません",
       "NUMBER_GREATER_THAN": "値は {{ value }} 以上でなければなりません"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "プロセスリストのコンテキストメニュー"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "カスタムのタイトル翻訳 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "カスタムのタイトル翻訳 2",

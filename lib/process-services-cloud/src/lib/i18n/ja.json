@@ -19,7 +19,8 @@
       "PROCESS_NAME": "プロセス名",
       "PARENT_TASK_ID": "親タスク ID",
       "PROCESS_DEF_ID": "プロセス定義 ID",
-      "PROCESS_DEF_KEY": "プロセス定義キー"
+      "PROCESS_DEF_KEY": "プロセス定義キー",
+      "APP_VERSION": "アプリケーションのリリースバージョン"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "プロセスの開始",
@@ -41,7 +42,8 @@
         "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
         "PROCESS_NAME_REQUIRED": "プロセス名を入力してください",
         "PROCESS_DEFINITION_REQUIRED": "プロセス定義を指定してください",
-        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
+        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
+        "SPACE_VALIDATOR": "先頭または末尾にスペースを使用することはできません。"
       }
     }
   },
@@ -158,7 +160,8 @@
       "LAST_MODIFIED": "最終更新日時",
       "LAST_MODIFIED_DATE_FORM": "最終変更日 - 開始",
       "LAST_MODIFIED_TO": "最終変更日 - 終了",
-      "PROCESS_NAME": "プロセス名"
+      "PROCESS_NAME": "プロセス名",
+      "APP_VERSION": "アプリケーションのリリースバージョン"
     },
     "ERROR": {
       "DATE": "日付形式: YYYY-MM-DD"

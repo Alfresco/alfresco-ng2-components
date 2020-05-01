@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Startsida"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Innehållsmeny till uppgiftslista"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Infoga program-ID",
       "APP_ID_TYPE_ERROR": "Program-ID måste vara ett nummer",
       "NUMBER_GREATER_THAN": "Värdet måste vara större än eller lika med {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Innehållsmeny för processlista"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Anpassad titelöversättning ett",
   "GROUP-TITLE2-TRANSLATION-KEY": "Anpassad titelöversättning två",

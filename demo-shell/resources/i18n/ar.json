@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "صفحة البدء"
-    }
+    },
+    "TASK_CONTEXT_MENU": "قائمة سياق قائمة المهام"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "إدراج معرف التطبيق",
       "APP_ID_TYPE_ERROR": "يجب أن يكون معرف التطبيق رقمًا",
       "NUMBER_GREATER_THAN": "يجب أن تكون القيمة أكبر من {{ value }} أو تساويها"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "قائمة سياق قائمة العمليات"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "الترجمة الأولى للعنوان المخصص",
   "GROUP-TITLE2-TRANSLATION-KEY": "الترجمة الثانية للعنوان المخصص",

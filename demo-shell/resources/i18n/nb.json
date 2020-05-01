@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Starter side"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Kontekstmeny for oppgaveliste"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Sett inn app-ID",
       "APP_ID_TYPE_ERROR": "App-ID må være et tall",
       "NUMBER_GREATER_THAN": "Verdien må være høyere enn eller lik {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Kontekstmeny for prosessliste"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Egendefinert tittel, oversettelse én",
   "GROUP-TITLE2-TRANSLATION-KEY": "Egendefinert tittel, oversettelse to",

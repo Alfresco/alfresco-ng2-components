@@ -63,7 +63,7 @@
     "NOTIFICATIONS": "Meddelelser",
     "TASK_LIST": "Opgaveliste",
     "PROCESS_LIST": "Procesliste",
-    "PROCESS_CLOUD": "Activiti Cloud",
+    "PROCESS_CLOUD": "Proces Cloud",
     "CARD_VIEW": "Kortvisning",
     "PROCESS_SERVICES": "Process Services",
     "LOGIN": "Log ind",
@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Startside"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Opgave Liste Kontekst Menu"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Indsæt app-id",
       "APP_ID_TYPE_ERROR": "App-id'et skal være et tal",
       "NUMBER_GREATER_THAN": "Værdien skal være større end eller lig med {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Proces Liste Kontekst Menu"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Brugerdefineret titel oversættelse et",
   "GROUP-TITLE2-TRANSLATION-KEY": "Brugerdefineret titel oversættelse to",

@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Peruuta",
     "CHOOSE": "Valitse",
+    "CHOOSE_ITEM": "Valitse liitettävä sisältö kohteesta '{{ name }}'",
     "COPY": "Kopioi",
     "COPY_ITEM": "Kopioi '{{ name }}' kohteeseen...",
     "MOVE": "Siirrä",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Kopioi se leikepöydälle napsauttamalla alla olevaa linkkiä.",
     "TITLE": "Jakolinkki",
     "EXPIRES": "Vanhentuu",
+    "EXPIRATION-LABEL": "Voimassaolon päättymispäivä",
     "CLIPBOARD-MESSAGE": "Linkki kopioitu leikepöydälle",
     "CLOSE": "Sulje",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Solmutunnusta ei ole annettu!"
+    "MISSING-ID": "Solmutunnusta ei ole annettu!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Vaihda: {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

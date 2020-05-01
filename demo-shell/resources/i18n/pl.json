@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Strona początkowa"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Menu kontekstowe listy zadań"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Wstaw identyfikator aplikacji",
       "APP_ID_TYPE_ERROR": "Identyfikator aplikacji musi być liczbą.",
       "NUMBER_GREATER_THAN": "Wartość musi być większa od lub równa wartości {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Menu kontekstowe listy procesów"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie pierwsze",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tytuł niestandardowy — tłumaczenie drugie",

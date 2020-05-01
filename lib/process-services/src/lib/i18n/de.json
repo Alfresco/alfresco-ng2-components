@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Prozessdefinitionen konnten nicht geladen werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
         "START": "Neue Prozessinstanz konnte nicht gestartet werden. Überprüfen Sie, ob Sie über die nötigen Zugriffsrechte verfügen.",
-        "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen."
+        "MAXIMUM_LENGTH": "Max. Länge überschritten, max. {{characters}} Zeichen.",
+        "SPACE_VALIDATOR": "Darf nicht mit einem Leerzeichen beginnen oder enden.",
+        "PROCESS_NAME_REQUIRED": "Prozessname ist erforderlich"
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Bei '{{ ecmHost }}' anmelden"
+    },
     "ACTIONS": {
       "LOGIN": "Anmelden",
       "CANCEL": "Abbrechen",
-      "CHOOSE": "Auswählen"
+      "CHOOSE": "Auswählen",
+      "CHOOSE_ITEM": "Wählen Sie aus '{{ name }}' Content zum Anhängen aus"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Hängen Sie ein Formular an, das später angesehen werden kann",
+      "COMPLETE-TASK-MESSAGE": "Aufgabe {{taskName}} abgeschlossen",
+      "COMPLETE-TASK-SUB-MESSAGE": "Keine Formulare, die hinzugefügt werden können",
+      "BUTTONS": {
+        "COMPLETE": "Abschließen",
+        "CANCEL": "Abbrechen"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Aufgabe {{taskName}} abgeschlossen",
+      "SUBTITLE": "Keine Formulare, die hinzugefügt werden können"
     }
   }
 }
