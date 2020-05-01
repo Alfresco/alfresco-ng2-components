@@ -20,6 +20,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { Node } from '@alfresco/js-api';
+import { ContentNodeSelectorPanelComponent } from '@alfresco/adf-content-services';
 import { By } from '@angular/platform-browser';
 import { setupTestBed, SitesService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
@@ -159,8 +160,10 @@ describe('ContentNodeSelectorDialogComponent', () => {
 
     describe('Title', () => {
 
-        it('should be updated when a node is chosen', () => {
-            component.onSelect([new Node({ id: 'fake', name: 'fake-node' })]);
+        it('should be updated when a site is chosen', () => {
+            const fakeSiteTitle = 'My fake site';
+            const contentNodePanel = fixture.debugElement.query(By.directive(ContentNodeSelectorPanelComponent));
+            contentNodePanel.componentInstance.siteChange.emit(fakeSiteTitle);
             fixture.detectChanges();
 
             const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
