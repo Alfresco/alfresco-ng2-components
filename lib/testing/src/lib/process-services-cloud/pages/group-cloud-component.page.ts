@@ -39,19 +39,19 @@ export class GroupCloudComponentPage {
     }
 
     async selectGroupFromList(name: string): Promise<void> {
-        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        const groupRow = element.all(by.css(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`)).first();
 
         await BrowserActions.click(groupRow);
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 
     async checkGroupIsDisplayed(name: string): Promise<void> {
-        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        const groupRow = element.all(by.css(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(groupRow);
     }
 
     async checkGroupIsNotDisplayed(name: string): Promise<void> {
-        const groupRow = element.all(by.cssContainingText('mat-option span', name)).first();
+        const groupRow = element.all(by.css(`mat-option[data-automation-id="adf-cloud-group-chip-${name}"]`)).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(groupRow);
     }
 

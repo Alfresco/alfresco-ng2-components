@@ -215,7 +215,7 @@ for more information about installing and using the source code.
 | [JWT helper service](core/services/jwt-helper.service.md) | Decodes a JSON Web Token (JWT) to a JavaScript object. | [Source](../lib/core/services/jwt-helper.service.ts) |
 | [Log Service](core/services/log.service.md) | Provides log functionality. | [Source](../lib/core/services/log.service.ts) |
 | [Login Dialog service](core/services/login-dialog.service.md) | Manages login dialogs. | [Source](../lib/core/services/login-dialog.service.ts) |
-| [Node Service](core/services/node.service.md) | *Deprecated.* Use the Nodes Api service instead. | [Source](../lib/core/form/services/node.service.ts) |
+| [Node Service](core/services/node.service.md) | use Nodes Api service instead of this. | [Source](../lib/core/form/services/node.service.ts) |
 | [Nodes Api service](core/services/nodes-api.service.md) | Accesses and manipulates ACS document nodes using their node IDs. | [Source](../lib/core/services/nodes-api.service.ts) |
 | [Notification Service](core/services/notification.service.md) | Shows a notification message with optional feedback. | [Source](../lib/core/notifications/services/notification.service.ts) |
 | [Page Title service](core/services/page-title.service.md) | Sets the page title. | [Source](../lib/core/services/page-title.service.ts) |
@@ -387,6 +387,7 @@ for more information about installing and using the source code.
 | [Task Attachment List Component](process-services/components/task-attachment-list.component.md) | Displays documents attached to a specified task. | [Source](../lib/process-services/src/lib/attachment/task-attachment-list.component.ts) |
 | [Task Details component](process-services/components/task-details.component.md) | Shows the details of the task ID passed in as input. | [Source](../lib/process-services/src/lib/task-list/components/task-details.component.ts) |
 | [Task Filters component](process-services/components/task-filters.component.md) | Shows all available filters. | [Source](../lib/process-services/src/lib/task-list/components/task-filters.component.ts) |
+| [Task Form component](process-services/components/task-form.component.md) | Shows a form for a task. | [Source](../lib/process-services/src/lib/task-list/components/task-form/task-form.component.ts) |
 | [Task Header component](process-services/components/task-header.component.md) | Shows all the information related to a task. | [Source](../lib/process-services/src/lib/task-list/components/task-header.component.ts) |
 | [Task List component](process-services/components/task-list.component.md) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services/src/lib/task-list/components/task-list.component.ts) |
 | [Task Standalone component](process-services/components/task-standalone.component.md) | This component can be used when the task doesn't belong to any processes. | [Source](../lib/process-services/src/lib/task-list/components/task-standalone.component.ts) |

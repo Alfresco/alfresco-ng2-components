@@ -25,12 +25,12 @@ Shows a [`form`](../../../lib/process-services/src/lib/task-list/models/form.mod
 | ---- | ---- | ------------- | ----------- |
 | fieldValidators | [`FormFieldValidator`](../../../lib/core/form/components/widgets/core/form-field-validator.ts)`[]` | \[] | Field validators for use with the form. |
 | readOnlyForm | `boolean` | false | Toggles read-only state of the form. All form widgets render as read-only if enabled. |
+| showCancelButton | `boolean` | true | Toggle rendering of the `Cancel` button. |
 | showFormCompleteButton | `boolean` | true | Toggles rendering of the `Complete` outcome button. |
 | showFormRefreshButton | `boolean` | true | Toggles rendering of the `Refresh` button. |
 | showFormSaveButton | `boolean` | true | Toggles rendering of the `Save` outcome button. |
 | showFormTitle | `boolean` | false | Toggles rendering of the form title. |
-| showCancelButton | `boolean` | true | Toggles rendering of the `Cancel` empty form button. |
-| showFormValidationIcon | `boolean` | true | Toggle rendering of the validation icon 
+| showFormValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | (**required**) The id of the task whose details we are asking for. |
 
 ### Events
@@ -43,9 +43,10 @@ Shows a [`form`](../../../lib/process-services/src/lib/task-list/models/form.mod
 | executeOutcome | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormOutcomeEvent`](../../../lib/core/form/components/widgets/core/form-outcome-event.model.ts)`>` | Emitted when any outcome is executed. Default behaviour can be prevented via `event.preventDefault()`. |
 | formCompleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Complete` outcome. |
 | formContentClicked | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ContentLinkModel`](../../../lib/core/form/components/widgets/core/content-link.model.ts)`>` | Emitted when the form field content is clicked. |
-| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormFieldModel`](../../core/models/form-field.model.md)`[]>` | Emitted when the supplied form values have a validation error. |
+| formLoaded | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is loaded or reloaded. |
 | formSaved | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FormModel`](../../../lib/core/form/components/widgets/core/form.model.ts)`>` | Emitted when the form is submitted with the `Save` or custom outcomes. |
+| showAttachForm | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the form associated with the form task is attached. |
 
 ## See also
 

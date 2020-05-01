@@ -54,14 +54,15 @@ describe('Attach Folder', () => {
     beforeAll(async () => {
         await this.alfrescoJsApi.login(adminEmail, adminPassword);
         user = await users.createTenantAndUser(this.alfrescoJsApi);
+
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs });
 
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs.host });
         await this.alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.loginToAllUsingUserModel(user);
-   });
+    });
 
     afterAll(async () => {
         await this.alfrescoJsApi.login(adminEmail, adminPassword);

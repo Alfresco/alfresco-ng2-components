@@ -33,6 +33,7 @@ describe('Sorting for process filters', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let tenantId, appId, user, processesQuery;
+    let importedApp;
 
     const processFilter = {
         running_old_first: 'Running - Oldest first',
@@ -64,7 +65,7 @@ describe('Sorting for process filters', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
+        importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
@@ -84,9 +85,9 @@ describe('Sorting for process filters', () => {
             'filter': { 'sort': 'created-asc', 'name': '', 'state': 'running' }
         });
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc =  await processUtil.startProcessOfApp('Task App');
-        const secondProc =  await processUtil.startProcessOfApp('Task App');
-        const thirdProc =  await processUtil.startProcessOfApp('Task App');
+        const firstProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc =  await processUtil.startProcessOfApp(importedApp.name);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -107,9 +108,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc =  await processUtil.startProcessOfApp('Task App');
-        const secondProc =  await processUtil.startProcessOfApp('Task App');
-        const thirdProc =  await processUtil.startProcessOfApp('Task App');
+        const firstProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc =  await processUtil.startProcessOfApp(importedApp.name);
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -136,13 +137,13 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc =  await processUtil.startProcessOfApp('Task App');
-        const secondProc =  await processUtil.startProcessOfApp('Task App');
-        const thirdProc =  await processUtil.startProcessOfApp('Task App');
+        const firstProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc =  await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc =  await processUtil.startProcessOfApp(importedApp.name);
 
-        const deleteFirstProc = await processUtil.startProcessOfApp('Task App');
-        const deleteSecondProc = await processUtil.startProcessOfApp('Task App');
-        const deleteThirdProc = await processUtil.startProcessOfApp('Task App');
+        const deleteFirstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const deleteSecondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const deleteThirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteFirstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteSecondProc.id);
@@ -172,9 +173,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc = await processUtil.startProcessOfApp('Task App');
-        const secondProc = await processUtil.startProcessOfApp('Task App');
-        const thirdProc = await processUtil.startProcessOfApp('Task App');
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
@@ -197,9 +198,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc = await processUtil.startProcessOfApp('Task App');
-        const secondProc = await processUtil.startProcessOfApp('Task App');
-        const thirdProc = await processUtil.startProcessOfApp('Task App');
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
@@ -225,13 +226,13 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc = await processUtil.startProcessOfApp('Task App');
-        const secondProc = await processUtil.startProcessOfApp('Task App');
-        const thirdProc = await processUtil.startProcessOfApp('Task App');
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
-        const deleteFirstProc = await processUtil.startProcessOfApp('Task App');
-        const deleteSecondProc = await processUtil.startProcessOfApp('Task App');
-        const deleteThirdProc = await processUtil.startProcessOfApp('Task App');
+        const deleteFirstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const deleteSecondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const deleteThirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteFirstProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(deleteSecondProc.id);
@@ -261,9 +262,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc = await processUtil.startProcessOfApp('Task App');
-        const secondProc = await processUtil.startProcessOfApp('Task App');
-        const thirdProc = await processUtil.startProcessOfApp('Task App');
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);
@@ -290,9 +291,9 @@ describe('Sorting for process filters', () => {
         });
 
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
-        const firstProc = await processUtil.startProcessOfApp('Task App');
-        const secondProc = await processUtil.startProcessOfApp('Task App');
-        const thirdProc = await processUtil.startProcessOfApp('Task App');
+        const firstProc = await processUtil.startProcessOfApp(importedApp.name);
+        const secondProc = await processUtil.startProcessOfApp(importedApp.name);
+        const thirdProc = await processUtil.startProcessOfApp(importedApp.name);
 
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(secondProc.id);
         await this.alfrescoJsApi.activiti.processInstancesApi.deleteProcessInstance(firstProc.id);

@@ -73,9 +73,9 @@ describe('Attachment list action menu for processes', () => {
         const processUtil = new ProcessUtil(this.alfrescoJsApi);
         await processUtil.startProcessOfApp(importedApp.name, processName.completed);
         await processUtil.startProcessOfApp(importedApp.name, processName.active);
-        await processUtil.startProcessOfApp('Task App', processName.taskApp);
-        await processUtil.startProcessOfApp('Task App', processName.emptyList);
-        await processUtil.startProcessOfApp('Task App', processName.dragDrop);
+        await processUtil.startProcessOfApp(importedApp.name, processName.taskApp);
+        await processUtil.startProcessOfApp(importedApp.name, processName.emptyList);
+        await processUtil.startProcessOfApp(importedApp.name, processName.dragDrop);
 
         await loginPage.loginToProcessServicesUsingUserModel(user);
     });

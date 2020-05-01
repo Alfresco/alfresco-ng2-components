@@ -36,6 +36,15 @@ export class StringUtil {
     }
 
     /**
+     * Generates a random lowercase string.
+     *
+     * @param length If this parameter is not provided the length is set to 8 by default.
+     */
+    static generateRandomLowercaseString(length: number = 8): string {
+        return StringUtil.generateRandomCharset(length, 'abcdefghijklmnopqrstuvwxyz0123456789');
+    }
+
+    /**
      * Generates a random email address following the format: abcdef@activiti.test.com
      *
      * @param domain

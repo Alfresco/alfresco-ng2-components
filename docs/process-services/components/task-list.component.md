@@ -68,13 +68,13 @@ when the task list is empty:
 | processInstanceId | `string` |  | The Instance Id of the process. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
+| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | size | `number` |  | The number of tasks to fetch. Default value: 25. |
 | sort | `string` |  | Define the sort order of the tasks. Possible values are : `created-desc`, `created-asc`, `due-desc`, `due-asc` |
 | start | `number` |  | Starting point of the list within the full set of tasks. |
 | state | `string` |  | Current state of the process. Possible values are: `completed`, `active`. |
-| taskId | `string` |  | The id of a task |
-| showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
+| taskId | `string` |  | The id of a task |
 
 ### Events
 
@@ -83,8 +83,8 @@ when the task list is empty:
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when a task in the list is clicked |
 | rowsSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any[]>` | Emitted when rows are selected/unselected |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
 | showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the task list is loaded |
 
 ## Details
 
@@ -235,7 +235,7 @@ You can customize the styling of a column and also add features like tooltips an
 
 Emitted before the context menu is displayed for a row.
 
-Note that the TaskListComponent itself does not populate the context menu with items.
+Note that the [TaskListComponent](../../process-services/components/task-list.component.md) itself does not populate the context menu with items.
 You can provide all necessary content via the handler.
 
 ```html
@@ -270,7 +270,7 @@ onShowRowContextMenu(event: DataCellEvent) {
 
 This event is cancellable. You can use `event.preventDefault()` to prevent the default behavior.
 
-The TaskListComponent will automatically render the supplied menu items.
+The [TaskListComponent](../../process-services/components/task-list.component.md) will automatically render the supplied menu items.
 
 See the [ContextMenu](https://www.npmjs.com/package/ng2-alfresco-core)
 documentation for more details on the format and behavior of context actions.

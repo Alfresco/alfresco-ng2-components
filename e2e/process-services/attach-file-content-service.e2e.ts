@@ -142,7 +142,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
-        await expect(await externalNodeSelector.getTitle()).toEqual(`Please log in for ${browser.params.testConfig.adf_external_acs.host}`);
+        await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
         await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
@@ -172,7 +172,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
-        await expect(await externalNodeSelector.getTitle()).toEqual(`Please log in for ${browser.params.testConfig.adf_external_acs.host}`);
+        await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
         await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);

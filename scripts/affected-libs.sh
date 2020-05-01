@@ -54,6 +54,14 @@ if [ ! -f $DIRECTORY/deps.txt ]; then
     npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
 fi
 
+LIST_SPECS="$(git diff --name-only $BRANCH_NAME HEAD)"
+
+if [[ $LIST_SPECS == *"protractor.excludes.json"* ]]; then
+  AFFECTED_LIBS="core$ content-services$ process-services$ process-services-cloud$ insights$ extensions$ testing$ cli$"
+        echo "${AFFECTED_LIBS}"
+        exit 0
+fi
+
 #cat $DIRECTORY/deps.txt
 #echo "extensions" > deps.txt
 

@@ -43,7 +43,7 @@
         "PROCESS_NAME_REQUIRED": "Process Name is required",
         "PROCESS_DEFINITION_REQUIRED": "Process Definition is required",
         "MAXIMUM_LENGTH": "Length exceeded, {{characters}} characters max.",
-        "SPACE_VALIDATOR": "Space is not allowed in the beginning or the end of the text."
+        "SPACE_VALIDATOR": "Cannot begin or end with a space."
       }
     }
   },
