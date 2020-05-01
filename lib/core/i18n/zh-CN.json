@@ -198,14 +198,18 @@
         "SAVE": "保存",
         "CANCEL": "取消",
         "CLEAR": "清除",
-        "TOGGLE": "切换值"
+        "TOGGLE": "切换值",
+        "COPY_TO_CLIPBOARD": "双击以复制值"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "使用箭头键在日期之间进行浏览。上下移动至同一天的下一周或上一周。左右移动到第二天或前一天。按 Enter（回车） 或 Return（返回） 键选择一个日期。"
+        "EDIT": "编辑按钮",
+        "DATEPICKER": "使用箭头键在日期之间进行浏览。上下移动至同一天的下一周或上一周。左右移动到第二天或前一天。按 Enter（回车） 或 Return（返回） 键选择一个日期。",
+        "COPY_TO_CLIPBOARD_MESSAGE": "值已复制到剪贴板"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "在升序和降序之间切换结果"
+      "TOGGLE_ASC_DESC_ORDER": "在升序和降序之间切换结果",
+      "SORT_BY": "排序依据"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "内容操作"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "操作",
       "SELECT_ALL": "全选",
       "SELECT_FILE": "选择文件",
       "SORT_ASCENDING": "升序",

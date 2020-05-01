@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Impossible de charger les définitions de processus ; vérifiez que vous avez les droits d'accès.",
         "START": "Impossible de démarrer la nouvelle instance de processus ; vérifiez que vous avez les droits d'accès.",
-        "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max."
+        "MAXIMUM_LENGTH": "Longueur dépassée, {{characters}} caractères max.",
+        "SPACE_VALIDATOR": "Ne peut pas commencer ou finir par un espace.",
+        "PROCESS_NAME_REQUIRED": "Nom du processus requis."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Se connecter à '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Connexion",
       "CANCEL": "Annuler",
-      "CHOOSE": "Choisir"
+      "CHOOSE": "Sélectionner",
+      "CHOOSE_ITEM": "Sélectionner le contenu à joindre à partir de '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Joindre un formulaire qui pourra être consulté ultérieurement",
+      "COMPLETE-TASK-MESSAGE": "La tâche {{taskName}} est terminée",
+      "COMPLETE-TASK-SUB-MESSAGE": "Aucun formulaire à ajouter",
+      "BUTTONS": {
+        "COMPLETE": "Terminer",
+        "CANCEL": "Annuler"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "La tâche {{taskName}} est terminée",
+      "SUBTITLE": "Aucun formulaire à ajouter"
     }
   }
 }

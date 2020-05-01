@@ -198,14 +198,18 @@
         "SAVE": "Speichern",
         "CANCEL": "Abbrechen",
         "CLEAR": "Löschen",
-        "TOGGLE": "Umschaltwert"
+        "TOGGLE": "Umschaltwert",
+        "COPY_TO_CLIPBOARD": "Doppelklicken, um den Wert zu kopieren"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Mit den Pfeiltasten können Sie zwischen den Daten wechseln. Mit den Aufwärts- und Abwärtspfeilen gelangen Sie zum selben Tag der vorherigen bzw. nächsten Woche, mit den Links- und Rechtspfeilen gelangen Sie zum vorherigen bzw. zum nächsten Tag. Drücken Sie die Eingabetaste, um ein Datum auszuwählen."
+        "EDIT": "Schaltfläche 'Hinzufügen'",
+        "DATEPICKER": "Mit den Pfeiltasten können Sie zwischen den Daten wechseln. Mit den Aufwärts- und Abwärtspfeilen gelangen Sie zum selben Tag der vorherigen bzw. nächsten Woche, mit den Links- und Rechtspfeilen gelangen Sie zum vorherigen bzw. zum nächsten Tag. Drücken Sie die Eingabetaste, um ein Datum auszuwählen.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Wert in Zwischenablage kopiert"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Umschalten zwischen auf- und absteigender Reihenfolge der Ergebnisse"
+      "TOGGLE_ASC_DESC_ORDER": "Umschalten zwischen auf- und absteigender Reihenfolge der Ergebnisse",
+      "SORT_BY": "Sortieren nach"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Content-Aktionen"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Aktionen",
       "SELECT_ALL": "Alle auswählen",
       "SELECT_FILE": "Datei auswählen",
       "SORT_ASCENDING": "Aufsteigend",

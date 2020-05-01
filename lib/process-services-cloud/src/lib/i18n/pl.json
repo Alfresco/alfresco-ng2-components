@@ -19,7 +19,8 @@
       "PROCESS_NAME": "Nazwa procesu",
       "PARENT_TASK_ID": "Identyfikator zadania nadrzędnego",
       "PROCESS_DEF_ID": "Identyfikator definicji procesu",
-      "PROCESS_DEF_KEY": "Klucz definicji procesu"
+      "PROCESS_DEF_KEY": "Klucz definicji procesu",
+      "APP_VERSION": "Wersja wydania aplikacji"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Rozpocznij proces",
@@ -41,7 +42,8 @@
         "START": "Nie można rozpocząć nowego wystąpienia procesu. Sprawdź, czy masz dostęp.",
         "PROCESS_NAME_REQUIRED": "Nazwa procesu jest wymagana",
         "PROCESS_DEFINITION_REQUIRED": "Definicja procesu jest wymagana",
-        "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków"
+        "MAXIMUM_LENGTH": "Przekroczono długość, maksymalna długość wynosi {{characters}} znaków",
+        "SPACE_VALIDATOR": "Spacje na początku lub końcu są zabronione."
       }
     }
   },
@@ -158,7 +160,8 @@
       "LAST_MODIFIED": "Ostatnia modyfikacja",
       "LAST_MODIFIED_DATE_FORM": "Ostatnia modyfikacja - od",
       "LAST_MODIFIED_TO": "Ostatnia modyfikacja - do",
-      "PROCESS_NAME": "Nazwa procesu"
+      "PROCESS_NAME": "Nazwa procesu",
+      "APP_VERSION": "Wersja wydania aplikacji"
     },
     "ERROR": {
       "DATE": "Format daty DD/MM/RRRR"

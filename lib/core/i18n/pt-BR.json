@@ -198,14 +198,18 @@
         "SAVE": "Salvar",
         "CANCEL": "Cancelar",
         "CLEAR": "Limpar",
-        "TOGGLE": "Alternar valor"
+        "TOGGLE": "Alternar valor",
+        "COPY_TO_CLIPBOARD": "Clique duas vezes para copiar o valor"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Navegue entre as datas usando as teclas de seta. Para mover entre as semanas mantendo o dia, use as setas para cima e para baixo. As setas esquerda e direita alternam entre os dias. Pressione Enter ou Return para selecionar uma data."
+        "EDIT": "Botão Editar",
+        "DATEPICKER": "Navegue entre as datas usando as teclas de seta. Para mover entre as semanas mantendo o dia, use as setas para cima e para baixo. As setas esquerda e direita alternam entre os dias. Pressione Enter ou Return para selecionar uma data.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valor copiado para a área de transferência"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Alterne os resultados entre as ordens crescente e decrescente"
+      "TOGGLE_ASC_DESC_ORDER": "Alterne os resultados entre as ordens crescente e decrescente",
+      "SORT_BY": "Classificar por"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Ações de conteúdo"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Ações",
       "SELECT_ALL": "Selecionar tudo",
       "SELECT_FILE": "Selecionar um arquivo",
       "SORT_ASCENDING": "Crescente",

@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Beginpagina"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Contextmenu lijst met taken"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "App-id invoegen",
       "APP_ID_TYPE_ERROR": "App-id moet een getal zijn",
       "NUMBER_GREATER_THAN": "Waarde moet groter zijn dan of gelijk zijn aan {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Contextmenu lijst met processen"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Aangepaste titel vertaling één",
   "GROUP-TITLE2-TRANSLATION-KEY": "Aangepaste titel vertaling twee",

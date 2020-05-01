@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Iniciando a página"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Menu de contexto da lista de tarefas"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Inserir ID do aplicativo",
       "APP_ID_TYPE_ERROR": "O ID do aplicativo deve ser um número",
       "NUMBER_GREATER_THAN": "O valor deve ser maior ou igual a {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Menu de contexto da lista de processamento"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Tradução um de título personalizado",
   "GROUP-TITLE2-TRANSLATION-KEY": "Tradução dois de título personalizado",

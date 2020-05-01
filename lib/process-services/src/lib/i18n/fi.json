@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Prosessimääritelmien lataaminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
         "START": "Uuden prosessiesiintymän käynnistäminen ei onnistu. Tarkista, että sinulla on tarvittavat oikeudet.",
-        "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä."
+        "MAXIMUM_LENGTH": "Liian pitkä: voit käyttää enintään {{characters}} merkkiä.",
+        "SPACE_VALIDATOR": "Ei voi alkaa välilyönnillä tai päättyä siihen.",
+        "PROCESS_NAME_REQUIRED": "Prosessin nimi on pakollinen."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Kirjaudu uudelleen osoitteessa '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Kirjaudu sisään",
       "CANCEL": "Peruuta",
-      "CHOOSE": "Valitse"
+      "CHOOSE": "Valitse",
+      "CHOOSE_ITEM": "Valitse liitettävä sisältö kohteesta '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Liitä lomake, jota voi tarkastella myöhemmin",
+      "COMPLETE-TASK-MESSAGE": "Tehtävä {{taskName}} suoritettu",
+      "COMPLETE-TASK-SUB-MESSAGE": "Ei lisättäviä lomakkeita",
+      "BUTTONS": {
+        "COMPLETE": "Merkitse valmiiksi",
+        "CANCEL": "Peruuta"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Tehtävä {{taskName}} suoritettu",
+      "SUBTITLE": "Ei lisättäviä lomakkeita"
     }
   }
 }

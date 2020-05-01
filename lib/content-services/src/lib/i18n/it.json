@@ -70,7 +70,8 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annulla",
-    "CHOOSE": "Scegli",
+    "CHOOSE": "Seleziona",
+    "CHOOSE_ITEM": "Selezionare il contenuto da allegare da \"{{ name }}\"",
     "COPY": "Copia",
     "COPY_ITEM": "Copia '{{ name }}' in...",
     "MOVE": "Sposta",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Per copiarlo negli appunti, fai clic sul link seguente.",
     "TITLE": "Link da condividere",
     "EXPIRES": "Scade il",
+    "EXPIRATION-LABEL": "Data di scadenza",
     "CLIPBOARD-MESSAGE": "Link copiato negli appunti",
     "CLOSE": "Chiudi",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Nessun ID nodo specificato."
+    "MISSING-ID": "Nessun ID nodo specificato.",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Attiva/Disattiva {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

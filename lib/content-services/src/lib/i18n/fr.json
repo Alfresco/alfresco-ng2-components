@@ -70,7 +70,8 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annuler",
-    "CHOOSE": "Choisir",
+    "CHOOSE": "Sélectionner",
+    "CHOOSE_ITEM": "Sélectionner le contenu à joindre à partir de '{{ name }}'",
     "COPY": "Copier",
     "COPY_ITEM": "Copier '{{ name }}' dans...",
     "MOVE": "Déplacer",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Cliquez sur le lien ci-dessous pour le copier dans le Presse-papiers.",
     "TITLE": "Lien à partager",
     "EXPIRES": "Expire le",
+    "EXPIRATION-LABEL": "Date d'expiration",
     "CLIPBOARD-MESSAGE": "Lien copié dans le Presse-papiers",
     "CLOSE": "Fermer",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Aucun ID de nœud spécifié !"
+    "MISSING-ID": "Aucun ID de nœud spécifié !",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Activer/désactiver {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

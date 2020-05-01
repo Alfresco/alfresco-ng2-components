@@ -19,7 +19,8 @@
       "PROCESS_NAME": "اسم العملية",
       "PARENT_TASK_ID": "معرف المهمة الأصلية",
       "PROCESS_DEF_ID": "معرف تعريف العملية",
-      "PROCESS_DEF_KEY": "مفتاح تعريف العملية"
+      "PROCESS_DEF_KEY": "مفتاح تعريف العملية",
+      "APP_VERSION": "إصدار التطبيق"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "بدء العملية",
@@ -41,7 +42,8 @@
         "START": "تعذر بدء مثيل عملية جديد، تأكد أن لديك حق الوصول.",
         "PROCESS_NAME_REQUIRED": "اسم العملية مطلوب",
         "PROCESS_DEFINITION_REQUIRED": "تعريف العملية مطلوب",
-        "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف."
+        "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف.",
+        "SPACE_VALIDATOR": "لا يمكن البدء أو الانتهاء بمسافة."
       }
     }
   },
@@ -158,7 +160,8 @@
       "LAST_MODIFIED": "آخر تعديل",
       "LAST_MODIFIED_DATE_FORM": "آخر تعديل من",
       "LAST_MODIFIED_TO": "آخر تعديل إلى",
-      "PROCESS_NAME": "اسم العملية"
+      "PROCESS_NAME": "اسم العملية",
+      "APP_VERSION": "إصدار التطبيق"
     },
     "ERROR": {
       "DATE": "تنسيق التاريخ ي‎ي/ش‎ش/س‎س‎س‎س"

@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Не удалось загрузить определения процесса, проверьте, есть ли у вас доступ.",
         "START": "Не удалось начать новый экземпляр процесса, проверьте, есть ли у вас доступ.",
-        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}"
+        "MAXIMUM_LENGTH": "Превышение длины, макс. символов: {{characters}}",
+        "SPACE_VALIDATOR": "Нельзя начинать и заканчивать пробелом.",
+        "PROCESS_NAME_REQUIRED": "Требуется имя процесса."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Войти в '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Войти",
       "CANCEL": "Отмена",
-      "CHOOSE": "Выбрать"
+      "CHOOSE": "Выбрать",
+      "CHOOSE_ITEM": "Выберите содержимое, чтобы прикрепить из '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Прикрепите форму для дальнейшего просмотра",
+      "COMPLETE-TASK-MESSAGE": "Задача {{taskName}} выполнена",
+      "COMPLETE-TASK-SUB-MESSAGE": "Нет форм для добавления",
+      "BUTTONS": {
+        "COMPLETE": "Завершить",
+        "CANCEL": "Отмена"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Задача {{taskName}} выполнена",
+      "SUBTITLE": "Нет форм для добавления"
     }
   }
 }

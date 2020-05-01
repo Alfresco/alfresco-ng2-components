@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Definice procesu se nepodařilo načíst. Zkontrolujte svá přístupová oprávnění.",
         "START": "Nepodařilo se spustit novou instanci procesu. Zkontrolujte svá přístupová oprávnění.",
-        "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků)."
+        "MAXIMUM_LENGTH": "Přesáhli jste délku (maximálně lze zadat {{characters}} znaků).",
+        "SPACE_VALIDATOR": "Nesmí začínat ani končit mezerou.",
+        "PROCESS_NAME_REQUIRED": "Název procesu je povinný."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Připojit se k '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Přihlášení",
       "CANCEL": "Zrušit",
-      "CHOOSE": "Vybrat"
+      "CHOOSE": "Vybrat",
+      "CHOOSE_ITEM": "Vybrat obsah pro připojení z '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Připojte formulář pro pozdější použití",
+      "COMPLETE-TASK-MESSAGE": "Úkol {{taskName}} dokončen",
+      "COMPLETE-TASK-SUB-MESSAGE": "Žádné formuláře určené k připojení",
+      "BUTTONS": {
+        "COMPLETE": "Dokončit",
+        "CANCEL": "Zrušit"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Úkol {{taskName}} dokončen",
+      "SUBTITLE": "Žádné formuláře určené k připojení"
     }
   }
 }

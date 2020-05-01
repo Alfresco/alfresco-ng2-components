@@ -198,14 +198,18 @@
         "SAVE": "Gem",
         "CANCEL": "Annuller",
         "CLEAR": "Ryd",
-        "TOGGLE": "Slå værdi til/fra"
+        "TOGGLE": "Slå værdi til/fra",
+        "COPY_TO_CLIPBOARD": "Dobbeltklik for at kopiere værdien"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato."
+        "EDIT": "Redigér knap",
+        "DATEPICKER": "Brug piletasterne til at navigere mellem datoer. Pil op og pil ned bruges til at gå til den næste eller forrige uge, på den samme dag. Brug venstre og højre pil til at gå til næste eller forrige dag. Tryk på Enter eller Return for at vælge en dato.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Værdien er kopieret til udklipsholderen"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Slå resultater til/fra mellem stigende og faldende rækkefølge"
+      "TOGGLE_ASC_DESC_ORDER": "Slå resultater til/fra mellem stigende og faldende rækkefølge",
+      "SORT_BY": "Sortér efter"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Indholdshandlinger"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Handlinger",
       "SELECT_ALL": "Vælg alle",
       "SELECT_FILE": "Vælg fil",
       "SORT_ASCENDING": "Stigende",

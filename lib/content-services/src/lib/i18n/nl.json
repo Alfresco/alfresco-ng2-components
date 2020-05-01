@@ -70,7 +70,8 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "Annuleren",
-    "CHOOSE": "Kiezen",
+    "CHOOSE": "Selecteren",
+    "CHOOSE_ITEM": "Selecteer content om bij te voegen vanuit '{{ name }}'",
     "COPY": "Kopiëren",
     "COPY_ITEM": "'{{ name }}' kopiëren naar...",
     "MOVE": "Verplaatsen",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Klik op de onderstaande koppeling om deze te kopiëren naar het klembord.",
     "TITLE": "Koppeling om te delen",
     "EXPIRES": "Verloopt op",
+    "EXPIRATION-LABEL": "Verloopdatum",
     "CLIPBOARD-MESSAGE": "Koppeling gekopieerd naar het klembord",
     "CLOSE": "Sluiten",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Geen node-id opgegeven!"
+    "MISSING-ID": "Geen node-id opgegeven!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "{{ name }} in-/uitschakelen"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

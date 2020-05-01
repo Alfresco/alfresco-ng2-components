@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Startseite"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Aufgabenlisten-Kontextmenü"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "App-ID einfügen",
       "APP_ID_TYPE_ERROR": "App-ID muss eine Zahl sein",
       "NUMBER_GREATER_THAN": "Wert muss größer oder gleich {{ value }} sein"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Prozesslisten-Kontextmenü"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "Übersetzung benutzerdefinierter Titel 2",

@@ -198,14 +198,18 @@
         "SAVE": "Uložit",
         "CANCEL": "Zrušit",
         "CLEAR": "Vymazat",
-        "TOGGLE": "Přepnout hodnotu"
+        "TOGGLE": "Přepnout hodnotu",
+        "COPY_TO_CLIPBOARD": "Dvojím kliknutím zkopírovat hodnotu"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Pro přechod mezi daty používejte klávesy se šipkami. Pomocí šipek nahoru a dolů přejdete do příštího nebo minulého týdne, ale na stejný den. Pomocí šipek vlevo a vpravo přejdete na další nebo předchozí den. Datum vyberte stisknutím klávesy Enter nebo Return."
+        "EDIT": "Tlačítko Upravit",
+        "DATEPICKER": "Pro přechod mezi daty používejte klávesy se šipkami. Pomocí šipek nahoru a dolů přejdete do příštího nebo minulého týdne, ale na stejný den. Pomocí šipek vlevo a vpravo přejdete na další nebo předchozí den. Datum vyberte stisknutím klávesy Enter nebo Return.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Hodnota se zkopírovala do schránky"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Přepnout řazení výsledků mezi vzestupným a sestupným"
+      "TOGGLE_ASC_DESC_ORDER": "Přepnout řazení výsledků mezi vzestupným a sestupným",
+      "SORT_BY": "Třídit podle"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Akce pro obsah"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Akce",
       "SELECT_ALL": "Vybrat vše",
       "SELECT_FILE": "Vybrat soubor",
       "SORT_ASCENDING": "Vzestupně",

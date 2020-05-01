@@ -198,14 +198,18 @@
         "SAVE": "Salva",
         "CANCEL": "Annulla",
         "CLEAR": "Cancella",
-        "TOGGLE": "Cambiare valore"
+        "TOGGLE": "Cambiare valore",
+        "COPY_TO_CLIPBOARD": "Fare doppio clic per copiare il valore"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Usare i tasti freccia per spostarsi fra le date. I tasti Su e Giù passano alla settimana successiva o precedente, ma nello stesso giorno. I tasti Sinistra e Destra passano al giorno successivo o precedente. Premere Invio per selezionare una data."
+        "EDIT": "Pulsante Modifica",
+        "DATEPICKER": "Usare i tasti freccia per spostarsi fra le date. I tasti Su e Giù passano alla settimana successiva o precedente, ma nello stesso giorno. I tasti Sinistra e Destra passano al giorno successivo o precedente. Premere Invio per selezionare una data.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Valore copiato negli appunti"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Ordina i risultati in modo crescente o decrescente"
+      "TOGGLE_ASC_DESC_ORDER": "Ordina i risultati in modo crescente o decrescente",
+      "SORT_BY": "Ordina per"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Azioni contenuti"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Azioni",
       "SELECT_ALL": "Seleziona tutto",
       "SELECT_FILE": "Selezionare un file",
       "SORT_ASCENDING": "Ascendente",

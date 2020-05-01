@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "プロセス定義を読み込めませんでした。アクセス権があることを確認してください。",
         "START": "新しいプロセスインスタンスを開始できませんでした。アクセス権があることを確認してください。",
-        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。"
+        "MAXIMUM_LENGTH": "長すぎます。{{characters}} 文字以内で入力してください。",
+        "SPACE_VALIDATOR": "先頭または末尾にスペースを使用することはできません。",
+        "PROCESS_NAME_REQUIRED": "プロセス名を指定してください。"
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "'{{ ecmHost }}' にサインイン"
+    },
     "ACTIONS": {
       "LOGIN": "ログイン",
       "CANCEL": "キャンセル",
-      "CHOOSE": "選択"
+      "CHOOSE": "選択",
+      "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "後で表示できるフォームを添付してください",
+      "COMPLETE-TASK-MESSAGE": "タスク {{taskName}} が完了しました",
+      "COMPLETE-TASK-SUB-MESSAGE": "フォームは追加されません",
+      "BUTTONS": {
+        "COMPLETE": "完了",
+        "CANCEL": "キャンセル"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "タスク {{taskName}} が完了しました",
+      "SUBTITLE": "フォームは追加されません"
     }
   }
 }

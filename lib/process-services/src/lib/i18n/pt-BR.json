@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Não foi possível carregar as definições do processo, verifique se você tem acesso.",
         "START": "Não foi possível iniciar a instância de novo processo, verifique se você tem acesso.",
-        "MAXIMUM_LENGTH": "Tamanho excedido, máximo de {{characters}} caracteres."
+        "MAXIMUM_LENGTH": "Tamanho excedido, máximo de {{characters}} caracteres.",
+        "SPACE_VALIDATOR": "Não pode começar ou terminar com um espaço.",
+        "PROCESS_NAME_REQUIRED": "O nome do processo é obrigatório."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Fazer login em '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Login",
       "CANCEL": "Cancelar",
-      "CHOOSE": "Escolher"
+      "CHOOSE": "Selecionar",
+      "CHOOSE_ITEM": "Selecionar conteúdo para anexar a partir de '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Anexe um formulário que possa ser visualizado mais tarde",
+      "COMPLETE-TASK-MESSAGE": "Tarefa {{taskName}} concluída",
+      "COMPLETE-TASK-SUB-MESSAGE": "Sem formulários a serem adicionados",
+      "BUTTONS": {
+        "COMPLETE": "Completar",
+        "CANCEL": "Cancelar"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Tarefa {{taskName}} concluída",
+      "SUBTITLE": "Sem formulários a serem adicionados"
     }
   }
 }
