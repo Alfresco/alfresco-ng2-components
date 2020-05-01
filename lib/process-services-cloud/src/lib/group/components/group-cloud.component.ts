@@ -183,9 +183,6 @@ export class GroupCloudComponent implements OnChanges, OnDestroy {
                 }
             }),
             debounceTime(500),
-            distinctUntilChanged((a, b) => {
-                return JSON.stringify(a) === JSON.stringify(b);
-            }),
             distinctUntilChanged(),
             tap((value) => {
                 if (value.trim()) {
