@@ -58,7 +58,7 @@ import { ComponentSelectionMode } from '../../types';
     encapsulation: ViewEncapsulation.None
 })
 
-export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class PeopleCloudComponent implements OnChanges, OnDestroy {
 
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
@@ -144,11 +144,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
     constructor(
         private identityUserService: IdentityUserService,
         private logService: LogService) {}
-
-    ngOnInit(): void {
-        this.loadClientId();
-        this.initSearch();
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
 

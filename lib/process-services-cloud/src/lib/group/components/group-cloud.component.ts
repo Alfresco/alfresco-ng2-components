@@ -54,7 +54,7 @@ import { ComponentSelectionMode } from '../../types';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
+export class GroupCloudComponent implements OnChanges, OnDestroy {
 
     /** Name of the application. If specified this shows the groups who have access to the app. */
     @Input()
@@ -136,11 +136,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
         private identityGroupService: IdentityGroupService,
         private logService: LogService) {}
 
-    ngOnInit(): void {
-        this.loadClientId();
-        this.initSearch();
-    }
-
     ngOnChanges(changes: SimpleChanges): void {
         if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
             if (this.hasPreSelectGroups()) {
@@ -188,6 +183,9 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }),
             debounceTime(500),
+            distinctUntilChanged((a, b) => {
+                return JSON.stringify(a) === JSON.stringify(b);
+            }),
             distinctUntilChanged(),
             tap((value) => {
                 if (value.trim()) {
