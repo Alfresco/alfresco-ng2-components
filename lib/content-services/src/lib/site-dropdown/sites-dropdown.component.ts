@@ -164,7 +164,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
 
-                if (!this.selected) {
+                if (this.value && !this.selected && !this.allSitesLoaded()) {
                     this.loadSiteList();
                 }
 
@@ -196,4 +196,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
             });
     }
 
+    private allSitesLoaded(): boolean {
+        return this.skipCount > this.siteList.list.entries.length;
+    }
 }
