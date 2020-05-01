@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Zrušit",
     "CHOOSE": "Vybrat",
+    "CHOOSE_ITEM": "Vybrat obsah pro připojení z '{{ name }}'",
     "COPY": "Kopírovat",
     "COPY_ITEM": "Zkopírovat položku '{{ name }}' do...",
     "MOVE": "Přesunout",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Kliknutím na následující odkaz jej zkopírujete do schránky.",
     "TITLE": "Odkaz pro sdílení",
     "EXPIRES": "Platnost vyprší k",
+    "EXPIRATION-LABEL": "Datum vypršení platnosti",
     "CLIPBOARD-MESSAGE": "Odkaz zkopírován do schránky",
     "CLOSE": "Zavřít",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Nebylo zadáno ID uzlu!"
+    "MISSING-ID": "Nebylo zadáno ID uzlu!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Přepnout {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

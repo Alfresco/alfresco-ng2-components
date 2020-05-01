@@ -19,7 +19,8 @@
       "PROCESS_NAME": "Procesnavn",
       "PARENT_TASK_ID": "Id for overordnet opgave",
       "PROCESS_DEF_ID": "Id for procesdefinition",
-      "PROCESS_DEF_KEY": "Procesdefinitionsnøgle"
+      "PROCESS_DEF_KEY": "Procesdefinitionsnøgle",
+      "APP_VERSION": "Release-version af appen"
     },
     "ADF_CLOUD_START_PROCESS": {
       "BUTTON": "Start proces",
@@ -41,7 +42,8 @@
         "START": "Der kunne ikke startes en ny procesforekomst. Kontrollér, om du har adgang.",
         "PROCESS_NAME_REQUIRED": "Procesnavn er påkrævet",
         "PROCESS_DEFINITION_REQUIRED": "Procesdefinition er påkrævet",
-        "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn."
+        "MAXIMUM_LENGTH": "Længden er overskredet, maks. {{characters}} tegn.",
+        "SPACE_VALIDATOR": "Må ikke starte eller slutte med et mellemrum."
       }
     }
   },
@@ -158,7 +160,8 @@
       "LAST_MODIFIED": "Sidst redigeret",
       "LAST_MODIFIED_DATE_FORM": "Sidst redigeret fra",
       "LAST_MODIFIED_TO": "Sidst redigeret til",
-      "PROCESS_NAME": "Procesnavn"
+      "PROCESS_NAME": "Procesnavn",
+      "APP_VERSION": "Release-version af appen"
     },
     "ERROR": {
       "DATE": "Datoformat DD/MM/ÅÅÅÅ"

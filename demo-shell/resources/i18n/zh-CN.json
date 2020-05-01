@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "开始页面"
-    }
+    },
+    "TASK_CONTEXT_MENU": "任务列表上下文菜单"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "插入应用程序 ID",
       "APP_ID_TYPE_ERROR": "应用程序 ID 必须为数字",
       "NUMBER_GREATER_THAN": "值必须大于或等于 {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "流程列表上下文菜单"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "自定义标题翻译 1",
   "GROUP-TITLE2-TRANSLATION-KEY": "自定义标题翻译 2",

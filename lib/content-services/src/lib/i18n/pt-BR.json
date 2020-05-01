@@ -70,7 +70,8 @@
   },
   "NODE_SELECTOR": {
     "CANCEL": "Cancelar",
-    "CHOOSE": "Escolher",
+    "CHOOSE": "Selecionar",
+    "CHOOSE_ITEM": "Selecionar conteúdo para anexar a partir de '{{ name }}'",
     "COPY": "Copiar",
     "COPY_ITEM": "Copiar '{{ name }}' para...",
     "MOVE": "Mover",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Clique no link abaixo para copiar na área de transferência.",
     "TITLE": "Link para compartilhar",
     "EXPIRES": "Expira",
+    "EXPIRATION-LABEL": "Data de vencimento",
     "CLIPBOARD-MESSAGE": "Link copiado na área de transferência",
     "CLOSE": "Fechar",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Nenhum ID de nó fornecido!"
+    "MISSING-ID": "Nenhum ID de nó fornecido!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Alternar {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

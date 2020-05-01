@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Inizia da pagina"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Menu di scelta rapida Elenco compiti"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Inserisci ID applicazione",
       "APP_ID_TYPE_ERROR": "L'ID applicazione deve essere un numero",
       "NUMBER_GREATER_THAN": "Il valore deve essere maggiore o uguale a {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Menu di scelta rapida Elenco processi"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Custom Title Translation One",
   "GROUP-TITLE2-TRANSLATION-KEY": "Custom Title Translation Two",

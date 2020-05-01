@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "キャンセル",
     "CHOOSE": "選択",
+    "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください",
     "COPY": "コピー",
     "COPY_ITEM": "'{{ name }}' のコピー先...",
     "MOVE": "移動",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "下のリンクをクリックすると、リンクがクリップボードにコピーされます。",
     "TITLE": "共有するリンク",
     "EXPIRES": "有効期限",
+    "EXPIRATION-LABEL": "有効期限",
     "CLIPBOARD-MESSAGE": "リンクがクリップボードにコピーされました",
     "CLOSE": "閉じる",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "ノード ID が指定されていません。"
+    "MISSING-ID": "ノード ID が指定されていません。",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "{{ name }} を切り替えます"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

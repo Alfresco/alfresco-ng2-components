@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Avbryt",
     "CHOOSE": "Velg",
+    "CHOOSE_ITEM": "Velg innhold du vil legge ved fra '{{ name }}'",
     "COPY": "Kopier",
     "COPY_ITEM": "Kopier {{ name }} til ...",
     "MOVE": "Flytt",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Klikk på koblingen nedenfor for å kopiere den til utklippstavlen.",
     "TITLE": "Kobling som skal deles",
     "EXPIRES": "Utløper den",
+    "EXPIRATION-LABEL": "Utløpsdato",
     "CLIPBOARD-MESSAGE": "Kobling kopiert til utklippstavlen",
     "CLOSE": "Lukk",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Ingen node-ID oppgitt!"
+    "MISSING-ID": "Ingen node-ID oppgitt!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "Bytt {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

@@ -270,14 +270,16 @@
     },
     "TOOLTIP_MESSAGE": {
       "START_INPUT": "Начальная страница"
-    }
+    },
+    "TASK_CONTEXT_MENU": "Контекстное меню списка задач"
   },
   "PROCESS_LIST_DEMO": {
     "ERROR_MESSAGE": {
       "APP_ID_REQUIRED_ERROR": "Вставить идентификатор приложения",
       "APP_ID_TYPE_ERROR": "Идентификатор приложения должен быть числом",
       "NUMBER_GREATER_THAN": "Значение должно быть больше или равно {{ value }}"
-    }
+    },
+    "PROCESS_CONTEXT_MENU": "Контекстное меню списка процессов"
   },
   "GROUP-TITLE1-TRANSLATION-KEY": "Перевод пользовательского заголовка один",
   "GROUP-TITLE2-TRANSLATION-KEY": "Перевод пользовательского заголовка два",

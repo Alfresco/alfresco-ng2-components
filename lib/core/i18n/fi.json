@@ -198,14 +198,18 @@
         "SAVE": "Tallenna",
         "CANCEL": "Peruuta",
         "CLEAR": "Tyhjennä",
-        "TOGGLE": "Vaihda arvoa"
+        "TOGGLE": "Vaihda arvoa",
+        "COPY_TO_CLIPBOARD": "Kopioi arvo kaksoisnapsauttamalla"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Navigoi päivämäärien välillä nuolinäppäinten avulla. Nuolet ylös ja alas siirtävät seuraavaan tai edelliseen viikkoon, mutta samaan viikonpäivään. Nuolet vasemmalle ja oikealle siirtävät seuraavan tai edelliseen päivään. Valitse päivämäärä Enter-näppäimellä."
+        "EDIT": "Muokkaa-painike",
+        "DATEPICKER": "Navigoi päivämäärien välillä nuolinäppäinten avulla. Nuolet ylös ja alas siirtävät seuraavaan tai edelliseen viikkoon, mutta samaan viikonpäivään. Nuolet vasemmalle ja oikealle siirtävät seuraavan tai edelliseen päivään. Valitse päivämäärä Enter-näppäimellä.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Arvo kopioitu leikepöydälle"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Tarkastele tulosnäkymää nousevassa tai laskevassa järjestyksessä"
+      "TOGGLE_ASC_DESC_ORDER": "Tarkastele tulosnäkymää nousevassa tai laskevassa järjestyksessä",
+      "SORT_BY": "Lajitteluperuste"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Sisältötoiminnot"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Toiminnot",
       "SELECT_ALL": "Valitse kaikki",
       "SELECT_FILE": "Valitse tiedosto",
       "SORT_ASCENDING": "Nouseva",

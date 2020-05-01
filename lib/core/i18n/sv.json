@@ -198,14 +198,18 @@
         "SAVE": "Spara",
         "CANCEL": "Avbryt",
         "CLEAR": "Rensa",
-        "TOGGLE": "Växla värde"
+        "TOGGLE": "Växla värde",
+        "COPY_TO_CLIPBOARD": "Dubbelklicka för att kopiera värde"
       },
       "ACCESSIBILITY": {
-        "DATEPICKER": "Använd piltangenterna för att navigera mellan datumen. Upp och ner flyttar till nästa eller föregående vecka men på samma dag. Vänster och höger flyttar till nästa eller föregående dag. Tryck på Retur för att välja ett datum."
+        "EDIT": "Redigeringsknapp",
+        "DATEPICKER": "Använd piltangenterna för att navigera mellan datumen. Upp och ner flyttar till nästa eller föregående vecka men på samma dag. Vänster och höger flyttar till nästa eller föregående dag. Tryck på Retur för att välja ett datum.",
+        "COPY_TO_CLIPBOARD_MESSAGE": "Värde kopierat till urklipp"
       }
     },
     "SEARCH": {
-      "TOGGLE_ASC_DESC_ORDER": "Växla mellan att visa resultaten i stigande eller sjunkande ordning"
+      "TOGGLE_ASC_DESC_ORDER": "Växla mellan att visa resultaten i stigande eller sjunkande ordning",
+      "SORT_BY": "Sortera efter"
     }
   },
   "COMMENTS": {
@@ -275,6 +279,7 @@
       "TOOLTIP": "Innehållsåtgärder"
     },
     "ACCESSIBILITY": {
+      "ACTIONS": "Åtgärder",
       "SELECT_ALL": "Välj alla",
       "SELECT_FILE": "Välj fil",
       "SORT_ASCENDING": "Stigande",

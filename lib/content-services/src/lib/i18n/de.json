@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Abbrechen",
     "CHOOSE": "Auswählen",
+    "CHOOSE_ITEM": "Wählen Sie aus '{{ name }}' Content zum Anhängen aus",
     "COPY": "Kopieren",
     "COPY_ITEM": "'{{ name }}' kopieren nach...",
     "MOVE": "Verschieben",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "Auf Link klicken um in die Zwischenablage zu kopieren.",
     "TITLE": "Link zum Teilen",
     "EXPIRES": "Läuft ab am",
+    "EXPIRATION-LABEL": "Ablaufdatum",
     "CLIPBOARD-MESSAGE": "Link in die Zwischenablage kopiert",
     "CLOSE": "Schließen",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "Keine Node-ID angegeben!"
+    "MISSING-ID": "Keine Node-ID angegeben!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "{{ name }} wechseln"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

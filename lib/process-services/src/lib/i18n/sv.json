@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "Kunde inte läsa in processdefinitioner, kontrollera att du har åtkomst.",
         "START": "Kunde inte starta ny processinstans, kontrollera att du har åtkomst.",
-        "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max."
+        "MAXIMUM_LENGTH": "Längd överskriden, {{characters}} tecken max.",
+        "SPACE_VALIDATOR": "Får inte börja eller sluta med ett mellanslag.",
+        "PROCESS_NAME_REQUIRED": "Processnamn krävs."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "Logga in på '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "Inloggning",
       "CANCEL": "Avbryt",
-      "CHOOSE": "Välj"
+      "CHOOSE": "Välj",
+      "CHOOSE_ITEM": "Välj innehåll att bifoga från '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "Bifoga ett formulär som kan visas senare",
+      "COMPLETE-TASK-MESSAGE": "Uppgift {{taskName}} slutförd",
+      "COMPLETE-TASK-SUB-MESSAGE": "Inga formulär ska läggas till",
+      "BUTTONS": {
+        "COMPLETE": "Slutför",
+        "CANCEL": "Avbryt"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "Uppgift {{taskName}} slutförd",
+      "SUBTITLE": "Inga formulär ska läggas till"
     }
   }
 }

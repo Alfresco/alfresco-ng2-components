@@ -288,7 +288,9 @@
       "ERROR": {
         "LOAD_PROCESS_DEFS": "تعذر تحميل تعريفات العملية، تأكد أن لديك حق الوصول.",
         "START": "تعذر بدء مثيل عملية جديد، تأكد أن لديك حق الوصول.",
-        "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف."
+        "MAXIMUM_LENGTH": "تم تجاوز الطول، {{characters}} من الحد الأقصى للحروف.",
+        "SPACE_VALIDATOR": "لا يمكن البدء أو الانتهاء بمسافة.",
+        "PROCESS_NAME_REQUIRED": "اسم العملية مطلوب."
       }
     },
     "PROCESS-ATTACHMENT": {
@@ -324,10 +326,29 @@
     }
   },
   "ATTACH-FILE": {
+    "DIALOG": {
+      "LOGIN": "تسجيل الدخول إلى '{{ ecmHost }}'"
+    },
     "ACTIONS": {
       "LOGIN": "دخول",
       "CANCEL": "إلغاء",
-      "CHOOSE": "اختيار"
+      "CHOOSE": "اختيار",
+      "CHOOSE_ITEM": "اختيار محتوى لإرفاقه من '{{ name }}'"
+    }
+  },
+  "ADF_TASK_FORM": {
+    "EMPTY_FORM": {
+      "SUBTITLE": "قم بإرفاق نموذج يمكن عرضه لاحقًا",
+      "COMPLETE-TASK-MESSAGE": "اكتملت المهمة {{taskName}}",
+      "COMPLETE-TASK-SUB-MESSAGE": "لا توجد نماذج لإضافتها",
+      "BUTTONS": {
+        "COMPLETE": "تم",
+        "CANCEL": "إلغاء"
+      }
+    },
+    "COMPLETED_TASK": {
+      "TITLE": "اكتملت المهمة {{taskName}}",
+      "SUBTITLE": "لا توجد نماذج لإضافتها"
     }
   }
 }

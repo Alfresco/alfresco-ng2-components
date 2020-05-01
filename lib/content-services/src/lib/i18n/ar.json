@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "إلغاء",
     "CHOOSE": "اختيار",
+    "CHOOSE_ITEM": "اختيار محتوى لإرفاقه من '{{ name }}'",
     "COPY": "نسخ",
     "COPY_ITEM": "نسخ '{{ name }}' إلى...",
     "MOVE": "نقل",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "انقر فوق الرابط أدناه لنسخه إلى الحافظة.",
     "TITLE": "رابط للمشاركة",
     "EXPIRES": "تنتهي الصلاحية في",
+    "EXPIRATION-LABEL": "تاريخ الانتهاء",
     "CLIPBOARD-MESSAGE": "تم نسخ الرابط إلى الحافظة",
     "CLOSE": "إغلاق",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "معرف العقدة غير متوفر!"
+    "MISSING-ID": "معرف العقدة غير متوفر!",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "تبديل {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {

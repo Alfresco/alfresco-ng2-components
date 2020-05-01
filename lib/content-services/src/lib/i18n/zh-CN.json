@@ -71,6 +71,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "取消",
     "CHOOSE": "选择",
+    "CHOOSE_ITEM": "从 '{{ name }}'中选择要附加的内容",
     "COPY": "复制",
     "COPY_ITEM": "将 '{{ name }}' 复制到...",
     "MOVE": "移动",
@@ -306,6 +307,7 @@
     "DESCRIPTION": "单击下面的链接以将其复制到剪贴板。",
     "TITLE": "要共享的链接",
     "EXPIRES": "到期日期",
+    "EXPIRATION-LABEL": "截止日期",
     "CLIPBOARD-MESSAGE": "已复制到剪贴板的链接",
     "CLOSE": "关闭",
     "CONFIRMATION": {
@@ -340,7 +342,10 @@
     }
   },
   "ADF-TREE-VIEW": {
-    "MISSING-ID": "未提供节点 ID！"
+    "MISSING-ID": "未提供节点 ID！",
+    "ACCESSIBILITY": {
+      "ARIA_LABEL": "切换 {{ name }}"
+    }
   },
   "LIBRARY": {
     "DIALOG": {
