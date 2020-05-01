@@ -18,7 +18,6 @@
 import {
     Component,
     ElementRef,
-    OnInit,
     Output,
     EventEmitter,
     ViewChild,

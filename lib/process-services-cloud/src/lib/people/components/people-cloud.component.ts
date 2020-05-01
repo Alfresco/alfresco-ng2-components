@@ -18,7 +18,6 @@
 import { FormControl } from '@angular/forms';
 import {
     Component,
-    OnInit,
     Output,
     EventEmitter,
     ViewEncapsulation,
