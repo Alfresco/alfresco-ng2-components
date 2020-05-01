@@ -7,6 +7,7 @@ Github only: true
 
 The pages linked below contain the licenses for all third party dependencies of ADF.
 
+- [ADF v3.8](license-info-3.8.0.md)
 - [ADF v3.7](license-info-3.7.0.md)
 - [ADF v3.6](license-info-3.6.0.md)
 - [ADF v3.5](license-info-3.5.0.md)
