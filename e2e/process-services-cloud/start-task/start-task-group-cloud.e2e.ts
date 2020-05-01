@@ -170,6 +170,7 @@ describe('Start Task - Group Cloud Component', () => {
         await groupCloud.checkSelectedGroup(testGroup.name);
 
         await groupCloud.removeSelectedGroup(testGroup.name);
+        await browser.sleep(1000);
         await groupCloud.checkGroupNotSelected(testGroup.name);
 
         await groupCloud.searchGroups(testGroup.name);
