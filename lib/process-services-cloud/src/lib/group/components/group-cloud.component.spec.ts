@@ -221,11 +221,13 @@ describe('GroupCloudComponent', () => {
     describe('when application name defined', () => {
         let checkGroupHasAnyClientAppRoleSpy: jasmine.Spy;
         let checkGroupHasClientAppSpy: jasmine.Spy;
+        let getClientIdByApplicationNameSpy: jasmine.Spy;
 
         beforeEach(async(() => {
             findGroupsByNameSpy = spyOn(identityGroupService, 'findGroupsByName').and.returnValue(of(mockIdentityGroups));
             checkGroupHasAnyClientAppRoleSpy = spyOn(identityGroupService, 'checkGroupHasAnyClientAppRole').and.returnValue(of(true));
             checkGroupHasClientAppSpy = spyOn(identityGroupService, 'checkGroupHasClientApp').and.returnValue(of(true));
+            getClientIdByApplicationNameSpy = spyOn(identityGroupService, 'getClientIdByApplicationName').and.callThrough();
 
             component.preSelectGroups = [];
             component.appName = 'mock-app-name';
@@ -234,12 +236,6 @@ describe('GroupCloudComponent', () => {
         }));
 
         it('should fetch the client ID if appName specified', async (() => {
-            const getClientIdByApplicationNameSpy = spyOn(identityGroupService, 'getClientIdByApplicationName').and.callThrough();
-            component.appName = 'mock-app-name';
-
-            const change = new SimpleChange(null, 'mock-app-name', false);
-            component.ngOnChanges({ 'appName': change });
-
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();

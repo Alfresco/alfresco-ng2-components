@@ -276,11 +276,13 @@ describe('PeopleCloudComponent', () => {
     describe('when application name defined', () => {
         let checkUserHasAccessSpy: jasmine.Spy;
         let checkUserHasAnyClientAppRoleSpy: jasmine.Spy;
+        let getClientIdByApplicationNameSpy: jasmine.Spy;
 
         beforeEach(async(() => {
             findUsersByNameSpy = spyOn(identityService, 'findUsersByName').and.returnValue(of(mockUsers));
             checkUserHasAccessSpy = spyOn(identityService, 'checkUserHasClientApp').and.returnValue(of(true));
             checkUserHasAnyClientAppRoleSpy = spyOn(identityService, 'checkUserHasAnyClientAppRole').and.returnValue(of(true));
+            getClientIdByApplicationNameSpy = spyOn(identityService, 'getClientIdByApplicationName').and.callThrough();
 
             component.preSelectUsers = [];
             component.appName = 'mock-app-name';
@@ -289,7 +291,6 @@ describe('PeopleCloudComponent', () => {
         }));
 
         it('should fetch the client ID if appName specified', async (() => {
-            const getClientIdByApplicationNameSpy = spyOn(identityService, 'getClientIdByApplicationName').and.callThrough();
             component.appName = 'mock-app-name';
 
             const change = new SimpleChange(null, 'mock-app-name', false);

@@ -27,7 +27,7 @@ import {
     OnChanges,
     OnDestroy,
     ChangeDetectionStrategy,
-    SimpleChange
+    OnInit
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -53,7 +53,7 @@ import { ComponentSelectionMode } from '../../types';
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class GroupCloudComponent implements OnChanges, OnDestroy {
+export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Name of the application. If specified this shows the groups who have access to the app. */
     @Input()
@@ -135,6 +135,11 @@ export class GroupCloudComponent implements OnChanges, OnDestroy {
         private identityGroupService: IdentityGroupService,
         private logService: LogService) {}
 
+    ngOnInit(): void {
+        this.loadClientId();
+        this.initSearch();
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (this.hasPreselectedGroupsChanged(changes) || this.hasModeChanged(changes) || this.isValidationChanged(changes)) {
             if (this.hasPreSelectGroups()) {
@@ -148,18 +153,6 @@ export class GroupCloudComponent implements OnChanges, OnDestroy {
                 this.invalidGroups = [];
             }
         }
-
-        if (changes.appName && this.isAppNameChanged(changes.appName)) {
-            this.loadClientId();
-            this.initSearch();
-        }
-    }
-
-    private isAppNameChanged(change: SimpleChange): boolean {
-        return change
-            && change.previousValue !== change.currentValue
-            && this.appName
-            && this.appName.length > 0;
     }
 
     private async loadClientId(): Promise<void> {

@@ -26,7 +26,7 @@ import {
     OnChanges,
     OnDestroy,
     ChangeDetectionStrategy,
-    ViewChild, ElementRef, SimpleChange
+    ViewChild, ElementRef, SimpleChange, OnInit
 } from '@angular/core';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, debounceTime, distinctUntilChanged, mergeMap, tap, filter, map, takeUntil } from 'rxjs/operators';
@@ -57,7 +57,7 @@ import { ComponentSelectionMode } from '../../types';
     encapsulation: ViewEncapsulation.None
 })
 
-export class PeopleCloudComponent implements OnChanges, OnDestroy {
+export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Name of the application. If specified, this shows the users who have access to the app. */
     @Input()
@@ -144,6 +144,11 @@ export class PeopleCloudComponent implements OnChanges, OnDestroy {
         private identityUserService: IdentityUserService,
         private logService: LogService) {}
 
+    ngOnInit(): void {
+        this.loadClientId();
+        this.initSearch();
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
 
         if (this.valueChanged(changes.preSelectUsers)
@@ -160,11 +165,6 @@ export class PeopleCloudComponent implements OnChanges, OnDestroy {
             if (!this.isValidationEnabled()) {
                 this.invalidUsers = [];
             }
-        }
-
-        if (changes.appName && this.isAppNameChanged(changes.appName)) {
-            this.loadClientId();
-            this.initSearch();
         }
     }
 
@@ -230,10 +230,6 @@ export class PeopleCloudComponent implements OnChanges, OnDestroy {
     ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
-    }
-
-    private isAppNameChanged(change: SimpleChange): boolean {
-        return change && change.previousValue !== change.currentValue && this.appName && this.appName.length > 0;
     }
 
     isValidationEnabled(): boolean {
