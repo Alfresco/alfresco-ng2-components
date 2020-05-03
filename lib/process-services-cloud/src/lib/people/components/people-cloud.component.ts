@@ -170,7 +170,6 @@ export class PeopleCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
             this.loadClientId();
-            this.initSearch();
         }
     }
 
