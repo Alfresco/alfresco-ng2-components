@@ -157,7 +157,6 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
 
         if (changes.appName && this.isAppNameChanged(changes.appName)) {
             this.loadClientId();
-            this.initSearch();
         }
     }
 
