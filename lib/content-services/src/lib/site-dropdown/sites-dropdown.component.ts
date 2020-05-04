@@ -164,7 +164,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
 
-                if (this.value && !this.selected && !this.allSitesLoaded()) {
+                if (this.value && !this.selected && this.siteList.list.pagination.hasMoreItems) {
                     this.loadSiteList();
                 }
 
@@ -194,9 +194,5 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
             !!site.relations.members.list.entries.find((member) => {
                 return member.entry.id.toLowerCase() === loggedUserName.toLowerCase();
             });
-    }
-
-    private allSitesLoaded(): boolean {
-        return this.skipCount > this.siteList.list.entries.length;
     }
 }
