@@ -22,6 +22,26 @@ import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
 import { SitesService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { getFakeSitePaging, getFakeSitePagingNoMoreItems, getFakeSitePagingWithMembers } from '../mock';
+
+const customSiteList = {
+    'list': {
+        'entries': [
+            {
+                'entry': {
+                    'guid': '-my-',
+                    'title': 'PERSONAL_FILES'
+                }
+            },
+            {
+                'entry': {
+                    'guid': '-mysites-',
+                    'title': 'FILE_LIBRARIES'
+                }
+            }
+        ]
+    }
+};
 
 describe('DropdownSitesComponent', () => {
 
@@ -54,45 +74,10 @@ describe('DropdownSitesComponent', () => {
                 debug = fixture.debugElement;
                 element = fixture.nativeElement;
                 component = fixture.componentInstance;
+                spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePaging()));
             }));
 
             it('Should show loading item if there are more itemes', async(() => {
-                spyOn(siteService, 'getSites').and.returnValue(of({
-                    'list': {
-                        'pagination': {
-                            'count': 2,
-                            'hasMoreItems': true,
-                            'totalItems': 2,
-                            'skipCount': 0,
-                            'maxItems': 100
-                        },
-                        'entries': [
-                            {
-                                'entry': {
-                                    'role': 'SiteManager',
-                                    'visibility': 'PUBLIC',
-                                    'guid': 'fake-1',
-                                    'description': 'fake-test-site',
-                                    'id': 'fake-test-site',
-                                    'preset': 'site-dashboard',
-                                    'title': 'fake-test-site'
-                                }
-                            },
-                            {
-                                'entry': {
-                                    'role': 'SiteManager',
-                                    'visibility': 'PUBLIC',
-                                    'guid': 'fake-2',
-                                    'description': 'This is a Sample Alfresco Team site.',
-                                    'id': 'swsdp',
-                                    'preset': 'site-dashboard',
-                                    'title': 'fake-test-2'
-                                }
-                            }
-                        ]
-                    }
-                }));
-
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -101,42 +86,6 @@ describe('DropdownSitesComponent', () => {
             }));
 
             it('Should not show loading item if there are more itemes', async(() => {
-                spyOn(siteService, 'getSites').and.returnValue(of({
-                    'list': {
-                        'pagination': {
-                            'count': 2,
-                            'hasMoreItems': false,
-                            'totalItems': 2,
-                            'skipCount': 0,
-                            'maxItems': 100
-                        },
-                        'entries': [
-                            {
-                                'entry': {
-                                    'role': 'SiteManager',
-                                    'visibility': 'PUBLIC',
-                                    'guid': 'fake-1',
-                                    'description': 'fake-test-site',
-                                    'id': 'fake-test-site',
-                                    'preset': 'site-dashboard',
-                                    'title': 'fake-test-site'
-                                }
-                            },
-                            {
-                                'entry': {
-                                    'role': 'SiteManager',
-                                    'visibility': 'PUBLIC',
-                                    'guid': 'fake-2',
-                                    'description': 'This is a Sample Alfresco Team site.',
-                                    'id': 'swsdp',
-                                    'preset': 'site-dashboard',
-                                    'title': 'fake-test-2'
-                                }
-                            }
-                        ]
-                    }
-                }));
-
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -150,41 +99,7 @@ describe('DropdownSitesComponent', () => {
 
             beforeEach(async(() => {
                 siteService = TestBed.get(SitesService);
-                spyOn(siteService, 'getSites').and.returnValue(of({
-                    'list': {
-                        'pagination': {
-                            'count': 2,
-                            'hasMoreItems': false,
-                            'totalItems': 2,
-                            'skipCount': 0,
-                            'maxItems': 100
-                        },
-                        'entries': [
-                            {
-                                'entry': {
-                                    'role': 'SiteManager',
-                                    'visibility': 'PUBLIC',
-                                    'guid': 'fake-1',
-                                    'description': 'fake-test-site',
-                                    'id': 'fake-test-site',
-                                    'preset': 'site-dashboard',
-                                    'title': 'fake-test-site'
-                                }
-                            },
-                            {
-                                'entry': {
-                                    'role': 'SiteManager',
-                                    'visibility': 'PUBLIC',
-                                    'guid': 'fake-2',
-                                    'description': 'This is a Sample Alfresco Team site.',
-                                    'id': 'swsdp',
-                                    'preset': 'site-dashboard',
-                                    'title': 'fake-test-2'
-                                }
-                            }
-                        ]
-                    }
-                }));
+                spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingNoMoreItems()));
 
                 fixture = TestBed.createComponent(DropdownSitesComponent);
                 debug = fixture.debugElement;
@@ -260,24 +175,7 @@ describe('DropdownSitesComponent', () => {
             }));
 
             it('should load custom sites when the \'siteList\' input property is given a value', async(() => {
-                component.siteList = {
-                    'list': {
-                        'entries': [
-                            {
-                                'entry': {
-                                    'guid': '-my-',
-                                    'title': 'PERSONAL_FILES'
-                                }
-                            },
-                            {
-                                'entry': {
-                                    'guid': '-mysites-',
-                                    'title': 'FILE_LIBRARIES'
-                                }
-                            }
-                        ]
-                    }
-                };
+                component.siteList = customSiteList;
 
                 fixture.detectChanges();
 
@@ -339,129 +237,11 @@ describe('DropdownSitesComponent', () => {
             });
         });
 
-        describe('Sites  with members', () => {
+        describe('Sites with members', () => {
 
             beforeEach(async(() => {
                 siteService = TestBed.get(SitesService);
-                spyOn(siteService, 'getSites').and.returnValue(of({
-                    'list': {
-                        'entries': [{
-                            'entry': {
-                                'visibility': 'MODERATED',
-                                'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                                'description': 'This is a Sample Alfresco Team site.',
-                                'id': 'MODERATED-SITE',
-                                'preset': 'site-dashboard',
-                                'title': 'FAKE-MODERATED-SITE'
-                            },
-                            'relations': {
-                                'members': {
-                                    'list': {
-                                        'pagination': {
-                                            'count': 3,
-                                            'hasMoreItems': false,
-                                            'skipCount': 0,
-                                            'maxItems': 100
-                                        },
-                                        'entries': [
-                                            {
-                                                'entry': {
-                                                    'role': 'SiteManager',
-                                                    'person': {
-                                                        'firstName': 'Administrator',
-                                                        'emailNotificationsEnabled': true,
-                                                        'company': {},
-                                                        'id': 'admin',
-                                                        'enabled': true,
-                                                        'email': 'admin@alfresco.com'
-                                                    },
-                                                    'id': 'admin'
-                                                }
-                                            },
-                                            {
-                                                'entry': {
-                                                    'role': 'SiteCollaborator',
-                                                    'person': {
-                                                        'lastName': 'Beecher',
-                                                        'userStatus': 'Helping to design the look and feel of the new web site',
-                                                        'jobTitle': 'Graphic Designer',
-                                                        'statusUpdatedAt': '2011-02-15T20:20:13.432+0000',
-                                                        'mobile': '0112211001100',
-                                                        'emailNotificationsEnabled': true,
-                                                        'description': 'Alice is a demo user for the sample Alfresco Team site.',
-                                                        'telephone': '0112211001100',
-                                                        'enabled': false,
-                                                        'firstName': 'Alice',
-                                                        'skypeId': 'abeecher',
-                                                        'avatarId': '198500fc-1e99-4f5f-8926-248cea433366',
-                                                        'location': 'Tilbury, UK',
-                                                        'company': {
-                                                            'organization': 'Moresby, Garland and Wedge',
-                                                            'address1': '200 Butterwick Street',
-                                                            'address2': 'Tilbury',
-                                                            'address3': 'UK',
-                                                            'postcode': 'ALF1 SAM1'
-                                                        },
-                                                        'id': 'abeecher',
-                                                        'email': 'abeecher@example.com'
-                                                    },
-                                                    'id': 'abeecher'
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }, {
-                            'entry': {
-                                'visibility': 'PUBLIC',
-                                'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                                'description': 'This is a Sample Alfresco Team site.',
-                                'id': 'PUBLIC-SITE',
-                                'preset': 'site-dashboard',
-                                'title': 'FAKE-SITE-PUBLIC'
-                            }
-                        }, {
-                            'entry': {
-                                'visibility': 'PRIVATE',
-                                'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
-                                'description': 'This is a Sample Alfresco Team site.',
-                                'id': 'MEMBER-SITE',
-                                'preset': 'site-dashboard',
-                                'title': 'FAKE-PRIVATE-SITE-MEMBER'
-                            },
-                            'relations': {
-                                'members': {
-                                    'list': {
-                                        'pagination': {
-                                            'count': 3,
-                                            'hasMoreItems': false,
-                                            'skipCount': 0,
-                                            'maxItems': 100
-                                        },
-                                        'entries': [
-                                            {
-                                                'entry': {
-                                                    'role': 'SiteManager',
-                                                    'person': {
-                                                        'firstName': 'Administrator',
-                                                        'emailNotificationsEnabled': true,
-                                                        'company': {},
-                                                        'id': 'admin',
-                                                        'enabled': true,
-                                                        'email': 'admin@alfresco.com'
-                                                    },
-                                                    'id': 'test'
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                        ]
-                    }
-                }));
+                spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingWithMembers()));
 
                 fixture = TestBed.createComponent(DropdownSitesComponent);
                 debug = fixture.debugElement;
