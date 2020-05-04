@@ -18,6 +18,7 @@
 import { ApiService } from '../api.service';
 import { Logger } from '../../utils/logger';
 import { ApiUtil } from '../../structure/api.util';
+export type TaskStatus  = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED' | 'COMPLETED';
 
 export class QueryService {
 
@@ -90,7 +91,8 @@ export class QueryService {
         return ApiUtil.waitForApi(apiCall, predicate);
     }
 
-    async getTaskByName(taskName, processInstanceId, appName): Promise<any> {
+    async getProcessInstanceTaskByStatus(processInstanceId, appName, taskName, status: TaskStatus): Promise<any> {
+
         const predicate = (result: any) => {
             return !!result;
         };
@@ -103,6 +105,28 @@ export class QueryService {
                 const queryParams = {}, postBody = {};
 
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                return data.list && data.list.entries.length && data.list.entries.find(task => task.entry.name === taskName && task.entry.status === status);
+            } catch (error) {
+                Logger.error('get process-instances tasks by status - Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
+    }
+
+    async getTaskByStatus(taskName, appName, status: TaskStatus, standalone = false): Promise<any> {
+        const predicate = (result: any) => {
+            return !!result;
+        };
+
+        const apiCall = async () => {
+            try {
+                const path = `/${appName}/query/v1/tasks?standalone=${standalone}&status=${status}&maxItems=1000&skipCount=0&sort=createdDate`;
+                const method = 'GET';
+
+                const queryParams = {}, postBody = {};
+
+                const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 for (let i = 0; i < data.list.entries.length; i++) {
                     if (data.list.entries[i].entry.name === taskName) {
                         return data.list.entries[i];
@@ -110,7 +134,7 @@ export class QueryService {
                 }
 
             } catch (error) {
-                Logger.error('Get Task By Name - Service error');
+                Logger.error('Get Task By Status - Service error');
             }
         };
 
