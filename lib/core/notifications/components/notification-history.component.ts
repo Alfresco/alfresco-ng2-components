@@ -72,7 +72,7 @@ export class NotificationHistoryComponent implements OnDestroy {
     }
 
     markAsRead() {
-        this.storageService.setItem('notifications', '');
+        this.storageService.removeItem('notifications');
         this.notifications = [];
     }
 
