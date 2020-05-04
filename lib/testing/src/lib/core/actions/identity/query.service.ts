@@ -92,7 +92,6 @@ export class QueryService {
     }
 
     async getProcessInstanceTaskByStatus(processInstanceId, appName, taskName, status: TaskStatus): Promise<any> {
-
         const predicate = (result: any) => {
             return !!result;
         };
