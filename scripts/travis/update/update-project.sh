@@ -47,7 +47,7 @@ git clone https://$TOKEN@github.com/$NAME_REPO.git $TEMP_GENERATOR_DIR
 cd $TEMP_GENERATOR_DIR
 git checkout development
 
-BRANCH="ADF-update-beta-$VERSION"
+BRANCH="ADF-update-$VERSION"
 git checkout -b $BRANCH
 
 ./scripts/update-version.sh -gnu -v $VERSION -vj $JS_VERSION
