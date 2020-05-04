@@ -45,7 +45,15 @@ Please report issues with this release in the [issue tracker](https://github.com
 
 After some time  the content and metadata management hasn't been loved enough, with this version of ADF there are a good number of improvements on the way to consume content metadata in ADF components and ADF based applications. Most of them are developed for an improved and more appealing end-user experience.
 
+#### Revised Content Metadata Component
+
 As one of the most requested enhancements, it would be valuable to highlight the changed User Experience in the metadata editing on the adf-card-view-component ([ADF-4900](https://issues.alfresco.com/jira/browse/ADF-4900)).
+
+ADF's Content Metadata Component has been revised with a fresh new style for a better user experience. Fields look much more uniform and the interaction with them has been simplified to avoid unwanted changes. 
+
+This new version will make it clearer than ever to know what aspects can be changed and also how they can be saved.
+
+![](images/metadata-component.png)
 
 Check [ADF-5108](https://issues.alfresco.com/jira/browse/ADF-5108) for the full list of issues done.
 
