@@ -40,7 +40,7 @@ describe('Notification History Component', () => {
     }
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [CoreTestingModule]
     });
 
     beforeEach(async(() => {
