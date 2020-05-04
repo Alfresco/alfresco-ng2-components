@@ -307,7 +307,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     siteChanged(chosenSite: SiteEntry): void {
         this.siteId = chosenSite.entry.guid;
         this.setTitleIfCustomSite(chosenSite);
-        this.siteChange.next(chosenSite.entry.title);
+        this.siteChange.emit(chosenSite.entry.title);
         this.updateResults();
     }
 
