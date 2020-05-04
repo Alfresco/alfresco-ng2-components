@@ -7,7 +7,8 @@
 
     <div *ngSwitchDefault>
         <mat-form-field class="adf-property-field adf-card-textitem-field"
-                        [ngClass]="{ 'adf-property-read-only': !isEditable }">
+                        [ngClass]="{ 'adf-property-read-only': !isEditable }"
+                        [floatLabel]="'never'">
             <input matInput
                    *ngIf="!property.multiline"
                    class="adf-property-value"
@@ -73,7 +74,8 @@
 
         <mat-form-field *ngIf="isEditable"
                         class="adf-property-field adf-textitem-chip-list-input"
-                        [ngClass]="{ 'adf-property-read-only': !isEditable }">
+                        [ngClass]="{ 'adf-property-read-only': !isEditable }"
+                        [floatLabel]="'never'">
             <input matInput
                    class="adf-property-value"
                    [placeholder]="property.default | translate"
@@ -94,7 +96,8 @@
          (click)="clicked()"
          fxLayout="row"
          fxLayoutAlign="space-between center">
-        <mat-form-field class="adf-property-field adf-card-textitem-field">
+        <mat-form-field class="adf-property-field adf-card-textitem-field"
+                        [floatLabel]="'never'">
             <input matInput
                    [type]=property.inputType
                    class="adf-property-value"
