@@ -41,7 +41,7 @@ export class FiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter: ElementFinder = element(by.css(`.adf-filters__entry.adf-active button[data-automation-id='${filterName}_filter']`));
+        const highlightedFilter: ElementFinder = element(by.css(`.adf-active button[data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }

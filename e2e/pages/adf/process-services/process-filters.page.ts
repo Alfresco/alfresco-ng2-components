@@ -78,7 +78,7 @@ export class ProcessFiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName): Promise<void> {
-        const processNameHighlighted: ElementFinder = element(by.css(`.adf-filters__entry.adf-active button[data-automation-id='${filterName}_filter']`));
+        const processNameHighlighted: ElementFinder = element(by.css(`adf-process-instance-filters .adf-active button[data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 

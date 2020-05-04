@@ -51,7 +51,7 @@ export class TaskFiltersCloudComponentPage {
     }
 
     getTaskFilterLocatorByFilterName(filterName: string): ElementFinder {
-        return element(by.css(`button[data-automation-id="${filterName}-filter"]`));
+        return element(by.css(`button[data-automation-id="${filterName}_filter"]`));
     }
 
 }

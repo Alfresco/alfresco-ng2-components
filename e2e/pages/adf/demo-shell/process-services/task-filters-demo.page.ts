@@ -25,7 +25,7 @@ export class TaskFiltersDemoPage {
     queuedTask: ElementFinder = element(by.css('button[data-automation-id="Queued Tasks_filter"]'));
     completedTask: ElementFinder = element(by.css('button[data-automation-id="Completed Tasks_filter"]'));
     involvedTask: ElementFinder = element(by.css('button[data-automation-id="Involved Tasks_filter"]'));
-    activeFilter: ElementFinder = element(by.css('.adf-filters__entry.adf.active'));
+    activeFilter: ElementFinder = element(by.css('adf-task-filters .adf-active'));
 
     myTasksFilter(): TaskFiltersPage {
         return new TaskFiltersPage(this.myTasks);

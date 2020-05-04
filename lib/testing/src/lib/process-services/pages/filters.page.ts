@@ -34,7 +34,7 @@ export class FiltersPage {
     }
 
     async isFilterHighlighted(filterName): Promise<boolean> {
-        const processNameHighlighted: ElementFinder = element(by.css(`.adf-filters__entry.adf-active button[data-automation-id='${filterName}_filter']`));
+        const processNameHighlighted: ElementFinder = element(by.css(`.adf-active button[data-automation-id='${filterName}_filter']`));
         try {
             await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
             return true;
