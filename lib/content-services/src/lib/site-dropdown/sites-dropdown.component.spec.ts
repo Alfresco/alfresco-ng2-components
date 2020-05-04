@@ -22,7 +22,12 @@ import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
 import { SitesService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { getFakeSitePaging, getFakeSitePagingNoMoreItems, getFakeSitePagingWithMembers } from '../mock';
+import { getFakeSitePaging,
+    getFakeSitePagingNoMoreItems,
+    getFakeSitePagingFirstPage,
+    getFakeSitePagingLastPage,
+    getFakeSitePagingWithMembers
+} from '../mock';
 
 const customSiteList = {
     'list': {
@@ -232,6 +237,38 @@ describe('DropdownSitesComponent', () => {
 
                 fixture.whenStable().then(() => {
                     expect(component.selected.entry.title).toBe('fake-test-2');
+                    done();
+                });
+            });
+        });
+
+        describe('Default value', () => {
+
+            beforeEach(async(() => {
+                siteService = TestBed.get(SitesService);
+                spyOn(siteService, 'getSites').and.returnValues(of(getFakeSitePagingFirstPage()), of(getFakeSitePagingLastPage()));
+
+                fixture = TestBed.createComponent(DropdownSitesComponent);
+                component = fixture.componentInstance;
+            }));
+
+            it('should load new sites if default value is not in the first page', (done) => {
+                component.value = 'fake-test-4';
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.selected.entry.title).toBe('fake-test-4');
+                    done();
+                });
+            });
+
+            it('should NOT reload infinitely if default value is NOT found after all sites are loaded', (done) => {
+                component.value = 'nonexistent-site';
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    expect(component.selected).toBeUndefined();
+                    expect(component.loading).toBeFalsy();
                     done();
                 });
             });

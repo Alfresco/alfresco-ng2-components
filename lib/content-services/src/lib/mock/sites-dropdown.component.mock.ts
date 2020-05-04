@@ -17,7 +17,7 @@
 
 import { SitePaging } from '@alfresco/js-api';
 
-/* We are using functions instead of const here to pass a new instance of the object each time */
+/* We are using functions instead of constants here to pass a new instance of the object each time */
 export function getFakeSitePaging(): SitePaging {
     return {
         'list': {
@@ -87,6 +87,82 @@ export function getFakeSitePagingNoMoreItems(): SitePaging {
                         'id': 'swsdp',
                         'preset': 'site-dashboard',
                         'title': 'fake-test-2'
+                    }
+                }
+            ]
+        }
+    };
+}
+
+export function getFakeSitePagingFirstPage(): SitePaging {
+    return {
+        'list': {
+            'pagination': {
+                'count': 2,
+                'hasMoreItems': true,
+                'totalItems': 2,
+                'skipCount': 0,
+                'maxItems': 4
+            },
+            'entries': [
+                {
+                    'entry': {
+                        'role': 'SiteManager',
+                        'visibility': 'PUBLIC',
+                        'guid': 'fake-1',
+                        'description': 'fake-test-site',
+                        'id': 'fake-test-site',
+                        'preset': 'site-dashboard',
+                        'title': 'fake-test-site'
+                    }
+                },
+                {
+                    'entry': {
+                        'role': 'SiteManager',
+                        'visibility': 'PUBLIC',
+                        'guid': 'fake-2',
+                        'description': 'This is a Sample Alfresco Team site.',
+                        'id': 'swsdp',
+                        'preset': 'site-dashboard',
+                        'title': 'fake-test-2'
+                    }
+                }
+            ]
+        }
+    };
+}
+
+export function getFakeSitePagingLastPage(): SitePaging {
+    return {
+        'list': {
+            'pagination': {
+                'count': 4,
+                'hasMoreItems': false,
+                'totalItems': 2,
+                'skipCount': 2,
+                'maxItems': 4
+            },
+            'entries': [
+                {
+                    'entry': {
+                        'role': 'SiteManager',
+                        'visibility': 'PUBLIC',
+                        'guid': 'fake-3',
+                        'description': 'fake-test-3',
+                        'id': 'fake-test-3',
+                        'preset': 'site-dashboard',
+                        'title': 'fake-test-3'
+                    }
+                },
+                {
+                    'entry': {
+                        'role': 'SiteManager',
+                        'visibility': 'PUBLIC',
+                        'guid': 'fake-test-4',
+                        'description': 'This is a Sample Alfresco Team site.',
+                        'id': 'fake-test-4',
+                        'preset': 'site-dashboard',
+                        'title': 'fake-test-4'
                     }
                 }
             ]
