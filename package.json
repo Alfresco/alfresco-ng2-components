@@ -2,7 +2,7 @@
   "name": "alfresco-ng2-components",
   "commit": "b644b39d17396330d2a67509f58c5b9e890b9b13",
   "description": "Alfresco Angular components",
-  "version": "3.8.0-beta10",
+  "version": "3.8.0",
   "author": "Alfresco Software, Ltd.",
   "main": "./index.js",
   "scripts": {
@@ -78,12 +78,12 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "3.8.0-beta10",
-    "@alfresco/adf-core": "3.8.0-beta10",
-    "@alfresco/adf-extensions": "3.8.0-beta10",
-    "@alfresco/adf-insights": "3.8.0-beta10",
-    "@alfresco/adf-process-services": "3.8.0-beta10",
-    "@alfresco/adf-process-services-cloud": "3.8.0-beta10",
+    "@alfresco/adf-content-services": "3.8.0",
+    "@alfresco/adf-core": "3.8.0",
+    "@alfresco/adf-extensions": "3.8.0",
+    "@alfresco/adf-insights": "3.8.0",
+    "@alfresco/adf-process-services": "3.8.0",
+    "@alfresco/adf-process-services-cloud": "3.8.0",
     "@alfresco/js-api": "3.8.0",
     "@angular/animations": "^7.2.15",
     "@angular/cdk": "7.3.7",
@@ -125,8 +125,8 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@alfresco/adf-cli": "3.8.0-beta10",
-    "@alfresco/adf-testing": "3.8.0-beta10",
+    "@alfresco/adf-cli": "3.8.0",
+    "@alfresco/adf-testing": "3.8.0",
     "@angular-devkit/build-angular": "^0.13.4",
     "@angular-devkit/build-ng-packagr": "~0.10.0",
     "@angular/cli": "^7.3.9",
