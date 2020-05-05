@@ -20,7 +20,7 @@ import {
     Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import {
-    ActivitiContentService, AppConfigService, AppConfigValues,
+    ActivitiContentService,
     FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -108,12 +108,12 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     processDefinitionInput: FormControl;
     filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = this.MAX_LENGTH;
+    alfrescoRepositoryName: string;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private activitiProcess: ProcessService,
-                private activitiContentService: ActivitiContentService,
-                private appConfig: AppConfigService) {
+                private activitiContentService: ActivitiContentService) {
         }
 
     ngOnInit() {
@@ -131,6 +131,13 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 map((value) => this._filter(value)),
                 takeUntil(this.onDestroy$)
             );
+
+        this.activitiContentService.getAlfrescoRepositories(null, true).subscribe((repoList) => {
+            if (repoList && repoList[0]) {
+                const alfrescoRepository = repoList[0];
+                this.alfrescoRepositoryName = `alfresco-${alfrescoRepository.id}-${alfrescoRepository.name}`;
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -208,22 +215,13 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.processDefinitions.length === 0;
     }
 
-    getAlfrescoRepositoryName(): string {
-        let alfrescoRepositoryName = this.appConfig.get<string>(AppConfigValues.ALFRESCO_REPOSITORY_NAME);
-        if (!alfrescoRepositoryName) {
-            alfrescoRepositoryName = 'alfresco-1';
-        }
-        return alfrescoRepositoryName + 'Alfresco';
-    }
-
     moveNodeFromCStoPS(): void {
-        const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue.filter((value: any) => value && value.isFile)
-                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
+                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, this.alfrescoRepositoryName));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => this.values[key] = [...res] );
             }
         }
