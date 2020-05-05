@@ -302,6 +302,7 @@ async function main(args: ConfigArgs) {
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
         program.outputHelp();
+        return;
     }
 
     await initConfiguration(args);
