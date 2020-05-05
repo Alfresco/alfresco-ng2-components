@@ -23,7 +23,7 @@ export class FiltersPage {
 
     accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    processIcon: ElementFinder =  element(by.css('.adf-icon'));
+    processIcon: ElementFinder =  element(by.css('adf-icon[data-automation-id="adf-filter-icon"]'));
 
     async clickFilterButton(filterElement: ElementFinder): Promise<void> {
         await BrowserActions.click(filterElement);

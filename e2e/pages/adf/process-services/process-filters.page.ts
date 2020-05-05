@@ -33,7 +33,7 @@ export class ProcessFiltersPage {
     rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
     tableBody: ElementFinder = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
     nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
-    processIcon: ElementFinder =  element(by.css('.adf-icon'));
+    processIcon: ElementFinder =  element(by.css('adf-icon[data-automation-id="adf-filter-icon"]'));
 
     async startProcess(): Promise<StartProcessPage> {
         await this.clickCreateProcessButton();

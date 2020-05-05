@@ -4,8 +4,8 @@
       [id]="filter.id"
       [attr.data-automation-id]="filter.name + '_filter'"
       mat-button
-      class="adf-action-button adf-full-width" fxLayout="row" fxLayoutAlign="space-between center">
-      <adf-icon *ngIf="showIcon" [value]="getFilterIcon(filter.icon)"></adf-icon>
-      <span class="adf-action-button__label">{{ filter.name | translate }}</span>
+      class="adf-filter-action-button adf-full-width" fxLayout="row" fxLayoutAlign="space-between center">
+      <adf-icon data-automation-id="adf-filter-icon" *ngIf="showIcon" [value]="getFilterIcon(filter.icon)"></adf-icon>
+      <span data-automation-id="adf-filter-label" class="adf-filter-action-button__label">{{ filter.name | translate }}</span>
     </button>
 </div>

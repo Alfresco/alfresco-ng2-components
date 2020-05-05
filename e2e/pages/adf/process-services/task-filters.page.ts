@@ -21,7 +21,7 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class TaskFiltersPage {
 
     filter;
-    taskIcon: ElementFinder =  element(by.css('.adf-icon'));
+    taskIcon: ElementFinder =  element(by.css('adf-icon[data-automation-id="adf-filter-icon"]'));
 
     constructor(filter: ElementFinder) {
         this.filter = filter;

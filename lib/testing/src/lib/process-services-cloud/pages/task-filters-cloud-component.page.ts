@@ -23,7 +23,7 @@ export class TaskFiltersCloudComponentPage {
 
     filter: ElementFinder;
     taskFilters: ElementFinder = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
-    activeFilter: ElementFinder = element(by.css('.adf-active'));
+    activeFilter: ElementFinder = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
 
     async checkTaskFilterIsDisplayed(filterName: string): Promise<void> {
         this.filter = this.getTaskFilterLocatorByFilterName(filterName);

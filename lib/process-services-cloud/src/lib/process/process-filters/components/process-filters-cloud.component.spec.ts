@@ -36,6 +36,7 @@ describe('ProcessFiltersCloudComponent', () => {
     const fakeGlobalFilter = [
         new ProcessFilterCloudModel({
             name: 'FakeAllProcesses',
+            key: 'FakeAllProcesses',
             icon: 'adjust',
             id: '10',
             status: ''
@@ -278,7 +279,7 @@ describe('ProcessFiltersCloudComponent', () => {
             done();
         });
 
-        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalFilter[0].name}_filter"]`);
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalFilter[0].key}_filter"]`);
         filterButton.click();
     });
 

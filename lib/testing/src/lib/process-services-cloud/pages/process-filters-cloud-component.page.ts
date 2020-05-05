@@ -26,7 +26,7 @@ export class ProcessFiltersCloudComponentPage {
 
     processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
-    activeFilter: ElementFinder = element(by.css('.adf-active'));
+    activeFilter: ElementFinder = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
     processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
 
     async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
