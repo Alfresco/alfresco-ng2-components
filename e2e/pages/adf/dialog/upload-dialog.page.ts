@@ -101,7 +101,7 @@ export class UploadDialogPage {
     }
 
     async fileIsCancelled(content): Promise<void> {
-        const row = await this.getRowByRowName(content);
+        const row = element(by.xpath(`//span[@title="${content}"]/ancestor::adf-file-uploading-list-row`));
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon));
     }
 
@@ -110,7 +110,6 @@ export class UploadDialogPage {
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
         const elementRow = await this.getRowByRowName(content);
         await BrowserActions.click(elementRow.element(this.uploadedStatusIcon));
-
     }
 
     async getTitleText(): Promise<string> {
