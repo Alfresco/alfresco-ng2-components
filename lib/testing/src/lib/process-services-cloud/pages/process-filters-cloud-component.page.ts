@@ -22,7 +22,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class ProcessFiltersCloudComponentPage {
 
     filter: ElementFinder;
-    filterIcon: ElementFinder = element(by.css('.adf-icon'));
+    filterIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
