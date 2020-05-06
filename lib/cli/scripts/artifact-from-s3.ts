@@ -52,6 +52,7 @@ function main() {
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
         program.outputHelp();
+        return;
     }
 
     if (!program.artifact || program.artifact === '' || !program.output || program.output === '') {

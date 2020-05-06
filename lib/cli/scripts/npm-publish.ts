@@ -115,6 +115,7 @@ async function main(args) {
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
         program.outputHelp();
+        return;
     }
 
     for (let i = 0; i < projects.length; i++) {

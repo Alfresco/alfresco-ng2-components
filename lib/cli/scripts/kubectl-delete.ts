@@ -77,6 +77,7 @@ function main(args) {
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
         program.outputHelp();
+        return;
     }
 
     if (args.label !== undefined) {

@@ -278,6 +278,7 @@ async function main(args) {
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
         program.outputHelp();
+        return;
     }
 
     const configModeler = getAlfrescoJsApiInstance(args);

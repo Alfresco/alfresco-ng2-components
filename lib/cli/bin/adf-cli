@@ -1,16 +1,30 @@
 #!/usr/bin/env node
+// tslint:disable: adf-file-name
+// tslint:disable: no-var-requires
 const minimist = require('minimist');
 const path = require('path');
+const fs = require('fs');
 
 const args = minimist(process.argv.slice(2), {
     boolean: ['verbose']
 });
+
+if (args._.length === 0) {
+    console.error('Error: no commands provided');
+    process.exit(1);
+}
+
 const scriptName = args._.shift();
-const scriptPath = path.join('../scripts', scriptName);
+const scriptPath = process.env.DEVELOP
+    ? path.resolve(path.join(__dirname, '../dist/scripts', scriptName))
+    : path.resolve(path.join(__dirname, '../scripts', scriptName));
+
+if (!fs.existsSync(`${scriptPath}.js`)) {
+    console.error(`Error: command ${scriptName} not found.`);
+    process.exit(1);
+}
 
 const cwd = process.cwd();
-process.chdir(path.join(__dirname, '..'));
-
 
 try {
     Promise.resolve()

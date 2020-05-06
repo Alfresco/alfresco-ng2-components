@@ -17,9 +17,10 @@
  * limitations under the License.
  */
 
-import { exec } from './exec';
 import * as program from 'commander';
-import { logger } from './logger';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as shell from 'shelljs';
 
 export interface UpdateArgs {
     pathPackage: string;
@@ -28,140 +29,98 @@ export interface UpdateArgs {
     beta?: boolean;
     version: string;
     vjs: string;
-    skipGnu: boolean;
 }
 
-const ALPHA = 'alpha';
-const BETA = 'beta';
-const LATEST = 'latest';
-const ADF_LIBS_PREFIX = '\"@alfresco/adf-[^"]*\":';
-const JS_API_DEPENDENCY = '@alfresco/js-api';
-
-let projects = [''];
-
-function latestPerform(args: UpdateArgs) {
-    tagPerform(args, LATEST);
+export interface PackageInfo {
+    dependencies?: string[];
+    devDependencies?: string[];
 }
 
-function versionPerform(args: UpdateArgs) {
-    updateLibsVersionPerform(args.pathPackage, args.version, args.skipGnu);
+function parseAlfrescoLibs(workingDir: string): PackageInfo {
+    const packagePath = path.resolve(path.join(workingDir, 'package.json'));
+
+    let dependencies: string[] = [];
+    let devDependencies: string[] = [];
+
+    if (fs.existsSync(packagePath)) {
+        const json = require(packagePath);
+        const isAlfrescoLib = (key: string) => key.startsWith('@alfresco');
+
+        dependencies = Object.keys((json.dependencies || [])).filter(isAlfrescoLib);
+        devDependencies = Object.keys((json.devDependencies || [])).filter(isAlfrescoLib);
+    }
+
+    return {
+        dependencies,
+        devDependencies
+    };
 }
 
-function versionJsPerform(args: UpdateArgs) {
-    updateJsAPIVersionPerform(args.pathPackage, args.vjs, args.skipGnu);
+function formatNpmCommand(deps: string[], tag: string): string {
+    return [
+        'npm i -E',
+        deps.map(name => `${name}@${tag}`).join(' ')
+    ].join(' ');
 }
 
-function alphaPerform(args: UpdateArgs) {
-    tagPerform(args, ALPHA);
-}
-
-function betaPerform(args: UpdateArgs) {
-    tagPerform(args, BETA);
-}
-
-function findADFLibsDependencies(args: UpdateArgs) {
-    const prjs: any = [];
-    const result = exec('grep', [`${ADF_LIBS_PREFIX}`, `${args.pathPackage}/package.json`], {}).trim();
-    const res = result.replace(/,\s*$/, '').split(',');
-    res.forEach( (dependecy) => {
-        const dep = dependecy.split(':');
-        const depName = dep[0].trim();
-        prjs.push(depName.replace(/"/g, ''));
-    });
-    return prjs;
-}
-
-function getLatestVersionFromNpm(tag: string, project: string): string {
-    logger.info(`====== Auto find latest ${tag} version of ${project}`);
-    const latestVersion = exec('npm', ['view', `${project}@${tag}`, `version`], {}).trim();
-    logger.info(`====== version lib ${latestVersion} =====`);
-    return latestVersion;
-}
-
-function updateLibsVersionPerform(path: string, version: string, skipGnu = false) {
-    logger.info('Perform libs version...');
-    projects.forEach( (project) => {
-        logger.info(`apply version ${version} on ${project} ...`);
-        project = project.replace('/', '\\/');
-        replaceVersionPerform(project, version, path, skipGnu);
-    });
-}
-
-function updateJsAPIVersionPerform(path: string, version: string, skipGnu = false) {
-    logger.info('Perform js-api version...');
-    logger.info(`apply version ${version} on ${JS_API_DEPENDENCY} ...`);
-    const project = JS_API_DEPENDENCY.replace('/', '\\/');
-    replaceVersionPerform(project, version, path, skipGnu);
-}
-
-function replaceVersionPerform(project: string, version: string, path: string, skipGnu = false) {
-    const rule = `s/\"${project}\": \".*\"/\"${project}\": \"${version}\"/g`;
-    if (skipGnu) {
-        exec('sed', ['-i', '', `${rule}`, `${path}/package.json`], {}).trim();
-    } else {
-        exec('sed', ['-i', `${rule}`, `${path}/package.json`], {}).trim();
+function runNpmCommand(command: string, workingDir: string) {
+    if (shell.exec(command, { cwd: workingDir }).code !== 0) {
+        shell.echo('Error running NPM command');
+        shell.exit(1);
     }
 }
 
-function tagPerform(args: UpdateArgs, tag: string) {
-    logger.info(`Perform ${tag} update...`);
-    tagLibPerform(args, tag);
-    tagJsPerform(args, tag);
+function updateLibs(pkg: PackageInfo, tag: string, workingDir: string) {
+    if (pkg.dependencies && pkg.dependencies.length > 0) {
+        runNpmCommand(
+            formatNpmCommand(pkg.dependencies, tag),
+            workingDir
+        );
+    }
+
+    if (pkg.devDependencies && pkg.devDependencies.length > 0) {
+        runNpmCommand(
+            formatNpmCommand(pkg.devDependencies, tag) + ' -D',
+            workingDir
+        );
+    }
 }
 
-function tagLibPerform(args: UpdateArgs, tag: string) {
-    const libVersion = getLatestVersionFromNpm(tag, '@alfresco/adf-extensions');
-    updateLibsVersionPerform(args.pathPackage, libVersion, args.skipGnu);
+function parseTag(args: UpdateArgs): string {
+    if (args.alpha) {
+       return 'alpha';
+    }
+
+    if (args.beta) {
+        return 'beta';
+    }
+
+    return args.version || 'latest';
 }
 
-function tagJsPerform(args: UpdateArgs, tag: string) {
-    const jsApiVersion = getLatestVersionFromNpm(tag, JS_API_DEPENDENCY);
-    updateJsAPIVersionPerform(args.pathPackage, jsApiVersion, args.skipGnu);
-}
-
-export default function (args: UpdateArgs) {
-    main(args);
-}
-
-function main(args) {
-
+export default function main(args: UpdateArgs, workingDir: string) {
     program
-        .version('0.1.0', '-vers')
         .description('This command allows you to update the adf dependencies and js-api with different versions\n\n' +
         'Update adf libs and js-api with latest alpha\n\n' +
-        'adf-cli update-version --alpha --pathPackage "$(pwd)"')
-        .option('--pathPackage [type]', 'pathPackage')
-        .option('--alpha [type]', 'use alpha')
-        .option('--beta [type]', 'use beta')
-        .option('--version [type]', 'use version')
-        .option('--vjs [type]', 'vjs use version js api')
-        .option('--skipGnu [type]', 'skipGnu')
+        'adf-cli update-version --alpha')
+        .option('--pathPackage [dir]', 'Directory that contains package.json file', 'current directory')
+        .option('--alpha', 'use alpha')
+        .option('--beta', 'use beta')
+        .option('--version [tag]', 'use specific version can be also alpha/beta/latest', 'latest')
+        .option('--vjs [tag]', 'Upgrade only JS-API to a specific version')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
         program.outputHelp();
+        return;
     }
 
-    projects = findADFLibsDependencies(args);
+    workingDir = args.pathPackage || workingDir;
 
-    if (args.version) {
-        versionPerform(args);
-    }
+    const tag = args.vjs || parseTag(args);
+    const pkg = args.vjs
+        ? { dependencies: ['@alfresco/js-api'] }
+        : parseAlfrescoLibs(workingDir);
 
-    if (args.vjs) {
-        versionJsPerform(args);
-    }
-
-    if (args.latest === true) {
-        latestPerform(args);
-    }
-
-    if (args.alpha === true) {
-        alphaPerform(args);
-    }
-
-    if (args.beta === true) {
-        betaPerform(args);
-    }
-
+    updateLibs(pkg, tag, workingDir);
 }
