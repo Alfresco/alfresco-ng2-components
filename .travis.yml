@@ -3,9 +3,9 @@ git:
   quiet: true
 
 language: node_js
-dist: trusty
+dist: bionic
 node_js:
-  - '12.13.1'
+  - '12.16.3'
 
 install:
     echo "no install"
@@ -19,7 +19,6 @@ branches:
   - /.*beta.*/
   - /.*greenkeeper.*/
 
-# TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
   - name: Lint & Build Dist
     if: type = pull_request OR type = api
