@@ -7,7 +7,7 @@ cd $DIR/../../../
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
 then
     TAG_NPM=latest
-    if [[ $TRAVIS_BRANCH == "development" ]];
+    if [[ $TRAVIS_BRANCH == "develop" ]];
     then
         TAG_NPM=alpha
         if [[ $TRAVIS_EVENT_TYPE == "cron" ]];

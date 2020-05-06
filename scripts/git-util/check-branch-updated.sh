@@ -25,8 +25,8 @@ then
     exit 0
 fi
 
-hash1=$(git show-ref --heads -s development)
-hash2=$(git merge-base development $BRANCH_NAME)
+hash1=$(git show-ref --heads -s develop)
+hash2=$(git merge-base develop $BRANCH_NAME)
 [ "${hash1}" = "${hash2}" ] && echo "Branch up to date" || { echo "Branch needs to be rebeased"; exit 1; }
 
 echo "Development branch HEAD sha " $hash1
