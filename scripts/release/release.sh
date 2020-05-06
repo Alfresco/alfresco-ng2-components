@@ -30,7 +30,7 @@ release() {
     rm -rf $TEMP;
     git clone https://$TOKEN@github.com/$1.git $TEMP
     cd $TEMP
-    git checkout development
+    git checkout develop
 
     if $GNU; then
         ./node_modules/@alfresco/adf-cli/bin/adf-cli update-version --pathPackage "$(pwd)" --version $VERSION
@@ -40,9 +40,9 @@ release() {
 
     git add .
     git commit -m "Release $VERSION"
-    git push -u origin development
+    git push -u origin develop
 
-    curl -H "Authorization: token $TOKEN" -X POST -d '{"body":"Release ADF version '$VERSION'","head":"'development'","base":"master","title":"Release ADF version '$VERSION'"}' https://api.github.com/repos/$1/pulls
+    curl -H "Authorization: token $TOKEN" -X POST -d '{"body":"Release ADF version '$VERSION'","head":"'develop'","base":"master","title":"Release ADF version '$VERSION'"}' https://api.github.com/repos/$1/pulls
     rm -rf $TEMP;
 }
 

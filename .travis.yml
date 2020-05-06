@@ -13,7 +13,7 @@ install:
 branches:
   only:
   - master
-  - development
+  - develop
   - /.*old-env.*/
   - /.*next-release.*/
   - /.*beta.*/
@@ -38,7 +38,7 @@ stages:
   - name: Release beta tag
     if: type = cron OR branch = master
   - name: Trigger ADF child build
-    if: (branch = development AND type = push) OR type = api
+    if: (branch = develop AND type = push) OR type = api
   - name: Deploy PR
     if: type = pull_request && commit_message =~ /\[create peview\]/
 
@@ -64,7 +64,7 @@ jobs:
             - ./scripts/travis/build/build.sh || exit 1;
             - ./scripts/lint.sh || exit 1;
 
-        # Run Only on Development and master
+        # Run Only on develop and master
         - stage: Lint & Build Dist & Release
           name:  Lint & Build Dist & Release
           script:
