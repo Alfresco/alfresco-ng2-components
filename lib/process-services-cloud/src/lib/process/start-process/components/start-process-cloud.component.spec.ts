@@ -602,7 +602,7 @@ describe('StartProcessCloudComponent', () => {
             component.currentCreatedProcess = fakeProcessInstance;
             component.startProcess();
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).toHaveBeenCalledWith(component.appName, fakeProcessInstance.id);
+                expect(startProcessSpy).toHaveBeenCalledWith(component.appName, fakeProcessInstance.id, component.processPayloadCloud);
             });
         }));
 
