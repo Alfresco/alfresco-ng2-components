@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 eval repos=(
-    "alfresco-modeler-app"
+    "alfresco-apps"
     "alfresco-content-app"
     "generator-alfresco-adf-app"
     "alfresco-process-workspace-app")
