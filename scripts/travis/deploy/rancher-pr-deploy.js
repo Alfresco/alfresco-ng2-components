@@ -98,7 +98,7 @@ async function main() {
             "devices": [],
             "logConfig": {"driver": "", "config": {}},
             "dataVolumesFromLaunchConfigs": [],
-            "imageUuid": program.image,
+            "imageUuid": "docker:"+program.image,
             "ports": [],
             "blkioWeight": null,
             "cgroupParent": null,
@@ -171,6 +171,8 @@ async function main() {
         "vip": null,
         "fqdn": null
     };
+
+    console.log("Create Service ");
 
     var createService = await asyncRequest({
         url: `${program.server}/v2-beta/projects/${environmentId}/service`,

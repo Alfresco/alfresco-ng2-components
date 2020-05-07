@@ -10,7 +10,7 @@ echo "Running the docker with tag" $TAG_VERSION
 
 # Publish Image to docker
 
-sed s%href=\"/\"%href=\""${TRAVIS_BUILD_NUMBER}"\"%g \
+sed s%href=\"/\"%href=\""/${TRAVIS_BUILD_NUMBER}/"\"%g \
 -i ./demo-shell/dist/index.html
 
 ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
