@@ -16,7 +16,7 @@ echo "Update Generator"
 echo "Update ACA"
 ./scripts/travis/update/update-project.sh -t $GITHUB_TOKEN -n 'Alfresco/alfresco-content-app' -v $VERSION -vjs $JS_VERSION
 echo "Update AMA"
-./scripts/travis/update/update-project.sh -t $GITHUB_ENTERPRISE_TOKEN -n 'Alfresco/alfresco-modeler-app' -v $VERSION -vjs $JS_VERSION
+./scripts/travis/update/update-project.sh -t $GITHUB_ENTERPRISE_TOKEN -n 'Alfresco/alfresco-apps' -v $VERSION -vjs $JS_VERSION
 echo "Update Workspace"
 ./scripts/travis/update/update-project.sh -t $GITHUB_ENTERPRISE_TOKEN -n 'Alfresco/alfresco-process-workspace-app' -v $VERSION -vjs $JS_VERSION
 echo "Update Digital Workspace"
