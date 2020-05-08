@@ -20,7 +20,7 @@ import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
 import { Observable, from, throwError } from 'rxjs';
-import { FormFieldModel, FormModel, TabModel, ContainerModel } from '../components/widgets/core/index';
+import { FormFieldModel, FormModel, TabModel, ContainerModel, FormFieldTypes } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
@@ -321,6 +321,21 @@ export class WidgetVisibilityService {
 
     toJson(res: any): any {
         return res || {};
+    }
+
+    removeInvisibleFormValues(formModel: FormModel) {
+        if (formModel) {
+            formModel.getFormFields().map((field: FormFieldModel) => {
+                if (field.type !== FormFieldTypes.CONTAINER) {
+                    if (!field.isVisible) {
+                        delete formModel.values[field.id];
+                    } else {
+                        field.updateForm();
+                    }
+                }
+                return field;
+            });
+        }
     }
 
     private isValidOperator(operator: string): boolean {
