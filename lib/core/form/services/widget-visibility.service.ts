@@ -336,6 +336,7 @@ export class WidgetVisibilityService {
                 return field;
             });
         }
+        return formModel;
     }
 
     private isValidOperator(operator: string): boolean {
