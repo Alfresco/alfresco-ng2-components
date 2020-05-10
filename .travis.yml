@@ -3,9 +3,9 @@ git:
   quiet: true
 
 language: node_js
-dist: trusty
+dist: bionic
 node_js:
-  - '12.13.1'
+  - '12.16.3'
 
 install:
     echo "no install"
@@ -19,7 +19,6 @@ branches:
   - /.*beta.*/
   - /.*greenkeeper.*/
 
-# TRAVIS_PULL_REQUEST == false means is running on dev branch and is not a PR
 stages:
   - name: Lint & Build Dist
     if: type = pull_request OR type = api
@@ -27,6 +26,8 @@ stages:
     if: (type = push OR type = cron) AND tag IS blank
   - name: Update Rancher
     if: (type = push AND tag IS blank)  OR type = api
+  - name: Deploy PR
+    if: type = pull_request && commit_message =~ /\[create preview\]/
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Unit test
@@ -46,12 +47,8 @@ before_script:
     - "sudo chown root /opt/google/chrome/chrome-sandbox"
     - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
     - export GIT_HASH=`git rev-parse HEAD`
-
-before_install:
-    - export CHROME_BIN=chromium-browser
-    - export DISPLAY=:99.0
-    - sh -e /etc/init.d/xvfb start
-    - sleep 3 # give xvfb some time to start
+services:
+    - xvfb
 
 jobs:
     include:
@@ -110,11 +107,16 @@ jobs:
           name: Update Rancher
           script: ./scripts/travis/deploy/deploy.sh
 
+        - stage: Deploy PR
+          name: Deploy PR
+          script: ./scripts/travis/deploy/deploy-pr.sh
+
 
         - stage: Check bundle
           script:
           - ADF_VERSION=$(npm view @alfresco/adf-core@${TAG_NPM} version)
           - ./scripts/npm-check-bundles.sh -v ${ADF_VERSION}
+
 
         - stage: Trigger ADF child build
           name: Trigger ADF child build
