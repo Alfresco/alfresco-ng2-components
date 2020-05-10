@@ -1,16 +1,4 @@
-# 1. Generate licenses
-
-FROM node:12.16.2-alpine3.9 AS builder
-WORKDIR /usr/src/alfresco
-COPY package.json package.json
-
-RUN mkdir -p ./licenses && \
-  yarn licenses list > ./licenses/licenses.txt && \
-  yarn licenses generate-disclaimer > ./licenses/disclaimer.txt
-
-# 2. Generate image
-
-FROM nginx:stable-alpine
+FROM nginx:stable-alpine AS Build
 LABEL version="3.0.0"
 
 ARG GROUPNAME=Alfresco
