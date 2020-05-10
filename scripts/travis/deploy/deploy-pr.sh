@@ -15,7 +15,6 @@ sed s%href=\".\"%href=\""${TRAVIS_BUILD_NUMBER}"\"%g \
 
 mkdir  "./demo-shell/dist/${TRAVIS_BUILD_NUMBER}"
 mkdir  "./demo-shell/tmp/"
-
 mv ./demo-shell/dist/* ./demo-shell/tmp
 mv ./demo-shell/tmp/* ./demo-shell/dist/${TRAVIS_BUILD_NUMBER}
 
