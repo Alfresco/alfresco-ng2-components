@@ -10,9 +10,6 @@ echo "Running the docker with tag" $TAG_VERSION
 
 # Publish Image to docker
 
-sed s%href=\".\"%href=\""${TRAVIS_BUILD_NUMBER}"\"%g \
--i ./demo-shell/dist/index.html
-
 mkdir  "./demo-shell/tmp/"
 mv ./demo-shell/dist/* ./demo-shell/tmp
 
