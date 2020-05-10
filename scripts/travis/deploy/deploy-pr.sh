@@ -14,7 +14,10 @@ sed s%href=\".\"%href=\""${TRAVIS_BUILD_NUMBER}"\"%g \
 -i ./demo-shell/dist/index.html
 
 mkdir  "./demo-shell/dist/${TRAVIS_BUILD_NUMBER}"
-mv ./demo-shell/dist/* ./demo-shell/dist/${TRAVIS_BUILD_NUMBER}
+mkdir  "./demo-shell/tmp/"
+
+mv ./demo-shell/dist/* ./demo-shell/tmp
+mv ./demo-shell/tmp/* ./demo-shell/dist/${TRAVIS_BUILD_NUMBER}
 
 ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
 
