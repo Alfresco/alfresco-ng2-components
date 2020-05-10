@@ -27,7 +27,7 @@ stages:
   - name: Update Rancher
     if: (type = push AND tag IS blank)  OR type = api
   - name: Deploy PR
-    if: type = pull_request && commit_message =~ /\[create peview\]/
+    if: type = pull_request && commit_message =~ /\[create preview\]/
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Unit test
