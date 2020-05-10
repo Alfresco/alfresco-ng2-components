@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine AS Build
+FROM nginx:stable-alpine
 LABEL version="3.0.0"
 
 ARG GROUPNAME=Alfresco
@@ -13,7 +13,6 @@ COPY ./docker/entrypoint.sh /
 
 WORKDIR /usr/share/nginx/html
 COPY demo-shell/dist/ .
-COPY --from=builder /usr/src/alfresco/licenses ./licenses
 
 RUN addgroup -g ${GROUPID} ${GROUPNAME} && \
   adduser -S -u ${USERID} -G ${GROUPNAME} -s "/bin/bash" ${USERNAME} && \
