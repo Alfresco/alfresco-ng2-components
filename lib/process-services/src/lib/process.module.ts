@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, TRANSLATION_PROVIDER, FormRenderingService } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -29,6 +29,8 @@ import { ProcessCommentsModule } from './process-comments/process-comments.modul
 import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
 import { FormModule } from './form/form.module';
+import { AttachFileWidgetComponent } from './content-widget/attach-file-widget.component';
+import { AttachFolderWidgetComponent } from './content-widget/attach-folder-widget.component';
 
 @NgModule({
     imports: [
@@ -90,6 +92,11 @@ export class ProcessModule {
             ngModule: ProcessModuleLazy
         };
     }
+
+    constructor(formRenderingService: FormRenderingService) {
+        formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
+    }
 }
 
 @NgModule({
@@ -118,4 +125,9 @@ export class ProcessModule {
         PeopleModule
     ]
 })
-export class ProcessModuleLazy {}
+export class ProcessModuleLazy {
+    constructor(formRenderingService: FormRenderingService) {
+        formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
+    }
+}

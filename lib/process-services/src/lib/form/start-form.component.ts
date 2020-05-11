@@ -29,17 +29,13 @@ import {
     OnDestroy
 } from '@angular/core';
 import { FormComponent } from './form.component';
-import { ContentLinkModel, FormService, WidgetVisibilityService, FormRenderingService, FormOutcomeModel } from '@alfresco/adf-core';
-import { ProcessFormRenderingService } from './process-form-rendering.service';
+import { ContentLinkModel, FormService, WidgetVisibilityService, FormOutcomeModel } from '@alfresco/adf-core';
 
 @Component({
     selector: 'adf-start-form',
     templateUrl: './start-form.component.html',
     styleUrls: ['./start-form.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ]
+    encapsulation: ViewEncapsulation.None
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
 

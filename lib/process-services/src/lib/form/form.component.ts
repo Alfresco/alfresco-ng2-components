@@ -17,20 +17,16 @@
 
 import { Component, EventEmitter, Input, Output, ViewEncapsulation, SimpleChanges, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { EcmModelService, NodeService, WidgetVisibilityService,
-    FormService, FormRenderingService, FormBaseComponent, FormOutcomeModel,
+    FormService, FormBaseComponent, FormOutcomeModel,
     FormEvent, FormErrorEvent, FormFieldModel,
     FormModel, FormOutcomeEvent, FormValues, ContentLinkModel } from '@alfresco/adf-core';
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 @Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
     encapsulation: ViewEncapsulation.None,
-    providers: [
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ]
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
 

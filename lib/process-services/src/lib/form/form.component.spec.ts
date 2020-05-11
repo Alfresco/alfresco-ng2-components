@@ -20,12 +20,11 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
-    setupTestBed, CoreModule } from '@alfresco/adf-core';
+    setupTestBed, CoreModule, FormRenderingService } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormModule } from './form.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
-import { ProcessFormRenderingService } from './process-form-rendering.service';
 
 describe('FormComponent', () => {
 
@@ -35,7 +34,7 @@ describe('FormComponent', () => {
     let formService: FormService;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
-    let formRenderingService: ProcessFormRenderingService;
+    let formRenderingService: FormRenderingService;
 
     @Component({
         selector: 'adf-custom-widget',
@@ -79,7 +78,7 @@ describe('FormComponent', () => {
 
         formService = TestBed.get(FormService);
         nodeService = TestBed.get(NodeService);
-        formRenderingService = TestBed.get(ProcessFormRenderingService);
+        formRenderingService = TestBed.get(FormRenderingService);
 
         fixture = TestBed.createComponent(FormComponent);
         formComponent = fixture.componentInstance;
