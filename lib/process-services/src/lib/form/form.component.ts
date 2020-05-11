@@ -26,7 +26,7 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 @Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
 })
 export class FormComponent extends FormBaseComponent implements OnInit, OnDestroy, OnChanges {
 
