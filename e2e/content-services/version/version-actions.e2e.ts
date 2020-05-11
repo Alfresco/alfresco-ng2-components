@@ -149,10 +149,10 @@ describe('Version component actions', () => {
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
         await browser.refresh();
         await contentServicesPage.versionManagerContent(txtFileModel.name);
-        await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
 
         await BrowserActions.click(versionManagePage.showNewVersionButton);
 
+        await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1500)');
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
         await versionManagePage.closeVersionDialog();
 

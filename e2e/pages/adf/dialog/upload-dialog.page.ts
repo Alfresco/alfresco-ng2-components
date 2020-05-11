@@ -97,12 +97,12 @@ export class UploadDialogPage {
     }
 
     async checkCancelProgressIsVisible(): Promise<void> {
-            await BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadInProgressButton);
+        await BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadInProgressButton);
     }
 
     async fileIsCancelled(content): Promise<void> {
         const row = await this.getRowByRowName(content);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon));
+        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon), 10000);
     }
 
     async removeUploadedFile(content): Promise<void> {
