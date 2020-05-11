@@ -29,7 +29,8 @@ import {
     FormOutcomeModel,
     setupTestBed,
     TRANSLATION_PROVIDER,
-    WidgetVisibilityService
+    WidgetVisibilityService,
+    FormRenderingService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -45,14 +46,13 @@ import { FormCloudRepresentation } from '../models/form-cloud-representation.mod
 import { FormCloudModule } from '../form-cloud.module';
 import { TranslateService } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CloudFormRenderingService } from './cloud-form-rendering.service';
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
     let fixture: ComponentFixture<FormCloudComponent>;
     let formComponent: FormCloudComponent;
     let visibilityService: WidgetVisibilityService;
-    let formRenderingService: CloudFormRenderingService;
+    let formRenderingService: FormRenderingService;
     let translateService: TranslateService;
 
     @Component({
@@ -101,7 +101,7 @@ describe('FormCloudComponent', () => {
     });
 
     beforeEach(async(() => {
-        formRenderingService = TestBed.get(CloudFormRenderingService);
+        formRenderingService = TestBed.get(FormRenderingService);
         formCloudService = TestBed.get(FormCloudService);
 
         translateService = TestBed.get(TranslateService);

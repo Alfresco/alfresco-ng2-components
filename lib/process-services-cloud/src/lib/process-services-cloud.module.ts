@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER, CoreModule } from '@alfresco/adf-core';
+import { TRANSLATION_PROVIDER, CoreModule, FormRenderingService } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
@@ -30,6 +30,11 @@ import {
     TASK_FILTERS_SERVICE_TOKEN
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
+import { AttachFileCloudWidgetComponent } from './form/components/widgets/attach-file/attach-file-cloud-widget.component';
+import { DropdownCloudWidgetComponent } from './form/components/widgets/dropdown/dropdown-cloud.widget';
+import { DateCloudWidgetComponent } from './form/components/widgets/date/date-cloud.widget';
+import { PeopleCloudWidgetComponent } from './form/components/widgets/people/people-cloud.widget';
+import { GroupCloudWidgetComponent } from './form/components/widgets/group/group-cloud.widget';
 
 @NgModule({
     imports: [
@@ -66,4 +71,12 @@ import { PeopleCloudModule } from './people/people-cloud.module';
         PeopleCloudModule
     ]
 })
-export class ProcessServicesCloudModule { }
+export class ProcessServicesCloudModule {
+    constructor(formRenderingService: FormRenderingService) {
+        formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
+    }
+}
