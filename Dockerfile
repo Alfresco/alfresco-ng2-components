@@ -14,9 +14,7 @@ COPY demo-shell/dist/ .
 
 RUN addgroup -g ${GROUPID} ${GROUPNAME} && \
   adduser -S -u ${USERID} -G ${GROUPNAME} -s "/bin/bash" ${USERNAME} && \
-  chown -R ${USERNAME}:${GROUPNAME} ./**/app.config.json ||  exit  0 && \
-  chown -R ${USERNAME}:${GROUPNAME} ./app.config.json ||  exit  0 && \
-  chown -R ${USERNAME}:${GROUPNAME} /var/cache/nginx && \
+  chown -R ${USERNAME}:${GROUPNAME} ./**/app.config.json,  ./app.config.json  /var/cache/nginx  ||  \
   touch /var/run/nginx.pid && \
   chown -R ${USERNAME}:${GROUPNAME} /var/run/nginx.pid && \
   chmod +x /entrypoint.sh && \

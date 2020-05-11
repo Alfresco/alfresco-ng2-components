@@ -89,10 +89,10 @@ describe('Notifications Component', () => {
 
     it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
         await notificationPage.enterMessageField('Notification test');
-        await notificationPage.enterDurationField(1000);
+        await notificationPage.enterDurationField(4000);
         await notificationPage.clickNotificationButton();
         await notificationPage.checkNotificationSnackBarIsDisplayed();
-        await browser.sleep(1500);
+        await browser.sleep(5500);
         await notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
 
