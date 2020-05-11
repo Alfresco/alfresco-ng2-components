@@ -17,7 +17,14 @@
 
 import { SimpleChange, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { setupTestBed, StorageService, LogService, TranslationService, TranslationMock, FormService } from '@alfresco/adf-core';
+import {
+    setupTestBed,
+    StorageService,
+    LogService,
+    TranslationService,
+    TranslationMock,
+    FormService
+} from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
@@ -25,13 +32,25 @@ import { StartProcessCloudComponent } from './start-process-cloud.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateStore } from '@ngx-translate/core';
-import { MatCardModule, MatOptionModule, MatAutocompleteModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatCommonModule } from '@angular/material';
+import {
+    MatCardModule,
+    MatOptionModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
+    MatCommonModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormCloudModule } from '../../../form/form-cloud.module';
 
-import { fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
+import {
+    fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
     fakeProcessInstance, fakeNoNameProcessDefinitions,
-    fakeSingleProcessDefinition, fakeCreatedProcessInstance } from '../mock/start-process.component.mock';
+    fakeSingleProcessDefinition, fakeCreatedProcessInstance
+} from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 
@@ -52,14 +71,14 @@ describe('StartProcessCloudComponent', () => {
         selectElement.click();
         fixture.detectChanges();
         const options: any = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-        const currentOption = options.find( (option: DebugElement) => option.nativeElement.innerHTML.trim() === name );
+        const currentOption = options.find((option: DebugElement) => option.nativeElement.innerHTML.trim() === name);
 
         if (currentOption) {
             currentOption.nativeElement.click();
         }
     };
 
-    function typeValueInto(selector: any, value: string ) {
+    function typeValueInto(selector: any, value: string) {
         const inputElement = fixture.debugElement.query(By.css(`${selector}`));
         inputElement.nativeElement.value = value;
         inputElement.nativeElement.dispatchEvent(new Event('input'));
@@ -113,28 +132,26 @@ describe('StartProcessCloudComponent', () => {
     describe('start a process without start form', () => {
 
         it('should create a process instance if the selection is valid', fakeAsync(() => {
-            component.name = '';
-            component.processDefinitionName = '';
+            component.name = 'testFormWithProcess';
+            component.processDefinitionName = 'processwithoutform2';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             fixture.detectChanges();
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
-            fixture.detectChanges();
-            tick();
-            typeValueInto('#processName', 'OLE');
-            typeValueInto('#processDefinitionName', 'processwithoutform2');
             fixture.detectChanges();
             tick(450);
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
+                const firstNameEl = fixture.nativeElement.querySelector('#firstName');
+                expect(firstNameEl).toBeDefined();
+                const lastNameEl = fixture.nativeElement.querySelector('#lastName');
+                expect(lastNameEl).toBeDefined();
                 const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(component.formCloud.isValid).toBe(true);
                 expect(startBtn.disabled).toBe(false);
-                expect(component.isProcessFormValid()).toBe(true);
-                expect(createProcessSpy).toHaveBeenCalledWith('MyApp', new ProcessPayloadCloud({name: 'OLE',
-                    processDefinitionKey: fakeProcessDefinitions[1].key}));
-                expect(component.currentCreatedProcess.status).toBe('CREATED');
-                expect(component.currentCreatedProcess.startDate).toBeNull();
             });
         }));
 
@@ -272,7 +289,10 @@ describe('StartProcessCloudComponent', () => {
         it('should be able to start a process with a prefilled valid form', fakeAsync(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
-            component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
+            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+                'name': 'lastName',
+                'value': 'FakeLastName'
+            }];
             fixture.detectChanges();
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
 
@@ -303,7 +323,10 @@ describe('StartProcessCloudComponent', () => {
         it('should NOT be able to start a process with a prefilled NOT valid form', async(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
-            component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
+            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+                'name': 'lastName',
+                'value': 'FakeLastName'
+            }];
             fixture.detectChanges();
             formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartFormNotValid));
 
@@ -326,7 +349,10 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should create a process instance if the selection is valid', fakeAsync(() => {
-            component.values = [{'name': 'firstName', 'value': 'FakeName'}, {'name': 'lastName', 'value': 'FakeLastName'}];
+            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+                'name': 'lastName',
+                'value': 'FakeLastName'
+            }];
             component.name = 'testFormWithProcess';
             component.processDefinitionName = 'processwithoutform2';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
@@ -344,8 +370,10 @@ describe('StartProcessCloudComponent', () => {
                 expect(startBtn.disabled).toBe(false);
                 expect(component.formCloud.isValid).toBe(true);
                 expect(component.isProcessFormValid()).toBe(true);
-                expect(createProcessSpy).toHaveBeenCalledWith('MyApp', new ProcessPayloadCloud({name: 'testFormWithProcess',
-                    processDefinitionKey: fakeProcessDefinitions[1].key}));
+                expect(createProcessSpy).toHaveBeenCalledWith('MyApp', new ProcessPayloadCloud({
+                    name: 'testFormWithProcess',
+                    processDefinitionKey: fakeProcessDefinitions[1].key
+                }));
                 expect(component.currentCreatedProcess.status).toBe('CREATED');
                 expect(component.currentCreatedProcess.startDate).toBeNull();
             });
@@ -608,7 +636,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should call service to start process with the variables setted', async(() => {
             const inputProcessVariable: Map<string, object>[] = [];
-            inputProcessVariable['name'] = {value: 'Josh'};
+            inputProcessVariable['name'] = { value: 'Josh' };
 
             component.variables = inputProcessVariable;
             component.currentCreatedProcess = fakeProcessInstance;
