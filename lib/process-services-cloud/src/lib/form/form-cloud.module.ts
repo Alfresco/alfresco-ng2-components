@@ -23,7 +23,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
-import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 
@@ -63,10 +62,6 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent
     ],
-    providers: [
-        FormDefinitionSelectorCloudService,
-        FormRenderingService
-    ],
     entryComponents: [
         UploadCloudWidgetComponent,
         DropdownCloudWidgetComponent,
@@ -84,4 +79,11 @@ import { GroupCloudModule } from '../group/group-cloud.module';
     ]
 })
 export class FormCloudModule {
+    constructor(formRenderingService: FormRenderingService) {
+        formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
+    }
 }

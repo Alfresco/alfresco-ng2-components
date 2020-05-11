@@ -30,7 +30,8 @@ import {
     setupTestBed,
     TRANSLATION_PROVIDER,
     WidgetVisibilityService,
-    FormRenderingService
+    FormRenderingService,
+    WidgetComponent
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -46,6 +47,11 @@ import { FormCloudRepresentation } from '../models/form-cloud-representation.mod
 import { FormCloudModule } from '../form-cloud.module';
 import { TranslateService } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AttachFileCloudWidgetComponent } from './widgets/attach-file/attach-file-cloud-widget.component';
+import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.widget';
+import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
+import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget';
+import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
@@ -59,7 +65,7 @@ describe('FormCloudComponent', () => {
         selector: 'adf-cloud-custom-widget',
         template: '<div></div>'
     })
-    class CustomWidget {
+    class CustomWidget extends WidgetComponent {
         typeId = 'CustomWidget';
     }
 
@@ -102,6 +108,12 @@ describe('FormCloudComponent', () => {
 
     beforeEach(async(() => {
         formRenderingService = TestBed.get(FormRenderingService);
+        formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
+
         formCloudService = TestBed.get(FormCloudService);
 
         translateService = TestBed.get(TranslateService);

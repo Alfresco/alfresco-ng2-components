@@ -17,9 +17,11 @@
 
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, FormRenderingService } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
+import { AttachFileWidgetComponent } from '../content-widget/attach-file-widget.component';
+import { AttachFolderWidgetComponent } from '../content-widget/attach-folder-widget.component';
 
 @NgModule({
     imports: [
@@ -35,4 +37,9 @@ import { StartFormComponent } from './start-form.component';
         StartFormComponent
     ]
 })
-export class FormModule {}
+export class FormModule {
+    constructor(formRenderingService: FormRenderingService) {
+        formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
+        formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
+    }
+}
