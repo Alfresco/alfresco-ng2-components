@@ -22,7 +22,6 @@ import {
     PaginationModel,
     UserPreferenceValues,
     InfinitePaginationComponent, PaginatedComponent,
-    ActivitiContentService,
     NodesApiService,
     SitesService
 } from '@alfresco/adf-core';
@@ -216,7 +215,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
                 private userPreferencesService: UserPreferencesService,
-                private activitiContentService: ActivitiContentService,
                 private nodesApiService: NodesApiService,
                 private sitesService: SitesService) {
     }
@@ -264,7 +262,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     private getStartSite() {
         this.nodesApiService.getNode(this.currentFolderId).subscribe((startNodeEntry) => {
-            this.startSiteGuid = this.activitiContentService.getSiteNameFromNodePath(startNodeEntry);
+            this.startSiteGuid = this.sitesService.getSiteNameFromNodePath(startNodeEntry);
             if (this.startSiteGuid) {
                 this.sitesService.getSite(this.startSiteGuid).subscribe((startSiteEntry) => {
                     if (startSiteEntry instanceof SiteEntry) {

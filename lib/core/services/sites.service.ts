@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SitePaging, SiteEntry, SitesApi, SiteMembershipRequestWithPersonPaging } from '@alfresco/js-api';
+import { SitePaging, SiteEntry, MinimalNode, SitesApi, SiteMembershipRequestWithPersonPaging } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -101,6 +101,24 @@ export class SitesService {
      */
     getEcmCurrentLoggedUserName(): string {
         return this.apiService.getInstance().getEcmUsername();
+    }
+
+    /**
+     * Looks for a site inside the path of a Node and returns its guid if it finds one.
+     * (return an empty string if no site is found)
+     * @param node Node to look for parent site
+     * @returns Site guid
+     */
+    getSiteNameFromNodePath(node: MinimalNode): string {
+        let siteName = '';
+        if (node.path && node.path.elements) {
+            const foundNode = node.path
+                .elements.find((pathNode: MinimalNode) =>
+                    pathNode.nodeType === 'st:site' &&
+                    pathNode.name !== 'Sites');
+            siteName = foundNode ? foundNode.name : '';
+        }
+        return siteName.toLocaleLowerCase();
     }
 
     /**
