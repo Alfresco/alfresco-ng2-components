@@ -21,12 +21,11 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
-import { StorageService } from 'core';
+import { StorageService } from '../../services/storage.service';
 
 describe('Notification History Component', () => {
 
     let fixture: ComponentFixture<NotificationHistoryComponent>;
-    let component: NotificationHistoryComponent;
     let element: HTMLElement;
     let notificationService: NotificationService;
     let overlayContainerElement: HTMLElement;
@@ -45,7 +44,6 @@ describe('Notification History Component', () => {
 
     beforeEach(async(() => {
         fixture = TestBed.createComponent(NotificationHistoryComponent);
-        component = fixture.componentInstance;
         element = fixture.nativeElement;
 
         storage = TestBed.get(StorageService);
@@ -82,12 +80,16 @@ describe('Notification History Component', () => {
             });
         });
 
-        it('should remove notification from storage when mark all as read', () => {
-            spyOn(storage, 'removeItem');
-            component.markAsRead();
+        it('should remove notification from storage when mark all as read', (done) => {
+            openNotification();
+            fixture.whenStable().then(() => {
+                const markAllAsRead = <HTMLButtonElement> overlayContainerElement.querySelector('#adf-notification-history-mark-as-read button');
+                markAllAsRead.click();
+                fixture.detectChanges();
+                expect(storage.getItem('notifications')).toBeNull();
+                done();
+            });
 
-            expect(storage.removeItem).toHaveBeenCalled();
-            expect(storage.getItem('notifications')).toBeNull();
         });
     });
 });
