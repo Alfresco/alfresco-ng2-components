@@ -19,7 +19,7 @@ export interface RouteRef {
     id: string;
     path: string;
     component: string;
-
+    parentRoute?: string;
     layout?: string;
     auth?: string[];
     data?: { [key: string]: string };
