@@ -78,7 +78,7 @@
             <button mat-button (click)="cancelStartProcess()" id="cancel_process">
                 {{ 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.CANCEL' | translate | uppercase}}
             </button>
-            <button color="primary" mat-button [disabled]="!currentCreatedProcess || !isProcessFormValid()" (click)="startProcess()"
+            <button color="primary" mat-button [disabled]="disableStartButton || !isProcessFormValid()" (click)="startProcess()"
                 data-automation-id="btn-start" id="button-start" class="btn-start">
                 {{'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
             </button>

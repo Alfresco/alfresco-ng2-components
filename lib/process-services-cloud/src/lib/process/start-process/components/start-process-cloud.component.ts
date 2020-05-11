@@ -100,7 +100,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     isLoading = false;
     isFormCloudLoaded = false;
     formCloud: FormModel;
-    currentCreatedProcess: any;
+    currentCreatedProcess: ProcessInstanceCloud;
+    disableStartButton: boolean = true;
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(private startProcessCloudService: StartProcessCloudService,
@@ -118,19 +120,20 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionName) => {
                 this.selectProcessDefinitionByProcesDefinitionName(processDefinitionName);
-        });
+            });
 
         this.processForm.valueChanges
-        .pipe(
-            tap(() => this.currentCreatedProcess = undefined),
-            debounceTime(400),
-            distinctUntilChanged(),
-            filter(() => this.isProcessSelectionValid()),
-            switchMap(() => this.generateProcessInstance())
-        ).pipe(takeUntil(this.onDestroy$))
-        .subscribe((res) => {
-            this.currentCreatedProcess = res;
-        });
+            .pipe(
+                debounceTime(200),
+                tap(() => this.disableStartButton = true),
+                distinctUntilChanged(),
+                filter(() => this.isProcessSelectionValid()),
+                switchMap(() => this.generateProcessInstance())
+            ).pipe(takeUntil(this.onDestroy$))
+            .subscribe((res) => {
+                this.currentCreatedProcess = res;
+                this.disableStartButton = false;
+            });
 
         if (this.processDefinitionName) {
             this.processDefinition.setValue(this.processDefinitionName);
@@ -167,12 +170,17 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             StartProcessCloudComponent.MAX_NAME_LENGTH : this.maxNameLength;
     }
 
-    private generateProcessInstance(): Observable <ProcessInstanceCloud> {
+    private generateProcessInstance(): Observable<ProcessInstanceCloud> {
         const createPayload: ProcessPayloadCloud = new ProcessPayloadCloud({
             name: this.processInstanceName.value,
             processDefinitionKey: this.processPayloadCloud.processDefinitionKey
         });
-        return this.startProcessCloudService.createProcess(this.appName, createPayload);
+
+        if (this.currentCreatedProcess) {
+            return this.startProcessCloudService.updateProcess(this.appName, this.currentCreatedProcess.id, createPayload);
+        } else {
+            return this.startProcessCloudService.createProcess(this.appName, createPayload);
+        }
     }
 
     private selectProcessDefinitionByProcesDefinitionName(processDefinitionName: string): void {
@@ -184,8 +192,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     setProcessDefinitionOnForm(selectedProcessDefinitionName: string) {
-        this.processDefinitionCurrent = this.filteredProcesses.find( (process: ProcessDefinitionCloud) =>
-            process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName );
+        this.processDefinitionCurrent = this.filteredProcesses.find((process: ProcessDefinitionCloud) =>
+            process.name === selectedProcessDefinitionName || process.key === selectedProcessDefinitionName);
 
         this.isFormCloudLoaded = false;
         this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
@@ -198,7 +206,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private getProcessIfExists(processDefinition: string): ProcessDefinitionCloud {
-        let matchedProcess = this.processDefinitionList.find((option) => this.getProcessDefinition(option, processDefinition) );
+        let matchedProcess = this.processDefinitionList.find((option) => this.getProcessDefinition(option, processDefinition));
         if (!matchedProcess) {
             matchedProcess = new ProcessDefinitionCloud();
         }
@@ -227,14 +235,14 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.startProcessCloudService.getProcessDefinitions(this.appName)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
-                this.processDefinitionList = processDefinitionRepresentations;
-                if (processDefinitionRepresentations.length === 1) {
-                    this.selectDefaultProcessDefinition();
-                }
-            },
-            () => {
-                this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-            });
+                    this.processDefinitionList = processDefinitionRepresentations;
+                    if (processDefinitionRepresentations.length === 1) {
+                        this.selectDefaultProcessDefinition();
+                    }
+                },
+                () => {
+                    this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                });
     }
 
     private isValidName(name: string): boolean {
@@ -255,7 +263,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     private getProcessDefinition(option: ProcessDefinitionCloud, processDefinition: string): boolean {
         return (this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinition.toLowerCase())) ||
-                 (option.key && option.key.toLowerCase().includes(processDefinition.toLowerCase()));
+            (option.key && option.key.toLowerCase().includes(processDefinition.toLowerCase()));
     }
 
     isProcessDefinitionsEmpty(): boolean {
@@ -292,7 +300,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         );
     }
 
-    cancelStartProcess() {
+    async cancelStartProcess() {
+        if (this.currentCreatedProcess) {
+            await this.startProcessCloudService.deleteProcess(this.appName, this.currentCreatedProcess.id);
+        }
+
         this.currentCreatedProcess = null;
         this.cancel.emit();
     }

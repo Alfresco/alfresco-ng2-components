@@ -112,7 +112,20 @@ export class StartProcessCloudService extends BaseCloudService {
         payload.payloadType = 'UpdateProcessPayload';
 
         return this.put(url, payload).pipe(
-            map(processInstance => new ProcessInstanceCloud(processInstance))
+            map((processInstance: any) => {
+                return new ProcessInstanceCloud(processInstance.entry);
+            })
         );
+    }
+
+    /**
+     * Delete an existing process instance
+     * @param appName name of the Application
+     * @param processInstanceId process instance to update
+     */
+    deleteProcess(appName: string, processInstanceId: string): Observable<void> {
+        const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
+
+        return this.delete(url);
     }
 }
