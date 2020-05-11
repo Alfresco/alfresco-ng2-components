@@ -49,7 +49,12 @@ describe('FormComponent', () => {
         exports: [CustomWidget],
         entryComponents: [CustomWidget]
     })
-    class CustomUploadModule {}
+    class CustomModule {
+        constructor(renderingService: FormRenderingService) {
+            renderingService.setComponentTypeResolver('upload', () => CustomWidget, true);
+            renderingService.setComponentTypeResolver('people', () => CustomWidget, true);
+        }
+    }
 
     setupTestBed({
         imports: [
@@ -57,7 +62,7 @@ describe('FormComponent', () => {
             CoreModule.forRoot(),
             FormModule,
             ContentWidgetModule,
-            CustomUploadModule
+            CustomModule
         ]
     });
 
@@ -84,14 +89,14 @@ describe('FormComponent', () => {
         formComponent = fixture.componentInstance;
     });
 
-    it('should register custom [upload] widget', () => {
-        const widget = buildWidget('upload', fixture.componentRef.injector);
-        expect(widget['typeId']).toBe('AttachFileWidgetComponent');
+    it('should redefine existing widget via the module', () => {
+        const widget = buildWidget('people', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
     });
 
-    it('should register custom [select-folder] widget', () => {
-        const widget = buildWidget('select-folder', fixture.componentRef.injector);
-        expect(widget['typeId']).toBe('AttachFolderWidgetComponent');
+    it('should register custom [upload] widget', () => {
+        const widget = buildWidget('upload', fixture.componentRef.injector);
+        expect(widget['typeId']).toBe('CustomWidget');
     });
 
     it('should allow to replace custom [upload] widget', () => {
