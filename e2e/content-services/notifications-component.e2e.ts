@@ -18,14 +18,14 @@
 import { LoginPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NotificationPage } from '../pages/adf/notification.page';
+import { NotificationDemoPage } from '../pages/adf/demo-shell/notification.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Notifications Component', () => {
 
     const loginPage = new LoginPage();
-    const notificationPage = new NotificationPage();
+    const notificationPage = new NotificationDemoPage();
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
@@ -62,20 +62,20 @@ describe('Notifications Component', () => {
     it('[C279977] Should show notification when the message is not empty and button is clicked', async () => {
         await notificationPage.enterMessageField('Notification test');
         await notificationPage.clickNotificationButton();
-        await notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
+        await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
         await notificationPage.clearMessage();
         await notificationPage.clickNotificationButton();
-        await notificationPage.checkNotificationSnackBarIsNotDisplayed();
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
         await notificationPage.enterMessageField('Notification test');
         await notificationPage.clickActionToggle();
         await notificationPage.clickNotificationButton();
-        await notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
+        await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
         await notificationPage.clickActionToggle();
@@ -84,24 +84,24 @@ describe('Notifications Component', () => {
     it('[C279981] Should show notification with action when the message is not empty and custom configuration button is clicked', async () => {
         await notificationPage.enterMessageField('Notification test');
         await notificationPage.clickNotificationButton();
-        await notificationPage.checkNotificationSnackBarIsDisplayed();
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
     });
 
     it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
         await notificationPage.enterMessageField('Notification test');
         await notificationPage.enterDurationField(1000);
         await notificationPage.clickNotificationButton();
-        await notificationPage.checkNotificationSnackBarIsDisplayed();
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
         await browser.sleep(2000);
-        await notificationPage.checkNotificationSnackBarIsNotDisplayed();
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
     });
 
     it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', async () => {
         await notificationPage.enterMessageField('Notification test');
         await notificationPage.clickActionToggle();
         await notificationPage.clickNotificationButton();
-        await notificationPage.checkNotificationSnackBarIsDisplayedWithMessage('Notification test');
-        await notificationPage.checkNotificationSnackBarIsNotDisplayed();
+        await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
         await notificationPage.clickNotificationButton();
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();

@@ -30,3 +30,4 @@ export * from './card-view/public-api';
 export * from './viewer.page';
 export * from './config-editor-page';
 export * from './about.page';
+export * from './snackbar.page';

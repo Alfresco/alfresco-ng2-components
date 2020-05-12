@@ -16,9 +16,11 @@
  */
 
 import { element, by, browser, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, DropdownPage, SnackbarPage } from '@alfresco/adf-testing';
 
-export class NotificationPage {
+export class NotificationDemoPage {
+
+    snackbarPage = new SnackbarPage();
 
     messageField: ElementFinder = element(by.css('input[data-automation-id="notification-message"]'));
     durationField: ElementFinder = element(by.css('input[data-automation-id="notification-duration"]'));
@@ -44,17 +46,12 @@ export class NotificationPage {
         return BrowserActions.getText(this.notificationConfig);
     }
 
-    async checkNotificationSnackBarIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar);
+    async isNotificationSnackBarDisplayed(): Promise<boolean> {
+        return this.snackbarPage.isNotificationSnackBarDisplayed();
     }
 
-    async checkNotificationSnackBarIsDisplayedWithMessage(message): Promise<void> {
-        const notificationSnackBarMessage: ElementFinder = element(by.cssContainingText('simple-snack-bar', message));
-        await BrowserVisibility.waitUntilElementIsVisible(notificationSnackBarMessage);
-    }
-
-    async checkNotificationSnackBarIsNotDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.notificationSnackBar);
+    async getSnackBarMessage(): Promise<string> {
+        return this.snackbarPage.getSnackBarMessage();
     }
 
     async enterMessageField(text): Promise<void> {
