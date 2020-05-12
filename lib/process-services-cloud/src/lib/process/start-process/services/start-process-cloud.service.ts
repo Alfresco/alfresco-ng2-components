@@ -63,7 +63,7 @@ export class StartProcessCloudService extends BaseCloudService {
      */
     createProcess(appName: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/create`;
-        payload.payloadType = 'StartProcessPayload';
+        payload.payloadType = 'CreateProcessInstancePayload';
 
         return this.post(url, payload).pipe(
             map((result: any) => result.entry),
@@ -76,10 +76,10 @@ export class StartProcessCloudService extends BaseCloudService {
      * @param createdProcessInstanceId process instance id of the process previously created
      * @returns Details of the process instance just started
      */
-    startCreatedProcess(appName: string, createdProcessInstanceId: string): Observable<ProcessInstanceCloud> {
+    startCreatedProcess(appName: string, createdProcessInstanceId: string, payload: ProcessPayloadCloud): Observable<ProcessInstanceCloud> {
         const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${createdProcessInstanceId}/start`;
 
-        return this.post(url).pipe(
+        return this.post(url, payload).pipe(
             map((result: any) => result.entry),
             map(processInstance => new ProcessInstanceCloud(processInstance.entry))
         );
@@ -112,7 +112,20 @@ export class StartProcessCloudService extends BaseCloudService {
         payload.payloadType = 'UpdateProcessPayload';
 
         return this.put(url, payload).pipe(
-            map(processInstance => new ProcessInstanceCloud(processInstance))
+            map((processInstance: any) => {
+                return new ProcessInstanceCloud(processInstance.entry);
+            })
         );
+    }
+
+    /**
+     * Delete an existing process instance
+     * @param appName name of the Application
+     * @param processInstanceId process instance to update
+     */
+    deleteProcess(appName: string, processInstanceId: string): Observable<void> {
+        const url = `${this.getBasePath(appName)}/rb/v1/process-instances/${processInstanceId}`;
+
+        return this.delete(url);
     }
 }

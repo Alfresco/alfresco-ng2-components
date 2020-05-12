@@ -124,7 +124,7 @@ describe('StartProcessCloudService', () => {
 
     it('should be able to start a created new process instance', (done) => {
         spyOn(service, 'startCreatedProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'RUNNING' }));
-        service.startCreatedProcess('appName1', 'fake-id')
+        service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
             .subscribe(
                 (res: ProcessInstanceCloud) => {
                     expect(res).toBeDefined();

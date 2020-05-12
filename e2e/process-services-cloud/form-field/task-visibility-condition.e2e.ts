@@ -71,7 +71,6 @@ describe('Task cloud visibility', async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.goToApp(simpleApp);
-        await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
     });
 
     it('[C315170] Should be able to complete a task with a form with required number widgets', async () => {
