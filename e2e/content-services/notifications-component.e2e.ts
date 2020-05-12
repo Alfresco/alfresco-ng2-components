@@ -92,7 +92,7 @@ describe('Notifications Component', () => {
         await notificationPage.enterDurationField(1000);
         await notificationPage.clickNotificationButton();
         await notificationPage.checkNotificationSnackBarIsDisplayed();
-        await browser.sleep(1500);
+        await browser.sleep(2000);
         await notificationPage.checkNotificationSnackBarIsNotDisplayed();
     });
 

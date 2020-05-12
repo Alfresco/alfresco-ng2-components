@@ -47,8 +47,8 @@ export class BrowserActions {
         await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
     }
 
-    static async getUrl(url: string): Promise<any> {
-        return browser.get(url);
+    static async getUrl(url: string, timeout: number = 10000): Promise<any> {
+        return browser.get(url, timeout);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {

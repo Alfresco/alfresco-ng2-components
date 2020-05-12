@@ -54,7 +54,7 @@ export class LoginPage {
     sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
     async goToLoginPage(): Promise<void> {
-        await browser.get(this.loginURL);
+        await BrowserActions.getUrl(this.loginURL);
         await this.waitForElements();
     }
 

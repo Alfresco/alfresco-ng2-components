@@ -9,7 +9,7 @@ const configPath = './demo-shell/dist/app.config.json';
 fs.readFile(configPath, (err, appConfigString) => {
     if (err) throw err;
     let appConfig = JSON.parse(appConfigString);
-    appConfig.providers = process.env.PROVIDERS;
+    appConfig.providers = process.env.PROVIDERS || 'ALL';
     appConfig.bpmHost = (process.env.PROXY_HOST_ADF || process.env.URL_HOST_BPM_ADF || process.env.URL_HOST_ADF);
     appConfig.ecmHost = (process.env.PROXY_HOST_ADF || process.env.URL_HOST_ADF);
     appConfig.identityHost = process.env.URL_HOST_IDENTITY;

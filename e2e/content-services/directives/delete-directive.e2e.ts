@@ -18,7 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { LoginPage, UploadActions, PaginationPage, StringUtil, PermissionActions } from '@alfresco/adf-testing';
+import { BrowserActions, LoginPage, UploadActions, PaginationPage, StringUtil, PermissionActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -114,7 +114,7 @@ describe('Delete Directive', () => {
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await browser.get(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
 
@@ -188,7 +188,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-            await browser.get(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
 
@@ -240,7 +240,7 @@ describe('Delete Directive', () => {
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(secondAcsUser);
-            await browser.get(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });
 

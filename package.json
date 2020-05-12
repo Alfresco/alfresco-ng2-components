@@ -41,7 +41,7 @@
     "start:dist": "ng lint dist && npm run validate-config && ng serve dist --prod --open",
     "build": "npm run validate-config && ng build dist",
     "build:dev": "npm run validate-config  && npm run style:dev && ng build dev",
-    "build:dist": "npm run validate-config && node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build dist --prod  --base-href .",
+    "build:dist": "npm run validate-config && node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build dist --prod",
     "build:dist:stats": "npm run validate-config && node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build dist --prod --stats-json",
     "build:dist:e2e": "npm run validate-config &&  node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build dist --prod --configuration=e2e --stats-json ",
     "style:dev": "npm run webpack -- --config  ./lib/config/webpack.style.js --progress --profile --bail",
