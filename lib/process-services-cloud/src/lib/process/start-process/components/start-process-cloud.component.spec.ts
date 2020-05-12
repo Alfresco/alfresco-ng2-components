@@ -708,5 +708,18 @@ describe('StartProcessCloudComponent', () => {
             fixture.detectChanges();
             selectOptionByName(fakeProcessDefinitions[0].name);
         });
+
+        it('should wait for process definition to be loaded before showing the empty process definition message', () => {
+            component.processDefinitionLoaded = false;
+            fixture.detectChanges();
+            let noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
+            expect(noProcessElement).toBeNull();
+            getDefinitionsSpy.and.returnValue(of([]));
+
+            component.loadProcessDefinitions();
+            fixture.detectChanges();
+            noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
+            expect(noProcessElement).not.toBeNull();
+        });
     });
 });
