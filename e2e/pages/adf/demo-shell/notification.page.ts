@@ -54,6 +54,10 @@ export class NotificationDemoPage {
         return this.snackbarPage.getSnackBarMessage();
     }
 
+    async waitForSnackBarToClose(): Promise<void> {
+        await this.snackbarPage.waitForSnackBarToClose();
+    }
+
     async enterMessageField(text): Promise<void> {
         await BrowserActions.clearSendKeys(this.messageField, text);
     }

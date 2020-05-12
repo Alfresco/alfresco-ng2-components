@@ -55,6 +55,7 @@ describe('Notifications Component', () => {
     });
 
     afterEach(async () => {
+        await notificationPage.waitForSnackBarToClose();
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
         await notificationPage.enterDurationField(3000);
     });
@@ -102,6 +103,7 @@ describe('Notifications Component', () => {
         await notificationPage.clickNotificationButton();
         await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
         await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
+        await notificationPage.waitForSnackBarToClose();
         await notificationPage.clickNotificationButton();
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
