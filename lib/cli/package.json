@@ -4,9 +4,9 @@
   "version": "3.8.0",
   "author": "Alfresco Software, Ltd.",
   "bin": {
-    "adf-license": "./bin/doc/licenseList.js",
     "adf-audit": "./bin/doc/audit.js",
-    "adf-cli": "./bin/adf-cli"
+    "adf-cli": "./bin/adf-cli",
+    "adf": "./bin/adf-cli"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "develop": "tsc -p tsconfig.json --watch",
-    "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp ./package.json ./dist/"
+    "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./templates ./dist && cp ./package.json ./dist/"
   },
   "dependencies": {
     "commander": "^4.0.0",
