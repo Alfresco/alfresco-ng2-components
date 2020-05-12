@@ -66,7 +66,15 @@ export class ProcessListCloudService extends BaseCloudService {
             }
         }
 
+        if (!queryParam['status']) {
+            queryParam['status'] = this.buildFilterForAllStatus();
+        }
+
         return queryParam;
+    }
+
+    private buildFilterForAllStatus() {
+        return ['RUNNING', 'SUSPENDED', 'CANCELLED', 'COMPLETED'];
     }
 
     private isExcludedField(property: string): boolean {
