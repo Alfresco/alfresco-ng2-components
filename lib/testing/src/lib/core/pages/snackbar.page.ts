@@ -36,7 +36,7 @@ export class SnackbarPage {
 
     async getSnackBarMessage(): Promise<string> {
         await this.waitForSnackBarToAppear();
-        return this.notificationSnackBar.getAttribute('innerText');
+        return this.notificationSnackBar.getText();
     }
 
     async isNotificationSnackBarDisplayed(): Promise<boolean> {
