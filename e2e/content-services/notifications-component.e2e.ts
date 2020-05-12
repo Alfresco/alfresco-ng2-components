@@ -59,16 +59,16 @@ describe('Notifications Component', () => {
         await notificationPage.enterDurationField(3000);
     });
 
-    it('[C279977] Should show notification when the message is not empty and button is clicked', async () => {
-        await notificationPage.enterMessageField('Notification test');
-        await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
-    });
-
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {
         await notificationPage.clearMessage();
         await notificationPage.clickNotificationButton();
         await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
+    });
+
+    it('[C279977] Should show notification when the message is not empty and button is clicked', async () => {
+        await notificationPage.enterMessageField('Notification test');
+        await notificationPage.clickNotificationButton();
+        await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
     });
 
     it('[C279978] Should show notification with action when the message is not empty and button is clicked', async () => {
@@ -100,8 +100,8 @@ describe('Notifications Component', () => {
         await notificationPage.enterMessageField('Notification test');
         await notificationPage.clickActionToggle();
         await notificationPage.clickNotificationButton();
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
         await expect(await notificationPage.getSnackBarMessage()).toEqual('Notification test');
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
         await notificationPage.clickNotificationButton();
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
