@@ -152,7 +152,7 @@ describe('Version component actions', () => {
 
         await BrowserActions.click(versionManagePage.showNewVersionButton);
 
-        await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 5000)');
+        await browser.executeScript(' setTimeout(() => {document.querySelector("div[data-automation-id=\'cancel-upload-progress\']").click();}, 1000)');
         await versionManagePage.uploadNewVersionFile(bigFileToCancel.location);
         await versionManagePage.closeVersionDialog();
 
