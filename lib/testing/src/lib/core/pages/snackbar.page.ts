@@ -21,7 +21,7 @@ import { Logger } from '../utils/logger';
 
 export class SnackbarPage {
 
-    notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar span')).first();
+    notificationSnackBar: ElementFinder = element(by.css('simple-snack-bar span'));
     snackBarContainerCss = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {

@@ -96,6 +96,7 @@ export class NotificationDemoPage {
     }
 
     async clearMessage(): Promise<void> {
-        await BrowserActions.clearSendKeys(this.messageField, '');
+        await BrowserActions.click(this.messageField);
+        await BrowserActions.clearWithBackSpace(this.messageField);
     }
 }
