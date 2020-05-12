@@ -176,7 +176,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             processDefinitionKey: this.processPayloadCloud.processDefinitionKey
         });
 
-        if (this.currentCreatedProcess) {
+        if (this.currentCreatedProcess && this.processPayloadCloud.processDefinitionKey === this.currentCreatedProcess.processDefinitionKey) {
             return this.startProcessCloudService.updateProcess(this.appName, this.currentCreatedProcess.id, createPayload);
         } else {
             return this.startProcessCloudService.createProcess(this.appName, createPayload);
@@ -285,19 +285,19 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.isLoading = true;
         this.buildProcessCloudPayload();
         this.startProcessCloudService.startCreatedProcess(this.appName,
-                                                          this.currentCreatedProcess.id,
-                                                          this.processPayloadCloud)
-        .subscribe(
-            (res) => {
-                this.success.emit(res);
-                this.isLoading = false;
-            },
-            (err) => {
-                this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
-                this.error.emit(err);
-                this.isLoading = false;
-            }
-        );
+            this.currentCreatedProcess.id,
+            this.processPayloadCloud)
+            .subscribe(
+                (res) => {
+                    this.success.emit(res);
+                    this.isLoading = false;
+                },
+                (err) => {
+                    this.errorMessageId = 'ADF_CLOUD_PROCESS_LIST.ADF_CLOUD_START_PROCESS.ERROR.START';
+                    this.error.emit(err);
+                    this.isLoading = false;
+                }
+            );
     }
 
     async cancelStartProcess() {
