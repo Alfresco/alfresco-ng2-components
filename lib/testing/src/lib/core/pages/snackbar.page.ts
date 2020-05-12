@@ -21,7 +21,7 @@ import { Logger } from '../utils/logger';
 
 export class SnackbarPage {
 
-    notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar')).first();
+    notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar span')).first();
     snackBarContainerCss = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {
@@ -42,10 +42,10 @@ export class SnackbarPage {
     async isNotificationSnackBarDisplayed(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar);
-        } catch (e) {
+            return true;
+        } catch {
             Logger.error(`Snackbar is not displayed `);
             return false;
         }
-        return true;
     }
 }
