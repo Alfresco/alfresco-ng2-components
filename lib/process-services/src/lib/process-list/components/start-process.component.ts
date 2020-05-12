@@ -21,6 +21,8 @@ import {
 } from '@angular/core';
 import {
     ActivitiContentService,
+    AppConfigService,
+    AppConfigValues,
     FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -113,7 +115,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private activitiProcess: ProcessService,
-                private activitiContentService: ActivitiContentService) {
+                private activitiContentService: ActivitiContentService,
+                private appConfig: AppConfigService) {
         }
 
     ngOnInit() {
@@ -215,13 +218,22 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.processDefinitions.length === 0;
     }
 
+    getAlfrescoRepositoryName(): string {
+        let alfrescoRepositoryName = this.appConfig.get<string>(AppConfigValues.ALFRESCO_REPOSITORY_NAME);
+        if (!alfrescoRepositoryName) {
+            alfrescoRepositoryName = this.alfrescoRepositoryName;
+        }
+        return alfrescoRepositoryName + 'Alfresco';
+    }
+
     moveNodeFromCStoPS(): void {
+        const accountIdentifier = this.getAlfrescoRepositoryName();
 
         for (const key in this.values) {
             if (this.values.hasOwnProperty(key)) {
                 const currentValue = Array.isArray(this.values[key]) ? this.values[key] : [this.values[key]];
                 const contents = currentValue.filter((value: any) => value && value.isFile)
-                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, this.alfrescoRepositoryName));
+                                             .map((content: MinimalNode) => this.activitiContentService.applyAlfrescoNode(content, null, accountIdentifier));
                 forkJoin(contents).subscribe((res: RelatedContentRepresentation[]) => this.values[key] = [...res] );
             }
         }

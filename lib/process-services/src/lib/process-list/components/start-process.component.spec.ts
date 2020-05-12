@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService, FormService, setupTestBed } from '@alfresco/adf-core';
+import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -36,6 +36,7 @@ import { By } from '@angular/platform-browser';
 
 describe('StartFormComponent', () => {
 
+    let appConfig: AppConfigService;
     let activitiContentService: ActivitiContentService;
     let component: StartProcessInstanceComponent;
     let fixture: ComponentFixture<StartProcessInstanceComponent>;
@@ -65,6 +66,7 @@ describe('StartFormComponent', () => {
     };
 
     beforeEach(() => {
+        appConfig = TestBed.get(AppConfigService);
         activitiContentService = TestBed.get(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
@@ -203,7 +205,15 @@ describe('StartFormComponent', () => {
 
         describe('CS content connection', () => {
 
-            it('Should fetch the alfrescoRepositoryName', async () => {
+            it('Should get the alfrescoRepositoryName from the config json', async () => {
+                appConfig.config = Object.assign(appConfig.config, {
+                    'alfrescoRepositoryName': 'alfresco-123'
+                });
+
+                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
+            });
+
+            it('Should take the alfrescoRepositoryName from the API when there is no alfrescoRepositoryName defined in config json', async () => {
                 fixture.detectChanges();
                 await fixture.whenStable();
                 expect(component.alfrescoRepositoryName).toBe('alfresco-1-fake-repo-name');
