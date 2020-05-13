@@ -76,7 +76,7 @@ describe('TaskFiltersCloudComponent', () => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(component.filters.length).toBe(3);
-            const filters = fixture.nativeElement.querySelectorAll('.adf-filters__entry-icon');
+            const filters = fixture.nativeElement.querySelectorAll('.adf-icon');
             expect(filters.length).toBe(3);
             expect(filters[0].innerText).toContain('adjust');
             expect(filters[1].innerText).toContain('done');
@@ -94,7 +94,7 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters: any = fixture.debugElement.queryAll(By.css('.adf-filters__entry-icon'));
+            const filters: any = fixture.debugElement.queryAll(By.css('.adf-icon'));
             expect(filters.length).toBe(0);
             done();
         });
@@ -108,7 +108,7 @@ describe('TaskFiltersCloudComponent', () => {
         component.showIcons = true;
         fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const filters = fixture.debugElement.queryAll(By.css('mat-list-item[class*="adf-filters__entry"]'));
+            const filters = fixture.debugElement.queryAll(By.css('.adf-filters__entry'));
             expect(component.filters.length).toBe(3);
             expect(filters.length).toBe(3);
             expect(filters[0].nativeElement.innerText).toContain('FakeInvolvedTasks');
@@ -262,9 +262,10 @@ describe('TaskFiltersCloudComponent', () => {
 
         fixture.detectChanges();
         spyOn(component, 'selectFilterAndEmit').and.stub();
-        const filterButton = fixture.debugElement.nativeElement.querySelector('span[data-automation-id="fake-my-tast1-filter"]');
+        const filterButton = fixture.debugElement.nativeElement.querySelector(`[data-automation-id="${fakeGlobalFilter[1].key}_filter"]`);
+
         filterButton.click();
-        expect(component.selectFilterAndEmit).toHaveBeenCalledWith({id: fakeGlobalFilter[1].id});
+        expect(component.selectFilterAndEmit).toHaveBeenCalledWith(fakeGlobalFilter[1]);
     }));
 
     it('should reload filters by appName on binding changes', () => {

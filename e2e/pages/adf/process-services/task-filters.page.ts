@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { by, ElementFinder, Locator } from 'protractor';
+import { by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TaskFiltersPage {
 
     filter;
-    taskIcon: Locator = by.xpath("ancestor::div[@class='mat-list-item-content']/mat-icon");
+    taskIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
