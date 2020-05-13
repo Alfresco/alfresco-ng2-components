@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SitePaging, SiteEntry } from '@alfresco/js-api';
+import { SitePaging, SiteEntry, SitesApi, SiteMembershipRequestWithPersonPaging } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -26,8 +26,10 @@ import { catchError } from 'rxjs/operators';
 })
 export class SitesService {
 
-    constructor(
-        private apiService: AlfrescoApiService) {
+    sitesApi: SitesApi;
+
+    constructor(private apiService: AlfrescoApiService) {
+        this.sitesApi = new SitesApi(apiService.getInstance());
     }
 
     /**
@@ -41,7 +43,7 @@ export class SitesService {
             include: ['properties']
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.apiService.getInstance().core.sitesApi.getSites(queryOptions))
+        return from(this.sitesApi.listSites(queryOptions))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
@@ -54,7 +56,7 @@ export class SitesService {
      * @returns Information about the site
      */
     getSite(siteId: string, opts?: any): Observable<SiteEntry | {}> {
-        return from(this.apiService.getInstance().core.sitesApi.getSite(siteId, opts))
+        return from(this.sitesApi.getSite(siteId, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
@@ -69,7 +71,7 @@ export class SitesService {
     deleteSite(siteId: string, permanentFlag: boolean = true): Observable<any> {
         const options: any = {};
         options.permanent = permanentFlag;
-        return from(this.apiService.getInstance().core.sitesApi.deleteSite(siteId, options))
+        return from(this.sitesApi.deleteSite(siteId, options))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
@@ -99,6 +101,18 @@ export class SitesService {
      */
     getEcmCurrentLoggedUserName(): string {
         return this.apiService.getInstance().getEcmUsername();
+    }
+
+    /**
+     * Gets a list of site membership requests.
+     * @param opts Options supported by JS-API
+     * @returns Site membership requests
+     */
+    getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+        return from(this.sitesApi.getSiteMembershipRequests(opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
     }
 
     private handleError(error: any): any {
