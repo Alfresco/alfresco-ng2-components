@@ -135,7 +135,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 takeUntil(this.onDestroy$)
             );
 
-        this.activitiContentService.getAlfrescoRepositories().subscribe((repoList) => {
+        this.activitiContentService.getAlfrescoRepositories(true).subscribe((repoList) => {
             if (repoList && repoList[0]) {
                 const alfrescoRepository = repoList[0];
                 this.alfrescoRepositoryName = `alfresco-${alfrescoRepository.id}-${alfrescoRepository.name}`;
