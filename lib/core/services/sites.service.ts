@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SitePaging, SiteEntry, SitesApi } from '@alfresco/js-api';
+import { SitePaging, SiteEntry, SitesApi, SiteMembershipRequestWithPersonPaging } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -101,6 +101,18 @@ export class SitesService {
      */
     getEcmCurrentLoggedUserName(): string {
         return this.apiService.getInstance().getEcmUsername();
+    }
+
+    /**
+     * Gets a list of site membership requests.
+     * @param opts Options supported by JS-API
+     * @returns Site membership requests
+     */
+    getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+        return from(this.sitesApi.getSiteMembershipRequests(opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
     }
 
     private handleError(error: any): any {
