@@ -17,7 +17,7 @@
 
 import {
     Component, EventEmitter, Input, OnChanges,
-    Output, SimpleChanges, OnDestroy
+    Output, SimpleChanges, OnDestroy, OnInit
 } from '@angular/core';
 import { Observable, of, forkJoin, Subject, Subscription } from 'rxjs';
 import { switchMap, takeUntil, map } from 'rxjs/operators';
@@ -34,17 +34,23 @@ import {
     FormValues,
     FormModel,
     AppConfigService,
-    ContentLinkModel
+    ContentLinkModel,
+    FormRenderingService
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
+import { AttachFileCloudWidgetComponent } from './widgets/attach-file/attach-file-cloud-widget.component';
+import { DropdownCloudWidgetComponent } from './widgets/dropdown/dropdown-cloud.widget';
+import { DateCloudWidgetComponent } from './widgets/date/date-cloud.widget';
+import { PeopleCloudWidgetComponent } from './widgets/people/people-cloud.widget';
+import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 
 @Component({
     selector: 'adf-cloud-form',
     templateUrl: './form-cloud.component.html'
 })
-export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
+export class FormCloudComponent extends FormBaseComponent implements OnInit, OnChanges, OnDestroy {
 
     /** App name to fetch corresponding form and values. */
     @Input()
@@ -106,6 +112,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
+                protected formRenderingService: FormRenderingService,
                 private notificationService: NotificationService,
                 protected visibilityService: WidgetVisibilityService,
                 private appConfigService: AppConfigService) {
@@ -372,6 +379,14 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     }
 
     protected storeFormAsMetadata() {
+    }
+
+    ngOnInit() {
+        this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
+        this.formRenderingService.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
     }
 
     ngOnDestroy() {
