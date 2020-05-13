@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TemplateModule, FormBaseModule, PipeModule, CoreModule, FormRenderingService } from '@alfresco/adf-core';
+import { TemplateModule, FormBaseModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -36,7 +36,6 @@ import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
-import { CloudFormRenderingService } from './components/cloud-form-rendering.service';
 
 @NgModule({
     imports: [
@@ -65,9 +64,7 @@ import { CloudFormRenderingService } from './components/cloud-form-rendering.ser
         GroupCloudWidgetComponent
     ],
     providers: [
-        FormDefinitionSelectorCloudService,
-        FormRenderingService,
-        { provide: FormRenderingService, useClass: CloudFormRenderingService }
+        FormDefinitionSelectorCloudService
     ],
     entryComponents: [
         UploadCloudWidgetComponent,

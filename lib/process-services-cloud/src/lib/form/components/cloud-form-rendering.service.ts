@@ -29,10 +29,13 @@ import { GroupCloudWidgetComponent } from './widgets/group/group-cloud.widget';
 export class CloudFormRenderingService extends FormRenderingService {
     constructor() {
         super();
-        this.setComponentTypeResolver('upload', () => AttachFileCloudWidgetComponent, true);
-        this.setComponentTypeResolver('dropdown', () => DropdownCloudWidgetComponent, true);
-        this.setComponentTypeResolver('date', () => DateCloudWidgetComponent, true);
-        this.setComponentTypeResolver('people', () => PeopleCloudWidgetComponent, true);
-        this.setComponentTypeResolver('functional-group', () => GroupCloudWidgetComponent, true);
+
+        this.register({
+            'upload': () => AttachFileCloudWidgetComponent,
+            'dropdown': () => DropdownCloudWidgetComponent,
+            'date': () => DateCloudWidgetComponent,
+            'people': () => PeopleCloudWidgetComponent,
+            'functional-group': () => GroupCloudWidgetComponent
+        }, true);
     }
 }

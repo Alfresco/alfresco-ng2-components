@@ -54,9 +54,7 @@ import { ProcessFormRenderingService } from './form/process-form-rendering.servi
                 name: 'adf-process-services',
                 source: 'assets/adf-process-services'
             }
-        },
-        FormRenderingService,
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+        }
     ],
     exports: [
         CommonModule,
@@ -83,7 +81,9 @@ export class ProcessModule {
                         name: 'adf-process-services',
                         source: 'assets/adf-process-services'
                     }
-                }
+                },
+                FormRenderingService,
+                { provide: FormRenderingService, useClass: ProcessFormRenderingService }
             ]
         };
     }
