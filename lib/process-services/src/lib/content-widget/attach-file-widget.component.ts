@@ -76,7 +76,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     ngOnInit() {
         super.ngOnInit();
 
-        this.activitiContentService.getAlfrescoRepositories(true).subscribe((repoList) => {
+        this.activitiContentService.getAlfrescoRepositories(null, true).subscribe((repoList) => {
             this.repositoryList = repoList;
         });
 
