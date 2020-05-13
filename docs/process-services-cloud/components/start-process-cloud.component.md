@@ -25,7 +25,7 @@ Starts a process.
 ## Basic Usage
 
 ```html
-<adf-cloud-start-process 
+<adf-cloud-start-process
    [appName]="YOUR_APP_NAME">
 </adf-cloud-start-process>
 ```
@@ -41,6 +41,7 @@ Starts a process.
 | name | `string` | "" | Name of the process. |
 | processDefinitionName | `string` |  | Name of the process definition. |
 | showSelectProcessDropdown | `boolean` | true | Show/hide the process dropdown list. |
+| processDefinitions | [`ProcessDefinitionCloud[]`](../../../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) | | Parameter to pass process definition values in the start process dropdown |
 | values | [`TaskVariableCloud`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`[]` |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | `__type` |  | Variables to attach to the payload. |
 
@@ -59,11 +60,11 @@ Starts a process.
 ### Starting a process with a default name and a pre-selected process definition name
 
 ```html
- <adf-cloud-start-process 
+ <adf-cloud-start-process
       [appId]="YOUR_APP_ID"
       [name]="PROCESS_NAME"
       [processDefinitionName]="PROCESS_DEFINITION_NAME">
- </adf-cloud-start-process>		 
+ </adf-cloud-start-process>
 ```
 
 You can use the `processDefinitionName` property to select which process will be selected by default on the dropdown (when there is more than one process to choose from). Use the `name` property to set the name shown on the dropdown item.
@@ -73,17 +74,17 @@ If the app contains only one process definition, this process definition will be
 ### Starting a process with variables
 
 ```html
- <adf-cloud-start-process 
+ <adf-cloud-start-process
       [appId]="YOUR_APP_ID"
       [variables]="{ 'my-key1' : 'myvalue', 'my-key2' : 'myvalue2'}">
- </adf-cloud-start-process>		 
+ </adf-cloud-start-process>
 ```
 
 ### Starting a process with values passed to the form
 
 ```html
- <adf-cloud-start-process 
+ <adf-cloud-start-process
       [appId]="YOUR_APP_ID"
       [values]="[{'name': 'firstName', 'value': 'MyName'}, {'name': 'lastName', 'value': 'MyLastName'}]">
- </adf-cloud-start-process>		 
+ </adf-cloud-start-process>
 ```

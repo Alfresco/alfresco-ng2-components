@@ -71,6 +71,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     @Input()
     showSelectProcessDropdown: boolean = true;
 
+    /** Parameter to pass process definition values in the start process dropdown */
+    @Input()
+    processDefinitions: ProcessDefinitionCloud[];
+
     /** Emitted when the process is successfully started. */
     @Output()
     success = new EventEmitter<ProcessInstanceCloud>();
@@ -148,8 +152,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
             this.appName = changes['appName'].currentValue;
         }
 
-        if (this.appName || this.appName === '') {
+        if ((this.appName || this.appName === '') && !this.processDefinitions) {
             this.loadProcessDefinitions();
+        } else {
+            this.processDefinitionList = this.processDefinitions;
         }
     }
 

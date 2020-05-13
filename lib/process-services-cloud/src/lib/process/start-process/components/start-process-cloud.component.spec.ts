@@ -730,5 +730,14 @@ describe('StartProcessCloudComponent', () => {
             noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
             expect(noProcessElement).not.toBeNull();
         });
+
+        it('should load process definition from input', () => {
+            spyOn(component, 'loadProcessDefinitions');
+            component.processDefinitions = fakeProcessDefinitions;
+            fixture.detectChanges();
+
+            expect(component.loadProcessDefinitions).not.toHaveBeenCalled();
+            expect(component.processDefinitionList).toEqual(fakeProcessDefinitions);
+        });
     });
 });
