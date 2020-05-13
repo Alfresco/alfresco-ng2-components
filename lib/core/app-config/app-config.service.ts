@@ -62,8 +62,7 @@ export class AppConfigService {
         },
         ecmHost: 'http://{hostname}{:port}/ecm',
         bpmHost: 'http://{hostname}{:port}/bpm',
-        logLevel: 'silent',
-        alfrescoRepositoryName: 'alfresco-1'
+        logLevel: 'silent'
     };
 
     status: Status = Status.INIT;

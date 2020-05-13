@@ -308,7 +308,6 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(startEventFormProcess);
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processId);
-
         });
    });
 

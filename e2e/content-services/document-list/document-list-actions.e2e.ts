@@ -250,7 +250,6 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContextActionIsVisible('Info');
                 await contentServicesPage.checkContextActionIsVisible('Permission');
             });
-
         });
     });
 

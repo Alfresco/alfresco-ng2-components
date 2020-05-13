@@ -33,6 +33,7 @@ export interface ContentActionRef extends ExtensionElement {
     icon?: string;
     children?: Array<ContentActionRef>;
     component?: string;
+    data?: any;
     actions?: {
         click?: string;
         [key: string]: string;

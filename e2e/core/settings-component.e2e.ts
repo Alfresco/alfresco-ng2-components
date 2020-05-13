@@ -40,7 +40,6 @@ describe('Settings component', () => {
     describe('Should be able to change Urls in the Settings', () => {
         beforeEach(async () => {
             await settingsPage.goToSettingsPage();
-
         });
 
         it('[C245641] Should navigate User from Settings page to Login screen', async () => {

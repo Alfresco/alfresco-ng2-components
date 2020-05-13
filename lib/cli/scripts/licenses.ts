@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/// <reference> types.d.ts
 
 /*!
  * @license
@@ -98,13 +97,13 @@ export default function main(_args: string[], workingDir: string) {
     }
 
     if (!fs.existsSync(packagePath)) {
-        console.error('Package.json not found');
+        console.error('The package.json file was not found');
         process.exit(1);
     }
 
     const templatePath = path.resolve(__dirname, '../templates/licensePage.ejs');
     if (!fs.existsSync(templatePath)) {
-        console.error(`Cannot find licence template: ${templatePath}`);
+        console.error(`Cannot find the report template: ${templatePath}`);
         process.exit(1);
     }
 

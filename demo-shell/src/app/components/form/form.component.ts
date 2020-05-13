@@ -16,7 +16,8 @@
  */
 
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, CoreAutomationService } from '@alfresco/adf-core';
+import { FormModel, FormFieldModel, FormService, FormOutcomeEvent, NotificationService, CoreAutomationService, FormRenderingService } from '@alfresco/adf-core';
+import { ProcessFormRenderingService } from '@alfresco/adf-process-services';
 import { InMemoryFormService } from '../../services/in-memory-form.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -26,7 +27,8 @@ import { takeUntil } from 'rxjs/operators';
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.scss'],
     providers: [
-        { provide: FormService, useClass: InMemoryFormService }
+        { provide: FormService, useClass: InMemoryFormService },
+        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
     ],
     encapsulation: ViewEncapsulation.None
 })

@@ -18,7 +18,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TemplateModule, FormBaseModule, PipeModule, CoreModule, FormRenderingService } from '@alfresco/adf-core';
+import { TemplateModule, FormBaseModule, PipeModule, CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
@@ -64,8 +64,7 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         GroupCloudWidgetComponent
     ],
     providers: [
-        FormDefinitionSelectorCloudService,
-        FormRenderingService
+        FormDefinitionSelectorCloudService
     ],
     entryComponents: [
         UploadCloudWidgetComponent,

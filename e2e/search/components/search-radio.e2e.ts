@@ -260,7 +260,6 @@ describe('Search Radio Component', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         });
 
         it('[C277033] Should be able to add a new option', async () => {

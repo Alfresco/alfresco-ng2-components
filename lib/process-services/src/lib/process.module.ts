@@ -18,7 +18,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule, TRANSLATION_PROVIDER } from '@alfresco/adf-core';
+import { CoreModule, TRANSLATION_PROVIDER, FormRenderingService } from '@alfresco/adf-core';
 
 import { MaterialModule } from './material.module';
 
@@ -29,6 +29,7 @@ import { ProcessCommentsModule } from './process-comments/process-comments.modul
 import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
 import { FormModule } from './form/form.module';
+import { ProcessFormRenderingService } from './form/process-form-rendering.service';
 
 @NgModule({
     imports: [
@@ -80,7 +81,9 @@ export class ProcessModule {
                         name: 'adf-process-services',
                         source: 'assets/adf-process-services'
                     }
-                }
+                },
+                FormRenderingService,
+                { provide: FormRenderingService, useClass: ProcessFormRenderingService }
             ]
         };
     }

@@ -198,7 +198,18 @@ export class ExtensionService {
      * @param context Parameter object for the expression with details of app state
      * @returns Result of evaluated expression, if found, or the literal value otherwise
      */
-    runExpression(value: string, context?: any) {
+    runExpression(value: string | {} , context?: any) {
+        if (typeof value === 'string' ) {
+            return this.evaluateExpression(value, context);
+        } else {
+            Object.keys(value).forEach( (key) => {
+                value[key] = this.evaluateExpression(value[key], context);
+            });
+            return value;
+        }
+    }
+
+    private evaluateExpression(value: string, context?: any): string {
         const pattern = new RegExp(/\$\((.*\)?)\)/g);
         const matches = pattern.exec(value);
 
@@ -209,7 +220,6 @@ export class ExtensionService {
 
             return result;
         }
-
         return value;
     }
 }

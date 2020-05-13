@@ -36,6 +36,7 @@ import { fakeTaskProcessVariableModels,
         formValues, complexVisibilityJsonVisible,
         complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
         tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
+import { formWithOneVisibleAndOneInvisibleFieldMock, formWithOneVisibleAndOneInvisibleTabMock } from '../components/mock/form-renderer.component.mock';
 
 declare let jasmine: any;
 
@@ -1054,6 +1055,57 @@ describe('WidgetVisibilityService', () => {
             service.refreshVisibility(invalidTabVisibilityJsonModel);
             invalidTabVisibilityJsonModel.validateForm();
             expect(invalidTabVisibilityJsonModel.isValid).toBeTruthy();
+        });
+    });
+
+    describe('Remove invisible field values', () => {
+
+        let fakeFormWithField: FormModel;
+        let fakeFormWithTab: FormModel;
+
+        beforeEach(() => {
+            fakeFormWithField = new FormModel(formWithOneVisibleAndOneInvisibleFieldMock);
+            fakeFormWithTab = new FormModel(formWithOneVisibleAndOneInvisibleTabMock);
+        });
+
+        it('Should remove invisible field value from the form values', () => {
+            service.refreshVisibility(fakeFormWithField);
+            service.removeInvisibleFormValues(fakeFormWithField);
+            expect(fakeFormWithField.values).toEqual({ mockname: 'Mock value' });
+        });
+
+        it('Should be able to add field value to the form values if the field get visible', () => {
+            service.refreshVisibility(fakeFormWithField);
+            service.removeInvisibleFormValues(fakeFormWithField);
+            expect(fakeFormWithField.values).toEqual({ mockname: 'Mock value' });
+
+            const mockNameFiled = fakeFormWithField.getFormFields().find((field) => field.id === 'mockname');
+            mockNameFiled.value = 'test';
+            mockNameFiled.updateForm();
+
+            service.refreshVisibility(fakeFormWithField);
+            service.removeInvisibleFormValues(fakeFormWithField);
+            expect(fakeFormWithField.values).toEqual({ mockname: 'test', mockmobilenumber: 'Mock invisible value' });
+        });
+
+        it('Should be able to remove invisible tab fields value from the form values', () => {
+            service.refreshVisibility(fakeFormWithTab);
+            expect(fakeFormWithTab.values).toEqual({ mockname: null, mockmobilenumber: null, mockemail: null, mockaddress: null });
+            service.removeInvisibleFormValues(fakeFormWithTab);
+            expect(fakeFormWithTab.values).toEqual({ mockname: null });
+        });
+
+        it('Should be able to add tab fields value to the form values if the tab get visible', () => {
+            service.refreshVisibility(fakeFormWithTab);
+            expect(fakeFormWithTab.values).toEqual({ mockname: null, mockmobilenumber: null, mockemail: null, mockaddress: null });
+
+            const mockNameFiled = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockname');
+            mockNameFiled.value = 'test';
+            mockNameFiled.updateForm();
+
+            service.refreshVisibility(fakeFormWithTab);
+            service.removeInvisibleFormValues(fakeFormWithTab);
+            expect(fakeFormWithTab.values).toEqual({ mockname: 'test', mockmobilenumber: null, mockemail: null, mockaddress: null });
         });
     });
 });

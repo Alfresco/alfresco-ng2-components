@@ -67,7 +67,6 @@ describe('Task', () => {
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp(app.title);
-
         });
 
         afterEach(async () => {

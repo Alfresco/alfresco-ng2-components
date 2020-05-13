@@ -77,14 +77,12 @@ describe('Form widgets', () => {
             const formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
             formInstance.setFields(formDefinition.fields);
             formInstance.setAllWidgets(formDefinition.fields);
-
         });
 
         afterAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
         });
 
         it('[C272778] Should display text and multi-line in form', async () => {
@@ -221,7 +219,6 @@ describe('Form widgets', () => {
             const processUtil = new ProcessUtil(alfrescoJsApi);
             process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-
         });
 
         beforeEach(async () => {
@@ -235,7 +232,6 @@ describe('Form widgets', () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
-
         });
 
         it('[C260405] Value fields configured with process variables', async () => {

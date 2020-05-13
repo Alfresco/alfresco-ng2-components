@@ -283,7 +283,6 @@ describe('Search Checklist Component', () => {
 
         beforeAll(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         });
 
         it('[C277018] Should be able to change the operator', async () => {

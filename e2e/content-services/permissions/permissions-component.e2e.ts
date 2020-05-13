@@ -183,7 +183,6 @@ describe('Permissions Component', () => {
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
             await permissionsPage.checkPermissionContainerIsDisplayed();
-
         });
 
         afterEach(async () => {

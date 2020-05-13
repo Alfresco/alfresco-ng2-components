@@ -20,7 +20,9 @@ import {
     Output, SimpleChanges, ViewChild, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import {
-    ActivitiContentService, AppConfigService, AppConfigValues,
+    ActivitiContentService,
+    AppConfigService,
+    AppConfigValues,
     FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -108,6 +110,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     processDefinitionInput: FormControl;
     filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = this.MAX_LENGTH;
+    alfrescoRepositoryName: string;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -131,6 +134,13 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 map((value) => this._filter(value)),
                 takeUntil(this.onDestroy$)
             );
+
+        this.activitiContentService.getAlfrescoRepositories().subscribe((repoList) => {
+            if (repoList && repoList[0]) {
+                const alfrescoRepository = repoList[0];
+                this.alfrescoRepositoryName = `alfresco-${alfrescoRepository.id}-${alfrescoRepository.name}`;
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -211,7 +221,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     getAlfrescoRepositoryName(): string {
         let alfrescoRepositoryName = this.appConfig.get<string>(AppConfigValues.ALFRESCO_REPOSITORY_NAME);
         if (!alfrescoRepositoryName) {
-            alfrescoRepositoryName = 'alfresco-1';
+            alfrescoRepositoryName = this.alfrescoRepositoryName;
         }
         return alfrescoRepositoryName + 'Alfresco';
     }

@@ -16,7 +16,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { TRANSLATION_PROVIDER, CoreModule } from '@alfresco/adf-core';
+import { TRANSLATION_PROVIDER, CoreModule, FormRenderingService } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
 import { ProcessCloudModule } from './process/process-cloud.module';
@@ -30,6 +30,7 @@ import {
     TASK_FILTERS_SERVICE_TOKEN
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
+import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
 
 @NgModule({
     imports: [
@@ -54,7 +55,9 @@ import { PeopleCloudModule } from './people/people-cloud.module';
         UserPreferenceCloudService,
         LocalPreferenceCloudService,
         { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+        FormRenderingService,
+        { provide: FormRenderingService, useClass: CloudFormRenderingService }
     ],
     exports: [
         AppListCloudModule,

@@ -19,7 +19,6 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@
 import {
   FormModel,
   ContentLinkModel,
-  FormRenderingService,
   FormFieldValidator,
   FormOutcomeEvent,
   AuthenticationService,
@@ -29,8 +28,6 @@ import {
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
-import { AttachFileWidgetComponent } from '../../../content-widget/attach-file-widget.component';
-import { AttachFolderWidgetComponent } from '../../../content-widget/attach-folder-widget.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -129,11 +126,8 @@ export class TaskFormComponent implements OnInit {
   constructor(
     private taskListService: TaskListService,
     private authService: AuthenticationService,
-    private formRenderingService: FormRenderingService,
     private translationService: TranslationService
   ) {
-    this.formRenderingService.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-    this.formRenderingService.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
   }
 
   ngOnInit() {

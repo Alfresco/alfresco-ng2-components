@@ -105,4 +105,52 @@ describe('Sites service', () => {
             }
         });
     });
+
+    it('should get a list of membership requests', (done) => {
+        service.getSiteMembershipRequests().subscribe((data) => {
+            expect(data.list.entries[0].entry.site.id).toBe('site-id');
+            expect(data.list.entries[0].entry.person.id).toBe('user-id');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'json',
+            responseText: {
+                'list': {
+                    'pagination': {
+                        'count': 1,
+                        'hasMoreItems': false,
+                        'totalItems': 1,
+                        'skipCount': 0,
+                        'maxItems': 100
+                    },
+                    'entries': [
+                        {
+                            'entry': {
+                                'id': 'site-id',
+                                'createdAt': '2020-05-13T07:46:36.180Z',
+                                'site': {
+                                        'id': 'site-id',
+                                        'guid': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                                        'title': 'Sample Site',
+                                        'description': '',
+                                        'visibility': 'MODERATED',
+                                        'preset': 'preset',
+                                        'role': 'Manager'
+                                },
+                                'person': {
+                                        'id': 'user-id',
+                                        'firstName': 'string',
+                                        'lastName': 'string',
+                                        'displayName': 'string'
+                                },
+                                'message': 'message'
+                            }
+                      }
+                    ]
+                }
+            }
+        });
+    });
 });

@@ -59,9 +59,10 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-   });
+    });
 
     afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await navigationBarPage.clickLogoutButton();
     });
 
@@ -77,12 +78,10 @@ describe('Viewer', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(wordFolderUploaded.entry.id);
-
         });
 
         it('[C280011] Should be possible to open any Word file', async () => {
@@ -95,5 +94,5 @@ describe('Viewer', () => {
                 }
             }
         });
-   });
+    });
 });

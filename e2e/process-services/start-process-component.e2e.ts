@@ -520,7 +520,6 @@ describe('Start Process Component', () => {
 
             const appCreated = await applicationsService.importPublishDeployApp(startProcessAttachFileApp.file_path);
             appId = appCreated.id;
-
         });
 
         afterAll(async () => {

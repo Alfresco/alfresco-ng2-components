@@ -26,7 +26,10 @@ import { AttachFolderWidgetComponent } from '../content-widget/attach-folder-wid
 export class ProcessFormRenderingService extends FormRenderingService {
     constructor() {
         super();
-        this.setComponentTypeResolver('upload', () => AttachFileWidgetComponent, true);
-        this.setComponentTypeResolver('select-folder', () => AttachFolderWidgetComponent, true);
+
+        this.register({
+            'upload': () => AttachFileWidgetComponent,
+            'select-folder': () => AttachFolderWidgetComponent
+        }, true);
     }
 }

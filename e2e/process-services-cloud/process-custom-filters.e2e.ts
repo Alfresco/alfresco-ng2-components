@@ -101,7 +101,6 @@ describe('Process list cloud', () => {
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
             await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
-
         });
 
         afterAll(async () => {

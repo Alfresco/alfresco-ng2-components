@@ -54,7 +54,6 @@ describe('StartFormComponent', () => {
     });
 
     const selectOptionByName = (name: string) => {
-
         const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
         selectElement.click();
         fixture.detectChanges();
@@ -78,6 +77,7 @@ describe('StartFormComponent', () => {
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
         getStartFormDefinitionSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of(taskFormMock));
         applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of({ id: 1234 }));
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of([{ id: '1', name: 'fake-repo-name'}]));
     });
 
     afterEach(() => {
@@ -205,15 +205,7 @@ describe('StartFormComponent', () => {
 
         describe('CS content connection', () => {
 
-            it('alfrescoRepositoryName default configuration property', () => {
-                appConfig.config = Object.assign(appConfig.config, {
-                    'alfrescoRepositoryName': null
-                });
-
-                expect(component.getAlfrescoRepositoryName()).toBe('alfresco-1Alfresco');
-            });
-
-            it('alfrescoRepositoryName configuration property should be fetched', () => {
+            it('Should get the alfrescoRepositoryName from the config json', async () => {
                 appConfig.config = Object.assign(appConfig.config, {
                     'alfrescoRepositoryName': 'alfresco-123'
                 });
@@ -221,8 +213,13 @@ describe('StartFormComponent', () => {
                 expect(component.getAlfrescoRepositoryName()).toBe('alfresco-123Alfresco');
             });
 
-            it('if values in input is a node should be linked in the process service', async(() => {
+            it('Should take the alfrescoRepositoryName from the API when there is no alfrescoRepositoryName defined in config json', async () => {
+                fixture.detectChanges();
+                await fixture.whenStable();
+                expect(component.alfrescoRepositoryName).toBe('alfresco-1-fake-repo-name');
+            });
 
+            it('if values in input is a node should be linked in the process service', async(() => {
                 component.values = {};
                 component.values['file'] = {
                     isFile: true,
@@ -238,7 +235,6 @@ describe('StartFormComponent', () => {
             }));
 
             it('if values in input is a collection of nodes should be linked in the process service', async(() => {
-
                 component.values = {};
                 component.values['file'] = [
                     {

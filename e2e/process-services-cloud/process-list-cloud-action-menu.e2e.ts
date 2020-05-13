@@ -78,7 +78,6 @@ describe('Process list cloud', () => {
         afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeAll(async () => {

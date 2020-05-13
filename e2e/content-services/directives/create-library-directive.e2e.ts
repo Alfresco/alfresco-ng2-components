@@ -58,16 +58,17 @@ describe('Create library directive', () => {
             title: StringUtil.generateRandomString(20).toLowerCase(),
             visibility: 'PUBLIC'
         });
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
     });
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.openCreateLibraryDialog();
-   });
+    });
 
     afterEach(async () => {
         await BrowserActions.closeMenuAndDialogs();

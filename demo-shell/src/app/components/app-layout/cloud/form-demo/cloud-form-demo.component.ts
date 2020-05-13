@@ -16,13 +16,16 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormFieldModel, NotificationService, CoreAutomationService, FormModel } from '@alfresco/adf-core';
-import { FormCloudService } from '@alfresco/adf-process-services-cloud';
+import { FormFieldModel, NotificationService, CoreAutomationService, FormModel, FormRenderingService } from '@alfresco/adf-core';
+import { FormCloudService, CloudFormRenderingService } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
 
 @Component({
     templateUrl: 'cloud-form-demo.component.html',
-    styleUrls: ['cloud-form-demo.component.scss']
+    styleUrls: ['cloud-form-demo.component.scss'],
+    providers: [
+        { provide: FormRenderingService, useClass: CloudFormRenderingService }
+    ]
 })
 export class FormCloudDemoComponent implements OnInit, OnDestroy {
 

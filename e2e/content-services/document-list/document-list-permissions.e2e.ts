@@ -57,7 +57,7 @@ describe('Document List Component', () => {
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {

@@ -98,6 +98,7 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     instance.fieldChanged.subscribe((field) => {
                         if (field && this.field.form) {
                             this.visibilityService.refreshVisibility(field.form);
+                            this.visibilityService.removeInvisibleFormValues(field.form);
                             field.form.onFormFieldChanged(field);
                         }
                     });
