@@ -36,6 +36,7 @@ import { AttachFileCloudWidgetComponent } from './components/widgets/attach-file
 import { UploadCloudWidgetComponent } from './components/widgets/attach-file/upload-cloud.widget';
 import { PeopleCloudModule } from '../people/people-cloud.module';
 import { GroupCloudModule } from '../group/group-cloud.module';
+import { CloudFormRenderingService } from './components/cloud-form-rendering.service';
 
 @NgModule({
     imports: [
@@ -65,7 +66,8 @@ import { GroupCloudModule } from '../group/group-cloud.module';
     ],
     providers: [
         FormDefinitionSelectorCloudService,
-        FormRenderingService
+        FormRenderingService,
+        { provide: FormRenderingService, useClass: CloudFormRenderingService }
     ],
     entryComponents: [
         UploadCloudWidgetComponent,

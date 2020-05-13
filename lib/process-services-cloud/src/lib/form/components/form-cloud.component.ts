@@ -29,7 +29,6 @@ import {
     WidgetVisibilityService,
     FormService,
     NotificationService,
-    FormRenderingService,
     FORM_FIELD_VALIDATORS,
     FormFieldValidator,
     FormValues,
@@ -40,14 +39,10 @@ import {
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
-import { CloudFormRenderingService } from './cloud-form-rendering.service';
 
 @Component({
     selector: 'adf-cloud-form',
-    templateUrl: './form-cloud.component.html',
-    providers: [
-        { provide: FormRenderingService, useClass: CloudFormRenderingService }
-    ]
+    templateUrl: './form-cloud.component.html'
 })
 export class FormCloudComponent extends FormBaseComponent implements OnChanges, OnDestroy {
 
