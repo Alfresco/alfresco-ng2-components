@@ -163,7 +163,6 @@ describe('Permissions Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
 
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + publicSite.entry.guid);
-
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {
@@ -228,7 +227,6 @@ describe('Permissions Component', () => {
             await contentServicesPage.uploadFile(testFileModel.location);
 
             await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
-
         });
 
         it('[C276997] Role SiteContributor', async () => {
@@ -259,7 +257,6 @@ describe('Permissions Component', () => {
             await uploadDialog.fileIsUploaded(testFileModel.name);
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
-
         });
 
         it('[C277005] Role SiteCollaborator', async () => {

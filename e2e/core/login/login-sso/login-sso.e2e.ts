@@ -71,7 +71,6 @@ describe('Login component - SSO', () => {
             await loginPage.clickSignInButton();
 
             await BrowserVisibility.waitUntilElementIsVisible(loginPage.sidenavLayout);
-
         });
     });
 });

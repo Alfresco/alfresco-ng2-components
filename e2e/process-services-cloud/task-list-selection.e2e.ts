@@ -60,13 +60,11 @@ describe('Task list cloud - selection', () => {
             }
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
         });
 
         afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeEach(async () => {

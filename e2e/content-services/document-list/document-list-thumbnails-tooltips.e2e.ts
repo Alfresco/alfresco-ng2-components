@@ -88,7 +88,6 @@ describe('Document List Component', () => {
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
             folderNode = await uploadActions.createFolder(folderName, '-my-');
-
         });
 
         afterAll(async () => {
@@ -126,25 +125,21 @@ describe('Document List Component', () => {
         it('[C260119] Should have a specific thumbnail for folders', async () => {
             const folderIconUrl = await contentServicesPage.getRowIconImageUrl(folderName);
             await expect(folderIconUrl).toContain('/assets/images/ft_ic_folder.svg');
-
         });
 
         it('[C280066] Should have a specific thumbnail PDF files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             await expect(fileIconUrl).toContain('/assets/images/ft_ic_pdf.svg');
-
         });
 
         it('[C280067] Should have a specific thumbnail DOCX files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(docxFile.name);
             await expect(fileIconUrl).toContain('/assets/images/ft_ic_ms_word.svg');
-
         });
 
         it('[C280068] Should have a specific thumbnail files', async () => {
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(testFile.name);
             await expect(fileIconUrl).toContain('/assets/images/ft_ic_document.svg');
-
         });
 
         it('[C274701] Should be able to enable thumbnails', async () => {
@@ -152,7 +147,6 @@ describe('Document List Component', () => {
             await contentServicesPage.checkAcsContainer();
             const fileIconUrl = await contentServicesPage.getRowIconImageUrl(pdfFile.name);
             await expect(fileIconUrl).toContain(`/versions/1/nodes/${filePdfNode.entry.id}/renditions`);
-
         });
     });
 });

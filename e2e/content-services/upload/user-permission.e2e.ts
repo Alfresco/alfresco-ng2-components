@@ -88,13 +88,17 @@ describe('Upload - User permission', () => {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
-   });
+    });
+
+    afterEach(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id);
+    });
 
     describe('Consumer permissions', () => {
 
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
-
         });
 
         it('[C291921] Should display tooltip for uploading files without permissions', async () => {
@@ -128,7 +132,7 @@ describe('Upload - User permission', () => {
 
             await notificationHistoryPage.checkNotifyContains('You don\'t have the create permission to upload the content');
         });
-   });
+    });
 
     describe('full permissions', () => {
 
@@ -136,7 +140,6 @@ describe('Upload - User permission', () => {
             await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
             await contentServicesPage.goToDocumentList();
-
         });
 
         it('[C279917] Should be allowed to upload a file in a folder with manager permissions', async () => {
@@ -144,13 +147,12 @@ describe('Upload - User permission', () => {
 
             await uploadDialog.fileIsUploaded(emptyFile.name);
         });
-   });
+    });
 
     describe('multiple users', () => {
 
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
-
         });
 
         it('[C260175] Should two different user upload files in the proper User Home', async () => {

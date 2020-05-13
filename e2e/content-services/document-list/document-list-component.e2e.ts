@@ -94,7 +94,6 @@ describe('Document List Component', () => {
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
-
         });
 
         afterAll(async () => {
@@ -117,7 +116,6 @@ describe('Document List Component', () => {
 
         beforeEach(async () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         });
 
         it('[C279926] Should only display the user\'s files and folders', async () => {
@@ -142,7 +140,6 @@ describe('Document List Component', () => {
             await contentServicesPage.goToDocumentList();
             const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
             await expect(dateValue).toMatch(/(ago|few)/);
-
         });
 
         it('[C279929] Should be able to display the date with date type', async () => {
@@ -153,7 +150,6 @@ describe('Document List Component', () => {
             await contentServicesPage.enableMediumTimeFormat();
             const dateValue = await contentServicesPage.getColumnValueForRow(mediumFileModel.name, 'Created');
             await expect(dateValue).toContain(createdDate);
-
         });
     });
 
@@ -191,7 +187,6 @@ describe('Document List Component', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(user);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
@@ -351,7 +346,6 @@ describe('Document List Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkListIsSortedByNameColumn('asc');
-
         });
     });
 
@@ -375,7 +369,6 @@ describe('Document List Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
-
         });
 
         it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {

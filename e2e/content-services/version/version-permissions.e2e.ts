@@ -67,7 +67,6 @@ describe('Version component permissions', () => {
     const nodeActions = new NodeActions();
 
     beforeAll(async () => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
@@ -114,6 +113,10 @@ describe('Version component permissions', () => {
         await this.alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
 
         await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
+    });
+
+    afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
     });
 
     describe('Manager', () => {
@@ -172,7 +175,6 @@ describe('Version component permissions', () => {
             await loginPage.loginToContentServicesUsingUserModel(consumerUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
-
         });
 
         afterAll(async () => {
@@ -206,7 +208,6 @@ describe('Version component permissions', () => {
             await loginPage.loginToContentServicesUsingUserModel(contributorUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
-
         });
 
         afterAll(async () => {
@@ -262,7 +263,6 @@ describe('Version component permissions', () => {
             await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
-
         });
 
         afterAll(async () => {

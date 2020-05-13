@@ -59,14 +59,12 @@ describe('Document List Component - Properties', () => {
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
-
         });
 
         afterEach(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
-
         });
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {

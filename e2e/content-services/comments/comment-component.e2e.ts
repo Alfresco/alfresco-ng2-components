@@ -181,12 +181,11 @@ describe('Comment Component', () => {
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             await navigationBarPage.clickContentServicesButton();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
-
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {

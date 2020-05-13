@@ -106,20 +106,20 @@ describe('Unshare file', () => {
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navBar.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(testSite.entry.id);
     });
 
     afterEach(async () => {
         await browser.refresh();
-   });
+    });
 
     describe('with permission', () => {
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(nodeId);
-
         });
 
         it('[C286550] Should display unshare confirmation dialog', async () => {
@@ -168,7 +168,6 @@ describe('Unshare file', () => {
         afterAll(async () => {
             await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await this.alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
-
         });
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {

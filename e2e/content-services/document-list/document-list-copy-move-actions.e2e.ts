@@ -121,7 +121,6 @@ describe('Document List Component', () => {
         beforeEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
             await navigationBarPage.clickContentServicesButton();
-
         });
 
         it('[C260128] Move - Same name file', async () => {

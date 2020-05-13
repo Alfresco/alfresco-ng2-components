@@ -125,7 +125,6 @@ describe('Restore content directive', () => {
             await contentServicesPage.checkContentIsDisplayed(folderName);
 
             await notificationHistoryPage.checkNotifyContains('Can\'t restore, ' + folderName + ' item already exists');
-
         });
     });
 
@@ -267,7 +266,6 @@ describe('Restore content directive', () => {
             await contentServicesPage.doubleClickRow(siteFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(siteFile.entry.name);
             await notificationHistoryPage.checkNotifyContains(publicSite.entry.id + ' item restored');
-
         });
     });
 

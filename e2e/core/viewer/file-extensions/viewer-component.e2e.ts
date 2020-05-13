@@ -71,6 +71,7 @@ describe('Viewer', () => {
     });
 
     afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
         await navigationBarPage.clickLogoutButton();
     });
 
@@ -99,12 +100,10 @@ describe('Viewer', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(otherFolderUploaded.entry.id);
-
         });
 
         it('[C280012] Should be possible to open any other Document supported extension', async () => {
