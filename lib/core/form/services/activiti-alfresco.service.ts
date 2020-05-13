@@ -55,10 +55,12 @@ export class ActivitiContentService {
     /**
      * Returns a list of all the repositories configured
      * @param includeAccounts
+     * @param tenantId
      */
-    getAlfrescoRepositories(includeAccounts: boolean): Observable<any> {
+    getAlfrescoRepositories(includeAccounts: boolean, tenantId?: number): Observable<any> {
         const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
         const opts = {
+            tenantId,
             includeAccounts
         };
         return from(apiService.activiti.alfrescoApi.getRepositories(opts))
