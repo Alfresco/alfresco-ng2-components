@@ -246,9 +246,7 @@ describe('Delete Directive', () => {
 
         afterAll(async () => {
             try {
-                await this.alfrescoJsApi.core.sitesApi.deleteSite(
-                    createdSite.entry.id
-                );
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
         });
 

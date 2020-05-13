@@ -56,7 +56,11 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-   });
+    });
+
+    afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+    });
 
     describe('Text Folder Uploaded', () => {
 
@@ -70,12 +74,10 @@ describe('Viewer', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(textFolderUploaded.entry.id);
-
         });
 
         it('[C280010] Should be possible to open any Text file', async () => {
@@ -88,5 +90,5 @@ describe('Viewer', () => {
                 }
             }
         });
-   });
+    });
 });

@@ -33,9 +33,9 @@ describe('Viewer', () => {
     const navigationBarPage = new NavigationBarPage();
 
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -71,6 +71,7 @@ describe('Viewer', () => {
     });
 
     afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await navigationBarPage.clickLogoutButton();
     });
 
@@ -99,12 +100,10 @@ describe('Viewer', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(otherFolderUploaded.entry.id);
-
         });
 
         it('[C280012] Should be possible to open any other Document supported extension', async () => {
@@ -117,5 +116,5 @@ describe('Viewer', () => {
                 }
             }
         });
-   });
+    });
 });

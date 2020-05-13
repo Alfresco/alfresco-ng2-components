@@ -74,13 +74,16 @@ describe('Lock File', () => {
         });
     });
 
+    afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+    });
+
     describe('Lock file interaction with the UI', () => {
 
         beforeAll(async () => {
             const pngLockedUploadedFile = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
             lockedFileNodeId = pngLockedUploadedFile.entry.id;
-
         });
 
         beforeEach(async () => {
@@ -177,7 +180,6 @@ describe('Lock File', () => {
             await loginPage.loginToContentServicesUsingUserModel(managerUser);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
-
         });
 
         afterEach(async () => {

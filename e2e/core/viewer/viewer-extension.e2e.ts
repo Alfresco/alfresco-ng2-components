@@ -66,9 +66,10 @@ describe('Viewer', () => {
         jsFileUploaded = await uploadActions.uploadFile(jsFileInfo.location, jsFileInfo.name, '-my-');
 
         await loginPage.loginToContentServicesUsingUserModel(acsUser);
-   });
+    });
 
     afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(jsFileUploaded.entry.id);
     });

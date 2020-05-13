@@ -48,13 +48,11 @@ describe('Task filters cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
         });
 
         afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeEach(async () => {

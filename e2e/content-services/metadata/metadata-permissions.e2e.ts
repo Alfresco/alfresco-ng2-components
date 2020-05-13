@@ -92,7 +92,7 @@ describe('permissions', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {

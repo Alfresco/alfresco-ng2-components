@@ -112,7 +112,6 @@ describe('Task filters cloud', () => {
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
-
         });
 
         it('[C290045] Should display only tasks with Assigned status when Assigned is selected from status dropdown', async () => {

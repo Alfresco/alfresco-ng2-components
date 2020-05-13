@@ -91,7 +91,6 @@ describe('Process List - Pagination', () => {
 
         beforeEach(async () => {
             await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-
         });
 
         it('[C261042] Should display default pagination',  async() => {

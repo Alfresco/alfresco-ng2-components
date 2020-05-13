@@ -228,7 +228,6 @@ describe('Edit folder directive', () => {
             await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
-
         });
 
         it('[C260167] Edit folder without permission', async () => {

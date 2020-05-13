@@ -29,9 +29,9 @@ describe('Viewer', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
     const acsUser = new AcsUserModel();
@@ -61,7 +61,11 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-   });
+    });
+
+    afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+    });
 
     describe('Image Folder Uploaded', () => {
 
@@ -79,12 +83,10 @@ describe('Viewer', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(imgFolderUploaded.entry.id);
-
         });
 
         it('[C279966] Should be possible to open any Image supported extension', async () => {
@@ -105,5 +107,5 @@ describe('Viewer', () => {
                 }
             }
         });
-   });
+    });
 });

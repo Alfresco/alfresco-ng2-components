@@ -57,7 +57,11 @@ describe('Viewer', () => {
         });
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-   });
+    });
+
+    afterAll(async () => {
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+    });
 
     describe('PowerPoint Folder Uploaded', () => {
 
@@ -71,12 +75,10 @@ describe('Viewer', () => {
 
             await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
-
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(pptFolderUploaded.entry.id);
-
         });
 
         it('[C280009] Should be possible to open any PowerPoint file', async () => {
@@ -90,5 +92,5 @@ describe('Viewer', () => {
                 }
             }
         });
-   });
+    });
 });

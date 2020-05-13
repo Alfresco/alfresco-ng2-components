@@ -240,7 +240,6 @@ describe('People Groups Cloud Component', () => {
 
             await peopleCloudComponent.searchAssigneeToExisting(noRoleUser.lastName);
             await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
-
         });
 
         it('[C309677] Should populate the Users without any validation when the Preselect flag is set to false', async () => {
@@ -255,7 +254,6 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkSelectedPeople('TestFirstName1 TestLastName1');
             await peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
             await peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
-
         });
    });
 });

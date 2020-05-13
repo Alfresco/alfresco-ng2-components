@@ -65,13 +65,11 @@ describe('Process list cloud', () => {
             await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-
         });
 
         afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeAll(async () => {

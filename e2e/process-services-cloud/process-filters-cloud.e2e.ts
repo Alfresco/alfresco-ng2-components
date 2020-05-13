@@ -95,7 +95,6 @@ describe('Process filters cloud', () => {
         afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-
         });
 
         beforeEach(async () => {
@@ -104,7 +103,6 @@ describe('Process filters cloud', () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
             await tasksCloudDemoPage.taskListCloudComponent().checkTaskListIsLoaded();
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
-
         });
 
         it('[C290021] Should be able to view default filters', async () => {

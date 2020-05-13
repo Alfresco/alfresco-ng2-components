@@ -61,7 +61,6 @@ describe('Datatable component', () => {
         beforeAll(async () => {
             await navigationBarPage.navigateToCopyContentDatatable();
             await dataTablePage.dataTable.waitForTableBody();
-
         });
 
         it('[C307037] A tooltip is displayed when mouseOver a column with copyContent set to true', async () => {
