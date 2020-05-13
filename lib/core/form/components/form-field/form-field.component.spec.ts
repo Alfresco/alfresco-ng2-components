@@ -26,6 +26,7 @@ import { FormBaseModule } from '../../form-base.module';
 import { TranslationService } from '../../../services/translation.service';
 import { TranslationMock } from '../../../mock/translation.service.mock';
 import { TranslateStore } from '@ngx-translate/core';
+import { formWithOneVisibleAndOneInvisibleFieldMock, formWithOneVisibleAndOneInvisibleTabMock } from '../mock/form-renderer.component.mock';
 
 describe('FormFieldComponent', () => {
 
@@ -150,6 +151,78 @@ describe('FormFieldComponent', () => {
         component.field.isVisible = false;
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('#field-FAKE-TXT-WIDGET-container').hidden).toBeTruthy();
+    });
+
+    it('Should remove invisible field value from the form values', (done) => {
+        const fakeFormWithField = new FormModel(formWithOneVisibleAndOneInvisibleFieldMock);
+        const mockNameFiled = fakeFormWithField.getFormFields().find((field) => field.id === 'mockname');
+        const mockMobileFiled = fakeFormWithField.getFormFields().find((field) => field.id === 'mockmobilenumber');
+
+        expect(mockNameFiled.name).toBe('Mock Name', 'Visibile field');
+        expect(mockMobileFiled.name).toBe('Mock Mobile Number', 'Invisible field');
+
+        component.field = mockNameFiled;
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(component.field.form.values).toEqual({ mockname: 'Mock value' });
+            expect(component.field.form.values[mockNameFiled.id]).toBeDefined();
+            expect(component.field.form.values[mockMobileFiled.id]).not.toBeDefined();
+            done();
+        });
+    });
+
+    it('Should remove invisible tab fields value from the form values', (done) => {
+        const fakeFormWithTab = new FormModel(formWithOneVisibleAndOneInvisibleTabMock);
+
+        const tabOneNameField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockname');
+        const tabOneMobileField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockmobilenumber');
+
+        const tabTwoAddressField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockaddress');
+        const tabTwoEmailField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockemail');
+
+        expect(tabOneNameField.name).toBe('Mock Name', 'Visibile field');
+        expect(tabOneMobileField.name).toBe('Mock Mobile Number', 'Invisible field');
+
+        expect(tabTwoEmailField.name).toBe('Mock Email', 'Invisible field');
+        expect(tabTwoAddressField.name).toBe('Mock Address', 'Invisible field');
+
+        component.field = tabOneNameField;
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(component.field.form.values).toEqual({ mockname: null });
+            expect(component.field.form.values[tabOneNameField.id]).toBeDefined();
+            expect(component.field.form.values[tabOneMobileField.id]).not.toBeDefined();
+            expect(component.field.form.values[tabTwoAddressField.id]).not.toBeDefined();
+            expect(component.field.form.values[tabTwoEmailField.id]).not.toBeDefined();
+            done();
+        });
+    });
+
+    it('Should add tab invisible fields value to the form values if the tab get visible', (done) => {
+        const fakeFormWithTab = new FormModel(formWithOneVisibleAndOneInvisibleTabMock);
+
+        const tabOneNameField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockname');
+        const tabOneMobileField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockmobilenumber');
+
+        const tabTwoAddressField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockaddress');
+        const tabTwoEmailField = fakeFormWithTab.getFormFields().find((field) => field.id === 'mockemail');
+
+        expect(tabOneNameField.name).toBe('Mock Name', 'Visibile field');
+        expect(tabOneMobileField.name).toBe('Mock Mobile Number', 'Invisible field');
+
+        expect(tabTwoEmailField.name).toBe('Mock Email', 'Invisible field');
+        expect(tabTwoAddressField.name).toBe('Mock Address', 'Invisible field');
+
+        component.field = tabOneNameField;
+        component.field.value = 'test';
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+            expect(component.field.form.values).toEqual({ mockname: 'test', mockmobilenumber: null, mockemail: null, mockaddress: null });
+            done();
+        });
     });
 
     it('[C213878] - Should fields be correctly rendered when filled with process variables', async () => {
