@@ -185,7 +185,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(subTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : subTask.entry.description);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual(subTask.entry.status);
+        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
         await expect(await taskHeaderCloudPage.getPriority()).toEqual(subTask.entry.priority.toString());
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!subTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : subTask.entry.category);

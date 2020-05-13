@@ -16,7 +16,16 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, TasksService, ApiService, AppListCloudPage, StringUtil, IdentityService, GroupIdentityService } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    TasksService,
+    ApiService,
+    AppListCloudPage,
+    StringUtil,
+    IdentityService,
+    GroupIdentityService,
+    QueryService
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 
@@ -27,16 +36,19 @@ describe('Task filters cloud', () => {
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+
         let tasksService: TasksService;
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
+        let queryService: QueryService;
         let testUser, groupInfo;
         const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-        beforeAll(async() => {
+        beforeAll(async () => {
+            queryService = new QueryService(apiService);
 
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
@@ -48,11 +60,13 @@ describe('Task filters cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+
         });
 
-        afterAll(async() => {
+        afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
+
         });
 
         beforeEach(async () => {
@@ -84,6 +98,7 @@ describe('Task filters cloud', () => {
             await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);
 
+            await queryService.getTaskByStatus(toBeCompletedTask.entry.name, simpleApp, 'COMPLETED');
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
@@ -94,5 +109,5 @@ describe('Task filters cloud', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);
         });
 
-   });
+    });
 });
