@@ -104,6 +104,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     disableStartButton: boolean = true;
 
     protected onDestroy$ = new Subject<boolean>();
+    processDefinitionLoaded = false;
 
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder) {
@@ -233,7 +234,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.resetErrorMessage();
 
         this.startProcessCloudService.getProcessDefinitions(this.appName)
-            .pipe(takeUntil(this.onDestroy$))
+            .pipe(
+                tap(() => this.processDefinitionLoaded = true),
+                takeUntil(this.onDestroy$))
             .subscribe((processDefinitionRepresentations: ProcessDefinitionCloud[]) => {
                     this.processDefinitionList = processDefinitionRepresentations;
                     if (processDefinitionRepresentations.length === 1) {
