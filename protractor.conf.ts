@@ -6,7 +6,6 @@ const TestConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
-const VideoReporter = require('protractor-video-reporter');
 
 require('ts-node').register({
     project: './lib/testing/tsconfig.lib.json'
@@ -180,18 +179,6 @@ exports.config = {
         });
 
         browser.manage().window().setSize(width, height);
-
-        jasmine.getEnv().addReporter(new VideoReporter({
-            baseDirectory: `${projectRoot}/e2e-output/reports/videos/`,
-            ffmpegArgs: [
-                '-y',
-                '-r', '30',
-                '-f', 'avfoundation',
-                '-i', '1',
-                '-g', '300',
-                '-vcodec', 'mpeg4'
-            ]
-        }));
 
         jasmine.getEnv().addReporter(
             new SpecReporter({
