@@ -24,6 +24,7 @@ export class PeopleCloudComponentPage {
 
     peopleCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     assigneeField: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    selectionReady: ElementFinder = element(by.css('div[data-automation-id="adf-people-cloud-row"]'));
     formFields: FormFields = new FormFields();
     labelLocator: Locator = by.css("label[class*='adf-label']");
     inputLocator: Locator = by.css('input');
@@ -45,10 +46,6 @@ export class PeopleCloudComponentPage {
     }
 
     async searchAssignee(name: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
-    }
-
-    async searchAssigneeToExisting(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, name);
     }
 
@@ -79,6 +76,7 @@ export class PeopleCloudComponentPage {
     }
 
     async checkUserIsNotDisplayed(name: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectionReady);
         const assigneeRow = element(by.cssContainingText('mat-option span.adf-people-label-name', name));
         await BrowserVisibility.waitUntilElementIsNotVisible(assigneeRow);
     }

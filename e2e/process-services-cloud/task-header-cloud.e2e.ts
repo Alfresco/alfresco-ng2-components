@@ -145,7 +145,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(basicCreatedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : basicCreatedTask.entry.description);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual(basicCreatedTask.entry.status);
+        await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
         await expect(await taskHeaderCloudPage.getPriority()).toEqual(basicCreatedTask.entry.priority.toString());
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!basicCreatedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : basicCreatedTask.entry.category);
@@ -165,7 +165,7 @@ describe('Task Header cloud component', () => {
         await expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
             .toEqual(isValueInvalid(completedTask.entry.description) ? CONSTANTS.TASK_DETAILS.NO_DESCRIPTION : completedTask.entry.description);
-        await expect(await taskHeaderCloudPage.getStatus()).toEqual(completedTask.entry.status);
+        await expect(await taskHeaderCloudPage.getStatus()).toEqual('COMPLETED');
         await expect(await taskHeaderCloudPage.getPriority()).toEqual(completedTask.entry.priority.toString());
         await expect(await taskHeaderCloudPage.getCategory()).toEqual(!completedTask.entry.category ?
             CONSTANTS.TASK_DETAILS.NO_CATEGORY : completedTask.entry.category);
@@ -239,12 +239,17 @@ describe('Task Header cloud component', () => {
         const currentAssignee = await peopleCloudComponentPage.getChipAssignee();
         await expect(currentAssignee).toContain(testUser.firstName, 'Invalid Assignee first name set for the new task');
         await expect(currentAssignee).toContain(testUser.lastName, 'Invalid Assignee last name set for the new task');
+
         await peopleCloudComponentPage.searchAssignee('hrUser');
-        await peopleCloudComponentPage.checkUserIsDisplayed('HR User');
+        await peopleCloudComponentPage.selectAssigneeFromList('HR User');
+        await peopleCloudComponentPage.checkSelectedPeople('HR User');
+
         await peopleCloudComponentPage.searchAssignee('processAdmin');
-        await peopleCloudComponentPage.checkUserIsDisplayed('Process Admin User');
+        await peopleCloudComponentPage.selectAssigneeFromList('Process Admin User');
+        await peopleCloudComponentPage.checkSelectedPeople('Process Admin User');
+
         await peopleCloudComponentPage.searchAssignee('modeler');
-        await peopleCloudComponentPage.checkOptionIsNotDisplayed();
+        await peopleCloudComponentPage.checkNoResultsFoundError();
     });
 
     describe('Default Date format', () => {

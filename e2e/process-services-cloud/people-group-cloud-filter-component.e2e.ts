@@ -102,13 +102,13 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`);
 
-            await peopleCloudComponent.searchAssigneeToExisting(apsUser.firstName);
+            await peopleCloudComponent.searchAssignee(apsUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
 
-            await peopleCloudComponent.searchAssigneeToExisting(noRoleUser.firstName);
-            await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
+            await peopleCloudComponent.searchAssignee(noRoleUser.firstName);
+            await peopleCloudComponent.checkNoResultsFoundError();
         });
 
         it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
