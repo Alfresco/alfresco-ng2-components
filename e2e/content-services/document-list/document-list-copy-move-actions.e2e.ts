@@ -109,7 +109,7 @@ describe('Document List Component', () => {
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
         await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Document List Component - Actions Move and Copy', () => {

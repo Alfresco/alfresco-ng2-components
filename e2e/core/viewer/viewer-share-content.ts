@@ -77,10 +77,10 @@ describe('Viewer', () => {
         wordFileUploaded = await uploadActions.uploadFile(wordFileInfo.location, wordFileInfo.name, '-my-');
 
         pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
-   });
+    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);
     });

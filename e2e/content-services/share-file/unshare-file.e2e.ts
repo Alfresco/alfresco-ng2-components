@@ -110,7 +110,7 @@ describe('Unshare file', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(testSite.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
     });
 
     afterEach(async () => {

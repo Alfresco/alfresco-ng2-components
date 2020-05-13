@@ -56,10 +56,10 @@ describe('Viewer', () => {
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-   });
+    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         await navigationBarPage.clickLogoutButton();
     });
 
@@ -88,5 +88,5 @@ describe('Viewer', () => {
                 }
             }
         });
-   });
+    });
 });

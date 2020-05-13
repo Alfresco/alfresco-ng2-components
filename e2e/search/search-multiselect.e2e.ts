@@ -96,7 +96,7 @@ describe('Search Component - Multi-Select Facet', () => {
                 uploadActions.deleteFileOrFolder(txtFileSite.entry.id)
             ]);
 
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -226,7 +226,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(txtFile.entry.id);
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {

@@ -66,7 +66,7 @@ describe('Info Drawer', () => {
     afterAll(async () => {
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(pngFileUploaded.entry.id);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     beforeEach(async() => {

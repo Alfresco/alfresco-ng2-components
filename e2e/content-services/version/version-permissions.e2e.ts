@@ -60,9 +60,9 @@ describe('Version component permissions', () => {
     });
 
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const nodeActions = new NodeActions();
 
@@ -116,7 +116,7 @@ describe('Version component permissions', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Manager', () => {
@@ -191,7 +191,7 @@ describe('Version component permissions', () => {
             await contentServices.getDocumentList().rightClickOnRow(lockFileModel.name);
             await expect(await contentServices.isContextActionEnabled('Manage versions')).toBe(false, 'Manage version is enabled');
         });
-   });
+    });
 
     describe('Contributor', () => {
         const sameCreatorFile = new FileModel({

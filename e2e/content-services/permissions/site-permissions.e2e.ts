@@ -153,8 +153,8 @@ describe('Permissions Component', () => {
         await navigationBarPage.clickLogoutButton();
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });
 
     describe('Role Site Dropdown', () => {

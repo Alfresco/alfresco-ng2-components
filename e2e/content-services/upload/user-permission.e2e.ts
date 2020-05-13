@@ -91,8 +91,8 @@ describe('Upload - User permission', () => {
     });
 
     afterEach(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
     });
 
     describe('Consumer permissions', () => {

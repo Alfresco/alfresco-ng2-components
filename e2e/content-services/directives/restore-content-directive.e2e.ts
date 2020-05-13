@@ -245,7 +245,7 @@ describe('Restore content directive', () => {
 
         afterAll(async () => {
             try {
-                await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
             } catch (error) {
             }
         });

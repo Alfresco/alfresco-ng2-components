@@ -75,7 +75,7 @@ describe('Lock File', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Lock file interaction with the UI', () => {

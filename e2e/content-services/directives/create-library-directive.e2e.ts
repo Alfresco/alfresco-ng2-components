@@ -62,7 +62,7 @@ describe('Create library directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(createSite.entry.id);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
     });
 
     beforeEach(async () => {
