@@ -155,7 +155,7 @@ export class TaskFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Pass the selected filter as next
-     * @param filter
+     * @param newFilter
      */
     public selectFilter(newFilter: FilterParamsModel) {
         if (newFilter) {

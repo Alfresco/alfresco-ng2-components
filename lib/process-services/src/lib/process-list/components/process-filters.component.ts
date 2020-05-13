@@ -157,14 +157,17 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
      */
     selectProcessFilter(filterParam: FilterProcessRepresentationModel) {
         if (filterParam) {
-            this.filters.filter((processFilter: UserProcessInstanceFilterRepresentation, index) => {
-                if (filterParam.name && filterParam.name.toLowerCase() === processFilter.name.toLowerCase() ||
-                    filterParam.id === processFilter.id ||
-                    filterParam.index === index) {
-                    this.currentFilter = processFilter;
-                    this.filterSelected.emit(processFilter);
-                }
-            });
+            const newFilter = this.filters.find((processFilter, index) =>
+                filterParam.index === index ||
+                filterParam.id === processFilter.id ||
+                (filterParam.name &&
+                    (filterParam.name.toLocaleLowerCase() === processFilter.name.toLocaleLowerCase())
+                ));
+            this.currentFilter = newFilter;
+
+            if (newFilter) {
+                this.filterSelected.emit(newFilter);
+            }
         }
     }
 

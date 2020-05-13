@@ -128,7 +128,6 @@ describe('ProcessFiltersComponent', () => {
         });
 
         fixture.detectChanges();
-        filterList.selectRunningFilter();
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
