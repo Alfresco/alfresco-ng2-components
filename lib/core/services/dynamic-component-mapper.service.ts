@@ -68,6 +68,17 @@ export abstract class DynamicComponentMapper {
     }
 
     /**
+     * Register multiple components
+     */
+    register(components: { [key: string]: DynamicComponentResolveFunction }, override: boolean = false) {
+        if (components) {
+            for (const type of Object.keys(components)) {
+                this.setComponentTypeResolver(type, components[type], override);
+            }
+        }
+    }
+
+    /**
      * Finds the component type that is needed to render a form field.
      * @param model Form field model for the field to render
      * @param defaultValue Default type returned for field types that are not yet mapped.
