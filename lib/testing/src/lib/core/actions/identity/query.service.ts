@@ -18,7 +18,8 @@
 import { ApiService } from '../api.service';
 import { Logger } from '../../utils/logger';
 import { ApiUtil } from '../../structure/api.util';
-export type TaskStatus  = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED' | 'COMPLETED';
+
+export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED' | 'COMPLETED';
 
 export class QueryService {
 
@@ -134,6 +135,33 @@ export class QueryService {
 
             } catch (error) {
                 Logger.error('Get Task By Status - Service error');
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate);
+    }
+
+    async getTaskByName(taskName, processInstanceId, appName): Promise<any> {
+        const predicate = (result: any) => {
+            return !!result;
+        };
+
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances/' + processInstanceId + '/tasks';
+                const method = 'GET';
+
+                const queryParams = {}, postBody = {};
+
+                const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                for (let i = 0; i < data.list.entries.length; i++) {
+                    if (data.list.entries[i].entry.name === taskName) {
+                        return data.list.entries[i];
+                    }
+                }
+
+            } catch (error) {
+                Logger.error('Get Task By Name - Service error');
             }
         };
 
