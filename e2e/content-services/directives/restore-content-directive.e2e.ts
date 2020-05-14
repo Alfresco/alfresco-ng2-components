@@ -23,8 +23,7 @@ import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
-import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions } from '@alfresco/adf-testing';
-import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb.page';
+import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions, BreadCrumbPage } from '@alfresco/adf-testing';
 
 describe('Restore content directive', () => {
 

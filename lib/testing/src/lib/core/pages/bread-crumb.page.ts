@@ -21,10 +21,15 @@ import { BrowserActions } from '@alfresco/adf-testing';
 export class BreadCrumbPage {
 
     breadCrumb: ElementFinder = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
+    currentItem: ElementFinder = element(by.css('.adf-breadcrumb-item-current'));
 
     async chooseBreadCrumb(breadCrumbItem): Promise<void> {
         const path = this.breadCrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
         await BrowserActions.click(path);
+    }
+
+    async getActiveBreadCrumbItemName(): Promise<string> {
+        return this.currentItem.getText();
     }
 
 }

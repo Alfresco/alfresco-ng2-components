@@ -17,11 +17,13 @@
 
 import { browser, by, element } from 'protractor';
 import {
+    BreadCrumbPage,
     LoginPage,
     PaginationPage,
     UploadActions,
     StringUtil,
-    ContentNodeSelectorDialogPage, ViewerPage
+    ContentNodeSelectorDialogPage,
+    ViewerPage,
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -30,7 +32,6 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { Util } from '../../util/util';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
-import { BreadCrumbPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb.page';
 import { InfinitePaginationPage } from '../../pages/adf/core/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
