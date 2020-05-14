@@ -80,51 +80,16 @@ describe('CheckboxWidgetComponent', () => {
                 fixture.detectChanges();
                 const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
                 expect(checkbox.getAttribute('aria-checked')).toBe('true');
-                expect(widget.checkboxValue).toBe(true);
             });
         }));
 
-        it('should be checked if string "true" is passed', async(() => {
-            widget.field.value = 'true';
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-                expect(checkbox.getAttribute('aria-checked')).toBe('true');
-                expect(widget.checkboxValue).toBe(true);
-            });
-        }));
-
-        it('should not be checked if boolean false is passed', async(() => {
+        it('should not be checked if false is passed', async(() => {
             widget.field.value = false;
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
                 const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
                 expect(checkbox.getAttribute('aria-checked')).toBe('false');
-                expect(widget.checkboxValue).toBe(false);
-            });
-        }));
-
-        it('should not be checked if string "false" is passed', async(() => {
-            widget.field.value = 'false';
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-                expect(checkbox.getAttribute('aria-checked')).toBe('false');
-                expect(widget.checkboxValue).toBe(false);
-            });
-        }));
-
-        it('should not be checked if null is passed', async(() => {
-            widget.field.value = null;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const checkbox = fixture.debugElement.nativeElement.querySelector('mat-checkbox input');
-                expect(checkbox.getAttribute('aria-checked')).toBe('false');
-                expect(widget.checkboxValue).toBe(false);
             });
         }));
    });

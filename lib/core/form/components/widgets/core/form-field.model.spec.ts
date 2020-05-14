@@ -284,6 +284,30 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe('deferred-radio');
     });
 
+    it('should parse boolean value when set to "true"', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.BOOLEAN,
+            value: 'true'
+        });
+        expect(field.value).toBe(true);
+    });
+
+    it('should parse boolean value when set to "false"', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.BOOLEAN,
+            value: 'false'
+        });
+        expect(field.value).toBe(false);
+    });
+
+    it('should parse boolean value to false when set to null', () => {
+        const field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.BOOLEAN,
+            value: null
+        });
+        expect(field.value).toBe(false);
+    });
+
     it('should update form with empty dropdown value', () => {
         const form = new FormModel();
         const field = new FormFieldModel(form, {
