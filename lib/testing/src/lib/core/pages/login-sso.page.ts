@@ -21,7 +21,6 @@ import { BrowserActions } from '../utils/browser-actions';
 
 export class LoginSSOPage {
 
-    loginURL: string = browser.baseUrl + '/login';
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
     usernameField = element(by.id('username'));
     passwordField = element(by.id('password'));
@@ -40,7 +39,8 @@ export class LoginSSOPage {
         }
 
         if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
-            await browser.get(this.loginURL);
+            const loginURL: string = browser.baseUrl + browser.params.loginRoute ? browser.params.loginRoute : '';
+            await browser.get(loginURL);
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
