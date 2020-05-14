@@ -343,4 +343,16 @@ describe('TaskFiltersComponent', () => {
             done();
         });
     });
+
+    it('should reset selection when filterParam is a filter that does not exist', async () => {
+        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        component.currentFilter = fakeGlobalFilter[0];
+        component.filterParam = new FilterRepresentationModel( {name: 'non-existing-filter'});
+        const appId = '1';
+        const change = new SimpleChange(null, appId, true);
+        component.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(component.currentFilter).toBe(undefined);
+    });
 });

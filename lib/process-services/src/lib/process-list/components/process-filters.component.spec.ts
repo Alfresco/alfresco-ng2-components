@@ -24,6 +24,7 @@ import { ProcessFiltersComponent } from './process-filters.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { fakeProcessFilters } from '../../mock';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -51,13 +52,13 @@ describe('ProcessFiltersComponent', () => {
         fakeGlobalFilterPromise = Promise.resolve([
             new FilterProcessRepresentationModel({
                 id: 10,
-                name: 'FakeInvolvedTasks',
+                name: 'FakeCompleted',
                 icon: 'glyphicon-th',
                 filter: { state: 'open', assignment: 'fake-involved' }
             }),
             new FilterProcessRepresentationModel({
                 id: 20,
-                name: 'FakeMyTasks',
+                name: 'FakeAll',
                 icon: 'glyphicon-random',
                 filter: { state: 'open', assignment: 'fake-assignee' }
             }),
@@ -87,8 +88,8 @@ describe('ProcessFiltersComponent', () => {
             expect(res).toBeDefined();
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
-            expect(filterList.filters[0].name).toEqual('FakeInvolvedTasks');
-            expect(filterList.filters[1].name).toEqual('FakeMyTasks');
+            expect(filterList.filters[0].name).toEqual('FakeCompleted');
+            expect(filterList.filters[1].name).toEqual('FakeAll');
             expect(filterList.filters[2].name).toEqual('Running');
             done();
         });
@@ -123,11 +124,23 @@ describe('ProcessFiltersComponent', () => {
         expect(filterList.currentFilter).toBeUndefined();
 
         filterList.filterSelected.subscribe((filter) => {
-            expect(filter.name).toEqual('FakeInvolvedTasks');
+            expect(filter.name).toEqual('FakeCompleted');
             done();
         });
 
         fixture.detectChanges();
+    });
+
+    it('should reset selection when filterParam is a filter that does not exist', async () => {
+        spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
+        filterList.currentFilter = fakeProcessFilters.data[0];
+        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'non-existing-filter' });
+        const appId = '1';
+        const change = new SimpleChange(null, appId, true);
+        filterList.ngOnChanges({ 'appId': change });
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(filterList.currentFilter).toBe(undefined);
     });
 
     it('should return the filter task list, filtered By Name', (done) => {
@@ -183,7 +196,7 @@ describe('ProcessFiltersComponent', () => {
     it('should emit an event when a filter is selected', (done) => {
         const currentFilter = new FilterProcessRepresentationModel({
             id: 10,
-            name: 'FakeInvolvedTasks',
+            name: 'FakeCompleted',
             filter: { state: 'open', assignment: 'fake-involved' }
         });
 
@@ -229,7 +242,7 @@ describe('ProcessFiltersComponent', () => {
 
     it('should return the current filter after one is selected', () => {
         const filter = new FilterProcessRepresentationModel({
-            name: 'FakeMyTasks',
+            name: 'FakeAll',
             filter: { state: 'open', assignment: 'fake-assignee' }
         });
         expect(filterList.currentFilter).toBeUndefined();
@@ -252,7 +265,7 @@ describe('ProcessFiltersComponent', () => {
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
             expect(filterList.currentFilter).toBeDefined();
-            expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
+            expect(filterList.currentFilter.name).toEqual('FakeAll');
             done();
         });
     });
@@ -260,7 +273,7 @@ describe('ProcessFiltersComponent', () => {
     it('should select the filter passed as input by name', (done) => {
         spyOn(processFilterService, 'getProcessFilters').and.returnValue(from(fakeGlobalFilterPromise));
 
-        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeMyTasks' });
+        filterList.filterParam = new FilterProcessRepresentationModel({ name: 'FakeAll' });
 
         const appId = 1;
         const change = new SimpleChange(null, appId, true);
@@ -272,7 +285,7 @@ describe('ProcessFiltersComponent', () => {
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(3);
             expect(filterList.currentFilter).toBeDefined();
-            expect(filterList.currentFilter.name).toEqual('FakeMyTasks');
+            expect(filterList.currentFilter.name).toEqual('FakeAll');
             done();
         });
     });
