@@ -116,6 +116,7 @@ exports.config = {
 
     params: {
         testConfig: TestConfig,
+        loginRoute: '/login',
         config: TestConfig.appConfig,
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: TestConfig.identityAdmin,
