@@ -1,17 +1,9 @@
 @mixin adf-cloud-start-service-theme($theme) {
     .adf {
         &-start-process {
-            .mat-select-trigger {
-                font-size: 14px !important;
-            }
 
             mat-form-field {
                 width: 100%;
-            }
-
-            mat-select {
-                width: 100%;
-                padding: 16px 0 0;
             }
 
             .mat-form-field-label {

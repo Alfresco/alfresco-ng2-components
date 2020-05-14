@@ -57,10 +57,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Input()
     title: string;
 
-    /** (optional) Hide or show application selection drop-down. */
-    @Input()
-    showApplications: boolean = false;
-
     /** (optional) Definition name of the process to start. */
     @Input()
     processDefinitionName: string;
@@ -82,6 +78,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     /** Hide or show the process selection dropdown. */
     @Input()
     showSelectProcessDropdown: boolean = true;
+
+    /** (optional) Hide or show application selection dropdown. */
+    @Input()
+    showSelectApplicationDropdown: boolean = false;
 
     /** (optional) Parameter to enable selection of process when filtering. */
     @Input()
@@ -117,13 +117,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = this.MAX_LENGTH;
     alfrescoRepositoryName: string;
+    applications: AppDefinitionRepresentationModel[] = [];
+    selectedApplication: AppDefinitionRepresentationModel;
 
     private onDestroy$ = new Subject<boolean>();
-
-    applications: any[];
-    selectedApplication: any;
-
-    isLoading = true;
     constructor(private activitiProcess: ProcessService,
                 private activitiContentService: ActivitiContentService,
                 private appsProcessService: AppsProcessService,
@@ -134,7 +131,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
         this.processDefinitionInput = new FormControl();
 
-        if (this.showApplications) {
+        if (this.showSelectApplicationDropdown) {
             this.loadAppsAndStartProcess();
         } else {
             this.loadStartProcess(this.appId);
@@ -172,7 +169,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             this.appId = changes['appId'].currentValue;
         }
 
-        if (this.showApplications) {
+        if (this.showSelectApplicationDropdown) {
             this.loadAppsAndStartProcess();
         } else {
             this.loadStartProcess(this.appId);
@@ -227,40 +224,52 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
                     this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                 }
-                this.isLoading =  false;
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
-                this.isLoading =  false;
             });
     }
 
-    private loadAppsAndStartProcess() {
-        this.appsProcessService.getDeployedApplications()
-        .subscribe(
-            (deployedApplications: AppDefinitionRepresentationModel[]) => {
-                let currentApplication: any;
-                this.applications = deployedApplications.filter((app) => app.id);
-                if (this.applications && this.applications.length > 0) {
-                    currentApplication = this.applications[0];
-                    if (this.appId) {
-                        const filteredApp = this.applications.find((app) => app.id === this.appId);
-                        currentApplication = filteredApp ? filteredApp : this.applications[0];
-                    }
-                    this.selectedApplication = currentApplication;
-                    this.loadStartProcess(this.selectedApplication.id);
-                }
+    loadAppsAndStartProcess() {
+        this.appsProcessService
+            .getDeployedApplications()
+            .pipe(map((response: AppDefinitionRepresentationModel[]) => {
+                    let currentApplication: AppDefinitionRepresentationModel;
+                    let applications: AppDefinitionRepresentationModel[] = [];
 
-            },
-            (err) => {
-                this.error.emit(err);
-            }
-        );
+                    applications = this.removeDefaultApps(response);
+
+                    if (applications && applications.length > 0) {
+                        currentApplication = applications[0];
+                        if (this.appId) {
+                            const filteredApp = applications.find( app => app.id === this.appId );
+                            currentApplication = filteredApp ? filteredApp : applications[0];
+                        }
+                    }
+
+                    return { currentApplication, applications };
+                })
+            )
+            .subscribe((filteredApps) => {
+                    this.applications = filteredApps.applications;
+                    this.selectedApplication = filteredApps.currentApplication;
+                    this.loadStartProcess(this.selectedApplication ? this.selectedApplication.id : null);
+                },
+                err => {
+                    this.error.emit(err);
+                }
+            );
+
     }
 
     onAppSelectionChange(selectedApplication: any) {
         this.selectedApplication = selectedApplication.value;
-        this.loadStartProcess(this.selectedApplication.value.id);
+        this.loadStartProcess(this.selectedApplication.id);
+    }
+
+    private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
+        return apps.filter((app) => app.id);
+
     }
 
     isProcessDefinitionsEmpty(): boolean {

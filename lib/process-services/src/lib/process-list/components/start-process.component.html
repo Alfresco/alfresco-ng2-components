@@ -5,7 +5,7 @@
             {{errorMessageId|translate}}
         </div>
         <div class="adf-start-process-definition-container">
-            <mat-form-field *ngIf="showApplications" [floatLabel]="'always'" class="adf-start-process-app-list">
+            <mat-form-field *ngIf="showSelectApplicationDropdown" [floatLabel]="'always'" class="adf-start-process-app-list">
                 <mat-select
                     placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.APPLICATIONS' | translate}}"
                     (selectionChange)="onAppSelectionChange($event)"

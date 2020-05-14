@@ -595,7 +595,7 @@ describe('StartFormComponent', () => {
         beforeEach(() => {
             fixture.detectChanges();
             component.name = 'My new process';
-            component.showApplications = true;
+            component.showSelectApplicationDropdown = true;
             const change = new SimpleChange(null, 3, true);
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
@@ -612,7 +612,7 @@ describe('StartFormComponent', () => {
         });
 
         it('Should not be able to show application drop-down if showApplications set to false', () => {
-            component.showApplications = false;
+            component.showSelectApplicationDropdown = false;
             fixture.detectChanges();
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
             expect(appsSelector).toBeNull();
