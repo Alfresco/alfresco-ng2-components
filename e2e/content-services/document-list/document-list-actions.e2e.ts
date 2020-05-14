@@ -17,13 +17,13 @@
 
 import { browser, by, element } from 'protractor';
 import {
-    BreadCrumbPage,
+    BreadcrumbPage,
     LoginPage,
     PaginationPage,
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    ViewerPage,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -44,7 +44,7 @@ describe('Document List Component - Actions', () => {
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const paginationPage = new PaginationPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
-    const breadCrumbPage = new BreadCrumbPage();
+    const breadCrumbPage = new BreadcrumbPage();
     const viewerPage = new ViewerPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',

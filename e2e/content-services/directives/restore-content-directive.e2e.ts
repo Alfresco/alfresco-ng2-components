@@ -23,7 +23,7 @@ import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
-import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions, BreadCrumbPage } from '@alfresco/adf-testing';
+import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions, BreadcrumbPage } from '@alfresco/adf-testing';
 
 describe('Restore content directive', () => {
 
@@ -33,7 +33,7 @@ describe('Restore content directive', () => {
     const acsUser = new AcsUserModel();
     const anotherAcsUser = new AcsUserModel();
     const trashcanPage = new TrashcanPage();
-    const breadCrumbPage = new BreadCrumbPage();
+    const breadCrumbPage = new BreadcrumbPage();
     const notificationHistoryPage = new NotificationHistoryPage();
 
     this.alfrescoJsApi = new AlfrescoApi({
