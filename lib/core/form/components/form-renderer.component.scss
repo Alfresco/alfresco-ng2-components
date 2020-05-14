@@ -40,10 +40,18 @@
             & .mat-form-field-wrapper {
                 margin: 0 12px 0 0;
             }
+
+            & h4 {
+                margin-right: 55px;
+                display: grid;
+            }
         }
 
         &-form-title {
             font-size: mat-font-size($alfresco-typography, title);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &-form-debug-container {
