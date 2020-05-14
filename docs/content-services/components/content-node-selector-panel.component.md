@@ -49,6 +49,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | select | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`[]>` | Emitted when the user has chosen an item. |
+| siteChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when the select site changes. |
 
 ## Details
 

@@ -17,6 +17,7 @@
 
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
+import { SitesService } from '../../services/sites.service';
 import { Injectable } from '@angular/core';
 import { AlfrescoApiCompatibility, MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { Observable, from, throwError } from 'rxjs';
@@ -33,7 +34,8 @@ export class ActivitiContentService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
+                private logService: LogService,
+                private sitesService: SitesService) {
     }
 
     /**
@@ -94,7 +96,7 @@ export class ActivitiContentService {
 
     applyAlfrescoNode(node: MinimalNode, siteId: string, accountId: string) {
         const apiService: AlfrescoApiCompatibility = this.apiService.getInstance();
-        const currentSideId = siteId ? siteId : this.getSiteNameFromNodePath(node);
+        const currentSideId = siteId ? siteId : this.sitesService.getSiteNameFromNodePath(node);
         const params: RelatedContentRepresentation = {
             source: accountId,
             mimeType: node.content.mimeType,
@@ -107,18 +109,6 @@ export class ActivitiContentService {
                 map(this.toJson),
                 catchError((err) => this.handleError(err))
             );
-    }
-
-    private getSiteNameFromNodePath(node: MinimalNode): string {
-        let siteName = '';
-        if (node.path) {
-            const foundNode = node.path
-                .elements.find((pathNode: MinimalNode) =>
-                    pathNode.nodeType === 'st:site' &&
-                    pathNode.name !== 'Sites');
-            siteName = foundNode ? foundNode.name : '';
-        }
-        return siteName.toLocaleLowerCase();
     }
 
     toJson(res: any) {

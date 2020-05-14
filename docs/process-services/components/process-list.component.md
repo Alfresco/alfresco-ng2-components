@@ -193,7 +193,7 @@ The Process Instance List also supports pagination:
 
 Emitted before the context menu is displayed for a row.
 
-Note that the [ProcessInstanceListComponent](../../../lib/process-services/src/lib/process-list/components/process-list.component.ts) itself does not populate the context menu with items. You can provide all necessary content via the handler.
+Note that the [`ProcessInstanceListComponent`](../../../lib/process-services/src/lib/process-list/components/process-list.component.ts) itself does not populate the context menu with items. You can provide all necessary content via the handler.
 
 ```html
 <adf-process-instance-list

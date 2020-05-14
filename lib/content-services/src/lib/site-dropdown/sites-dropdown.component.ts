@@ -142,8 +142,8 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
                     if (!this.hideMyFiles) {
                         const siteEntry = new SiteEntry({
                             entry: {
-                                id: '-my-',
-                                guid: '-my-',
+                                id: this.MY_FILES_VALUE,
+                                guid: this.MY_FILES_VALUE,
                                 title: 'DROPDOWN.MY_FILES_OPTION'
                             }
                         });
@@ -151,7 +151,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
                         this.siteList.list.entries.unshift(siteEntry);
 
                         if (!this.value) {
-                            this.value = '-my-';
+                            this.value = this.MY_FILES_VALUE;
                         }
                     }
 
@@ -164,6 +164,10 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
 
+                if (this.value && !this.selected && this.siteListHasMoreItems()) {
+                    this.loadSiteList();
+                }
+
                 this.loading = false;
             },
             (error) => {
@@ -172,11 +176,15 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     }
 
     showLoading(): boolean {
-        return this.loading && (this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems);
+        return this.loading && this.siteListHasMoreItems();
     }
 
     isInfiniteScrollingEnabled(): boolean {
-        return !this.loading && (this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems);
+        return !this.loading && this.siteListHasMoreItems();
+    }
+
+    private siteListHasMoreItems(): boolean {
+        return this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems;
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
@@ -191,5 +199,4 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
                 return member.entry.id.toLowerCase() === loggedUserName.toLowerCase();
             });
     }
-
 }

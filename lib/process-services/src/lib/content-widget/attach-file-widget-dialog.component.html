@@ -1,6 +1,8 @@
 <header
     mat-dialog-title
-    data-automation-id="content-node-selector-title">{{title}}
+    data-automation-id="content-node-selector-title">
+    <span *ngIf="isLoggedIn(); else loginTitle">{{title}}</span>
+    <ng-template #loginTitle>{{data.title}}</ng-template>
 </header>
 
 <mat-dialog-content class="adf-login-dialog-content">
@@ -10,7 +12,8 @@
                                      id="attach-file-content-node"
                                      [isSelectionValid]="data?.isSelectionValid"
                                      [showFilesInResult]="data?.showFilesInResult"
-                                     (select)="onSelect($event)">
+                                     (select)="onSelect($event)"
+                                     (siteChange)="onSiteChange($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>
 

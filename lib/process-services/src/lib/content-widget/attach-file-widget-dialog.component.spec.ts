@@ -145,22 +145,14 @@ describe('AttachFileWidgetDialogComponent', () => {
             });
         });
 
-        it('should update the title when the selected node is a file', () => {
-            const fakeNode: Node = new Node({ id: 'fake', isFile: true});
-            contentNodePanel.componentInstance.select.emit([fakeNode]);
+        it('should update the title when a site is selected', () => {
+            const fakeSiteTitle = 'My fake site';
+            contentNodePanel.componentInstance.siteChange.emit(fakeSiteTitle);
             fixture.detectChanges();
+
             const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
             expect(titleElement).not.toBeNull();
             expect(titleElement.nativeElement.innerText).toBe('ATTACH-FILE.ACTIONS.CHOOSE_ITEM');
-        });
-
-        it('should update the title when the selected node is a folder', () => {
-            const fakeNode: Node = new Node({ id: 'fake', isFolder: true});
-            contentNodePanel.componentInstance.select.emit([fakeNode]);
-            fixture.detectChanges();
-            const titleElement = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-title"]'));
-            expect(titleElement).not.toBeNull();
-            expect(titleElement.nativeElement.innerText).toBe('ATTACH-FILE.ACTIONS.CHOOSE_IN');
         });
    });
 });

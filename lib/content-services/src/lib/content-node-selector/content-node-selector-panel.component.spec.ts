@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging } from '@alfresco/js-api';
-import { SearchService, SitesService, setupTestBed } from '@alfresco/adf-core';
+import { SearchService, SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -27,6 +27,7 @@ import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
+import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
 
@@ -53,6 +54,8 @@ describe('ContentNodeSelectorComponent', () => {
     let fixture: ComponentFixture<ContentNodeSelectorPanelComponent>;
     let contentNodeSelectorService: ContentNodeSelectorService;
     let searchService: SearchService;
+    let nodeService: NodesApiService;
+    let sitesService: SitesService;
     let searchSpy: jasmine.Spy;
     let cnSearchSpy: jasmine.Spy;
 
@@ -82,13 +85,19 @@ describe('ContentNodeSelectorComponent', () => {
             component.debounceSearch = 0;
 
             searchService = TestBed.get(SearchService);
+            nodeService = TestBed.get(NodesApiService);
             contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
+            sitesService = TestBed.get(SitesService);
+
+            spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
             cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
             searchSpy = spyOn(searchService, 'searchByQueryBody').and.callFake(() => {
                 return new Observable((observer: Observer<NodePaging>) => {
                     _observer = observer;
                 });
             });
+            const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
+            spyOn(sitesService, 'getSite').and.returnValue(of(fakeSite));
         });
 
         afterEach(() => {
@@ -98,11 +107,9 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Parameters', () => {
 
             let documentListService: DocumentListService;
-            let sitesService: SitesService;
 
             beforeEach(() => {
                 documentListService = TestBed.get(DocumentListService);
-                sitesService = TestBed.get(SitesService);
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -205,11 +212,9 @@ describe('ContentNodeSelectorComponent', () => {
         describe('Breadcrumbs', () => {
 
             let documentListService: DocumentListService;
-            let sitesService: SitesService;
 
             beforeEach(() => {
                 documentListService = TestBed.get(DocumentListService);
-                sitesService = TestBed.get(SitesService);
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -350,6 +355,40 @@ describe('ContentNodeSelectorComponent', () => {
             });
         });
 
+        describe('Site selection', () => {
+
+            beforeEach(() => {
+                spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
+                component.currentFolderId = 'fake-starting-folder';
+            });
+
+            it('should trigger siteChange event on init with parent site Title of start folder', (done) => {
+                component.siteChange.subscribe((siteTitle: string) => {
+                    expect(siteTitle).toBe('fake-site');
+                    done();
+                });
+
+                component.ngOnInit();
+                fixture.detectChanges();
+                expect(component.startSiteGuid).toBe('fake-site');
+            });
+
+            it('should trigger siteChange event when a site is selected in sites-dropdown', (done) => {
+                const fakeSiteEntry = new SiteEntry({ entry: { title: 'fake-new-site', guid: 'fake-new-site' } });
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    component.siteChange.subscribe((siteTitle: string) => {
+                        expect(siteTitle).toBe('fake-new-site');
+                        done();
+                    });
+
+                    const sitesDropdown = fixture.debugElement.query(By.directive(DropdownSitesComponent));
+                    sitesDropdown.componentInstance.selectedSite({value: fakeSiteEntry});
+                });
+            });
+        });
+
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
 
@@ -392,7 +431,6 @@ describe('ContentNodeSelectorComponent', () => {
                     }
                 }));
 
-                const sitesService = TestBed.get(SitesService);
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
                 const customResourcesService = TestBed.get(CustomResourcesService);
@@ -883,7 +921,6 @@ describe('ContentNodeSelectorComponent', () => {
             }
 
             beforeEach(() => {
-                const sitesService = TestBed.get(SitesService);
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
             });
 
