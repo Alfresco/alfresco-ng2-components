@@ -164,7 +164,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
 
-                if (this.value && !this.selected && this.siteList.list.pagination.hasMoreItems) {
+                if (this.value && !this.selected && this.siteListHasMoreItems()) {
                     this.loadSiteList();
                 }
 
@@ -176,11 +176,15 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     }
 
     showLoading(): boolean {
-        return this.loading && (this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems);
+        return this.loading && this.siteListHasMoreItems();
     }
 
     isInfiniteScrollingEnabled(): boolean {
-        return !this.loading && (this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems);
+        return !this.loading && this.siteListHasMoreItems();
+    }
+
+    private siteListHasMoreItems(): boolean {
+        return this.siteList && this.siteList.list.pagination && this.siteList.list.pagination.hasMoreItems;
     }
 
     private filteredResultsByMember(sites: SitePaging): SitePaging {
