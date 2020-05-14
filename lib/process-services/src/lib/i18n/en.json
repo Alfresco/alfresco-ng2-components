@@ -276,6 +276,7 @@
       "FORM": {
         "TITLE": "Start Process",
         "LABEL": {
+          "APPLICATIONS": "Select Application",
           "TYPE": "Select Process",
           "NAME": "Process Name"
         },

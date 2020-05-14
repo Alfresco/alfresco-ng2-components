@@ -153,6 +153,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
     showProcessFilterIcon: boolean;
     showTaskFilterIcon: boolean;
+    showApplications: boolean;
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,

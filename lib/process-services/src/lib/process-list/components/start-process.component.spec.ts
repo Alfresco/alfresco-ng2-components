@@ -17,7 +17,7 @@
 
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivitiContentService, AppConfigService, FormService, setupTestBed } from '@alfresco/adf-core';
+import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -34,6 +34,7 @@ import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { deployedApps } from '../../mock/apps-list.mock';
 
 describe('StartFormComponent', () => {
 
@@ -43,10 +44,12 @@ describe('StartFormComponent', () => {
     let fixture: ComponentFixture<StartProcessInstanceComponent>;
     let processService: ProcessService;
     let formService: FormService;
+    let appsProcessService: AppsProcessService;
     let getDefinitionsSpy: jasmine.Spy;
     let getStartFormDefinitionSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
     let applyAlfrescoNodeSpy: jasmine.Spy;
+    let getDeployedApplicationsSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -74,6 +77,7 @@ describe('StartFormComponent', () => {
         component = fixture.componentInstance;
         processService = TestBed.get(ProcessService);
         formService = TestBed.get(FormService);
+        appsProcessService = TestBed.get(AppsProcessService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
@@ -584,5 +588,34 @@ describe('StartFormComponent', () => {
                 expect(component.hasStartForm()).toBe(true);
             });
         }));
+   });
+
+    describe('Select applications', () => {
+
+        beforeEach(() => {
+            fixture.detectChanges();
+            component.name = 'My new process';
+            component.showApplications = true;
+            const change = new SimpleChange(null, 3, true);
+            getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
+            getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
+            component.ngOnChanges({ 'appId': change });
+        });
+
+        it('Should able to show application drop-down if showApplications set to true', () => {
+            fixture.detectChanges();
+            const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            const lable = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-form-field-label');
+            expect(appsSelector).not.toBeNull();
+            expect(lable.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.APPLICATIONS');
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+        });
+
+        it('Should not be able to show application drop-down if showApplications set to false', () => {
+            component.showApplications = false;
+            fixture.detectChanges();
+            const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            expect(appsSelector).toBeNull();
+        });
    });
 });

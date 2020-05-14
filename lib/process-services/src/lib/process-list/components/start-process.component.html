@@ -4,35 +4,50 @@
         <div class="subtitle" id="error-message" *ngIf="errorMessageId">
             {{errorMessageId|translate}}
         </div>
-        <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
-            <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate}}</mat-label>
-            <input
-                type="text"
-                matInput
-                [formControl]="processDefinitionInput"
-                [matAutocomplete]="auto"
-                id="processDefinitionName"
-                #inputAutocomplete>
-            <div class="adf-process-input-autocomplete">
-                <mat-autocomplete
-                    #auto="matAutocomplete"
-                    id="processDefinitionOptions"
-                    [displayWith]="displayFn">
-                    <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name"
-                    (click)="processDefinitionSelectionChanged(processDef)">
-                        {{ processDef.name }}
+        <div class="adf-start-process-definition-container">
+            <mat-form-field *ngIf="showApplications" [floatLabel]="'always'" class="adf-start-process-app-list">
+                <mat-select
+                    placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.APPLICATIONS' | translate}}"
+                    (selectionChange)="onAppSelectionChange($event)"
+                    [(ngModel)]="selectedApplication"
+                    data-automation-id="adf-start-process-apps-drop-down">
+                    <mat-option 
+                        *ngFor="let application of applications"
+                        [value]="application"
+                        [attr.data-automation-id]="'adf-start-process-apps-option' + application.name">
+                        {{ application.name }}
                     </mat-option>
-                </mat-autocomplete>
-                <button
-                    id="adf-select-process-dropdown"
-                    *ngIf="showSelectProcessDropdown"
-                    mat-icon-button
-                    (click)="displayDropdown($event)">
-                    <mat-icon>arrow_drop_down</mat-icon>
-                </button>
-            </div>
-        </mat-form-field>
-
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+                <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate}}</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="processDefinitionInput"
+                    [matAutocomplete]="auto"
+                    id="processDefinitionName"
+                    #inputAutocomplete>
+                <div class="adf-process-input-autocomplete">
+                    <mat-autocomplete
+                        #auto="matAutocomplete"
+                        id="processDefinitionOptions"
+                        [displayWith]="displayFn">
+                        <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name"
+                        (click)="processDefinitionSelectionChanged(processDef)">
+                            {{ processDef.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <button
+                        id="adf-select-process-dropdown"
+                        *ngIf="showSelectProcessDropdown"
+                        mat-icon-button
+                        (click)="displayDropdown($event)">
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                </div>
+            </mat-form-field>
+        </div>
         <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
             <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}</mat-label>
             <input

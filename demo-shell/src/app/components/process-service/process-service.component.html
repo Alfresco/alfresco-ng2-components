@@ -218,6 +218,7 @@
                     <adf-start-process
                         #activitiStartProcess
                         [appId]="appId"
+                        [showApplications]="showApplications"
                         [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
                         [name]="defaultProcessName"
                         [processDefinitionName]="defaultProcessDefinitionName"
@@ -290,6 +291,9 @@
                 </div>
                 <div>
                     <mat-slide-toggle id="adf-process-context-menu" [(ngModel)]="processContextMenu" >Show Process list Context menu</mat-slide-toggle>
+                </div>
+                <div>
+                    <mat-slide-toggle id="adf-start-process-app-drop-down" [(ngModel)]="showApplications" >Show Application dropdown on start process</mat-slide-toggle>
                 </div>
                 <br>
                 <mat-radio-group [(ngModel)]="selectionMode">

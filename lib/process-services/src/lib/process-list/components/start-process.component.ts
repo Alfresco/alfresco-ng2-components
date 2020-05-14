@@ -23,6 +23,7 @@ import {
     ActivitiContentService,
     AppConfigService,
     AppConfigValues,
+    AppsProcessService,
     FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
@@ -35,6 +36,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { StartFormComponent } from '../../form';
 import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
+import { AppDefinitionRepresentationModel } from '../../task-list';
 
 @Component({
     selector: 'adf-start-process',
@@ -54,6 +56,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     /** (optional) Define the header of the component. */
     @Input()
     title: string;
+
+    /** (optional) Hide or show application selection drop-down. */
+    @Input()
+    showApplications: boolean = false;
 
     /** (optional) Definition name of the process to start. */
     @Input()
@@ -114,8 +120,13 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     private onDestroy$ = new Subject<boolean>();
 
+    applications: any[];
+    selectedApplication: any;
+
+    isLoading = true;
     constructor(private activitiProcess: ProcessService,
                 private activitiContentService: ActivitiContentService,
+                private appsProcessService: AppsProcessService,
                 private appConfig: AppConfigService) {
         }
 
@@ -123,7 +134,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
         this.processDefinitionInput = new FormControl();
 
-        this.loadStartProcess();
+        if (this.showApplications) {
+            this.loadAppsAndStartProcess();
+        } else {
+            this.loadStartProcess(this.appId);
+        }
 
         this.processNameInput.valueChanges
             .pipe(takeUntil(this.onDestroy$))
@@ -157,7 +172,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             this.appId = changes['appId'].currentValue;
         }
 
-        this.loadStartProcess();
+        if (this.showApplications) {
+            this.loadAppsAndStartProcess();
+        } else {
+            this.loadStartProcess(this.appId);
+        }
     }
 
     private _filter(value: string): ProcessDefinitionRepresentation[] {
@@ -183,11 +202,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return processSelected;
     }
 
-    loadStartProcess(): void {
+    loadStartProcess(appId: any): void {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
 
-        this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
+        this.activitiProcess.getProcessDefinitions(appId).subscribe(
             (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
                 this.processDefinitions = processDefinitionRepresentations;
 
@@ -208,10 +227,40 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
                     this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                 }
+                this.isLoading =  false;
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+                this.isLoading =  false;
             });
+    }
+
+    private loadAppsAndStartProcess() {
+        this.appsProcessService.getDeployedApplications()
+        .subscribe(
+            (deployedApplications: AppDefinitionRepresentationModel[]) => {
+                let currentApplication: any;
+                this.applications = deployedApplications.filter((app) => app.id);
+                if (this.applications && this.applications.length > 0) {
+                    currentApplication = this.applications[0];
+                    if (this.appId) {
+                        const filteredApp = this.applications.find((app) => app.id === this.appId);
+                        currentApplication = filteredApp ? filteredApp : this.applications[0];
+                    }
+                    this.selectedApplication = currentApplication;
+                    this.loadStartProcess(this.selectedApplication.id);
+                }
+
+            },
+            (err) => {
+                this.error.emit(err);
+            }
+        );
+    }
+
+    onAppSelectionChange(selectedApplication: any) {
+        this.selectedApplication = selectedApplication.value;
+        this.loadStartProcess(this.selectedApplication.value.id);
     }
 
     isProcessDefinitionsEmpty(): boolean {
