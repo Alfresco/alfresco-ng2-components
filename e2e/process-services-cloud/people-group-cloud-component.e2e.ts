@@ -125,11 +125,9 @@ describe('People Groups Cloud Component', () => {
                 await peopleCloudComponent.searchAssignee(apsUser.lastName);
                 await peopleCloudComponent.checkUserIsDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
                 await peopleCloudComponent.searchAssignee(devopsUser.lastName);
-                await peopleCloudComponent.checkUserIsNotDisplayed(`${devopsUser.firstName} ${devopsUser.lastName}`);
-                await peopleCloudComponent.checkUserIsNotDisplayed(`${apsUser.firstName} ${apsUser.lastName}`);
+                await peopleCloudComponent.checkNoResultsFoundError();
                 await peopleCloudComponent.searchAssignee(noRoleUser.lastName);
-                await browser.sleep(5000);
-                await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
+                await peopleCloudComponent.checkNoResultsFoundError();
             });
 
             it('Multiple roles filtering', async () => {
@@ -139,8 +137,7 @@ describe('People Groups Cloud Component', () => {
                 await peopleCloudComponent.searchAssignee(testUser.lastName);
                 await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
                 await peopleCloudComponent.searchAssignee(noRoleUser.lastName);
-                await peopleCloudComponent.checkUserIsNotDisplayed(`${testUser.firstName} ${testUser.lastName}`);
-                await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
+                await peopleCloudComponent.checkNoResultsFoundError();
             });
         });
 
@@ -238,8 +235,8 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
 
-            await peopleCloudComponent.searchAssigneeToExisting(noRoleUser.lastName);
-            await peopleCloudComponent.checkUserIsNotDisplayed(`${noRoleUser.firstName} ${noRoleUser.lastName}`);
+            await peopleCloudComponent.searchAssignee(noRoleUser.lastName);
+            await peopleCloudComponent.checkNoResultsFoundError();
         });
 
         it('[C309677] Should populate the Users without any validation when the Preselect flag is set to false', async () => {

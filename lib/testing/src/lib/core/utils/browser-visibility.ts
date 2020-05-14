@@ -17,7 +17,8 @@
 
 import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
-const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 40000;
+const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 20000;
+const NOT_VISIBLE_DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 5000;
 
 export class BrowserVisibility {
 
@@ -48,7 +49,7 @@ export class BrowserVisibility {
     /*
      * Wait for element to not be visible
      */
-    static async waitUntilElementIsNotVisible(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
+    static async waitUntilElementIsNotVisible(elementToCheck: ElementFinder, waitTimeout: number = NOT_VISIBLE_DEFAULT_TIMEOUT): Promise<any> {
         return browser.wait(protractor.ExpectedConditions.invisibilityOf(elementToCheck), waitTimeout, 'Element is Visible and it should not' + elementToCheck.locator());
     }
 
@@ -59,7 +60,7 @@ export class BrowserVisibility {
         return browser.wait(protractor.ExpectedConditions.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
     }
 
-    static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = DEFAULT_TIMEOUT): Promise<any> {
+    static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = NOT_VISIBLE_DEFAULT_TIMEOUT): Promise<any> {
         return browser.wait(protractor.ExpectedConditions.stalenessOf(elementToCheck), waitTimeout, 'Element is present ' + elementToCheck.locator());
     }
 

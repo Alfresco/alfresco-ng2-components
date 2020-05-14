@@ -19,7 +19,7 @@ const projectRoot = path.resolve(__dirname);
 const width = 1657, height = 1657;
 
 let ENV_FILE = process.env.ENV_FILE;
-let GROUP_SUFFIX = process.env.PREFIX;
+let GROUP_SUFFIX = process.env.PREFIX || 'adf';
 
 RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
