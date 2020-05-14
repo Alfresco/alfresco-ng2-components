@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './bread-crumb.page';
 export * from './header.page';
 export * from './user-info.page';
 export * from './login.page';

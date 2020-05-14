@@ -16,15 +16,20 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserActions } from '@alfresco/adf-testing';
+import { BrowserActions } from '../utils/browser-actions';
 
-export class BreadCrumbPage {
+export class BreadcrumbPage {
 
-    breadCrumb: ElementFinder = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
+    breadcrumb: ElementFinder = element(by.css(`adf-breadcrumb nav[data-automation-id='breadcrumb']`));
+    currentItem: ElementFinder = element(by.css('.adf-breadcrumb-item-current'));
 
     async chooseBreadCrumb(breadCrumbItem): Promise<void> {
-        const path = this.breadCrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
+        const path = this.breadcrumb.element(by.css(`a[data-automation-id='breadcrumb_${breadCrumbItem}']`));
         await BrowserActions.click(path);
+    }
+
+    async getActiveBreadCrumbItemName(): Promise<string> {
+        return this.currentItem.getText();
     }
 
 }
