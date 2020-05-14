@@ -318,6 +318,10 @@ export class FormFieldModel extends FormWidgetModel {
             }
         }
 
+        if (json.type === FormFieldTypes.BOOLEAN) {
+            value = json.value === 'true' || json.value === true ? true : false;
+        }
+
         return value;
     }
 
