@@ -15,22 +15,32 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { name, version, commit, dependencies } from '../../../../../package.json';
+import { Component, OnInit } from '@angular/core';
+import {
+    name,
+    version,
+    commit,
+    dependencies
+} from '../../../../../package.json';
+import { AppConfigService } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-about-page',
     templateUrl: './about.component.html',
     styleUrls: ['about.component.scss']
 })
-export class AboutComponent {
-
+export class AboutComponent implements OnInit {
     url = `https://github.com/Alfresco/${name}/commits/${commit}`;
     version = version;
     dependencies = dependencies;
     showExtensions = true;
+    application = '';
 
-    constructor() {
+    constructor(private appConfigService: AppConfigService) {}
 
+    ngOnInit() {
+        this.application = this.appConfigService.get<string>(
+            'application.name'
+        );
     }
 }

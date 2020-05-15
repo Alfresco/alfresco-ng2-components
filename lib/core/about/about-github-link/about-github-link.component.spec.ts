@@ -19,13 +19,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { AboutGithubLinkComponent } from './about-github-link.component';
-import { AppConfigService } from '../../app-config/app-config.service';
 import { aboutGithubDetails } from '../about.mock';
 
 describe('AboutGithubLinkComponent', () => {
     let fixture: ComponentFixture<AboutGithubLinkComponent>;
     let component: AboutGithubLinkComponent;
-    let appConfigService: AppConfigService;
 
     setupTestBed({
         imports: [CoreTestingModule]
@@ -34,14 +32,6 @@ describe('AboutGithubLinkComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AboutGithubLinkComponent);
         component = fixture.componentInstance;
-        appConfigService = TestBed.get(AppConfigService);
-        appConfigService.config = Object.assign(appConfigService.config, {
-            'ecmHost': aboutGithubDetails.ecmHost,
-            'bpmHost': aboutGithubDetails.bpmHost,
-            'application': {
-                'name': aboutGithubDetails.appName
-            }
-        });
         fixture.detectChanges();
     });
 
@@ -49,7 +39,10 @@ describe('AboutGithubLinkComponent', () => {
         fixture.destroy();
     });
 
-    it('Should fetch appName for app.config and display as title', () => {
+    it('Should fetch appName for app.config and display as title', async () => {
+        component.application = 'mock-application-name';
+        fixture.detectChanges();
+        await fixture.whenStable();
         const titleElement = fixture.nativeElement.querySelector('[data-automation-id="adf-github-app-title"]');
         expect(titleElement === null).toBeFalsy();
         expect(titleElement.innerText).toEqual('mock-application-name');
@@ -76,12 +69,5 @@ describe('AboutGithubLinkComponent', () => {
         await fixture.whenStable();
         const githubUrl = fixture.nativeElement.querySelector('[data-automation-id="adf-github-url"]');
         expect(githubUrl.innerText).toEqual(aboutGithubDetails.url);
-    });
-
-    it('should fetch process and content hosts from the app.config.json file', async() => {
-        await fixture.whenStable();
-        expect(component.application).toEqual(aboutGithubDetails.appName);
-        expect(component.bpmHost).toEqual(aboutGithubDetails.bpmHost);
-        expect(component.ecmHost).toEqual(aboutGithubDetails.ecmHost);
     });
 });
