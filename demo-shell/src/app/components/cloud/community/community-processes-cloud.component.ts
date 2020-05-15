@@ -50,7 +50,7 @@ export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
     selectedRow: any;
     multiselect: boolean;
     selectionMode: string;
-    selectedRows: string[] = [];
+    selectedRows: any[] = [];
     testingMode: boolean;
     processFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 

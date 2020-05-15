@@ -39,8 +39,7 @@ describe('FileUploadingDialogComponent', () => {
             UploadModule
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            UserPreferencesService
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

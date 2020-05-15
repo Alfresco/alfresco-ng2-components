@@ -44,9 +44,6 @@ describe('NodeActionsService', () => {
             DialogModule
         ],
         providers: [
-            NodeActionsService,
-            DocumentListService,
-            ContentNodeDialogService,
             { provide: MatDialogRef, useValue: dialogRef }
         ]
     });

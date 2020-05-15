@@ -23,7 +23,6 @@ import { of } from 'rxjs';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
          fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
-import { NodePermissionDialogService } from './node-permission-dialog.service';
 
 describe('NodePermissionService', () => {
 
@@ -34,10 +33,6 @@ describe('NodePermissionService', () => {
     setupTestBed({
         imports: [
             CoreModule.forRoot()
-        ],
-        providers: [
-            NodePermissionDialogService,
-            NodePermissionService
         ]
     });
 

@@ -15,23 +15,33 @@
  * limitations under the License.
  */
 
-export { FacetFieldBucket } from './facet-field-bucket.interface';
-export { FacetField } from './facet-field.interface';
-export { FacetQuery } from './facet-query.interface';
-export { FilterQuery } from './filter-query.interface';
-export { SearchCategory } from './search-category.interface';
-export { SearchWidgetSettings } from './search-widget-settings.interface';
-export { SearchWidget } from './search-widget.interface';
-export { SearchConfiguration } from './search-configuration.interface';
-export { SearchQueryBuilderService } from './search-query-builder.service';
-export { SearchRange } from './search-range.interface';
+export * from './facet-field-bucket.interface';
+export * from './facet-field.interface';
+export * from './facet-query.interface';
+export * from './filter-query.interface';
+export * from './search-category.interface';
+export * from './search-widget-settings.interface';
+export * from './search-widget.interface';
+export * from './search-configuration.interface';
+export * from './search-query-builder.service';
+export * from './search-range.interface';
 
 export * from './components/search.component';
 export * from './components/search-control.component';
 export * from './components/empty-search-result.component';
+export * from './components/search-control.component';
+export * from './components/search.component';
+export * from './components/search-check-list/search-check-list.component';
+export * from './components/search-chip-list/search-chip-list.component';
+export * from './components/search-date-range/search-date-range.component';
 export * from './components/search-filter/search-filter.component';
 export * from './components/search-filter/search-filter.service';
+export * from './components/search-number-range/search-number-range.component';
+export * from './components/search-radio/search-radio.component';
+export * from './components/search-slider/search-slider.component';
 export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-sorting-picker/search-sorting-picker.component';
+export * from './components/search-text/search-text.component';
+export * from './components/search-widget-container/search-widget-container.component';
 
 export * from './search.module';

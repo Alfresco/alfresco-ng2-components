@@ -2,7 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../dist/content-services",
   "lib": {
-    "languageLevel": [ "dom", "es2017" ],
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-content-services",
     "umdModuleIds": {
