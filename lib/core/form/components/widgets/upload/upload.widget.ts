@@ -24,14 +24,24 @@ import { Observable, from } from 'rxjs';
 import { FormService } from '../../../services/form.service';
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../core/content-link.model';
-import { baseHost, WidgetComponent } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 import { mergeMap, map } from 'rxjs/operators';
 
 @Component({
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class UploadWidgetComponent extends WidgetComponent implements OnInit {

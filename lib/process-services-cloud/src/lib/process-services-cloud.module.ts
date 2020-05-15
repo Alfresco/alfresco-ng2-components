@@ -23,7 +23,6 @@ import { ProcessCloudModule } from './process/process-cloud.module';
 import { GroupCloudModule } from './group/group-cloud.module';
 import { FormCloudModule } from './form/form-cloud.module';
 import { TaskFormModule } from './task/task-form/task-form.module';
-import { UserPreferenceCloudService } from './services/user-preference-cloud.service';
 import {
     LocalPreferenceCloudService,
     PROCESS_FILTERS_SERVICE_TOKEN,
@@ -52,8 +51,6 @@ import { CloudFormRenderingService } from './form/components/cloud-form-renderin
                 source: 'assets/adf-process-services-cloud'
             }
         },
-        UserPreferenceCloudService,
-        LocalPreferenceCloudService,
         { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
         { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
         FormRenderingService,

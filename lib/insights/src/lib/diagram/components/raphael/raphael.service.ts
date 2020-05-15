@@ -19,7 +19,7 @@ import { Injectable , OnDestroy } from '@angular/core';
 
 declare let Raphael: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RaphaelService implements OnDestroy {
 
     paper: any;

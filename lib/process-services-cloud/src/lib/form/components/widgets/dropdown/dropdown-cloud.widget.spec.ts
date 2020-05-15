@@ -48,8 +48,7 @@ describe('DropdownCloudWidgetComponent', () => {
             NoopAnimationsModule,
             CoreModule.forRoot()
         ],
-        declarations: [DropdownCloudWidgetComponent],
-        providers: [FormCloudService]
+        declarations: [DropdownCloudWidgetComponent]
     });
 
     beforeEach(async(() => {

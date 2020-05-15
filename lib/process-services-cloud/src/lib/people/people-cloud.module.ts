@@ -19,15 +19,13 @@ import { NgModule } from '@angular/core';
 import { PeopleCloudComponent } from './components/people-cloud.component';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
-import { TemplateModule, CoreModule, PipeModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
-        PipeModule,
-        TemplateModule,
         FlexLayoutModule,
         MaterialModule,
         FormsModule,

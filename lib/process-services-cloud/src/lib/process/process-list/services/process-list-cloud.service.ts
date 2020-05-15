@@ -21,7 +21,7 @@ import { Observable, throwError } from 'rxjs';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ProcessListCloudService extends BaseCloudService {
 
     constructor(apiService: AlfrescoApiService,

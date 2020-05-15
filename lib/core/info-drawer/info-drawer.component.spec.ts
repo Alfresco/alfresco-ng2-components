@@ -61,11 +61,12 @@ describe('InfoDrawerComponent', () => {
     });
 
     it('should render the title', () => {
-        component.title = 'FakeTitle';
         fixture.detectChanges();
-        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
-        expect(title.length).toBe(1);
-        expect(title[0].nativeElement.innerText).toBe('FakeTitle');
+        fixture.whenStable().then(() => {
+            const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+            expect(title.length).toBe(1);
+            expect(title[0].nativeElement.innerText).toBe('Fake Title Custom');
+        });
     });
 });
 

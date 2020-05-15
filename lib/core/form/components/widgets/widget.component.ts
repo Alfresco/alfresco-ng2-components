@@ -21,25 +21,23 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulatio
 import { FormService } from './../../services/form.service';
 import { FormFieldModel } from './core/index';
 
-export const baseHost = {
-    '(click)': 'event($event)',
-    '(blur)': 'event($event)',
-    '(change)': 'event($event)',
-    '(focus)': 'event($event)',
-    '(focusin)': 'event($event)',
-    '(focusout)': 'event($event)',
-    '(input)': 'event($event)',
-    '(invalid)': 'event($event)',
-    '(select)': 'event($event)'
-};
-
 /**
  * Base widget component.
  */
 @Component({
     selector: 'base-widget',
     template: '',
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class WidgetComponent implements AfterViewInit {

@@ -17,7 +17,6 @@
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable, from, throwError, of } from 'rxjs';
 import { ParameterValueModel } from '../../diagram/models/report/parameter-value.model';
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
@@ -30,7 +29,7 @@ import { PieChart } from '../../diagram/models/chart/pie-chart.model';
 import { TableChart } from '../../diagram/models/chart/table-chart.model';
 import { map, catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AnalyticsService {
 
     constructor(private apiService: AlfrescoApiService,
@@ -256,7 +255,7 @@ export class AnalyticsService {
             );
     }
 
-    private handleError(error: Response) {
+    private handleError(error: any) {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }

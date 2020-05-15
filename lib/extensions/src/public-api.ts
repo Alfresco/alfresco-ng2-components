@@ -42,3 +42,4 @@ export * from './lib/store/states/selection.state';
 export * from './lib/store/states/repository.state';
 
 export * from './lib/components/public-api';
+export * from './lib/extensions.module';

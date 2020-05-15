@@ -23,8 +23,6 @@ import { IdentityGroupModel } from '@alfresco/adf-core';
 })
 export class InitialGroupNamePipe implements PipeTransform {
 
-    constructor() {}
-
     transform(group: IdentityGroupModel): string {
         let result = '';
         if (group) {

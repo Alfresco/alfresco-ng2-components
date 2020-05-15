@@ -19,18 +19,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material.module';
-import { TemplateModule, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { StartTaskCloudComponent } from './components/start-task-cloud.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupCloudModule } from '../../group/group-cloud.module';
-import { TaskCloudService } from '../services/task-cloud.service';
 import { FormCloudModule } from '../../form/form-cloud.module';
 import { PeopleCloudModule } from '../../people/people-cloud.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        TemplateModule,
         FlexLayoutModule,
         MaterialModule,
         FormsModule,
@@ -41,9 +39,6 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         PeopleCloudModule
     ],
     declarations: [StartTaskCloudComponent],
-    providers: [
-        TaskCloudService
-    ],
     exports: [
         StartTaskCloudComponent
     ]

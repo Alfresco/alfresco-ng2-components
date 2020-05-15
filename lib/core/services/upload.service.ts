@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter, Injectable } from '@angular/core';
-import { Minimatch } from 'minimatch-browser';
+import { Minimatch } from 'minimatch';
 import { Subject } from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import {
