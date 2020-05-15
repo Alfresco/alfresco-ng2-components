@@ -242,7 +242,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     if (applications && applications.length > 0) {
                         currentApplication = applications[0];
                         if (this.appId) {
-                            const filteredApp = applications.find( app => app.id === this.appId );
+                            const filteredApp = applications.find( app => app.id === +this.appId );
                             currentApplication = filteredApp ? filteredApp : applications[0];
                         }
                     }

@@ -176,6 +176,25 @@ The result will be the start form prefilled with the file data:
 
 ![Start process load file](../../docassets/images/start_process.png)
 
+### Starting a process with a selected application
+
+Now you can start process based on selected application from the dropdown. The process definition dropdown will display based on the selected application. The application dropdown will be selected application based on the given `appId` otherwise first application will be selected as default.
+
+```html
+ <adf-start-process 
+      [appId]="YOUR_APP_ID"
+      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
+      [name]="PROCESS_NAME"
+      [showSelectApplicationDropdown]="true"
+      [processDefinitionName]="PROCESS_DEFINITION_NAME">
+ </adf-start-process>		 
+```
+
+You can use the `showSelectApplicationDropdown` property to Hide or show application drop down.
+
+![Start process with selected application](../../docassets/images/start-process-with-selected-application.png)
+
+
 ## See also
 
 -   [Select Apps Dialog component](select-apps-dialog.component.md)
