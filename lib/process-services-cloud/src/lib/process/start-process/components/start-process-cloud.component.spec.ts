@@ -49,7 +49,8 @@ import { FormCloudModule } from '../../../form/form-cloud.module';
 import {
     fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
     fakeProcessInstance, fakeNoNameProcessDefinitions,
-    fakeSingleProcessDefinition, fakeCreatedProcessInstance
+    fakeSingleProcessDefinition, fakeCreatedProcessInstance,
+    fakeSingleProcessDefinitionWithoutForm
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
@@ -131,12 +132,20 @@ describe('StartProcessCloudComponent', () => {
 
     describe('start a process without start form', () => {
 
-        it('should create a process instance if the selection is valid', fakeAsync(() => {
-            component.name = 'testFormWithProcess';
-            component.processDefinitionName = 'processwithoutform2';
-            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
+        beforeEach(() => {
+            component.name = 'My new process';
+            component.appName = 'myApp';
             fixture.detectChanges();
-            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ 'appName': change });
+            fixture.detectChanges();
+        });
+
+        it('should be able to start a process with a valid process name and process definition', fakeAsync(() => {
+            component.name = 'My new process';
+            component.processDefinitionName = 'processwithoutform2';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinitionWithoutForm(component.processDefinitionName)));
+            fixture.detectChanges();
 
             const change = new SimpleChange(null, 'MyApp', true);
             component.ngOnChanges({ 'appName': change });
@@ -145,35 +154,30 @@ describe('StartProcessCloudComponent', () => {
 
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
-                const firstNameEl = fixture.nativeElement.querySelector('#firstName');
-                expect(firstNameEl).toBeDefined();
-                const lastNameEl = fixture.nativeElement.querySelector('#lastName');
-                expect(lastNameEl).toBeDefined();
                 const startBtn = fixture.nativeElement.querySelector('#button-start');
-                expect(component.formCloud.isValid).toBe(true);
+                expect(component.isProcessFormValid()).toBe(true);
                 expect(startBtn.disabled).toBe(false);
             });
         }));
 
-        it('should be able to start a process with a valid process name and process definition', async(() => {
-            component.name = 'My new process';
-            component.processDefinitionName = 'processwithoutform2';
-            fixture.detectChanges();
+        it('should create a process instance if the selection is valid', async(() => {
 
-            const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
-            fixture.detectChanges();
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
+            component.name = 'My new process';
+            component.processDefinitionName = 'process';
+            selectOptionByName('process');
 
             fixture.whenStable().then(() => {
+                expect(component.processDefinitionCurrent.name).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[1])).name);
                 const startBtn = fixture.nativeElement.querySelector('#button-start');
-                expect(startBtn.disabled).toBe(false);
                 expect(component.isProcessFormValid()).toBe(true);
+                expect(startBtn.disabled).toBe(false);
             });
         }));
 
         it('should have start button disabled  if create operation failed', fakeAsync(() => {
             createProcessSpy.and.returnValue(throwError('fake error'));
-            const change = new SimpleChange(null, 'MyApp', true);
+            const change = new SimpleChange(null, 'MyApp', false);
             fixture.detectChanges();
 
             component.ngOnChanges({ 'appName': change });
@@ -198,10 +202,6 @@ describe('StartProcessCloudComponent', () => {
             component.processDefinitionName = '';
             fixture.detectChanges();
 
-            const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
-            fixture.detectChanges();
-
             fixture.whenStable().then(() => {
                 const startBtn = fixture.nativeElement.querySelector('#button-start');
                 expect(startBtn.disabled).toBe(true);
@@ -212,10 +212,6 @@ describe('StartProcessCloudComponent', () => {
         it('should have start button disabled when name not filled out', async(() => {
             component.name = '';
             component.processDefinitionName = 'processwithoutform2';
-            fixture.detectChanges();
-
-            const change = new SimpleChange(null, 'MyApp', true);
-            component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -320,7 +316,7 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should NOT be able to start a process with a prefilled NOT valid form', async(() => {
+        it('should NOT be able to start a process with a prefilled NOT valid form', fakeAsync(() => {
             component.processDefinitionName = 'processwithform';
             getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
             component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
@@ -334,7 +330,14 @@ describe('StartProcessCloudComponent', () => {
             component.ngOnChanges({ 'appName': change });
             fixture.detectChanges();
 
+            tick();
+            typeValueInto('#processName', 'My new process with form');
+            typeValueInto('#processDefinitionName', 'processwithform');
+            fixture.detectChanges();
+            tick(4500);
+
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 expect(formDefinitionSpy).toHaveBeenCalled();
                 const firstNameEl = fixture.nativeElement.querySelector('#firstName');
                 expect(firstNameEl).toBeDefined();
