@@ -76,8 +76,7 @@ describe('TaskAuditDirective', () => {
 
     setupTestBed({
         imports: [CoreModule.forRoot()],
-        declarations: [BasicButtonComponent, TaskAuditDirective],
-        providers: [TaskListService]
+        declarations: [BasicButtonComponent, TaskAuditDirective]
     });
 
     beforeEach(async(() => {

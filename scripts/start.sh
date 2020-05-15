@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-eval EXEC_INSTALL=true
+eval EXEC_INSTALL=false
 eval EXEC_UPDATE=false
 eval EXEC_CLEAN=false
 eval EXEC_DEVELOP=false

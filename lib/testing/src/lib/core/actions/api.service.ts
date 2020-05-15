@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AlfrescoApiConfig } from '@alfresco/js-api/src/alfrescoApiConfig';
+import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 
 export class ApiService {
 

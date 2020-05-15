@@ -22,10 +22,7 @@ import {
     AppConfigService,
     AppConfigServiceMock,
     IdentityUserService,
-    JwtHelperService,
-    LogService,
-    setupTestBed,
-    StorageService
+    setupTestBed
 } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -58,11 +55,6 @@ describe('TaskFilterCloudService', () => {
           HttpClientTestingModule
         ],
         providers: [
-            TaskFilterCloudService,
-            IdentityUserService,
-            LogService,
-            JwtHelperService,
-            StorageService,
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: UserPreferenceCloudService },
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
             { provide: AppConfigService, useClass: AppConfigServiceMock }
@@ -243,9 +235,6 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             HttpClientTestingModule
         ],
         providers: [
-            TaskFilterCloudService,
-            IdentityUserService,
-            StorageService,
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });

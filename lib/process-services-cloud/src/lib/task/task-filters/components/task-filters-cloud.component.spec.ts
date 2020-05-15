@@ -55,7 +55,6 @@ describe('TaskFiltersCloudComponent', () => {
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
         providers: [
-            TaskFilterCloudService,
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });

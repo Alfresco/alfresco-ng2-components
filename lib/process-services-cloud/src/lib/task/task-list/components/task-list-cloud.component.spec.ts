@@ -83,8 +83,7 @@ describe('TaskListCloudComponent', () => {
     setupTestBed({
         imports: [
             ProcessServiceCloudTestingModule, TaskListCloudModule
-        ],
-        providers: [TaskListCloudService]
+        ]
     });
 
     beforeEach(() => {
