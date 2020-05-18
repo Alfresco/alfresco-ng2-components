@@ -34,10 +34,10 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        CoreModule.forChild(),
+        CoreModule,
         RouterModule.forChild(routes),
         ContentModule.forChild(),
-        ExtensionsModule.forChild()
+        ExtensionsModule
     ],
     declarations: [
         ExtensionPresetsComponent,

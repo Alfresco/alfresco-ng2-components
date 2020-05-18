@@ -23,7 +23,7 @@ import { LazyLoadingComponent } from './lazy-loading.component';
 
 @NgModule({
     imports: [
-        CoreModule.forChild(),
+        CoreModule,
         LazyLoadingRoutes
     ],
     declarations: [
