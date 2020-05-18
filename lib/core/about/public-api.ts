@@ -18,5 +18,6 @@
 export * from './about-github-link/about-github-link.component';
 export * from './about-product-version/about-product-version.component';
 export * from './about-application-modules/about-application-modules.component';
+export * from './about-server-settings/about-server-settings.component';
 
 export * from './about.module';

@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 
 @Component({
-    selector: 'adf-about-github-link',
-    templateUrl: './about-github-link.component.html',
+    selector: 'adf-about-server-settings',
+    templateUrl: './about-server-settings.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class AboutGithubLinkComponent {
-    /** Commit corresponding to the version of ADF to be used. */
-    @Input()
-    url = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
+export class AboutServerSettingsComponent implements OnInit {
+    ecmHost = '';
+    bpmHost = '';
 
-    /** Current version of the app running */
-    @Input() version: string;
+    constructor(private appConfig: AppConfigService) {}
 
-    /** Current version of the app running */
-    @Input() application: string;
-
-    constructor() {}
+    ngOnInit() {
+        this.ecmHost = this.appConfig.get<string>(AppConfigValues.ECMHOST);
+        this.bpmHost = this.appConfig.get<string>(AppConfigValues.BPMHOST);
+    }
 }
