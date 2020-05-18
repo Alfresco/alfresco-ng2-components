@@ -41,7 +41,8 @@
                               [versioning]="versioning"
                               [adf-check-allowable-operation]="'create'"
                               [adf-nodes]="disableDragArea ? getCurrentDocumentListNode() : []"
-                              (beginUpload)="onBeginUpload($event)">
+                              (beginUpload)="onBeginUpload($event)"
+                              (updateFileVersion)="onUploadNewVersion($event)">
             <div *ngIf="errorMessage" class="app-error-message">
                 <button (click)="resetError()" mat-icon-button>
                     <mat-icon>highlight_off</mat-icon>
@@ -226,6 +227,7 @@
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 [allowDropFiles]="allowDropFiles"
+                [allowDropFileVersion]="allowDropFileVersion"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
                 [display]="displayMode"
@@ -568,6 +570,13 @@
             <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [(ngModel)]="allowDropFiles"
                               (click)="toggleAllowDropFiles()">
                 {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
+            </mat-slide-toggle>
+        </section>
+
+        <section>
+            <mat-slide-toggle id="adf-document-list-enable-drop-file-version" [color]="'primary'" [(ngModel)]="allowDropFileVersion"
+                              (click)="toggleAllowDropFileVersion()">
+                {{'DOCUMENT_LIST.ALLOW_DROP_FILE_VERSION' | translate}}
             </mat-slide-toggle>
         </section>
 
