@@ -101,7 +101,19 @@ export const ACTIVITI_CLOUD_APPS: any = {
             numbervisibilityprocess: 'numbervisibilityprocess',
             processformoutcome: 'outcomebuttons',
             uploadSingleMultipleFiles: 'upload-single-multiple-pro',
-            processDisplayRestJson: 'process-display-rest-json'
+            processDisplayRestJson: 'process-display-rest-json',
+            poolStartEndMessageThrow: 'pool-start-end-mess-throw',
+            poolStartEndMessageCatch: 'pool-start-end-mess-catch',
+            poolProcessCalled: 'pool-process-called',
+            poolProcessCalling: 'pool-process-calling',
+            poolNonIntBoundaryThrown: 'pool-nonint-boundary-throw',
+            poolNonIntBoundaryCatch: 'pool-nonint-boundary-catch',
+            poolIntermediateMessageThrow: 'pool-interm-message-throw',
+            poolIntermediateMessageCatch: 'pool-interm-message-catch',
+            poolInterruptingBoundarySubprocessThrow: 'pool-int-bound-subpr-throw',
+            poolInterruptingBoundarySubprocessCatch: 'pool-int-bound-subpr-catch',
+            poolInterruptingBoundaryThrow: 'pool-int-boundary-throw',
+            poolInterruptingBoundaryCatch: 'pool-int-boundary-catch'
         },
         forms: {
             tabVisibilityFields: {
@@ -157,6 +169,9 @@ export const ACTIVITI_CLOUD_APPS: any = {
             },
             formWithAllWidgets: {
                 name: 'form-with-all-widgets'
+            },
+            poolForm: {
+                name: 'pool-usertaskform'
             }
 
         },
