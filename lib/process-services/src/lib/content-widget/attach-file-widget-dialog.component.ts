@@ -17,8 +17,9 @@
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { ExternalAlfrescoApiService, AlfrescoApiService, LoginDialogPanelComponent, SearchService, TranslationService } from '@alfresco/adf-core';
+import { ExternalAlfrescoApiService, AlfrescoApiService, LoginDialogPanelComponent, SearchService, TranslationService, AuthenticationService, SitesService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
+import { DocumentListService, ContentNodeSelectorService } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
 
 @Component({
@@ -27,9 +28,12 @@ import { Node } from '@alfresco/js-api';
     styleUrls: ['./attach-file-widget-dialog.component.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [
+        AuthenticationService,
+        DocumentListService,
+        SitesService,
+        ContentNodeSelectorService,
         SearchService,
-        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService}
-    ]
+        { provide: AlfrescoApiService, useClass: ExternalAlfrescoApiService} ]
 })
 export class AttachFileWidgetDialogComponent {
 
