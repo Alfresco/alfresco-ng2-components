@@ -15,8 +15,8 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "scripts": {
-    "build": "npm run tsc -p tsconfig.json",
-    "develop": "npm run tsc:w -p tsconfig.json",
+    "build": "npm run tsc -- -p tsconfig.json",
+    "develop": "npm run tsc:w -- -p tsconfig.json",
     "dist": "rm -rf ./dist/ && npm run build && cp -R ./bin ./dist/ && cp -R ./templates ./dist && cp ./package.json ./dist/",
     "tsc": "./node_modules/typescript/bin/tsc",
     "tsc:w": "./node_modules/typescript/bin/tsc -w"
