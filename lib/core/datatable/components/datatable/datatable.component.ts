@@ -105,6 +105,17 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     contextMenu: boolean = false;
 
+    /**
+     * When true, this enables you to drop one file directly into a file
+     * as item in the list and then create a new version for that file.
+     * When false, the dropped file will be added to the
+     * current folder (ie, the one containing all the items shown in the list).
+     * See the Upload directive for further details about how the file drop is
+     * handled.
+     */
+    @Input()
+    allowDropFileVersion: boolean = false;
+
     /** Toggles file drop support for rows (see
      * [Upload directive](upload.directive.md) for further details).
      */
@@ -666,6 +677,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     isMultiSelectionMode(): boolean {
         return this.selectionMode && this.selectionMode.toLowerCase() === 'multiple';
+    }
+
+    isFolder(row: DataRow): boolean {
+        return row.obj.entry.isFolder;
     }
 
     getRowStyle(row: DataRow): string {
