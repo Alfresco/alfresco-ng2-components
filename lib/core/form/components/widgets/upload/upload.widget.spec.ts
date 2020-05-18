@@ -26,8 +26,7 @@ import { FormModel } from '../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
 import { UploadWidgetComponent } from './upload.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 const fakePngAnswer = {
     'id': 1155,
@@ -82,8 +81,7 @@ describe('UploadWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

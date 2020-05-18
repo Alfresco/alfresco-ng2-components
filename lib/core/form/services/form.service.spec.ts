@@ -20,8 +20,7 @@ import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { formModelTabs, AlfrescoApiServiceMock } from '../../mock';
 import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -57,8 +56,7 @@ describe('Form service', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

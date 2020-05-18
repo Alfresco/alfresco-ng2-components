@@ -18,6 +18,7 @@
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
@@ -30,7 +31,12 @@ import { CookieService } from '../services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 
 @NgModule({
-    imports: [NoopAnimationsModule, RouterTestingModule, CoreModule.forRoot()],
+    imports: [
+        NoopAnimationsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        CoreModule.forRoot()
+    ],
     providers: [
         DatePipe,
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
@@ -40,7 +46,9 @@ import { CookieServiceMock } from '../mock/cookie.service.mock';
 
     ],
     exports: [
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        CoreModule,
+        TranslateModule
     ]
 })
 export class CoreTestingModule {}

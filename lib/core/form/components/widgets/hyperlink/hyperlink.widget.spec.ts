@@ -34,7 +34,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            TranslateModule,
+            TranslateModule.forRoot(),
             HttpClientModule
         ],
         declarations: [

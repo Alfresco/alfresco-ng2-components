@@ -18,12 +18,11 @@
 import { Component, ContentChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { AuthenticationService } from '../services';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { LogoutDirective } from './logout.directive';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LogoutDirective', () => {
 
@@ -44,8 +43,7 @@ describe('LogoutDirective', () => {
 
         setupTestBed({
             imports: [
-                CoreModule.forRoot(),
-                RouterTestingModule
+                CoreTestingModule
             ],
             declarations: [
                 TestComponent
@@ -99,8 +97,7 @@ describe('LogoutDirective', () => {
 
         setupTestBed({
             imports: [
-                CoreModule.forRoot(),
-                RouterTestingModule
+                CoreTestingModule
             ],
             declarations: [
                 TestComponent
@@ -143,8 +140,7 @@ describe('LogoutDirective', () => {
 
         setupTestBed({
             imports: [
-                CoreModule.forRoot(),
-                RouterTestingModule
+                CoreTestingModule
             ],
             declarations: [
                 TestComponent

@@ -19,8 +19,8 @@ import { ChangeDetectorRef, Component, ElementRef, SimpleChange } from '@angular
 import { ContentService } from './../services/content.service';
 import { CheckAllowableOperationDirective, NodeAllowableOperationSubject } from './check-allowable-operation.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { TestBed } from '@angular/core/testing';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 @Component({
     selector: 'adf-text-subject',
@@ -35,7 +35,9 @@ describe('CheckAllowableOperationDirective', () => {
     let changeDetectorMock: ChangeDetectorRef;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()]
+        imports: [
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

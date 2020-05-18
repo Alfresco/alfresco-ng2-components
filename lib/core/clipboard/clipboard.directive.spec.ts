@@ -18,10 +18,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
-import { RouterTestingModule } from '@angular/router/testing';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 @Component({
      selector: 'adf-test-component',
@@ -43,7 +42,7 @@ describe('ClipboardDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         declarations: [
             TestTargetClipboardComponent
@@ -85,8 +84,7 @@ describe('CopyClipboardDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            CoreTestingModule
         ],
         declarations: [
             TestCopyClipboardComponent
@@ -109,9 +107,11 @@ describe('CopyClipboardDirective', () => {
     it('should not show tooltip when element it is not hovered', (() => {
         const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span');
         spanHTMLElement.dispatchEvent(new Event('mouseenter'));
+        fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).not.toBeNull();
 
         spanHTMLElement.dispatchEvent(new Event('mouseleave'));
+        fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
     }));
 

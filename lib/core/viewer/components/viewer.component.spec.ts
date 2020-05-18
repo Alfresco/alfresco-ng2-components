@@ -21,8 +21,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
 import { AlfrescoApiService, RenditionsService } from '../../services';
 
-import { CoreModule } from '../../core.module';
-
 import { throwError } from 'rxjs';
 import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
@@ -30,7 +28,7 @@ import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
-import { RouterTestingModule } from '@angular/router/testing';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -130,8 +128,7 @@ describe('ViewerComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            CoreTestingModule
         ],
         declarations: [
             ViewerWithCustomToolbarComponent,

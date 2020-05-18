@@ -18,12 +18,11 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { setupTestBed, CoreModule, TranslationService } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TemplateModule } from '../template.module';
+import { setupTestBed, TranslationService } from '@alfresco/adf-core';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 @Component({
     selector: 'adf-test-component',
@@ -47,9 +46,7 @@ describe('EmptyContentComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            TemplateModule
+            CoreTestingModule
         ],
         declarations: [
             TestComponent

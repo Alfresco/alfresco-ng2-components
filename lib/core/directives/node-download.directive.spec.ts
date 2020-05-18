@@ -20,11 +20,11 @@ import { By } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { Component, DebugElement } from '@angular/core';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { DialogModule } from '../dialogs/dialog.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDownloadDirective } from './node-download.directive';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 @Component({
     template: '<div [adfNodeDownload]="selection"></div>'
@@ -44,7 +44,7 @@ describe('NodeDownloadDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
+            CoreTestingModule,
             DialogModule
         ],
         providers: [

@@ -24,8 +24,7 @@ import { DynamicTableRow  } from './dynamic-table-row.model';
 import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './dynamic-table.widget.model';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 const fakeFormField = {
     id: 'fake-dynamic-table',
@@ -79,8 +78,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

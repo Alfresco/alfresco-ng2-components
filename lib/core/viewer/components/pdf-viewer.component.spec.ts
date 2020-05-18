@@ -24,11 +24,11 @@ import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
 import { TranslationService } from '../../services/translation.service';
 import { TranslationMock } from '../../mock/translation.service.mock';
 import { take } from 'rxjs/operators';
 import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare const pdfjsLib: any;
 
@@ -128,7 +128,7 @@ describe('Test PdfViewer component', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         declarations: [
             TestDialogComponent,

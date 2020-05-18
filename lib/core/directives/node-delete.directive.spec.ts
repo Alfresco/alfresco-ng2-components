@@ -21,10 +21,10 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { TranslationService } from '../services/translation.service';
 import { TranslationMock } from '../mock/translation.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 @Component({
     template: `
@@ -96,7 +96,7 @@ describe('NodeDeleteDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         declarations: [
             TestComponent,

@@ -21,8 +21,7 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -32,8 +31,7 @@ describe('DateTimeWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

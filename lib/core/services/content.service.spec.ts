@@ -23,12 +23,12 @@ import { AuthenticationService } from './authentication.service';
 import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { TranslationService } from './translation.service';
 import { TranslationMock } from '../mock/translation.service.mock';
 import { Node } from '@alfresco/js-api';
+import { CoreTestingModule } from '../testing';
 
 declare let jasmine: any;
 
@@ -43,7 +43,7 @@ describe('ContentService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

@@ -21,12 +21,12 @@ import { FormFieldModel, FormFieldTypes, FormModel } from './../widgets/core/ind
 import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets/index';
 import { FormFieldComponent } from './form-field.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBaseModule } from '../../form-base.module';
 import { TranslationService } from '../../../services/translation.service';
 import { TranslationMock } from '../../../mock/translation.service.mock';
 import { TranslateStore } from '@ngx-translate/core';
 import { formWithOneVisibleAndOneInvisibleFieldMock, formWithOneVisibleAndOneInvisibleTabMock } from '../mock/form-renderer.component.mock';
+import { CoreTestingModule } from '../../../testing';
 
 describe('FormFieldComponent', () => {
 
@@ -38,7 +38,7 @@ describe('FormFieldComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             FormBaseModule
         ],
         providers: [

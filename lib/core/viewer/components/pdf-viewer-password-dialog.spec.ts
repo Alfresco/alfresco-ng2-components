@@ -19,8 +19,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare const pdfjsLib: any;
 
@@ -31,8 +30,7 @@ describe('PdfPasswordDialogComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             {

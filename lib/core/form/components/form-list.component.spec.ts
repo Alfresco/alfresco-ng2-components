@@ -21,8 +21,7 @@ import { of } from 'rxjs';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('TaskAttachmentList', () => {
 
@@ -33,8 +32,7 @@ describe('TaskAttachmentList', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: TranslationService, useClass: TranslationMock }

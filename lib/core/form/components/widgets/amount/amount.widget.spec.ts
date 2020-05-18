@@ -19,12 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldModel } from './../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBaseModule } from '../../../form-base.module';
 import { TranslateStore } from '@ngx-translate/core';
 import { TranslationService } from '../../../../services/translation.service';
 import { TranslationMock } from '../../../../mock/translation.service.mock';
 import { FormModel } from '../core';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('AmountWidgetComponent', () => {
 
@@ -33,7 +33,7 @@ describe('AmountWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             FormBaseModule
         ],
         providers: [
@@ -92,7 +92,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             FormBaseModule
         ],
         providers: [
@@ -162,7 +162,7 @@ describe('AmountWidgetComponent settings', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             FormBaseModule
         ],
         providers: [

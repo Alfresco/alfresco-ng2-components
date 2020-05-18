@@ -19,9 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { BpmUserModel } from '../models/bpm-user.model';
 import { BpmUserService } from '../services/bpm-user.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -31,7 +31,7 @@ describe('Bpm user service', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

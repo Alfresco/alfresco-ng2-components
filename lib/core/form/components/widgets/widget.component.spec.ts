@@ -20,8 +20,7 @@ import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
 import { WidgetComponent } from './widget.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
-import { CoreModule } from '../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../testing';
 
 describe('WidgetComponent', () => {
 
@@ -31,8 +30,7 @@ describe('WidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

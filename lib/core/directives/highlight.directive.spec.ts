@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { HighlightTransformService } from '../services/highlight-transform.service';
 import { HighlightDirective } from './highlight.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 /* spellchecker: disable */
 const template: string = `
@@ -47,7 +47,7 @@ describe('HighlightDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         declarations: [
             TestComponent
