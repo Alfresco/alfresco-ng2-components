@@ -25,7 +25,7 @@
         tooltip="{{ 'ADF_VERSION_LIST.ACTIONS.UPLOAD.TOOLTIP' | translate }}"
         [comment]="comment"
         [versioning]="true"
-        [newFileVersion]="newFileVersion"
+        [file]="newFileVersion"
         [majorVersion]="isMajorVersion()"
         (success)="success.emit($event)"
         (error)="error.emit($event)">

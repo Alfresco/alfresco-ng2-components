@@ -35,10 +35,6 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
     @Input()
     node: Node;
 
-    /** (**Required**) The drag&dropped new file to be versioned. */
-    @Input()
-    newFileVersion: File;
-
     protected createFileModel(file: File): FileModel {
         const fileModel = super.createFileModel(file, this.rootFolderId, ((<any> file).webkitRelativePath || '').replace(/\/[^\/]*$/, ''), this.node.id);
 
@@ -51,7 +47,6 @@ export class UploadVersionButtonComponent extends UploadButtonComponent implemen
     }
 
     ngOnInit() {
-        this.file = this.newFileVersion;
         super.ngOnInit();
         this.checkPermission();
     }

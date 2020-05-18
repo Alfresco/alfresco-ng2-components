@@ -119,8 +119,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (with checkboxes)",
     "THUMBNAILS": "Enable Thumbnails",
-    "ALLOW_DROP_FILES": "Enable Drop Files in a folder",
-    "ALLOW_DROP_FILE_VERSION": "Enable Drop File in a file to change version",
+    "ALLOW_DROP_FILES": "Enable Drop Files in a folder or a file",
     "MULTIPLE_FILE_UPLOAD": "Multiple File Upload",
     "FOLDER_UPLOAD": "Folder upload",
     "CUSTOM_FILTER": "Custom extensions filter",

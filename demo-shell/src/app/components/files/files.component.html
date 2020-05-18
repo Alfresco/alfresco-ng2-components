@@ -227,7 +227,6 @@
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 [allowDropFiles]="allowDropFiles"
-                [allowDropFileVersion]="allowDropFileVersion"
                 [selectionMode]="selectionMode"
                 [multiselect]="multiselect"
                 [display]="displayMode"
@@ -567,16 +566,9 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [(ngModel)]="allowDropFiles"
-                              (click)="toggleAllowDropFiles()">
+            <mat-slide-toggle id="adf-document-list-enable-drop-files" [color]="'primary'" [checked]="allowDropFiles"
+                              (change)="toggleAllowDropFiles()">
                 {{'DOCUMENT_LIST.ALLOW_DROP_FILES' | translate}}
-            </mat-slide-toggle>
-        </section>
-
-        <section>
-            <mat-slide-toggle id="adf-document-list-enable-drop-file-version" [color]="'primary'" [(ngModel)]="allowDropFileVersion"
-                              (click)="toggleAllowDropFileVersion()">
-                {{'DOCUMENT_LIST.ALLOW_DROP_FILE_VERSION' | translate}}
             </mat-slide-toggle>
         </section>
 
