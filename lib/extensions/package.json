@@ -15,7 +15,6 @@
   "peerDependencies": {
     "@angular/common": ">=7.0.3",
     "@angular/core": ">=7.0.3",
-    "@angular/http": ">=7.0.3",
     "@alfresco/js-api": "3.8.0"
   },
   "keywords": [
@@ -24,6 +23,5 @@
     "angular",
     "activiti",
     "components"
-  ],
-  "license": "Apache-2.0"
+  ]
 }
