@@ -26,7 +26,7 @@ import { PaginationComponent } from './pagination.component';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule.forChild()
+        TranslateModule
     ],
     declarations: [
         InfinitePaginationComponent,

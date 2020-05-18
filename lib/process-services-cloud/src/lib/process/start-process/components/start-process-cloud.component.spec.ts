@@ -100,7 +100,7 @@ describe('StartProcessCloudComponent', () => {
             MatInputModule,
             MatRippleModule,
             FormCloudModule,
-            TranslateModule.forChild()
+            TranslateModule
         ],
         declarations: [StartProcessCloudComponent],
         providers: [

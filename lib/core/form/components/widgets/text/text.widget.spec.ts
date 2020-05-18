@@ -46,7 +46,7 @@ describe('TextWidgetComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            TranslateModule.forChild(),
+            TranslateModule,
             MatInputModule,
             FormsModule,
             MatIconModule,

@@ -43,7 +43,7 @@ describe('RadioButtonsWidgetComponent', () => {
     setupTestBed({
         imports: [
             NoopAnimationsModule,
-            TranslateModule.forChild(),
+            TranslateModule,
             MatRadioModule,
             FormsModule,
             MatIconModule,

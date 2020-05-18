@@ -27,7 +27,7 @@ import { PipeModule } from '../pipes/pipe.module';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule.forChild(),
+        TranslateModule,
         PipeModule
     ],
     declarations: [
