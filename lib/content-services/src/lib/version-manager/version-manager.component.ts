@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { VersionListComponent } from './version-list.component';
 import { ContentService, AlfrescoApiService } from '@alfresco/adf-core';
@@ -27,25 +27,29 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     styleUrls: ['./version-manager.component.scss'],
     animations: [
         trigger('uploadToggle', [
-            state('open', style({ height: '175px', opacity: 1, visibility: 'visible' })),
-            state('close', style({ height: '0%', opacity: 0, visibility: 'hidden' })),
+            state('open', style({height: '175px', opacity: 1, visibility: 'visible'})),
+            state('close', style({height: '0%', opacity: 0, visibility: 'hidden'})),
             transition('open => close', [
-                style({ visibility: 'hidden' }),
+                style({visibility: 'hidden'}),
                 animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')
             ]),
             transition('close => open', [
-                style({ visibility: 'visible' }),
+                style({visibility: 'visible'}),
                 animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)')
             ])
         ])
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class VersionManagerComponent {
+export class VersionManagerComponent implements OnInit {
 
     /** Target node to manage version history. */
     @Input()
     node: Node;
+
+    /** New file for updating current version. */
+    @Input()
+    newFileVersion: File;
 
     /** Toggles showing/hiding of comments. */
     @Input()
@@ -72,6 +76,12 @@ export class VersionManagerComponent {
                 private alfrescoApiService: AlfrescoApiService) {
     }
 
+    ngOnInit() {
+        if (this.newFileVersion) {
+            this.toggleNewVersion();
+        }
+    }
+
     refresh(node: Node) {
         this.alfrescoApiService.nodeUpdated.next(node);
         this.versionListComponent.loadVersionHistory();
@@ -80,6 +90,7 @@ export class VersionManagerComponent {
     }
 
     onUploadSuccess(event: any) {
+        this.newFileVersion = null;
         this.alfrescoApiService.nodeUpdated.next(event.value.entry);
         this.versionListComponent.loadVersionHistory();
         this.uploadSuccess.emit(event.value.entry);
