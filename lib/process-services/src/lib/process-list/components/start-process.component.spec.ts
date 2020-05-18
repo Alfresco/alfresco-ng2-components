@@ -592,6 +592,8 @@ describe('StartFormComponent', () => {
 
     describe('Select applications', () => {
 
+        const mockAppId = 3;
+
         beforeEach(() => {
             fixture.detectChanges();
             component.name = 'My new process';
@@ -608,7 +610,7 @@ describe('StartFormComponent', () => {
             const lableElement = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-form-field-label');
 
             expect(appsSelector).not.toBeNull();
-            expect(lableElement.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.APPLICATIONS');
+            expect(lableElement.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');
 
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
             expect(component.applications.length).toBe(6);
@@ -617,22 +619,24 @@ describe('StartFormComponent', () => {
             expect(component.selectedApplication.id).toEqual(component.appId);
             expect(component.selectedApplication.name).toEqual('App3');
 
-            expect(getDefinitionsSpy).toHaveBeenCalled();
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(mockAppId);
             expect(component.processDefinitions.length).toEqual(2);
             expect(component.processDefinitions[0].name).toEqual('My Process 1');
             expect(component.processDefinitions[1].name).toEqual('My Process 2');
         });
 
-        it('Should able to list process-definition based on selected application', () => {
+        it('Should be able to list process-definition based on selected application', () => {
             fixture.detectChanges();
             expect(component.appId).toBe(component.selectedApplication.id);
             expect(component.selectedApplication).toEqual(deployedApps[2]);
             expect(component.selectedApplication.name).toEqual('App3');
 
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(mockAppId);
             expect(component.processDefinitions.length).toEqual(2);
             expect(component.processDefinitions[0].name).toEqual('My Process 1');
             expect(component.processDefinitions[1].name).toEqual('My Process 2');
 
+            const changedAppId = 2;
             getDefinitionsSpy.and.returnValue(of([ { id: 'my:process 3', name: 'My Process 3', hasStartForm: true } ]));
             fixture.detectChanges();
 
@@ -643,6 +647,7 @@ describe('StartFormComponent', () => {
             expect(component.selectedApplication).toEqual(deployedApps[1]);
             expect(component.selectedApplication.name).toEqual('App2');
 
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(changedAppId);
             expect(component.processDefinitions.length).toEqual(1);
             expect(component.processDefinitions[0].name).toEqual('My Process 3');
         });

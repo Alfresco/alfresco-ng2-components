@@ -114,7 +114,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     errorMessageId: string = '';
     processNameInput: FormControl;
     processDefinitionInput: FormControl;
-    filteredProcesses: Observable<ProcessDefinitionRepresentation[]>;
+    filteredProcessesDefinitions$: Observable<ProcessDefinitionRepresentation[]>;
     maxProcessNameLength: number = this.MAX_LENGTH;
     alfrescoRepositoryName: string;
     applications: AppDefinitionRepresentationModel[] = [];
@@ -141,7 +141,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(name => this.name = name);
 
-        this.filteredProcesses = this.processDefinitionInput.valueChanges
+        this.filteredProcessesDefinitions$ = this.processDefinitionInput.valueChanges
             .pipe(
                 map((value) => this._filter(value)),
                 takeUntil(this.onDestroy$)
@@ -222,6 +222,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                         }
                     }
 
+                    this.processDefinitionSelection.emit(this.selectedProcessDef);
                     this.processDefinitionInput.setValue(this.selectedProcessDef.name);
                 }
             },
@@ -234,19 +235,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.appsProcessService
             .getDeployedApplications()
             .pipe(map((response: AppDefinitionRepresentationModel[]) => {
-                    let currentApplication: AppDefinitionRepresentationModel;
-                    let applications: AppDefinitionRepresentationModel[] = [];
-
-                    applications = this.removeDefaultApps(response);
-
-                    if (applications && applications.length > 0) {
-                        currentApplication = applications[0];
-                        if (this.appId) {
-                            const filteredApp = applications.find( app => app.id === +this.appId );
-                            currentApplication = filteredApp ? filteredApp : applications[0];
-                        }
-                    }
-
+                    const applications = this.removeDefaultApps(response);
+                    const filteredApp = applications.find( app => app.id === +this.appId );
+                    const currentApplication = filteredApp ? filteredApp : applications[0];
                     return { currentApplication, applications };
                 })
             )
@@ -264,7 +255,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     onAppSelectionChange(selectedApplication: any) {
         this.selectedApplication = selectedApplication.value;
-        this.loadStartProcess(this.selectedApplication.id);
+        this.appId = this.selectedApplication.id;
+        this.loadStartProcess(this.appId);
     }
 
     private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {

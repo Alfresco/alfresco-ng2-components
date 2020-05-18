@@ -7,7 +7,7 @@
         <div class="adf-start-process-definition-container">
             <mat-form-field *ngIf="showSelectApplicationDropdown" [floatLabel]="'always'" class="adf-start-process-app-list">
                 <mat-select
-                    placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.APPLICATIONS' | translate}}"
+                    placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION' | translate}}"
                     (selectionChange)="onAppSelectionChange($event)"
                     [(ngModel)]="selectedApplication"
                     data-automation-id="adf-start-process-apps-drop-down">
@@ -33,7 +33,7 @@
                         #auto="matAutocomplete"
                         id="processDefinitionOptions"
                         [displayWith]="displayFn">
-                        <mat-option *ngFor="let processDef of filteredProcesses | async" [value]="processDef.name"
+                        <mat-option *ngFor="let processDef of filteredProcessesDefinitions$ | async" [value]="processDef.name"
                         (click)="processDefinitionSelectionChanged(processDef)">
                             {{ processDef.name }}
                         </mat-option>
