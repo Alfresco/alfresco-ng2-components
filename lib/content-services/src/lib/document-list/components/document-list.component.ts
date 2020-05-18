@@ -161,16 +161,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     emptyFolderImageUrl: string = './assets/images/empty_doc_lib.svg';
 
-    /**
-     * When true, this enables you to drop one file directly into a file
-     * as item in the list and then create a new version for that file.
-     * When false, the dropped file will be added to the
-     * current folder (ie, the one containing all the items shown in the list).
-     * See the Upload directive for further details about how the file drop is
-     * handled.
-     */
-    @Input()
-    allowDropFileVersion: boolean = false;
+    // /**
+    //  * When true, this enables you to drop one file directly into a file
+    //  * as item in the list and then create a new version for that file.
+    //  * When false, the dropped file will be added to the
+    //  * current folder (ie, the one containing all the items shown in the list).
+    //  * See the Upload directive for further details about how the file drop is
+    //  * handled.
+    //  */
+    // @Input()
+    // allowDropFileVersion: boolean = false;
 
     /**
      * When true, this enables you to drop files directly into subfolders shown
@@ -391,7 +391,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode, allowDropFile);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 

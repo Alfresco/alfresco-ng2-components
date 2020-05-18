@@ -44,6 +44,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     thumbnails: boolean = false;
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
+    allowDropFiles: boolean;
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -61,11 +62,13 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 private contentService: ContentService,
                 schema: DataColumn[] = [],
                 sorting?: DataSorting,
-                sortingMode: string = 'client') {
+                sortingMode: string = 'client',
+                allowDropFiles: boolean = false) {
         this.rows = [];
         this.columns = schema || [];
         this.sorting = sorting;
         this.sortingMode = sortingMode;
+        this.allowDropFiles = allowDropFiles;
     }
 
     getRows(): Array<DataRow> {
@@ -248,7 +251,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (nodePaging && nodePaging.list) {
             const nodeEntries: NodeEntry[] = nodePaging.list.entries;
             if (nodeEntries && nodeEntries.length > 0) {
-                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService));
+                shareDataRows = nodeEntries.map((item) => new ShareDataRow(item, this.contentService, this.permissionsStyle, this.thumbnailService, this.allowDropFiles));
 
                 if (this.filter) {
                     shareDataRows = shareDataRows.filter(this.filter);

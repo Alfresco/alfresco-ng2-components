@@ -40,12 +40,13 @@ export class ShareDataRow implements DataRow {
     constructor(private obj: NodeEntry,
                 private contentService: ContentService,
                 private permissionsStyle: PermissionStyleModel[],
-                private thumbnailService?: ThumbnailService) {
+                private thumbnailService?: ThumbnailService,
+                private allowDropFiles?: boolean) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
-        this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj) || this.isFileAndHasParentFolderPermissionToUpload(obj);
+        this.isDropTarget = this.allowDropFiles && this.isFolderAndHasPermissionToUpload(obj) || this.isFileAndHasParentFolderPermissionToUpload(obj);
         if (permissionsStyle) {
             this.cssClass = this.getPermissionClass(obj);
         }
