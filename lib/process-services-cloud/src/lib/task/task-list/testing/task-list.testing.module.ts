@@ -24,11 +24,8 @@ import {
     AlfrescoApiServiceMock,
     AppConfigService,
     AppConfigServiceMock,
-    StorageService,
-    LogService,
     TranslationService,
     TranslationMock,
-    UserPreferencesService,
     ContextMenuModule
 } from '@alfresco/adf-core';
 
@@ -42,10 +39,7 @@ import {
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
-        { provide: TranslationService, useClass: TranslationMock },
-        StorageService,
-        LogService,
-        UserPreferencesService
+        { provide: TranslationService, useClass: TranslationMock }
     ]
 })
 export class TaskListTestingModule {}

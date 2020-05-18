@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './components/content-metadata/content-metadata.component';
 export * from './components/content-metadata-card/content-metadata-card.component';
 export * from './services/basic-properties.service';
 export * from './services/content-metadata.service';

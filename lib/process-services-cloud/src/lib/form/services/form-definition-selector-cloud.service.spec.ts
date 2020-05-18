@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AlfrescoApiService, CoreModule, setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, CoreModule, setupTestBed } from '@alfresco/adf-core';
 import { FormDefinitionSelectorCloudService } from './form-definition-selector-cloud.service';
 
 declare let jasmine: any;
@@ -63,11 +63,6 @@ describe('Form Definition Selector Cloud Service', () => {
         imports: [
             NoopAnimationsModule,
             CoreModule.forRoot()
-        ],
-        providers: [
-            FormDefinitionSelectorCloudService,
-            AlfrescoApiService,
-            AppConfigService
         ]
     });
 

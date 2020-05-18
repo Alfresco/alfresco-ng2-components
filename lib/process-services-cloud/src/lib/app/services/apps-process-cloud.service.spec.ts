@@ -38,7 +38,7 @@ describe('AppsProcessCloudService', () => {
 
     setupTestBed({
         imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule],
-        providers: [AppsProcessCloudService, AppConfigService,
+        providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock } ]
     });
 

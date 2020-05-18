@@ -76,8 +76,7 @@ describe('ProcessAuditDirective', () => {
         declarations: [
             BasicButtonComponent,
             ProcessAuditDirective
-        ],
-        providers: [ProcessService]
+        ]
     });
 
     beforeEach(() => {

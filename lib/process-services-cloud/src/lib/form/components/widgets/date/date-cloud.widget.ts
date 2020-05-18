@@ -23,7 +23,7 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MOMENT_DATE_FORMATS, MomentDateAdapter, baseHost, WidgetComponent,
+import { MOMENT_DATE_FORMATS, MomentDateAdapter, WidgetComponent,
     UserPreferencesService, UserPreferenceValues, FormService } from '@alfresco/adf-core';
 
 @Component({
@@ -33,7 +33,17 @@ import { MOMENT_DATE_FORMATS, MomentDateAdapter, baseHost, WidgetComponent,
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }],
     templateUrl: './date-cloud.widget.html',
     styleUrls: ['./date-cloud.widget.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class DateCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {

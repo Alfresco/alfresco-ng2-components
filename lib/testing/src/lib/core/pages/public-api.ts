@@ -24,7 +24,6 @@ export * from './login-sso.page';
 export * from './data-table-component.page';
 export * from './pagination.page';
 export * from './error.page';
-export * from './login.page';
 export * from './notification-history.page';
 export * from './form/public-api';
 export * from './card-view/public-api';

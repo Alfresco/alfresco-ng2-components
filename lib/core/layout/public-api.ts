@@ -15,6 +15,13 @@
  * limitations under the License.
  */
 
+export * from './components/header/header.component';
+export * from './components/layout-container/layout-container.component';
+export * from './components/sidebar-action/sidebar-action-menu.component';
 export * from './components/sidenav-layout/sidenav-layout.component';
+
+export * from './directives/sidenav-layout-content.directive';
+export * from './directives/sidenav-layout-header.directive';
+export * from './directives/sidenav-layout-navigation.directive';
 
 export * from './layout.module';

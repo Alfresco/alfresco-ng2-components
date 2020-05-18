@@ -18,12 +18,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TemplateModule, FormBaseModule, PipeModule, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { FormCloudComponent } from './components/form-cloud.component';
 import { FormDefinitionSelectorCloudComponent } from './components/form-definition-selector-cloud.component';
-import { FormDefinitionSelectorCloudService } from './services/form-definition-selector-cloud.service';
 import { FormCustomOutcomesComponent } from './components/form-cloud-custom-outcomes.component';
 import { ContentNodeSelectorModule } from '@alfresco/adf-content-services';
 
@@ -40,13 +39,10 @@ import { GroupCloudModule } from '../group/group-cloud.module';
 @NgModule({
     imports: [
         CommonModule,
-        PipeModule,
-        TemplateModule,
         FlexLayoutModule,
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        FormBaseModule,
         CoreModule,
         ContentNodeSelectorModule,
         PeopleCloudModule,
@@ -63,9 +59,6 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent
     ],
-    providers: [
-        FormDefinitionSelectorCloudService
-    ],
     entryComponents: [
         UploadCloudWidgetComponent,
         DropdownCloudWidgetComponent,
@@ -79,7 +72,11 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         UploadCloudWidgetComponent,
         FormDefinitionSelectorCloudComponent,
         FormCustomOutcomesComponent,
-        AttachFileCloudWidgetComponent
+        DropdownCloudWidgetComponent,
+        AttachFileCloudWidgetComponent,
+        DateCloudWidgetComponent,
+        PeopleCloudWidgetComponent,
+        GroupCloudWidgetComponent
     ]
 })
 export class FormCloudModule {

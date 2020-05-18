@@ -32,8 +32,7 @@ describe('SearchTextInputComponent', () => {
     let userPreferencesService: UserPreferencesService;
 
     setupTestBed({
-        imports: [CoreTestingModule],
-        providers: [ UserPreferencesService ]
+        imports: [CoreTestingModule]
     });
 
     beforeEach(() => {

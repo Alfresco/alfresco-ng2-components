@@ -113,7 +113,6 @@ describe('AttachFileCloudWidgetComponent', () => {
             FormCloudModule,
             ContentModule.forRoot()
         ],
-        providers: [],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

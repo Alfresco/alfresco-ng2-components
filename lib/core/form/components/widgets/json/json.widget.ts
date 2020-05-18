@@ -17,7 +17,7 @@
 
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
-import { baseHost, WidgetComponent } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dialogs/edit-json/edit-json.dialog';
 
@@ -25,7 +25,17 @@ import { EditJsonDialogSettings, EditJsonDialogComponent } from '../../../../dia
     template: `
         <button mat-raised-button color="primary" (click)="view()">json</button>
     `,
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class JsonWidgetComponent extends WidgetComponent {

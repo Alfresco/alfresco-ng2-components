@@ -21,14 +21,24 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { Node } from '@alfresco/js-api';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { WidgetComponent, baseHost, LogService, FormService, ThumbnailService, ContentLinkModel, NotificationService } from '@alfresco/adf-core';
+import { WidgetComponent, LogService, FormService, ThumbnailService, ContentLinkModel, NotificationService } from '@alfresco/adf-core';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 
 @Component({
     selector: 'upload-cloud-widget',
     templateUrl: './upload-cloud.widget.html',
     styleUrls: ['./upload-cloud.widget.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class UploadCloudWidgetComponent extends WidgetComponent implements OnInit {

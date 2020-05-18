@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
 import { CookieService } from '../services/cookie.service';
 
+@Injectable()
 export class CookieServiceMock extends CookieService {
 
     /** @override */

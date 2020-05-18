@@ -59,8 +59,6 @@ describe('UploadButtonComponent', () => {
             UploadButtonComponent
         ],
         providers: [
-            UploadService,
-            ContentService,
             { provide: TranslationService, useClass: TranslationMock }
         ]
     });

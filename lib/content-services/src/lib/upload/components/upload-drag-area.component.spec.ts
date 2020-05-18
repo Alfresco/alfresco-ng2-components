@@ -27,7 +27,6 @@ import {
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { throwError } from 'rxjs';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -111,7 +110,6 @@ describe('UploadDragAreaComponent', () => {
             UploadDragAreaComponent
         ],
         providers: [
-            UploadService,
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
@@ -417,7 +415,6 @@ describe('UploadDragAreaComponent', () => {
             };
 
             fixture.detectChanges();
-            spyOn(uploadService, 'fileUploadError').and.returnValue(throwError(new Error()));
 
             component.error.subscribe((error) => {
                 expect(error).not.toBeNull();

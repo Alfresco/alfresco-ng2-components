@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { baseHost, WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
+import { WidgetComponent, FormService, LogService, FormFieldOption } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -27,7 +27,17 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'dropdown-cloud-widget',
     templateUrl: './dropdown-cloud.widget.html',
     styleUrls: ['./dropdown-cloud.widget.scss'],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class DropdownCloudWidgetComponent extends WidgetComponent implements OnInit, OnDestroy {

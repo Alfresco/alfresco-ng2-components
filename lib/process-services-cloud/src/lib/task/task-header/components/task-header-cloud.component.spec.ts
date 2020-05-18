@@ -31,7 +31,7 @@ import {
     suspendedTaskDetailsCloudMock,
     taskDetailsWithParentTaskIdMock
 } from '../mocks/task-details-cloud.mock';
-import moment = require('moment');
+import moment from 'moment-es6';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -51,8 +51,7 @@ describe('TaskHeaderCloudComponent', () => {
             ProcessServiceCloudTestingModule,
             TaskHeaderCloudModule,
             RouterTestingModule
-        ],
-        providers: [TaskCloudService]
+        ]
     });
 
     beforeEach(() => {

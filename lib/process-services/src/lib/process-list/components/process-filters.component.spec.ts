@@ -41,7 +41,6 @@ describe('ProcessFiltersComponent', () => {
             CoreModule.forRoot()
         ],
         declarations: [ProcessFiltersComponent],
-        providers: [AppsProcessService, ProcessFilterService],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

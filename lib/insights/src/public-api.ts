@@ -18,4 +18,5 @@
 export * from './lib/analytics-process/public-api';
 export * from './lib/diagram/public-api';
 
+export * from './lib/material.module';
 export * from './lib/insights.module';

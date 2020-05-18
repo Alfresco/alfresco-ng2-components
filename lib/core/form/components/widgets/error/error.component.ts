@@ -21,7 +21,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ErrorMessageModel } from '../core/index';
 import { FormService } from './../../../services/form.service';
-import { baseHost , WidgetComponent } from './../widget.component';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     selector: 'error-widget',
@@ -36,7 +36,17 @@ import { baseHost , WidgetComponent } from './../widget.component';
             ])
         ])
     ],
-    host: baseHost,
+    host: {
+        '(click)': 'event($event)',
+        '(blur)': 'event($event)',
+        '(change)': 'event($event)',
+        '(focus)': 'event($event)',
+        '(focusin)': 'event($event)',
+        '(focusout)': 'event($event)',
+        '(input)': 'event($event)',
+        '(invalid)': 'event($event)',
+        '(select)': 'event($event)'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class ErrorWidgetComponent extends WidgetComponent implements OnChanges {

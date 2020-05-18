@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { TranslationService } from '../services/translation.service';
 
@@ -24,6 +24,7 @@ export interface LangChangeEvent {
     translations: any;
 }
 
+@Injectable()
 export class TranslationMock implements TranslationService {
 
     defaultLang: string = 'en';

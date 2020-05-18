@@ -44,9 +44,6 @@ describe('ProcessFilterCloudService', () => {
             CoreModule.forRoot()
         ],
         providers: [
-            ProcessFilterCloudService,
-            IdentityUserService,
-            LocalPreferenceCloudService,
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]
     });

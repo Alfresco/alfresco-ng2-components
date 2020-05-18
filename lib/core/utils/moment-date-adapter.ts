@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material';
 import { isMoment, Moment } from 'moment';
 import moment from 'moment-es6';
 
+@Injectable()
 export class MomentDateAdapter extends DateAdapter<Moment> {
 
     private localeData: any = moment.localeData();

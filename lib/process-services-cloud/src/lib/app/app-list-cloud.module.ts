@@ -21,7 +21,6 @@ import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
 import { AppDetailsCloudComponent } from './components/app-details-cloud.component';
 import { AppListCloudComponent } from './components/app-list-cloud.component';
-import { AppsProcessCloudService } from './services/apps-process-cloud.service';
 import { TemplateModule, CoreModule } from '@alfresco/adf-core';
 
 @NgModule({
@@ -35,9 +34,6 @@ import { TemplateModule, CoreModule } from '@alfresco/adf-core';
     declarations: [
         AppListCloudComponent,
         AppDetailsCloudComponent
-    ],
-    providers: [
-        AppsProcessCloudService
     ],
     exports: [
         AppListCloudComponent,

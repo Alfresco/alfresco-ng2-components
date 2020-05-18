@@ -17,11 +17,10 @@
 
 import { QueryBody } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '@alfresco/adf-core';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class TestSearchConfigurationService implements SearchConfigurationInterface {
-
-    constructor() {
-    }
 
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         const defaultQueryBody: QueryBody = {

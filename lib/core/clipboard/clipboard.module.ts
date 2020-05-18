@@ -18,16 +18,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ClipboardDirective, ClipboardComponent } from './clipboard.directive';
-import { ClipboardService } from './clipboard.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
         TranslateModule.forChild()
-    ],
-    providers: [
-        ClipboardService
     ],
     declarations: [
         ClipboardDirective,

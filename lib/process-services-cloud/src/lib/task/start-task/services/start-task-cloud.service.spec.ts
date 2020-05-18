@@ -22,13 +22,7 @@ import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-    setupTestBed,
-    AlfrescoApiService,
-    AppConfigService,
-    LogService,
-    StorageService
-} from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
 describe('StartTaskCloudService', () => {
@@ -37,8 +31,7 @@ describe('StartTaskCloudService', () => {
     const fakeAppName: string = 'fake-app';
 
     setupTestBed({
-        imports: [StartTaskCloudTestingModule],
-        providers: [TaskCloudService, AlfrescoApiService, AppConfigService, LogService, StorageService]
+        imports: [StartTaskCloudTestingModule]
     });
 
     beforeEach(() => {
