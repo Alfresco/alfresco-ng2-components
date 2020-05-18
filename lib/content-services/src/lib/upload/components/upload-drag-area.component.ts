@@ -26,9 +26,9 @@ import { UploadBase } from './base-upload/upload-base';
     selector: 'adf-upload-drag-area',
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.scss'],
-    host: { 'class': 'adf-upload-drag-area' },
+    host: {'class': 'adf-upload-drag-area'},
     viewProviders: [
-        { provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent) }
+        {provide: EXTENDIBLE_COMPONENT, useExisting: forwardRef(() => UploadDragAreaComponent)}
     ],
     encapsulation: ViewEncapsulation.None
 })
@@ -94,15 +94,21 @@ export class UploadDragAreaComponent extends UploadBase implements NodeAllowable
     onUploadFiles(event: CustomEvent) {
         event.stopPropagation();
         event.preventDefault();
-        const isAllowed: boolean = this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE);
+        const isAllowed: boolean = this.isTargetNodeFolder(event) ?
+            this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.CREATE)
+            : this.contentService.hasAllowableOperations(event.detail.data.obj.entry, AllowableOperationsEnum.UPDATE);
         if (isAllowed) {
-            const fileInfo: FileInfo[] = event.detail.files;
-            if (this.isTargetNodeFolder(event)) {
-                const destinationFolderName = event.detail.data.obj.entry.name;
-                fileInfo.map((file) => file.relativeFolder = destinationFolderName ? destinationFolderName.concat(file.relativeFolder) : file.relativeFolder);
-            }
-            if (fileInfo && fileInfo.length > 0) {
-                this.uploadFilesInfo(fileInfo);
+            if (!this.isTargetNodeFolder(event) && event.detail.files.length === 1) {
+                this.updateFileVersion.emit(event);
+            } else {
+                const fileInfo: FileInfo[] = event.detail.files;
+                if (this.isTargetNodeFolder(event)) {
+                    const destinationFolderName = event.detail.data.obj.entry.name;
+                    fileInfo.map((file) => file.relativeFolder = destinationFolderName ? destinationFolderName.concat(file.relativeFolder) : file.relativeFolder);
+                }
+                if (fileInfo && fileInfo.length > 0) {
+                    this.uploadFilesInfo(fileInfo);
+                }
             }
         }
     }
