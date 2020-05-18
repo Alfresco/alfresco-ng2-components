@@ -55,6 +55,10 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     @Input()
     tooltip: string = null;
 
+    /** Custom added file. The upload button type will be 'button' instead of 'file' */
+    @Input()
+    file: File;
+
     /** Emitted when create permission is missing. */
     @Output()
     permissionEvent: EventEmitter<PermissionModel> = new EventEmitter<PermissionModel>();
@@ -98,6 +102,16 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
         }
         // reset the value of the input file
         $event.target.value = '';
+    }
+
+    onClickUploadButton(): void {
+        const files: File[] = [this.file];
+
+        if (this.hasAllowableOperations) {
+            this.uploadFiles(files);
+        } else {
+            this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
+        }
     }
 
     onDirectoryAdded($event: any): void {
