@@ -6,8 +6,8 @@ cd $DIR/../../lib/cli/
 
 echo "====== Cli ======"
 echo "====== Build ======"
-npm install
-npm run build
+npm install -g typescript
+npm run dist
 
 cd $DIR/../../
 if [ -e "./lib/dist/cli" ];
