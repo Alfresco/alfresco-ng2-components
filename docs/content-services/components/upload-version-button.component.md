@@ -34,6 +34,7 @@ to enrich the features and decrease the restrictions currently applied to node v
 | acceptedFilesType | `string` | "\*" | Filter for accepted file types. |
 | comment | `string` |  | When you overwrite existing content, you can use the comment field to add a version comment that appears in the version history |
 | disabled | `boolean` | false | Toggles component disabled state (if there is no node permission checking). |
+| file | `File` |  | Custom added file. The upload button type will be 'button' instead of 'file' |
 | majorVersion | `boolean` | false | majorVersion boolean field to true to indicate a major version should be created. |
 | maxFilesSize | `number` |  | Sets a limit on the maximum size (in bytes) of a file to be uploaded. Has no effect if undefined. |
 | multipleFiles | `boolean` | false | Allows/disallows multiple files |
@@ -53,6 +54,7 @@ to enrich the features and decrease the restrictions currently applied to node v
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when an error occurs. |
 | permissionEvent | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionModel`](../../../lib/content-services/src/lib/document-list/models/permissions.model.ts)`>` | Emitted when create permission is missing. |
 | success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | Emitted when the file is uploaded successfully. |
+| updateFileVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<CustomEvent<any>>` | Emitted when dropping a file over another file to update the version. |
 
 ## Details
 
