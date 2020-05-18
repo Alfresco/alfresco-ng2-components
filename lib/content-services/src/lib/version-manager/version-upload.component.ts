@@ -35,6 +35,9 @@ export class VersionUploadComponent {
     @Input()
     node: Node;
 
+    @Input()
+    newFileVersion: File;
+
     @Output()
     success = new EventEmitter();
 
