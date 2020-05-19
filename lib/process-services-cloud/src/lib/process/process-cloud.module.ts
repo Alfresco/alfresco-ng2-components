@@ -30,7 +30,7 @@ import { ProcessDirectiveModule } from './directives/process-directive.module';
         ProcessListCloudModule,
         StartProcessCloudModule,
         ProcessHeaderCloudModule,
-        ProcessDirectiveModule,
+        ProcessDirectiveModule
     ],
     exports: [
         ProcessFiltersCloudModule,

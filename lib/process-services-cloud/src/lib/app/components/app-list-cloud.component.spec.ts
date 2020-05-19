@@ -220,5 +220,3 @@ describe('AppListCloudComponent', () => {
         }));
     });
 });
-
-
