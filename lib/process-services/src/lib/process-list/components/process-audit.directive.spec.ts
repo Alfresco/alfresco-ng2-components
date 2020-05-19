@@ -19,8 +19,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { ProcessService } from './../services/process.service';
-import { ProcessAuditDirective } from './process-audit.directive';
-import { setupTestBed, CoreModule, DownloadService } from '@alfresco/adf-core';
+import { setupTestBed, DownloadService } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 @Component({
     selector: 'adf-basic-button',
@@ -71,11 +71,10 @@ describe('ProcessAuditDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ProcessTestingModule
         ],
         declarations: [
-            BasicButtonComponent,
-            ProcessAuditDirective
+            BasicButtonComponent
         ]
     });
 

@@ -20,17 +20,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskFormComponent } from './task-form.component';
 import {
     setupTestBed,
-    TranslationService,
-    TranslationMock,
     FormService,
     AuthenticationService,
     FormModel,
     FormOutcomeEvent,
     FormOutcomeModel
 } from '@alfresco/adf-core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskListService } from '../../services/tasklist.service';
-import { TranslateStore } from '@ngx-translate/core';
 import { NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import {
@@ -44,7 +40,7 @@ import {
     initiatorCanCompleteTaskDetailsMock
 } from '../../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../../models/task-details.model';
-import { TaskListModule } from '../../task-list.module';
+import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -59,12 +55,8 @@ describe('TaskFormComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            TaskListModule
+            ProcessTestingModule
         ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore],
         schemas: [NO_ERRORS_SCHEMA]
     });
 

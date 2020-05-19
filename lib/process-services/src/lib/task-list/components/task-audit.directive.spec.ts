@@ -24,8 +24,8 @@ import {
 } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TaskListService } from './../services/tasklist.service';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { TaskAuditDirective } from './task-audit.directive';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 declare let jasmine: any;
 
@@ -75,8 +75,8 @@ describe('TaskAuditDirective', () => {
     }
 
     setupTestBed({
-        imports: [CoreModule.forRoot()],
-        declarations: [BasicButtonComponent, TaskAuditDirective]
+        imports: [ProcessTestingModule],
+        declarations: [BasicButtonComponent]
     });
 
     beforeEach(async(() => {

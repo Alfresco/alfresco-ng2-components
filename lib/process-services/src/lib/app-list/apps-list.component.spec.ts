@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DebugElement, Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
@@ -33,8 +33,21 @@ describe('AppsListComponent', () => {
     let service: AppsProcessService;
     let getAppsSpy: jasmine.Spy;
 
+    @Component({
+        template: `
+        <adf-apps>
+            <adf-custom-empty-content-template>
+                <p id="custom-id">No Apps</p>
+            </adf-custom-empty-content-template>
+        </adf-apps>
+        `
+    })
+    class CustomEmptyAppListTemplateComponent {
+    }
+
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [ProcessTestingModule],
+        declarations: [CustomEmptyAppListTemplateComponent]
     });
 
     beforeEach(() => {
@@ -235,43 +248,28 @@ describe('AppsListComponent', () => {
             expect(appEls[1].query(By.css('.adf-app-listgrid-item-card-actions-icon'))).not.toBeNull();
         });
    });
-});
 
-@Component({
-    template: `
-    <adf-apps>
-        <adf-custom-empty-content>
-            <p id="custom-id">No Apps</p>
-        </adf-custom-empty-content>
-    </adf-apps>
-       `
-})
-class CustomEmptyAppListTemplateComponent {
-}
+    describe('Custom CustomEmptyAppListTemplateComponent', () => {
+        let customFixture: ComponentFixture<CustomEmptyAppListTemplateComponent>;
 
-describe('Custom CustomEmptyAppListTemplateComponent', () => {
-    let fixture: ComponentFixture<CustomEmptyAppListTemplateComponent>;
+        beforeEach(() => {
+            getAppsSpy.and.returnValue(of([]));
+            customFixture = TestBed.createComponent(CustomEmptyAppListTemplateComponent);
 
-    setupTestBed({
-        imports: [ProcessTestingModule],
-        declarations: [CustomEmptyAppListTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(CustomEmptyAppListTemplateComponent);
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
-    it('should render the custom no-apps template', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const title: any = fixture.debugElement.queryAll(By.css('#custom-id'));
-            expect(title.length).toBe(1);
-            expect(title[0].nativeElement.innerText).toBe('No Apps');
+            customFixture.detectChanges();
         });
-    }));
+
+        afterEach(() => {
+            customFixture.destroy();
+        });
+
+        it('should render the custom no-apps template', async(() => {
+            customFixture.detectChanges();
+            customFixture.whenStable().then(() => {
+                const title: any = customFixture.debugElement.queryAll(By.css('#custom-id'));
+                expect(title.length).toBe(1);
+                expect(title[0].nativeElement.innerText).toBe('No Apps');
+            });
+        }));
+    });
 });

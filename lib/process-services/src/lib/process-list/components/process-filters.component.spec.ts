@@ -16,15 +16,15 @@
  */
 
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
-import { AppsProcessService, CoreModule, setupTestBed } from '@alfresco/adf-core';
+import { AppsProcessService, setupTestBed } from '@alfresco/adf-core';
 import { from } from 'rxjs';
 import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessFilterService } from '../services/process-filter.service';
 import { ProcessFiltersComponent } from './process-filters.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { fakeProcessFilters } from '../../mock';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -37,10 +37,8 @@ describe('ProcessFiltersComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            ProcessTestingModule
         ],
-        declarations: [ProcessFiltersComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

@@ -22,11 +22,11 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { By } from '@angular/platform-browser';
 
 import { formDefinitionDropdownField, formDefinitionTwoTextFields,
-    formDefinitionRequiredField, FormService, setupTestBed, CoreModule,
+    formDefinitionRequiredField, FormService, setupTestBed,
     formDefVisibilitiFieldDependsOnNextOne, formDefVisibilitiFieldDependsOnPreviousOne,
     formReadonlyTwoTextFields } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 /** Duration of the select opening animation. */
 const SELECT_OPEN_ANIMATION = 200;
@@ -48,11 +48,7 @@ describe('FormComponent UI and visibility', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            FormComponent
+            ProcessTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

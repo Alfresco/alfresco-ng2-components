@@ -20,12 +20,10 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
     FormService, WidgetVisibilityService, NodeService, ContainerModel, fakeForm,
-    setupTestBed, CoreModule } from '@alfresco/adf-core';
+    setupTestBed } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormModule } from './form.module';
-import { ContentWidgetModule } from '../content-widget/content-widget.module';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('FormComponent', () => {
 
@@ -54,10 +52,7 @@ describe('FormComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            FormModule,
-            ContentWidgetModule,
+            ProcessTestingModule,
             CustomUploadModule
         ]
     });
