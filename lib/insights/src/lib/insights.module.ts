@@ -34,6 +34,10 @@ import { MaterialModule } from './material.module';
         MaterialModule,
         DiagramsModule,
         AnalyticsProcessModule
+    ],
+    exports: [
+        DiagramsModule,
+        AnalyticsProcessModule
     ]
 })
 export class InsightsModule {
