@@ -173,6 +173,7 @@ export class ProcessFiltersComponent implements OnInit, OnChanges {
 
     /**
      * Select the Running filter
+     * @deprecated in 3.9.0, Use the filterParam Input() with a running filter instance instead
      */
     selectRunningFilter() {
         this.selectProcessFilter(this.processFilterService.getRunningFilterInstance(null));

@@ -88,7 +88,7 @@ export class ProcessFilterService {
      * @returns Default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
-        const runningFilter = this.getRunningFilterInstance(appId);
+        const runningFilter = this.getRunningFilterInstanceWithIndex(appId);
         const runningObservable = this.addProcessFilter(runningFilter);
 
         const completedFilter = this.getCompletedFilterInstance(appId);
@@ -128,6 +128,22 @@ export class ProcessFilterService {
     }
 
     /**
+     * Creates and returns a filter that matches "running" process instances with index.
+     * @param appId ID of the target app
+     * @returns Filter just created
+     */
+    public getRunningFilterInstanceWithIndex(appId: number): FilterProcessRepresentationModel {
+        return new FilterProcessRepresentationModel({
+            'name': 'Running',
+            'appId': appId,
+            'recent': true,
+            'icon': 'glyphicon-random',
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' },
+            'index': 0
+        });
+    }
+
+    /**
      * Creates and returns a filter that matches "running" process instances.
      * @param appId ID of the target app
      * @returns Filter just created
@@ -138,8 +154,7 @@ export class ProcessFilterService {
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' },
-            'index': 0
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
     }
 
