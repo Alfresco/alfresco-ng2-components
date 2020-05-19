@@ -16,17 +16,9 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    FileModel,
-    UploadService,
-    setupTestBed,
-    CoreModule
-} from '@alfresco/adf-core';
-
-import { FileDraggableDirective } from '../directives/file-draggable.directive';
+import { FileModel, UploadService, setupTestBed } from '@alfresco/adf-core';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -103,14 +95,7 @@ describe('UploadDragAreaComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            FileDraggableDirective,
-            UploadDragAreaComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ContentTestingModule
         ]
     });
 

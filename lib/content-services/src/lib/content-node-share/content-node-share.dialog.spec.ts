@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { of, empty } from 'rxjs';
@@ -26,14 +25,13 @@ import {
     NotificationService,
     RenditionsService,
     AppConfigService,
-    CoreModule,
     AppConfigServiceMock,
     AlfrescoApiService,
     AlfrescoApiServiceMock
 } from '@alfresco/adf-core';
-import { ContentNodeShareModule } from './content-node-share.module';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment-es6';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('ShareDialogComponent', () => {
     let node;
@@ -50,9 +48,7 @@ describe('ShareDialogComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            ContentNodeShareModule
+           ContentTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

@@ -16,10 +16,11 @@
  */
 
 import { AlfrescoApiServiceMock, AlfrescoApiService,
-    AppConfigService, ContentService, setupTestBed, CoreModule, LogService, AppConfigServiceMock, StorageService } from '@alfresco/adf-core';
+    AppConfigService, ContentService, setupTestBed, LogService, AppConfigServiceMock, StorageService } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { CustomResourcesService } from './custom-resources.service';
 import { TestBed } from '@angular/core/testing';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -64,7 +65,7 @@ describe('DocumentListService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ContentTestingModule
         ]
     });
 

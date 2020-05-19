@@ -19,15 +19,15 @@ import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DropdownSitesComponent, Relations } from './sites-dropdown.component';
-import { SitesService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { SitesService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getFakeSitePaging,
     getFakeSitePagingNoMoreItems,
     getFakeSitePagingFirstPage,
     getFakeSitePagingLastPage,
     getFakeSitePagingWithMembers
 } from '../mock';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 const customSiteList = {
     'list': {
@@ -58,14 +58,7 @@ describe('DropdownSitesComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            DropdownSitesComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ContentTestingModule
         ]
     });
 

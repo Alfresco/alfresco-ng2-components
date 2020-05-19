@@ -16,11 +16,11 @@
  */
 
 import { Component } from '@angular/core';
-import { CoreModule, setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { SearchModule } from '../../search.module';
 import { By } from '@angular/platform-browser';
 import { SelectedBucket } from '../search-filter/search-filter.component';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 @Component({
     selector: 'adf-test-component',
@@ -45,8 +45,7 @@ describe('SearchChipListComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            SearchModule
+            ContentTestingModule
         ],
         declarations: [
             TestComponent

@@ -16,13 +16,13 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AlfrescoApiServiceMock, AppConfigService, ContentService, setupTestBed,
-    CoreModule, TranslationMock, StorageService } from '@alfresco/adf-core';
+import { AlfrescoApiServiceMock, AppConfigService, ContentService, setupTestBed, TranslationMock, StorageService } from '@alfresco/adf-core';
 import { Observable } from 'rxjs';
 import { FileNode, FolderNode } from '../../mock';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('FolderActionsService', () => {
 
@@ -31,7 +31,7 @@ describe('FolderActionsService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ContentTestingModule
         ]
     });
 

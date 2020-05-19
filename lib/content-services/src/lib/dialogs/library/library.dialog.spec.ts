@@ -15,18 +15,12 @@
  * limitations under the License.
  */
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
 import { LibraryDialogComponent } from './library.dialog';
 import { TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import {
-    CoreModule,
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    setupTestBed
-} from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('LibraryDialogComponent', () => {
     let fixture;
@@ -39,13 +33,10 @@ describe('LibraryDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [NoopAnimationsModule, CoreModule.forRoot(), ReactiveFormsModule],
-        declarations: [LibraryDialogComponent],
+        imports: [
+            ContentTestingModule
+        ],
         providers: [
-            {
-                provide: AlfrescoApiService,
-                useClass: AlfrescoApiServiceMock
-            },
             { provide: MatDialogRef, useValue: dialogRef }
         ],
         schemas: [NO_ERRORS_SCHEMA]
