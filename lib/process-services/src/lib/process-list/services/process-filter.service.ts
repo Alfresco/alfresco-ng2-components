@@ -98,10 +98,11 @@ export class ProcessFilterService {
         const allObservable = this.addProcessFilter(allFilter);
 
         return new Observable((observer) => {
-            forkJoin(
-                runningObservable,
-                completedObservable,
-                allObservable
+            forkJoin([
+                    runningObservable,
+                    completedObservable,
+                    allObservable
+                ]
             ).subscribe(
                 (res) => {
                     const filters: FilterProcessRepresentationModel[] = [];
@@ -137,7 +138,8 @@ export class ProcessFilterService {
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' },
+            'index': 0
         });
     }
 
@@ -152,7 +154,8 @@ export class ProcessFilterService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-ok-sign',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' }
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' },
+            'index': 1
         });
     }
 
@@ -167,7 +170,8 @@ export class ProcessFilterService {
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-th',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' }
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' },
+            'index': 2
         });
     }
 

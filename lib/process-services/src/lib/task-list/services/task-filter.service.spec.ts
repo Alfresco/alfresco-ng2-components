@@ -129,9 +129,9 @@ describe('Activiti Task filter Service', () => {
             service.createDefaultFilters(1234).subscribe((res: FilterRepresentationModel []) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(4);
-                expect(res[0].name).toEqual('Involved Tasks');
+                expect(res[0].name).toEqual('My Tasks');
                 expect(res[0].id).toEqual(111);
-                expect(res[1].name).toEqual('My Tasks');
+                expect(res[1].name).toEqual('Involved Tasks');
                 expect(res[1].id).toEqual(222);
                 expect(res[2].name).toEqual('Queued Tasks');
                 expect(res[2].id).toEqual(333);
@@ -144,7 +144,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 111, name: 'Involved Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001, id: 111, name: 'My Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
@@ -152,7 +152,7 @@ describe('Activiti Task filter Service', () => {
                 'status': 200,
                 contentType: 'application/json',
                 responseText: JSON.stringify({
-                    appId: 1001, id: 222, name: 'My Tasks', icon: 'fake-icon', recent: false
+                    appId: 1001, id: 222, name: 'Involved Tasks', icon: 'fake-icon', recent: false
                 })
             });
 
