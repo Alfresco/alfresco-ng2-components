@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver } from '@angular/core';
+import { Component, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
@@ -1016,10 +1016,10 @@ describe('FormCloudComponent', () => {
     template: `
     <adf-cloud-form #adfCloudForm>
         <adf-cloud-form-custom-outcomes>
-            <button mat-button id="adf-custom-outcome-1" (click)="onButtonClick()">
+            <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
             CUSTOM-BUTTON-1
             </button>
-            <button mat-button id="adf-custom-outcome-2" (click)="onButtonClick()">
+            <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
                 CUSTOM-BUTTON-2
             </button>
         </adf-cloud-form-custom-outcomes>
@@ -1028,25 +1028,39 @@ describe('FormCloudComponent', () => {
 
 class FormCloudWithCustomOutComesComponent {
 
-    onButtonClick() { }
+    @ViewChild('adfCloudForm')
+    adfCloudForm: FormCloudComponent;
+
+    onCustomButtonOneClick() { }
+    onCustomButtonTwoClick() { }
 }
 
 describe('FormCloudWithCustomOutComesComponent', () => {
 
     let fixture: ComponentFixture<FormCloudWithCustomOutComesComponent>;
-    let component: FormCloudWithCustomOutComesComponent;
+    let customComponent: FormCloudWithCustomOutComesComponent;
     let debugElement: DebugElement;
 
     setupTestBed({
         imports: [ProcessServiceCloudTestingModule],
-        declarations: [FormCloudWithCustomOutComesComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        declarations: [FormCloudWithCustomOutComesComponent]
     });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(FormCloudWithCustomOutComesComponent);
-        component = fixture.componentInstance;
+        customComponent = fixture.componentInstance;
         debugElement = fixture.debugElement;
+        const formRepresentation = {
+            fields: [
+                { id: 'container1' }
+            ],
+            outcomes: [
+                { id: 'outcome-1', name: 'outcome 1' }
+            ]
+        };
+
+        const form = new FormModel(formRepresentation);
+        customComponent.adfCloudForm.form = form;
         fixture.detectChanges();
     });
 
@@ -1054,14 +1068,16 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         fixture.destroy();
     });
 
-    // TODO: this test should be reworked
-    // tslint:disable-next-line: ban
-    xit('should be able to inject custom outcomes and click on custom outcomes', () => {
-        fixture.detectChanges();
-        const cancelSpy = spyOn(component, 'onButtonClick').and.callThrough();
-        const cancelBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
-        cancelBtn.nativeElement.click();
-        expect(cancelSpy).toHaveBeenCalled();
-        expect(cancelBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
+    it('should be able to inject custom outcomes and click on custom outcomes', () => {
+        const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
+        const buttonOneBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
+        const buttonTwoBtn = debugElement.query(By.css('#adf-custom-outcome-2'));
+        expect(buttonOneBtn).not.toBeNull();
+        expect(buttonTwoBtn).not.toBeNull();
+
+        buttonOneBtn.nativeElement.click();
+        expect(onCustomButtonOneSpy).toHaveBeenCalled();
+        expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
+        expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
     });
 });
