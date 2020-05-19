@@ -25,12 +25,12 @@ import { ProcessDirectiveModule } from './directives/process-directive.module';
 
 @NgModule({
     imports: [
+        CoreModule,
         ProcessFiltersCloudModule,
         ProcessListCloudModule,
         StartProcessCloudModule,
         ProcessHeaderCloudModule,
         ProcessDirectiveModule,
-        CoreModule
     ],
     exports: [
         ProcessFiltersCloudModule,

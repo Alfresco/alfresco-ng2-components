@@ -16,10 +16,10 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DateCloudWidgetComponent } from './date-cloud.widget';
-import { setupTestBed, FormFieldModel, FormModel, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import moment from 'moment-es6';
+import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 
 describe('DateWidgetComponent', () => {
 
@@ -29,10 +29,8 @@ describe('DateWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [DateCloudWidgetComponent]
+            ProcessServiceCloudTestingModule
+        ]
     });
 
     beforeEach(async(() => {

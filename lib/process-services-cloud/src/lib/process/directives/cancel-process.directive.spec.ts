@@ -17,9 +17,10 @@
 
 import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, IdentityUserService, setupTestBed } from '@alfresco/adf-core';
+import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
 import { processDetailsMockRunning, processDetailsMockCompleted } from '../mock/process-details.mock';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
 describe('CancelProcessDirective', () => {
 
@@ -39,11 +40,10 @@ describe('CancelProcessDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
-            TestComponent,
-            CancelProcessDirective
+            TestComponent
         ]
     });
 

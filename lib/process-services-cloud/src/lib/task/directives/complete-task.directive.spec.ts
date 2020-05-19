@@ -17,11 +17,11 @@
 import { Component, ViewChild, ContentChildren } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CoreModule, setupTestBed } from '@alfresco/adf-core';
-import { RouterTestingModule } from '@angular/router/testing';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { TaskCloudService } from '../services/task-cloud.service';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
 describe('CompleteTaskDirective', () => {
 
@@ -47,12 +47,10 @@ describe('CompleteTaskDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
-            TestComponent,
-            CompleteTaskDirective
+            TestComponent
         ]
     });
 
@@ -144,15 +142,13 @@ describe('Complete Task Directive validation errors', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
             TestMissingTaskIdDirectiveComponent,
             TestInvalidAppNameUndefineddDirectiveComponent,
             TestInvalidAppNameNulldDirectiveComponent,
-            TestMissingInputDirectiveComponent,
-            CompleteTaskDirective
+            TestMissingInputDirectiveComponent
         ]
     });
 

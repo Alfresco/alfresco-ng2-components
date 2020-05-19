@@ -16,7 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule, IdentityUserService } from '@alfresco/adf-core';
+import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
 import {
@@ -28,6 +28,7 @@ import {
 } from '../mock/process-filters.cloud.mock';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -41,7 +42,7 @@ describe('ProcessFilterCloudService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ProcessServiceCloudTestingModule
         ],
         providers: [
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
