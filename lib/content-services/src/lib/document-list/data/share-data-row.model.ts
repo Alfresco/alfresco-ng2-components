@@ -46,10 +46,14 @@ export class ShareDataRow implements DataRow {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
-        this.isDropTarget = this.allowDropFiles && (this.isFolderAndHasPermissionToUpload(obj) || this.isFileAndHasParentFolderPermissionToUpload(obj));
+        this.isDropTarget = allowDropFiles !== undefined ? this.allowDropFiles && this.checkNodeTypeAndPermissions(obj) : this.checkNodeTypeAndPermissions(obj);
         if (permissionsStyle) {
             this.cssClass = this.getPermissionClass(obj);
         }
+    }
+
+    checkNodeTypeAndPermissions(nodeEntry: NodeEntry) {
+        return this.isFolderAndHasPermissionToUpload(nodeEntry) || this.isFileAndHasParentFolderPermissionToUpload(nodeEntry);
     }
 
     getPermissionClass(nodeEntity: NodeEntry): string {
