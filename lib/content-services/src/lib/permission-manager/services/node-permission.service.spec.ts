@@ -17,12 +17,13 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { NodePermissionService } from './node-permission.service';
-import { SearchService, NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { SearchService, NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { Node, PermissionElement } from '@alfresco/js-api';
 import { of } from 'rxjs';
 import { fakeEmptyResponse, fakeNodeWithOnlyLocally, fakeSiteRoles, fakeSiteNodeResponse,
          fakeNodeToRemovePermission, fakeNodeWithoutPermissions } from '../../mock/permission-list.component.mock';
 import { fakeAuthorityResults } from '../../mock/add-permission.component.mock';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('NodePermissionService', () => {
 
@@ -32,7 +33,7 @@ describe('NodePermissionService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ContentTestingModule
         ]
     });
 

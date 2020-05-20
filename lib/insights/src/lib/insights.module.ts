@@ -35,21 +35,7 @@ import { MaterialModule } from './material.module';
         DiagramsModule,
         AnalyticsProcessModule
     ],
-    providers: [
-        {
-            provide: TRANSLATION_PROVIDER,
-            multi: true,
-            useValue: {
-                name: 'adf-insights',
-                source: 'assets/adf-insights'
-            }
-        }
-    ],
     exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
         DiagramsModule,
         AnalyticsProcessModule
     ]
@@ -73,28 +59,7 @@ export class InsightsModule {
 
     static forChild(): ModuleWithProviders {
         return {
-            ngModule: InsightsModuleLazy
+            ngModule: InsightsModule
         };
     }
 }
-
-@NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        DiagramsModule,
-        AnalyticsProcessModule
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        DiagramsModule,
-        AnalyticsProcessModule
-    ]
-})
-export class InsightsModuleLazy {}

@@ -21,10 +21,9 @@ import { MatTabChangeEvent } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('InfoDrawerComponent', () => {
     let element: HTMLElement;
@@ -34,8 +33,7 @@ describe('InfoDrawerComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 
@@ -93,8 +91,7 @@ describe('Custom InfoDrawer', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         declarations: [
             CustomInfoDrawerComponent

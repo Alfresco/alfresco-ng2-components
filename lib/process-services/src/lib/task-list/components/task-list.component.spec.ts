@@ -18,14 +18,13 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRowEvent, ObjectDataRow, DataCellEvent } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask, paginatedTask } from '../../mock';
 import { TranslateService } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
-import { TaskListModule } from '../task-list.module';
 
 declare let jasmine: any;
 
@@ -737,9 +736,8 @@ describe('CustomTaskListComponent', () => {
     let component: CustomTaskListComponent;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()],
-        declarations: [TaskListComponent, CustomTaskListComponent],
-        providers: [TaskListService]
+        imports: [ProcessTestingModule],
+        declarations: [CustomTaskListComponent]
     });
 
     beforeEach(() => {
@@ -779,7 +777,7 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     let taskListService: TaskListService;
 
     setupTestBed({
-        imports: [ProcessTestingModule, TaskListModule, DataTableModule],
+        imports: [ProcessTestingModule],
         declarations: [EmptyTemplateComponent]
     });
 
@@ -878,9 +876,12 @@ describe('TaskListContextMenuComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()],
-        declarations: [TaskListComponent, TaskListContextMenuComponent],
-        providers: [TaskListService]
+        imports: [
+            ProcessTestingModule
+        ],
+        declarations: [
+            TaskListContextMenuComponent
+        ]
     });
 
     beforeEach(() => {

@@ -20,11 +20,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
-import { FolderDialogComponent } from '../dialogs/folder.dialog';
 
-import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
 import { Node } from '@alfresco/js-api';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 @Component({
     template: `
@@ -63,13 +63,11 @@ describe('FolderCreateDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ContentTestingModule
         ],
         declarations: [
             TestTypeComponent,
-            TestComponent,
-            FolderDialogComponent,
-            FolderCreateDirective
+            TestComponent
         ]
     });
 

@@ -18,13 +18,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
 import { WidgetComponent } from './../widget.component';
-import { TranslationService } from '../../../../services';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { TranslationMock } from '../../../../mock/translation.service.mock';
-import { HttpClientModule } from '@angular/common/http';
+import { CoreTestingModule } from '../../../../testing';
 
 describe('HyperlinkWidgetComponent', () => {
 
@@ -34,16 +31,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            TranslateModule.forChild(),
-            HttpClientModule
-        ],
-        declarations: [
-            HyperlinkWidgetComponent
-        ],
-        providers: [
-            TranslateStore,
-            TranslateService,
-            { provide: TranslationService, useClass: TranslationMock }
+            CoreTestingModule
         ]
     });
 

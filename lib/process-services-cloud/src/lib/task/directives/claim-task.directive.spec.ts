@@ -16,12 +16,12 @@
  */
 import { Component, ContentChildren, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ClaimTaskDirective } from './claim-task.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
 describe('ClaimTaskDirective', () => {
 
@@ -43,12 +43,10 @@ describe('ClaimTaskDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
-            TestComponent,
-            ClaimTaskDirective
+            TestComponent
         ]
     });
 
@@ -124,15 +122,13 @@ describe('Claim Task Directive validation errors', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
             ClaimTestMissingTaskIdDirectiveComponent,
             ClaimTestInvalidAppNameUndefineddDirectiveComponent,
             ClaimTestInvalidAppNameNulldDirectiveComponent,
-            ClaimTestMissingInputDirectiveComponent,
-            ClaimTaskDirective
+            ClaimTestMissingInputDirectiveComponent
         ]
     });
 

@@ -16,15 +16,13 @@
  */
 
 import { tick, fakeAsync, async, ComponentFixture, TestBed, flush } from '@angular/core/testing';
-import { fakeFormJson, TranslationMock } from '../../../../mock';
+import { fakeFormJson } from '../../../../mock';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TabModel } from '../core/tab.model';
 import { TabsWidgetComponent } from './tabs.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslationService } from '../../../../services/translation.service';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('TabsWidgetComponent', () => {
 
@@ -32,11 +30,7 @@ describe('TabsWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
+            CoreTestingModule
         ]
     });
 

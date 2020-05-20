@@ -16,3 +16,4 @@
  */
 
 export * from './setup-test-bed';
+export * from './core.testing.module';

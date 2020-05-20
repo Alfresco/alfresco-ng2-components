@@ -19,10 +19,10 @@ import { Observable } from 'rxjs';
 import { FormModel } from './../components/widgets/core/form.model';
 import { EcmModelService } from './ecm-model.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
 import { TestBed } from '@angular/core/testing';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -32,7 +32,7 @@ describe('EcmModelService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

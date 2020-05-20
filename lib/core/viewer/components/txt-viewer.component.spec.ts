@@ -19,7 +19,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TxtViewerComponent } from './txt-viewer.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('Text View component', () => {
 
@@ -29,7 +29,7 @@ describe('Text View component', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

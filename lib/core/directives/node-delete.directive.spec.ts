@@ -21,10 +21,7 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { TranslationService } from '../services/translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 @Component({
     template: `
@@ -83,10 +80,8 @@ describe('NodeDeleteDirective', () => {
     let fixtureWithPermissions: ComponentFixture<TestWithPermissionsComponent>;
     let fixtureWithPermanentComponent: ComponentFixture<TestDeletePermanentComponent>;
     let element: DebugElement;
-    let elementWithPermissions: DebugElement;
     let elementWithPermanentDelete: DebugElement;
     let component: TestComponent;
-    let componentWithPermissions: TestWithPermissionsComponent;
     let componentWithPermanentDelete: TestDeletePermanentComponent;
     let alfrescoApi: AlfrescoApiService;
     let nodeApi;
@@ -96,16 +91,12 @@ describe('NodeDeleteDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         declarations: [
             TestComponent,
             TestWithPermissionsComponent,
             TestDeletePermanentComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 
@@ -120,11 +111,9 @@ describe('NodeDeleteDirective', () => {
         fixtureWithPermanentComponent = TestBed.createComponent(TestDeletePermanentComponent);
 
         component = fixture.componentInstance;
-        componentWithPermissions = fixtureWithPermissions.componentInstance;
         componentWithPermanentDelete = fixtureWithPermanentComponent.componentInstance;
 
         element = fixture.debugElement.query(By.directive(NodeDeleteDirective));
-        elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
         elementWithPermanentDelete = fixtureWithPermanentComponent.debugElement.query(By.directive(NodeDeleteDirective));
     });
 
@@ -330,6 +319,9 @@ describe('NodeDeleteDirective', () => {
         });
 
         it('should not enable the button if adf-check-allowable-operation is present', (done) => {
+            const elementWithPermissions = fixtureWithPermissions.debugElement.query(By.directive(NodeDeleteDirective));
+            const componentWithPermissions = fixtureWithPermissions.componentInstance;
+
             elementWithPermissions.nativeElement.disabled = false;
             componentWithPermissions.selection = [];
 

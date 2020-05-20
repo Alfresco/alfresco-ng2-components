@@ -17,10 +17,9 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare const pdfjsViewer: any;
 
@@ -63,8 +62,7 @@ describe('PdfThumbListComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

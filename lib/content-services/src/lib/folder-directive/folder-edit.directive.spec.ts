@@ -21,9 +21,10 @@ import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { Subject, of } from 'rxjs';
 
-import { ContentService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
 import { Node } from '@alfresco/js-api';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
@@ -51,11 +52,10 @@ describe('FolderEditDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ContentTestingModule
         ],
         declarations: [
-            TestComponent,
-            FolderEditDirective
+            TestComponent
         ]
     });
 

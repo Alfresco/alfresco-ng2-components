@@ -16,12 +16,12 @@
  */
 import { Component, ContentChildren, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { UnClaimTaskDirective } from './unclaim-task.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
+import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 
 describe('UnClaimTaskDirective', () => {
 
@@ -43,14 +43,11 @@ describe('UnClaimTaskDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
-            TestComponent,
-            UnClaimTaskDirective
-        ],
-        providers: [ TaskCloudService ]
+            TestComponent
+        ]
     });
 
     beforeEach(() => {
@@ -125,15 +122,13 @@ describe('UnClaim Task Directive validation errors', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            RouterTestingModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
             ClaimTestMissingTaskIdDirectiveComponent,
             ClaimTestInvalidAppNameUndefineddDirectiveComponent,
             ClaimTestInvalidAppNameNulldDirectiveComponent,
-            ClaimTestMissingInputDirectiveComponent,
-            UnClaimTaskDirective
+            ClaimTestMissingInputDirectiveComponent
         ]
     });
 

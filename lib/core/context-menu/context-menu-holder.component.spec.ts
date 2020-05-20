@@ -21,9 +21,8 @@ import { fakeAsync, ComponentFixture, TestBed, tick } from '@angular/core/testin
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
-import { CoreModule } from '../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { setupTestBed } from '../testing/setup-test-bed';
+import { CoreTestingModule } from '../testing';
 
 describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
@@ -55,8 +54,7 @@ describe('ContextMenuHolderComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
+            CoreTestingModule,
             ContextMenuModule
         ],
         providers: [

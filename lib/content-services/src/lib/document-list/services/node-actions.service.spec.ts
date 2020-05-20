@@ -17,13 +17,13 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import { Node } from '@alfresco/js-api';
-import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { of, throwError } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
-import { DialogModule } from '../../dialogs/dialog.module';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 const fakeNode: Node = <Node> {
     id: 'fake'
@@ -40,8 +40,7 @@ describe('NodeActionsService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            DialogModule
+            ContentTestingModule
         ],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef }

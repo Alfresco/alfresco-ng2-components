@@ -92,6 +92,7 @@ describe('ButtonsMenuComponent', () => {
 
         it('should trigger event when a specific button is clicked', async(() => {
             expect(component.value).toBeUndefined();
+            fixture.detectChanges();
             const button = element.querySelector('button');
             button.click();
             fixture.detectChanges();

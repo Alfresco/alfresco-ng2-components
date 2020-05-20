@@ -32,7 +32,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        CoreModule.forChild(),
+        CoreModule,
         RouterModule.forChild(routes),
         MatButtonModule
     ],

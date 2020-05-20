@@ -19,8 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
-import { setupTestBed, CoreModule } from '@alfresco/adf-core';
-import { ProcessModule } from '../process.module';
+import { setupTestBed } from '@alfresco/adf-core';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('AttachFileWidgetDialogService', () => {
 
@@ -30,8 +30,7 @@ describe('AttachFileWidgetDialogService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            ProcessModule.forRoot()
+            ProcessTestingModule
         ]
     });
 

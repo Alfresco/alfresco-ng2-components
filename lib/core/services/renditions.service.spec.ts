@@ -19,10 +19,10 @@ import { TestBed } from '@angular/core/testing';
 import { fakeRendition, fakeRenditionCreated, fakeRenditionsList, fakeRenditionsListWithACreated } from '../mock/renditions-service.mock';
 import { RenditionsService } from './renditions.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { RenditionEntry } from '@alfresco/js-api';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -31,7 +31,7 @@ describe('RenditionsService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

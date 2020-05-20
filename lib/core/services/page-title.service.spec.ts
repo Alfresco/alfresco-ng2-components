@@ -17,11 +17,12 @@
 
 import { TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AppConfigService } from '../app-config/app-config.service';
 import { PageTitleService } from './page-title.service';
 import { TranslationService } from './translation.service';
 import { Title } from '@angular/platform-browser';
+import { CoreModule } from '../core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PageTitleService', () => {
 
@@ -33,6 +34,7 @@ describe('PageTitleService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreModule.forRoot()
         ]
     });

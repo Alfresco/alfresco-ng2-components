@@ -19,7 +19,6 @@ import { TestBed, async } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../services/translation.service';
-import { TranslationMock } from '../../mock/translation.service.mock';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -50,7 +49,6 @@ describe('ErrorContentComponent', () => {
                 CoreTestingModule
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 { provide: ActivatedRoute, useValue: { params: of() } }
             ]
         });
@@ -114,7 +112,6 @@ describe('ErrorContentComponent', () => {
                 CoreTestingModule
             ],
             providers: [
-                { provide: TranslationService, useClass: TranslationMock },
                 { provide: ActivatedRoute, useValue: { params: of({ id: '404' }) } }
             ]
         });

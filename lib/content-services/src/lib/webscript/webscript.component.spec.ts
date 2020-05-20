@@ -16,8 +16,9 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AppConfigService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed } from '@alfresco/adf-core';
 import { WebscriptComponent } from './webscript.component';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 declare let jasmine: any;
 
@@ -29,10 +30,7 @@ describe('WebscriptComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            WebscriptComponent
+            ContentTestingModule
         ]
     });
 

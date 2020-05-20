@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { setupTestBed, CoreModule, AlfrescoApiServiceMock,  AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { AppListCloudModule } from '../app-list-cloud.module';
 
 describe('AppListCloudComponent', () => {
 
@@ -40,11 +39,22 @@ describe('AppListCloudComponent', () => {
             }
     };
 
+    @Component({
+        template: `
+        <adf-cloud-app-list>
+            <adf-custom-empty-content-template>
+                <mat-icon>apps</mat-icon>
+                <p id="custom-id">No Apps Found</p>
+            </adf-custom-empty-content-template>
+        </adf-cloud-app-list>
+           `
+    })
+    class CustomEmptyAppListCloudTemplateComponent {
+    }
+
     setupTestBed({
-        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule, AppListCloudModule],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
-        ]
+        imports: [ProcessServiceCloudTestingModule],
+        declarations: [CustomEmptyAppListCloudTemplateComponent]
     });
 
     beforeEach(() => {
@@ -188,43 +198,25 @@ describe('AppListCloudComponent', () => {
         onAppClick.click();
         expect(component.appClick.emit).toHaveBeenCalledWith(fakeApplicationInstance[0]);
     });
-});
 
-@Component({
-    template: `
-    <adf-cloud-app-list>
-        <adf-custom-empty-content>
-            <mat-icon>apps</mat-icon>
-            <p id="custom-id">No Apps Found</p>
-        </adf-custom-empty-content>
-    </adf-cloud-app-list>
-       `
-})
-class CustomEmptyAppListCloudTemplateComponent {
-}
+    describe('Custom CustomEmptyAppListCloudTemplateComponent', () => {
+        let customFixture: ComponentFixture<CustomEmptyAppListCloudTemplateComponent>;
 
-describe('Custom CustomEmptyAppListCloudTemplateComponent', () => {
-    let fixture: ComponentFixture<CustomEmptyAppListCloudTemplateComponent>;
-
-    setupTestBed({
-        imports: [ProcessServiceCloudTestingModule],
-        declarations: [CustomEmptyAppListCloudTemplateComponent],
-        schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(CustomEmptyAppListCloudTemplateComponent);
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
-    it('should render the custom empty template', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const title: any =  fixture.nativeElement.querySelector('#custom-id');
-            expect(title.innerText).toBe('No Apps Found');
+        beforeEach(() => {
+            getAppsSpy.and.returnValue(of([]));
+            customFixture = TestBed.createComponent(CustomEmptyAppListCloudTemplateComponent);
         });
-    }));
+
+        afterEach(() => {
+            customFixture.destroy();
+        });
+
+        it('should render the custom empty template', async(() => {
+            customFixture.detectChanges();
+            customFixture.whenStable().then(() => {
+                const title: any =  customFixture.nativeElement.querySelector('#custom-id');
+                expect(title.innerText).toBe('No Apps Found');
+            });
+        }));
+    });
 });

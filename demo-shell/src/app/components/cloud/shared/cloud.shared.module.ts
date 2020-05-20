@@ -25,7 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
     imports: [
         CommonModule,
-        CoreModule.forChild(),
+        CoreModule,
         MatDialogModule,
         MatInputModule,
         MatSelectModule,

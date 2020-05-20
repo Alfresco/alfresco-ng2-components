@@ -18,7 +18,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import {
     AlfrescoApiServiceMock,
-    CoreModule,
     setupTestBed,
     AlfrescoApiService,
     LogService,
@@ -42,6 +41,7 @@ import {
     deleteGroupMappingApi,
     mockIdentityGroupsCount
 } from '../mock/identity-group.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -49,7 +49,9 @@ describe('IdentityGroupService', () => {
     let logService: LogService;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()],
+        imports: [
+            CoreTestingModule
+        ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]

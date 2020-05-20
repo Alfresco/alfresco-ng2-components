@@ -16,10 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SearchService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, throwError } from 'rxjs';
-import { SearchModule } from '../search.module';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('SearchComponent', () => {
 
@@ -29,8 +29,7 @@ describe('SearchComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            SearchModule
+            ContentTestingModule
         ],
         declarations: [SimpleSearchTestComponent]
     });

@@ -24,9 +24,9 @@ import {
     startFormAmountWidgetMock, startFormNumberWidgetMock, startFormRadioButtonWidgetMock
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormService, WidgetVisibilityService, setupTestBed, CoreModule, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
+import { FormService, WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
 import { TranslateService } from '@ngx-translate/core';
+import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('StartFormComponent', () => {
 
@@ -42,11 +42,7 @@ describe('StartFormComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            StartFormComponent
+            ProcessTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

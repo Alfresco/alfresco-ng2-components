@@ -22,10 +22,9 @@ import { DynamicTableRow } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { MatDatepickerInputEvent } from '@angular/material';
+import { CoreTestingModule } from '../../../../../../testing';
 
 describe('DateEditorComponent', () => {
     let component: DateEditorComponent;
@@ -36,8 +35,7 @@ describe('DateEditorComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

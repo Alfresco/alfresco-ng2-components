@@ -19,7 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { TranslateLoaderService } from './translate-loader.service';
 import { TranslationService } from './translation.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -29,7 +29,10 @@ describe('TranslateLoader', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
+        ],
+        providers: [
+            TranslationService
         ]
     });
 

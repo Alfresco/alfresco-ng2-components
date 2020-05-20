@@ -17,15 +17,10 @@
 
 import { TestBed } from '@angular/core/testing';
 import { searchMockApi, mockError, fakeSearch } from '../mock/search.service.mock';
-import { CookieServiceMock } from './../mock/cookie.service.mock';
-import { CookieService } from './cookie.service';
 import { SearchService } from './search.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { TranslationService } from './translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('SearchService', () => {
 
@@ -34,12 +29,7 @@ describe('SearchService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: CookieService, useClass: CookieServiceMock }
+            CoreTestingModule
         ]
     });
 

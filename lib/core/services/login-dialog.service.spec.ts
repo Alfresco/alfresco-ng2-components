@@ -20,7 +20,7 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { MatDialog } from '@angular/material';
 import { LoginDialogService } from './login-dialog.service';
 import { Subject, of } from 'rxjs';
-import { CoreModule } from '../core.module';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('LoginDialogService', () => {
 
@@ -29,7 +29,9 @@ describe('LoginDialogService', () => {
     let spyOnDialogOpen: jasmine.Spy;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()]
+        imports: [
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -20,7 +20,7 @@ import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, Conte
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { AppDefinitionRepresentationModel } from '../task-list';
 import { IconModel } from './icon.model';
-import { share, takeUntil } from 'rxjs/operators';
+import { share, takeUntil, finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-apps',
@@ -103,25 +103,25 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     private load() {
         this.loading = true;
-        this.appsProcessService.getDeployedApplications()
-        .subscribe(
-            (res: AppDefinitionRepresentationModel[]) => {
-                this.filterApps(res).forEach((app: AppDefinitionRepresentationModel) => {
-                    if (this.isDefaultApp(app)) {
-                        app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
-                        app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
-                        this.appsObserver.next(app);
-                    } else if (app.deploymentId) {
-                        this.appsObserver.next(app);
-                    }
-                    this.loading = false;
-                });
-            },
-            (err) => {
-                this.error.emit(err);
-                this.loading = false;
-            }
-        );
+        this.appsProcessService
+            .getDeployedApplications()
+            .pipe(finalize(() => this.loading = false))
+            .subscribe(
+                (res: AppDefinitionRepresentationModel[]) => {
+                    this.filterApps(res).forEach((app) => {
+                        if (this.isDefaultApp(app)) {
+                            app.theme = AppsListComponent.DEFAULT_TASKS_APP_THEME;
+                            app.icon = AppsListComponent.DEFAULT_TASKS_APP_ICON;
+                            this.appsObserver.next(app);
+                        } else if (app.deploymentId) {
+                            this.appsObserver.next(app);
+                        }
+                    });
+                },
+                (err) => {
+                    this.error.emit(err);
+                }
+            );
     }
 
     isDefaultApp(app) {
