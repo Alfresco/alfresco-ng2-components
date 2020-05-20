@@ -21,15 +21,9 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslationMock } from '../../../../mock/translation.service.mock';
-import { TranslationService } from '../../../../services';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
 import { MatInputModule, MatIconModule } from '@angular/material';
-import { InputMaskDirective } from './text-mask.component';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { HttpClientModule } from '@angular/common/http';
+import { CoreTestingModule } from '../../../../testing';
 
 const enterValueInTextField = (element: HTMLInputElement, value: string) => {
     element.value = value;
@@ -45,22 +39,10 @@ describe('TextWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
+            CoreTestingModule,
             MatInputModule,
             FormsModule,
-            MatIconModule,
-            HttpClientModule
-        ],
-        declarations: [
-            TextWidgetComponent,
-            InputMaskDirective,
-            ErrorWidgetComponent
-        ],
-        providers: [
-            TranslateStore,
-            TranslateService,
-            { provide: TranslationService, useClass: TranslationMock }
+            MatIconModule
         ]
     });
 

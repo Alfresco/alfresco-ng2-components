@@ -16,17 +16,15 @@
  */
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { OVERLAY_PROVIDERS, OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationService } from './notification.service';
-import { TranslationMock } from '../../mock/translation.service.mock';
 import { TranslationService } from '../../services/translation.service';
-import { HttpClientModule } from '@angular/common/http';
 import { setupTestBed } from '../../testing/setup-test-bed';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 @Component({
     template: '',
@@ -79,18 +77,14 @@ describe('NotificationService', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             OverlayModule,
-            MatSnackBarModule,
-            HttpClientModule
+            MatSnackBarModule
         ],
         declarations: [ProvidesNotificationServiceComponent],
         providers: [
-            NotificationService,
             MatSnackBar,
-            OVERLAY_PROVIDERS,
-            LiveAnnouncer,
-            { provide: TranslationService, useClass: TranslationMock }
+            LiveAnnouncer
         ]
     });
 

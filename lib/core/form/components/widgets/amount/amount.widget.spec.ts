@@ -20,9 +20,6 @@ import { FormFieldModel } from './../core/form-field.model';
 import { AmountWidgetComponent, ADF_AMOUNT_SETTINGS } from './amount.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../../form-base.module';
-import { TranslateStore } from '@ngx-translate/core';
-import { TranslationService } from '../../../../services/translation.service';
-import { TranslationMock } from '../../../../mock/translation.service.mock';
 import { FormModel } from '../core';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
@@ -35,10 +32,6 @@ describe('AmountWidgetComponent', () => {
         imports: [
             CoreTestingModule,
             FormBaseModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore
         ]
     });
 
@@ -94,10 +87,6 @@ describe('AmountWidgetComponent - rendering', () => {
         imports: [
             CoreTestingModule,
             FormBaseModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore
         ]
     });
 
@@ -166,8 +155,6 @@ describe('AmountWidgetComponent settings', () => {
             FormBaseModule
         ],
         providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore,
             {
                 provide: ADF_AMOUNT_SETTINGS,
                 useValue: {

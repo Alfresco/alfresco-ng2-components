@@ -16,17 +16,11 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { ContentService } from './content.service';
 import { AppConfigService } from '../app-config/app-config.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from './cookie.service';
 import { StorageService } from './storage.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { TranslationService } from './translation.service';
-import { TranslationMock } from '../mock/translation.service.mock';
 import { Node } from '@alfresco/js-api';
 import { CoreTestingModule } from '../testing';
 
@@ -44,11 +38,6 @@ describe('ContentService', () => {
     setupTestBed({
         imports: [
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: CookieService, useClass: CookieServiceMock }
         ]
     });
 

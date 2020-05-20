@@ -31,9 +31,6 @@ import { formDisplayValueVisibility,
          textWidgetVisibility,
          numberWidgetVisibilityForm,
          radioWidgetVisibiltyForm } from './mock/form-renderer.component.mock';
-import { TranslationService } from 'core/services';
-import { TranslationMock } from 'core/mock';
-import { TranslateStore } from '@ngx-translate/core';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
 
@@ -82,10 +79,6 @@ describe('Form Renderer Component', () => {
         imports: [
             CoreTestingModule,
             FormBaseModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore
         ]
     });
 

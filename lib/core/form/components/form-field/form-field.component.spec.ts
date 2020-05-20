@@ -22,9 +22,6 @@ import { TextWidgetComponent, CheckboxWidgetComponent } from '../widgets/index';
 import { FormFieldComponent } from './form-field.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../form-base.module';
-import { TranslationService } from '../../../services/translation.service';
-import { TranslationMock } from '../../../mock/translation.service.mock';
-import { TranslateStore } from '@ngx-translate/core';
 import { formWithOneVisibleAndOneInvisibleFieldMock, formWithOneVisibleAndOneInvisibleTabMock } from '../mock/form-renderer.component.mock';
 import { CoreTestingModule } from '../../../testing';
 
@@ -40,10 +37,6 @@ describe('FormFieldComponent', () => {
         imports: [
             CoreTestingModule,
             FormBaseModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore
         ]
     });
 

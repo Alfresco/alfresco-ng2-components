@@ -16,16 +16,11 @@
  */
 
 import { NotificationService } from '../notifications/services/notification.service';
-import { AppConfigService } from '../app-config/app-config.service';
 import { TestBed } from '@angular/core/testing';
-import { ClipboardModule } from './clipboard.module';
 import { ClipboardService } from './clipboard.service';
-import { TranslationService } from '../services/translation.service';
-import { AppConfigServiceMock } from '../mock/app-config.service.mock';
-import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material';
-import { TranslationMock } from '@alfresco/adf-core';
 import { setupTestBed } from '../testing/setup-test-bed';
+import { CoreTestingModule } from '../testing';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -34,13 +29,8 @@ describe('ClipboardService', () => {
 
     setupTestBed({
         imports: [
-            ClipboardModule,
-            HttpClientModule,
+            CoreTestingModule,
             MatSnackBarModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock }
         ]
     });
 

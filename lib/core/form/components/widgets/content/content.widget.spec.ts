@@ -18,14 +18,13 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslationService, ContentService } from '../../../../services';
+import { ContentService } from '../../../../services';
 import { of } from 'rxjs';
 
 import { ProcessContentService } from '../../../services/process-content.service';
 import { ContentLinkModel } from '../index';
 import { ContentWidgetComponent } from './content.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { TranslationMock } from '../../../../mock/translation.service.mock';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 declare let jasmine: any;
@@ -65,9 +64,6 @@ describe('ContentWidgetComponent', () => {
     setupTestBed({
         imports: [
             CoreTestingModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 

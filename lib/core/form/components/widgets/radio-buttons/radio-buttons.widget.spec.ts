@@ -25,15 +25,9 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { RadioButtonsWidgetComponent } from './radio-buttons.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule, TranslateStore, TranslateService } from '@ngx-translate/core';
 import { MatIconModule, MatRadioModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { ErrorWidgetComponent } from '../error/error.component';
-import { TranslationService } from '../../../../services';
-import { TranslationMock } from '../../../../mock/translation.service.mock';
-import { DisplayTextWidgetComponent } from '../display-text/display-text.widget';
+import { CoreTestingModule } from '../../../../testing';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -42,22 +36,10 @@ describe('RadioButtonsWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            TranslateModule.forRoot(),
+            CoreTestingModule,
             MatRadioModule,
             FormsModule,
-            MatIconModule,
-            HttpClientModule
-        ],
-        declarations: [
-            RadioButtonsWidgetComponent,
-            ErrorWidgetComponent,
-            DisplayTextWidgetComponent
-        ],
-        providers: [
-            TranslateStore,
-            TranslateService,
-            { provide: TranslationService, useClass: TranslationMock }
+            MatIconModule
         ]
     });
 

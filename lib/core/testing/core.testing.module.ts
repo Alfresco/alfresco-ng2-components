@@ -29,11 +29,13 @@ import { TranslationMock } from '../mock/translation.service.mock';
 import { DatePipe } from '@angular/common';
 import { CookieService } from '../services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
         NoopAnimationsModule,
         RouterTestingModule,
+        HttpClientModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot()
     ],

@@ -17,21 +17,11 @@
 
 import { SimpleChange, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import {
-    setupTestBed,
-    StorageService,
-    LogService,
-    TranslationService,
-    TranslationMock,
-    FormService
-} from '@alfresco/adf-core';
+import { setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormCloudService } from '../../../form/services/form-cloud.service';
 import { StartProcessCloudComponent } from './start-process-cloud.component';
-import { HttpClientModule } from '@angular/common/http';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule, TranslateStore } from '@ngx-translate/core';
 import {
     MatCardModule,
     MatOptionModule,
@@ -44,7 +34,6 @@ import {
     MatCommonModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormCloudModule } from '../../../form/form-cloud.module';
 
 import {
     fakeProcessDefinitions, fakeStartForm, fakeStartFormNotValid,
@@ -53,6 +42,7 @@ import {
 } from '../mock/start-process.component.mock';
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -86,8 +76,7 @@ describe('StartProcessCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            HttpClientModule,
-            NoopAnimationsModule,
+            ProcessServiceCloudTestingModule,
             FormsModule,
             MatCommonModule,
             ReactiveFormsModule,
@@ -98,17 +87,7 @@ describe('StartProcessCloudComponent', () => {
             MatButtonModule,
             MatFormFieldModule,
             MatInputModule,
-            MatRippleModule,
-            FormCloudModule,
-            TranslateModule.forRoot()
-        ],
-        declarations: [StartProcessCloudComponent],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            FormService,
-            TranslateStore,
-            StorageService,
-            LogService
+            MatRippleModule
         ]
     });
 

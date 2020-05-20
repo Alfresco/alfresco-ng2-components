@@ -16,7 +16,6 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, TranslationMock } from '../../index';
 import { of } from 'rxjs';
 import { FormService } from '../services/form.service';
 import { FormListComponent } from './form-list.component';
@@ -33,9 +32,6 @@ describe('TaskAttachmentList', () => {
     setupTestBed({
         imports: [
             CoreTestingModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 
