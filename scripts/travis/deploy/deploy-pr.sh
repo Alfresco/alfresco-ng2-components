@@ -25,3 +25,7 @@ echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --enviro
 
 # Deploy PR in Rancher env
 (node --no-deprecation ./scripts/travis/deploy/rancher-pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "alfresco/demo-shell:develop-$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
+
+# Restore the app in the main run the unit test
+mv ./demo-shell/dist/${TRAVIS_BUILD_NUMBER} "./demo-shell/tmp/"
+mv "./demo-shell/tmp/" "./demo-shell/dist/"
