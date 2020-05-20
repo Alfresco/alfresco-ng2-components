@@ -74,6 +74,12 @@ describe('VersionManagerComponent', () => {
         expect(spyOnListVersionHistory).toHaveBeenCalledWith(node.id);
     });
 
+    it('should toggle new version if given a new file as input', () => {
+        component.newFileVersion = new File([], 'New file version');
+        fixture.detectChanges();
+        expect(component.uploadState).toBe('open');
+    });
+
     it('should display comments for versions when not configured otherwise', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {

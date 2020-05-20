@@ -6,6 +6,7 @@
                     <adf-version-upload
                         id="adf-version-upload-button"
                         [node]="node"
+                        [newFileVersion]="newFileVersion"
                         (success)="onUploadSuccess($event)"
                         (cancel)="onUploadCancel()"
                         (error)="onUploadError($event)">

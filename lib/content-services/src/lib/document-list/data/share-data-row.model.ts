@@ -40,16 +40,20 @@ export class ShareDataRow implements DataRow {
     constructor(private obj: NodeEntry,
                 private contentService: ContentService,
                 private permissionsStyle: PermissionStyleModel[],
-                private thumbnailService?: ThumbnailService) {
+                private thumbnailService?: ThumbnailService,
+                private allowDropFiles?: boolean) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
 
-        this.isDropTarget = this.isFolderAndHasPermissionToUpload(obj);
-
+        this.isDropTarget = allowDropFiles !== undefined ? this.allowDropFiles && this.checkNodeTypeAndPermissions(obj) : this.checkNodeTypeAndPermissions(obj);
         if (permissionsStyle) {
             this.cssClass = this.getPermissionClass(obj);
         }
+    }
+
+    checkNodeTypeAndPermissions(nodeEntry: NodeEntry) {
+        return this.isFolderAndHasPermissionToUpload(nodeEntry) || this.isFileAndHasParentFolderPermissionToUpload(nodeEntry);
     }
 
     getPermissionClass(nodeEntity: NodeEntry): string {
@@ -79,6 +83,14 @@ export class ShareDataRow implements DataRow {
 
     isFolderAndHasPermissionToUpload(nodeEntry: NodeEntry): boolean {
         return this.isFolder(nodeEntry) && this.contentService.hasAllowableOperations(nodeEntry.entry, 'create');
+    }
+
+    isFileAndHasParentFolderPermissionToUpload(nodeEntry: NodeEntry): boolean {
+        return this.isFile(nodeEntry) && this.contentService.hasAllowableOperations(nodeEntry.entry, 'update');
+    }
+
+    isFile(nodeEntry: NodeEntry): boolean {
+        return nodeEntry.entry && nodeEntry.entry.isFile;
     }
 
     isFolder(nodeEntry: NodeEntry): boolean {

@@ -15,12 +15,13 @@
             <input #uploadSingleFile
                 id="upload-single-file"
                 data-automation-id="upload-single-file"
-                type="file"
+                [type]="file ? 'button' : 'file'"
                 name="uploadFiles"
                 accept="{{acceptedFilesType}}"
                 [attr.disabled]="isButtonDisabled()"
                 [title]="tooltip"
-                (change)="onFilesAdded($event)">
+                (change)="onFilesAdded($event)"
+                (click)="onClickUploadButton()">
         </button>
 
         <!--Multiple Files Upload-->

@@ -75,9 +75,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     toolbarColor = 'default';
 
     selectionModes = [
-        { value: 'none', viewValue: 'None' },
-        { value: 'single', viewValue: 'Single' },
-        { value: 'multiple', viewValue: 'Multiple' }
+        {value: 'none', viewValue: 'None'},
+        {value: 'single', viewValue: 'Single'},
+        {value: 'multiple', viewValue: 'Multiple'}
     ];
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -237,6 +237,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     toggleAllowDropFiles() {
+        this.allowDropFiles = !this.allowDropFiles;
         this.documentList.reload();
     }
 
@@ -322,7 +323,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
         if (this.documentList.folderNode) {
-            return [{ entry: this.documentList.folderNode }];
+            return [{entry: this.documentList.folderNode}];
         } else {
             return [];
         }
@@ -427,7 +428,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
+                data: {contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload},
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
@@ -589,6 +590,27 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     runCustomAction(event: any) {
         this.logService.log(event);
+    }
+
+    onUploadNewVersion(ev) {
+        const contentEntry = ev.detail.data.node.entry;
+        const showComments = this.showVersionComments;
+        const allowDownload = this.allowVersionDownload;
+        const newFileVersion = ev.detail.files[0].file;
+
+        if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
+            this.dialog.open(VersionManagerDialogAdapterComponent, {
+                data: {
+                    contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload,
+                    newFileVersion: newFileVersion, showComparison: true
+                },
+                panelClass: 'adf-version-manager-dialog',
+                width: '630px'
+            });
+        } else {
+            const translatedErrorMessage: any = this.translateService.instant('OPERATION.ERROR.PERMISSION');
+            this.openSnackMessage(translatedErrorMessage);
+        }
     }
 
     getFileFiltering(): string {

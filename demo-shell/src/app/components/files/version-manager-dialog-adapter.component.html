@@ -19,7 +19,7 @@
 </section>
 
 <section mat-dialog-content *ngIf="!readOnly">
-    <adf-version-manager [node]="contentEntry" [allowDownload]="allowDownload" [showComments]="showComments" (uploadError)="uploadError($event)"></adf-version-manager>
+    <adf-version-manager [node]="contentEntry" [newFileVersion]="newFileVersion" [allowDownload]="allowDownload" [showComments]="showComments" (uploadError)="uploadError($event)"></adf-version-manager>
 </section>
 <section mat-dialog-content *ngIf="readOnly">
     <adf-version-list [node]="contentEntry" [showActions]="false" ></adf-version-list>

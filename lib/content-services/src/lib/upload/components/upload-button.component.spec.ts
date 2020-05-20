@@ -98,6 +98,19 @@ describe('UploadButtonComponent', () => {
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
 
+    it('should have input type as button if receiving a file as input', () => {
+        component.multipleFiles = false;
+        component.file = new File([], 'Fake file name');
+        const compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        const inputButton = compiled.querySelector('#upload-single-file');
+        expect(inputButton.type).toBe('button');
+
+        component.file = undefined;
+        fixture.detectChanges();
+        expect(inputButton.type).toBe('file');
+    });
+
     it('should disable uploadFolder button if disabled is true', () => {
         component.disabled = true;
         component.uploadFolders = true;

@@ -27,6 +27,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class VersionManagerDialogAdapterComponent {
 
     public contentEntry: MinimalNodeEntryEntity;
+    public newFileVersion: File;
 
     showComments = true;
     allowDownload = true;
@@ -36,6 +37,7 @@ export class VersionManagerDialogAdapterComponent {
                 private snackBar: MatSnackBar,
                 private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>) {
         this.contentEntry = data.contentEntry;
+        this.newFileVersion = data.hasOwnProperty('newFileVersion') ? data.newFileVersion : this.newFileVersion;
         this.showComments = data.hasOwnProperty('showComments') ? data.showComments : this.showComments;
         this.allowDownload = data.hasOwnProperty('allowDownload') ? data.allowDownload : this.allowDownload;
     }
