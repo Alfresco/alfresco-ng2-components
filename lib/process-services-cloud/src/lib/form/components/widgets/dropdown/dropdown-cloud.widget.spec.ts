@@ -25,8 +25,7 @@ import {
     FormFieldOption,
     setupTestBed,
     FormFieldModel,
-    FormModel,
-    CoreModule
+    FormModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../../../services/form-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
