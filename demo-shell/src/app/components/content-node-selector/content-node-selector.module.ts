@@ -33,7 +33,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CoreModule.forChild(),
+        CoreModule,
         ContentModule.forChild()
     ],
     declarations: [ContentNodeSelectorComponent]

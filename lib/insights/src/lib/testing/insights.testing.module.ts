@@ -17,6 +17,7 @@
 
 import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 import { InsightsModule } from '../insights.module';
 import {
     AlfrescoApiService,
@@ -31,6 +32,7 @@ import {
 @NgModule({
     imports: [
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
         CoreModule.forRoot(),
         InsightsModule.forRoot()
     ],
@@ -38,6 +40,12 @@ import {
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock }
+    ],
+    exports: [
+        NoopAnimationsModule,
+        TranslateModule,
+        CoreModule,
+        InsightsModule
     ]
 })
 export class InsightsTestingModule {}

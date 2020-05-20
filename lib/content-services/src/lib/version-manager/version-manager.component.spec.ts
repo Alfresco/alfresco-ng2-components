@@ -18,11 +18,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AlfrescoApiService, setupTestBed, CoreModule, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
-import { VersionListComponent } from './version-list.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
@@ -46,15 +45,7 @@ describe('VersionManagerComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            NoopAnimationsModule
-        ],
-        declarations: [
-            VersionManagerComponent,
-            VersionListComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ContentTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
@@ -72,6 +63,12 @@ describe('VersionManagerComponent', () => {
     it('should load the versions for a given node', () => {
         fixture.detectChanges();
         expect(spyOnListVersionHistory).toHaveBeenCalledWith(node.id);
+    });
+
+    it('should toggle new version if given a new file as input', () => {
+        component.newFileVersion = new File([], 'New file version');
+        fixture.detectChanges();
+        expect(component.uploadState).toBe('open');
     });
 
     it('should display comments for versions when not configured otherwise', async(() => {

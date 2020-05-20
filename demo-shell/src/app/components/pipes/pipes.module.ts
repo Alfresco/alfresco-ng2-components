@@ -31,7 +31,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        CoreModule.forChild(),
+        CoreModule,
         RouterModule.forChild(routes)
     ],
     declarations: [PipesComponent]

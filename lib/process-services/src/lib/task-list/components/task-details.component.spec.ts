@@ -28,9 +28,7 @@ import {
     BpmUserService,
     CommentProcessService, LogService, AuthenticationService,
     UserProcessModel,
-    PeopleProcessService,
-    TranslationMock,
-    TranslationService
+    PeopleProcessService
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import {
@@ -42,9 +40,7 @@ import {
 } from '../../mock';
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
-import { TaskListModule } from '../task-list.module';
-import { TranslateStore } from '@ngx-translate/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ProcessTestingModule } from '../../testing/process.testing.module';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',
@@ -69,12 +65,8 @@ describe('TaskDetailsComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            TaskListModule
+            ProcessTestingModule
         ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore],
         schemas: [NO_ERRORS_SCHEMA]
     });
 

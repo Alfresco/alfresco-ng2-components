@@ -16,13 +16,12 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NodesApiService } from './nodes-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('NodesApiService', () => {
     let service: NodesApiService;
@@ -51,8 +50,7 @@ describe('NodesApiService', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

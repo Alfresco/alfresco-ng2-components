@@ -25,9 +25,8 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { PeopleWidgetComponent } from './people.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateService } from '@ngx-translate/core';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('PeopleWidgetComponent', () => {
 
@@ -39,8 +38,7 @@ describe('PeopleWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

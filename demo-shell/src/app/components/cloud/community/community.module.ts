@@ -73,7 +73,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        CoreModule.forChild(),
+        CoreModule,
         ProcessServicesCloudModule,
         RouterModule.forChild(routes),
         AppCloudSharedModule,

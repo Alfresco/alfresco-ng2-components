@@ -27,17 +27,25 @@ import {
     TranslationMock,
     CoreModule
 } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
         CoreModule.forRoot(),
-        ProcessModule
+        ProcessModule.forRoot()
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock }
+    ],
+    exports: [
+        NoopAnimationsModule,
+        TranslateModule,
+        CoreModule,
+        ProcessModule
     ]
 })
 export class ProcessTestingModule {}

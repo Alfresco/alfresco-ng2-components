@@ -17,11 +17,11 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentService, UploadService, TranslationService, setupTestBed, CoreModule, TranslationMock } from '@alfresco/adf-core';
+import { ContentService, UploadService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NodeEntry } from '@alfresco/js-api';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('UploadButtonComponent', () => {
 
@@ -52,14 +52,7 @@ describe('UploadButtonComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            UploadButtonComponent
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock }
+            ContentTestingModule
         ]
     });
 
@@ -96,6 +89,19 @@ describe('UploadButtonComponent', () => {
         const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
+    });
+
+    it('should have input type as button if receiving a file as input', () => {
+        component.multipleFiles = false;
+        component.file = new File([], 'Fake file name');
+        const compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        const inputButton = compiled.querySelector('#upload-single-file');
+        expect(inputButton.type).toBe('button');
+
+        component.file = undefined;
+        fixture.detectChanges();
+        expect(inputButton.type).toBe('file');
     });
 
     it('should disable uploadFolder button if disabled is true', () => {

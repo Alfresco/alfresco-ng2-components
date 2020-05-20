@@ -37,7 +37,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CoreModule.forChild(),
+        CoreModule,
         ProcessModule.forChild()
     ],
     declarations: [ProcessListDemoComponent]

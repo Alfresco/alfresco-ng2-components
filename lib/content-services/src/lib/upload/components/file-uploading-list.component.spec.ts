@@ -16,13 +16,10 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslationService, FileUploadStatus, NodesApiService, UploadService,
-    setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock
-} from '@alfresco/adf-core';
+import { TranslationService, FileUploadStatus, NodesApiService, UploadService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-import { UploadModule } from '../upload.module';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('FileUploadingListComponent', () => {
     let fixture: ComponentFixture<FileUploadingListComponent>;
@@ -38,12 +35,7 @@ describe('FileUploadingListComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
-            UploadModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ContentTestingModule
         ]
     });
 

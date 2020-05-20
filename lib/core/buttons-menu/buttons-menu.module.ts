@@ -26,7 +26,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule.forChild(),
+        TranslateModule,
         FlexLayoutModule
     ],
     declarations: [

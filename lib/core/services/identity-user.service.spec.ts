@@ -39,11 +39,11 @@ import {
 } from 'core/mock/identity-user.service.mock';
 import { IdentityUserService } from '../services/identity-user.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { mockToken } from '../mock/jwt-helper.service.spec';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('IdentityUserService', () => {
 
@@ -60,7 +60,7 @@ describe('IdentityUserService', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

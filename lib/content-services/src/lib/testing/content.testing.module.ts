@@ -30,11 +30,13 @@ import {
     CookieServiceMock
 } from '@alfresco/adf-core';
 import { ContentModule } from '../content.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         NoopAnimationsModule,
         RouterTestingModule,
+        TranslateModule.forRoot(),
         CoreModule.forRoot(),
         ContentModule.forRoot()
     ],
@@ -43,6 +45,12 @@ import { ContentModule } from '../content.module';
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
         { provide: CookieService, useClass: CookieServiceMock }
+    ],
+    exports: [
+        NoopAnimationsModule,
+        TranslateModule,
+        CoreModule,
+        ContentModule
     ]
 })
 export class ContentTestingModule {}

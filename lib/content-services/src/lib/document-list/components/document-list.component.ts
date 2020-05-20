@@ -65,7 +65,7 @@ import { takeUntil } from 'rxjs/operators';
     styleUrls: ['./document-list.component.scss'],
     templateUrl: './document-list.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'adf-document-list' }
+    host: {class: 'adf-document-list'}
 })
 export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit, PaginatedComponent, NavigableComponentInterface {
 
@@ -163,7 +163,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /**
      * When true, this enables you to drop files directly into subfolders shown
-     * as items in the list. When false, the dropped file will be added to the
+     * as items in the list or into another file to trigger updating it's version.
+     * When false, the dropped file will be added to the
      * current folder (ie, the one containing all the items shown in the list).
      * See the Upload directive for further details about how the file drop is
      * handled.
@@ -380,7 +381,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     ngOnInit() {
         this.rowMenuCache = {};
         this.loadLayoutPresets();
-        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(), this.sortingMode);
+        this.data = new ShareDataTableAdapter(this.thumbnailService, this.contentService, null, this.getDefaultSorting(),
+            this.sortingMode, this.allowDropFiles);
         this.data.thumbnails = this.thumbnails;
         this.data.permissionsStyle = this.permissionsStyle;
 
@@ -555,14 +557,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
             this._currentFolderId = node;
-            this.folderChange.emit(new NodeEntryEvent(<Node> { id: node }));
+            this.folderChange.emit(new NodeEntryEvent(<Node> {id: node}));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
                 this._currentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent(<Node> { id: this._currentFolderId }));
+                this.folderChange.emit(new NodeEntryEvent(<Node> {id: this._currentFolderId}));
                 this.reload();
                 return true;
             }
@@ -651,7 +653,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this._pagination.merge);
+            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }

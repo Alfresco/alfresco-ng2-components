@@ -23,8 +23,7 @@ import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateTimeEditorComponent } from './datetime.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
 
 describe('DateTimeEditorComponent', () => {
     let component: DateTimeEditorComponent;
@@ -35,8 +34,7 @@ describe('DateTimeEditorComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

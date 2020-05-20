@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, SimpleChange } from '@angular/core';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { TaskCloudModule } from '../../task-cloud.module';
-import { TaskDirectiveModule } from '../../directives/task-directive.module';
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -54,8 +52,7 @@ describe('TaskFormCloudComponent', () => {
     let fixture: ComponentFixture<TaskFormCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskCloudModule, TaskDirectiveModule],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        imports: [ProcessServiceCloudTestingModule]
     });
 
     beforeEach(() => {
@@ -414,91 +411,5 @@ describe('TaskFormCloudComponent', () => {
 
             expect(loadingTemplate).toBeNull();
         });
-   });
-});
-
-@Component({
-    selector: 'adf-cloud-task-form-cloud-with-custom-outcomes',
-    template: `
-    <adf-cloud-form #adfCloudForm>
-        <adf-cloud-form-custom-outcomes>
-            <button mat-button *ngIf="showCancelButton" id="adf-cloud-cancel-task" (click)="onCancel()">
-                CANCEL
-            </button>
-            <button mat-button *ngIf="canClaimTask()" adf-cloud-claim-task [appName]="appName" [taskId]="taskId" (click)="onClaim()">
-                CLAIM
-            </button>
-            <button mat-button *ngIf="canUnclaimTask()" adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId" (click)="onUnclaim()">
-                UNCLAIM
-            </button>
-        </adf-cloud-form-custom-outcomes>
-    </adf-cloud-form>`
-})
-
-class TaskFormWithCustomOutComesComponent {
-
-    appName = 'simple-app';
-    taskId = 'mock-task-id';
-    showCancelButton = true;
-
-    canClaimTask() { return true; }
-
-    canUnclaimTask() { return true; }
-
-    onUnclaim() {}
-
-    onClaim() {}
-
-    onCancel() {}
-}
-
-describe('TaskFormWithCustomOutComesComponent', () => {
-
-    let fixture: ComponentFixture<TaskFormWithCustomOutComesComponent>;
-    let component: TaskFormWithCustomOutComesComponent;
-    let debugElement: DebugElement;
-
-    setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskCloudModule, TaskDirectiveModule],
-        declarations: [TaskFormWithCustomOutComesComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TaskFormWithCustomOutComesComponent);
-        component = fixture.componentInstance;
-        debugElement = fixture.debugElement;
-        fixture.detectChanges();
-    });
-
-    afterEach(() => {
-        fixture.destroy();
-    });
-
-    it('should be able to display and click on cancel button', () => {
-        fixture.detectChanges();
-        const cancelSpy = spyOn(component, 'onCancel').and.callThrough();
-        const cancelBtn = debugElement.query(By.css('#adf-cloud-cancel-task'));
-        cancelBtn.nativeElement.click();
-        expect(cancelSpy).toHaveBeenCalled();
-        expect(cancelBtn.nativeElement.innerText).toBe('CANCEL');
-    });
-
-    it('should be able to display and click on claim button', () => {
-        fixture.detectChanges();
-        const claimSpy = spyOn(component, 'onClaim').and.callThrough();
-        const claimBtn = debugElement.query(By.css('[adf-cloud-claim-task]'));
-        claimBtn.nativeElement.click();
-        expect(claimSpy).toHaveBeenCalled();
-        expect(claimBtn.nativeElement.innerText).toBe('CLAIM');
-    });
-
-    it('should be able to display and click on unclaim button', () => {
-        fixture.detectChanges();
-        const unClaimSpy = spyOn(component, 'onUnclaim').and.callThrough();
-        const unclaimBtn = debugElement.query(By.css('[adf-cloud-unclaim-task]'));
-        unclaimBtn.nativeElement.click();
-        expect(unClaimSpy).toHaveBeenCalled();
-        expect(unclaimBtn.nativeElement.innerText).toBe('UNCLAIM');
     });
 });

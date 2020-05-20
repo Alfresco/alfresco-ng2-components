@@ -22,16 +22,13 @@ import {
     AuthenticationService,
     SearchService,
     setupTestBed,
-    CoreModule,
     UserPreferencesService,
     SearchTextInputComponent
 } from '@alfresco/adf-core';
 import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
-import { SearchComponent } from './search.component';
-import { EmptySearchResultComponent } from './empty-search-result.component';
 import { of } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 @Component({
     template: `
@@ -68,13 +65,9 @@ describe('SearchControlComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            ContentTestingModule
         ],
         declarations: [
-            SearchControlComponent,
-            SearchComponent,
-            EmptySearchResultComponent,
             SimpleSearchTestCustomEmptyComponent
         ]
     });

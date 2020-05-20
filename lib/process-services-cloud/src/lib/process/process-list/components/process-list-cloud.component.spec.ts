@@ -19,9 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
     AppConfigService,
-    CoreModule,
     DataRowEvent,
-    DataTableModule,
     ObjectDataRow,
     setupTestBed
 } from '@alfresco/adf-core';
@@ -29,8 +27,7 @@ import { ProcessListCloudService } from '../services/process-list-cloud.service'
 import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
-import { ProcessListCloudTestingModule } from '../testing/process-list.testing.module';
-import { ProcessListCloudModule } from '../process-list-cloud.module';
+import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 
 @Component({
     template: `
@@ -72,10 +69,8 @@ describe('ProcessListCloudComponent', () => {
 
     setupTestBed({
         imports: [
-            ProcessListCloudTestingModule,
-            ProcessListCloudModule
-        ],
-        providers: [ProcessListCloudService]
+            ProcessServiceCloudTestingModule
+        ]
     });
 
     beforeEach(() => {
@@ -260,9 +255,8 @@ describe('ProcessListCloudComponent', () => {
         let componentCustom: CustomTaskListComponent;
 
         setupTestBed({
-            imports: [CoreModule.forRoot()],
-            declarations: [ProcessListCloudComponent, CustomTaskListComponent],
-            providers: [ProcessListCloudService]
+            imports: [ProcessServiceCloudTestingModule],
+            declarations: [CustomTaskListComponent]
         });
 
         beforeEach(() => {
@@ -289,7 +283,7 @@ describe('ProcessListCloudComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         setupTestBed({
-            imports: [ProcessListCloudModule, ProcessListCloudTestingModule, DataTableModule],
+            imports: [ProcessServiceCloudTestingModule],
             declarations: [EmptyTemplateComponent]
         });
 

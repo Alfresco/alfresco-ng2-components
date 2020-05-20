@@ -17,7 +17,6 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormRendererComponent } from './form-renderer.component';
 import { FormBaseModule } from '../form-base.module';
 import { formDisplayValueVisibility,
@@ -32,10 +31,8 @@ import { formDisplayValueVisibility,
          textWidgetVisibility,
          numberWidgetVisibilityForm,
          radioWidgetVisibiltyForm } from './mock/form-renderer.component.mock';
-import { TranslationService } from 'core/services';
-import { TranslationMock } from 'core/mock';
-import { TranslateStore } from '@ngx-translate/core';
 import { FormService } from '../services/form.service';
+import { CoreTestingModule } from '../../testing';
 
 function typeIntoInput(targetInput: HTMLInputElement, message: string ) {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
@@ -80,12 +77,8 @@ describe('Form Renderer Component', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             FormBaseModule
-        ],
-        providers: [
-            { provide: TranslationService, useClass: TranslationMock },
-            TranslateStore
         ]
     });
 

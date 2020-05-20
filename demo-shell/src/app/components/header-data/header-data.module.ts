@@ -32,7 +32,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CoreModule.forChild()
+        CoreModule
     ],
     declarations: [HeaderDataComponent]
 })

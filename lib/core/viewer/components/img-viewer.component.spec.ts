@@ -21,8 +21,8 @@ import { ContentService } from '../../services/content.service';
 
 import { ImgViewerComponent } from './img-viewer.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
 import { AppConfigService, AppConfigServiceMock } from '@alfresco/adf-core';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('Test Img viewer component ', () => {
 
@@ -38,7 +38,7 @@ describe('Test Img viewer component ', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AppConfigService, useClass: AppConfigServiceMock }

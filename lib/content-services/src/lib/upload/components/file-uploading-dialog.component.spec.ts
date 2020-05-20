@@ -18,11 +18,11 @@
 import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import {
-    FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, CoreModule, AlfrescoApiService, AlfrescoApiServiceMock, UserPreferencesService
+    FileModel, FileUploadCompleteEvent, FileUploadErrorEvent, UploadService, setupTestBed, AlfrescoApiService, AlfrescoApiServiceMock, UserPreferencesService
 } from '@alfresco/adf-core';
 import { UploadModule } from '../upload.module';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 describe('FileUploadingDialogComponent', () => {
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
@@ -34,8 +34,7 @@ describe('FileUploadingDialogComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot(),
+            ContentTestingModule,
             UploadModule
         ],
         providers: [

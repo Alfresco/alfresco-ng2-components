@@ -16,17 +16,9 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-    AlfrescoApiService,
-    AlfrescoApiServiceMock,
-    FileModel,
-    UploadService,
-    setupTestBed,
-    CoreModule
-} from '@alfresco/adf-core';
-
-import { FileDraggableDirective } from '../directives/file-draggable.directive';
+import { FileModel, UploadService, setupTestBed } from '@alfresco/adf-core';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -103,14 +95,7 @@ describe('UploadDragAreaComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
-        ],
-        declarations: [
-            FileDraggableDirective,
-            UploadDragAreaComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ContentTestingModule
         ]
     });
 
@@ -264,6 +249,34 @@ describe('UploadDragAreaComponent', () => {
             });
         }));
 
+        it('should NOT upload the file if it is dropped on another file', () => {
+            const fakeItem = {
+                fullPath: '/folder-fake/file-fake.png',
+                isDirectory: false,
+                isFile: true,
+                name: 'file-fake.png',
+                relativeFolder: '/',
+                file: (callbackFile) => {
+                    const fileFake = new File(['fakefake'], 'file-fake.png', { type: 'image/png' });
+                    callbackFile(fileFake);
+                }
+            };
+
+            addToQueueSpy.and.callFake((fileList) => {
+                expect(fileList.name).toBe('file');
+                expect(fileList.options.path).toBe('pippo/');
+            });
+
+            const fakeCustomEvent: CustomEvent = new CustomEvent('CustomEvent', {
+                detail: {
+                    data: getFakeShareDataRow(),
+                    files: [fakeItem]
+                }
+            });
+
+            component.onUploadFiles(fakeCustomEvent);
+        });
+
         it('should not upload a file if fileType is not in acceptedFilesType', async(() => {
             component.success = null;
             component.acceptedFilesType = '.pdf';
@@ -367,8 +380,8 @@ describe('UploadDragAreaComponent', () => {
             component.onUploadFiles(fakeCustomEvent);
         }));
 
-        it('should upload the file in the current folder when the target is file', async(() => {
-
+        it('should trigger updating the file version when we drop a file over another file', async(() => {
+            spyOn(component.updateFileVersion, 'emit');
             const fakeItem = {
                 fullPath: '/folder-fake/file-fake.png',
                 isDirectory: false,
@@ -394,6 +407,7 @@ describe('UploadDragAreaComponent', () => {
             });
 
             component.onUploadFiles(fakeCustomEvent);
+            expect(component.updateFileVersion.emit).toHaveBeenCalledWith(fakeCustomEvent);
         }));
     });
 

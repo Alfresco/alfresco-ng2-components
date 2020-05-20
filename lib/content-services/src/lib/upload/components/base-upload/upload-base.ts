@@ -71,6 +71,10 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     @Output()
     beginUpload = new EventEmitter<UploadFilesEvent>();
 
+    /** Emitted when dropping a file over another file to update the version. */
+    @Output()
+    updateFileVersion = new EventEmitter<CustomEvent>();
+
     protected onDestroy$ = new Subject<boolean>();
 
     constructor(protected uploadService: UploadService,

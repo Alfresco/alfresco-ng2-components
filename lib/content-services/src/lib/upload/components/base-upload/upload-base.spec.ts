@@ -17,10 +17,10 @@
 
 import { Component, NgZone } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { TranslationService, UploadService, setupTestBed, CoreModule, FileModel, TranslationMock } from '@alfresco/adf-core';
+import { TranslationService, UploadService, setupTestBed, FileModel } from '@alfresco/adf-core';
 import { UploadBase } from './upload-base';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UploadFilesEvent } from '../upload-files.event';
+import { ContentTestingModule } from '../../../testing/content.testing.module';
 
 @Component({
     selector: 'adf-upload-button-test',
@@ -43,15 +43,10 @@ describe('UploadBase', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            ContentTestingModule
         ],
         declarations: [
             UploadTestComponent
-        ],
-        providers: [
-            UploadService,
-            { provide: TranslationService, useClass: TranslationMock }
         ]
     });
 

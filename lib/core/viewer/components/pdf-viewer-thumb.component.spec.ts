@@ -19,7 +19,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 describe('PdfThumbComponent', () => {
 
@@ -43,7 +43,7 @@ describe('PdfThumbComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: DomSanitizer, useValue: domSanitizer }

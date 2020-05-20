@@ -21,13 +21,12 @@ import { of, throwError, Subject } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessInstanceListComponent } from './process-list.component';
 import {
-    AppConfigService, setupTestBed, CoreModule, DataTableModule, DataRow, DataColumn,
+    AppConfigService, setupTestBed, DataRow, DataColumn,
     DataRowEvent, ObjectDataRow, ObjectDataTableAdapter, DataCellEvent
 } from '@alfresco/adf-core';
 import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessCustomSchema } from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { ProcessListModule } from '../process-list.module';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -465,9 +464,8 @@ describe('CustomProcessListComponent', () => {
     let component: CustomProcessListComponent;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()],
-        declarations: [ProcessInstanceListComponent, CustomProcessListComponent],
-        providers: [ProcessService]
+        imports: [ProcessTestingModule],
+        declarations: [CustomProcessListComponent]
     });
 
     beforeEach(() => {
@@ -501,7 +499,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
     let processService: ProcessService;
 
     setupTestBed({
-        imports: [ProcessTestingModule, ProcessListModule, DataTableModule],
+        imports: [ProcessTestingModule],
         declarations: [EmptyTemplateComponent]
     });
 
@@ -600,9 +598,8 @@ describe('ProcessListContextMenuComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [CoreModule.forRoot()],
-        declarations: [ProcessInstanceListComponent, ProcessListContextMenuComponent],
-        providers: [ProcessService]
+        imports: [ProcessTestingModule],
+        declarations: [ProcessListContextMenuComponent]
     });
 
     beforeEach(() => {

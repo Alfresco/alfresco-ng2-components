@@ -19,10 +19,9 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ProcessContentService } from './process-content.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -71,8 +70,7 @@ describe('ProcessContentService', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }

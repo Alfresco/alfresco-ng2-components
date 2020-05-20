@@ -21,10 +21,9 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslationService } from '../services/translation.service';
+import { CoreTestingModule } from '../testing/core.testing.module';
 
 @Component({
     template: `
@@ -51,8 +50,7 @@ describe('NodeRestoreDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot(),
-            NoopAnimationsModule
+            CoreTestingModule
         ],
         declarations: [
             TestComponent

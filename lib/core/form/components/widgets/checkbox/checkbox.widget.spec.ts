@@ -22,10 +22,10 @@ import { FormModel } from '../core/form.model';
 import { CheckboxWidgetComponent } from './checkbox.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from 'core/form/form-base.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateService, TranslateStore, TranslateLoader } from '@ngx-translate/core';
 import { TranslateLoaderService } from 'core/services';
 import { MatCheckboxModule } from '@angular/material';
+import { CoreTestingModule } from '../../../../testing';
 
 describe('CheckboxWidgetComponent', () => {
 
@@ -35,7 +35,7 @@ describe('CheckboxWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            CoreTestingModule,
             FormBaseModule,
             MatCheckboxModule
         ],

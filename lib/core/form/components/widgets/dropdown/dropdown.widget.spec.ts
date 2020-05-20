@@ -26,8 +26,7 @@ import { FormModel } from './../core/form.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { DropdownWidgetComponent } from './dropdown.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('DropdownWidgetComponent', () => {
 
@@ -50,8 +49,7 @@ describe('DropdownWidgetComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

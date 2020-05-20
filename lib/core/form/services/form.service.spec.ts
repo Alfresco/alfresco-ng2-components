@@ -16,13 +16,11 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { Response, ResponseOptions } from '@angular/http';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { formModelTabs, AlfrescoApiServiceMock } from '../../mock';
 import { FormService } from './form.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -58,8 +56,7 @@ describe('Form service', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
@@ -244,32 +241,6 @@ describe('Form service', () => {
                 expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
                 done();
             });
-        });
-
-        it('should not get form id from response', () => {
-            let response = new Response(new ResponseOptions({ body: null }));
-            expect(service.getFormId(response)).toBeNull();
-
-            response = new Response(new ResponseOptions({ body: {} }));
-            expect(service.getFormId(response)).toBeNull();
-
-            response = new Response(new ResponseOptions({ body: { data: null } }));
-            expect(service.getFormId(response)).toBeNull();
-
-            response = new Response(new ResponseOptions({ body: { data: [] } }));
-            expect(service.getFormId(response)).toBeNull();
-
-            expect(service.getFormId(null)).toBeNull();
-        });
-
-        it('should fallback to empty json array', () => {
-            expect(service.toJsonArray(null)).toEqual([]);
-
-            let response = new Response(new ResponseOptions({ body: {} }));
-            expect(service.toJsonArray(response)).toEqual([]);
-
-            response = new Response(new ResponseOptions({ body: { data: null } }));
-            expect(service.toJsonArray(response)).toEqual([]);
         });
 
         it('should handle error with generic message', () => {

@@ -26,8 +26,7 @@ import { DynamicTableRow  } from './../../dynamic-table-row.model';
 import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DropdownEditorComponent } from './dropdown.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
-import { CoreModule } from '../../../../../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
 
 describe('DropdownEditorComponent', () => {
 
@@ -40,8 +39,7 @@ describe('DropdownEditorComponent', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ]
     });
 

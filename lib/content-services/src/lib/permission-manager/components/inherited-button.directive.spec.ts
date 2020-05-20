@@ -17,9 +17,9 @@
 
 import { SimpleInheritedPermissionTestComponent } from '../../mock/inherited-permission.component.mock';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { InheritPermissionDirective } from './inherited-button.directive';
-import { NodesApiService, setupTestBed, CoreModule } from '@alfresco/adf-core';
+import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
+import { ContentTestingModule } from '../../testing/content.testing.module';
 
 const fakeNodeWithInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : true}, allowableOperations: ['updatePermissions']};
 const fakeNodeNoInherit: any = { id: 'fake-id', permissions : {isInheritanceEnabled : false}, allowableOperations: ['updatePermissions']};
@@ -34,10 +34,9 @@ describe('InheritPermissionDirective', () => {
 
     setupTestBed({
         imports: [
-            CoreModule.forRoot()
+            ContentTestingModule
         ],
         declarations: [
-            InheritPermissionDirective,
             SimpleInheritedPermissionTestComponent
         ]
     });

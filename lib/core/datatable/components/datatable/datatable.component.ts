@@ -105,12 +105,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     contextMenu: boolean = false;
 
-    /** Toggles file drop support for rows (see
-     * [Upload directive](upload.directive.md) for further details).
-     */
-    @Input()
-    allowDropFiles: boolean = false;
-
     /** The inline style to apply to every row. See
      * [NgStyle](https://angular.io/docs/ts/latest/api/common/index/NgStyle-directive.html)
      * docs for more details and usage examples.

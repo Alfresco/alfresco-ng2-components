@@ -27,8 +27,6 @@ import { TaskProcessVariableModel } from './../models/task-process-variable.mode
 import { WidgetVisibilityModel, WidgetTypeEnum } from './../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { CoreModule } from '../../core.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import {
@@ -36,6 +34,7 @@ import {
     formTest, formValues, complexVisibilityJsonVisible,
     nextConditionForm, complexVisibilityJsonNotVisible,
     headerVisibilityCond } from 'core/mock/form/widget-visibility-cloud.service.mock';
+import { CoreTestingModule } from '../../testing/core.testing.module';
 
 declare let jasmine: any;
 
@@ -47,8 +46,7 @@ describe('WidgetVisibilityCloudService', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
-            CoreModule.forRoot()
+            CoreTestingModule
         ],
         providers: [
             { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
