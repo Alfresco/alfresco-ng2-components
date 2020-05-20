@@ -61,4 +61,10 @@ export class TaskListPage {
     getAllRowsNameColumn(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
+
+    async clickOnTask(taskName: string): Promise<void> {
+        await BrowserActions.clickExecuteScript(
+            `span[aria-label="${taskName}"]`
+        );
+    }
 }
