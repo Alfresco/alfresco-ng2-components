@@ -21,6 +21,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ConfirmDialogComponent } from './confirm.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Confirm Dialog Component', () => {
     let fixture: ComponentFixture<ConfirmDialogComponent>;
@@ -38,7 +39,10 @@ describe('Confirm Dialog Component', () => {
     };
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef },
             { provide: MAT_DIALOG_DATA, useValue: data }

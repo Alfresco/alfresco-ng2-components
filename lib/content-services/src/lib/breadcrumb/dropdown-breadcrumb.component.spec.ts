@@ -24,6 +24,7 @@ import { DocumentListComponent, DocumentListService } from '../document-list';
 import { DropdownBreadcrumbComponent } from './dropdown-breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DropdownBreadcrumb', () => {
 
@@ -33,7 +34,10 @@ describe('DropdownBreadcrumb', () => {
     let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         providers : [{ provide: DocumentListService, useValue: documentListService }]
     });

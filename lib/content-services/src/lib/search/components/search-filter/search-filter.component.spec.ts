@@ -37,6 +37,7 @@ import {
     stepThree,
     stepTwo
 } from '../../../mock';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchFilterComponent', () => {
     let fixture: ComponentFixture<SearchFilterComponent>;
@@ -49,6 +50,7 @@ describe('SearchFilterComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         providers: [

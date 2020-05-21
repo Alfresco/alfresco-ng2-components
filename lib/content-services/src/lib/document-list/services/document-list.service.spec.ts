@@ -21,6 +21,7 @@ import { DocumentListService } from './document-list.service';
 import { CustomResourcesService } from './custom-resources.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -65,6 +66,7 @@ describe('DocumentListService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

@@ -19,6 +19,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { TagService } from './tag.service';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -27,7 +28,10 @@ describe('TagService', () => {
     let service: TagService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

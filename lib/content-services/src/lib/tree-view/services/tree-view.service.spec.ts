@@ -21,6 +21,7 @@ import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { of } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TreeViewService', () => {
 
@@ -37,7 +38,10 @@ describe('TreeViewService', () => {
     ] } };
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

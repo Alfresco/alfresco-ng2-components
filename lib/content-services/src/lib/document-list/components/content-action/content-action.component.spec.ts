@@ -27,6 +27,7 @@ import { DocumentListComponent } from './../document-list.component';
 import { ContentActionListComponent } from './content-action-list.component';
 import { ContentActionComponent } from './content-action.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentAction', () => {
 
@@ -39,7 +40,10 @@ describe('ContentAction', () => {
     let nodeActionsService: NodeActionsService;
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

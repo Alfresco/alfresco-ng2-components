@@ -23,6 +23,7 @@ import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
 import { FolderActionsService } from './folder-actions.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FolderActionsService', () => {
 
@@ -31,6 +32,7 @@ describe('FolderActionsService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

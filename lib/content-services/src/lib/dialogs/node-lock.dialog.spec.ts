@@ -23,6 +23,7 @@ import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { NodeBodyLock } from '@alfresco/js-api';
 import { NodeLockDialogComponent } from './node-lock.dialog';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NodeLockDialogComponent', () => {
 
@@ -35,7 +36,10 @@ describe('NodeLockDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef }
         ]

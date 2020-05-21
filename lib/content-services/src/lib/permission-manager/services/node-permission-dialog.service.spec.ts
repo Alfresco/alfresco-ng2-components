@@ -23,6 +23,7 @@ import { Subject, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';
 import { Node } from '@alfresco/js-api';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NodePermissionDialogService', () => {
 
@@ -34,7 +35,10 @@ describe('NodePermissionDialogService', () => {
     let contentService: ContentService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

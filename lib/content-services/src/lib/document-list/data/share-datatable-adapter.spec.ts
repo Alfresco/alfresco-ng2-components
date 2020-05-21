@@ -21,6 +21,7 @@ import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ShareDataTableAdapter', () => {
 
@@ -28,7 +29,10 @@ describe('ShareDataTableAdapter', () => {
     let contentService: ContentService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

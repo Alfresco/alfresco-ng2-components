@@ -19,6 +19,7 @@ import { TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { RatingService } from './rating.service';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -27,7 +28,10 @@ describe('Rating service', () => {
     let service;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -24,14 +24,12 @@ import {
     NodesApiService,
     NotificationService,
     RenditionsService,
-    AppConfigService,
-    AppConfigServiceMock,
-    AlfrescoApiService,
-    AlfrescoApiServiceMock
+    AppConfigService
 } from '@alfresco/adf-core';
 import { ShareDialogComponent } from './content-node-share.dialog';
 import moment from 'moment-es6';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ShareDialogComponent', () => {
     let node;
@@ -48,11 +46,10 @@ describe('ShareDialogComponent', () => {
 
     setupTestBed({
         imports: [
-           ContentTestingModule
+            TranslateModule.forRoot(),
+            ContentTestingModule
         ],
         providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
-            { provide: AppConfigService, useClass: AppConfigServiceMock },
             { provide: NotificationService, useValue: notificationServiceMock },
             { provide: MatDialogRef, useValue: { close: () => {}} },
             { provide: MAT_DIALOG_DATA, useValue: {} }

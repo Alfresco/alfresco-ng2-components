@@ -27,6 +27,7 @@ import { Subject } from 'rxjs';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { fakeAuthorityResults } from '../../../mock/add-permission.component.mock';
 import { AddPermissionPanelComponent } from './add-permission-panel.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AddPermissionDialog', () => {
 
@@ -42,7 +43,10 @@ describe('AddPermissionDialog', () => {
     };
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef },
             { provide: MAT_DIALOG_DATA, useValue: data }

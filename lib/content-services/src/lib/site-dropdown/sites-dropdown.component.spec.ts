@@ -28,6 +28,7 @@ import { getFakeSitePaging,
     getFakeSitePagingWithMembers
 } from '../mock';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const customSiteList = {
     'list': {
@@ -58,6 +59,7 @@ describe('DropdownSitesComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

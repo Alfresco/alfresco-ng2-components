@@ -22,6 +22,7 @@ import { FolderDialogComponent } from './folder.dialog';
 import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FolderDialogComponent', () => {
 
@@ -33,7 +34,10 @@ describe('FolderDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef }
         ]

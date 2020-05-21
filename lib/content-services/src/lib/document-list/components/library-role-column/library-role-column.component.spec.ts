@@ -20,13 +20,17 @@ import { LibraryRoleColumnComponent } from './library-role-column.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LibraryNameColumnComponent', () => {
     let fixture: ComponentFixture<LibraryRoleColumnComponent>;
     let component: LibraryRoleColumnComponent;
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     });
 

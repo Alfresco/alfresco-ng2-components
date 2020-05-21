@@ -24,6 +24,7 @@ import { DocumentListComponent, DocumentListService } from '../document-list';
 import { BreadcrumbComponent } from './breadcrumb.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Breadcrumb', () => {
 
@@ -36,7 +37,10 @@ describe('Breadcrumb', () => {
     let documentListComponent: DocumentListComponent;
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
         providers : [{ provide: DocumentListService, useValue: documentListService }]
     });

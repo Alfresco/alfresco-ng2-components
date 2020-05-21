@@ -21,6 +21,7 @@ import { TranslationService, UploadService, setupTestBed, FileModel } from '@alf
 import { UploadBase } from './upload-base';
 import { UploadFilesEvent } from '../upload-files.event';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-upload-button-test',
@@ -43,6 +44,7 @@ describe('UploadBase', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: [

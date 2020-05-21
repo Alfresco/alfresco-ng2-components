@@ -25,6 +25,7 @@ import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FolderEditDirective } from './folder-edit.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: '<div [adf-edit-folder]="folder" (success)="success($event)" title="edit-title"></div>'
@@ -52,6 +53,7 @@ describe('FolderEditDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: [

@@ -24,6 +24,7 @@ import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -45,6 +46,7 @@ describe('VersionListComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -29,6 +29,7 @@ import {
     setupTestBed
 } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PropertyGroupTranslatorService', () => {
 
@@ -40,7 +41,10 @@ describe('PropertyGroupTranslatorService', () => {
     let logService: LogService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -25,6 +25,7 @@ import { fakeAuthorityResults } from '../../../mock/add-permission.component.moc
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { NodePermissionService } from '../../services/node-permission.service';
 import { Node } from '@alfresco/js-api';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AddPermissionComponent', () => {
 
@@ -35,6 +36,7 @@ describe('AddPermissionComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

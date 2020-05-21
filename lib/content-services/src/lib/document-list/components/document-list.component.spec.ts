@@ -47,6 +47,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodeEntry } from '@alfresco/js-api';
 import { By } from '@angular/platform-browser';
 import { DocumentListModule } from '../document-list.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DocumentList', () => {
 
@@ -63,7 +64,10 @@ describe('DocumentList', () => {
     let spyFolderNode: any;
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 
@@ -1512,6 +1516,7 @@ describe('DocumentListComponent rendering', () => {
     setupTestBed({
         declarations: [CustomTemplateComponent],
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule,
             DataTableModule,
             DocumentListModule

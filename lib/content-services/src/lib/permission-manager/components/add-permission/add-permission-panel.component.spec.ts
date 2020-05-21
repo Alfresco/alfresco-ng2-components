@@ -23,6 +23,7 @@ import { of } from 'rxjs';
 import { fakeAuthorityListResult, fakeNameListResult } from '../../../mock/add-permission.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { DebugElement } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AddPermissionPanelComponent', () => {
 
@@ -33,7 +34,10 @@ describe('AddPermissionPanelComponent', () => {
     let debugElement: DebugElement;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

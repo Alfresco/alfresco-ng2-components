@@ -19,6 +19,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FileModel, UploadService, setupTestBed } from '@alfresco/adf-core';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 function getFakeShareDataRow(allowableOperations = ['delete', 'update', 'create']) {
     return {
@@ -95,6 +96,7 @@ describe('UploadDragAreaComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

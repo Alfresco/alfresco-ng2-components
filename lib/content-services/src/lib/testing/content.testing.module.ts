@@ -36,9 +36,9 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [
         NoopAnimationsModule,
         RouterTestingModule,
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
-        ContentModule.forRoot()
+        TranslateModule,
+        CoreModule,
+        ContentModule
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
