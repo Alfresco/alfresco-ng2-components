@@ -45,6 +45,8 @@ import { AppDefinitionRepresentationModel } from '../../task-list';
 })
 export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestroy {
 
+    static ALL_APPS_OPTION = new AppDefinitionRepresentationModel({ id: 0, name: 'All' });
+
     MAX_LENGTH: number = 255;
 
     /** (optional) Limit the list of processes that can be started to those
@@ -103,6 +105,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Output()
     processDefinitionSelection: EventEmitter<ProcessDefinitionRepresentation> = new EventEmitter<ProcessDefinitionRepresentation>();
 
+    /** Emitted when process definition selection changes. */
+    @Output()
+    applicationSelection: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
+
     @ViewChild('startForm')
     startForm: StartFormComponent;
 
@@ -110,7 +116,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     inputAutocomplete: MatAutocompleteTrigger;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
-    selectedProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
+    selectedProcessDef: ProcessDefinitionRepresentation;
     errorMessageId: string = '';
     processNameInput: FormControl;
     processDefinitionInput: FormControl;
@@ -131,11 +137,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
         this.processDefinitionInput = new FormControl();
 
-        if (this.showSelectApplicationDropdown) {
-            this.loadAppsAndStartProcess();
-        } else {
-            this.loadStartProcess(this.appId);
-        }
+        this.load();
 
         this.processNameInput.valueChanges
             .pipe(takeUntil(this.onDestroy$))
@@ -165,15 +167,24 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             this.moveNodeFromCStoPS();
         }
 
-        if (changes['appId'] && changes['appId'].currentValue) {
+        if (this.isAppIdChanged(changes)) {
             this.appId = changes['appId'].currentValue;
+            this.load();
         }
 
-        if (this.showSelectApplicationDropdown) {
-            this.loadAppsAndStartProcess();
-        } else {
-            this.loadStartProcess(this.appId);
+        if (this.isProcessDefinitionChanged(changes)) {
+            this.processDefinitionName = changes['processDefinitionName'].currentValue;
+            this.filterProcessDefinitionByName();
         }
+    }
+
+    private isAppIdChanged(changes: SimpleChanges) {
+        return changes['appId'] && changes['appId'].currentValue && changes['appId'].currentValue !== changes['appId'].previousValue;
+    }
+
+    private isProcessDefinitionChanged(changes: SimpleChanges) {
+        return changes['processDefinitionName'] && changes['processDefinitionName'].currentValue &&
+        changes['processDefinitionName'].currentValue !== changes['processDefinitionName'].previousValue;
     }
 
     private _filter(value: string): ProcessDefinitionRepresentation[] {
@@ -199,52 +210,72 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return processSelected;
     }
 
-    loadStartProcess(appId: any): void {
+    load() {
+        if (this.showSelectApplicationDropdown) {
+            this.loadApps();
+        } else {
+            this.loadProcessDefinitions(this.appId);
+        }
+    }
+
+    loadProcessDefinitions(appId: any): void {
         this.resetSelectedProcessDefinition();
         this.resetErrorMessage();
 
-        this.activitiProcess.getProcessDefinitions(appId).subscribe(
-            (processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
-                this.processDefinitions = processDefinitionRepresentations;
+        this.activitiProcess.getProcessDefinitions(appId).pipe(
+            map((processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
+                let currentProcessDef: ProcessDefinitionRepresentation;
 
-                if (!this.isProcessDefinitionsEmpty()) {
-
-                    if (this.processDefinitions.length === 1) {
-                        this.selectedProcessDef = this.processDefinitions[0];
-                    }
-
-                    if (this.processDefinitionName) {
-                        const selectedProcess = this.processDefinitions.find((currentProcessDefinition) => {
-                            return currentProcessDefinition.name === this.processDefinitionName;
-                        });
-                        if (selectedProcess) {
-                            this.selectedProcessDef = selectedProcess;
-                        }
-                    }
-
-                    this.processDefinitionSelection.emit(this.selectedProcessDef);
-                    this.processDefinitionInput.setValue(this.selectedProcessDef.name);
+                if (processDefinitionRepresentations.length === 1) {
+                    currentProcessDef = processDefinitionRepresentations[0];
                 }
+
+                if (this.processDefinitionName) {
+                    currentProcessDef = processDefinitionRepresentations.find((processDefinition) => {
+                        return processDefinition.name === this.processDefinitionName;
+                    });
+                }
+
+                return { currentProcessDef, processDefinitionRepresentations };
+            })
+        ).subscribe(
+            (filteredProcessDefinitions) => {
+                this.processDefinitions = filteredProcessDefinitions.processDefinitionRepresentations;
+                this.selectedProcessDef = filteredProcessDefinitions.currentProcessDef;
+                this.processDefinitionInput.setValue(this.selectedProcessDef ? this.selectedProcessDef.name : '');
+                this.processDefinitionSelection.emit(this.selectedProcessDef);
             },
             () => {
                 this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             });
     }
 
-    loadAppsAndStartProcess() {
+    filterProcessDefinitionByName() {
+        if (this.processDefinitionName) {
+            this.selectedProcessDef = this.processDefinitions.find((processDefinition) => {
+                return processDefinition.name === this.processDefinitionName;
+            });
+            this.processDefinitionInput.setValue(this.selectedProcessDef ? this.selectedProcessDef.name : '');
+        }
+    }
+
+    loadApps() {
         this.appsProcessService
             .getDeployedApplications()
             .pipe(map((response: AppDefinitionRepresentationModel[]) => {
                     const applications = this.removeDefaultApps(response);
+                    applications.unshift(this.getAllAppsOption());
                     const filteredApp = applications.find( app => app.id === +this.appId );
-                    const currentApplication = filteredApp ? filteredApp : applications[0];
+                    const currentApplication = filteredApp ? filteredApp : this.getAllAppsOption();
+
                     return { currentApplication, applications };
                 })
             )
             .subscribe((filteredApps) => {
                     this.applications = filteredApps.applications;
                     this.selectedApplication = filteredApps.currentApplication;
-                    this.loadStartProcess(this.selectedApplication ? this.selectedApplication.id : null);
+                    this.applicationSelection.emit(this.selectedApplication);
+                    this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
                 },
                 err => {
                     this.error.emit(err);
@@ -255,8 +286,12 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     onAppSelectionChange(selectedApplication: any) {
         this.selectedApplication = selectedApplication.value;
-        this.appId = this.selectedApplication.id;
-        this.loadStartProcess(this.appId);
+        this.applicationSelection.emit(this.selectedApplication);
+        this.loadProcessDefinitions(this.selectedApplication.id);
+    }
+
+    private getAllAppsOption() {
+        return StartProcessInstanceComponent.ALL_APPS_OPTION;
     }
 
     private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
@@ -382,6 +417,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     processDefinitionSelectionChanged(processDefinition) {
-        this.processDefinitionSelection.emit(processDefinition);
+        this.selectedProcessDef = processDefinition;
+        this.processDefinitionSelection.emit(this.selectedProcessDef);
     }
 }

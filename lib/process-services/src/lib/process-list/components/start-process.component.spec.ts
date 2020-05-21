@@ -104,7 +104,7 @@ describe('StartFormComponent', () => {
             });
 
             it('should enable start button when name and process filled out', async(() => {
-                spyOn(component, 'loadStartProcess').and.callThrough();
+                spyOn(component, 'loadProcessDefinitions').and.callThrough();
                 component.processNameInput.setValue('My Process');
                 component.processDefinitionInput.setValue(testProcessDef.name);
 
@@ -117,7 +117,7 @@ describe('StartFormComponent', () => {
             }));
 
             it('should have start button disabled when name not filled out', async(() => {
-                spyOn(component, 'loadStartProcess').and.callThrough();
+                spyOn(component, 'loadProcessDefinitions').and.callThrough();
                 component.processNameInput.setValue('');
                 component.processDefinitionInput.setValue(testProcessDef.name);
                 fixture.detectChanges();
@@ -309,7 +309,8 @@ describe('StartFormComponent', () => {
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(throwError({}));
             component.appId = 123;
-            component.ngOnChanges({});
+            const change = new SimpleChange(null, 123, true);
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -322,7 +323,8 @@ describe('StartFormComponent', () => {
         it('should show no process available message when no process definition is loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([]));
             component.appId = 123;
-            component.ngOnChanges({});
+            const change = new SimpleChange(null, 123, true);
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -346,7 +348,8 @@ describe('StartFormComponent', () => {
         it('should select automatically the processDefinition if the app contain only one', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testProcessDefinitions));
             component.appId = 123;
-            component.ngOnChanges({});
+            const change = new SimpleChange(null, 123, true);
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBe(JSON.parse(JSON.stringify(testProcessDefinitions[0])).name);
@@ -356,7 +359,8 @@ describe('StartFormComponent', () => {
         it('should not select automatically any processDefinition if the app contain multiple process and does not have any processDefinition as input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             component.appId = 123;
-            component.ngOnChanges({});
+            const change = new SimpleChange(null, 123, true);
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(component.selectedProcessDef.name).toBeNull();

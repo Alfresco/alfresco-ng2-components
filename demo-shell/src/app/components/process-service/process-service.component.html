@@ -217,11 +217,12 @@
                      *ngIf="isStartProcessMode()">
                     <adf-start-process
                         #activitiStartProcess
-                        [appId]="appId"
+                        [appId]="applicationId"
+                        [processDefinitionName]="processDefinitionName"
                         [showSelectApplicationDropdown]="showApplications"
                         [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
                         [name]="defaultProcessName"
-                        [processDefinitionName]="defaultProcessDefinitionName"
+                        
                         (formContentClicked)="onContentClick($event)"
                         (start)="onStartProcessInstance($event)"
                         (cancel)="onCancelProcessInstance()">
@@ -294,6 +295,21 @@
                 </div>
                 <div>
                     <mat-slide-toggle id="adf-start-process-app-drop-down" [(ngModel)]="showApplications" >Show Application dropdown on start process</mat-slide-toggle>
+                    <mat-card class="example-card" *ngIf="showApplications">
+                        <mat-card-header >
+                          <mat-card-title>Filter Process definitions</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content  fxLayout="column" fxLayoutAlign="space-around stretch">
+                            <mat-form-field>
+                                <mat-label>ApplicationId</mat-label>
+                                <input matInput [(ngModel)]="applicationId">
+                              </mat-form-field>
+                              <mat-form-field>
+                                <mat-label>ProcessDefinitionName</mat-label>
+                                <input matInput [(ngModel)]="processDefinitionName">
+                              </mat-form-field>
+                        </mat-card-content>
+                      </mat-card>
                 </div>
                 <br>
                 <mat-radio-group [(ngModel)]="selectionMode">

@@ -154,6 +154,8 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     showProcessFilterIcon: boolean;
     showTaskFilterIcon: boolean;
     showApplications: boolean;
+    applicationId: number;
+    processDefinitionName: string;
 
     fieldValidators = [
         ...FORM_FIELD_VALIDATORS,
@@ -252,6 +254,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
 
             if (applicationId && applicationId !== '0') {
                 this.appId = params['appId'];
+                this.applicationId = this.appId;
             }
 
             this.taskFilter = null;
