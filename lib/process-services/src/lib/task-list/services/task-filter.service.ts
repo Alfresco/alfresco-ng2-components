@@ -36,24 +36,25 @@ export class TaskFilterService {
      * @returns Array of default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
-        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
-        const involvedObservable = this.addFilter(involvedTasksFilter);
-
-        const myTasksFilter = this.getMyTasksFilterInstance(appId);
+        const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
         const myTaskObservable = this.addFilter(myTasksFilter);
 
-        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
+        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId, 1);
+        const involvedObservable = this.addFilter(involvedTasksFilter);
+
+        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId, 2);
         const queuedObservable = this.addFilter(queuedTasksFilter);
 
-        const completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
+        const completedTasksFilter = this.getCompletedTasksFilterInstance(appId, 3);
         const completeObservable = this.addFilter(completedTasksFilter);
 
         return new Observable((observer) => {
-            forkJoin(
-                involvedObservable,
-                myTaskObservable,
-                queuedObservable,
-                completeObservable
+            forkJoin([
+                    myTaskObservable,
+                    involvedObservable,
+                    queuedObservable,
+                    completeObservable
+                ]
             ).subscribe(
                 (res) => {
                     const filters: FilterRepresentationModel[] = [];
@@ -156,62 +157,70 @@ export class TaskFilterService {
     }
 
     /**
-     * Creates and returns a filter for "Involved" task instances.
-     * @param appId ID of the target app
-     * @returns The newly created filter
-     */
-    getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
-            'name': 'Involved Tasks',
-            'appId': appId,
-            'recent': false,
-            'icon': 'glyphicon-align-left',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'}
-        });
-    }
-
-    /**
      * Creates and returns a filter for "My Tasks" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getMyTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'My Tasks',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-inbox',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'}
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'},
+            index
+        });
+    }
+
+    /**
+     * Creates and returns a filter for "Involved" task instances.
+     * @param appId ID of the target app
+     * @param index of the filter (optional)
+     * @returns The newly created filter
+     */
+    getInvolvedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
+        return new FilterRepresentationModel({
+            'name': 'Involved Tasks',
+            'appId': appId,
+            'recent': false,
+            'icon': 'glyphicon-align-left',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'},
+            index
         });
     }
 
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getQueuedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Queued Tasks',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-record',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'}
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'},
+            index
         });
     }
 
     /**
      * Creates and returns a filter for "Completed" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getCompletedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Completed Tasks',
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-ok-sign',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'},
+            index
         });
     }
 
