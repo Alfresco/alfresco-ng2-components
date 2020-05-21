@@ -27,7 +27,7 @@ import { UserEventModel } from '../../../task-list/models/user-event.model';
 
 export class PeopleListComponent implements AfterContentInit {
 
-    @ContentChild(DataColumnListComponent, { static: false })
+    @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
     @ViewChild('dataTable', { static: true })

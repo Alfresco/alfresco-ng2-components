@@ -43,7 +43,7 @@ import { TranslateModule } from '@ngx-translate/core';
     </adf-cloud-task-list>`
 })
 class CustomTaskListComponent {
-    @ViewChild(TaskListCloudComponent, { static: false})
+    @ViewChild(TaskListCloudComponent)
     taskList: TaskListCloudComponent;
 
     getFullName(person: Person): string {
@@ -71,7 +71,7 @@ class EmptyTemplateComponent {
     </adf-cloud-task-list>`
 })
 class CustomCopyContentTaskListComponent {
-    @ViewChild(TaskListCloudComponent, { static: false })
+    @ViewChild(TaskListCloudComponent)
     taskList: TaskListCloudComponent;
 }
 

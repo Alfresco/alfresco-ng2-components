@@ -74,7 +74,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     transform: (node) => any;
 
-    @ViewChild('dropdown', { static: false })
+    @ViewChild('dropdown')
     dropdown: MatSelect;
 
     /** Maximum number of nodes to display before wrapping them with a dropdown element.  */

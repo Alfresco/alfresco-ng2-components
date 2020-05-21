@@ -11,6 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "demo-shell/dist",
             "index": "demo-shell/src/index.html",
             "main": "demo-shell/src/main.ts",
@@ -108,6 +109,10 @@
                   "baseline": "4.2MB",
                   "warning": "4.5MB",
                   "error": "5.0MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "fileReplacements": [
@@ -118,6 +123,12 @@
               ]
             },
             "e2e": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
@@ -249,6 +260,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "demo-shell/dist",
             "index": "demo-shell/src/index.html",
             "main": "demo-shell/src/main.ts",
@@ -359,6 +371,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -377,6 +395,12 @@
               ]
             },
             "e2e": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "demo-shell/src/environments/environment.ts",
@@ -583,7 +607,8 @@
           "configurations": {
             "production": {
               "project": "lib/core/ng-package.json"
-            }
+            ,              "tsConfig": "lib/core/tsconfig.lib.prod.json"
+}
           }
         },
         "test": {
@@ -625,7 +650,8 @@
           "configurations": {
             "production": {
               "project": "lib/content-services/ng-package.json"
-            }
+            ,              "tsConfig": "lib/content-services/tsconfig.lib.prod.json"
+}
           }
         },
         "test": {
@@ -667,7 +693,8 @@
           "configurations": {
             "production": {
               "project": "lib/process-services/ng-package.json"
-            }
+            ,              "tsConfig": "lib/process-services/tsconfig.lib.prod.json"
+}
           }
         },
         "test": {
@@ -709,7 +736,8 @@
           "configurations": {
             "production": {
               "project": "lib/process-services-cloud/ng-package.json"
-            }
+            ,              "tsConfig": "lib/process-services-cloud/tsconfig.lib.prod.json"
+}
           }
         },
         "test": {
@@ -751,7 +779,8 @@
           "configurations": {
             "production": {
               "project": "lib/insights/ng-package.json"
-            }
+            ,              "tsConfig": "lib/insights/tsconfig.lib.prod.json"
+}
           }
         },
         "test": {
@@ -790,7 +819,12 @@
             "tsConfig": "lib/extensions/tsconfig.lib.json",
             "project": "lib/extensions/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "lib/extensions/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -827,7 +861,12 @@
             "tsConfig": "lib/testing/tsconfig.lib.json",
             "project": "lib/testing/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "lib/testing/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -861,7 +900,12 @@
           "options": {
             "tsConfig": "lib/cli/tsconfig.json"
           }
-        }
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "lib/cli/tsconfig.lib.prod.json"
+            }
+          }
+}
       }
     }
   },

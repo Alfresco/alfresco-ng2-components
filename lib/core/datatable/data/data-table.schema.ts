@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { ContentChild, Input } from '@angular/core';
+import { ContentChild, Input, Directive } from '@angular/core';
 import { AppConfigService } from '../../app-config/app-config.service';
 import { DataColumnListComponent } from '../../data-column/data-column-list.component';
 import { DataColumn } from './data-column.model';
 import { ObjectDataColumn } from './object-datacolumn.model';
 
+@Directive()
+// tslint:disable-next-line: directive-class-suffix
 export abstract class DataTableSchema {
 
-    @ContentChild(DataColumnListComponent, { static: false })
+    @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
     /** Custom preset column schema in JSON format. */

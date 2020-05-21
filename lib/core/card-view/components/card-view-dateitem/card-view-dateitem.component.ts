@@ -58,7 +58,7 @@ export class CardViewDateItemComponent extends BaseCardView<CardViewDateItemMode
     @Input()
     displayClearAction: boolean = true;
 
-    @ViewChild('datetimePicker', { static: false })
+    @ViewChild('datetimePicker')
     public datepicker: MatDatetimepicker<any>;
 
     valueDate: Moment;

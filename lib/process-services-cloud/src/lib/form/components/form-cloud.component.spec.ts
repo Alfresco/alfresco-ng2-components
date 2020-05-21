@@ -1048,7 +1048,7 @@ describe('FormCloudComponent', () => {
 
 class FormCloudWithCustomOutComesComponent {
 
-    @ViewChild('adfCloudForm', { static: false })
+    @ViewChild('adfCloudForm')
     adfCloudForm: FormCloudComponent;
 
     onCustomButtonOneClick() { }

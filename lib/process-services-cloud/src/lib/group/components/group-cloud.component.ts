@@ -112,7 +112,7 @@ export class GroupCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     warning = new EventEmitter<any>();
 
-    @ViewChild('groupInput', { static: false })
+    @ViewChild('groupInput')
     private groupInput: ElementRef<HTMLInputElement>;
 
     private searchGroups: IdentityGroupModel[] = [];

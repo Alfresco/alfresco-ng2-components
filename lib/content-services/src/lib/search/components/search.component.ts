@@ -50,7 +50,7 @@ export class SearchComponent implements SearchComponentInterface, AfterContentIn
     @ViewChild('panel', { static: true })
     panel: ElementRef;
 
-    @ContentChild(TemplateRef, { static: false })
+    @ContentChild(TemplateRef)
     template: TemplateRef<any>;
 
     /** Function that maps an option's value to its display value in the trigger. */

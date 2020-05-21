@@ -26,7 +26,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
 })
 export class LoadingContentTemplateDirective implements AfterContentInit {
 
-    @ContentChild(TemplateRef, { static: false })
+    @ContentChild(TemplateRef)
     template: any;
 
     constructor(private dataTable: DataTableComponent) {

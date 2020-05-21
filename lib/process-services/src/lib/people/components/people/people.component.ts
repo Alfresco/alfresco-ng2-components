@@ -41,7 +41,7 @@ export class PeopleComponent {
     @Input()
     readOnly: boolean = false;
 
-    @ViewChild('peopleSearch', { static: false })
+    @ViewChild('peopleSearch')
     peopleSearch: PeopleSearchComponent;
 
     showAssignment: boolean = false;

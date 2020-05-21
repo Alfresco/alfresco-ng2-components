@@ -74,10 +74,10 @@ export class StartTaskCloudComponent implements OnInit, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('peopleInput', { static: false })
+    @ViewChild('peopleInput')
     assignee: PeopleCloudComponent;
 
-    @ViewChild('groupInput', { static: false })
+    @ViewChild('groupInput')
     candidateGroups: GroupCloudComponent;
 
     users$: Observable<any[]>;

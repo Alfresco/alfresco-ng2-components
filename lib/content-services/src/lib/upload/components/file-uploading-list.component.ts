@@ -41,7 +41,7 @@ import { map, catchError } from 'rxjs/operators';
 export class FileUploadingListComponent {
     FileUploadStatus = FileUploadStatus;
 
-    @ContentChild(TemplateRef, { static: false })
+    @ContentChild(TemplateRef)
     template: any;
 
     @Input()

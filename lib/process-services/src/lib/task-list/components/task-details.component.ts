@@ -51,16 +51,16 @@ import { TaskFormComponent } from './task-form/task-form.component';
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild('activitiComments', { static: false })
+    @ViewChild('activitiComments')
     activitiComments: CommentsComponent;
 
-    @ViewChild('activitiChecklist', { static: false })
+    @ViewChild('activitiChecklist')
     activitiChecklist: any;
 
-    @ViewChild('errorDialog', { static: false })
+    @ViewChild('errorDialog')
     errorDialog: TemplateRef<any>;
 
-    @ViewChild('activitiTaskForm', { static: false })
+    @ViewChild('activitiTaskForm')
     taskFormComponent: TaskFormComponent;
 
     /** Toggles debug mode. */

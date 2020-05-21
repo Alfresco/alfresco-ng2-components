@@ -32,7 +32,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private direction: Direction = 'ltr';
     private onDestroy$ = new Subject<boolean>();
 
-    @ViewChild('uploadList', { static: false })
+    @ViewChild('uploadList')
     uploadList: FileUploadingListComponent;
 
     /** Dialog position. Can be 'left' or 'right'. */

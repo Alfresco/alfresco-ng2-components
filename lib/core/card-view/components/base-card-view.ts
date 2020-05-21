@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Input, OnDestroy } from '@angular/core';
+import { Input, OnDestroy, Directive } from '@angular/core';
 import { CardViewUpdateService } from '../services/card-view.services';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+@Directive()
+// tslint:disable-next-line: directive-class-suffix
 export abstract class BaseCardView<T extends CardViewItem> implements OnDestroy {
 
     @Input()

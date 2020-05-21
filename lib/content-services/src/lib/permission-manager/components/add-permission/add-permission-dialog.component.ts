@@ -29,7 +29,7 @@ import { AddPermissionComponent } from '../add-permission/add-permission.compone
 })
 export class AddPermissionDialogComponent {
 
-    @ViewChild('addPermission', { static: false })
+    @ViewChild('addPermission')
     addPermissionComponent: AddPermissionComponent;
 
     currentSelection: NodeEntry[] = [];

@@ -86,7 +86,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     @Output()
     deleteReportSuccess = new EventEmitter();
 
-    @ViewChild('reportNameDialog', { static: false })
+    @ViewChild('reportNameDialog')
     reportNameDialog: any;
 
     onDropdownChanged = new EventEmitter();

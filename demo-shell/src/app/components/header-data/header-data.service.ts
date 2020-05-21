@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter, Directive } from '@angular/core';
 
+@Directive()
 @Injectable({
     providedIn: 'root'
 })
+// tslint:disable-next-line: directive-class-suffix
 export class HeaderDataService {
 
     show = true;

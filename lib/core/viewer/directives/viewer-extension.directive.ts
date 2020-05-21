@@ -25,7 +25,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ViewerExtensionDirective implements AfterContentInit, OnDestroy {
 
-    @ContentChild(TemplateRef, { static: false })
+    @ContentChild(TemplateRef)
     template: any;
 
     @Input()

@@ -27,7 +27,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
     `
 })
 class TestComponent {
-    @ViewChild(ToggleIconDirective, { static: false })
+    @ViewChild(ToggleIconDirective)
     directive: ToggleIconDirective;
 }
 

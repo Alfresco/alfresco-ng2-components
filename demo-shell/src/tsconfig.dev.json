@@ -39,13 +39,16 @@
       ]
     }
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ],
   "angularCompilerOptions": {
     "skipTemplateCodegen": false,
     "entryModule": "./app/app.module#AppModule",
     "genDir": "../ngfactory"
-  }
+  },
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "demo-shell/src/**/*.d.ts"
+  ]
 }

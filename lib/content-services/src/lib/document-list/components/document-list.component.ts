@@ -81,16 +81,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         totalItems: 0
     });
 
-    @ContentChild(DataColumnListComponent, { static: false })
+    @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
-    @ContentChild(CustomLoadingContentTemplateDirective, { static: false })
+    @ContentChild(CustomLoadingContentTemplateDirective)
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
-    @ContentChild(CustomNoPermissionTemplateDirective, { static: false })
+    @ContentChild(CustomNoPermissionTemplateDirective)
     customNoPermissionsTemplate: CustomNoPermissionTemplateDirective;
 
-    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
+    @ContentChild(CustomEmptyContentTemplateDirective)
     customNoContentTemplate: CustomEmptyContentTemplateDirective;
 
     @ContentChild(CustomHeaderFilterTemplateDirective)

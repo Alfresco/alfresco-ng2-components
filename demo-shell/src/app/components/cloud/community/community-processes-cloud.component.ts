@@ -38,10 +38,10 @@ export class CommunityProcessesCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_SAVE_AS = 'saveAs';
     static PROCESS_FILTER_PROPERTY_KEYS = 'adf-edit-process-filter';
 
-    @ViewChild('processCloud', { static: false })
+    @ViewChild('processCloud')
     processCloud: ProcessListCloudComponent;
 
-    @ViewChild('processFiltersCloud', { static: false })
+    @ViewChild('processFiltersCloud')
     processFiltersCloud: ProcessFiltersCloudComponent;
 
     isFilterLoaded: boolean;

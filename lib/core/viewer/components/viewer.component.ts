@@ -42,16 +42,16 @@ import { filter } from 'rxjs/operators';
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
-    @ContentChild(ViewerToolbarComponent, { static: false })
+    @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
 
-    @ContentChild(ViewerSidebarComponent, { static: false })
+    @ContentChild(ViewerSidebarComponent)
     sidebar: ViewerSidebarComponent;
 
-    @ContentChild(ViewerOpenWithComponent, { static: false })
+    @ContentChild(ViewerOpenWithComponent)
     mnuOpenWith: ViewerOpenWithComponent;
 
-    @ContentChild(ViewerMoreActionsComponent, { static: false })
+    @ContentChild(ViewerMoreActionsComponent)
     mnuMoreActions: ViewerMoreActionsComponent;
 
     /** If you want to load an external file that does not come from ACS you

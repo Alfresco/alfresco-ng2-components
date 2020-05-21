@@ -33,7 +33,7 @@ export class TasksCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_DELETE = 'delete';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
-    @ViewChild('taskCloud', { static: false })
+    @ViewChild('taskCloud')
     taskCloud: TaskListCloudComponent;
 
     appName: string = '';

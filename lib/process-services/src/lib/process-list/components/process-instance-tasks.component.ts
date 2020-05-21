@@ -58,10 +58,10 @@ export class ProcessInstanceTasksComponent implements OnInit, OnChanges, OnDestr
     message: string;
     processId: string;
 
-    @ViewChild('startDialog', { static: false })
+    @ViewChild('startDialog')
     startDialog: any;
 
-    @ViewChild('taskDetails', { static: false })
+    @ViewChild('taskDetails')
     taskDetails: any;
 
     /** Emitted when a task is clicked. */

@@ -16,16 +16,18 @@
  */
 
 import { MatDialog } from '@angular/material/dialog';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output, Directive } from '@angular/core';
 import { TranslationService } from '@alfresco/adf-core';
 import { Subject, Observable } from 'rxjs';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { Node } from '@alfresco/js-api';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 
+@Directive()
 @Injectable({
     providedIn: 'root'
 })
+// tslint:disable-next-line: directive-class-suffix
 export class AttachFileWidgetDialogService {
 
     /** Emitted when an error occurs. */
