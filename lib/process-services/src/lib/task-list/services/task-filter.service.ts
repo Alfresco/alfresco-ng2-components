@@ -36,16 +36,16 @@ export class TaskFilterService {
      * @returns Array of default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterRepresentationModel[]> {
-        const myTasksFilter = this.getMyTasksFilterInstance(appId);
+        const myTasksFilter = this.getMyTasksFilterInstance(appId, 0);
         const myTaskObservable = this.addFilter(myTasksFilter);
 
-        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
+        const involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId, 1);
         const involvedObservable = this.addFilter(involvedTasksFilter);
 
-        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
+        const queuedTasksFilter = this.getQueuedTasksFilterInstance(appId, 2);
         const queuedObservable = this.addFilter(queuedTasksFilter);
 
-        const completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
+        const completedTasksFilter = this.getCompletedTasksFilterInstance(appId, 3);
         const completeObservable = this.addFilter(completedTasksFilter);
 
         return new Observable((observer) => {
@@ -159,64 +159,68 @@ export class TaskFilterService {
     /**
      * Creates and returns a filter for "My Tasks" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getMyTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getMyTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'My Tasks',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-inbox',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'},
-            'index': 0
+            index
         });
     }
 
     /**
      * Creates and returns a filter for "Involved" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getInvolvedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getInvolvedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Involved Tasks',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-align-left',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'},
-            'index': 1
+            index
         });
     }
 
     /**
      * Creates and returns a filter for "Queued Tasks" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getQueuedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getQueuedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Queued Tasks',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-record',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'},
-            'index': 2
+            index
         });
     }
 
     /**
      * Creates and returns a filter for "Completed" task instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns The newly created filter
      */
-    getCompletedTasksFilterInstance(appId: number): FilterRepresentationModel {
+    getCompletedTasksFilterInstance(appId: number, index?: number): FilterRepresentationModel {
         return new FilterRepresentationModel({
             'name': 'Completed Tasks',
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-ok-sign',
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'},
-            'index': 3
+            index
         });
     }
 

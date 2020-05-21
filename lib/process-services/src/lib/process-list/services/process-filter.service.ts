@@ -88,13 +88,13 @@ export class ProcessFilterService {
      * @returns Default filters just created
      */
     public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
-        const runningFilter = this.getRunningFilterInstanceWithIndex(appId);
+        const runningFilter = this.getRunningFilterInstance(appId, 0);
         const runningObservable = this.addProcessFilter(runningFilter);
 
-        const completedFilter = this.getCompletedFilterInstance(appId);
+        const completedFilter = this.getCompletedFilterInstance(appId, 1);
         const completedObservable = this.addProcessFilter(completedFilter);
 
-        const allFilter = this.getAllFilterInstance(appId);
+        const allFilter = this.getAllFilterInstance(appId, 2);
         const allObservable = this.addProcessFilter(allFilter);
 
         return new Observable((observer) => {
@@ -128,65 +128,53 @@ export class ProcessFilterService {
     }
 
     /**
-     * Creates and returns a filter that matches "running" process instances with index.
+     * Creates and returns a filter that matches "running" process instances.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns Filter just created
      */
-    public getRunningFilterInstanceWithIndex(appId: number): FilterProcessRepresentationModel {
-        return new FilterProcessRepresentationModel({
+    public getRunningFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
+        return  new FilterProcessRepresentationModel({
             'name': 'Running',
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-random',
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' },
-            'index': 0
-        });
-    }
-
-    /**
-     * Creates and returns a filter that matches "running" process instances.
-     * @param appId ID of the target app
-     * @returns Filter just created
-     */
-    public getRunningFilterInstance(appId: number): FilterProcessRepresentationModel {
-        return new FilterProcessRepresentationModel({
-            'name': 'Running',
-            'appId': appId,
-            'recent': true,
-            'icon': 'glyphicon-random',
-            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
+            index
         });
     }
 
     /**
      * Returns a static Completed filter instance.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns Details of the filter
      */
-    private getCompletedFilterInstance(appId: number): FilterProcessRepresentationModel {
+    private getCompletedFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'Completed',
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-ok-sign',
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed' },
-            'index': 1
+            index
         });
     }
 
     /**
      * Returns a static All filter instance.
      * @param appId ID of the target app
+     * @param index of the filter (optional)
      * @returns Details of the filter
      */
-    private getAllFilterInstance(appId: number): FilterProcessRepresentationModel {
+    private getAllFilterInstance(appId: number, index?: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'All',
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-th',
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'all' },
-            'index': 2
+            index
         });
     }
 
