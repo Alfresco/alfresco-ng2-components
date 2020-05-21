@@ -22,7 +22,7 @@ import { FormModel } from '../core/form.model';
 import { CheckboxWidgetComponent } from './checkbox.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from 'core/form/form-base.module';
-import { TranslateService, TranslateStore, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderService } from 'core/services';
 import { MatCheckboxModule } from '@angular/material';
 import { CoreTestingModule } from '../../../../testing';
@@ -35,13 +35,12 @@ describe('CheckboxWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule,
             MatCheckboxModule
         ],
         providers: [
-            TranslateStore,
-            TranslateService,
             { provide: TranslateLoader, useClass: TranslateLoaderService }
         ]
     });

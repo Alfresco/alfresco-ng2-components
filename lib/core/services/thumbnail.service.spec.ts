@@ -20,6 +20,7 @@ import { ThumbnailService } from './thumbnail.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ThumbnailService', () => {
 
@@ -27,7 +28,10 @@ describe('ThumbnailService', () => {
     let apiService: AlfrescoApiService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

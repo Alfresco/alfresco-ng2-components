@@ -22,9 +22,8 @@ import { AboutProductVersionComponent } from './about-product-version.component'
 import { DiscoveryApiService } from '../../services/discovery-api.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { of } from 'rxjs';
-import { DataTableModule } from '../../datatable/datatable.module';
-import { MatCardModule } from '@angular/material';
 import { aboutAPSMockDetails, mockModules } from '../about.mock';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AboutProductVersionComponent', () => {
     let fixture: ComponentFixture<AboutProductVersionComponent>;
@@ -32,7 +31,10 @@ describe('AboutProductVersionComponent', () => {
     let discoveryApiService:  DiscoveryApiService;
 
     setupTestBed({
-        imports: [CoreTestingModule, DataTableModule, MatCardModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -33,6 +33,7 @@ import { formDisplayValueVisibility,
          radioWidgetVisibiltyForm } from './mock/form-renderer.component.mock';
 import { FormService } from '../services/form.service';
 import { CoreTestingModule } from '../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 function typeIntoInput(targetInput: HTMLInputElement, message: string ) {
     expect(targetInput).not.toBeNull('Expected input to set to be valid and not null');
@@ -77,6 +78,7 @@ describe('Form Renderer Component', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule
         ]

@@ -25,6 +25,7 @@ import { setupTestBed } from '../../../../../../testing/setup-test-bed';
 import { By } from '@angular/platform-browser';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { CoreTestingModule } from '../../../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateEditorComponent', () => {
     let component: DateEditorComponent;
@@ -35,6 +36,7 @@ describe('DateEditorComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

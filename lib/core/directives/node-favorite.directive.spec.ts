@@ -23,6 +23,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { StorageService } from '../services/storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NodeFavoriteDirective', () => {
 
@@ -30,7 +31,10 @@ describe('NodeFavoriteDirective', () => {
     let alfrescoApiService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

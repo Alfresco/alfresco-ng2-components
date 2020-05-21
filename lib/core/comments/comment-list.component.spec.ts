@@ -24,6 +24,7 @@ import { EcmUserService } from '../services/ecm-user.service';
 import { PeopleProcessService } from '../services/people-process.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const testUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -111,7 +112,10 @@ describe('CommentListComponent', () => {
     let peopleProcessService: PeopleProcessService;
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

@@ -21,6 +21,7 @@ import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginDialogPanelComponent', () => {
     let component: LoginDialogPanelComponent;
@@ -30,7 +31,10 @@ describe('LoginDialogPanelComponent', () => {
     let authService: AuthenticationService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

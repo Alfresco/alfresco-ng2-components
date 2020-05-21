@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { DecimalNumberPipe } from './decimal-number.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DecimalNumberPipe', () => {
 
@@ -29,7 +30,10 @@ describe('DecimalNumberPipe', () => {
     let userPreferences: UserPreferencesService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

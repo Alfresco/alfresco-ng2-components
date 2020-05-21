@@ -22,6 +22,7 @@ import { WidgetComponent } from './../widget.component';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HyperlinkWidgetComponent', () => {
 
@@ -31,6 +32,7 @@ describe('HyperlinkWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

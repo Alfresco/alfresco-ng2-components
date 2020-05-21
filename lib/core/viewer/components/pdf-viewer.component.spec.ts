@@ -27,6 +27,7 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { take } from 'rxjs/operators';
 import { AppConfigService } from '@alfresco/adf-core';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare const pdfjsLib: any;
 
@@ -126,6 +127,7 @@ describe('Test PdfViewer component', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

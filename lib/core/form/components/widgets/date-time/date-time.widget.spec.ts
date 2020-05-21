@@ -22,6 +22,7 @@ import { FormModel } from './../core/form.model';
 import { DateTimeWidgetComponent } from './date-time.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -31,6 +32,7 @@ describe('DateTimeWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

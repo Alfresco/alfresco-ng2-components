@@ -21,6 +21,7 @@ import { CheckAllowableOperationDirective, NodeAllowableOperationSubject } from 
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-text-subject',
@@ -36,6 +37,7 @@ describe('CheckAllowableOperationDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

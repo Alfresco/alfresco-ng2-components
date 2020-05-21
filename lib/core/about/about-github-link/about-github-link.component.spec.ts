@@ -20,13 +20,17 @@ import { CoreTestingModule } from '../../testing/core.testing.module';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { AboutGithubLinkComponent } from './about-github-link.component';
 import { aboutGithubDetails } from '../about.mock';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AboutGithubLinkComponent', () => {
     let fixture: ComponentFixture<AboutGithubLinkComponent>;
     let component: AboutGithubLinkComponent;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

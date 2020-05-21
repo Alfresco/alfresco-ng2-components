@@ -25,7 +25,7 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { PeopleWidgetComponent } from './people.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('PeopleWidgetComponent', () => {
@@ -38,6 +38,7 @@ describe('PeopleWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

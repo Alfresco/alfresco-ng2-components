@@ -25,6 +25,7 @@ import { NotificationService } from './notification.service';
 import { TranslationService } from '../../services/translation.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: '',
@@ -77,6 +78,7 @@ describe('NotificationService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             OverlayModule,
             MatSnackBarModule

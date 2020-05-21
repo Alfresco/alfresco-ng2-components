@@ -19,11 +19,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { VersionListComponent } from './version-list.component';
-import { AlfrescoApiService, setupTestBed, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material';
 import { of } from 'rxjs';
 import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
-import { CoreTestingModule } from '../../../../core/testing/core.testing.module';
+import { ContentTestingModule } from '../testing/content.testing.module';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
@@ -45,13 +45,7 @@ describe('VersionListComponent', () => {
 
     setupTestBed({
         imports: [
-            CoreTestingModule
-        ],
-        declarations: [
-            VersionListComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+            ContentTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

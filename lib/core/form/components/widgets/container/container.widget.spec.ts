@@ -25,6 +25,7 @@ import { ContainerWidgetComponent } from './container.widget';
 import { ContainerWidgetComponentModel } from './container.widget.model';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContainerWidgetComponent', () => {
 
@@ -33,6 +34,7 @@ describe('ContainerWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

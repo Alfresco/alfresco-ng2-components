@@ -20,6 +20,7 @@ import { AppConfigService } from '../app-config/app-config.service';
 import { SitesService } from './sites.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -28,7 +29,10 @@ describe('Sites service', () => {
     let service;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -22,6 +22,7 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeDeleteDirective } from './node-delete.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -91,6 +92,7 @@ describe('NodeDeleteDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

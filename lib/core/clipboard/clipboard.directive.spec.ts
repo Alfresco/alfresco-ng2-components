@@ -21,6 +21,7 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { ClipboardService } from './clipboard.service';
 import { ClipboardDirective } from './clipboard.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
      selector: 'adf-test-component',
@@ -42,6 +43,7 @@ describe('ClipboardDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [
@@ -84,6 +86,7 @@ describe('CopyClipboardDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

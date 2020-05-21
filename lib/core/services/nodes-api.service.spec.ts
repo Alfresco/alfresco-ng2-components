@@ -19,13 +19,13 @@ import { TestBed } from '@angular/core/testing';
 import { NodesApiService } from './nodes-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NodesApiService', () => {
     let service: NodesApiService;
-    let apiService: AlfrescoApiServiceMock;
+    let apiService: AlfrescoApiService;
 
     const MODEL_NAMESPACE = 'activitiForms';
     const responseBody = {
@@ -50,10 +50,8 @@ describe('NodesApiService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

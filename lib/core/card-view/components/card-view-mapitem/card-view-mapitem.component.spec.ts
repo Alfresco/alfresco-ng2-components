@@ -23,6 +23,7 @@ import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewMapItemComponent } from './card-view-mapitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewMapItemComponent', () => {
     let service: CardViewUpdateService;
@@ -33,7 +34,10 @@ describe('CardViewMapItemComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

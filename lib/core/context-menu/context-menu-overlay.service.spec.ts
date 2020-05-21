@@ -16,12 +16,12 @@
  */
 
 import { Overlay } from '@angular/cdk/overlay';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { ContextMenuOverlayService } from './context-menu-overlay.service';
 import { Injector } from '@angular/core';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContextMenuService', () => {
     let contextMenuOverlayService: ContextMenuOverlayService;
@@ -36,7 +36,10 @@ describe('ContextMenuService', () => {
     };
 
     setupTestBed({
-        imports: [NoopAnimationsModule, CoreTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
         providers: [ Overlay ]
     });
 

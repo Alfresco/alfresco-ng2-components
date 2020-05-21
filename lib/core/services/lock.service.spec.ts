@@ -23,6 +23,7 @@ import { Node } from '@alfresco/js-api';
 import { AlfrescoApiServiceMock } from 'core/mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import moment from 'moment-es6';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PeopleProcessService', () => {
 
@@ -34,7 +35,10 @@ describe('PeopleProcessService', () => {
     const fakeNodeNoProperty: Node = <Node> { name: 'unlocked', isLocked: true, isFile: true, properties: {} };
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

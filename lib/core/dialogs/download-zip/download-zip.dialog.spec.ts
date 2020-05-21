@@ -22,6 +22,7 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { DownloadZipService } from '../../services/download-zip.service';
 import { Observable } from 'rxjs/index';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DownloadZipDialogComponent', () => {
 
@@ -40,7 +41,10 @@ describe('DownloadZipDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: dialogRef },
             { provide: MAT_DIALOG_DATA, useValue: dataMock }

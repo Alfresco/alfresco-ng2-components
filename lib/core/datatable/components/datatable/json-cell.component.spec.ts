@@ -22,6 +22,7 @@ import { ObjectDataColumn } from './../../data/object-datacolumn.model';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { JsonCellComponent } from './json-cell.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('JsonCellComponent', () => {
     let component: JsonCellComponent;
@@ -31,7 +32,10 @@ describe('JsonCellComponent', () => {
     let columnData;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

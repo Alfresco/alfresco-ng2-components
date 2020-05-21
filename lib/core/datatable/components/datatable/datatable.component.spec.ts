@@ -28,6 +28,7 @@ import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumnComponent } from '../../../data-column/data-column.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({selector: 'adf-custom-column-template-component', template: `
     <ng-template #tmplRef></ng-template>
@@ -69,6 +70,7 @@ describe('DataTable', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         schemas: [NO_ERRORS_SCHEMA]
@@ -1237,6 +1239,7 @@ describe('Accesibility', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [CustomColumnTemplateComponent],

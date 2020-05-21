@@ -26,6 +26,7 @@ import { CardViewItemFloatValidator, CardViewItemIntValidator, CardViewIntItemMo
 import { MatChipsModule } from '@angular/material';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { DebugElement } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewTextItemComponent', () => {
 
@@ -34,6 +35,7 @@ describe('CardViewTextItemComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             MatChipsModule
         ]

@@ -24,6 +24,7 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateTimeEditorComponent } from './datetime.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateTimeEditorComponent', () => {
     let component: DateTimeEditorComponent;
@@ -34,6 +35,7 @@ describe('DateTimeEditorComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

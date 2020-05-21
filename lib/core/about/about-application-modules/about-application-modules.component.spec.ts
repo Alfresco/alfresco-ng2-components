@@ -19,16 +19,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { AboutApplicationModulesComponent } from './about-application-modules.component';
-import { MatTableModule } from '@angular/material/table';
-import { DataTableModule } from '../../datatable/datatable.module';
 import { mockDependencies, mockPlugins } from '../about.mock';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AboutApplicationModulesComponent', () => {
     let fixture: ComponentFixture<AboutApplicationModulesComponent>;
     let component: AboutApplicationModulesComponent;
 
     setupTestBed({
-        imports: [CoreTestingModule, MatTableModule, DataTableModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

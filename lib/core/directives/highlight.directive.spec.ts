@@ -22,6 +22,7 @@ import { HighlightTransformService } from '../services/highlight-transform.servi
 import { HighlightDirective } from './highlight.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 /* spellchecker: disable */
 const template: string = `
@@ -47,6 +48,7 @@ describe('HighlightDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

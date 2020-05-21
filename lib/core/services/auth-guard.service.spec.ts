@@ -22,6 +22,7 @@ import { AuthGuard } from './auth-guard.service';
 import { AuthenticationService } from './authentication.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AuthGuardService', () => {
     let state;
@@ -31,7 +32,10 @@ describe('AuthGuardService', () => {
     let appConfigService: AppConfigService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

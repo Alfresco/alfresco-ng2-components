@@ -21,6 +21,7 @@ import { fakeContentComment, fakeContentComments } from '../mock/comment-content
 import { CommentContentService } from './comment-content.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -29,7 +30,10 @@ describe('Comment Content Service', () => {
     let service: CommentContentService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

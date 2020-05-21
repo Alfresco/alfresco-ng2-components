@@ -21,9 +21,9 @@ import { By } from '@angular/platform-browser';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { NodeRestoreDirective } from './node-restore.directive';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { TranslationService } from '../services/translation.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -50,13 +50,11 @@ describe('NodeRestoreDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [
             TestComponent
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

@@ -27,6 +27,7 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { DropdownWidgetComponent } from './dropdown.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DropdownWidgetComponent', () => {
 
@@ -49,6 +50,7 @@ describe('DropdownWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

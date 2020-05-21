@@ -27,6 +27,7 @@ import { FormFieldModel } from './../core/form-field.model';
 import { UploadWidgetComponent } from './upload.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakePngAnswer = {
     'id': 1155,
@@ -81,6 +82,7 @@ describe('UploadWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

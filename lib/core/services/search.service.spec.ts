@@ -21,6 +21,7 @@ import { SearchService } from './search.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchService', () => {
 
@@ -29,6 +30,7 @@ describe('SearchService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

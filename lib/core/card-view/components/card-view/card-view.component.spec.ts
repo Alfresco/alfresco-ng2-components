@@ -22,6 +22,7 @@ import { CardViewDateItemModel } from '../../models/card-view-dateitem.model';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewComponent } from './card-view.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewComponent', () => {
 
@@ -29,7 +30,10 @@ describe('CardViewComponent', () => {
     let component: CardViewComponent;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

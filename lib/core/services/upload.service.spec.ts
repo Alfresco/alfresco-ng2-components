@@ -26,6 +26,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -34,7 +35,11 @@ describe('UploadService', () => {
     let alfrescoApiService: AlfrescoApiService;
 
     setupTestBed({
-        imports: [CoreTestingModule, AppConfigModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule,
+            AppConfigModule
+        ]
     });
 
     beforeEach(() => {

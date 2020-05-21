@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 
@@ -45,6 +45,7 @@ describe('EmptyContentComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

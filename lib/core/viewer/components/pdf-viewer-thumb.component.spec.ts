@@ -20,6 +20,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PdfThumbComponent', () => {
 
@@ -43,6 +44,7 @@ describe('PdfThumbComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         providers: [

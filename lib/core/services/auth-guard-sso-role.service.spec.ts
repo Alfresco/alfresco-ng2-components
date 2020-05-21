@@ -22,6 +22,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { AuthGuardSsoRoleService } from './auth-guard-sso-role.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { MatDialog } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Auth Guard SSO role service', () => {
 
@@ -30,7 +31,10 @@ describe('Auth Guard SSO role service', () => {
     let routerService: Router;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

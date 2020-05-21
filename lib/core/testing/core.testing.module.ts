@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,22 +30,29 @@ import { DatePipe } from '@angular/common';
 import { CookieService } from '../services/cookie.service';
 import { CookieServiceMock } from '../mock/cookie.service.mock';
 import { HttpClientModule } from '@angular/common/http';
+import { directionalityConfigFactory } from '../services/directionality-config-factory';
+import { DirectionalityConfigService } from '../services/directionality-config.service';
 
 @NgModule({
     imports: [
         NoopAnimationsModule,
         RouterTestingModule,
         HttpClientModule,
-        TranslateModule.forRoot(),
-        CoreModule.forRoot()
+        TranslateModule,
+        CoreModule
     ],
     providers: [
         DatePipe,
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },
         { provide: AppConfigService, useClass: AppConfigServiceMock },
         { provide: TranslationService, useClass: TranslationMock },
-        { provide: CookieService, useClass: CookieServiceMock }
-
+        { provide: CookieService, useClass: CookieServiceMock },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: directionalityConfigFactory,
+            deps: [ DirectionalityConfigService ],
+            multi: true
+        }
     ],
     exports: [
         NoopAnimationsModule,

@@ -24,6 +24,7 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { TranslateModule } from '@ngx-translate/core';
 registerLocaleData(localeFr);
 
 describe('LocalizedDatePipe', () => {
@@ -32,7 +33,10 @@ describe('LocalizedDatePipe', () => {
     let userPreferences: UserPreferencesService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

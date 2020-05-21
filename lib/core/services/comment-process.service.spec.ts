@@ -22,6 +22,7 @@ import { CommentProcessService } from './comment-process.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -31,7 +32,10 @@ describe('Comment ProcessService Service', () => {
     let alfrescoApi: any;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

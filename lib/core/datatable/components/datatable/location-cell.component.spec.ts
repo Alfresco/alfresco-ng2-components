@@ -22,6 +22,7 @@ import { ObjectDataColumn } from './../../data/object-datacolumn.model';
 import { LocationCellComponent } from './location-cell.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LocationCellComponent', () => {
     let component: LocationCellComponent;
@@ -31,7 +32,10 @@ describe('LocationCellComponent', () => {
     let columnData;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

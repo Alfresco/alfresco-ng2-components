@@ -25,6 +25,7 @@ import { DynamicTableWidgetComponent } from './dynamic-table.widget';
 import { DynamicTableModel } from './dynamic-table.widget.model';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakeFormField = {
     id: 'fake-dynamic-table',
@@ -78,6 +79,7 @@ describe('DynamicTableWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

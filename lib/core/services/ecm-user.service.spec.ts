@@ -16,12 +16,13 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AuthenticationService, ContentService, AlfrescoApiService  } from '.';
 import { fakeEcmUser } from '../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationService } from './authentication.service';
+import { ContentService } from './content.service';
 
 declare let jasmine: any;
 
@@ -33,10 +34,8 @@ describe('EcmUserService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

@@ -21,6 +21,7 @@ import { ClipboardService } from './clipboard.service';
 import { MatSnackBarModule } from '@angular/material';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ClipboardService', () => {
     let clipboardService: ClipboardService;
@@ -29,6 +30,7 @@ describe('ClipboardService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             MatSnackBarModule
         ]
