@@ -18,7 +18,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
-import { StartTaskCloudTestingModule } from '../../task/start-task/testing/start-task-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormDefinitionSelectorCloudComponent } from './form-definition-selector-cloud.component';
 import { By } from '@angular/platform-browser';
@@ -36,8 +35,7 @@ describe('FormDefinitionCloudComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            StartTaskCloudTestingModule
+            ProcessServiceCloudTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

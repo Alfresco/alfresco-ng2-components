@@ -22,7 +22,6 @@ import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
-import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
@@ -50,8 +49,7 @@ describe('StartTaskCloudComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            StartTaskCloudTestingModule
+            ProcessServiceCloudTestingModule
         ],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
