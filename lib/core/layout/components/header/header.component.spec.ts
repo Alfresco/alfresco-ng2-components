@@ -188,8 +188,13 @@ describe('HeaderLayoutComponent', () => {
         class HeaderLayoutTesterComponent {}
 
         setupTestBed({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                LayoutModule,
+                MaterialModule
+            ],
             declarations: [HeaderLayoutTesterComponent],
-            imports: [ CoreTestingModule, LayoutModule, MaterialModule, RouterTestingModule ]
         });
 
         it('should project the provided nodes into the component', () => {
