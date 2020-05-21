@@ -22,7 +22,6 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from './../../../material.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -194,7 +193,7 @@ describe('HeaderLayoutComponent', () => {
                 LayoutModule,
                 MaterialModule
             ],
-            declarations: [HeaderLayoutTesterComponent],
+            declarations: [HeaderLayoutTesterComponent]
         });
 
         it('should project the provided nodes into the component', () => {
