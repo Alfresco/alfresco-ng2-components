@@ -28,6 +28,7 @@ import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -69,6 +70,7 @@ describe('ProcessListCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ]
     });
@@ -255,7 +257,10 @@ describe('ProcessListCloudComponent', () => {
         let componentCustom: CustomTaskListComponent;
 
         setupTestBed({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
             declarations: [CustomTaskListComponent]
         });
 
@@ -283,7 +288,10 @@ describe('ProcessListCloudComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         setupTestBed({
-            imports: [ProcessServiceCloudTestingModule],
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ],
             declarations: [EmptyTemplateComponent]
         });
 

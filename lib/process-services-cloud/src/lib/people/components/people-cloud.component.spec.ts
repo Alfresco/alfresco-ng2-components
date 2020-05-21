@@ -30,6 +30,7 @@ import { mockUsers } from '../mock/user-cloud.mock';
 import { PeopleCloudModule } from '../people-cloud.module';
 import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PeopleCloudComponent', () => {
     let component: PeopleCloudComponent;
@@ -56,6 +57,7 @@ describe('PeopleCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreModule.forRoot(),
             ProcessServiceCloudTestingModule,
             PeopleCloudModule

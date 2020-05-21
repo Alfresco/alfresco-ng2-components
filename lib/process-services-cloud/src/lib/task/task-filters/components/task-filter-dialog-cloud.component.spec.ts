@@ -21,6 +21,7 @@ import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.compo
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFilterDialogCloudComponent', () => {
     let component: TaskFilterDialogCloudComponent;
@@ -36,7 +37,11 @@ describe('TaskFilterDialogCloudComponent', () => {
     };
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            TaskFiltersCloudModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: mockDialogRef },
             { provide: MAT_DIALOG_DATA, useValue: mockDialogData }

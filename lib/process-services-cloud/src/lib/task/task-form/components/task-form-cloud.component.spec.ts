@@ -24,6 +24,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { TaskFormCloudComponent } from './task-form-cloud.component';
 import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const taskDetails: TaskDetailsCloudModel = {
     appName: 'simple-app',
@@ -52,7 +53,10 @@ describe('TaskFormCloudComponent', () => {
     let fixture: ComponentFixture<TaskFormCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule
+        ]
     });
 
     beforeEach(() => {

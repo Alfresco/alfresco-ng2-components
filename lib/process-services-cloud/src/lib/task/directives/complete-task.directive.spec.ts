@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { taskCompleteCloudMock } from '../task-header/mocks/fake-complete-task.mock';
 import { TaskCloudService } from '../services/task-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CompleteTaskDirective', () => {
 
@@ -47,6 +48,7 @@ describe('CompleteTaskDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ],
         declarations: [
@@ -142,6 +144,7 @@ describe('Complete Task Directive validation errors', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ],
         declarations: [

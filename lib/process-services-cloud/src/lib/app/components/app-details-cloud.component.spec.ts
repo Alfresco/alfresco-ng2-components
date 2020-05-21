@@ -23,6 +23,7 @@ import { AppDetailsCloudComponent } from './app-details-cloud.component';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { AppListCloudModule } from '../app-list-cloud.module';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppDetailsCloudComponent', () => {
 
@@ -30,7 +31,11 @@ describe('AppDetailsCloudComponent', () => {
     let fixture: ComponentFixture<AppDetailsCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, AppListCloudModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            AppListCloudModule
+        ]
     });
 
     beforeEach(() => {

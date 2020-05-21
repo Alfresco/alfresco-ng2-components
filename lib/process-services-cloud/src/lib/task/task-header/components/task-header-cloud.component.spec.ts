@@ -17,7 +17,6 @@
 
 import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
-import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
@@ -32,6 +31,7 @@ import {
     taskDetailsWithParentTaskIdMock
 } from '../mocks/task-details-cloud.mock';
 import moment from 'moment-es6';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskHeaderCloudComponent', () => {
     let component: TaskHeaderCloudComponent;
@@ -48,9 +48,9 @@ describe('TaskHeaderCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
-            TaskHeaderCloudModule,
-            RouterTestingModule
+            TaskHeaderCloudModule
         ]
     });
 

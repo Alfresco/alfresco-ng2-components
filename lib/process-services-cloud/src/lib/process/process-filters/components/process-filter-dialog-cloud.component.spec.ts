@@ -21,6 +21,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessFilterDialogCloudComponent', () => {
     let component: ProcessFilterDialogCloudComponent;
@@ -36,7 +37,11 @@ describe('ProcessFilterDialogCloudComponent', () => {
     };
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            ProcessFiltersCloudModule
+        ],
         providers: [
             { provide: MatDialogRef, useValue: mockDialogRef },
             { provide: MAT_DIALOG_DATA, useValue: mockDialogData }

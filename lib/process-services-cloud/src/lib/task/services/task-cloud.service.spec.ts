@@ -23,6 +23,7 @@ import { assignedTaskDetailsCloudMock, createdTaskDetailsCloudMock, emptyOwnerTa
 import { fakeTaskDetailsCloud } from '../task-header/mocks/fake-task-details-response.mock';
 import { cloudMockUser } from '../start-task/mock/user-cloud.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Task Cloud Service', () => {
 
@@ -82,6 +83,7 @@ describe('Task Cloud Service', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ]
     });

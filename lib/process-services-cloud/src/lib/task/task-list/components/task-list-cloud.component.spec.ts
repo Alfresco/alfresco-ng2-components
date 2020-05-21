@@ -26,6 +26,7 @@ import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { Person } from '@alfresco/js-api';
 import { TaskListModule } from '@alfresco/adf-process-services';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -82,6 +83,7 @@ describe('TaskListCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
             TaskListModule
         ],
@@ -298,6 +300,7 @@ describe('TaskListCloudComponent', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 ProcessServiceCloudTestingModule,
                 TaskListModule
             ],
@@ -396,7 +399,10 @@ describe('TaskListCloudComponent', () => {
         let taskSpy: jasmine.Spy;
 
         setupTestBed({
-            imports: [ProcessServiceCloudTestingModule]
+            imports: [
+                TranslateModule.forRoot(),
+                ProcessServiceCloudTestingModule
+            ]
         });
 
         beforeEach( () => {

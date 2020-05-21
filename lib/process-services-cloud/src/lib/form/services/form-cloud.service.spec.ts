@@ -20,6 +20,7 @@ import { FormCloudService } from './form-cloud.service';
 import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -40,6 +41,7 @@ describe('Form Cloud service', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ]
     });

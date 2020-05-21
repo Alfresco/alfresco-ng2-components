@@ -43,6 +43,7 @@ import {
 import { By } from '@angular/platform-browser';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('StartProcessCloudComponent', () => {
 
@@ -76,6 +77,7 @@ describe('StartProcessCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
             FormsModule,
             MatCommonModule,

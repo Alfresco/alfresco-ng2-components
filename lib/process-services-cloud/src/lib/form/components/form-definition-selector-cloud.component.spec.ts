@@ -24,6 +24,7 @@ import { FormDefinitionSelectorCloudComponent } from './form-definition-selector
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { FormDefinitionSelectorCloudService } from '../services/form-definition-selector-cloud.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FormDefinitionCloudComponent', () => {
 
@@ -33,7 +34,11 @@ describe('FormDefinitionCloudComponent', () => {
     let getFormsSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            StartTaskCloudTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

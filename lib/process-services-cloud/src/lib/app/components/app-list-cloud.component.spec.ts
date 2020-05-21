@@ -24,6 +24,7 @@ import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { AppListCloudComponent } from './app-list-cloud.component';
 import { AppsProcessCloudService } from '../services/apps-process-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppListCloudComponent', () => {
 
@@ -53,7 +54,10 @@ describe('AppListCloudComponent', () => {
     }
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule
+        ],
         declarations: [CustomEmptyAppListCloudTemplateComponent]
     });
 
