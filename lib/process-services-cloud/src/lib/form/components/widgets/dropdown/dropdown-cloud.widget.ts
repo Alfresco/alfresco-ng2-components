@@ -57,38 +57,25 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
          }
      }
 
-     getValuesFromRestApi() {
-         if (this.isValidRestType()) {
+    getValuesFromRestApi() {
+        if (this.isValidRestType()) {
             this.formCloudService.getDropDownJsonData(this.field.restUrl)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe( (result: FormFieldOption[]) => {
-                if (this.field.restResponsePath) {
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe((result: FormFieldOption[]) => {
                     this.field.options = this.mapJsonData(result);
-                } else {
-                    this.setOptionValues(result);
-                }
-            },
-            (err) => this.handleError(err));
-         }
-     }
+                }, (err) => this.handleError(err));
+        }
+    }
 
     mapJsonData(data: any[]): FormFieldOption[] {
-        const path = this.field.restResponsePath;
-        const idProperty = this.field.restIdProperty;
+        const dataToMap: any[] = this.field.restResponsePath ? data[this.field.restResponsePath] : data;
+        const idProperty = this.field.restIdProperty || 'id';
+        const restLabelProperty = this.field.restLabelProperty || 'name';
 
-        return data.map( (value: any) => {
+        return dataToMap.map((value: any) => {
             return {
-                name: value[path][idProperty],
-                id: value.id
-            };
-        });
-     }
-
-    private setOptionValues(result: FormFieldOption[] ) {
-        this.field.options = result.map( (value: FormFieldOption) => {
-            return {
-                id: value.id,
-                name: value.name
+                name: value[restLabelProperty],
+                id: value[idProperty]
             };
         });
     }
@@ -116,7 +103,7 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     isReadOnlyType(): boolean {
-        return this.field.type === 'readonly' ? true : false;
+        return this.field.type === 'readonly';
     }
 
     ngOnDestroy() {

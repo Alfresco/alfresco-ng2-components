@@ -21,7 +21,6 @@ import {
     FormValues,
     AppConfigService,
     FormOutcomeModel,
-    FormFieldOption,
     FormModel
 } from '@alfresco/adf-core';
 import { Observable, from } from 'rxjs';
@@ -200,8 +199,8 @@ export class FormCloudService extends BaseCloudService {
      * @param url String data to make the request
      * @returns Array of FormFieldOption object
      */
-    getDropDownJsonData(url: string): Observable<FormFieldOption[]> {
-        return this.get<FormFieldOption[]>(url);
+    getDropDownJsonData(url: string): Observable<any> {
+        return this.get<any>(url);
     }
 
     /**
