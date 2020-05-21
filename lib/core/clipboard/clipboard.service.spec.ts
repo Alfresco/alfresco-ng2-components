@@ -18,7 +18,7 @@
 import { NotificationService } from '../notifications/services/notification.service';
 import { TestBed } from '@angular/core/testing';
 import { ClipboardService } from './clipboard.service';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing';
 import { TranslateModule } from '@ngx-translate/core';

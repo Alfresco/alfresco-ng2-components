@@ -17,7 +17,8 @@
 
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
-import { MatDialog, DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import moment from 'moment-es6';

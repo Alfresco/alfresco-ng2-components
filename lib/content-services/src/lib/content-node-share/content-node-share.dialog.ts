@@ -23,7 +23,8 @@ import {
     ViewChild,
     OnDestroy
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSlideToggleChange } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import {

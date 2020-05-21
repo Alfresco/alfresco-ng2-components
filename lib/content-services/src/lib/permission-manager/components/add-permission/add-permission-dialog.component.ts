@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NodeEntry } from '@alfresco/js-api';
 import { AddPermissionDialogData } from './add-permission-dialog-data.interface';
 import { AddPermissionComponent } from '../add-permission/add-permission.component';

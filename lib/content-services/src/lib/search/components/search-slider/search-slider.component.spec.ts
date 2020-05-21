@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 import { SearchSliderComponent } from './search-slider.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';

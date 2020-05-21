@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, ViewEncapsulation, SecurityContext } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 
 export interface ConfirmDialogComponentProps {

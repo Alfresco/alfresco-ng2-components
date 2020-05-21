@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 import { Direction } from '@angular/cdk/bidi';
 

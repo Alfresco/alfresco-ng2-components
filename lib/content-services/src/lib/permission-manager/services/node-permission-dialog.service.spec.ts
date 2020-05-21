@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed, ContentService } from '@alfresco/adf-core';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';

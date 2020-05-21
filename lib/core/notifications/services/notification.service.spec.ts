@@ -20,7 +20,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarModule, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { TranslationService } from '../../services/translation.service';
 import { setupTestBed } from '../../testing/setup-test-bed';

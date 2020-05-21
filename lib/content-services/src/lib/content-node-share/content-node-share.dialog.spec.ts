@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { of, empty } from 'rxjs';
 import {
     setupTestBed,

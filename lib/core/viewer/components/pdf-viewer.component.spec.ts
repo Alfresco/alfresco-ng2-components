@@ -21,7 +21,7 @@ import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { take } from 'rxjs/operators';

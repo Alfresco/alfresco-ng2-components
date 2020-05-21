@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogService } from './login-dialog.service';
 import { Subject, of } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';

@@ -24,7 +24,7 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from 'core/form/form-base.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderService } from 'core/services';
-import { MatCheckboxModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
 
 describe('CheckboxWidgetComponent', () => {

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslationService } from '../../services/translation.service';
 import { AppConfigService, AppConfigValues } from '../../app-config/app-config.service';
 import { Subject } from 'rxjs';

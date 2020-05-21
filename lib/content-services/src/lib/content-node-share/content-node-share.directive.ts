@@ -16,7 +16,7 @@
  */
 
 import { Directive, Input, HostListener, OnChanges, NgZone, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NodeEntry, Node } from '@alfresco/js-api';
 
 import { ShareDialogComponent } from './content-node-share.dialog';

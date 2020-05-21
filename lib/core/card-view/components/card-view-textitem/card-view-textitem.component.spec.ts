@@ -23,7 +23,7 @@ import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator, CardViewItemIntValidator, CardViewIntItemModel, CardViewFloatItemModel } from '@alfresco/adf-core';
-import { MatChipsModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { DebugElement } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';

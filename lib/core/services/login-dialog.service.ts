@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { LoginDialogComponent } from '../login/components/login-dialog.component';

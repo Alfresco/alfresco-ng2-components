@@ -22,7 +22,8 @@ import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule, MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 

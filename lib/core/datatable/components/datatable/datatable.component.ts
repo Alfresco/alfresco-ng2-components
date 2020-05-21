@@ -21,7 +21,7 @@ import {
     IterableDiffers, OnChanges, Output, SimpleChange, SimpleChanges, TemplateRef, ViewEncapsulation, OnDestroy
 } from '@angular/core';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Subscription, Observable, Observer } from 'rxjs';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
 import { DataColumn } from '../../data/data-column.model';
