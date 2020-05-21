@@ -80,15 +80,6 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
         CardViewContentProxyDirective,
         CardViewArrayItemComponent
     ],
-    entryComponents: [
-        CardViewBoolItemComponent,
-        CardViewDateItemComponent,
-        CardViewMapItemComponent,
-        CardViewTextItemComponent,
-        CardViewSelectItemComponent,
-        CardViewKeyValuePairsItemComponent,
-        CardViewArrayItemComponent
-    ],
     exports: [
         CardViewComponent,
         CardViewBoolItemComponent,

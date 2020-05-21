@@ -42,9 +42,6 @@ const routes: Routes = [
     declarations: [
         ExtensionPresetsComponent,
         NameColumnComponent
-    ],
-    entryComponents: [
-        NameColumnComponent
     ]
 })
 export class ExtensionPresetsModule {

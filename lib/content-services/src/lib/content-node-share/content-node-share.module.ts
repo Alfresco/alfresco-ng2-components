@@ -35,9 +35,6 @@ import { NodeSharedDirective } from './content-node-share.directive';
     exports: [
         ShareDialogComponent,
         NodeSharedDirective
-    ],
-    entryComponents: [
-        ShareDialogComponent
     ]
 })
 export class ContentNodeShareModule {

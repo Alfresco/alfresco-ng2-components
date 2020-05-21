@@ -67,9 +67,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ...MASK_DIRECTIVE,
         WidgetComponent
     ],
-    entryComponents: [
-        ...WIDGET_DIRECTIVES
-    ],
     exports: [
         ContentWidgetComponent,
         FormFieldComponent,

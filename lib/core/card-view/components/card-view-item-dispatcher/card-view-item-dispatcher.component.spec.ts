@@ -54,12 +54,6 @@ describe('CardViewItemDispatcherComponent', () => {
             providers: [ { provide: CardItemTypeService, useValue: cardItemTypeService } ]
         });
 
-        // entryComponents are not supported yet on TestBed, that is why this ugly workaround:
-        // https://github.com/angular/angular/issues/10760
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ CardViewShinyCustomElementItemComponent ] }
-        });
-
         TestBed.compileComponents();
     }));
 

@@ -79,17 +79,9 @@ import { SearchQueryBuilderService } from './search-query-builder.service';
         SearchSortingPickerComponent,
         SearchHeaderComponent
     ],
-    entryComponents: [
-        SearchWidgetContainerComponent,
-        SearchTextComponent,
-        SearchRadioComponent,
-        SearchSliderComponent,
-        SearchNumberRangeComponent,
-        SearchCheckListComponent,
-        SearchDateRangeComponent
-    ],
     providers: [
         { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }
+        SearchSortingPickerComponent
     ]
 })
 export class SearchModule {}

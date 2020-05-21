@@ -61,10 +61,6 @@ describe('DynamicExtensionComponent', () => {
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
 
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [TestComponent] }
-        });
-
         TestBed.compileComponents();
     }));
 
