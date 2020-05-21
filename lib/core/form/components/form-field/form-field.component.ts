@@ -145,15 +145,12 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     private createComponentFactorySync(compiler: Compiler, metadata: Component, componentClass: any): ComponentFactory<any> {
-        const cmpClass = componentClass || class RuntimeComponent {
-        };
+        const cmpClass = componentClass || class RuntimeComponent {};
         const decoratedCmp = Component(metadata)(cmpClass);
+        const moduleClass = class RuntimeComponentModule {};
+        const decoratedNgModule = NgModule({ imports: [], declarations: [decoratedCmp] })(moduleClass);
+        const module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(decoratedNgModule);
 
-        @NgModule({ imports: [], declarations: [decoratedCmp] })
-        class RuntimeComponentModule {
-        }
-
-        const module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
         return module.componentFactories.find((x) => x.componentType === decoratedCmp);
     }
 

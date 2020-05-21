@@ -548,7 +548,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             this.emitSortingChangedEvent(column.key, newDirection);
         }
 
-        this.keyManager.updateActiveItemIndex(0);
+        this.keyManager.updateActiveItem(0);
     }
 
     onSelectAllClick(matCheckboxChange: MatCheckboxChange) {

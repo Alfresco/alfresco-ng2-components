@@ -32,10 +32,11 @@ export * from './directives/drop-zone.directive';
 export * from './components/datatable-cell/datatable-cell.component';
 export * from './components/datatable-row/datatable-row.component';
 export * from './components/datatable/datatable.component';
-export * from './components/date-cell/date-cell.component';
-export * from './components/empty-list/empty-list.component';
-export * from './components/filesize-cell/filesize-cell.component';
-export * from './components/location-cell/location-cell.component';
+export * from './components/datatable/date-cell.component';
+export * from './components/datatable/empty-list.component';
+export * from './components/datatable/filesize-cell.component';
+export * from './components/datatable/location-cell.component';
+export * from './components/datatable/json-cell.component';
 export * from './data/data-table.schema';
 
 export * from './directives/loading-template.directive';
