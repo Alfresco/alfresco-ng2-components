@@ -47,10 +47,10 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
 
-    @ViewChild('panel')
+    @ViewChild('panel', { static: true })
     panel: ElementRef;
 
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { static: false })
     template: TemplateRef<any>;
 
     /** Function that maps an option's value to its display value in the trigger. */

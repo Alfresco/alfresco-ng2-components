@@ -33,7 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 class TestComponent {
     selection = [];
 
-    @ViewChild(NodeDeleteDirective)
+    @ViewChild(NodeDeleteDirective, { static: true })
     deleteDirective: NodeDeleteDirective;
 
     onDelete() {
@@ -50,7 +50,7 @@ class TestComponent {
 class TestWithPermissionsComponent {
     selection = [];
 
-    @ViewChild(NodeDeleteDirective)
+    @ViewChild(NodeDeleteDirective, { static: true })
     deleteDirective: NodeDeleteDirective;
 
     onDelete = jasmine.createSpy('onDelete');
@@ -68,7 +68,7 @@ class TestWithPermissionsComponent {
 class TestDeletePermanentComponent {
     selection = [];
 
-    @ViewChild(NodeDeleteDirective)
+    @ViewChild(NodeDeleteDirective, { static: true })
     deleteDirective: NodeDeleteDirective;
 
     permanent = true;

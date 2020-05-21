@@ -37,7 +37,7 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
     public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
     public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
     /** (**required**) Defines the layout of the apps. There are two possible

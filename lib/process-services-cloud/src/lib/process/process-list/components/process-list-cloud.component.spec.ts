@@ -45,7 +45,7 @@ import { TranslateModule } from '@ngx-translate/core';
     </adf-cloud-process-list>`
 })
 class CustomTaskListComponent {
-    @ViewChild(ProcessListCloudComponent)
+    @ViewChild(ProcessListCloudComponent, { static: false })
     processListCloud: ProcessListCloudComponent;
 }
 

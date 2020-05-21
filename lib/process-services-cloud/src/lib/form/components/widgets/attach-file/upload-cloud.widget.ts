@@ -48,7 +48,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     multipleOption: string = '';
     mimeTypeIcon: string;
 
-    @ViewChild('uploadFiles')
+    @ViewChild('uploadFiles', { static: false })
     fileInput: ElementRef;
 
     constructor(

@@ -34,7 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
     <ng-template #tmplRef></ng-template>
 `})
 class CustomColumnTemplateComponent {
-    @ViewChild('tmplRef') templateRef: TemplateRef<any>;
+    @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
 
 class FakeDataRow implements DataRow {

@@ -182,7 +182,7 @@
       true,
       2
     ],
-    "use-host-property-decorator": false,
+    "no-host-metadata-property": false,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,

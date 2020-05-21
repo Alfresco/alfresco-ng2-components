@@ -52,7 +52,7 @@ declare var adf: any;
 })
 export class FormFieldComponent implements OnInit, OnDestroy {
 
-    @ViewChild('container', { read: ViewContainerRef })
+    @ViewChild('container', { read: ViewContainerRef, static: true })
     container: ViewContainerRef;
 
     /** Contains all the necessary data needed to determine what UI Widget

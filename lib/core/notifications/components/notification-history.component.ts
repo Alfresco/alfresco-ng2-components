@@ -36,7 +36,7 @@ export class NotificationHistoryComponent implements OnDestroy {
 
     MAX_NOTIFICATION_STACK_LENGTH = 100;
 
-    @ViewChild(MatMenuTrigger)
+    @ViewChild(MatMenuTrigger, { static: true })
     trigger: MatMenuTrigger;
 
     /** Custom choice for opening the menu at the bottom. Can be `before` or `after`. */

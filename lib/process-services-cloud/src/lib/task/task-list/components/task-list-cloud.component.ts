@@ -38,7 +38,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     static PRESET_KEY = 'adf-cloud-task-list.presets';
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     emptyCustomContent: CustomEmptyContentTemplateDirective;
 
     /** The name of the application. */

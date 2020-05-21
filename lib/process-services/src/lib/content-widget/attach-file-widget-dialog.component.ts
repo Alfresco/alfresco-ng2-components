@@ -37,7 +37,7 @@ import { Node } from '@alfresco/js-api';
 })
 export class AttachFileWidgetDialogComponent {
 
-    @ViewChild('adfLoginPanel')
+    @ViewChild('adfLoginPanel', { static: false })
     loginPanel: LoginDialogPanelComponent;
 
     title: string;

@@ -37,7 +37,7 @@ import {
 })
 export class TaskAttachmentListComponent implements OnChanges, AfterContentInit {
 
-    @ContentChild(EmptyListComponent)
+    @ContentChild(EmptyListComponent, { static: false })
     emptyTemplate: EmptyListComponent;
 
     /** (**required**) The ID of the task to display. */

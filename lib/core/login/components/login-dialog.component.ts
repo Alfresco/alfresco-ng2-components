@@ -27,7 +27,7 @@ import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 })
 export class LoginDialogComponent {
 
-    @ViewChild('adfLoginPanel')
+    @ViewChild('adfLoginPanel', { static: true })
     loginPanel: LoginDialogPanelComponent;
 
     buttonActionName = '';

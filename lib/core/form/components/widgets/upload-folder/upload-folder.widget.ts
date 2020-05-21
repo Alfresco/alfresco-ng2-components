@@ -51,7 +51,7 @@ export class UploadFolderWidgetComponent extends WidgetComponent implements OnIn
     multipleOption: string = '';
     mimeTypeIcon: string;
 
-    @ViewChild('uploadFiles')
+    @ViewChild('uploadFiles', { static: false })
     fileInput: ElementRef;
 
     constructor(public formService: FormService,

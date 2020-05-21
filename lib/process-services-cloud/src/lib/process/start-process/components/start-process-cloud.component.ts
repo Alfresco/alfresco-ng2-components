@@ -41,7 +41,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     static MAX_NAME_LENGTH: number = 255;
 
-    @ViewChild(MatAutocompleteTrigger)
+    @ViewChild(MatAutocompleteTrigger, { static: false })
     inputAutocomplete: MatAutocompleteTrigger;
 
     /** (required) Name of the app. */

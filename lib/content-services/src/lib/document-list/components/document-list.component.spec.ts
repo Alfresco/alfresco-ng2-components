@@ -1505,7 +1505,7 @@ describe('DocumentList', () => {
     `
 })
 class CustomTemplateComponent {
-    @ViewChild('customDocumentList')
+    @ViewChild('customDocumentList', { static: false })
     customDocumentList: DocumentListComponent;
 }
 

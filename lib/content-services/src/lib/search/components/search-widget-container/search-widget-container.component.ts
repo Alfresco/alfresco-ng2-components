@@ -26,7 +26,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 })
 export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
 
-    @ViewChild('content', { read: ViewContainerRef })
+    @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
     @Input()

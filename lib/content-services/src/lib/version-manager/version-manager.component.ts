@@ -75,7 +75,7 @@ export class VersionManagerComponent implements OnInit {
     @Output()
     uploadCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('versionList')
+    @ViewChild('versionList', { static: true })
     versionListComponent: VersionListComponent;
 
     uploadState: string = 'close';

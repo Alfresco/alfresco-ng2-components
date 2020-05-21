@@ -35,7 +35,7 @@ describe('ClaimTaskCloudDirective', () => {
         taskMock = 'test1234';
         appNameMock = 'simple-app';
 
-        @ViewChild(ClaimTaskCloudDirective)
+        @ViewChild(ClaimTaskCloudDirective, { static: false })
         claimTaskDirective: ClaimTaskCloudDirective;
     }
 
@@ -116,7 +116,7 @@ describe('Claim Task Directive validation errors', () => {
         appNameNull = null;
         taskMock = 'test1234';
 
-        @ViewChild(ClaimTaskCloudDirective)
+        @ViewChild(ClaimTaskCloudDirective, { static: false })
         claimTaskValidationDirective: ClaimTaskCloudDirective;
     }
 

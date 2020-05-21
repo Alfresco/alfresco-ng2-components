@@ -21,6 +21,6 @@ import { ContentChild, Directive, TemplateRef } from '@angular/core';
     selector: 'adf-sidenav-layout-content'
 })
 export class SidenavLayoutContentDirective {
-    @ContentChild(TemplateRef)
+    @ContentChild(TemplateRef, { static: false })
     public template: TemplateRef<any>;
 }

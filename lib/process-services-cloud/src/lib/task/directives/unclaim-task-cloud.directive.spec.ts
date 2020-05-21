@@ -116,7 +116,7 @@ describe('UnClaim Task Directive validation errors', () => {
         appNameNull = null;
         taskMock = 'test1234';
 
-        @ViewChild(UnClaimTaskCloudDirective)
+        @ViewChild(UnClaimTaskCloudDirective, { static: false })
         claimTaskValidationDirective: UnClaimTaskCloudDirective;
     }
 

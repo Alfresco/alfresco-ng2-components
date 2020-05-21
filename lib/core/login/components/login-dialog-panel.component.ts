@@ -30,7 +30,7 @@ export class LoginDialogPanelComponent {
     @Output()
     success = new EventEmitter<LoginSuccessEvent>();
 
-    @ViewChild('adfLogin')
+    @ViewChild('adfLogin', { static: true })
     login: LoginComponent;
 
     submitForm(): void {

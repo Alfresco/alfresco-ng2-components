@@ -56,10 +56,10 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
 
     static PRESET_KEY = 'adf-process-list.presets';
 
-    @ContentChild(CustomEmptyContentTemplateDirective)
+    @ContentChild(CustomEmptyContentTemplateDirective, { static: false })
     customEmptyContent: CustomEmptyContentTemplateDirective;
 
-    @ContentChild(CustomLoadingContentTemplateDirective)
+    @ContentChild(CustomLoadingContentTemplateDirective, { static: false })
     customLoadingContent: CustomLoadingContentTemplateDirective;
 
     /** The id of the app. */

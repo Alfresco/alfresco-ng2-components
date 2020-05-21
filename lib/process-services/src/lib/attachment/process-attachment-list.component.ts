@@ -26,7 +26,7 @@ import { AfterContentInit, ContentChild, Component, EventEmitter, Input, NgZone,
 })
 export class ProcessAttachmentListComponent implements OnChanges, AfterContentInit {
 
-    @ContentChild(EmptyListComponent)
+    @ContentChild(EmptyListComponent, { static: false })
     emptyTemplate: EmptyListComponent;
 
     /** (**required**) The ID of the process instance to display. */

@@ -43,10 +43,10 @@ import { TranslateModule } from '@ngx-translate/core';
 export class SimpleSearchTestCustomEmptyComponent {
     customMessage = '';
 
-    @ViewChild(SearchControlComponent)
+    @ViewChild(SearchControlComponent, { static: true })
     searchComponent: SearchControlComponent;
 
-    @ViewChild(SearchTextInputComponent)
+    @ViewChild(SearchTextInputComponent, { static: true })
     searchTextInputComponent: SearchTextInputComponent;
 }
 
