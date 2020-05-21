@@ -22,6 +22,7 @@ import { DiscoveryApiService } from './discovery-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -102,10 +103,13 @@ const fakeBPMDiscoverySystemPropertyResponse: any = {
 
 describe('Discovery Api Service', () => {
 
-    let service;
+    let service: DiscoveryApiService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

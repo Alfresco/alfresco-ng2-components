@@ -21,6 +21,7 @@ import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
 import { processDetailsMockRunning, processDetailsMockCompleted } from '../mock/process-details.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CancelProcessDirective', () => {
 
@@ -40,6 +41,7 @@ describe('CancelProcessDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ],
         declarations: [

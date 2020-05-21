@@ -22,6 +22,7 @@ import { TranslationService } from '../../services/translation.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ErrorContentComponent', () => {
 
@@ -46,6 +47,7 @@ describe('ErrorContentComponent', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule
             ],
             providers: [
@@ -109,6 +111,7 @@ describe('ErrorContentComponent', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule
             ],
             providers: [

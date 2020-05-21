@@ -20,6 +20,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
 import { NoContentTemplateDirective } from './no-content-template.directive';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NoContentTemplateDirective', () => {
 
@@ -28,7 +29,10 @@ describe('NoContentTemplateDirective', () => {
     let directive: NoContentTemplateDirective;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

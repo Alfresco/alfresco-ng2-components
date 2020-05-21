@@ -27,8 +27,6 @@ import { TaskProcessVariableModel } from './../models/task-process-variable.mode
 import { WidgetVisibilityModel } from './../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { fakeTaskProcessVariableModels,
         fakeFormJson, formTest,
         formValues, complexVisibilityJsonVisible,
@@ -36,6 +34,7 @@ import { fakeTaskProcessVariableModels,
         tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
 import { formWithOneVisibleAndOneInvisibleFieldMock, formWithOneVisibleAndOneInvisibleTabMock } from '../components/mock/form-renderer.component.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -47,10 +46,8 @@ describe('WidgetVisibilityService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

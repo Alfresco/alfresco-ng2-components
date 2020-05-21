@@ -90,35 +90,7 @@ export class ProcessModule {
 
     static forChild(): ModuleWithProviders {
         return {
-            ngModule: ProcessModuleLazy
+            ngModule: ProcessModule
         };
     }
 }
-
-@NgModule({
-    imports: [
-        CoreModule,
-        CommonModule,
-        ProcessCommentsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        ProcessListModule,
-        TaskListModule,
-        AppsListModule,
-        AttachmentModule,
-        PeopleModule
-    ],
-    exports: [
-        CommonModule,
-        ProcessCommentsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ProcessListModule,
-        TaskListModule,
-        AppsListModule,
-        AttachmentModule,
-        PeopleModule
-    ]
-})
-export class ProcessModuleLazy {}

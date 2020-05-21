@@ -34,6 +34,7 @@ import moment from 'moment-es6';
 import { AbstractControl } from '@angular/forms';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -57,7 +58,11 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            ProcessFiltersCloudModule
+        ],
         providers: [
             MatDialog,
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }

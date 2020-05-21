@@ -41,6 +41,7 @@ import {
 import { TaskListService } from './../services/tasklist.service';
 import { TaskDetailsComponent } from './task-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 'fake-id',
@@ -65,6 +66,7 @@ describe('TaskDetailsComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         schemas: [NO_ERRORS_SCHEMA]

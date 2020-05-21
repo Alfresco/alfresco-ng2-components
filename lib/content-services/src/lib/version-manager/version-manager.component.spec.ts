@@ -22,6 +22,7 @@ import { AlfrescoApiService, setupTestBed } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { VersionManagerComponent } from './version-manager.component';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VersionManagerComponent', () => {
     let component: VersionManagerComponent;
@@ -45,6 +46,7 @@ describe('VersionManagerComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]

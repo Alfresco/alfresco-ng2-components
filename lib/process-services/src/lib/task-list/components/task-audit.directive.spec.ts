@@ -26,6 +26,7 @@ import { of } from 'rxjs';
 import { TaskListService } from './../services/tasklist.service';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -75,7 +76,10 @@ describe('TaskAuditDirective', () => {
     }
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [BasicButtonComponent]
     });
 

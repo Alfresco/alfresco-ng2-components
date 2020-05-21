@@ -26,6 +26,7 @@ import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing
 import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('StartTaskCloudComponent', () => {
 
@@ -47,7 +48,11 @@ describe('StartTaskCloudComponent', () => {
     const mockUser: IdentityUserModel = {username: 'currentUser', firstName: 'Test', lastName: 'User', email: 'currentUser@test.com'};
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, StartTaskCloudTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            StartTaskCloudTestingModule
+        ],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
 

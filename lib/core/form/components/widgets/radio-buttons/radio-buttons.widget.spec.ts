@@ -28,6 +28,7 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { MatIconModule, MatRadioModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { CoreTestingModule } from '../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RadioButtonsWidgetComponent', () => {
 
@@ -36,6 +37,7 @@ describe('RadioButtonsWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             MatRadioModule,
             FormsModule,

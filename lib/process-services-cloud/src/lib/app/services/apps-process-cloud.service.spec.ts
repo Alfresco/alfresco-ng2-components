@@ -17,12 +17,13 @@
 
 import { TestBed } from '@angular/core/testing';
 import { throwError } from 'rxjs';
-import { setupTestBed, CoreModule, AppConfigService, AlfrescoApiService, AlfrescoApiServiceMock } from '@alfresco/adf-core';
+import { setupTestBed, CoreModule, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppsProcessCloudService } from './apps-process-cloud.service';
 import { fakeApplicationInstance } from '../mock/app-model.mock';
 import { ApplicationInstanceModel } from '../models/application-instance.model';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppsProcessCloudService', () => {
 
@@ -37,9 +38,11 @@ describe('AppsProcessCloudService', () => {
     };
 
     setupTestBed({
-        imports: [CoreModule.forRoot(), ProcessServiceCloudTestingModule],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock } ]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreModule.forRoot(),
+            ProcessServiceCloudTestingModule
+        ]
     });
 
     beforeEach(() => {

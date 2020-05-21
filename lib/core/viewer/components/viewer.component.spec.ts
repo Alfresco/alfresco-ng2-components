@@ -29,6 +29,7 @@ import { setupTestBed } from '../../testing/setup-test-bed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { NodeEntry } from '@alfresco/js-api';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-viewer-container-toolbar',
@@ -128,6 +129,7 @@ describe('ViewerComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

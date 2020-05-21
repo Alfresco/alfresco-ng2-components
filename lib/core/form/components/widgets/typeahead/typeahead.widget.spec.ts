@@ -26,7 +26,7 @@ import { FormFieldModel } from '../core/form-field.model';
 import { FormModel } from '../core/form.model';
 import { TypeaheadWidgetComponent } from './typeahead.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 
 describe('TypeaheadWidgetComponent', () => {
@@ -37,6 +37,7 @@ describe('TypeaheadWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

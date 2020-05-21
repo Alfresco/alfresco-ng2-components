@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component } from '@angular/core';
@@ -23,6 +22,7 @@ import { DOCUMENT } from '@angular/common';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { setupTestBed, CoreModule } from '@alfresco/adf-core';
 import { ContentNodeShareModule } from './content-node-share.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-node-share-test-component',
@@ -52,7 +52,7 @@ describe('NodeSharedDirective', () => {
 
     setupTestBed({
         imports: [
-            NoopAnimationsModule,
+            TranslateModule.forRoot(),
             CoreModule.forRoot(),
             ContentTestingModule,
             ContentNodeShareModule

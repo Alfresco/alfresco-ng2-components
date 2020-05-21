@@ -22,6 +22,7 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewArrayItemComponent } from './card-view-arrayitem.component';
 import { CardViewArrayItemModel, CardViewArrayItem } from '../../models/card-view-arrayitem.model';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewArrayItemComponent', () => {
     let component: CardViewArrayItemComponent;
@@ -41,7 +42,10 @@ describe('CardViewArrayItemComponent', () => {
     };
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     afterEach(() => {

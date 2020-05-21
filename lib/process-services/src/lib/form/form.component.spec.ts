@@ -24,6 +24,7 @@ import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcom
 import { FormComponent } from './form.component';
 import { ProcessFormRenderingService } from './process-form-rendering.service';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FormComponent', () => {
 
@@ -52,6 +53,7 @@ describe('FormComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule,
             CustomUploadModule
         ]

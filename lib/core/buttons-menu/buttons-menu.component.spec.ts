@@ -20,6 +20,7 @@ import { MaterialModule } from '../material.module';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-custom-container',
@@ -60,6 +61,7 @@ describe('ButtonsMenuComponent', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule,
                 MaterialModule
             ],
@@ -108,6 +110,7 @@ describe('ButtonsMenuComponent', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule,
                 MaterialModule
             ],

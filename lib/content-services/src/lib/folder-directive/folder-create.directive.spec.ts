@@ -25,6 +25,7 @@ import { ContentService, setupTestBed } from '@alfresco/adf-core';
 import { FolderCreateDirective } from './folder-create.directive';
 import { Node } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -63,6 +64,7 @@ describe('FolderCreateDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: [

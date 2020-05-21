@@ -21,6 +21,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SelectedBucket } from '../search-filter/search-filter.component';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-test-component',
@@ -45,6 +46,7 @@ describe('SearchChipListComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: [

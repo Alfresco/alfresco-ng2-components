@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { ClassesApi } from '@alfresco/js-api';
 import { PropertyGroup } from '../interfaces/content-metadata.interfaces';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PropertyDescriptorLoaderService', () => {
 
@@ -29,7 +30,10 @@ describe('PropertyDescriptorLoaderService', () => {
     let classesApi: ClassesApi;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -25,6 +25,7 @@ import { CardViewDateItemComponent } from './card-view-dateitem.component';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { AppConfigService } from '@alfresco/adf-core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewDateItemComponent', () => {
 
@@ -33,7 +34,10 @@ describe('CardViewDateItemComponent', () => {
     let appConfigService: AppConfigService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -21,6 +21,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { PeopleSearchFieldComponent } from './people-search-field.component';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PeopleSearchFieldComponent', () => {
 
@@ -29,7 +30,10 @@ describe('PeopleSearchFieldComponent', () => {
     let debug: DebugElement;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -1042,7 +1042,10 @@ describe('FormCloudWithCustomOutComesComponent', () => {
     let debugElement: DebugElement;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule
+        ],
         declarations: [FormCloudWithCustomOutComesComponent]
     });
 

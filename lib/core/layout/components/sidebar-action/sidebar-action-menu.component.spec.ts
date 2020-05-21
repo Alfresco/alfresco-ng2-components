@@ -22,6 +22,7 @@ import { SidebarActionMenuComponent } from './sidebar-action-menu.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SidebarActionMenuComponent', () => {
     let element: HTMLElement;
@@ -29,7 +30,10 @@ describe('SidebarActionMenuComponent', () => {
     let fixture: ComponentFixture<SidebarActionMenuComponent>;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

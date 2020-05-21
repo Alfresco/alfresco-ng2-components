@@ -24,6 +24,7 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
 import { of, throwError } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakeNode: Node = <Node> {
     id: 'fake'
@@ -40,6 +41,7 @@ describe('NodeActionsService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         providers: [

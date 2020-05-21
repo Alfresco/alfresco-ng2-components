@@ -20,6 +20,7 @@ import { DateCloudWidgetComponent } from './date-cloud.widget';
 import { setupTestBed, FormFieldModel, FormModel } from '@alfresco/adf-core';
 import moment from 'moment-es6';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DateWidgetComponent', () => {
 
@@ -29,6 +30,7 @@ describe('DateWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ]
     });

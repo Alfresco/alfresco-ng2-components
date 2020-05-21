@@ -28,6 +28,7 @@ import { ContentTestingModule } from '../testing/content.testing.module';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { ShareDataRow } from '../document-list';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentNodeSelectorDialogComponent', () => {
 
@@ -43,7 +44,10 @@ describe('ContentNodeSelectorDialogComponent', () => {
     };
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [
             { provide: MAT_DIALOG_DATA, useValue: data }
         ],

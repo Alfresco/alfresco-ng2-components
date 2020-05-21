@@ -24,6 +24,7 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule, MatIconModule } from '@angular/material';
 import { CoreTestingModule } from '../../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 const enterValueInTextField = (element: HTMLInputElement, value: string) => {
     element.value = value;
@@ -39,6 +40,7 @@ describe('TextWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             MatInputModule,
             FormsModule,

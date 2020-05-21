@@ -22,6 +22,7 @@ import { of, throwError } from 'rxjs';
 import { TaskAttachmentListComponent } from './task-attachment-list.component';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskAttachmentList', () => {
 
@@ -36,7 +37,10 @@ describe('TaskAttachmentList', () => {
     let disposableSuccess: any;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         schemas: [NO_ERRORS_SCHEMA]
     });
 
@@ -331,7 +335,10 @@ describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [CustomEmptyTemplateComponent],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });

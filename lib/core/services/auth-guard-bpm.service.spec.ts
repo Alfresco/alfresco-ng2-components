@@ -23,6 +23,7 @@ import { RouterStateSnapshot, Router } from '@angular/router';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { MatDialog } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AuthGuardService BPM', () => {
 
@@ -32,7 +33,10 @@ describe('AuthGuardService BPM', () => {
     let appConfigService: AppConfigService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

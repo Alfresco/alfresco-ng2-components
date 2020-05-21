@@ -20,6 +20,7 @@ import { UserProcessModel } from '../models';
 import { PeopleProcessService } from './people-process.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -44,7 +45,10 @@ describe('PeopleProcessService', () => {
     let service: PeopleProcessService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

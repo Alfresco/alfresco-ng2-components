@@ -23,6 +23,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { ProcessHeaderCloudComponent } from './process-header-cloud.component';
 import { ProcessHeaderCloudModule } from '../process-header-cloud.module';
 import { ProcessCloudService } from '../../services/process-cloud.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const processInstanceDetailsCloudMock = {
     appName: 'app-form-mau',
@@ -44,6 +45,7 @@ describe('ProcessHeaderCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
             ProcessHeaderCloudModule
         ]

@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material';
 import { LoginDialogService } from './login-dialog.service';
 import { Subject, of } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginDialogService', () => {
 
@@ -30,6 +31,7 @@ describe('LoginDialogService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

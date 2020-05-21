@@ -23,6 +23,7 @@ import { CardViewSelectItemComponent } from './card-view-selectitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewSelectItemComponent', () => {
 
@@ -39,7 +40,10 @@ describe('CardViewSelectItemComponent', () => {
     };
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

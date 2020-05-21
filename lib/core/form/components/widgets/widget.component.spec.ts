@@ -21,6 +21,7 @@ import { FormModel } from './core/form.model';
 import { WidgetComponent } from './widget.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('WidgetComponent', () => {
 
@@ -30,6 +31,7 @@ describe('WidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

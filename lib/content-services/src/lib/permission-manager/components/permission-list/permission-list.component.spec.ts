@@ -29,6 +29,7 @@ import { fakeNodeWithPermissions,
          fakeNodeWithoutPermissions,
          fakeEmptyResponse } from '../../../mock/permission-list.component.mock';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PermissionDisplayComponent', () => {
 
@@ -40,7 +41,10 @@ describe('PermissionDisplayComponent', () => {
     let searchApiService: SearchService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

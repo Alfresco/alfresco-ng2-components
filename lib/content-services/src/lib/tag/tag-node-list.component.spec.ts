@@ -21,6 +21,7 @@ import { TagNodeListComponent } from './tag-node-list.component';
 import { TagService } from './services/tag.service';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TagNodeList', () => {
 
@@ -47,7 +48,10 @@ describe('TagNodeList', () => {
     let tagService: TagService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

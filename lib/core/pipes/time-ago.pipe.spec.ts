@@ -22,6 +22,7 @@ import { UserPreferencesService } from '../services/user-preferences.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TimeAgoPipe', () => {
 
@@ -29,7 +30,10 @@ describe('TimeAgoPipe', () => {
     let userPreferences: UserPreferencesService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

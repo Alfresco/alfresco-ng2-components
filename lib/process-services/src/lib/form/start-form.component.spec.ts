@@ -25,7 +25,7 @@ import {
 } from './start-form.component.mock';
 import { StartFormComponent } from './start-form.component';
 import { FormService, WidgetVisibilityService, setupTestBed, FormModel, FormOutcomeModel } from '@alfresco/adf-core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 
 describe('StartFormComponent', () => {
@@ -42,6 +42,7 @@ describe('StartFormComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]

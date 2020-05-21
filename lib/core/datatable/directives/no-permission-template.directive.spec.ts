@@ -20,6 +20,7 @@ import { DataTableComponent } from '../components/datatable/datatable.component'
 import { NoPermissionTemplateDirective } from './no-permission-template.directive';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NoPermissionTemplateDirective', () => {
 
@@ -28,7 +29,10 @@ describe('NoPermissionTemplateDirective', () => {
     let directive: NoPermissionTemplateDirective;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

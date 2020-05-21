@@ -20,6 +20,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ContextMenuModule } from './context-menu.module';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-test-component',
@@ -80,6 +81,7 @@ describe('ContextMenuDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             ContextMenuModule
         ],

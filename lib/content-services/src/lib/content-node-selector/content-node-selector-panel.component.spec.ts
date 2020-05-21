@@ -30,6 +30,7 @@ import { DocumentListComponent } from '../document-list/components/document-list
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { ShareDataRow } from '../document-list';
+import { TranslateModule } from '@ngx-translate/core';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -73,7 +74,10 @@ describe('ContentNodeSelectorComponent', () => {
     }
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

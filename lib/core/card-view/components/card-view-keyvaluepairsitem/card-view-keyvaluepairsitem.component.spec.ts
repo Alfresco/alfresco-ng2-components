@@ -22,6 +22,7 @@ import { CardViewKeyValuePairsItemComponent } from './card-view-keyvaluepairsite
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CardViewKeyValuePairsItemComponent', () => {
 
@@ -32,7 +33,10 @@ describe('CardViewKeyValuePairsItemComponent', () => {
     const mockData = [{ name: 'test-name', value: 'test-value' }];
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

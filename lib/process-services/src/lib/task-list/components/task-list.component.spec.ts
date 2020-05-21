@@ -23,7 +23,7 @@ import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask, paginatedTask } from '../../mock';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 
 declare let jasmine: any;
@@ -36,6 +36,7 @@ describe('TaskListComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });
@@ -736,7 +737,10 @@ describe('CustomTaskListComponent', () => {
     let component: CustomTaskListComponent;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [CustomTaskListComponent]
     });
 
@@ -777,7 +781,10 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     let taskListService: TaskListService;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [EmptyTemplateComponent]
     });
 
@@ -877,6 +884,7 @@ describe('TaskListContextMenuComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         declarations: [

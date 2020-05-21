@@ -29,6 +29,7 @@ import { noResult, results } from '../../mock';
 import { SearchControlComponent } from './search-control.component';
 import { of } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: `
@@ -65,6 +66,7 @@ describe('SearchControlComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: [

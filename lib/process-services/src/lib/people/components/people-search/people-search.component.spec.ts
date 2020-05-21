@@ -20,6 +20,7 @@ import { UserProcessModel, setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { PeopleSearchComponent } from './people-search.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: '1',
@@ -44,7 +45,10 @@ describe('PeopleSearchComponent', () => {
     let searchInput: any;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(async(() => {

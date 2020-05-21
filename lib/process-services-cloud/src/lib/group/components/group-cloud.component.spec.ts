@@ -30,6 +30,7 @@ import {
     CoreModule
 } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GroupCloudComponent', () => {
     let component: GroupCloudComponent;
@@ -51,6 +52,7 @@ describe('GroupCloudComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreModule.forRoot(),
             ProcessServiceCloudTestingModule,
             GroupCloudModule

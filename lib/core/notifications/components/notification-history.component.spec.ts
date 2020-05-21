@@ -22,6 +22,7 @@ import { NotificationHistoryComponent } from './notification-history.component';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { NotificationService } from '../services/notification.service';
 import { StorageService } from '../../services/storage.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Notification History Component', () => {
 
@@ -39,7 +40,10 @@ describe('Notification History Component', () => {
     }
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(async(() => {

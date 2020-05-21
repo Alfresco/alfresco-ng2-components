@@ -16,12 +16,15 @@
  */
 
 import { ComponentFixture, TestBed, discardPeriodicTasks, fakeAsync, tick, async } from '@angular/core/testing';
-import { setupTestBed, UserPreferencesService } from 'core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { SearchTextInputComponent } from './search-text-input.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
+import { UserPreferencesService } from '../services/user-preferences.service';
+import { setupTestBed } from '../testing/setup-test-bed';
+import { CoreModule } from '../core.module';
 
 describe('SearchTextInputComponent', () => {
 
@@ -32,7 +35,11 @@ describe('SearchTextInputComponent', () => {
     let userPreferencesService: UserPreferencesService;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

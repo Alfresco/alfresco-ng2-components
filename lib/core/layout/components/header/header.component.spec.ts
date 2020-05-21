@@ -22,8 +22,8 @@ import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
 import { LayoutModule } from '../..';
 import { Component } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from './../../../material.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HeaderLayoutComponent', () => {
     let fixture: ComponentFixture<HeaderLayoutComponent>;
@@ -31,7 +31,10 @@ describe('HeaderLayoutComponent', () => {
 
     describe('Input parameters', () => {
         setupTestBed({
-            imports: [CoreTestingModule]
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
         });
 
         beforeEach(() => {
@@ -184,8 +187,13 @@ describe('HeaderLayoutComponent', () => {
         class HeaderLayoutTesterComponent {}
 
         setupTestBed({
-            declarations: [HeaderLayoutTesterComponent],
-            imports: [ CoreTestingModule, LayoutModule, MaterialModule, RouterTestingModule ]
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule,
+                LayoutModule,
+                MaterialModule
+            ],
+            declarations: [HeaderLayoutTesterComponent]
         });
 
         it('should project the provided nodes into the component', () => {

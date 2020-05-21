@@ -26,6 +26,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { PaginationModel } from '../models/pagination.model';
 import { RequestPaginationModel } from '../models/request-pagination.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     template: ``
@@ -60,7 +61,10 @@ describe('InfinitePaginationComponent', () => {
     let changeDetectorRef: ChangeDetectorRef;
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
         declarations: [
             TestPaginatedComponent
         ]

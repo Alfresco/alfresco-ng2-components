@@ -28,6 +28,7 @@ import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
 import { FilterParamsModel } from '../../../task/task-filters/models/filter-cloud.model';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessFiltersCloudComponent', () => {
 
@@ -77,7 +78,11 @@ describe('ProcessFiltersCloudComponent', () => {
     let fixture: ComponentFixture<ProcessFiltersCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, ProcessFiltersCloudModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            ProcessFiltersCloudModule
+        ],
         providers: [
             { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]

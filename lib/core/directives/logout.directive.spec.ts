@@ -23,6 +23,7 @@ import { AuthenticationService } from '../services';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { LogoutDirective } from './logout.directive';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LogoutDirective', () => {
 
@@ -43,6 +44,7 @@ describe('LogoutDirective', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule
             ],
             declarations: [
@@ -97,6 +99,7 @@ describe('LogoutDirective', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule
             ],
             declarations: [
@@ -140,6 +143,7 @@ describe('LogoutDirective', () => {
 
         setupTestBed({
             imports: [
+                TranslateModule.forRoot(),
                 CoreTestingModule
             ],
             declarations: [

@@ -20,9 +20,8 @@ import { NodeMetadata } from '../../models/node-metadata.model';
 import { EcmModelService } from './ecm-model.service';
 import { NodeService } from './node.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -32,10 +31,8 @@ describe('NodeService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

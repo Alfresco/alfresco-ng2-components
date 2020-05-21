@@ -24,6 +24,7 @@ import { of, throwError } from 'rxjs';
 import { defaultApp, deployedApps, nonDeployedApps } from '../mock/apps-list.mock';
 import { AppsListComponent } from './apps-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AppsListComponent', () => {
 
@@ -46,7 +47,10 @@ describe('AppsListComponent', () => {
     }
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [CustomEmptyAppListTemplateComponent]
     });
 

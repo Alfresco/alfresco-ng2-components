@@ -23,6 +23,7 @@ import { ViewerComponent } from '../components/viewer.component';
 import { ViewerExtensionDirective } from './viewer-extension.directive';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ExtensionViewerDirective', () => {
     let extensionViewerDirective: ViewerExtensionDirective;
@@ -35,6 +36,7 @@ describe('ExtensionViewerDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         providers: [

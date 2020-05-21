@@ -23,6 +23,7 @@ import { ContentMetadataComponent } from '../content-metadata/content-metadata.c
 import { setupTestBed, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentMetadataCardComponent', () => {
 
@@ -32,7 +33,10 @@ describe('ContentMetadataCardComponent', () => {
     const preset = 'custom-preset';
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

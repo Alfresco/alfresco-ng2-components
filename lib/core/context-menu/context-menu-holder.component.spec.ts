@@ -23,6 +23,7 @@ import { ContextMenuModule } from './context-menu.module';
 import { ContextMenuService } from './context-menu.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContextMenuHolderComponent', () => {
     let fixture: ComponentFixture<ContextMenuHolderComponent>;
@@ -54,6 +55,7 @@ describe('ContextMenuHolderComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             ContextMenuModule
         ],

@@ -17,7 +17,6 @@
 
 import { async, TestBed } from '@angular/core/testing';
 import {
-    AlfrescoApiServiceMock,
     setupTestBed,
     AlfrescoApiService,
     LogService,
@@ -42,6 +41,7 @@ import {
     mockIdentityGroupsCount
 } from '../mock/identity-group.service.mock';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
@@ -50,10 +50,8 @@ describe('IdentityGroupService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
-        ],
-        providers: [
-            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
         ]
     });
 

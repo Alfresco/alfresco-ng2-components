@@ -22,7 +22,7 @@ import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { of } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CoreTestingModule } from '../testing/core.testing.module';
 
 describe('InfoDrawerComponent', () => {
@@ -33,6 +33,7 @@ describe('InfoDrawerComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });
@@ -91,6 +92,7 @@ describe('Custom InfoDrawer', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ],
         declarations: [

@@ -36,8 +36,8 @@ import { RouterTestingModule } from '@angular/router/testing';
         HttpClientModule,
         NoopAnimationsModule,
         RouterTestingModule,
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
+        TranslateModule,
+        CoreModule,
         ProcessServicesCloudModule
     ],
     providers: [

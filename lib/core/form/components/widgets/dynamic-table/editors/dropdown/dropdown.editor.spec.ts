@@ -27,6 +27,7 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DropdownEditorComponent } from './dropdown.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DropdownEditorComponent', () => {
 
@@ -39,6 +40,7 @@ describe('DropdownEditorComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

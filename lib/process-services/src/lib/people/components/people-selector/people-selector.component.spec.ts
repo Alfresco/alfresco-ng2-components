@@ -21,6 +21,7 @@ import { PeopleSelectorComponent } from './people-selector.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PeopleSelectorComponent', () => {
 
@@ -28,7 +29,10 @@ describe('PeopleSelectorComponent', () => {
     let fixture: ComponentFixture<PeopleSelectorComponent>;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(() => {

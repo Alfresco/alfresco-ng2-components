@@ -21,14 +21,18 @@ import { SearchRadioComponent } from './search-radio.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchRadioComponent', () => {
    let fixture: ComponentFixture<SearchRadioComponent>;
    let component: SearchRadioComponent;
 
    setupTestBed({
-       imports: [ ContentTestingModule ]
-   });
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
+    });
 
    beforeEach(() => {
        fixture = TestBed.createComponent(SearchRadioComponent);

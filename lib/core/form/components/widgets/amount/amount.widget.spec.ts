@@ -22,6 +22,7 @@ import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../../form-base.module';
 import { FormModel } from '../core';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AmountWidgetComponent', () => {
 
@@ -30,6 +31,7 @@ describe('AmountWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule
         ]
@@ -85,6 +87,7 @@ describe('AmountWidgetComponent - rendering', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule
         ]
@@ -151,6 +154,7 @@ describe('AmountWidgetComponent settings', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule
         ],

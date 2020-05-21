@@ -23,6 +23,7 @@ import { PaginatedComponent } from './paginated-component.interface';
 import { BehaviorSubject } from 'rxjs';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 class FakePaginationInput implements Pagination {
     count: number = 25;
@@ -43,7 +44,10 @@ describe('PaginationComponent', () => {
     let component: PaginationComponent;
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
         schemas: [ NO_ERRORS_SCHEMA ]
     });
 

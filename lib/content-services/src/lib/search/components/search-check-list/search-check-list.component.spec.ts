@@ -22,13 +22,17 @@ import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { sizeOptions, stepOne, stepThree } from '../../../mock';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchCheckListComponent', () => {
     let fixture: ComponentFixture<SearchCheckListComponent>;
     let component: SearchCheckListComponent;
 
     setupTestBed({
-        imports: [ ContentTestingModule ]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

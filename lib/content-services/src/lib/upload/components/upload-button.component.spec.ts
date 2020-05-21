@@ -22,6 +22,7 @@ import { of, throwError } from 'rxjs';
 import { UploadButtonComponent } from './upload-button.component';
 import { NodeEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UploadButtonComponent', () => {
 
@@ -52,6 +53,7 @@ describe('UploadButtonComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

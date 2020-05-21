@@ -28,6 +28,7 @@ import { By } from '@angular/platform-browser';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { fakeGlobalFilter } from '../mock/task-filters-cloud.mock';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFiltersCloudComponent', () => {
 
@@ -53,7 +54,11 @@ describe('TaskFiltersCloudComponent', () => {
     let fixture: ComponentFixture<TaskFiltersCloudComponent>;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            TaskFiltersCloudModule
+        ],
         providers: [
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
         ]

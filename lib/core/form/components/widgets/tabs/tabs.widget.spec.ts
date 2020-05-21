@@ -23,6 +23,7 @@ import { TabModel } from '../core/tab.model';
 import { TabsWidgetComponent } from './tabs.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TabsWidgetComponent', () => {
 
@@ -30,6 +31,7 @@ describe('TabsWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

@@ -25,6 +25,7 @@ import { DocumentListService } from './document-list.service';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DocumentActionsService', () => {
 
@@ -33,6 +34,7 @@ describe('DocumentActionsService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         providers: [

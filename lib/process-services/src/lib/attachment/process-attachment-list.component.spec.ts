@@ -22,6 +22,7 @@ import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
 import { ProcessAttachmentListComponent } from './process-attachment-list.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessAttachmentListComponent', () => {
 
@@ -32,7 +33,10 @@ describe('ProcessAttachmentListComponent', () => {
     let mockAttachment: any;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(() => {
@@ -306,7 +310,10 @@ describe('Custom CustomEmptyTemplateComponent', () => {
     let fixture: ComponentFixture<CustomEmptyTemplateComponent>;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [CustomEmptyTemplateComponent],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });

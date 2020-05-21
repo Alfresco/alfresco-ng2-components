@@ -28,6 +28,7 @@ import {
 import { throwError, of } from 'rxjs';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { mockGroupProperties } from './mock-data';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentMetadataComponent', () => {
     let component: ContentMetadataComponent;
@@ -40,7 +41,10 @@ describe('ContentMetadataComponent', () => {
     const preset = 'custom-preset';
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [{ provide: LogService, useValue: { error: jasmine.createSpy('error') } }]
     });
 

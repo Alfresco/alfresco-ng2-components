@@ -27,6 +27,7 @@ import { formDefinitionDropdownField, formDefinitionTwoTextFields,
     formReadonlyTwoTextFields } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 /** Duration of the select opening animation. */
 const SELECT_OPEN_ANIMATION = 200;
@@ -48,6 +49,7 @@ describe('FormComponent UI and visibility', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]

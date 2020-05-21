@@ -23,6 +23,7 @@ import { CommentsComponent } from './comments.component';
 import { CommentContentService } from '../services/comment-content.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CommentsComponent', () => {
 
@@ -36,7 +37,10 @@ describe('CommentsComponent', () => {
     let commentContentService: CommentContentService;
 
     setupTestBed({
-        imports: [CoreTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
 

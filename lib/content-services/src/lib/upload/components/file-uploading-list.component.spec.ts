@@ -20,6 +20,7 @@ import { TranslationService, FileUploadStatus, NodesApiService, UploadService, s
 import { of, throwError } from 'rxjs';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FileUploadingListComponent', () => {
     let fixture: ComponentFixture<FileUploadingListComponent>;
@@ -35,6 +36,7 @@ describe('FileUploadingListComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ]
     });

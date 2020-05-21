@@ -34,6 +34,7 @@ import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.compo
 import { fakeFilter } from '../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
 import moment from 'moment-es6';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -45,7 +46,11 @@ describe('EditTaskFilterCloudComponent', () => {
     let getRunningApplicationsSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [ProcessServiceCloudTestingModule, TaskFiltersCloudModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule,
+            TaskFiltersCloudModule
+        ],
         providers: [
             MatDialog,
             { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }

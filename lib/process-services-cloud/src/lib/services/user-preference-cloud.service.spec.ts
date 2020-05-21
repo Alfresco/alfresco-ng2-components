@@ -21,6 +21,7 @@ import { UserPreferenceCloudService } from './user-preference-cloud.service';
 import { setupTestBed, AlfrescoApiServiceMock, AlfrescoApiService } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('PreferenceService', () => {
   let service: UserPreferenceCloudService;
@@ -50,7 +51,8 @@ describe('PreferenceService', () => {
 
   setupTestBed({
     imports: [
-      ProcessServiceCloudTestingModule
+        TranslateModule.forRoot(),
+        ProcessServiceCloudTestingModule
     ]
   });
 

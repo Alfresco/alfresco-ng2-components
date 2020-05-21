@@ -20,6 +20,7 @@ import { HostSettingsComponent } from './host-settings.component';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AppConfigService } from '../app-config/app-config.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HostSettingsComponent', () => {
 
@@ -29,7 +30,10 @@ describe('HostSettingsComponent', () => {
     let element: any;
 
     setupTestBed({
-        imports: [CoreTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ]
     });
 
     beforeEach(() => {

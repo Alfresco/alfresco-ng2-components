@@ -36,6 +36,7 @@ import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { Node } from '@alfresco/js-api';
 import { FormCloudModule } from '../../../form-cloud.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFileCloudWidgetComponent', () => {
     let widget: AttachFileCloudWidgetComponent;
@@ -109,6 +110,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule,
             FormCloudModule,
             ContentModule.forRoot()

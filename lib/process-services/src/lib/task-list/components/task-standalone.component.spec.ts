@@ -19,6 +19,7 @@ import { TaskStandaloneComponent } from './task-standalone.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskStandaloneComponent', () => {
     let component: TaskStandaloneComponent;
@@ -27,6 +28,7 @@ describe('TaskStandaloneComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });

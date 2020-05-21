@@ -23,6 +23,7 @@ import { StorageService } from './storage.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
 import { CoreTestingModule } from '../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -37,6 +38,7 @@ describe('ContentService', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule
         ]
     });

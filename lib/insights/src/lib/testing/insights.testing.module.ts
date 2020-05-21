@@ -32,9 +32,9 @@ import {
 @NgModule({
     imports: [
         NoopAnimationsModule,
-        TranslateModule.forRoot(),
-        CoreModule.forRoot(),
-        InsightsModule.forRoot()
+        TranslateModule,
+        CoreModule,
+        InsightsModule
     ],
     providers: [
         { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock },

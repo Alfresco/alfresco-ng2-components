@@ -20,6 +20,7 @@ import { QueryBody } from '@alfresco/js-api';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 class SearchServiceMock {
     public query: QueryBody;
@@ -35,7 +36,10 @@ describe('ContentNodeSelectorService', () => {
     let search: SearchServiceMock;
 
     setupTestBed({
-        imports: [ContentTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ],
         providers: [
             { provide: SearchService, useClass: SearchServiceMock }
         ]

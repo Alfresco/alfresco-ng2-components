@@ -24,6 +24,7 @@ import { of, throwError } from 'rxjs';
 import { TreeBaseNode } from '../models/tree-view.model';
 import { NodeEntry } from '@alfresco/js-api';
 import { SimpleChange } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TreeViewComponent', () => {
 
@@ -73,6 +74,7 @@ describe('TreeViewComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: []

@@ -22,6 +22,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { of } from 'rxjs';
 import { RatingService } from './services/rating.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Rating component', () => {
 
@@ -31,7 +32,10 @@ describe('Rating component', () => {
     let service: RatingService;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

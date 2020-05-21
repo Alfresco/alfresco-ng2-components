@@ -21,6 +21,7 @@ import { of, throwError } from 'rxjs';
 import { ProcessService } from './../services/process.service';
 import { setupTestBed, DownloadService } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-basic-button',
@@ -71,6 +72,7 @@ describe('ProcessAuditDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         declarations: [

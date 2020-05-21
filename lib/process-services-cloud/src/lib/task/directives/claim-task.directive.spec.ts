@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { ClaimTaskDirective } from './claim-task.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ClaimTaskDirective', () => {
 
@@ -43,6 +44,7 @@ describe('ClaimTaskDirective', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ],
         declarations: [
@@ -122,6 +124,7 @@ describe('Claim Task Directive validation errors', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessServiceCloudTestingModule
         ],
         declarations: [

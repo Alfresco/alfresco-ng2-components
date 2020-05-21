@@ -29,6 +29,7 @@ import { ProcessService } from './../services/process.service';
 import { ProcessInstanceDetailsComponent } from './process-instance-details.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { FormModule } from '../../form';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessInstanceDetailsComponent', () => {
 
@@ -39,6 +40,7 @@ describe('ProcessInstanceDetailsComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule,
             FormModule,
             TaskListModule

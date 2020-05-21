@@ -23,6 +23,7 @@ import { ContentNodeDialogService } from './content-node-dialog.service';
 import { MatDialog } from '@angular/material';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakeNodeEntry: NodeEntry = <NodeEntry> {
     entry: {
@@ -67,7 +68,10 @@ describe('ContentNodeDialogService', () => {
     let afterOpenObservable: Subject<any>;
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     beforeEach(() => {

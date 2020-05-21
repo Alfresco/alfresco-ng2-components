@@ -20,6 +20,7 @@ import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { differentResult, result, SimpleSearchTestComponent } from '../../mock';
 import { of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SearchComponent', () => {
 
@@ -29,6 +30,7 @@ describe('SearchComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ContentTestingModule
         ],
         declarations: [SimpleSearchTestComponent]

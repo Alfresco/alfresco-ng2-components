@@ -22,6 +22,7 @@ import { ContentTestingModule } from '../../testing/content.testing.module';
 import { ContentMetadataService } from './content-metadata.service';
 import { of } from 'rxjs';
 import { PropertyGroup } from '../interfaces/property-group.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ContentMetaDataService', () => {
 
@@ -47,7 +48,10 @@ describe('ContentMetaDataService', () => {
     };
 
     setupTestBed({
-        imports: [ContentTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ContentTestingModule
+        ]
     });
 
     function setConfig(presetName, presetConfig) {

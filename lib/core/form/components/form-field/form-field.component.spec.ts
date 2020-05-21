@@ -24,6 +24,7 @@ import { setupTestBed } from '../../../testing/setup-test-bed';
 import { FormBaseModule } from '../../form-base.module';
 import { formWithOneVisibleAndOneInvisibleFieldMock, formWithOneVisibleAndOneInvisibleTabMock } from '../mock/form-renderer.component.mock';
 import { CoreTestingModule } from '../../../testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FormFieldComponent', () => {
 
@@ -35,6 +36,7 @@ describe('FormFieldComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule
         ]
