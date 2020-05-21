@@ -19,17 +19,14 @@ import { Column } from './column';
 import { TextColumn } from './text-column';
 import { DateColumn } from './date-column';
 import { DataTableItem } from './data-table-item';
+import { ElementFinder } from 'protractor';
 
 export class DataTableBuilder {
 
-    createDataTable(columns: Array<Column>): DataTableItem {
-        const datatable: DataTableItem = new DataTableItem();
+    createDataTable(columns: Array<Column>, rootElement?: ElementFinder): DataTableItem {
+        const datatable: DataTableItem = new DataTableItem(rootElement);
         for (const column of columns) {
             switch (column.columnType) {
-                case 'text': {
-                    datatable.addItem(new TextColumn(column.columnName));
-                    break;
-                }
                 case 'date': {
                     datatable.addItem(new DateColumn(column.columnName));
                     break;
@@ -38,7 +35,7 @@ export class DataTableBuilder {
                     datatable.addItem(column);
                     break;
                 }
-                default: ; // i can move the 'custom' case here in default, if it's considered better
+                default: datatable.addItem(new TextColumn(column.columnName));
                 // here cases for 'image', 'fileSize', 'location', and 'json' can be added when needed
             }
         }

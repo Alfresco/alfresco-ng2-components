@@ -16,11 +16,18 @@
  */
 
 import { Column } from './column';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
+import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class DataTableItem {
     columns = new Array<Column>();
+    rootElement: ElementFinder;
+    rows: Locator = by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
+
+    constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
+        this.rootElement = rootElement;
+    }
 
     addItem(column: Column): void {
         this.columns.push(column);
@@ -33,16 +40,24 @@ export class DataTableItem {
     }
 
     getRow(columnName: string, columnValue: string): ElementFinder {
-        // don't forget to add this.rootElement, for now is missing;
         const column = this.getColumn(columnName);
         const locator = `//div[@title="${columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`;
-        return element(by.xpath(locator));
+        return this.rootElement.element(by.xpath(locator));
     }
 
     async selectRow(columnName: string, columnValue: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const row = await this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
+    }
+
+    async rightClickOnRow(columnName: string, columnValue: string): Promise<void> {
+        const row = this.getRow(columnName, columnValue);
+        await BrowserActions.rightClick(row);
+    }
+
+    async waitForFirstRow(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
     }
 
     // all the methods we have on data-table-component.page.ts will be part of this class
