@@ -20,6 +20,7 @@ import { fakeReportList } from '../../mock';
 import { AnalyticsService } from './analytics.service';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -28,7 +29,10 @@ describe('AnalyticsService', () => {
     let service: AnalyticsService;
 
     setupTestBed({
-        imports: [InsightsTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            InsightsTestingModule
+        ]
     });
 
     beforeEach(() => {

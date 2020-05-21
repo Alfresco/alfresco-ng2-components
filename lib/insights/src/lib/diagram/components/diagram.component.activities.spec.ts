@@ -21,6 +21,7 @@ import * as diagramsActivitiesMock from '../../mock/diagram/diagram-activities.m
 import { DiagramComponent } from './diagram.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -31,7 +32,10 @@ describe('Diagrams activities', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [InsightsTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            InsightsTestingModule
+        ]
     });
 
     beforeEach(() => {

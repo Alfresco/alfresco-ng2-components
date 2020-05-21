@@ -20,13 +20,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AnalyticsComponent } from '../components/analytics.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AnalyticsComponent', () => {
 
     let fixture: ComponentFixture<AnalyticsComponent>;
 
     setupTestBed({
-        imports: [InsightsTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            InsightsTestingModule
+        ]
     });
 
     beforeEach(() => {

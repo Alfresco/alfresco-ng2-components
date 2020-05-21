@@ -23,6 +23,7 @@ import * as analyticMock from '../../mock';
 import { AnalyticsGeneratorComponent } from '../components/analytics-generator.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -32,7 +33,10 @@ describe('AnalyticsGeneratorComponent', () => {
     let fixture: ComponentFixture<AnalyticsGeneratorComponent>;
 
     setupTestBed({
-        imports: [InsightsTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            InsightsTestingModule
+        ]
     });
 
     beforeEach(() => {

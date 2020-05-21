@@ -20,6 +20,7 @@ import { AnalyticsReportListComponent } from '../components/analytics-report-lis
 import { ReportParametersModel } from '../../diagram/models/report/report-parameters.model';
 import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -40,7 +41,10 @@ describe('AnalyticsReportListComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [InsightsTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            InsightsTestingModule
+        ]
     });
 
     beforeEach(() => {

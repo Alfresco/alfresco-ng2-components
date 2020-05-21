@@ -24,6 +24,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { InsightsTestingModule } from '../../testing/insights.testing.module';
 import { AnalyticsService } from '../services/analytics.service';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare let jasmine: any;
 
@@ -36,7 +37,10 @@ describe('AnalyticsReportParametersComponent', () => {
     let service: AnalyticsService;
 
     setupTestBed({
-        imports: [InsightsTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            InsightsTestingModule
+        ]
     });
 
     beforeEach(() => {
