@@ -33,6 +33,7 @@ import {
 import { StartProcessInstanceComponent } from './start-process.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('StartFormComponent', () => {
 
@@ -49,6 +50,7 @@ describe('StartFormComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });

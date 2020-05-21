@@ -25,6 +25,7 @@ import { of } from 'rxjs';
 
 import { SelectAppsDialogComponent } from './select-apps-dialog.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'adf-dialog-test',
@@ -57,7 +58,10 @@ describe('Select app dialog', () => {
     let service: AppsProcessService;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [DialogSelectAppTestComponent],
         providers: [
             {

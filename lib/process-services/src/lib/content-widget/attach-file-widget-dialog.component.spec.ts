@@ -23,10 +23,10 @@ import { ProcessTestingModule } from '../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
 import { setupTestBed, AuthenticationService, SitesService, CoreModule } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Node } from '@alfresco/js-api';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFileWidgetDialogComponent', () => {
 
@@ -46,10 +46,10 @@ describe('AttachFileWidgetDialogComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             CoreModule.forRoot(),
             ProcessTestingModule,
-            ContentModule.forRoot(),
-            RouterTestingModule
+            ContentModule.forRoot()
         ],
         providers: [
             { provide: MAT_DIALOG_DATA, useValue: data }

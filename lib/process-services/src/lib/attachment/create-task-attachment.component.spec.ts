@@ -22,6 +22,7 @@ import { of } from 'rxjs';
 import { ProcessContentService, setupTestBed } from '@alfresco/adf-core';
 import { AttachmentComponent } from './create-task-attachment.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachmentComponent', () => {
 
@@ -31,7 +32,10 @@ describe('AttachmentComponent', () => {
     let createTaskRelatedContentSpy: jasmine.Spy;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(() => {

@@ -23,6 +23,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ChecklistComponent', () => {
 
@@ -33,7 +34,10 @@ describe('ChecklistComponent', () => {
     let service: TaskListService;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(async(() => {

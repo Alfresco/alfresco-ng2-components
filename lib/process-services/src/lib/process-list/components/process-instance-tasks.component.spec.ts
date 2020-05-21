@@ -28,6 +28,7 @@ import { ProcessService } from './../services/process.service';
 import { ProcessInstanceTasksComponent } from './process-instance-tasks.component';
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessInstanceTasksComponent', () => {
 
@@ -40,6 +41,7 @@ describe('ProcessInstanceTasksComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });

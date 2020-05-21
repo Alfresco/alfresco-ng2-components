@@ -25,6 +25,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { fakeProcessFilters } from '../../mock';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessFiltersComponent', () => {
 
@@ -37,6 +38,7 @@ describe('ProcessFiltersComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]

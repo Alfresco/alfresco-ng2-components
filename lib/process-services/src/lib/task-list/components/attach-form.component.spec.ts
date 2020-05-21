@@ -22,6 +22,7 @@ import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TaskListService } from './../services/tasklist.service';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFormComponent', () => {
     let component: AttachFormComponent;
@@ -31,6 +32,7 @@ describe('AttachFormComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });

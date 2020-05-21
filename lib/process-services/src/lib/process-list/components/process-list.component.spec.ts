@@ -27,6 +27,7 @@ import {
 import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessCustomSchema } from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessInstanceListComponent', () => {
 
@@ -46,6 +47,7 @@ describe('ProcessInstanceListComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });
@@ -464,7 +466,10 @@ describe('CustomProcessListComponent', () => {
     let component: CustomProcessListComponent;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [CustomProcessListComponent]
     });
 
@@ -499,7 +504,10 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
     let processService: ProcessService;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [EmptyTemplateComponent]
     });
 
@@ -598,7 +606,10 @@ describe('ProcessListContextMenuComponent', () => {
     let element: HTMLElement;
 
     setupTestBed({
-        imports: [ProcessTestingModule],
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
         declarations: [ProcessListContextMenuComponent]
     });
 

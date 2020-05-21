@@ -21,6 +21,7 @@ import { ProcessInstance } from '../models/process-instance.model';
 import { exampleProcess } from '../../mock';
 import { ProcessInstanceHeaderComponent } from './process-instance-header.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessInstanceHeaderComponent', () => {
 
@@ -30,6 +31,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });

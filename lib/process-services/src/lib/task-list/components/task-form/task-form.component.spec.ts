@@ -41,6 +41,7 @@ import {
 } from '../../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -55,6 +56,7 @@ describe('TaskFormComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ],
         schemas: [NO_ERRORS_SCHEMA]

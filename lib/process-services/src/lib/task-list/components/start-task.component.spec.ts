@@ -23,6 +23,7 @@ import { StartTaskComponent } from './start-task.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { taskDetailsMock } from '../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('StartTaskComponent', () => {
 
@@ -49,7 +50,10 @@ describe('StartTaskComponent', () => {
     const testUser = { id: 1001, firstName: 'fakeName', email: 'fake@app.activiti.com' };
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(async(() => {

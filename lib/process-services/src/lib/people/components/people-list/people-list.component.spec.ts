@@ -20,6 +20,7 @@ import { UserProcessModel, setupTestBed, DataRowActionEvent, DataRowEvent, Objec
 import { UserEventModel } from '../../../task-list/models/user-event.model';
 import { PeopleListComponent } from './people-list.component';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const fakeUser: UserProcessModel = new UserProcessModel({
     id: 1,
@@ -34,7 +35,10 @@ describe('PeopleListComponent', () => {
     let fixture: ComponentFixture<PeopleListComponent>;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(async(() => {

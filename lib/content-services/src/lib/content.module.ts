@@ -65,53 +65,6 @@ import { TreeViewModule } from './tree-view/tree-view.module';
         VersionManagerModule,
         TreeViewModule
     ],
-    exports: [
-        SocialModule,
-        TagModule,
-        WebScriptModule,
-        DocumentListModule,
-        UploadModule,
-        SearchModule,
-        SitesDropdownModule,
-        BreadcrumbModule,
-        ContentNodeSelectorModule,
-        ContentNodeShareModule,
-        ContentMetadataModule,
-        DialogModule,
-        FolderDirectiveModule,
-        ContentDirectiveModule,
-        PermissionManagerModule,
-        VersionManagerModule,
-        TreeViewModule
-    ]
-})
-export class ContentModuleLazy {}
-
-@NgModule({
-    imports: [
-        CoreModule,
-        SocialModule,
-        TagModule,
-        CommonModule,
-        WebScriptModule,
-        FormsModule,
-        ReactiveFormsModule,
-        DialogModule,
-        SearchModule,
-        DocumentListModule,
-        UploadModule,
-        MaterialModule,
-        SitesDropdownModule,
-        BreadcrumbModule,
-        ContentNodeSelectorModule,
-        ContentNodeShareModule,
-        ContentMetadataModule,
-        FolderDirectiveModule,
-        ContentDirectiveModule,
-        PermissionManagerModule,
-        VersionManagerModule,
-        TreeViewModule
-    ],
     providers: [
         {
             provide: TRANSLATION_PROVIDER,
@@ -161,7 +114,7 @@ export class ContentModule {
 
     static forChild(): ModuleWithProviders {
         return {
-            ngModule: ContentModuleLazy
+            ngModule: ContentModule
         };
     }
 }

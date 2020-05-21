@@ -24,6 +24,7 @@ import { CommentProcessService, setupTestBed } from '@alfresco/adf-core';
 import { ProcessCommentsComponent } from './process-comments.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { mockProcessInstanceComments } from '../mock/process/process-comments.mock';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ProcessCommentsComponent', () => {
 
@@ -33,7 +34,10 @@ describe('ProcessCommentsComponent', () => {
     let commentProcessService: CommentProcessService;
 
     setupTestBed({
-        imports: [ProcessTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ]
     });
 
     beforeEach(() => {

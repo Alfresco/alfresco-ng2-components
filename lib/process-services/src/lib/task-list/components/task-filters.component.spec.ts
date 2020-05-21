@@ -25,6 +25,7 @@ import { TaskFilterService } from '../services/task-filter.service';
 import { TaskFiltersComponent } from './task-filters.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TaskFiltersComponent', () => {
 
@@ -73,6 +74,7 @@ describe('TaskFiltersComponent', () => {
 
     setupTestBed({
         imports: [
+            TranslateModule.forRoot(),
             ProcessTestingModule
         ]
     });
