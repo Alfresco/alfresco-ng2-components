@@ -42,7 +42,7 @@ export function processUploadServiceFactory(api: AlfrescoApiService, config: App
 
 export class ProcessAttachmentsComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild('processAttachList')
+    @ViewChild('processAttachList', { static: false })
     processAttachList: ProcessAttachmentListComponent;
 
     @Input()

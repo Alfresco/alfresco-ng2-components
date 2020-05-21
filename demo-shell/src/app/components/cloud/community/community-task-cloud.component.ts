@@ -35,7 +35,7 @@ export class CommunityTasksCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_SAVE_AS = 'saveAs';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-task-filter';
 
-    @ViewChild('taskCloud')
+    @ViewChild('taskCloud', { static: false })
     taskCloud: TaskListCloudComponent;
 
     isFilterLoaded = false;

@@ -76,34 +76,34 @@ const REPORT_ROUTE = 2;
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    @ViewChild('activitiFilter')
+    @ViewChild('activitiFilter', { static: false })
     activitiFilter: TaskFiltersComponent;
 
-    @ViewChild('processListPagination')
+    @ViewChild('processListPagination', { static: false })
     processListPagination: PaginationComponent;
 
-    @ViewChild('taskListPagination')
+    @ViewChild('taskListPagination', { static: false })
     taskListPagination: PaginationComponent;
 
-    @ViewChild('taskList')
+    @ViewChild('taskList', { static: false })
     taskList: TaskListComponent;
 
-    @ViewChild('activitiProcessFilter')
+    @ViewChild('activitiProcessFilter', { static: false })
     activitiProcessFilter: ProcessFiltersComponent;
 
-    @ViewChild('processList')
+    @ViewChild('processList', { static: false })
     processList: ProcessInstanceListComponent;
 
-    @ViewChild('activitiProcessDetails')
+    @ViewChild('activitiProcessDetails', { static: false })
     activitiProcessDetails: ProcessInstanceDetailsComponent;
 
-    @ViewChild('activitiDetails')
+    @ViewChild('activitiDetails', { static: false })
     activitiDetails: TaskDetailsComponent;
 
-    @ViewChild('activitiStartProcess')
+    @ViewChild('activitiStartProcess', { static: false })
     activitiStartProcess: StartProcessInstanceComponent;
 
-    @ViewChild('analyticsReportList')
+    @ViewChild('analyticsReportList', { static: true })
     analyticsReportList: AnalyticsReportListComponent;
 
     @Input()

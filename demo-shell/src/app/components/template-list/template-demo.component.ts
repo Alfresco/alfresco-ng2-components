@@ -25,22 +25,22 @@ import { ObjectDataTableAdapter } from '@alfresco/adf-core';
 })
 export class TemplateDemoComponent implements AfterViewChecked {
 
-    @ViewChild('defaultDocumentList')
+    @ViewChild('defaultDocumentList', { static: true })
     defaultDocumentListComponent: DocumentListComponent;
 
-    @ViewChild('customLoadingDocumentList')
+    @ViewChild('customLoadingDocumentList', { static: true })
     customLoadingDocumentList: DocumentListComponent;
 
-    @ViewChild('customNoPermissionDocumentList')
+    @ViewChild('customNoPermissionDocumentList', { static: true })
     customNoPermissionDocumentList: DocumentListComponent;
 
-    @ViewChild('defaultNoPermissionDocumentList')
+    @ViewChild('defaultNoPermissionDocumentList', { static: true })
     defaultNoPermissionDocumentList: DocumentListComponent;
 
-    @ViewChild('customEmptyDocumentList')
+    @ViewChild('customEmptyDocumentList', { static: true })
     customEmptyDocumentList: DocumentListComponent;
 
-    @ViewChild('defaultEmptyDocumentList')
+    @ViewChild('defaultEmptyDocumentList', { static: true })
     defaultEmptyDocumentList: DocumentListComponent;
 
     constructor() {
