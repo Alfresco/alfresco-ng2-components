@@ -5,6 +5,13 @@ if [ -n "${APP_CONFIG_AUTH_TYPE}" ];then
     -i ./app.config.json
 fi
 
+if [ -n "${APP_CONFIG_IDENTITY_HOST}" ]; then
+  replace="\/"
+  encodedIdentity=${APP_CONFIG_IDENTITY_HOST//\//$replace}
+  sed -e "s/\"identityHost\": \".*\"/\"identityHost\": \"$encodedIdentity\"/g" \
+    -i ./app.config.json
+fi
+
 if [ -n "${APP_CONFIG_OAUTH2_HOST}" ];then
   replace="\/"
   encoded=${APP_CONFIG_OAUTH2_HOST//\//$replace}
@@ -18,12 +25,12 @@ if [ -n "${APP_CONFIG_OAUTH2_CLIENTID}" ];then
 fi
 
 if [ -n "${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}" ];then
- sed "/implicitFlow/s/true/${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}/" \
+  sed -e "s/\"implicitFlow\": [^,]*/\"implicitFlow\": ${APP_CONFIG_OAUTH2_IMPLICIT_FLOW}/g" \
     -i ./app.config.json
 fi
 
 if [ -n "${APP_CONFIG_OAUTH2_SILENT_LOGIN}" ];then
- sed "/silentLogin/s/true/${APP_CONFIG_OAUTH2_SILENT_LOGIN}/" \
+  sed -e "s/\"silentLogin\": [^,]*/\"silentLogin\": ${APP_CONFIG_OAUTH2_SILENT_LOGIN}/g" \
     -i ./app.config.json
 fi
 
@@ -48,12 +55,19 @@ if [ -n "${APP_CONFIG_OAUTH2_REDIRECT_LOGOUT}" ];then
     -i ./app.config.json
 fi
 
-if [[ $ACSURL ]]; then
-  sed -i s%{protocol}//{hostname}{:port}%"$ACSURL"%g /usr/share/nginx/html/app.config.json
+if [[ -n "${APP_CONFIG_BPM_HOST}" ]]
+then
+  replace="\/"
+  encoded=${APP_CONFIG_BPM_HOST//\//$replace}
+  sed -e "s/\"bpmHost\": \".*\"/\"bpmHost\": \"${encoded}\"/g" \
+    -i ./app.config.json
 fi
 
-if [ -n "${APP_BASE_SHARE_URL}" ];then
-  sed -e "s/\"baseShareUrl\": \".*\"/\"baseShareUrl\": \"${APP_BASE_SHARE_URL}\"/g" \
+if [[ -n "${APP_CONFIG_ECM_HOST}" ]]
+then
+  replace="\/"
+  encoded=${APP_CONFIG_ECM_HOST//\//$replace}
+  sed -e "s/\"ecmHost\": \".*\"/\"ecmHost\": \"${encoded}\"/g" \
     -i ./app.config.json
 fi
 
@@ -62,5 +76,6 @@ then
   sed s%href=\"/\"%href=\""${BASE_PATH}"\"%g \
     -i ./index.html
 fi
+
 
 nginx -g "daemon off;"
