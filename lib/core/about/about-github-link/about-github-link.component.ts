@@ -28,10 +28,12 @@ export class AboutGithubLinkComponent {
     url = 'https://github.com/Alfresco/alfresco-ng2-components/commits/';
 
     /** Current version of the app running */
-    @Input() version: string;
+    @Input()
+    version: string = '';
 
-    /** Current version of the app running */
-    @Input() application: string;
+    /** Title of app running */
+    @Input()
+    application: string = '';
 
     constructor() {}
 }
