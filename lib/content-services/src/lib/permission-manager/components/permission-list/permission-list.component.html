@@ -36,6 +36,7 @@
                           <mat-option *ngFor="let role of settableRoles" [value]="role">{{ role }}</mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <adf-role-selector ></adf-role-selector>
                     <ng-template #show_only_label>
                         <span>{{entry.data.getValue(entry.row, entry.col)}}</span>
                     </ng-template>
