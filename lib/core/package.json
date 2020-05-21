@@ -30,7 +30,6 @@
     "rxjs": ">=6.2.2",
     "@ngx-translate/core": ">=11.0.0",
     "core-js": ">=2.5.4",
-    "hammerjs": ">=2.0.8",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
     "pdfjs-dist": ">=2.3.200",
