@@ -27,9 +27,11 @@ export class FormFields {
     valueLocator: Locator = by.css('input');
     labelLocator: Locator = by.css('label');
     noFormMessage: ElementFinder = element(by.css('.adf-empty-content__title'));
+    noFormTemplate: ElementFinder = element(by.css('adf-empty-content'));
     completedTaskNoFormMessage: ElementFinder = element(by.css('div[id*="completed-form-message"] p'));
     attachFormButton: ElementFinder = element(by.id('adf-attach-form-attach-button'));
     completeButton: ElementFinder = element(by.id('adf-form-complete'));
+    cancelButton: ElementFinder = element(by.css('#adf-no-form-cancel-button'));
     errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first());
@@ -104,6 +106,17 @@ export class FormFields {
         await BrowserActions.click(this.saveButton);
     }
 
+    async isNoFormTemplateDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(
+                this.noFormTemplate
+            );
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async noFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.formContent);
     }
@@ -152,5 +165,29 @@ export class FormFields {
     async isCompleteFormButtonDisabled(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
         return this.completeButton.getAttribute('disabled');
+    }
+
+    async isCancelButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(
+                this.cancelButton
+            );
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isCancelButtonEnabled(): Promise<boolean> {
+        try {
+            await this.cancelButton.isEnabled();
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async clickCancelButton(): Promise<void> {
+        await BrowserActions.click(this.cancelButton);
     }
 }
