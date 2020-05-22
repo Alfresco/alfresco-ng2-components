@@ -23,8 +23,8 @@
     "commander": "^4.0.0",
     "license-checker": "^25.0.1",
     "npm-registry-fetch": "^3.9.0",
-    "@angular-devkit/core": "^7.2.15",
-    "rxjs": ">=6.2.2",
+    "@angular-devkit/core": "^9.1.7",
+    "rxjs": "^6.5.5",
     "shelljs": "^0.8.3",
     "spdx-license-list": "^5.0.0",
     "ejs": "^2.6.1"
@@ -35,6 +35,6 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/shelljs": "^0.8.7",
-    "typescript": "3.1.6"
+    "typescript": "3.9.3"
   }
 }

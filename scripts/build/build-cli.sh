@@ -6,7 +6,7 @@ cd $DIR/../../lib/cli/
 
 echo "====== Cli ======"
 echo "====== Build ======"
-npm install -g typescript
+npm i
 npm run dist
 
 cd $DIR/../../
