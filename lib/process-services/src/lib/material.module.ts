@@ -37,21 +37,23 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-export function modules() {
-    return [
+@NgModule({
+    providers: [
+        {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' }}
+    ],
+    imports: [
         MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
         MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
         MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
         MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
         MatChipsModule, MatMenuModule
-    ];
-}
-
-@NgModule({
-    providers: [
-        {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'never' }}
     ],
-    imports: modules(),
-    exports: modules()
+    exports: [
+        MatAutocompleteModule, MatButtonModule, MatCardModule, MatDialogModule,
+        MatCheckboxModule, MatDatepickerModule, MatGridListModule, MatIconModule, MatInputModule,
+        MatListModule, MatOptionModule, MatRadioModule, MatSelectModule, MatSlideToggleModule, MatTableModule,
+        MatTabsModule, MatProgressSpinnerModule, MatNativeDateModule, MatRippleModule, MatTooltipModule,
+        MatChipsModule, MatMenuModule
+    ]
 })
 export class MaterialModule {}

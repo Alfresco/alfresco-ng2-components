@@ -44,19 +44,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-export function modules() {
-    return [
+@NgModule({
+    imports: [
         MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
         MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
         MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
         MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
         MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
         MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule
-    ];
-}
-
-@NgModule({
-    imports: modules(),
-    exports: modules()
+    ],
+    exports: [
+        MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+        MatChipsModule, MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
+        MatInputModule, MatListModule, MatNativeDateModule, MatOptionModule, MatProgressSpinnerModule, MatRadioModule,
+        MatRippleModule, MatSelectModule, MatSlideToggleModule, MatTableModule, MatTabsModule,
+        MatMenuModule, MatProgressBarModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule,
+        MatTooltipModule, MatDatetimepickerModule, MatNativeDatetimeModule, MatExpansionModule
+    ]
 })
 export class MaterialModule {}
