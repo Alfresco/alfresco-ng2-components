@@ -201,13 +201,6 @@
                         <span>{{ 'DOCUMENT_LIST.TOOLBAR.EDIT_FOLDER' | translate }}</span>
                     </button>
                     <button mat-menu-item
-                            [disabled]="!hasSelection(documentList.selection)"
-                            title="Download"
-                            (click)="downloadNodes(documentList.selection)">
-                        <mat-icon>get_app</mat-icon>
-                        <span>{{ 'DOCUMENT_LIST.TOOLBAR.DOWNLOAD' | translate }}</span>
-                    </button>
-                    <button mat-menu-item
                             adf-check-allowable-operation="delete"
                             [adf-nodes]="documentList.selection"
                             (delete)="onDeleteActionSuccess($event)"
