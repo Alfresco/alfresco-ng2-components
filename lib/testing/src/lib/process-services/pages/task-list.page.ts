@@ -21,10 +21,19 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 import { element, by, ElementFinder } from 'protractor';
 
 export class TaskListPage {
+    rootElement: ElementFinder;
+    dataTable: DataTableComponentPage;
+    noTasksFound: ElementFinder;
 
-    noTasksFound: ElementFinder = element(by.css('div[class="adf-empty-content__title"]'));
-    taskList: ElementFinder = element(by.css('adf-tasklist'));
-    dataTable: DataTableComponentPage = new DataTableComponentPage(this.taskList);
+    constructor(
+        rootElement: ElementFinder = element.all(by.css("adf-tasklist")).first()
+    ) {
+        this.rootElement = rootElement;
+        this.dataTable = new DataTableComponentPage(this.rootElement);
+        this.noTasksFound = this.rootElement.element(
+            by.css('div[class="adf-empty-content__title"]')
+        );
+    }
 
     getDataTable() {
         return this.dataTable;
@@ -43,7 +52,7 @@ export class TaskListPage {
     }
 
     async checkTaskListIsLoaded(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.taskList);
+        await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
     }
 
     getNoTasksFoundMessage(): Promise<string> {
@@ -60,11 +69,5 @@ export class TaskListPage {
 
     getAllRowsNameColumn(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
-    }
-
-    async clickOnTask(taskName: string): Promise<void> {
-        await BrowserActions.clickExecuteScript(
-            `span[aria-label="${taskName}"]`
-        );
     }
 }
