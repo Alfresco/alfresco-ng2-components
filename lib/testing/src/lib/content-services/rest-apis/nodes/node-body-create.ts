@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-export * from './pages/public-api';
-export * from './actions/public-api';
-export * from './dialog/public-api';
-export * from './rest-apis/public-api';
+export const NODE_TYPE_FILE = 'cm:content';
+export const NODE_TYPE_FOLDER = 'cm:folder';
+export const NODE_TITLE = 'cm:title';
+export const NODE_DESCRIPTION = 'cm:description';
+
+export class NodeBodyCreate {
+    constructor(
+        public name: string,
+        public nodeType: string,
+        public relativePath: string = '/',
+        public aspectNames?: string[],
+        public properties?: any[]
+    ) {}
+}

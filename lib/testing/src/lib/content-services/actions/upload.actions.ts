@@ -17,8 +17,7 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
+import { AlfrescoApiCompatibility as AlfrescoApi, NodeEntry } from '@alfresco/js-api';
 import { ApiUtil } from '../../core/structure/api.util';
 import { Logger } from '../../core/utils/logger';
 

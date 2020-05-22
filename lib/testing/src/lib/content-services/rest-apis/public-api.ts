@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-export * from './pages/public-api';
-export * from './actions/public-api';
-export * from './dialog/public-api';
-export * from './rest-apis/public-api';
+export * from './repo-client';
+export * from './shared-links/shared-links-api';
+export * from './people/people-api';
+export * from './nodes/nodes-api';
+export * from './comments/comments-api';
+export * from './sites/sites-api';
+export * from './favorites/favorites-api';
+export * from './queries/queries-api';
+export * from './trashcan/trashcan-api';
+export * from './search/search-api';
+// export * from './upload/upload-api';
+export * from './authentication/authentication-api';
+export * from './nodes/node-body-create';
+export * from './nodes/node-content-tree';

@@ -15,7 +15,20 @@
  * limitations under the License.
  */
 
-export * from './pages/public-api';
-export * from './actions/public-api';
-export * from './dialog/public-api';
-export * from './rest-apis/public-api';
+import { RepoApi } from '../repo-api';
+
+export class AuthenticationApi extends RepoApi {
+
+    constructor(username?: string, password?: string) {
+        super(username, password);
+    }
+
+    async logout() {
+      try {
+        await this.apiAuth();
+        await this.alfrescoJsApi.logout();
+      } catch (error) {
+        this.handleError(`${this.constructor.name} ${this.logout.name}`, error);
+      }
+    }
+}
