@@ -18,14 +18,14 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { UserPreferenceCloudService } from './user-preference-cloud.service';
-import { setupTestBed, AlfrescoApiServiceMock, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { mockPreferences, getMockPreference, createMockPreference, updateMockPreference } from '../mock/user-preference.mock';
 import { ProcessServiceCloudTestingModule } from '../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('PreferenceService', () => {
   let service: UserPreferenceCloudService;
-  let alfrescoApiMock: AlfrescoApiServiceMock;
+  let alfrescoApiMock: AlfrescoApiService;
   let getInstanceSpy: jasmine.Spy;
 
   const errorResponse = {

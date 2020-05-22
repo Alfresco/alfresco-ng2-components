@@ -20,7 +20,6 @@ import { LockService } from './lock.service';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { Node } from '@alfresco/js-api';
-import { AlfrescoApiServiceMock } from 'core/mock';
 import { AlfrescoApiService } from './alfresco-api.service';
 import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
@@ -28,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('PeopleProcessService', () => {
 
     let service: LockService;
-    let apiService: AlfrescoApiServiceMock;
+    let apiService: AlfrescoApiService;
 
     const fakeNodeUnlocked: Node = <Node> { name: 'unlocked', isLocked: false, isFile: true };
     const fakeFolderNode: Node = <Node> { name: 'unlocked', isLocked: false, isFile: false, isFolder: true };

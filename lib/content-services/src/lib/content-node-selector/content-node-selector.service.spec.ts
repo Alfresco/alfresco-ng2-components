@@ -16,17 +16,19 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { QueryBody } from '@alfresco/js-api';
+import { QueryBody, ResultSetPaging } from '@alfresco/js-api';
 import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
 
-class SearchServiceMock {
+class SearchServiceMock extends SearchService {
     public query: QueryBody;
 
-    searchByQueryBody(query: QueryBody) {
-        this.query = query;
+    searchByQueryBody(queryBody: QueryBody): Observable<ResultSetPaging> {
+        this.query = queryBody;
+        return of({});
     }
 }
 
@@ -47,7 +49,7 @@ describe('ContentNodeSelectorService', () => {
 
     beforeEach(() => {
         service = TestBed.inject(ContentNodeSelectorService);
-        search = TestBed.inject(SearchService);
+        search = TestBed.inject(SearchService) as SearchServiceMock;
     });
 
     it('should have the proper main query for search string', () => {

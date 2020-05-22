@@ -516,7 +516,7 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
 
-            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText });
+            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText } as any);
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
