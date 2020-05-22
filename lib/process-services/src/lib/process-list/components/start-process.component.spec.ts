@@ -71,13 +71,13 @@ describe('StartFormComponent', () => {
     };
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        activitiContentService = TestBed.get(ActivitiContentService);
+        appConfig = TestBed.inject(AppConfigService);
+        activitiContentService = TestBed.inject(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
-        processService = TestBed.get(ProcessService);
-        formService = TestBed.get(FormService);
-        appsProcessService = TestBed.get(AppsProcessService);
+        processService = TestBed.inject(ProcessService);
+        formService = TestBed.inject(FormService);
+        appsProcessService = TestBed.inject(AppsProcessService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));

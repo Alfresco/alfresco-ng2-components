@@ -47,7 +47,7 @@ describe('LibraryDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(LibraryDialogComponent);
         component = fixture.componentInstance;
-        alfrescoApi = TestBed.get(AlfrescoApiService);
+        alfrescoApi = TestBed.inject(AlfrescoApiService);
         findSitesSpy = spyOn(alfrescoApi.getInstance().core.queriesApi, 'findSites');
     });
 

@@ -50,12 +50,12 @@ describe('NodeActionsService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        service = TestBed.get(NodeActionsService);
-        documentListService = TestBed.get(DocumentListService);
-        contentDialogService = TestBed.get(ContentNodeDialogService);
+        service = TestBed.inject(NodeActionsService);
+        documentListService = TestBed.inject(DocumentListService);
+        contentDialogService = TestBed.inject(ContentNodeDialogService);
     });
 
     it('should be able to copy content', async(() => {

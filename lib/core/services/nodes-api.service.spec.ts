@@ -56,8 +56,8 @@ describe('NodesApiService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(NodesApiService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(NodesApiService);
+        apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(mockSpy);
     });
 

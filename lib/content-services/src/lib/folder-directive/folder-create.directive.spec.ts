@@ -76,8 +76,8 @@ describe('FolderCreateDirective', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderCreateDirective));
-        dialog = TestBed.get(MatDialog);
-        contentService = TestBed.get(ContentService);
+        dialog = TestBed.inject(MatDialog);
+        contentService = TestBed.inject(ContentService);
     });
 
     beforeEach(() => {
@@ -95,8 +95,8 @@ describe('FolderCreateDirective', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TestTypeComponent);
             element = fixture.debugElement.query(By.directive(FolderCreateDirective));
-            dialog = TestBed.get(MatDialog);
-            contentService = TestBed.get(ContentService);
+            dialog = TestBed.inject(MatDialog);
+            contentService = TestBed.inject(ContentService);
             spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         });
 
@@ -144,8 +144,8 @@ describe('FolderCreateDirective', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TestComponent);
             element = fixture.debugElement.query(By.directive(FolderCreateDirective));
-            dialog = TestBed.get(MatDialog);
-            contentService = TestBed.get(ContentService);
+            dialog = TestBed.inject(MatDialog);
+            contentService = TestBed.inject(ContentService);
             spyOn(dialog, 'open').and.returnValue(dialogRefMock);
         });
 

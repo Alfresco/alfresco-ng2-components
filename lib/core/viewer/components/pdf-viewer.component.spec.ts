@@ -149,7 +149,7 @@ describe('Test PdfViewer component', () => {
 
     beforeEach((done) => {
         fixture = TestBed.createComponent(PdfViewerComponent);
-        dialog = TestBed.get(MatDialog);
+        dialog = TestBed.inject(MatDialog);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -720,7 +720,7 @@ describe('Test PdfViewer component', () => {
             let elementUrlTestComponent: HTMLElement;
 
             beforeEach((done) => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
 
                 fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
@@ -759,7 +759,7 @@ describe('Test PdfViewer component', () => {
             let elementUrlTestComponent: HTMLElement;
 
             beforeEach((done) => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
                 fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
@@ -800,7 +800,7 @@ describe('Test PdfViewer component', () => {
             let elementUrlTestComponent: HTMLElement;
 
             beforeEach((done) => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 55555;
 
                 fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);

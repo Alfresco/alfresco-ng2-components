@@ -76,11 +76,11 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
-        authService = TestBed.get(AuthenticationService);
-        router = TestBed.get(Router);
-        userPreferences = TestBed.get(UserPreferencesService);
-        appConfigService = TestBed.get(AppConfigService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        authService = TestBed.inject(AuthenticationService);
+        router = TestBed.inject(Router);
+        userPreferences = TestBed.inject(UserPreferencesService);
+        appConfigService = TestBed.inject(AppConfigService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
         fixture.detectChanges();
 

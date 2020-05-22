@@ -47,12 +47,12 @@ describe('TaskListComponent', () => {
     });
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
+        appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.inject(TaskListService);
 
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
@@ -809,8 +809,8 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     });
 
     beforeEach(() => {
-        translateService = TestBed.get(TranslateService);
-        taskListService = TestBed.get(TaskListService);
+        translateService = TestBed.inject(TranslateService);
+        taskListService = TestBed.inject(TaskListService);
         spyOn(translateService, 'get').and.callFake((key) => {
             return of(key);
         });
@@ -916,7 +916,7 @@ describe('TaskListContextMenuComponent', () => {
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
         element = fixture.nativeElement;
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
         fixture.detectChanges();
     });

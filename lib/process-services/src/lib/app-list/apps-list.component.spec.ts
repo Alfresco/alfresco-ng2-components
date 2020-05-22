@@ -59,7 +59,7 @@ describe('AppsListComponent', () => {
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
 
-        service = TestBed.get(AppsProcessService);
+        service = TestBed.inject(AppsProcessService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(of(deployedApps));
     });
 

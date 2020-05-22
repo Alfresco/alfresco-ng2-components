@@ -41,10 +41,10 @@ describe('AuthGuardService BPM', () => {
 
     beforeEach(() => {
         localStorage.clear();
-        authService = TestBed.get(AuthenticationService);
-        authGuard = TestBed.get(AuthGuardBpm);
-        router = TestBed.get(Router);
-        appConfigService = TestBed.get(AppConfigService);
+        authService = TestBed.inject(AuthenticationService);
+        authGuard = TestBed.inject(AuthGuardBpm);
+        router = TestBed.inject(Router);
+        appConfigService = TestBed.inject(AppConfigService);
 
         appConfigService.config.providers = 'BPM';
         appConfigService.config.auth = {};
@@ -162,7 +162,7 @@ describe('AuthGuardService BPM', () => {
     }));
 
     it('should to close the material dialog if is redirect to the login', () => {
-        const materialDialog = TestBed.get(MatDialog);
+        const materialDialog = TestBed.inject(MatDialog);
 
         spyOn(materialDialog, 'closeAll');
 

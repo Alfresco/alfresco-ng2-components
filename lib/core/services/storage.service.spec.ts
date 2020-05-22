@@ -41,13 +41,13 @@ describe('StorageService', () => {
         });
 
         beforeEach(() => {
-            appConfig = TestBed.get(AppConfigService);
+            appConfig = TestBed.inject(AppConfigService);
             appConfig.config = {
                 application: {
                     storagePrefix: 'ADF_APP'
                 }
             };
-            storage = TestBed.get(StorageService);
+            storage = TestBed.inject(StorageService);
         });
 
         it('should get the prefix for the storage from app config', (done) => {
@@ -90,13 +90,13 @@ describe('StorageService', () => {
         });
 
         beforeEach(() => {
-            appConfig = TestBed.get(AppConfigService);
+            appConfig = TestBed.inject(AppConfigService);
             appConfig.config = {
                 application: {
                     storagePrefix: ''
                 }
             };
-            storage = TestBed.get(StorageService);
+            storage = TestBed.inject(StorageService);
         });
 
         it('should set an empty prefix when the it is not defined in the app config', (done) => {

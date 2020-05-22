@@ -72,9 +72,9 @@ describe('EditProcessFilterCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessFilterCloudService);
-        appsService = TestBed.get(AppsProcessCloudService);
-        dialog = TestBed.get(MatDialog);
+        service = TestBed.inject(ProcessFilterCloudService);
+        appsService = TestBed.inject(AppsProcessCloudService);
+        dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
                 return of({

@@ -43,7 +43,7 @@ describe('TypeaheadWidgetComponent', () => {
     });
 
     beforeEach(() => {
-        translationService = TestBed.get(TranslateService);
+        translationService = TestBed.inject(TranslateService);
         spyOn(translationService, 'instant').and.callFake((key) => { return key; });
         spyOn(translationService, 'get').and.callFake((key) => { return of(key); });
 

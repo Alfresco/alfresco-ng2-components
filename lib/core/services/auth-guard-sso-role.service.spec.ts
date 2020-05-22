@@ -39,9 +39,9 @@ describe('Auth Guard SSO role service', () => {
 
     beforeEach(() => {
         localStorage.clear();
-        authGuard = TestBed.get(AuthGuardSsoRoleService);
-        jwtHelperService = TestBed.get(JwtHelperService);
-        routerService = TestBed.get(Router);
+        authGuard = TestBed.inject(AuthGuardSsoRoleService);
+        jwtHelperService = TestBed.inject(JwtHelperService);
+        routerService = TestBed.inject(Router);
     });
 
     it('Should canActivate be true if the Role is present int the JWT token', async(() => {
@@ -171,7 +171,7 @@ describe('Auth Guard SSO role service', () => {
     });
 
     it('Should canActivate be false hasRealm is true and hasClientRole is false', () => {
-        const materialDialog = TestBed.get(MatDialog);
+        const materialDialog = TestBed.inject(MatDialog);
 
         spyOn(materialDialog, 'closeAll');
 

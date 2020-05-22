@@ -56,8 +56,8 @@ describe('LanguageMenuComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(LanguageMenuComponent);
         component = fixture.componentInstance;
-        appConfig = TestBed.get(AppConfigService);
-        userPreferencesService = TestBed.get(UserPreferencesService);
+        appConfig = TestBed.inject(AppConfigService);
+        userPreferencesService = TestBed.inject(UserPreferencesService);
     });
 
     afterEach(() => {

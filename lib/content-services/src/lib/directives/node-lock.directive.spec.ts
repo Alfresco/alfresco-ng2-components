@@ -59,7 +59,7 @@ describe('NodeLock Directive', () => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeLockDirective));
-        contentNodeDialogService = TestBed.get(ContentNodeDialogService);
+        contentNodeDialogService = TestBed.inject(ContentNodeDialogService);
     });
 
     it('should call openLockNodeDialog method on click', () => {

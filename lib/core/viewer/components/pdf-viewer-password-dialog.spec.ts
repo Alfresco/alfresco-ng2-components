@@ -53,7 +53,7 @@ describe('PdfPasswordDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PdfPasswordDialogComponent);
         component = fixture.componentInstance;
-        dialogRef = TestBed.get(MatDialogRef);
+        dialogRef = TestBed.inject(MatDialogRef);
     });
 
     it('should have empty default value', () => {

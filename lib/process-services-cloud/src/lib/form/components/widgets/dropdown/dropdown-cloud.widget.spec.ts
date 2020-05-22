@@ -63,9 +63,9 @@ describe('DropdownCloudWidgetComponent', () => {
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        formService = TestBed.get(FormService);
-        visibilityService = TestBed.get(WidgetVisibilityService);
-        formCloudService = TestBed.get(FormCloudService);
+        formService = TestBed.inject(FormService);
+        visibilityService = TestBed.inject(WidgetVisibilityService);
+        formCloudService = TestBed.inject(FormCloudService);
 
         widget.field = new FormFieldModel(new FormModel());
     }));

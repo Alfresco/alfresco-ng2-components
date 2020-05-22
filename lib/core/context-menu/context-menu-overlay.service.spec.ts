@@ -44,8 +44,8 @@ describe('ContextMenuService', () => {
     });
 
     beforeEach(() => {
-        overlay = TestBed.get(Overlay);
-        injector = TestBed.get(Injector);
+        overlay = TestBed.inject(Overlay);
+        injector = TestBed.inject(Injector);
     });
 
     describe('Overlay', () => {

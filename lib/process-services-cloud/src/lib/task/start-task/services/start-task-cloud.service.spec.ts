@@ -40,7 +40,7 @@ fdescribe('StartTaskCloudService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(TaskCloudService);
+        service = TestBed.inject(TaskCloudService);
     });
 
     it('should able to create a new task ', (done) => {

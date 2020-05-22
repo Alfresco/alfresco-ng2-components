@@ -66,11 +66,11 @@ describe('TaskHeaderComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TaskHeaderComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(TaskListService);
-        userBpmService = TestBed.get(BpmUserService);
+        service = TestBed.inject(TaskListService);
+        userBpmService = TestBed.inject(BpmUserService);
         spyOn(userBpmService, 'getCurrentUserInfo').and.returnValue(of(fakeBpmAssignedUser));
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
     });
 
     it('should render empty component if no task details provided', async(() => {

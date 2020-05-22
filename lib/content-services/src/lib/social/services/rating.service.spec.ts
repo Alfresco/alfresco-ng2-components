@@ -35,7 +35,7 @@ describe('Rating service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(RatingService);
+        service = TestBed.inject(RatingService);
     });
 
     beforeEach(() => {

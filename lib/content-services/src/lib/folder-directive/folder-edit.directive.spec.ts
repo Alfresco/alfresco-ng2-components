@@ -64,8 +64,8 @@ describe('FolderEditDirective', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         element = fixture.debugElement.query(By.directive(FolderEditDirective));
-        dialog = TestBed.get(MatDialog);
-        contentService = TestBed.get(ContentService);
+        dialog = TestBed.inject(MatDialog);
+        contentService = TestBed.inject(ContentService);
     });
 
     beforeEach(() => {

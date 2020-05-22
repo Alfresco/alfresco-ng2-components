@@ -46,9 +46,9 @@ describe('AppsProcessCloudService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(AppsProcessCloudService);
-        appConfigService = TestBed.get(AppConfigService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(AppsProcessCloudService);
+        appConfigService = TestBed.inject(AppConfigService);
+        apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(apiMock);
     });
 

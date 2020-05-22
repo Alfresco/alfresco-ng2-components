@@ -93,8 +93,8 @@ describe('TaskListCloudComponent', () => {
     });
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        taskListCloudService = TestBed.get(TaskListCloudService);
+        appConfig = TestBed.inject(AppConfigService);
+        taskListCloudService = TestBed.inject(TaskListCloudService);
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
@@ -406,8 +406,8 @@ describe('TaskListCloudComponent', () => {
         });
 
         beforeEach( () => {
-            appConfig = TestBed.get(AppConfigService);
-            taskListCloudService = TestBed.get(TaskListCloudService);
+            appConfig = TestBed.inject(AppConfigService);
+            taskListCloudService = TestBed.inject(TaskListCloudService);
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-cloud-task-list': {
                     'presets': {

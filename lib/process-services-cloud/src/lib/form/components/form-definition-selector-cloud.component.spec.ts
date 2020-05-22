@@ -43,7 +43,7 @@ describe('FormDefinitionCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FormDefinitionSelectorCloudComponent);
         element = fixture.nativeElement;
-        service = TestBed.get(FormDefinitionSelectorCloudService);
+        service = TestBed.inject(FormDefinitionSelectorCloudService);
         getFormsSpy = spyOn(service, 'getStandAloneTaskForms').and.returnValue(of([{ id: 'fake-form', name: 'fakeForm' }]));
     });
 

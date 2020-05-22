@@ -86,8 +86,8 @@ describe('DynamicTableWidgetComponent', () => {
 
     beforeEach(() => {
         const field = new FormFieldModel(new FormModel());
-        logService = TestBed.get(LogService);
-        formService = TestBed.get(FormService);
+        logService = TestBed.inject(LogService);
+        formService = TestBed.inject(FormService);
         table = new DynamicTableModel(field, formService);
         const changeDetectorSpy = jasmine.createSpyObj('cd', ['detectChanges']);
         const nativeElementSpy = jasmine.createSpyObj('nativeElement', ['querySelector']);

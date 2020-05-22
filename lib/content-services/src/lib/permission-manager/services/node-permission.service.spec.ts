@@ -40,9 +40,9 @@ describe('NodePermissionService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(NodePermissionService);
-        searchApiService = TestBed.get(SearchService);
-        nodeService = TestBed.get(NodesApiService);
+        service = TestBed.inject(NodePermissionService);
+        searchApiService = TestBed.inject(SearchService);
+        nodeService = TestBed.inject(NodesApiService);
     });
 
     afterEach(() => {

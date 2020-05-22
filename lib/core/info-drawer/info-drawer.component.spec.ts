@@ -39,7 +39,7 @@ describe('InfoDrawerComponent', () => {
     });
 
     beforeEach(() => {
-        translateService = TestBed.get(TranslateService);
+        translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
@@ -101,7 +101,7 @@ describe('Custom InfoDrawer', () => {
     });
 
     beforeEach(() => {
-        translateService = TestBed.get(TranslateService);
+        translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);

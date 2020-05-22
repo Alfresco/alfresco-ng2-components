@@ -36,7 +36,7 @@ describe('Bpm user service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(BpmUserService);
+        service = TestBed.inject(BpmUserService);
     });
 
     beforeEach(() => {

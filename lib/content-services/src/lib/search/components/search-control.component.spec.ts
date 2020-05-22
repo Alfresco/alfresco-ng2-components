@@ -77,9 +77,9 @@ describe('SearchControlComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SearchControlComponent);
         debugElement = fixture.debugElement;
-        searchService = TestBed.get(SearchService);
-        authService = TestBed.get(AuthenticationService);
-        userPreferencesService = TestBed.get(UserPreferencesService);
+        searchService = TestBed.inject(SearchService);
+        authService = TestBed.inject(AuthenticationService);
+        userPreferencesService = TestBed.inject(UserPreferencesService);
         spyOn(authService, 'isEcmLoggedIn').and.returnValue(true);
         component = fixture.componentInstance;
         element = fixture.nativeElement;

@@ -49,7 +49,7 @@ describe('TaskAttachmentList', () => {
         fixture = TestBed.createComponent(TaskAttachmentListComponent);
         component = fixture.componentInstance;
 
-        service = TestBed.get(ProcessContentService);
+        service = TestBed.inject(ProcessContentService);
 
         mockAttachment = {
             size: 2,

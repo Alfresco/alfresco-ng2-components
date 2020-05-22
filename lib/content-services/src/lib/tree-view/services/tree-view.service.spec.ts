@@ -45,8 +45,8 @@ describe('TreeViewService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(TreeViewService);
-        nodeService = TestBed.get(NodesApiService);
+        service = TestBed.inject(TreeViewService);
+        nodeService = TestBed.inject(NodesApiService);
     });
 
     it('should returns TreeBaseNode elements', (done) => {

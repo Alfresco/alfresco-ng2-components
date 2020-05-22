@@ -82,9 +82,9 @@ describe('DocumentList', () => {
 
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
-        documentListService = TestBed.get(DocumentListService);
-        apiService = TestBed.get(AlfrescoApiService);
-        customResourcesService = TestBed.get(CustomResourcesService);
+        documentListService = TestBed.inject(DocumentListService);
+        apiService = TestBed.inject(AlfrescoApiService);
+        customResourcesService = TestBed.inject(CustomResourcesService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.callFake(() => {
             return Promise.resolve({ list: {} });

@@ -42,8 +42,8 @@ describe('PeopleProcessService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(LockService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(LockService);
+        apiService = TestBed.inject(AlfrescoApiService);
     });
 
     it('should return false when no lock is configured', () => {

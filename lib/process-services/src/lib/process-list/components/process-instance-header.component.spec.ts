@@ -42,7 +42,7 @@ describe('ProcessInstanceHeaderComponent', () => {
 
         component.processInstance = new ProcessInstance(exampleProcess);
 
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config['adf-process-instance-header'] = {};
     });
 

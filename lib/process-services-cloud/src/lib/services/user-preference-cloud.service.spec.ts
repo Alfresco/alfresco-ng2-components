@@ -57,8 +57,8 @@ describe('PreferenceService', () => {
   });
 
   beforeEach(async(() => {
-    service = TestBed.get(UserPreferenceCloudService);
-    alfrescoApiMock = TestBed.get(AlfrescoApiService);
+    service = TestBed.inject(UserPreferenceCloudService);
+    alfrescoApiMock = TestBed.inject(AlfrescoApiService);
     getInstanceSpy = spyOn(alfrescoApiMock, 'getInstance').and.returnValue(apiMock(mockPreferences));
   }));
 

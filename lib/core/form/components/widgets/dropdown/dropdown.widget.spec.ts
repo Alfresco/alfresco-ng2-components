@@ -59,8 +59,8 @@ describe('DropdownWidgetComponent', () => {
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        formService = TestBed.get(FormService);
-        visibilityService = TestBed.get(WidgetVisibilityService);
+        formService = TestBed.inject(FormService);
+        visibilityService = TestBed.inject(WidgetVisibilityService);
         widget.field = new FormFieldModel(new FormModel());
     }));
 

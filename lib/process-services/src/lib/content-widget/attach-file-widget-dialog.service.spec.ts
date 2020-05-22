@@ -37,8 +37,8 @@ describe('AttachFileWidgetDialogService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(AttachFileWidgetDialogService);
-        materialDialog = TestBed.get(MatDialog);
+        service = TestBed.inject(AttachFileWidgetDialogService);
+        materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => of({}),
             afterClosed: () => of({}),

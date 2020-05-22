@@ -53,7 +53,7 @@ describe('ClipboardDirective', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestTargetClipboardComponent);
-        clipboardService = TestBed.get(ClipboardService);
+        clipboardService = TestBed.inject(ClipboardService);
         fixture.detectChanges();
     });
 

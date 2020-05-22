@@ -64,7 +64,7 @@ describe('NodeRestoreDirective', () => {
         element = fixture.debugElement.query(By.directive(NodeRestoreDirective));
         directiveInstance = element.injector.get(NodeRestoreDirective);
 
-        alfrescoService = TestBed.get(AlfrescoApiService);
+        alfrescoService = TestBed.inject(AlfrescoApiService);
         nodesService = alfrescoService.getInstance().nodes;
         coreApi = alfrescoService.getInstance().core;
 
@@ -73,7 +73,7 @@ describe('NodeRestoreDirective', () => {
             list: { entries: [] }
         }));
 
-        translationService = TestBed.get(TranslationService);
+        translationService = TestBed.inject(TranslationService);
         spyOn(translationService, 'instant').and.callFake((key) => { return key; });
     });
 

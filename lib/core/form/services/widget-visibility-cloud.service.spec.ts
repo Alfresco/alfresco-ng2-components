@@ -51,7 +51,7 @@ describe('WidgetVisibilityCloudService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(WidgetVisibilityService);
+        service = TestBed.inject(WidgetVisibilityService);
         jasmine.Ajax.install();
     });
 

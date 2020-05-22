@@ -73,15 +73,15 @@ describe('TaskDetailsComponent', () => {
     });
 
     beforeEach(() => {
-        logService = TestBed.get(LogService);
+        logService = TestBed.inject(LogService);
 
-        const userService: BpmUserService = TestBed.get(BpmUserService);
+        const userService: BpmUserService = TestBed.inject(BpmUserService);
         spyOn(userService, 'getCurrentUserInfo').and.returnValue(of({}));
 
-        service = TestBed.get(TaskListService);
+        service = TestBed.inject(TaskListService);
         spyOn(service, 'getTaskChecklist').and.returnValue(of(noDataMock));
 
-        formService = TestBed.get(FormService);
+        formService = TestBed.inject(FormService);
 
         getTaskDetailsSpy = spyOn(service, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
         spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
@@ -90,9 +90,9 @@ describe('TaskDetailsComponent', () => {
 
         getTasksSpy = spyOn(service, 'getTasks').and.returnValue(of(tasksMock));
         assignTaskSpy = spyOn(service, 'assignTask').and.returnValue(of(fakeUser));
-        commentProcessService = TestBed.get(CommentProcessService);
+        commentProcessService = TestBed.inject(CommentProcessService);
 
-        authService = TestBed.get(AuthenticationService);
+        authService = TestBed.inject(AuthenticationService);
         spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
 
         spyOn(commentProcessService, 'getTaskComments').and.returnValue(of([
@@ -102,7 +102,7 @@ describe('TaskDetailsComponent', () => {
         ]));
 
         fixture = TestBed.createComponent(TaskDetailsComponent);
-        peopleProcessService = TestBed.get(PeopleProcessService);
+        peopleProcessService = TestBed.inject(PeopleProcessService);
         component = fixture.componentInstance;
     });
 

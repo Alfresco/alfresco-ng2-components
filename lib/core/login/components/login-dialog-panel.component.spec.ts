@@ -41,7 +41,7 @@ describe('LoginDialogPanelComponent', () => {
         fixture = TestBed.createComponent(LoginDialogPanelComponent);
         element = fixture.nativeElement;
         component = fixture.componentInstance;
-        authService = TestBed.get(AuthenticationService);
+        authService = TestBed.inject(AuthenticationService);
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             usernameInput = element.querySelector('#username');

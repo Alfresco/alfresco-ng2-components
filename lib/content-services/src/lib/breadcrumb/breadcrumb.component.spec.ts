@@ -49,7 +49,7 @@ describe('Breadcrumb', () => {
         fixture = TestBed.createComponent(BreadcrumbComponent);
         component = fixture.componentInstance;
         documentListComponent = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
-        documentListService = TestBed.get(DocumentListService);
+        documentListService = TestBed.inject(DocumentListService);
     });
 
     afterEach(() => {

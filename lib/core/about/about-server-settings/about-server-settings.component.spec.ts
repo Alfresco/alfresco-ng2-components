@@ -38,7 +38,7 @@ describe('AboutServerSettingsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AboutServerSettingsComponent);
         component = fixture.componentInstance;
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config = Object.assign(appConfigService.config, {
             'ecmHost': aboutGithubDetails.ecmHost,
             'bpmHost': aboutGithubDetails.bpmHost

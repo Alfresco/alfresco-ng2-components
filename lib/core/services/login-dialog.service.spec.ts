@@ -37,8 +37,8 @@ describe('LoginDialogService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(LoginDialogService);
-        materialDialog = TestBed.get(MatDialog);
+        service = TestBed.inject(LoginDialogService);
+        materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => of({}),
             afterClosed: () => of({}),

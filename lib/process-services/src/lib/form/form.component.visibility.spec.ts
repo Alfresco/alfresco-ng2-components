@@ -58,7 +58,7 @@ describe('FormComponent UI and visibility', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(FormService);
+        service = TestBed.inject(FormService);
     });
 
     afterEach(() => {

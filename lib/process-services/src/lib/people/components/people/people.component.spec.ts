@@ -53,7 +53,7 @@ describe('PeopleComponent', () => {
     });
 
     beforeEach(async(() => {
-        logService = TestBed.get(LogService);
+        logService = TestBed.inject(LogService);
         fixture = TestBed.createComponent(PeopleComponent);
         activitiPeopleComponent = fixture.componentInstance;
         element = fixture.nativeElement;

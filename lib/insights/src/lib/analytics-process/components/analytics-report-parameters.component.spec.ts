@@ -45,7 +45,7 @@ describe('AnalyticsReportParametersComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsReportParametersComponent);
-        service = TestBed.get(AnalyticsService);
+        service = TestBed.inject(AnalyticsService);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
         spyOn(component, 'isFormValid').and.callFake(() => {

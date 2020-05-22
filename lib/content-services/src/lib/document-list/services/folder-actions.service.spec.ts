@@ -38,10 +38,10 @@ describe('FolderActionsService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        const contentService = TestBed.get(ContentService);
+        const contentService = TestBed.inject(ContentService);
         const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);
         service = new FolderActionsService(null, documentListService, contentService,  new TranslationMock());

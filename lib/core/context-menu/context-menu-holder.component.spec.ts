@@ -74,7 +74,7 @@ describe('ContextMenuHolderComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ContextMenuHolderComponent);
         component = fixture.componentInstance;
-        contextMenuService = TestBed.get(ContextMenuService);
+        contextMenuService = TestBed.inject(ContextMenuService);
 
         component.ngOnDestroy = () => {};
         fixture.detectChanges();

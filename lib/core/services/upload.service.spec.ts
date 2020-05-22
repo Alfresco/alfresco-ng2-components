@@ -43,7 +43,7 @@ describe('UploadService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             files: {
@@ -62,8 +62,8 @@ describe('UploadService', () => {
             }
         };
 
-        service = TestBed.get(UploadService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(UploadService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         service.queue = [];
         service.activeTask = null;
         jasmine.Ajax.install();

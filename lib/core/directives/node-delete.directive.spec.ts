@@ -103,7 +103,7 @@ describe('NodeDeleteDirective', () => {
     });
 
     beforeEach(() => {
-        alfrescoApi = TestBed.get(AlfrescoApiService);
+        alfrescoApi = TestBed.inject(AlfrescoApiService);
         nodeApi = alfrescoApi.nodesApi;
         deleteNodeSpy = spyOn(nodeApi, 'deleteNode').and.returnValue(Promise.resolve());
         purgeDeletedNodeSpy = spyOn(nodeApi, 'purgeDeletedNode').and.returnValue(Promise.resolve());

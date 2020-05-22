@@ -68,8 +68,8 @@ describe('PeopleCloudComponent', () => {
         fixture = TestBed.createComponent(PeopleCloudComponent);
         component = fixture.componentInstance;
 
-        identityService = TestBed.get(IdentityUserService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        identityService = TestBed.inject(IdentityUserService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });

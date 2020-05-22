@@ -180,7 +180,7 @@ describe('CardViewBoolItemComponent', () => {
         });
 
         it('should trigger the update event when changing the checkbox', () => {
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
             const property = { ... component.property };
 
@@ -200,7 +200,7 @@ describe('CardViewBoolItemComponent', () => {
         }));
 
         it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.property.value = false;
             fixture.detectChanges();
             const property = { ...component.property };

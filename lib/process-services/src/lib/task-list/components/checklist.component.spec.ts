@@ -41,7 +41,7 @@ describe('ChecklistComponent', () => {
     });
 
     beforeEach(async(() => {
-        service = TestBed.get(TaskListService);
+        service = TestBed.inject(TaskListService);
         spyOn(service, 'getTaskChecklist').and.returnValue(of([{
             id: 'fake-check-changed-id',
             name: 'fake-check-changed-name'

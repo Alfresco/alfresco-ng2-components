@@ -111,7 +111,7 @@ describe('SidenavLayoutComponent', () => {
             removeListener: () => {}
         };
 
-        mediaMatcher = TestBed.get(MediaMatcher);
+        mediaMatcher = TestBed.inject(MediaMatcher);
         spyOn(mediaMatcher, 'matchMedia').and.callFake((mediaQuery) => {
             mediaQueryList.originalMediaQueryPassed = mediaQuery;
             spyOn(mediaQueryList, 'addListener').and.callThrough();
@@ -258,7 +258,7 @@ describe('Template transclusion', () => {
     });
 
     beforeEach(() => {
-        mediaMatcher = TestBed.get(MediaMatcher);
+        mediaMatcher = TestBed.inject(MediaMatcher);
         spyOn(mediaMatcher, 'matchMedia').and.callFake(() => {
             spyOn(mediaQueryList, 'addListener').and.stub();
             spyOn(mediaQueryList, 'removeListener').and.stub();

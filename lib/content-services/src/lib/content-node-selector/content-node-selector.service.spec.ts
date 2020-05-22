@@ -46,8 +46,8 @@ describe('ContentNodeSelectorService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(ContentNodeSelectorService);
-        search = TestBed.get(SearchService);
+        service = TestBed.inject(ContentNodeSelectorService);
+        search = TestBed.inject(SearchService);
     });
 
     it('should have the proper main query for search string', () => {

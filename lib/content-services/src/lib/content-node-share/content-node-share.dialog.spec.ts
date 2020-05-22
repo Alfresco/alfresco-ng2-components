@@ -61,11 +61,11 @@ describe('ShareDialogComponent', () => {
         component = fixture.componentInstance;
         component.maxDebounceTime = 0;
 
-        matDialog = TestBed.get(MatDialog);
-        sharedLinksApiService = TestBed.get(SharedLinksApiService);
-        renditionService = TestBed.get(RenditionsService);
-        nodesApiService = TestBed.get(NodesApiService);
-        appConfigService = TestBed.get(AppConfigService);
+        matDialog = TestBed.inject(MatDialog);
+        sharedLinksApiService = TestBed.inject(SharedLinksApiService);
+        renditionService = TestBed.inject(RenditionsService);
+        nodesApiService = TestBed.inject(NodesApiService);
+        appConfigService = TestBed.inject(AppConfigService);
 
         node = {
             entry: {

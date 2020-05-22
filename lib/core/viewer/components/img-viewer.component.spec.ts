@@ -47,7 +47,7 @@ describe('Test Img viewer component ', () => {
     describe('Url', () => {
 
         beforeEach(() => {
-            service = TestBed.get(ContentService);
+            service = TestBed.inject(ContentService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
@@ -270,7 +270,7 @@ describe('Test Img viewer component ', () => {
     describe('Blob', () => {
 
         beforeEach(() => {
-            service = TestBed.get(ContentService);
+            service = TestBed.inject(ContentService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
@@ -313,7 +313,7 @@ describe('Test Img viewer component ', () => {
     describe('Zoom customization', () => {
 
         beforeEach(() => {
-            service = TestBed.get(ContentService);
+            service = TestBed.inject(ContentService);
             fixture = TestBed.createComponent(ImgViewerComponent);
 
             element = fixture.nativeElement;
@@ -334,7 +334,7 @@ describe('Test Img viewer component ', () => {
         describe('custom value', () => {
 
             beforeEach(() => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.image-viewer-scaling'] = 70;
                 component.initializeScaling();
             });

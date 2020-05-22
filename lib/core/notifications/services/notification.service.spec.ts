@@ -91,7 +91,7 @@ describe('NotificationService', () => {
     });
 
     beforeEach(() => {
-        translationService = TestBed.get(TranslationService);
+        translationService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(ProvidesNotificationServiceComponent);
         fixture.detectChanges();
     });

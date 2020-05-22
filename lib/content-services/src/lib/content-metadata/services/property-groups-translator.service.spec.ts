@@ -48,8 +48,8 @@ describe('PropertyGroupTranslatorService', () => {
     });
 
     beforeEach(() => {
-        logService = TestBed.get(LogService);
-        service = TestBed.get(PropertyGroupTranslatorService);
+        logService = TestBed.inject(LogService);
+        service = TestBed.inject(PropertyGroupTranslatorService);
 
         property = {
             name: 'FAS:PLAGUE',

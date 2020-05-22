@@ -68,7 +68,7 @@ describe('DynamicExtensionComponent', () => {
 
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
-            componentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+            componentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
             spyOn(componentFactoryResolver, 'resolveComponentFactory').and.callThrough();
             component = fixture.componentInstance;
             component.id = 'test-component';

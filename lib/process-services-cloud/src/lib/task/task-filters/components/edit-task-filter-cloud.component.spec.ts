@@ -60,9 +60,9 @@ describe('EditTaskFilterCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(TaskFilterCloudService);
-        appsService = TestBed.get(AppsProcessCloudService);
-        dialog = TestBed.get(MatDialog);
+        service = TestBed.inject(TaskFilterCloudService);
+        appsService = TestBed.inject(AppsProcessCloudService);
+        dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ afterClosed: of({
             action: TaskFilterDialogCloudComponent.ACTION_SAVE,
             icon: 'icon',

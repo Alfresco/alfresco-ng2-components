@@ -54,7 +54,7 @@ describe('DownloadZipDialogComponent', () => {
     beforeEach(() => {
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(DownloadZipDialogComponent);
-        downloadZipService = TestBed.get(DownloadZipService);
+        downloadZipService = TestBed.inject(DownloadZipService);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
     });

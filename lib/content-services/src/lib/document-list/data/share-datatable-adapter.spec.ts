@@ -38,8 +38,8 @@ describe('ShareDataTableAdapter', () => {
     beforeEach(() => {
         const imageUrl: string = 'http://<addresss>';
 
-        contentService = TestBed.get(ContentService);
-        thumbnailService = TestBed.get(ThumbnailService);
+        contentService = TestBed.inject(ContentService);
+        thumbnailService = TestBed.inject(ThumbnailService);
 
         spyOn(thumbnailService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
     });

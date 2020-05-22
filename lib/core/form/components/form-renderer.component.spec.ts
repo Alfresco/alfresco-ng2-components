@@ -87,7 +87,7 @@ describe('Form Renderer Component', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FormRendererComponent);
         formRendererComponent = fixture.componentInstance;
-        formService = TestBed.get(FormService);
+        formService = TestBed.inject(FormService);
     });
 
     afterEach(() => {

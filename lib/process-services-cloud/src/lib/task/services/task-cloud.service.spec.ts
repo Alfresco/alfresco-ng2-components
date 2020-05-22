@@ -90,7 +90,7 @@ describe('Task Cloud Service', () => {
 
     beforeEach(async(() => {
         alfrescoApiMock = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        identityUserService = TestBed.get(IdentityUserService);
+        identityUserService = TestBed.inject(IdentityUserService);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(cloudMockUser);
         service = new TaskCloudService(alfrescoApiMock,
                                            new AppConfigService(null),

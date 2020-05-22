@@ -41,10 +41,10 @@ describe('AuthGuardService ECM', () => {
 
     beforeEach(() => {
         localStorage.clear();
-        authService = TestBed.get(AuthenticationService);
-        authGuard = TestBed.get(AuthGuardEcm);
-        router = TestBed.get(Router);
-        appConfigService = TestBed.get(AppConfigService);
+        authService = TestBed.inject(AuthenticationService);
+        authGuard = TestBed.inject(AuthGuardEcm);
+        router = TestBed.inject(Router);
+        appConfigService = TestBed.inject(AppConfigService);
 
         appConfigService.config.providers = 'ECM';
         appConfigService.config.auth = {};
@@ -185,7 +185,7 @@ describe('AuthGuardService ECM', () => {
     }));
 
     it('should to close the material dialog if is redirect to the login', () => {
-        const materialDialog = TestBed.get(MatDialog);
+        const materialDialog = TestBed.inject(MatDialog);
 
         spyOn(materialDialog, 'closeAll');
 

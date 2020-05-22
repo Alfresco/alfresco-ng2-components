@@ -41,7 +41,7 @@ describe('CardViewDateItemComponent', () => {
     });
 
     beforeEach(() => {
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.dateValues = {
             defaultDateFormat: 'shortDate',
             defaultDateTimeFormat: 'M/d/yy, h:mm a',
@@ -191,7 +191,7 @@ describe('CardViewDateItemComponent', () => {
     it('should trigger an update event on the CardViewUpdateService', (done) => {
         component.editable = true;
         component.property.editable = true;
-        const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+        const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         const expectedDate = moment('Jul 10 2017', 'MMM DD YY');
         fixture.detectChanges();
         const property = { ...component.property };
@@ -225,7 +225,7 @@ describe('CardViewDateItemComponent', () => {
     }));
 
     it('should copy value to clipboard on double click', () => {
-        const clipboardService = TestBed.get(ClipboardService);
+        const clipboardService = TestBed.inject(ClipboardService);
         spyOn(clipboardService, 'copyContentToClipboard');
 
         component.editable = false;
@@ -306,7 +306,7 @@ describe('CardViewDateItemComponent', () => {
             component.property.default = 'Jul 10 2017';
             component.property.value = 'Jul 10 2017';
             fixture.detectChanges();
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const property = { ...component.property };
 
             const disposableUpdate = cardViewUpdateService.itemUpdated$.subscribe(

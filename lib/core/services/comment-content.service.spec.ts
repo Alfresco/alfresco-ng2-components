@@ -37,7 +37,7 @@ describe('Comment Content Service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(CommentContentService);
+        service = TestBed.inject(CommentContentService);
 
         jasmine.Ajax.install();
     });

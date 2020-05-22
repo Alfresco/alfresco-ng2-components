@@ -48,7 +48,7 @@ describe('NodeLockDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(NodeLockDialogComponent);
         component = fixture.componentInstance;
-        alfrescoApi = TestBed.get(AlfrescoApiService);
+        alfrescoApi = TestBed.inject(AlfrescoApiService);
     });
 
     afterEach(() => {

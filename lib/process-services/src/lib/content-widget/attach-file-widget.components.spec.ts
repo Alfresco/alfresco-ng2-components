@@ -143,11 +143,11 @@ describe('AttachFileWidgetComponent', () => {
         fixture = TestBed.createComponent(AttachFileWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        activitiContentService = TestBed.get(ActivitiContentService);
-        contentNodeDialogService = TestBed.get(ContentNodeDialogService);
-        processContentService = TestBed.get(ProcessContentService);
-        downloadService = TestBed.get(DownloadService);
-        formService = TestBed.get(FormService);
+        activitiContentService = TestBed.inject(ActivitiContentService);
+        contentNodeDialogService = TestBed.inject(ContentNodeDialogService);
+        processContentService = TestBed.inject(ProcessContentService);
+        downloadService = TestBed.inject(DownloadService);
+        formService = TestBed.inject(FormService);
     }));
 
     afterEach(() => {

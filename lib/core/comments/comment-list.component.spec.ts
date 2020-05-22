@@ -120,10 +120,10 @@ describe('CommentListComponent', () => {
     });
 
     beforeEach(async(() => {
-        ecmUserService = TestBed.get(EcmUserService);
+        ecmUserService = TestBed.inject(EcmUserService);
         spyOn(ecmUserService, 'getUserProfileImage').and.returnValue('alfresco-logo.svg');
 
-        peopleProcessService = TestBed.get(PeopleProcessService);
+        peopleProcessService = TestBed.inject(PeopleProcessService);
         spyOn(peopleProcessService, 'getUserImage').and.returnValue('alfresco-logo.svg');
 
         fixture = TestBed.createComponent(CommentListComponent);

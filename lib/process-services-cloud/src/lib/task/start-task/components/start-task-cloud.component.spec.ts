@@ -59,10 +59,10 @@ describe('StartTaskCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        service = TestBed.get(TaskCloudService);
-        identityService = TestBed.get(IdentityUserService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
-        formDefinitionSelectorCloudService = TestBed.get(FormDefinitionSelectorCloudService);
+        service = TestBed.inject(TaskCloudService);
+        identityService = TestBed.inject(IdentityUserService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        formDefinitionSelectorCloudService = TestBed.inject(FormDefinitionSelectorCloudService);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUser);

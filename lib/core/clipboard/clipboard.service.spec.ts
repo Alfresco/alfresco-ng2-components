@@ -37,8 +37,8 @@ describe('ClipboardService', () => {
     });
 
     beforeEach(() => {
-        clipboardService = TestBed.get(ClipboardService);
-        notificationService = TestBed.get(NotificationService);
+        clipboardService = TestBed.inject(ClipboardService);
+        notificationService = TestBed.inject(NotificationService);
         inputElement = document.createElement('input');
     });
 

@@ -47,7 +47,7 @@ describe('FolderDialogComponent', () => {
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(FolderDialogComponent);
         component = fixture.componentInstance;
-        nodesApi = TestBed.get(NodesApiService);
+        nodesApi = TestBed.inject(NodesApiService);
     });
 
     afterEach(() => {

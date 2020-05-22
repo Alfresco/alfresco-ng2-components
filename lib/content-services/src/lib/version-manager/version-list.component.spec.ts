@@ -59,8 +59,8 @@ describe('VersionListComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VersionListComponent);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
-        dialog = TestBed.get(MatDialog);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        dialog = TestBed.inject(MatDialog);
 
         component = fixture.componentInstance;
         component.node = <Node> { id: nodeId, allowableOperations: ['update'] };
