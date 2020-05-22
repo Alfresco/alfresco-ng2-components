@@ -16,7 +16,7 @@
  */
 
 import { Input, OnDestroy, Directive } from '@angular/core';
-import { CardViewUpdateService } from '../services/card-view.services';
+import { CardViewUpdateService } from '../services/card-view-update.service';
 import { CardViewItem } from '../interfaces/card-view.interfaces';
 import { CardViewBaseItemModel } from '../models/card-view-baseitem.model';
 import { Subject } from 'rxjs';
