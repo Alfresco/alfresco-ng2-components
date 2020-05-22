@@ -59,6 +59,4 @@ export class DataTableItem {
     async waitForFirstRow(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
     }
-
-    // all the methods we have on data-table-component.page.ts will be part of this class
 }

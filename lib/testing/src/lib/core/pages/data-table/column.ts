@@ -24,7 +24,6 @@ export abstract class Column {
         this.columnName = columnName;
     }
 
-    // this will work for any type of columnType: 'text', 'image', 'date', 'fileSize', 'location', and 'json'.
     createLocator(columnValue: string): string {
         return `//div[@data-automation-id="${this.columnType}_${columnValue}"]`;
     }

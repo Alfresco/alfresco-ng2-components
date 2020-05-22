@@ -36,7 +36,6 @@ export class DataTableBuilder {
                     break;
                 }
                 default: datatable.addItem(new TextColumn(column.columnName));
-                // here cases for 'image', 'fileSize', 'location', and 'json' can be added when needed
             }
         }
         return datatable;
