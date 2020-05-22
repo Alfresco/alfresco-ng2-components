@@ -26,7 +26,7 @@ export class TaskListPage {
     noTasksFound: ElementFinder;
 
     constructor(
-        rootElement: ElementFinder = element.all(by.css("adf-tasklist")).first()
+        rootElement: ElementFinder = element.all(by.css('adf-tasklist')).first()
     ) {
         this.rootElement = rootElement;
         this.dataTable = new DataTableComponentPage(this.rootElement);
