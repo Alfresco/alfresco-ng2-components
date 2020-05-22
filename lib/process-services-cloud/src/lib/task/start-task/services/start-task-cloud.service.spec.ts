@@ -26,8 +26,7 @@ import { TaskCloudService } from '../../services/task-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 
-// tslint:disable-next-line: ban
-fdescribe('StartTaskCloudService', () => {
+describe('StartTaskCloudService', () => {
 
     let service: TaskCloudService;
     const fakeAppName: string = 'fake-app';
