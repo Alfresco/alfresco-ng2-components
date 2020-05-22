@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Node } from '@alfresco/js-api';
 import { FolderDialogComponent } from '../dialogs/folder.dialog';
 import { ContentService } from '@alfresco/adf-core';
@@ -62,7 +62,7 @@ export class FolderCreateDirective {
         public content: ContentService
     ) {}
 
-    private get dialogConfig(): MatDialogConfig {
+    private get dialogConfig() {
         const { DIALOG_WIDTH: width } = FolderCreateDirective;
         const { parentNodeId, title: createTitle, nodeType } = this;
 

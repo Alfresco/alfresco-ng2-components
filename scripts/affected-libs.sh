@@ -51,7 +51,7 @@ fi
 HEAD_SHA_BRANCH="$(git merge-base origin/$BRANCH_NAME HEAD)"
 
 if [ ! -f $DIRECTORY/deps.txt ]; then
-    npm run affected:libs -- $HEAD_SHA_BRANCH "HEAD" > $DIRECTORY/deps.txt
+    npm run affected:libs -- --base=$HEAD_SHA_BRANCH --head="HEAD" > $DIRECTORY/deps.txt
 fi
 
 LIST_SPECS="$(git diff --name-only $BRANCH_NAME HEAD)"

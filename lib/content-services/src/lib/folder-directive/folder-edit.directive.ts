@@ -18,7 +18,7 @@
 /* tslint:disable:no-input-rename  */
 
 import { Directive, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Node } from '@alfresco/js-api';
 
@@ -61,7 +61,7 @@ export class FolderEditDirective {
         public content: ContentService
     ) {}
 
-    private get dialogConfig(): MatDialogConfig {
+    private get dialogConfig() {
         const { DIALOG_WIDTH: width } = FolderEditDirective;
         const { folder } = this;
 

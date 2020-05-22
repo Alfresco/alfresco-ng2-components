@@ -6,7 +6,6 @@
     "flatModuleFile": "adf-content-services",
     "umdModuleIds": {
       "@alfresco/js-api": "@alfresco/js-api",
-      "minimatch": "minimatch",
       "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
       "@mat-datetimepicker/core": "@mat-datetimepicker/core",

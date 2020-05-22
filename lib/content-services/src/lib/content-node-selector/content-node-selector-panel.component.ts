@@ -38,7 +38,7 @@ import { Subject } from 'rxjs';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
-const defaultValidation = () => true;
+export const defaultValidation = () => true;
 
 @Component({
     selector: 'adf-content-node-selector-panel',
