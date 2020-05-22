@@ -4,12 +4,13 @@
     "resolveJsonModule": true,
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
+    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "importHelpers": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -28,6 +29,7 @@
     "node_modules"
   ],
   "angularCompilerOptions": {
+    "preserveWhitespaces": false,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   }

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "downlevelIteration": true,
     "module": "esnext",
+    "rootDir": ".",
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",
     "sourceMap": true,
@@ -16,6 +17,7 @@
     "noImplicitReturns": true,
     "target": "es2015",
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -31,5 +33,9 @@
     "assets",
     "tools",
     "node_modules"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
 }

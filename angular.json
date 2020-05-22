@@ -264,7 +264,7 @@
             "outputPath": "demo-shell/dist",
             "index": "demo-shell/src/index.html",
             "main": "demo-shell/src/main.ts",
-            "tsConfig": "demo-shell/src/tsconfig.dev.json",
+            "tsConfig": "tsconfig.dev.json",
             "polyfills": "demo-shell/src/polyfills.ts",
             "stylePreprocessorOptions": {
               "includePaths": [

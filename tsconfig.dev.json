@@ -1,0 +1,46 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "rootDir": ".",
+    "baseUrl": "./demo-shell/src",
+    "skipLibCheck": false,
+    "types": [],
+    "paths": {
+      "@alfresco/js-api": [
+        "node_modules/@alfresco/js-api"
+      ],
+      "rxjs/*": [
+        "node_modules/rxjs/*"
+      ],
+      "@angular/*": [
+        "node_modules/@angular/*"
+      ],
+      "@alfresco/adf-extensions": [
+        "lib/extensions"
+      ],
+      "@alfresco/adf-core": [
+        "lib/core"
+      ],
+      "@alfresco/adf-content-services": [
+        "lib/content-services"
+      ],
+      "@alfresco/adf-process-services": [
+        "lib/process-services"
+      ],
+      "@alfresco/adf-insights": [
+        "lib/insights"
+      ],
+      "@alfresco/adf-process-services-cloud": [
+        "lib/process-services-cloud"
+      ],
+      "@alfresco/adf-testing": [
+        "lib/testing"
+      ]
+    }
+  },
+  "files": [
+    "demo-shell/src/main.ts",
+    "demo-shell/src/polyfills.ts"
+  ]
+}
