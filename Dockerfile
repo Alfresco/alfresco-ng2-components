@@ -7,4 +7,4 @@ COPY ./docker/entrypoint.sh /
 WORKDIR /usr/share/nginx/html
 COPY demo-shell/dist/ .
 
-ENTRYPOINT [ "/docker-entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
