@@ -24,14 +24,13 @@ then
 
     npm install
 
-    #./scripts/npm-build-all.sh || exit 1;
+    ./scripts/npm-build-all.sh || exit 1;
 else
     npm install;
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
 
-    #./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
+    ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
 echo "====== Build Demo shell dist ====="
-./scripts/npm-build-all.sh || exit 1;
 npm run build:dist || exit 1;
