@@ -778,9 +778,9 @@
           },
           "configurations": {
             "production": {
-              "project": "lib/insights/ng-package.json"
-            ,              "tsConfig": "lib/insights/tsconfig.lib.prod.json"
-}
+              "project": "lib/insights/ng-package.json",
+              "tsConfig": "lib/insights/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -818,13 +818,13 @@
           "options": {
             "tsConfig": "lib/extensions/tsconfig.lib.json",
             "project": "lib/extensions/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "lib/extensions/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
