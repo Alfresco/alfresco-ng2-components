@@ -606,9 +606,9 @@
           },
           "configurations": {
             "production": {
-              "project": "lib/core/ng-package.json"
-            ,              "tsConfig": "lib/core/tsconfig.lib.prod.json"
-}
+              "project": "lib/core/ng-package.json",
+              "tsConfig": "lib/core/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -649,9 +649,9 @@
           },
           "configurations": {
             "production": {
-              "project": "lib/content-services/ng-package.json"
-            ,              "tsConfig": "lib/content-services/tsconfig.lib.prod.json"
-}
+              "project": "lib/content-services/ng-package.json",
+              "tsConfig": "lib/content-services/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -809,7 +809,7 @@
     },
     "extensions": {
       "root": "lib/extensions",
-      "sourceRoot": "lib/extensions/src/lib",
+      "sourceRoot": "lib/extensions/src",
       "projectType": "library",
       "prefix": "adf",
       "architect": {
