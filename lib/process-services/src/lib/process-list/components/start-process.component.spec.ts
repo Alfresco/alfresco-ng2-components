@@ -602,13 +602,13 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             component.name = 'My new process';
             component.showSelectApplicationDropdown = true;
-            const change = new SimpleChange(null, 3, true);
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
-            component.ngOnChanges({ 'appId': change });
         });
 
         it('Should be able to show application drop-down and respective process definitions if showSelectApplicationDropdown set to true', () => {
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
             const lableElement = fixture.nativeElement.querySelector('.adf-start-process-app-list .mat-form-field-label');
@@ -617,7 +617,7 @@ describe('StartFormComponent', () => {
             expect(lableElement.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');
 
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
-            expect(component.applications.length).toBe(6);
+            expect(component.applications.length).toBe(7);
 
             expect(component.selectedApplication).toEqual(deployedApps[2]);
             expect(component.selectedApplication.id).toEqual(component.appId);
@@ -630,6 +630,8 @@ describe('StartFormComponent', () => {
         });
 
         it('Should be able to list process-definition based on selected application', () => {
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             expect(component.appId).toBe(component.selectedApplication.id);
             expect(component.selectedApplication).toEqual(deployedApps[2]);
@@ -656,25 +658,23 @@ describe('StartFormComponent', () => {
             expect(component.processDefinitions[0].name).toEqual('My Process 3');
         });
 
-        it('Should be able to select first application from the apps as default application when appId is not defined', () => {
-            component.appId = undefined;
-            const change = new SimpleChange(null, undefined, true);
-            component.ngOnChanges({ 'appId': change });
-            fixture.detectChanges();
-            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
-            expect(component.applications.length).toEqual(6);
-            expect(component.selectedApplication).toEqual(deployedApps[0]);
-            expect(component.selectedApplication.name).toEqual('App1');
-        });
-
-        it('Should be able to select first application from the apps as default application when given appId does not exits', () => {
-            component.appId = 123;
+        it('Should be able to show all option as default when defined appId is not exists', () => {
             const change = new SimpleChange(null, 123, true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
-            expect(component.applications.length).toEqual(6);
-            expect(component.selectedApplication.id).not.toEqual(component.appId);
+            expect(component.applications.length).toEqual(7);
+            expect(component.selectedApplication.name).toEqual('All');
+        });
+
+        it('Should be able to select an application from the apps as default application when given appId is defined', () => {
+            component.appId = 1;
+            const change = new SimpleChange(null, 1, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toEqual(7);
+            expect(component.selectedApplication.id).toEqual(component.appId);
             expect(component.selectedApplication.id).toEqual(1);
             expect(component.selectedApplication.name).toEqual('App1');
         });
