@@ -2,6 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/core/",
-    "baseUrl": "."
+    "types": [],
+    "baseUrl": "./",
+    "paths": {
+      "@alfresco/adf-extensions": ["../dist/extensions"],
+      "@alfresco/adf-extensions/*": ["../dist/extensions/*"]
+    }
   }
 }
