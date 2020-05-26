@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
 import { SearchApi as AdfSearchApi } from '@alfresco/js-api';
 
-export class SearchApi extends RepoApi {
+export class SearchApi extends Api {
   searchApi = new AdfSearchApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

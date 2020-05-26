@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { PeopleApi } from './people/people-api';
-import { NodesApi } from './nodes/nodes-api';
-import { CommentsApi } from './comments/comments-api';
-import { SitesApi } from './sites/sites-api';
-import { FavoritesApi } from './favorites/favorites-api';
-import { QueriesApi } from './queries/queries-api';
-import { SharedLinksApi } from './shared-links/shared-links-api';
-import { TrashcanApi } from './trashcan/trashcan-api';
-import { SearchApi } from './search/search-api';
-import { UploadApi } from './upload/upload-api';
-import { AuthenticationApi } from './authentication/authentication-api';
+import { PeopleApi } from './apis/people-api';
+import { NodesApi } from './apis/nodes-api';
+import { CommentsApi } from './apis/comments-api';
+import { SitesApi } from './apis/sites-api';
+import { FavoritesApi } from './apis/favorites-api';
+import { QueriesApi } from './apis/queries-api';
+import { SharedLinksApi } from './apis/shared-links-api';
+import { TrashcanApi } from './apis/trashcan-api';
+import { SearchApi } from './apis/search-api';
+import { UploadApi } from './apis/upload-api';
+import { AuthenticationApi } from './apis/authentication-api';
 
-export class RepoClient {
+export class ContentApi {
     constructor(
         private username: string,
         private password: string

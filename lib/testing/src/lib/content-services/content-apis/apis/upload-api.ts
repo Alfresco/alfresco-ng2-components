@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { UploadApi as AdfUploadApi } from '@alfresco/js-api';
 
 import * as fs from 'fs';
 
-export class UploadApi extends RepoApi {
+export class UploadApi extends Api {
   upload = new AdfUploadApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

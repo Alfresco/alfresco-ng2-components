@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
-
-export class AuthenticationApi extends RepoApi {
-
-    constructor(username: string, password: string) {
-        super(username, password);
-    }
-
-    async logout() {
-      try {
-        await this.apiLogin();
-        await this.alfrescoJsApi.logout();
-      } catch (error) {
-        this.handleError(`${this.constructor.name} ${this.logout.name}`, error);
-      }
-    }
-}
+export * from './content-api';
+export * from './apis/shared-links-api';
+export * from './apis/people-api';
+export * from './apis/nodes-api';
+export * from './apis/comments-api';
+export * from './apis/sites-api';
+export * from './apis/favorites-api';
+export * from './apis/queries-api';
+export * from './apis/trashcan-api';
+export * from './apis/search-api';
+export * from './apis/upload-api';
+export * from './apis/authentication-api';
+export * from './apis/node-body-create';
+export * from './apis/node-content-tree';

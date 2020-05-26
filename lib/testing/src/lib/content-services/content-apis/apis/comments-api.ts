@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { CommentsApi as AdfCommentsApi, CommentPaging, CommentEntry } from '@alfresco/js-api';
 
-export class CommentsApi extends RepoApi {
+export class CommentsApi extends Api {
   commentsApi = new AdfCommentsApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

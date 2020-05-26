@@ -17,9 +17,9 @@
 
 import { browser } from 'protractor';
 import { AlfrescoApi } from '@alfresco/js-api';
-import { Logger } from '../../core/utils/logger';
+import { Logger } from '../../../core/utils/logger';
 
-export abstract class RepoApi {
+export abstract class Api {
     alfrescoJsApi = new AlfrescoApi();
 
     constructor(

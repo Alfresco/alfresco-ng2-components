@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { NodeBodyCreate } from './node-body-create';
 import { NodeContentTree, flattenNodeContentTree } from './node-content-tree';
 import { NodesApi as AdfNodeApi, NodeBodyLock, NodeEntry, NodeChildAssociationPaging } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
-export class NodesApi extends RepoApi {
+export class NodesApi extends Api {
   nodesApi = new AdfNodeApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

@@ -18,4 +18,4 @@
 export * from './pages/public-api';
 export * from './actions/public-api';
 export * from './dialog/public-api';
-export * from './rest-apis/public-api';
+export * from './content-apis/public-api';

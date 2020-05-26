@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
 import { TrashcanApi as AdfTrashcanApi } from '@alfresco/js-api';
 
-export class TrashcanApi extends RepoApi {
+export class TrashcanApi extends Api {
   trashcanApi = new AdfTrashcanApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

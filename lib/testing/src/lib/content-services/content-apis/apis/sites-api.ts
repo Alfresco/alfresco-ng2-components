@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
 import {
@@ -29,7 +29,7 @@ import {
     SiteMemberEntry
 } from '@alfresco/js-api';
 
-export class SitesApi extends RepoApi {
+export class SitesApi extends Api {
   sitesApi = new AdfSiteApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

@@ -16,10 +16,10 @@
  */
 
 import { PersonModel, Person } from './people-api-models';
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { PeopleApi as AdfPeopleApi } from '@alfresco/js-api';
 
-export class PeopleApi extends RepoApi {
+export class PeopleApi extends Api {
   peopleApi = new AdfPeopleApi(this.alfrescoJsApi);
 
   constructor(username: string, password: string) {

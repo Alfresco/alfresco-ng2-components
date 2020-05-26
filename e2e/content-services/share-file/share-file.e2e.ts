@@ -21,7 +21,7 @@ import {
     LocalStorageUtil,
     NotificationHistoryPage,
     ViewerPage,
-    RepoClient
+    ContentApi
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -47,8 +47,8 @@ describe('Share file', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    const adminAcsApi = new RepoClient(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-    const userAcsApi = new RepoClient(acsUser.id, acsUser.password);
+    const adminAcsApi = new ContentApi(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+    const userAcsApi = new ContentApi(acsUser.id, acsUser.password);
 
     let nodeId;
 

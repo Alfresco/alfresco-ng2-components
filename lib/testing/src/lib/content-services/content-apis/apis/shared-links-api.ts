@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
 import { SharedlinksApi as AdfSharedlinksApi, SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
 
-export class SharedLinksApi extends RepoApi {
+export class SharedLinksApi extends Api {
     sharedlinksApi = new AdfSharedlinksApi(this.alfrescoJsApi);
 
     constructor(username: string, password: string) {

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { RepoApi } from '../repo-api';
+import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
-import { RepoClient } from '../repo-client';
+import { ContentApi } from '../content-api';
 import { FavoritesApi as AdfFavoritesApi, SitesApi as AdfSiteApi, FavoriteEntry, FavoritePaging } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
-export class FavoritesApi extends RepoApi {
+export class FavoritesApi extends Api {
   favoritesApi = new AdfFavoritesApi(this.alfrescoJsApi);
   sitesApi = new AdfSiteApi(this.alfrescoJsApi);
 
@@ -29,7 +29,7 @@ export class FavoritesApi extends RepoApi {
     super(username, password);
   }
 
-  async addFavorite(api: RepoClient, nodeType: string, name: string): Promise<FavoriteEntry> {
+  async addFavorite(api: ContentApi, nodeType: string, name: string): Promise<FavoriteEntry> {
     try {
       const nodeId = (await api.nodes.getNodeByPath(name)).entry.id;
       const data = {
@@ -122,7 +122,7 @@ export class FavoritesApi extends RepoApi {
       };
       return await ApiUtil.retryCall(favorite);
     } catch (error) {
-      // this.handleError(`${this.constructor.name} ${this.isFavoriteWithRetry.name}`, error);
+      this.handleError(`${this.constructor.name} ${this.isFavoriteWithRetry.name}`, error);
     }
     return isFavorite;
   }

@@ -15,17 +15,20 @@
  * limitations under the License.
  */
 
-export * from './repo-client';
-export * from './shared-links/shared-links-api';
-export * from './people/people-api';
-export * from './nodes/nodes-api';
-export * from './comments/comments-api';
-export * from './sites/sites-api';
-export * from './favorites/favorites-api';
-export * from './queries/queries-api';
-export * from './trashcan/trashcan-api';
-export * from './search/search-api';
-// export * from './upload/upload-api';
-export * from './authentication/authentication-api';
-export * from './nodes/node-body-create';
-export * from './nodes/node-content-tree';
+import { Api } from './api';
+
+export class AuthenticationApi extends Api {
+
+    constructor(username: string, password: string) {
+        super(username, password);
+    }
+
+    async logout(): Promise<void> {
+      try {
+        await this.apiLogin();
+        await this.alfrescoJsApi.logout();
+      } catch (error) {
+        this.handleError(`${this.constructor.name} ${this.logout.name}`, error);
+      }
+    }
+}
