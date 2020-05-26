@@ -30,7 +30,7 @@ export class NodesApi extends RepoApi {
 
   async getNodeByPath(relativePath: string = '/'): Promise<NodeEntry> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.getNode('-my-', { relativePath });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getNodeByPath.name}`, error);
@@ -40,7 +40,7 @@ export class NodesApi extends RepoApi {
 
   async getNodeById(id: string): Promise<NodeEntry> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       const node = await this.nodesApi.getNode(id);
       return node;
     } catch (error) {
@@ -141,7 +141,7 @@ export class NodesApi extends RepoApi {
 
   async deleteNodeById(id: string, permanent: boolean = true): Promise<void> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       await this.nodesApi.deleteNode(id, { permanent });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.deleteNodeById.name}`, error);
@@ -184,7 +184,7 @@ export class NodesApi extends RepoApi {
       const opts = {
         include: [ 'properties' ]
       };
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.listNodeChildren(nodeId, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getNodeChildren.name}`, error);
@@ -251,7 +251,7 @@ export class NodesApi extends RepoApi {
     }
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.createNode(parentId, nodeBody, { majorVersion });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createNode.name}`, error);
@@ -288,7 +288,7 @@ export class NodesApi extends RepoApi {
 
   async createChildren(data: NodeBodyCreate[]): Promise<NodeEntry|any> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.createNode('-my-', data as any);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createChildren.name}`, error);
@@ -321,7 +321,7 @@ export class NodesApi extends RepoApi {
 
   async addAspects(nodeId: string, aspectNames: string[]): Promise<NodeEntry> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.nodesApi.updateNode(nodeId, { aspectNames });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.addAspects.name}`, error);
@@ -340,7 +340,7 @@ export class NodesApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       const link = await this.nodesApi.createNode(destinationId, nodeBody);
       await this.addAspects(originalNodeId, ['app:linked']);
       return link;
@@ -364,7 +364,7 @@ export class NodesApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       const link = await this.nodesApi.createNode(destinationId, nodeBody);
       await this.addAspects(originalNodeId, ['app:linked']);
       return link;
@@ -376,7 +376,7 @@ export class NodesApi extends RepoApi {
 
   async getNodeContent(nodeId: string): Promise<any> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.getNodeContent(nodeId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getNodeContent.name}`, error);
@@ -385,7 +385,7 @@ export class NodesApi extends RepoApi {
 
   async editNodeContent(nodeId: string, content: string): Promise<NodeEntry|null> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.updateNodeContent(nodeId, content);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.editNodeContent.name}`, error);
@@ -395,7 +395,7 @@ export class NodesApi extends RepoApi {
 
   async renameNode(nodeId: string, newName: string): Promise<NodeEntry|null> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.nodesApi.updateNode(nodeId, { name: newName });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.renameNode.name}`, error);
@@ -411,7 +411,7 @@ export class NodesApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.updateNode(nodeId, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.setGranularPermission.name}`, error);
@@ -433,7 +433,7 @@ export class NodesApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.updateNode(nodeId, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.setGranularPermission.name}`, error);
@@ -448,7 +448,7 @@ export class NodesApi extends RepoApi {
     } as NodeBodyLock;
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.lockNode(nodeId, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.lockFile.name}`, error);
@@ -458,7 +458,7 @@ export class NodesApi extends RepoApi {
 
   async unlockFile(nodeId: string): Promise<NodeEntry|null> {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.nodesApi.unlockNode(nodeId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.unlockFile.name}`, error);

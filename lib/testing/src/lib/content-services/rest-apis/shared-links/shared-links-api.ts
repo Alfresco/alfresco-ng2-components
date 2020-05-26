@@ -29,7 +29,7 @@ export class SharedLinksApi extends RepoApi {
 
     async shareFileById(id: string, expireDate?: Date): Promise<SharedLinkEntry|null> {
       try {
-        await this.apiAuth();
+        await this.apiLogin();
         const data = {
           nodeId: id,
           expiresAt: expireDate
@@ -74,7 +74,7 @@ export class SharedLinksApi extends RepoApi {
 
     async getSharedLinks() {
       try {
-        await this.apiAuth();
+        await this.apiLogin();
         return await this.sharedlinksApi.listSharedLinks();
       } catch (error) {
         this.handleError(`${this.constructor.name} ${this.getSharedLinks.name}`, error);

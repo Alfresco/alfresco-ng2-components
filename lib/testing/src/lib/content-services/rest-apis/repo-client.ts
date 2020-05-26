@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import { PeopleApi } from './people/people-api';
 import { NodesApi } from './nodes/nodes-api';
 import { CommentsApi } from './comments/comments-api';
@@ -25,61 +24,56 @@ import { QueriesApi } from './queries/queries-api';
 import { SharedLinksApi } from './shared-links/shared-links-api';
 import { TrashcanApi } from './trashcan/trashcan-api';
 import { SearchApi } from './search/search-api';
-// import { UploadApi } from './rest-apis/upload/upload-api';
+import { UploadApi } from './upload/upload-api';
 import { AuthenticationApi } from './authentication/authentication-api';
 
 export class RepoClient {
     constructor(
-        private username: string = browser.params.ADMIN_USERNAME,
-        private password: string = browser.params.ADMIN_PASSWORD
+        private username: string,
+        private password: string
     ) {}
 
-    private get auth() {
-        const { username, password } = this;
-        return { username, password };
-    }
-
     get people() {
-        return new PeopleApi(this.auth.username, this.auth.password);
+        return new PeopleApi(this.username, this.password);
     }
 
     get nodes() {
-        return new NodesApi(this.auth.username, this.auth.password);
+        return new NodesApi(this.username, this.password);
     }
 
     get comments() {
-        return new CommentsApi(this.auth.username, this.auth.password);
+        return new CommentsApi(this.username, this.password);
     }
 
     get sites() {
-        return new SitesApi(this.auth.username, this.auth.password);
+        return new SitesApi(this.username, this.password);
     }
 
     get favorites() {
-        return new FavoritesApi(this.auth.username, this.auth.password);
+        return new FavoritesApi(this.username, this.password);
     }
 
     get shared() {
-        return new SharedLinksApi(this.auth.username, this.auth.password);
+        return new SharedLinksApi(this.username, this.password);
     }
 
     get trashcan() {
-        return new TrashcanApi(this.auth.username, this.auth.password);
+        return new TrashcanApi(this.username, this.password);
     }
 
     get search() {
-        return new SearchApi(this.auth.username, this.auth.password);
+        return new SearchApi(this.username, this.password);
     }
 
     get queries() {
-        return new QueriesApi(this.auth.username, this.auth.password);
+        return new QueriesApi(this.username, this.password);
     }
 
-    // get upload() {
-    //     return new UploadApi(this.auth.username, this.auth.password);
-    // }
+    get upload() {
+        return new UploadApi(this.username, this.password);
+    }
 
     get authentication() {
-        return new AuthenticationApi(this.auth.username, this.auth.password);
+        return new AuthenticationApi(this.username, this.password);
     }
 }

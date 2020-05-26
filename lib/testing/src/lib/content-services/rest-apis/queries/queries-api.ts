@@ -34,7 +34,7 @@ export class QueriesApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.queriesApi.findSites(searchTerm, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.findSites.name}`, error);
@@ -49,7 +49,7 @@ export class QueriesApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.queriesApi.findNodes(searchTerm, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.findNodes.name}`, error);

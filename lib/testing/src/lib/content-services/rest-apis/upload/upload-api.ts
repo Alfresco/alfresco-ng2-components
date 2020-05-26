@@ -16,10 +16,9 @@
  */
 
 import { RepoApi } from '../repo-api';
-// import { E2E_ROOT_PATH } from '../../../../configs';
 import { UploadApi as AdfUploadApi } from '@alfresco/js-api';
 
-// const fs = require('fs');
+import * as fs from 'fs';
 
 export class UploadApi extends RepoApi {
   upload = new AdfUploadApi(this.alfrescoJsApi);
@@ -28,41 +27,43 @@ export class UploadApi extends RepoApi {
     super(username, password);
   }
 
-//   async uploadFile(fileName: string, parentFolderId: string = '-my-') {
-//     const file = fs.createReadStream(`${E2E_ROOT_PATH}/resources/test-files/${fileName}`);
-//     const opts = {
-//       name: file.name,
-//       nodeType: 'cm:content'
-//     };
+  async uploadFile(filePath: string, fileName: string, parentId: string = '-my-') {
+    const file = fs.createReadStream(filePath);
+    const opts = {
+      name: fileName,
+      nodeType: 'cm:content',
+      renditions: 'doclib'
+    };
 
-//     try {
-//       await this.apiAuth();
-//       return await this.upload.uploadFile(file, '', parentFolderId, null, opts);
-//     } catch (error) {
-//       this.handleError(`${this.constructor.name} ${this.uploadFile.name}`, error);
-//     }
-//   }
+    try {
+      await this.apiLogin();
+      return await this.upload.uploadFile(file, '', parentId, null, opts);
+    } catch (error) {
+      this.handleError(`${this.constructor.name} ${this.uploadFile.name}`, error);
+    }
+  }
 
-//   async uploadFileWithRename(fileName: string, parentId: string = '-my-', newName: string, title: string = '', description: string = '') {
-//     const file = fs.createReadStream(`${E2E_ROOT_PATH}/resources/test-files/${fileName}`);
-//     const nodeProps = {
-//       properties: {
-//         'cm:title': title,
-//         'cm:description': description
-//       }
-//     };
+  async uploadFileWithRename(filePath: string, parentId: string = '-my-', newName: string, title: string = '', description: string = '') {
+    const file = fs.createReadStream(filePath);
 
-//     const opts = {
-//         name: newName,
-//         nodeType: 'cm:content'
-//     };
+    const nodeProps = {
+      properties: {
+        'cm:title': title,
+        'cm:description': description
+      }
+    };
 
-//     try {
-//       await this.apiAuth();
-//       return await this.upload.uploadFile(file, '', parentId, nodeProps, opts);
-//     } catch (error) {
-//       this.handleError(`${this.constructor.name} ${this.uploadFileWithRename.name}`, error);
-//     }
-//   }
+    const opts = {
+        name: newName,
+        nodeType: 'cm:content'
+    };
+
+    try {
+      await this.apiLogin();
+      return await this.upload.uploadFile(file, '', parentId, nodeProps, opts);
+    } catch (error) {
+      this.handleError(`${this.constructor.name} ${this.uploadFileWithRename.name}`, error);
+    }
+  }
 
 }

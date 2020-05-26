@@ -29,7 +29,7 @@ export class PeopleApi extends RepoApi {
   async createUser(user: PersonModel) {
     try {
       const person = new Person(user);
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.peopleApi.createPerson(person);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createUser.name}`, error);
@@ -39,7 +39,7 @@ export class PeopleApi extends RepoApi {
 
   async getUser(username: string) {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.peopleApi.getPerson(username);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getUser.name}`, error);
@@ -49,7 +49,7 @@ export class PeopleApi extends RepoApi {
 
   async updateUser(username: string, userDetails?: PersonModel) {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.peopleApi.updatePerson(username, userDetails);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.updateUser.name}`, error);

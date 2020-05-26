@@ -41,7 +41,7 @@ export class SearchApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.searchApi.search(data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.queryRecentFiles.name}`, error);
@@ -61,7 +61,7 @@ export class SearchApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.searchApi.search(data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.queryNodesNames.name}`, error);
@@ -81,7 +81,7 @@ export class SearchApi extends RepoApi {
     };
 
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return this.searchApi.search(data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.queryNodesExactNames.name}`, error);

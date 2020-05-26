@@ -29,7 +29,7 @@ export class TrashcanApi extends RepoApi {
 
   async permanentlyDelete(id: string) {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.trashcanApi.deleteDeletedNode(id);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.permanentlyDelete.name}`, error);
@@ -38,7 +38,7 @@ export class TrashcanApi extends RepoApi {
 
   async restore(id: string) {
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.trashcanApi.restoreDeletedNode(id);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.restore.name}`, error);
@@ -51,7 +51,7 @@ export class TrashcanApi extends RepoApi {
         maxItems: 1000
     };
     try {
-      await this.apiAuth();
+      await this.apiLogin();
       return await this.trashcanApi.listDeletedNodes(opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getDeletedNodes.name}`, error);

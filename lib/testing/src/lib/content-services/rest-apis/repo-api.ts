@@ -23,8 +23,8 @@ export abstract class RepoApi {
     alfrescoJsApi = new AlfrescoApi();
 
     constructor(
-        private username: string = browser.params.testConfig.adf.adminEmail,
-        private password: string = browser.params.testConfig.adf.adminPassword
+        private username: string,
+        private password: string
     ) {
         this.alfrescoJsApi.setConfig({
             provider: 'ECM',
@@ -32,7 +32,7 @@ export abstract class RepoApi {
         });
     }
 
-    apiAuth(): Promise<any> {
+    async apiLogin(): Promise<any> {
         return this.alfrescoJsApi.login(this.username, this.password);
     }
 

@@ -47,7 +47,7 @@ describe('Share file', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    const adminAcsApi = new RepoClient();
+    const adminAcsApi = new RepoClient(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
     const userAcsApi = new RepoClient(acsUser.id, acsUser.password);
 
     let nodeId;

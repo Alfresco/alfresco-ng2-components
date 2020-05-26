@@ -25,7 +25,7 @@ export class AuthenticationApi extends RepoApi {
 
     async logout() {
       try {
-        await this.apiAuth();
+        await this.apiLogin();
         await this.alfrescoJsApi.logout();
       } catch (error) {
         this.handleError(`${this.constructor.name} ${this.logout.name}`, error);
