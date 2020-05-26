@@ -39,7 +39,7 @@ export class LoginSSOPage {
         }
 
         if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
-            const loginURL: string = browser.baseUrl + browser.params.loginRoute ? browser.params.loginRoute : '';
+            const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
             await browser.get(loginURL);
         }
 
