@@ -181,7 +181,7 @@ fi
 if $EXEC_START == true; then
     if $EXEC_DIST == true; then
         echo "====== Start Demo shell dist mode ====="
-        npm run start:dist
+        npm run start:prod
     else
         echo "====== Start Demo shell ====="
         npm run start
@@ -192,7 +192,7 @@ else
         npm run build
     else
         echo "====== Build Demo shell ====="
-        npm run build:dist
+        npm run build:prod
     fi
 fi
 

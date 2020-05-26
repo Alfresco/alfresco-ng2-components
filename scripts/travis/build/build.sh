@@ -32,5 +32,5 @@ else
     ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
 fi;
 
-echo "====== Build Demo shell dist ====="
-npm run build:dist || exit 1;
+echo "====== Build Demo shell for production ====="
+npm run build:prod || exit 1;
