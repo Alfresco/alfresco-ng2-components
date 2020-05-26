@@ -34,6 +34,108 @@ export enum DisplayMode {
     Gallery = 'gallery'
 }
 
+const mockCategory: SearchCategory[] = [{
+    id: 'checkList',
+    name: 'filterType',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'check-list',
+        settings: {
+            field: 'cm:type',
+            pageSize: 5,
+            operator: 'OR',
+            options: [
+              {
+                name: 'Folder',
+                value: "TYPE:'cm:folder'"
+              },
+              {
+                name: 'Document',
+                value: "TYPE:'cm:content'"
+              }
+            ]
+        }
+    }
+}, {
+    id: 'queryName',
+    name: 'filterName',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'text',
+        settings: {
+            field: 'cm:name',
+            pattern: "cm:name:'(.*?)'",
+            placeholder: 'Enter the name'
+        }
+    }
+}, {
+    id: 'contentSizeRange',
+    name: 'filterSize',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'number-range',
+        settings: {
+            field: 'cm:content.size',
+            format: '[{FROM} TO {TO}]'
+        }
+    }
+}, {
+    id: 'queryName',
+    name: 'filterNodeId',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'text',
+        settings: {
+            field: 'sys:node-uuid',
+            pattern: "sys:node-uuid:'(.*?)'",
+            placeholder: 'Enter the node id'
+        }
+    }
+}, {
+    id: 'queryName',
+    name: 'filterLock',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'text',
+        settings: {
+            field: 'cm:name',
+            pattern: "cm:name:'(.*?)'",
+            placeholder: 'Enter the name'
+        }
+    }
+}, {
+    id: 'queryName',
+    name: 'filterCreatedBy',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'text',
+        settings: {
+            field: 'cm:name',
+            pattern: "cm:name:'(.*?)'",
+            placeholder: 'Enter the name'
+        }
+    }
+}, {
+    id: 'createdDateRange',
+    name: 'filterCreated',
+    enabled: true,
+    expanded: false,
+    component: {
+        selector: 'date-range',
+        settings: {
+            field: 'cm:created',
+            dateFormat: 'DD-MMM-YY',
+            maxDate: 'today'
+        }
+    }
+}];
+
 @Component({
     selector: 'adf-document-list-header',
     templateUrl: './document-list-header.component.html',
@@ -88,30 +190,13 @@ export class DocumentListHeaderComponent implements OnInit, OnDestroy {
     searchCategories: SearchCategory[] = [];
     private onDestroy$ = new Subject<boolean>();
 
-    mockCategory: SearchCategory = {
-        id: 'queryName',
-        name: 'queryName',
-        enabled: true,
-        expanded: false,
-        component: {
-            selector: 'text',
-            settings: {
-                field: 'cm:name',
-                pattern: "cm:name:'(.*?)'",
-                placeholder: 'Enter the name'
-            }
-        }
-    };
-
     private keyManager: FocusKeyManager<DataTableRowComponent>;
 
     constructor(private elementRef: ElementRef,
                 public queryBuilder: SearchQueryBuilderService ) { }
 
     ngOnInit() {
-        this.data.getColumns().forEach(() => {
-            this.searchCategories.push(this.mockCategory);
-        });
+        this.searchCategories = mockCategory;
 
         this.queryBuilder.updated
             .pipe(takeUntil(this.onDestroy$))
