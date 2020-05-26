@@ -19,7 +19,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '@alfresco/adf-core';
 import { TaskHeaderCloudComponent } from '@alfresco/adf-process-services-cloud';
-import { PreviewService } from 'app/services/preview.service';
+import { PreviewService } from '../../services/preview.service';
 
 @Component({
     templateUrl: './task-details-cloud-demo.component.html',

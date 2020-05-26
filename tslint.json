@@ -10,7 +10,7 @@
   "rules": {
     "adf-license-banner": [
       true,
-      "e2e/**/*.ts",
+      "{demo-shell,e2e}/**/*.ts",
       "./license-community.txt"
     ],
     "align": [
@@ -158,16 +158,13 @@
     "component-selector": [
       true,
       "element",
-      "adf",
+      ["adf", "app"],
       "kebab-case"
     ],
     "directive-selector": [
       true,
-      [
-        "element",
-        "attribute"
-      ],
-      "adf",
+      ["element", "attribute"],
+      ["adf", "app"],
       "kebab-case"
     ],
     "naming-convention": [

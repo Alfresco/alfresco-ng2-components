@@ -61,11 +61,11 @@ import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
 export const appRoutes: Routes = [
-    { path: 'login', loadChildren: () => import('app/components/login/login.module').then(m => m.AppLoginModule) },
+    { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
-        loadChildren: () => import('app/components/settings/settings.module').then(m => m.AppSettingsModule)
+        loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
     },
     {
         path: 'files/:nodeId/view',
@@ -76,7 +76,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('app/components/file-view/file-view.module').then(m => m.FileViewModule)
+                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
             }
         ]
     },
@@ -88,7 +88,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('app/components/file-view/file-view.module').then(m => m.FileViewModule)
+                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
             }
         ]
     },
@@ -101,14 +101,14 @@ export const appRoutes: Routes = [
             {
                 path: 'breadcrumb',
                 canActivate: [AuthGuardEcm],
-                loadChildren: () => import('app/components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
+                loadChildren: () => import('./components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
             },
             {
                 path: 'notifications',
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('app/components/notifications/notifications.module').then(m => m.AppNotificationsModule)
+                        loadChildren: () => import('./components/notifications/notifications.module').then(m => m.AppNotificationsModule)
                     }
                 ]
             },
@@ -117,7 +117,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('app/components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
+                        loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
                     }
                 ]
             },
@@ -126,7 +126,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('app/components/pipes/pipes.module').then(m => m.AppPipesModule)
+                        loadChildren: () => import('./components/pipes/pipes.module').then(m => m.AppPipesModule)
                     }
                 ]
             },
@@ -135,7 +135,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('app/components/card-view/card-view.module').then(m => m.AppCardViewModule)
+                        loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
                     }
                 ]
             },
@@ -144,7 +144,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('app/components/sites/sites.module').then(m => m.SitesModule)
+                        loadChildren: () => import('./components/sites/sites.module').then(m => m.SitesModule)
                     }
                 ]
             },
@@ -153,7 +153,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: () => import('app/components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
+                        loadChildren: () => import('./components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
                     }
                 ]
             },
@@ -184,7 +184,7 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: 'community',
-                        loadChildren: () => import('app/components/cloud/community/community.module').then(m => m.AppCommunityModule)
+                        loadChildren: () => import('./components/cloud/community/community.module').then(m => m.AppCommunityModule)
                     },
                     {
                         path: ':appName',
@@ -232,7 +232,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'node-selector',
-                loadChildren: () => import('app/components/content-node-selector/content-node-selector.module').then(m => m.AppContentNodeSelectorModule)
+                loadChildren: () => import('./components/content-node-selector/content-node-selector.module').then(m => m.AppContentNodeSelectorModule)
             },
             {
                 path: 'confirm-dialog',
@@ -240,12 +240,12 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'settings-layout',
-                loadChildren: () => import('app/components/settings/settings.module').then(m => m.AppSettingsModule)
+                loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
             },
             {
                 path: 'trashcan',
                 canActivate: [AuthGuardEcm],
-                loadChildren: () => import('app/components/trashcan/trashcan.module').then(m => m.AppTrashcanModule)
+                loadChildren: () => import('./components/trashcan/trashcan.module').then(m => m.AppTrashcanModule)
             },
             {
                 path: 'files',
@@ -285,12 +285,12 @@ export const appRoutes: Routes = [
             {
                 path: 'dl-custom-sources',
                 canActivate: [AuthGuardEcm],
-                loadChildren: () => import('app/components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
+                loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
 
             },
             {
                 path: 'datatable',
-                loadChildren: () => import('app/components/datatable/datatable.module').then(m => m.AppDataTableModule)
+                loadChildren: () => import('./components/datatable/datatable.module').then(m => m.AppDataTableModule)
             },
             {
                 path: 'datatable/dnd',
@@ -368,17 +368,17 @@ export const appRoutes: Routes = [
             {
                 path: 'webscript',
                 canActivate: [AuthGuardEcm],
-                loadChildren: () => import('app/components/webscript/webscript.module').then(m => m.AppWebScriptModule)
+                loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
             },
             {
                 path: 'tag',
                 canActivate: [AuthGuardEcm],
-                loadChildren: () => import('app/components/tag/tag.module').then(m => m.AppTagModule)
+                loadChildren: () => import('./components/tag/tag.module').then(m => m.AppTagModule)
             },
             {
                 path: 'social',
                 canActivate: [AuthGuardEcm],
-                loadChildren: () => import('app/components/social/social.module').then(m => m.AppSocialModule)
+                loadChildren: () => import('./components/social/social.module').then(m => m.AppSocialModule)
             },
             {
                 path: 'permissions/:id',
@@ -392,7 +392,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'about',
-                loadChildren: () => import('app/components/about/about.module').then(m => m.AppAboutModule)
+                loadChildren: () => import('./components/about/about.module').then(m => m.AppAboutModule)
             },
             {
                 path: 'icons',
@@ -413,11 +413,11 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'datatable-lazy',
-                loadChildren: () => import('app/components/lazy-loading/lazy-loading.module').then(m => m.LazyLoadingModule)
+                loadChildren: () => import('./components/lazy-loading/lazy-loading.module').then(m => m.LazyLoadingModule)
             },
             {
                 path: 'copy-content',
-                loadChildren: () => import('app/components/datatable/copy-content/datatable.module').then(m => m.AppDataTableCopyModule)
+                loadChildren: () => import('./components/datatable/copy-content/datatable.module').then(m => m.AppDataTableCopyModule)
             },
             {
                 path: 'template-list',
@@ -426,12 +426,12 @@ export const appRoutes: Routes = [
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],
-                loadChildren: () => import('app/components/task-list-demo/task-list.module').then(m => m.AppTaskListModule)
+                loadChildren: () => import('./components/task-list-demo/task-list.module').then(m => m.AppTaskListModule)
             },
             {
                 path: 'process-list',
                 canActivate: [AuthGuardBpm],
-                loadChildren: () => import('app/components/process-list-demo/process-list.module').then(m => m.AppProcessListModule)
+                loadChildren: () => import('./components/process-list-demo/process-list.module').then(m => m.AppProcessListModule)
             },
             {
                 path: 'error/no-authorization',

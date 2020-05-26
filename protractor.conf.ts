@@ -1,12 +1,14 @@
-const { LocalStorageUtil } = require('@alfresco/adf-testing');
+// tslint:disable: no-var-requires
+// tslint:disable: no-console
 
+const { LocalStorageUtil } = require('@alfresco/adf-testing');
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
 const testConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
-const SmartRunner = require('protractor-smartrunner');
+const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
 
 require('ts-node').register({
@@ -20,23 +22,25 @@ const argv = require('yargs').argv;
 const projectRoot = path.resolve(__dirname);
 const width = 1657, height = 1657;
 
-let ENV_FILE = process.env.ENV_FILE;
-let GROUP_SUFFIX = process.env.PREFIX || 'adf';
+const ENV_FILE = process.env.ENV_FILE;
+const GROUP_SUFFIX = process.env.PREFIX || 'adf';
 
 RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
     require('dotenv').config({ path: ENV_FILE });
 }
 
-let HOST = process.env.URL_HOST_ADF;
-let BROWSER_RUN = !!process.env.BROWSER_RUN;
-let FOLDER = process.env.FOLDER || '';
-let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
-let MAXINSTANCES = process.env.MAXINSTANCES || 1;
-let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
-let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
-let LIST_SPECS = process.env.LIST_SPECS || [];
-let LOG = !!process.env.LOG;
+const HOST = process.env.URL_HOST_ADF;
+const BROWSER_RUN = !!process.env.BROWSER_RUN;
+const FOLDER = process.env.FOLDER || '';
+const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
+const DIRECT_CONNECCT = !SELENIUM_SERVER;
+const MAXINSTANCES = process.env.MAXINSTANCES || 1;
+const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
+const SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT === 'true');
+const LIST_SPECS = process.env.LIST_SPECS || [];
+const LOG = !!process.env.LOG;
+
 let arraySpecs = [];
 
 if (LOG) {
@@ -49,14 +53,15 @@ if (LOG) {
     console.log('SELENIUM_SERVER : ' + SELENIUM_SERVER);
 }
 
-let downloadFolder = path.join(__dirname, 'e2e/downloads');
+const downloadFolder = path.join(__dirname, 'e2e/downloads');
 
-let specs = () => {
-    let specsToRun = FOLDER ? './**/e2e/' + FOLDER + '/**/*.e2e.ts' : './**/e2e/**/*.e2e.ts';
+const specs = () => {
+    const specsToRun = FOLDER ? './**/e2e/' + FOLDER + '/**/*.e2e.ts' : './**/e2e/**/*.e2e.ts';
 
     if (LIST_SPECS.length === 0) {
         arraySpecs = [specsToRun];
     } else {
+        // @ts-ignore
         arraySpecs = LIST_SPECS.split(',');
         arraySpecs = arraySpecs.map((el) => './' + el);
     }
@@ -91,13 +96,13 @@ exports.config = {
                 'credentials_enable_service': false,
                 'download': {
                     'prompt_for_download': false,
-                    "directory_upgrade": true,
+                    'directory_upgrade': true,
                     'default_directory': downloadFolder
                 },
-                "browser": {
-                    "setDownloadBehavior": {
-                        "behavior": "allow",
-                        "downloadPath": downloadFolder
+                'browser': {
+                    'setDownloadBehavior': {
+                        'behavior': 'allow',
+                        'downloadPath': downloadFolder
                     }
                 }
             },
@@ -116,8 +121,9 @@ exports.config = {
     baseUrl: HOST,
 
     params: {
-        testConfig: testConfig,
+        testConfig,
         loginRoute: '/login',
+        config: testConfig.appConfig,
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: testConfig.identityAdmin,
         identityUser: testConfig.identityUser,
@@ -132,9 +138,8 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 120000,
-        print: () => {
-        },
-        ...SmartRunner.withOptionalExclusions(
+        print: () => {},
+        ...smartRunner.withOptionalExclusions(
             resolve(__dirname, './e2e/protractor.excludes.json')
         )
     },
@@ -169,7 +174,7 @@ exports.config = {
             project: 'e2e/tsconfig.e2e.json'
         });
 
-        require("tsconfig-paths").register({
+        require('tsconfig-paths').register({
             project: 'e2e/tsconfig.e2e.json',
             baseUrl: 'e2e/',
             paths: tsConfig.compilerOptions.paths
@@ -210,14 +215,14 @@ exports.config = {
         await LocalStorageUtil.apiReset();
 
         function disableCSSAnimation() {
-            let css = '* {' +
+            const css = '* {' +
                 '-webkit-transition-duration: 0s !important;' +
                 'transition-duration: 0s !important;' +
                 '-webkit-animation-duration: 0s !important;' +
                 'animation-duration: 0s !important;' +
-                '}',
-                head = document.head || document.getElementsByTagName('head')[0],
-                style = document.createElement('style');
+                '}';
+            const head = document.head || document.getElementsByTagName('head')[0];
+            const style = document.createElement('style');
 
             style.type = 'text/css';
             style.appendChild(document.createTextNode(css));

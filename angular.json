@@ -15,7 +15,7 @@
             "outputPath": "demo-shell/dist",
             "index": "demo-shell/src/index.html",
             "main": "demo-shell/src/main.ts",
-            "tsConfig": "demo-shell/src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
             "polyfills": "demo-shell/src/polyfills.ts",
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -242,7 +242,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "./demo-shell/src/tsconfig.app.json"
+              "tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**/*",
@@ -544,7 +544,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "./demo-shell/src/tsconfig.app.json"
+              "tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**/*",
