@@ -23,7 +23,7 @@ import { QueriesApi as AdfQueriesApi } from '@alfresco/js-api';
 export class QueriesApi extends RepoApi {
   queriesApi = new AdfQueriesApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

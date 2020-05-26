@@ -21,7 +21,7 @@ import { CommentsApi as AdfCommentsApi, CommentPaging, CommentEntry } from '@alf
 export class CommentsApi extends RepoApi {
   commentsApi = new AdfCommentsApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

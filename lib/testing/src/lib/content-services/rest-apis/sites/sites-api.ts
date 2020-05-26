@@ -32,7 +32,7 @@ import {
 export class SitesApi extends RepoApi {
   sitesApi = new AdfSiteApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

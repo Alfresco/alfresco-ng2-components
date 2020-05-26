@@ -19,7 +19,7 @@ import { RepoApi } from '../repo-api';
 
 export class AuthenticationApi extends RepoApi {
 
-    constructor(username?: string, password?: string) {
+    constructor(username: string, password: string) {
         super(username, password);
     }
 

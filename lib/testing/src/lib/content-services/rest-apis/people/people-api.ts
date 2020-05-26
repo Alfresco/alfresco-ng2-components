@@ -22,7 +22,7 @@ import { PeopleApi as AdfPeopleApi } from '@alfresco/js-api';
 export class PeopleApi extends RepoApi {
   peopleApi = new AdfPeopleApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

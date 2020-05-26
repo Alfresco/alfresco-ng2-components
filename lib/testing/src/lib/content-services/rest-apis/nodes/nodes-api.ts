@@ -24,7 +24,7 @@ import { ApiUtil } from '../../../core/structure/api.util';
 export class NodesApi extends RepoApi {
   nodesApi = new AdfNodeApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

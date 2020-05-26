@@ -25,7 +25,7 @@ export class FavoritesApi extends RepoApi {
   favoritesApi = new AdfFavoritesApi(this.alfrescoJsApi);
   sitesApi = new AdfSiteApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

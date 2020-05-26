@@ -23,7 +23,7 @@ import { SharedlinksApi as AdfSharedlinksApi, SharedLinkEntry, SharedLinkPaging 
 export class SharedLinksApi extends RepoApi {
     sharedlinksApi = new AdfSharedlinksApi(this.alfrescoJsApi);
 
-    constructor(username?: string, password?: string) {
+    constructor(username: string, password: string) {
       super(username, password);
     }
 

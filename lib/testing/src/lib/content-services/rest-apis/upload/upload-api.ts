@@ -23,7 +23,7 @@ import * as fs from 'fs';
 export class UploadApi extends RepoApi {
   upload = new AdfUploadApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 

@@ -23,7 +23,7 @@ import { TrashcanApi as AdfTrashcanApi } from '@alfresco/js-api';
 export class TrashcanApi extends RepoApi {
   trashcanApi = new AdfTrashcanApi(this.alfrescoJsApi);
 
-  constructor(username?: string, password?: string) {
+  constructor(username: string, password: string) {
     super(username, password);
   }
 
