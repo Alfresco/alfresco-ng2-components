@@ -1,6 +1,6 @@
 <div class="app-container">
 
-    <mat-accordion *ngIf="showRecentFiles" class="app-container-recent">
+    <!-- <mat-accordion *ngIf="showRecentFiles" class="app-container-recent">
         <mat-expansion-panel hideToggle="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -25,7 +25,7 @@
                 </adf-custom-empty-content-template>
             </adf-document-list>
         </mat-expansion-panel>
-    </mat-accordion>
+    </mat-accordion> -->
 
     <div *ngIf="showSitePicker" class="app-site-container-style" id="site-container">
         <adf-sites-dropdown (change)="onSiteChange($event)" [hideMyFiles]="false" [relations]="'members'">

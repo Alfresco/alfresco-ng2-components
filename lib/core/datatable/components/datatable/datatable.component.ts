@@ -258,13 +258,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    isColumnSortActive(column: DataColumn): boolean {
-        if (!column || !this.data.getSorting()) {
-            return false;
-        }
-        return column.key === this.data.getSorting().key;
-    }
-
     ngDoCheck() {
         const changes = this.differ.diff(this.rows);
         if (changes) {
@@ -508,39 +501,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         );
     }
 
-    onColumnHeaderClick(column: DataColumn) {
-        if (column && column.sortable) {
-            const current = this.data.getSorting();
-            let newDirection = 'asc';
-            if (current && column.key === current.key) {
-                newDirection = current.direction === 'asc' ? 'desc' : 'asc';
-            }
-            this.data.setSorting(new DataSorting(column.key, newDirection));
-            this.emitSortingChangedEvent(column.key, newDirection);
-        }
-
-        this.keyManager.updateActiveItemIndex(0);
-    }
-
-    onSelectAllClick(matCheckboxChange: MatCheckboxChange) {
-        this.isSelectAllChecked = matCheckboxChange.checked;
-        this.isSelectAllIndeterminate = false;
-
-        if (this.multiselect) {
-            const rows = this.data.getRows();
-            if (rows && rows.length > 0) {
-                for (let i = 0; i < rows.length; i++) {
-                    this.selectRow(rows[i], matCheckboxChange.checked);
-                }
-            }
-
-            const domEventName = matCheckboxChange.checked ? 'row-select' : 'row-unselect';
-            const row = this.selection.length > 0 ? this.selection[0] : null;
-
-            this.emitRowSelectionEvent(domEventName, row);
-        }
-    }
-
     onCheckboxChange(row: DataRow, event: MatCheckboxChange) {
         const newValue = event.checked;
 
@@ -605,14 +565,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return value ? 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '') : '';
     }
 
-    isColumnSorted(col: DataColumn, direction: string): boolean {
-        if (col && direction) {
-            const sorting = this.data.getSorting();
-            return sorting && sorting.key === col.key && sorting.direction === direction;
-        }
-        return false;
-    }
-
     getContextMenuActions(row: DataRow, col: DataColumn): any[] {
         const event = new DataCellEvent(row, col, []);
         this.showRowContextMenu.emit(event);
@@ -668,14 +620,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
-    getSortingKey(): string | null {
-        if (this.data.getSorting()) {
-            return this.data.getSorting().key;
-        }
-
-        return null;
-    }
-
     selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;
@@ -702,12 +646,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return null;
     }
 
-    getSortableColumns() {
-        return this.data.getColumns().filter((column) => {
-            return column.sortable === true;
-        });
-    }
-
     isEmpty() {
         return this.data.getRows().length === 0;
     }
@@ -725,17 +663,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             detail: {
                 row: row,
                 selection: this.selection
-            },
-            bubbles: true
-        });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
-    }
-
-    private emitSortingChangedEvent(key: string, direction: string) {
-        const domEvent = new CustomEvent('sorting-changed', {
-            detail: {
-                key,
-                direction
             },
             bubbles: true
         });
@@ -775,25 +702,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     getAutomationValue(row: DataRow): any {
         const name = this.getNameColumnValue();
         return name ? row.getValue(name.key) : '';
-    }
-
-    getAriaSort(column: DataColumn): string {
-        if (!this.isColumnSortActive(column)) {
-            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
-        }
-
-        return this.isColumnSorted(column, 'asc') ?
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' :
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
-    }
-
-    getSortLiveAnnouncement(column: DataColumn): string {
-        if (!this.isColumnSortActive(column)) {
-            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT' ;
-        }
-        return this.isColumnSorted(column, 'asc') ?
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING_BY' :
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING_BY';
     }
 }
 

@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
+import { SearchModule } from '../search';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
@@ -33,6 +34,8 @@ import { LibraryRoleColumnComponent } from './components/library-role-column/lib
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
 import { NameColumnComponent } from './components/name-column/name-column.component';
 
+import { DocumentListHeaderComponent } from './components/document-list-header/document-list-header.component';
+
 @NgModule({
     imports: [
         CoreModule,
@@ -40,7 +43,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         FlexLayoutModule,
         MaterialModule,
         UploadModule,
-        EditJsonDialogModule
+        EditJsonDialogModule,
+        SearchModule
     ],
     declarations: [
         DocumentListComponent,
@@ -50,7 +54,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         LibraryNameColumnComponent,
         NameColumnComponent,
         ContentActionComponent,
-        ContentActionListComponent
+        ContentActionListComponent,
+        DocumentListHeaderComponent
     ],
     exports: [
         DocumentListComponent,

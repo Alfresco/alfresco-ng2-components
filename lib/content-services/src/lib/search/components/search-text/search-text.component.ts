@@ -55,7 +55,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     onChangedHandler(event) {
         this.value = event.target.value;
-        this.updateQuery(this.value);
+        this.updateQuery(`*${this.value}*`);
     }
 
     private updateQuery(value: string) {

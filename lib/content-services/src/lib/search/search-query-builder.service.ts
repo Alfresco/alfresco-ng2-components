@@ -196,10 +196,16 @@ export class SearchQueryBuilderService {
      * Builds and executes the current query.
      * @returns Nothing
      */
-    async execute() {
+    async execute(specifiedPath?: string) {
         try {
             const query = this.buildQuery();
+            if (specifiedPath) {
+                query.filterQueries.pop();
+                query.query.query += ` AND (PARENT:\"${specifiedPath}\")`;
+            }
+
             if (query) {
+                // console.log(query);
                 const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
                 this.executed.next(resultSetPaging);
             }
