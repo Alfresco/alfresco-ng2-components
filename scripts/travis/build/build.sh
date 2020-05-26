@@ -29,7 +29,8 @@ else
     npm install;
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
 
-    ./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
+    #./scripts/smart-build.sh -b $TRAVIS_BRANCH  -gnu || exit 1;
+    npm run build-lib || exit 1;
 fi;
 
 echo "====== Build Demo shell for production ====="
