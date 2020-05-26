@@ -37,7 +37,7 @@
     "04": "echo -------------------------------------------- Demo Shell -----------------------------------------------",
     "04s": "",
     "start": "ng lint dev && npm run validate-config && concurrently \"ng serve dev --open\" \"npm run style:dev --watch\" ",
-    "start:prod": "ng lint dist && npm run validate-config && ng serve dev --prod --open",
+    "start:prod": "ng lint dev && npm run validate-config && ng serve dev --prod --open",
     "build": "npm run validate-config  && npm run style:dev && ng build dev",
     "build:prod": "npm run validate-config && node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build dev --prod",
     "style:dev": "npm run webpack -- --config  ./lib/config/webpack.style.js --progress --profile --bail",
@@ -50,7 +50,7 @@
     "postbuild:ci": "node ./scripts/app-config-replace.js",
     "06": "echo -------------------------------------------- Clean ----------------------------------------------",
     "06s": "",
-    "clean": "rimraf dist ./node_modules typings lib/dist",
+    "clean": "rimraf dist node_modules lib/dist",
     "lint:staged": "lint-staged",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"

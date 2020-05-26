@@ -18,7 +18,7 @@ cp -R ./lib/process-services/src/lib/i18n/* ./lib/dist/process-services/bundles/
 echo "====== Copy assets ======"
 cp -R ./lib/process-services/src/lib/assets/* ./lib/dist/process-services/bundles/assets
 
-echo "====== Move to node_modules ======"
-rm -rf ./node_modules/@alfresco/adf-process-services/ && \
-mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
-cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/
+#echo "====== Move to node_modules ======"
+#rm -rf ./node_modules/@alfresco/adf-process-services/ && \
+#mkdir -p ./node_modules/@alfresco/adf-process-services/ && \
+#cp -R ./lib/dist/process-services/* ./node_modules/@alfresco/adf-process-services/

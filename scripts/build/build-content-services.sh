@@ -18,7 +18,7 @@ cp -R ./lib/content-services/src/lib/i18n/* ./lib/dist/content-services/bundles/
 echo "====== Copy assets ======"
 cp -R ./lib/content-services/src/lib/assets/* ./lib/dist/content-services/bundles/assets
 
-echo "====== Move to node_modules ======"
-rm -rf ./node_modules/@alfresco/adf-content-services/ && \
-mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
-cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
+#echo "====== Move to node_modules ======"
+#rm -rf ./node_modules/@alfresco/adf-content-services/ && \
+#mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
+#cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/
