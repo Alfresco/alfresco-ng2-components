@@ -2,6 +2,13 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/content-services/",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "types": [],
+    "paths": {
+      "@alfresco/adf-extensions": ["../../dist/extensions"],
+      "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],
+      "@alfresco/adf-core": ["../../dist/core"],
+      "@alfresco/adf-core/*": ["../../dist/core/*"]
+    }
   }
 }

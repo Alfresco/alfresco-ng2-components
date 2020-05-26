@@ -1,6 +1,13 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/testing/"
+    "outDir": "../dist/testing/",
+    "baseUrl": "src",
+    "paths": {
+      "@alfresco/adf-extensions": ["../../dist/extensions"],
+      "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],
+      "@alfresco/adf-core": ["../../dist/core"],
+      "@alfresco/adf-core/*": ["../../dist/core/*"]
+    }
   }
 }
