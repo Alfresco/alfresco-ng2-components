@@ -325,6 +325,7 @@ describe('Test Img viewer component ', () => {
         describe('default value', () => {
 
             it('should use default zoom if is not present a custom zoom in the app.config', () => {
+                fixture.detectChanges();
                 expect(component.scaleX).toBe(1.0);
                 expect(component.scaleY).toBe(1.0);
             });
