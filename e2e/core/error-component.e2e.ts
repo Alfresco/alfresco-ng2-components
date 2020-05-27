@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('Error Component', () => {
 
     const acsUser = new AcsUserModel();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -36,7 +36,7 @@ describe('Error Component', () => {
 
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, FormPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, FormPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 
@@ -24,7 +24,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Form Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
     const widget = new Widget();
@@ -63,7 +63,7 @@ describe('Form Component', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.navigateToProcessServicesFormPage();
     });

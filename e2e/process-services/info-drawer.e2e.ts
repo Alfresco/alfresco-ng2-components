@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginPage, StringUtil, ApplicationsUtil } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginSSOPage, StringUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import {
     AlfrescoApiCompatibility as AlfrescoApi,
     AppDefinitionRepresentation,
@@ -34,7 +34,7 @@ import { infoDrawerConfiguration } from './config/task.config';
 
 describe('Info Drawer', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -81,7 +81,7 @@ describe('Info Drawer', () => {
         const applicationsService = new ApplicationsUtil(this.alfrescoApi);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll(async () => {

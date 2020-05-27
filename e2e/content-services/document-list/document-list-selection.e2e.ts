@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -26,7 +26,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
 describe('Document List - Selection', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
@@ -50,7 +50,7 @@ describe('Document List - Selection', () => {
             await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
             await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkDocumentListElementsAreDisplayed();

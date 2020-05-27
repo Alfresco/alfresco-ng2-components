@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginPage, AboutPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, AboutPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -22,7 +22,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('About Process Services', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
     let user, tenantId;
@@ -37,7 +37,7 @@ describe('About Process Services', () => {
         user = await users.createTenantAndUser(this.alfrescoJsApi);
         tenantId = user.tenantId;
         await this.alfrescoJsApi.login(user.email, user.password);
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
         await navigationBarPage.clickAboutButton();
 
     });

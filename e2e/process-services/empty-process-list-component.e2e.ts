@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -27,7 +27,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -59,7 +59,7 @@ describe('Empty Process List Test', () => {
         await applicationsService.importPublishDeployApp(appA.file_path);
         await applicationsService.importPublishDeployApp(appB.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     it('[C260494] Should add process to list when a process is created', async () => {

@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, UploadActions, StringUtil, LocalStorageUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, LocalStorageUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
@@ -39,7 +39,7 @@ describe('Search component - Search Bar', () => {
         }
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -104,7 +104,7 @@ describe('Search component - Search Bar', () => {
 
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

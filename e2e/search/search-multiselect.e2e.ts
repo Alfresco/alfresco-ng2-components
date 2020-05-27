@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { StringUtil, UploadActions, LoginPage } from '@alfresco/adf-testing';
+import { StringUtil, UploadActions, LoginSSOPage } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
@@ -27,7 +27,7 @@ import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Search Component - Multi-Select Facet', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchResultsPage = new SearchResultsPage();
     this.alfrescoJsApi = new AlfrescoApi({
@@ -76,7 +76,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await browser.sleep(15000);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -101,7 +101,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -168,7 +168,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await browser.sleep(15000);
 
-            await loginPage.loginToContentServicesUsingUserModel(userUploadingImg);
+            await loginPage.login(userUploadingImg);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -215,7 +215,7 @@ describe('Search Component - Multi-Select Facet', () => {
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
             await browser.sleep(15000);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -230,7 +230,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();

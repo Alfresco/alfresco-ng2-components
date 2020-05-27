@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -26,7 +26,7 @@ import { Util } from '../util/util';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const viewerPage = new ViewerPage();
@@ -87,7 +87,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

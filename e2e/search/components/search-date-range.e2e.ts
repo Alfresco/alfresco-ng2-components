@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
@@ -26,7 +26,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Date Range Filter', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
@@ -42,7 +42,7 @@ describe('Search Date Range Filter', () => {
             hostEcm: browser.params.testConfig.adf_acs.host
         });
 
-        await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginPage.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();

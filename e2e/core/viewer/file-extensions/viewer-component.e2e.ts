@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FileModel } from '../../../models/ACS/file.model';
@@ -28,7 +28,7 @@ import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -76,7 +76,7 @@ describe('Viewer', () => {
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.goToSite(site);
         await contentServicesPage.checkAcsContainer();
@@ -98,7 +98,7 @@ describe('Viewer', () => {
 
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

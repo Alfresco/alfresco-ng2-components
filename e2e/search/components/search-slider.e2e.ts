@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, UploadActions, DataTableComponentPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil, UploadActions, DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -28,7 +28,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Slider Filter', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
@@ -61,7 +61,7 @@ describe('Search Slider Filter', () => {
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();

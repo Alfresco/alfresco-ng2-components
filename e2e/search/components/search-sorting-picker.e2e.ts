@@ -16,7 +16,7 @@
  */
 
 import {
-    LoginPage,
+    LoginSSOPage,
     LocalStorageUtil,
     SearchSortingPickerPage,
     UploadActions
@@ -34,7 +34,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Sorting Picker', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
@@ -73,7 +73,7 @@ describe('Search Sorting Picker', () => {
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
         await browser.sleep(12000);
 
-        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
    });
 
     afterAll(async () => {

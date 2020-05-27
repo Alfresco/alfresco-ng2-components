@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -27,7 +27,7 @@ describe('Content Services Viewer', () => {
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
 
     let zoom;
@@ -102,7 +102,7 @@ describe('Content Services Viewer', () => {
         const unsupportedFileUploaded = await uploadActions.uploadFile(unsupportedFile.location, unsupportedFile.name, '-my-');
         Object.assign(unsupportedFile, unsupportedFileUploaded.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
    });

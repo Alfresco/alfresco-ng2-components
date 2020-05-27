@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FormModelActions } from '../actions/APS/form-model.actions';
@@ -30,7 +30,7 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
 
 describe('Task Details - Form', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();
@@ -80,7 +80,7 @@ describe('Task Details - Form', () => {
         await this.alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
         otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterAll( async () => {

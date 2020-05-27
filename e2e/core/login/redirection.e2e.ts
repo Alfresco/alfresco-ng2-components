@@ -17,13 +17,14 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, SettingsPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { SettingsPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
+import { LoginPage } from '../../pages/adf/demo-shell/login.page';
 
 describe('Login component - Redirect', () => {
 

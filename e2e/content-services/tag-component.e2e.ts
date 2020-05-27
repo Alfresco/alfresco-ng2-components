@@ -17,7 +17,7 @@
 
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
-import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tag.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -25,7 +25,7 @@ import { browser } from 'protractor';
 
 describe('Tag component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const tagPage = new TagPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -72,7 +72,7 @@ describe('Tag component', () => {
 
         await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {

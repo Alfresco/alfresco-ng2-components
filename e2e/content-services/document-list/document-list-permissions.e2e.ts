@@ -19,12 +19,12 @@ import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { LoginPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
@@ -52,7 +52,7 @@ describe('Document List Component', () => {
 
             privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         afterAll(async () => {

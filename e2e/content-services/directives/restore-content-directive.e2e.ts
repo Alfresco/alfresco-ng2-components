@@ -23,11 +23,11 @@ import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
-import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions, BreadcrumbPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions, BreadcrumbPage } from '@alfresco/adf-testing';
 
 describe('Restore content directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const acsUser = new AcsUserModel();
@@ -76,7 +76,7 @@ describe('Restore content directive', () => {
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
@@ -282,7 +282,7 @@ describe('Restore content directive', () => {
             mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
-            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
+            await loginPage.login(anotherAcsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
         });

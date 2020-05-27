@@ -24,7 +24,7 @@ import FormModel = require('../models/APS/FormModel');
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
-import { LoginPage, BrowserActions, StringUtil, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, StringUtil, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 
@@ -44,7 +44,7 @@ describe('Task Details component', () => {
         'stencilSet': 0
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
 
     beforeAll(async () => {
@@ -62,7 +62,7 @@ describe('Task Details component', () => {
         await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll( async () => {

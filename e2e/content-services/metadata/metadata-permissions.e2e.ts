@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -39,7 +39,7 @@ describe('permissions', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
@@ -96,7 +96,7 @@ describe('permissions', () => {
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {
-        await loginPage.loginToContentServicesUsingUserModel(consumerUser);
+        await loginPage.login(consumerUser);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -108,7 +108,7 @@ describe('permissions', () => {
     });
 
     it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', async () => {
-        await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+        await loginPage.login(collaboratorUser);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -128,7 +128,7 @@ describe('permissions', () => {
     });
 
     it('[C279972] Should be possible edit metadata properties when the user is a contributor user', async () => {
-        await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+        await loginPage.login(collaboratorUser);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 

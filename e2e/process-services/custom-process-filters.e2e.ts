@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
@@ -28,7 +28,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('New Process Filters', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const appSettingsToggles = new AppSettingsTogglesPage();
@@ -63,7 +63,7 @@ describe('New Process Filters', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {

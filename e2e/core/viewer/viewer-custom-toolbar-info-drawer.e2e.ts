@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -27,7 +27,7 @@ describe('Viewer', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -50,7 +50,7 @@ describe('Viewer', () => {
 
         txtFileUploaded = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

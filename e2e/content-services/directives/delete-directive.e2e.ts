@@ -18,7 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { BrowserActions, LoginPage, UploadActions, PaginationPage, StringUtil, PermissionActions } from '@alfresco/adf-testing';
+import { BrowserActions, LoginSSOPage, UploadActions, PaginationPage, StringUtil, PermissionActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -30,7 +30,7 @@ describe('Delete Directive', () => {
         hostEcm: browser.params.testConfig.adf_acs.host
     });
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -113,7 +113,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, textFolderUploaded.entry.id);
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -187,7 +187,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -239,7 +239,7 @@ describe('Delete Directive', () => {
             await permissionActions.disableInheritedPermissionsForNode(fileTxt.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(secondAcsUser);
+            await loginPage.login(secondAcsUser.email, secondAcsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });

@@ -17,7 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, FormPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, FormPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -26,7 +26,7 @@ import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 
 describe('Date widget', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
@@ -57,7 +57,7 @@ describe('Date widget', () => {
             return currentApp.modelId === appModel.id;
         });
         process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     afterAll(async () => {

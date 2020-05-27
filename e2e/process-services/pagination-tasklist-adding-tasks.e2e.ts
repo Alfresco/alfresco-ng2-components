@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -25,7 +25,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Items per page set to 15 and adding of tasks', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
@@ -65,7 +65,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {

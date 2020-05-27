@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
@@ -26,7 +26,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - No form', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel;
     const app = browser.params.resources.Files.NO_FORM_APP;
@@ -49,7 +49,7 @@ describe('Task Details - No form', () => {
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(importedApp.name);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     afterAll( async () => {

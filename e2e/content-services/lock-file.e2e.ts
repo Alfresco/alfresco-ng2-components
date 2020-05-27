@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { LockFilePage } from '../pages/adf/lock-file.page';
@@ -27,7 +27,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Lock File', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const lockFilePage = new LockFilePage();
     const contentServices = new ContentServicesPage();
@@ -90,7 +90,7 @@ describe('Lock File', () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
-                await loginPage.loginToContentServicesUsingUserModel(adminUser);
+                await loginPage.login(adminUser.email, adminUser.password);
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
 
                 await contentServices.waitForTableBody();
@@ -177,7 +177,7 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            await loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await loginPage.login(managerUser.email, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
         });
@@ -272,7 +272,7 @@ describe('Lock File', () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
-                await loginPage.loginToContentServicesUsingUserModel(adminUser);
+                await loginPage.login(adminUser);
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
             } catch (error) {
             }

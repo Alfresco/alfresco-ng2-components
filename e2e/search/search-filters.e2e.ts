@@ -25,7 +25,7 @@ import {
     StringUtil,
     DocumentListPage,
     PaginationPage,
-    LoginPage,
+    LoginSSOPage,
     LocalStorageUtil,
     UploadActions,
     BrowserActions
@@ -36,7 +36,7 @@ import { SearchConfiguration } from './search.config';
 
 describe('Search Filters', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFiltersPage = new SearchFiltersPage();
     this.alfrescoJsApi = new AlfrescoApi({
@@ -100,7 +100,7 @@ describe('Search Filters', () => {
         fileTypeJpg = await uploadActions.uploadFile(jpgFileModel.location, jpgFileModel.name, '-my-');
         fileTypeTxt2 = await uploadActions.uploadFile(txtFileModel2.location, txtFileModel2.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 

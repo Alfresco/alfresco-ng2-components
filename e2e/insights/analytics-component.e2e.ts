@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -28,7 +28,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Analytics Smoke Test', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const analyticsPage = new AnalyticsPage();
@@ -51,7 +51,7 @@ describe('Analytics Smoke Test', () => {
 
         await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
-        await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
+        await loginPage.login(procUserModel.email, procUserModel.password);
    });
 
     afterAll(async () => {

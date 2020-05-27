@@ -22,7 +22,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
-import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
@@ -35,7 +35,7 @@ describe('Search component - Text widget', () => {
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
 
@@ -66,7 +66,7 @@ describe('Search component - Text widget', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

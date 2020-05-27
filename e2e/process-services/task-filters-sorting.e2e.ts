@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 
 describe('Task Filters Sorting', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const tasksPage = new TasksPage();
@@ -66,7 +66,7 @@ describe('Task Filters Sorting', () => {
         const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await processServicesPage.goToApp(app.title);

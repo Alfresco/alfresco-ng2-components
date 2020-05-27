@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { DropActions } from '../../actions/drop.actions';
@@ -29,7 +29,7 @@ describe('Datatable component', () => {
     const dataTablePage = new DataTablePage('defaultTable');
     const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
     const dragAndDropDataTablePage = new DataTablePage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
@@ -49,7 +49,7 @@ describe('Datatable component', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {

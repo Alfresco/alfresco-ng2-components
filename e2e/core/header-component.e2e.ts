@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { HeaderPage, LoginPage, SettingsPage } from '@alfresco/adf-testing';
+import { HeaderPage, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -22,7 +22,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Header Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();
@@ -59,7 +59,7 @@ describe('Header Component', () => {
 
         await this.alfrescoJsApi.login(user.email, user.password);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     beforeEach(async() => {

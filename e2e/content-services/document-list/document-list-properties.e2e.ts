@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -26,7 +26,7 @@ import { FileModel } from '../../models/ACS/file.model';
 
 describe('Document List Component - Properties', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBar = new NavigationBarPage();
 
@@ -58,7 +58,7 @@ describe('Document List Component - Properties', () => {
 
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         afterEach(async () => {

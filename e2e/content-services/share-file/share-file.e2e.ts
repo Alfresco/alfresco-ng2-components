@@ -16,7 +16,7 @@
  */
 
 import {
-    LoginPage,
+    LoginSSOPage,
     BrowserActions,
     LocalStorageUtil,
     NotificationHistoryPage,
@@ -38,7 +38,7 @@ describe('Share file', () => {
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host
     });
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const shareDialog = new ShareDialogPage();
@@ -90,7 +90,7 @@ describe('Share file', () => {
     describe('Shared link dialog', () => {
 
         beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentListPage.selectRow(pngFileModel.name);
             await BrowserActions.closeMenuAndDialogs();
@@ -164,7 +164,7 @@ describe('Share file', () => {
     describe('Shared link preview', () => {
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
         });

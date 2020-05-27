@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -25,7 +25,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Comment component for Processes', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const commentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
@@ -57,7 +57,7 @@ describe('Comment component for Processes', () => {
         const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(importedApp.name, processName);
         processInstanceId = processWithComment.id;
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {

@@ -17,7 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { User } from '../../models/APS/user';
@@ -26,7 +26,7 @@ import CONSTANTS = require('../../util/constants');
 
 describe('Typeahead widget', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
@@ -46,7 +46,7 @@ describe('Typeahead widget', () => {
         await alfrescoJsApi.login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {

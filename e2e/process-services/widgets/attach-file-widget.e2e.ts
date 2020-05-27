@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
@@ -28,7 +28,7 @@ import { TasksListPage } from '../../pages/adf/process-services/tasks-list.page'
 import { FiltersPage } from '../../pages/adf/process-services/filters.page';
 
 describe('Attach widget - File', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
@@ -56,7 +56,7 @@ describe('Attach widget - File', () => {
 
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     beforeEach(async () => {

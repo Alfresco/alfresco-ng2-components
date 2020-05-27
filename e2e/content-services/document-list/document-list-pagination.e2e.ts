@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, PaginationPage, LocalStorageUtil, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, PaginationPage, LocalStorageUtil, FileBrowserUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -47,7 +47,7 @@ describe('Document List - Pagination', () => {
         default: '25'
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
@@ -90,7 +90,7 @@ describe('Document List - Pagination', () => {
         await uploadActions.createEmptyFiles(fileNames, newFolderUploadedModel.entry.id);
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
@@ -127,12 +127,12 @@ describe('Document List - Pagination', () => {
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
@@ -174,7 +174,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
@@ -201,7 +201,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.waitForTableBody();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         currentPage = 1;
     });
 

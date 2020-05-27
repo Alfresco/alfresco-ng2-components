@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
@@ -30,7 +30,7 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -59,7 +59,7 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {

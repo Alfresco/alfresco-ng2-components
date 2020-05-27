@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, LoginPage, SettingsPage } from '@alfresco/adf-testing';
+import { BrowserActions, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -24,7 +24,7 @@ import { ProcessServicesPage } from '../pages/adf/process-services/process-servi
 
 describe('Settings component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();

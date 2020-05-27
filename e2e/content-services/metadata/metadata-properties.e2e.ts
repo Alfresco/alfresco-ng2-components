@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
@@ -40,7 +40,7 @@ describe('CardView Component - properties', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
@@ -70,7 +70,7 @@ describe('CardView Component - properties', () => {
 
         pngFileModel.update(pdfUploadedFile.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

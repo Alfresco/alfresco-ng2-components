@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { TogglePage } from '../../material/pages/toggle.page';
 import { browser, by, element, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../utils/browser-visibility';
-import { LocalStorageUtil } from '../utils/local-storage.util';
-import { BrowserActions } from '../utils/browser-actions';
+import { TogglePage, BrowserActions, BrowserVisibility, LoginSSOPage } from '@alfresco/adf-testing';
 
 export class LoginPage {
 
     loginURL: string = browser.baseUrl + '/login';
+
+    loginSSOPage: LoginSSOPage = new LoginSSOPage();
 
     togglePage: TogglePage = new TogglePage();
     txtUsername: ElementFinder = element(by.css('input[id="username"]'));
@@ -129,38 +128,6 @@ export class LoginPage {
         return this.signInButton.isEnabled();
     }
 
-    async loginToAllUsingUserModel(userModel): Promise<void> {
-        await this.goToLoginPage();
-        await LocalStorageUtil.clearStorage();
-        await LocalStorageUtil.setStorageItem('providers', 'ALL');
-        await LocalStorageUtil.apiReset();
-        await this.login(userModel.email, userModel.password);
-    }
-
-    async loginToProcessServicesUsingUserModel(userModel): Promise<void> {
-        await this.goToLoginPage();
-        await LocalStorageUtil.clearStorage();
-        await LocalStorageUtil.setStorageItem('providers', 'BPM');
-        await LocalStorageUtil.apiReset();
-        await this.login(userModel.email, userModel.password);
-    }
-
-    async loginToContentServicesUsingUserModel(userModel): Promise<void> {
-        await this.goToLoginPage();
-        await LocalStorageUtil.clearStorage();
-        await LocalStorageUtil.setStorageItem('providers', 'ECM');
-        await LocalStorageUtil.apiReset();
-        await this.login(userModel.getId(), userModel.getPassword());
-    }
-
-    async loginToContentServices(username, password): Promise<void> {
-        await this.goToLoginPage();
-        await LocalStorageUtil.clearStorage();
-        await LocalStorageUtil.setStorageItem('providers', 'ECM');
-        await LocalStorageUtil.apiReset();
-        await this.login(username, password);
-    }
-
     async clickSignInButton(): Promise<void> {
         await BrowserActions.click(this.signInButton);
     }
@@ -237,10 +204,7 @@ export class LoginPage {
         await BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
-    async login(username, password): Promise<void> {
-        await this.enterUsername(username);
-        await this.enterPassword(password);
-        await this.clickSignInButton();
-        await BrowserVisibility.waitUntilElementIsVisible(this.sidenavLayout);
+    async login(username:string, password:string): Promise<void> {
+        await this.loginSSOPage.login(username, password);
     }
 }

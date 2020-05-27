@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CommentsPage } from '../../pages/adf/comments.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -27,7 +27,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Comment Component', () => {
 
-    const loginPage: LoginPage = new LoginPage();
+    const loginPage: LoginSSOPage = new LoginSSOPage();
     const contentServicesPage: ContentServicesPage = new ContentServicesPage();
     const viewerPage: ViewerPage = new ViewerPage();
     const commentsPage: CommentsPage = new CommentsPage();
@@ -76,7 +76,7 @@ describe('Comment Component', () => {
 
         userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
@@ -178,7 +178,7 @@ describe('Comment Component', () => {
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await navigationBarPage.clickContentServicesButton();
         });

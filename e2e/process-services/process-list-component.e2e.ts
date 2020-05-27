@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
@@ -24,7 +24,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Process List Test', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const processListDemoPage = new ProcessListDemoPage();
 
     const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
@@ -84,7 +84,7 @@ describe('Process List Test', () => {
         await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
         await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {

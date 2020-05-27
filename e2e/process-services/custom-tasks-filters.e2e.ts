@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateUtil, LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { DateUtil, LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
@@ -28,7 +28,7 @@ import moment = require('moment');
 
 describe('Start Task - Custom App', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();
@@ -116,7 +116,7 @@ describe('Start Task - Custom App', () => {
             'dueDate': currentDateStandardFormat
         });
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     describe('', () => {

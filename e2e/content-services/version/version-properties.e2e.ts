@@ -16,7 +16,7 @@
  */
 
 import { by, element, browser } from 'protractor';
-import { LoginPage, UploadActions, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -26,7 +26,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Version Properties', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
@@ -62,7 +62,7 @@ describe('Version Properties', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

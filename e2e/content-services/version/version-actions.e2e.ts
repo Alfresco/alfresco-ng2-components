@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -27,7 +27,7 @@ import { VersionManagePage } from '../../pages/adf/version-manager.page';
 
 describe('Version component actions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
@@ -63,7 +63,7 @@ describe('Version component actions', () => {
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
    });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, StringUtil, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, StringUtil, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 
 describe('Search Radio Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialogPage();
@@ -73,7 +73,7 @@ describe('Search Radio Component', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
    });
@@ -259,7 +259,7 @@ describe('Search Radio Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         it('[C277033] Should be able to add a new option', async () => {

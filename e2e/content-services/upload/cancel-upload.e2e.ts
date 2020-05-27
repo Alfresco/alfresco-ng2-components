@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -33,7 +33,7 @@ describe('Upload component', async () => {
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -57,7 +57,7 @@ describe('Upload component', async () => {
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
     });
 

@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { LoginPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -32,7 +32,7 @@ describe('Upload component - Excluded Files', () => {
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
 
@@ -78,7 +78,7 @@ describe('Upload component - Excluded Files', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
    });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, DatePickerCalendarPage, DateUtil, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, DatePickerCalendarPage, DateUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -25,7 +25,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Dynamic Table', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const datePicker = new DatePickerCalendarPage();
@@ -69,7 +69,7 @@ describe('Dynamic Table', () => {
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
-            await loginPage.loginToProcessServicesUsingUserModel(user);
+            await loginPage.login(user.email, user.password);
         });
 
         afterAll(async () => {
@@ -131,7 +131,7 @@ describe('Dynamic Table', () => {
 
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
-            await loginPage.loginToProcessServicesUsingUserModel(user);
+            await loginPage.login(user.email, user.password);
         });
 
         afterAll(async () => {

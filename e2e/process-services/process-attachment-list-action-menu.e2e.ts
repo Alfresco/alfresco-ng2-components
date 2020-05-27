@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 
 describe('Attachment list action menu for processes', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
@@ -77,7 +77,7 @@ describe('Attachment list action menu for processes', () => {
         await processUtil.startProcessOfApp(importedApp.name, processName.emptyList);
         await processUtil.startProcessOfApp(importedApp.name, processName.dragDrop);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {

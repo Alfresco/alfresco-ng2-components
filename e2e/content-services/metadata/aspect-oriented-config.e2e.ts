@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, LocalStorageUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, LocalStorageUtil, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -27,7 +27,7 @@ import { check } from '../../util/material';
 
 describe('Aspect oriented config', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
@@ -68,7 +68,7 @@ describe('Aspect oriented config', () => {
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         const aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
 

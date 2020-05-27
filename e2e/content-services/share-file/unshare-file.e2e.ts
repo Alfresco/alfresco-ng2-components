@@ -20,7 +20,7 @@ import {
     StringUtil,
     BrowserActions,
     NotificationHistoryPage,
-    LoginPage,
+    LoginSSOPage,
     ErrorPage,
     UploadActions
 } from '@alfresco/adf-testing';
@@ -38,7 +38,7 @@ describe('Unshare file', () => {
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host
     });
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const navBar = new NavigationBarPage();
@@ -103,7 +103,7 @@ describe('Unshare file', () => {
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navBar.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
     });

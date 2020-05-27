@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -27,7 +27,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Comment component for Processes', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const commentsPage = new CommentsPage();
@@ -62,7 +62,7 @@ describe('Comment component for Processes', () => {
         const importedApp = await new ApplicationsUtil(this.alfrescoJsApi).importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
@@ -123,7 +123,7 @@ describe('Comment component for Processes', () => {
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
-        await loginPage.loginToProcessServicesUsingUserModel(secondUser);
+        await loginPage.login(secondUser.id, secondUser.password);
 
         await this.alfrescoJsApi.activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
 

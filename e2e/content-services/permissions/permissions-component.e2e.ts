@@ -20,7 +20,7 @@ import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
-import { StringUtil, BrowserActions, NotificationHistoryPage, LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { StringUtil, BrowserActions, NotificationHistoryPage, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
@@ -33,7 +33,7 @@ describe('Permissions Component', () => {
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host
     });
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
     const navigationBarPage = new NavigationBarPage();
@@ -176,7 +176,7 @@ describe('Permissions Component', () => {
         beforeEach(async () => {
             await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-            await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            await loginPage.login(fileOwnerUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
@@ -244,7 +244,7 @@ describe('Permissions Component', () => {
         beforeEach(async () => {
             await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
-            await loginPage.loginToContentServicesUsingUserModel(fileOwnerUser);
+            await loginPage.login(fileOwnerUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
@@ -307,7 +307,7 @@ describe('Permissions Component', () => {
     describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
 
         it('[C276993] Role Consumer', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.login(filePermissionUser);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
             await contentList.doubleClickRow('RoleConsumer' + fileModel.name);
@@ -324,7 +324,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C276996] Role Contributor', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.login(filePermissionUser);
             await navigationBarPage.openContentServicesFolder(roleContributorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleContributor' + fileModel.name);
             await contentList.doubleClickRow('RoleContributor' + fileModel.name);
@@ -344,7 +344,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277000] Role Editor', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.login(filePermissionUser);
             await navigationBarPage.openContentServicesFolder(roleEditorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleEditor' + fileModel.name);
             await contentList.doubleClickRow('RoleEditor' + fileModel.name);
@@ -366,7 +366,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277003] Role Collaborator', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.login(filePermissionUser);
             await navigationBarPage.openContentServicesFolder(roleCollaboratorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleCollaborator' + fileModel.name);
             await contentList.doubleClickRow('RoleCollaborator' + fileModel.name);
@@ -391,7 +391,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C277004] Role Coordinator', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.login(filePermissionUser);
             await navigationBarPage.openContentServicesFolder(roleCoordinatorFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleCoordinator' + fileModel.name);
             await contentList.doubleClickRow('RoleCoordinator' + fileModel.name);
@@ -416,7 +416,7 @@ describe('Permissions Component', () => {
         });
 
         it('[C279881] No Permission User', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(filePermissionUser);
+            await loginPage.login(filePermissionUser);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('RoleConsumer' + fileModel.name);
             await contentServicesPage.checkSelectedSiteIsDisplayed('My files');

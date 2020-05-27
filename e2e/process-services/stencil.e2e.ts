@@ -17,7 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { LoginPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { User } from '../models/APS/user';
@@ -31,7 +31,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Stencil', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -56,7 +56,7 @@ describe('Stencil', () => {
         await alfrescoJsApi.login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {

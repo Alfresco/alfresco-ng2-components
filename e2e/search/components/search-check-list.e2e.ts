@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, UploadActions, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, UploadActions, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
@@ -27,7 +27,7 @@ import { browser } from 'protractor';
 
 describe('Search Checklist Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchFiltersPage = new SearchFiltersPage();
     const searchDialog = new SearchDialogPage();
     const searchResults = new SearchResultsPage();
@@ -66,7 +66,7 @@ describe('Search Checklist Component', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     beforeEach(async () => {
@@ -282,7 +282,7 @@ describe('Search Checklist Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         it('[C277018] Should be able to change the operator', async () => {

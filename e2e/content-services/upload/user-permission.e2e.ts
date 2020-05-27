@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { StringUtil, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { StringUtil, LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -29,7 +29,7 @@ describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     let acsUser;
     let acsUserTwo;
     const navigationBarPage = new NavigationBarPage();
@@ -67,7 +67,7 @@ describe('Upload - User permission', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         this.consumerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -163,7 +163,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
+            await loginPage.login(acsUserTwo);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -173,7 +173,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

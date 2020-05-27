@@ -18,7 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { LoginPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -26,7 +26,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Version component actions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -79,7 +79,7 @@ describe('Version component actions', () => {
 
         await uploadActions.createFolder(folderSecond.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
@@ -25,7 +25,7 @@ import { browser } from 'protractor';
 
 describe('Social component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const likePage = new LikePage();
     const ratePage = new RatePage();
     const socialPage = new SocialPage();
@@ -89,7 +89,7 @@ describe('Social component', () => {
     describe('User interaction on their own components', () => {
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(componentOwner);
+            await loginPage.login(componentOwner.id, componentOwner.password);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -114,7 +114,7 @@ describe('Social component', () => {
     describe('User interaction on components that belong to other users', () => {
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(componentVisitor);
+            await loginPage.login(componentVisitor.id, componentVisitor.password);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -150,7 +150,7 @@ describe('Social component', () => {
     describe('Multiple Users interaction', () => {
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(componentVisitor);
+            await loginPage.login(componentVisitor.id, componentVisitor.password);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -163,7 +163,7 @@ describe('Social component', () => {
             await likePage.removeHoverFromLikeButton();
             await expect(await likePage.getLikedIconColor()).toBe(blueLikeColor);
 
-            await loginPage.loginToContentServicesUsingUserModel(secondComponentVisitor);
+            await loginPage.login(secondComponentVisitor.id, secondComponentVisitor.password);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
@@ -185,7 +185,7 @@ describe('Social component', () => {
             await expect(await ratePage.isStarRated(4));
             await expect(await ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
 
-            await loginPage.loginToContentServicesUsingUserModel(secondComponentVisitor);
+            await loginPage.login(secondComponentVisitor.id, secondComponentVisitor.password);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);

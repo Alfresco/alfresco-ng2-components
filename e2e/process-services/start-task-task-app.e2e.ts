@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, StringUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -32,7 +32,7 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
@@ -78,7 +78,7 @@ describe('Start Task - Task App', () => {
 
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: showHeaderTask });
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {

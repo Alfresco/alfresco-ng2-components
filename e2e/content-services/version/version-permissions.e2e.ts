@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
@@ -29,7 +29,7 @@ import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
@@ -132,7 +132,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await loginPage.login(managerUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -172,7 +172,7 @@ describe('Version component permissions', () => {
     describe('Consumer', () => {
 
         beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(consumerUser);
+            await loginPage.login(consumerUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -205,7 +205,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.loginToContentServicesUsingUserModel(contributorUser);
+            await loginPage.login(contributorUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -260,7 +260,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
+            await loginPage.login(collaboratorUser);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });

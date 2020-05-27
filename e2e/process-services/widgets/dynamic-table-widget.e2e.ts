@@ -17,7 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Dynamic Table widget ', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
     const users = new UsersActions();
@@ -53,7 +53,7 @@ describe('Dynamic Table widget ', () => {
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === appModel.id);
             process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            await loginPage.login(processUserModel.email, processUserModel.password);
         });
 
         beforeEach(async () => {
@@ -103,7 +103,7 @@ describe('Dynamic Table widget ', () => {
             const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === appModel.id);
             process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            await loginPage.login(processUserModel.email, processUserModel.password);
         });
 
         afterAll(async () => {
@@ -169,7 +169,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+            await loginPage.login(processUserModel.email, processUserModel.password);
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

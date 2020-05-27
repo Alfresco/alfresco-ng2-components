@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
@@ -26,7 +26,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Create folder directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const createFolderDialog = new FolderDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
@@ -44,7 +44,7 @@ describe('Create folder directive', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

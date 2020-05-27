@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -39,7 +39,7 @@ describe('Process List - Pagination', () => {
 
     const processFilterRunning = 'Running';
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const paginationPage = new PaginationPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -69,7 +69,7 @@ describe('Process List - Pagination', () => {
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     describe('With processes Pagination', () => {

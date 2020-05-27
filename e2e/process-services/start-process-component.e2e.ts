@@ -18,7 +18,7 @@
 import CONSTANTS = require('../util/constants');
 import {
     FileBrowserUtil,
-    LoginPage, SelectAppsDialog,
+    LoginSSOPage, SelectAppsDialog,
     ProcessInstanceTasksPage,
     StringUtil,
     Widget,
@@ -42,7 +42,7 @@ import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { UploadDialogPage } from '../pages/adf/dialog/upload-dialog.page';
 
 describe('Start Process Component', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const startProcessPage = new StartProcessPage();
@@ -122,7 +122,7 @@ describe('Start Process Component', () => {
         describe(' Once logged with user without apps', () => {
 
             beforeEach(async () => {
-                await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
+                await loginPage.login(procUserModel);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
             });
@@ -139,7 +139,7 @@ describe('Start Process Component', () => {
         describe(' Once logged with user with app', () => {
 
             beforeAll(async () => {
-                await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+                await loginPage.login(secondProcUserModel);
             });
 
             beforeEach(async () => {
@@ -388,7 +388,7 @@ describe('Start Process Component', () => {
             });
 
             it('[C260457] Should display process in Completed when cancelled', async () => {
-                await loginPage.loginToProcessServicesUsingUserModel(secondProcUserModel);
+                await loginPage.login(secondProcUserModel);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
                 await processServicesPage.goToApp(app.title);
@@ -527,7 +527,7 @@ describe('Start Process Component', () => {
         });
 
         it('[C260490] Should be able to start a Process within ACS', async () => {
-            await loginPage.loginToAllUsingUserModel(contentUserModel);
+            await loginPage.login(contentUserModel.email, contentUserModel.password);
 
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkDocumentListElementsAreDisplayed();

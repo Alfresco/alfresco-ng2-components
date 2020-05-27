@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, DataTableComponentPage, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -28,7 +28,7 @@ describe('Viewer - properties', () => {
     const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
@@ -60,7 +60,7 @@ describe('Viewer - properties', () => {
         pngFileUploaded = await uploadActions.uploadFile(fileForOverlay.location, fileForOverlay.name, '-my-');
         Object.assign(fileForOverlay, pngFileUploaded.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
 

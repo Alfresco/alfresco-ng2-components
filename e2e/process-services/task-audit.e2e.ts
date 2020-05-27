@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
@@ -26,7 +26,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Task Audit', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
@@ -53,7 +53,7 @@ describe('Task Audit', () => {
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll( async () => {

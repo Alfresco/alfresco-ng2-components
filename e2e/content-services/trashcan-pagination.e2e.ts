@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -42,7 +42,7 @@ describe('Trashcan - Pagination', () => {
         default: '25'
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const trashcanPage = new TrashcanPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
@@ -68,7 +68,7 @@ describe('Trashcan - Pagination', () => {
                 this.alfrescoJsApi.node.deleteNode(entry.entry.id);
             });
         }
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
     });

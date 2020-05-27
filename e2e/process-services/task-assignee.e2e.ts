@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationsUtil, ProcessUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -30,7 +30,7 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Assignee', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const taskPage = new TasksPage();
@@ -68,7 +68,7 @@ describe('Task Assignee', () => {
             } catch (e) {
                 console.error(`failed to publish the application`);
             }
-            await loginPage.loginToProcessServicesUsingUserModel(user);
+            await loginPage.login(user.email, user.password);
         });
 
         afterAll(async () => {
@@ -152,7 +152,7 @@ describe('Task Assignee', () => {
         });
 
         it('[C216430] Start Task - Claim and Requeue a task', async () => {
-            await loginPage.loginToProcessServicesUsingUserModel(candidate1);
+            await loginPage.login(candidate1.email, candidate1.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -198,7 +198,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-            await loginPage.loginToProcessServicesUsingUserModel(candidate2);
+            await loginPage.login(candidate2.email, candidate2.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -209,7 +209,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-            await loginPage.loginToProcessServicesUsingUserModel(candidate1);
+            await loginPage.login(candidate1.email, candidate1.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -237,7 +237,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
             await taskPage.taskDetails().checkClaimEnabled();
 
-            await loginPage.loginToProcessServicesUsingUserModel(candidate2);
+            await loginPage.login(candidate2.email, candidate2.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');

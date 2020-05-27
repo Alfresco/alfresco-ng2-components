@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
@@ -28,7 +28,7 @@ import moment = require('moment');
 
 describe('Process Instance Details', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -57,7 +57,7 @@ describe('Process Instance Details', () => {
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         const processModel = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();

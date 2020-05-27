@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -26,7 +26,7 @@ import { User } from '../models/APS/user';
 
 describe('Task List Pagination', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
@@ -68,7 +68,7 @@ describe('Task List Pagination', () => {
             await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(resultApp.name);
         }
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll( async () => {

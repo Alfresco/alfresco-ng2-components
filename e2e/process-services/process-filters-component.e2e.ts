@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -31,7 +31,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Process Filters Test', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const processListPage = new ProcessListPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
@@ -70,7 +70,7 @@ describe('Process Filters Test', () => {
         await this.alfrescoJsApi.login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     beforeEach(async () => {

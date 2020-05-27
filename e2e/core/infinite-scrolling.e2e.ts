@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LocalStorageUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LocalStorageUtil, LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -27,7 +27,7 @@ import { Util } from '../util/util';
 
 describe('Enable infinite scrolling', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
     const navigationBarPage = new NavigationBarPage();
@@ -59,7 +59,7 @@ describe('Enable infinite scrolling', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
         deleteFileNames = Util.generateSequenceFiles(1, nrOfDeletedFiles, files.base, files.extension);

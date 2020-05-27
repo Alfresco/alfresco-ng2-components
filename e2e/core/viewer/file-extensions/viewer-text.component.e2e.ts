@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FolderModel } from '../../../models/ACS/folder.model';
@@ -26,7 +26,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -72,7 +72,7 @@ describe('Viewer', () => {
 
             uploadedTexts = await uploadActions.uploadFolder(textFolderInfo.location, textFolderUploaded.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

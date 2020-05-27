@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentNodeSelectorDialogPage, LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { ContentNodeSelectorDialogPage, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -28,7 +28,7 @@ import { TrashcanPage } from '../../pages/adf/trashcan.page';
 
 describe('Favorite directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const acsUser = new AcsUserModel();
@@ -60,7 +60,7 @@ describe('Favorite directive', () => {
         testFolder4 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
    });
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -29,7 +29,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -70,7 +70,7 @@ describe('Start Task - Custom App', () => {
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     it('[C263942] Should be possible to modify a task', async () => {

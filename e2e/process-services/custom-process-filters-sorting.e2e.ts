@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { FiltersPage } from '../pages/adf/process-services/filters.page';
@@ -26,7 +26,7 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Sorting for process filters', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processFiltersPage = new ProcessFiltersPage();
     const filtersPage = new FiltersPage();
@@ -68,7 +68,7 @@ describe('Sorting for process filters', () => {
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterEach(async () => {

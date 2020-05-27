@@ -18,14 +18,14 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     let uploadedFolder, uploadedFolderExtra;
     this.alfrescoJsApi = new AlfrescoApi({
@@ -110,7 +110,7 @@ describe('Document List Component', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

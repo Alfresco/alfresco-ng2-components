@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
 
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -43,7 +43,7 @@ describe('Search component - Search Page', () => {
         }
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
@@ -92,7 +92,7 @@ describe('Search component - Search Page', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

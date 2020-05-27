@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import CONSTANTS = require('../../util/constants');
@@ -28,7 +28,7 @@ describe('Info Drawer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -70,7 +70,7 @@ describe('Info Drawer', () => {
     });
 
     beforeEach(async() => {
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.goToSite(site);
         await contentServicesPage.checkAcsContainer();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, LoginPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { BrowserActions, LoginSSOPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -26,7 +26,7 @@ import { FileModel } from '../../models/ACS/file.model';
 
 describe('Edit folder directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const editFolderDialog = new FolderDialogPage();
     const acsUser = new AcsUserModel();
@@ -71,7 +71,7 @@ describe('Edit folder directive', () => {
                 }
             });
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {
@@ -225,7 +225,7 @@ describe('Edit folder directive', () => {
     describe('Edit Folder - no permission', () => {
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
+            await loginPage.login(anotherAcsUser);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -29,7 +29,7 @@ import path = require('path');
 
 describe('People component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     let processUserModel, assigneeUserModel, secondAssigneeUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -72,7 +72,7 @@ describe('People component', () => {
    });
 
     beforeEach(async () => {
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
@@ -162,7 +162,7 @@ describe('People component', () => {
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
+        await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
@@ -220,7 +220,7 @@ describe('People component', () => {
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
+        await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

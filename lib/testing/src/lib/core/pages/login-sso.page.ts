@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { element, by, browser, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { LocalStorageUtil } from '../../../..';
 
 export class LoginSSOPage {
 
@@ -27,6 +28,24 @@ export class LoginSSOPage {
     loginButton = element(by.css('input[type="submit"]'));
     header = element(by.tagName('adf-layout-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
+
+    txtUsernameBasicAuth: ElementFinder = element(by.css('input[id="username"]'));
+    txtPasswordBasicAuth: ElementFinder = element(by.css('input[id="password"]'));
+    signInButtonBasicAuth: ElementFinder = element(by.id('login-button'));
+
+    async goToLoginPage(): Promise<void> {
+        await BrowserActions.getUrl(browser.baseUrl + '/login');
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsernameBasicAuth);
+        await BrowserVisibility.waitUntilElementIsVisible(this.txtPasswordBasicAuth);
+    }
+
+    async login(username: string, password: string) {
+        if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
+            this.loginSSOIdentityService(username, password);
+        } else {
+            this.loginBasicAuth(username, password);
+        }
+    }
 
     async loginSSOIdentityService(username, password) {
         browser.ignoreSynchronization = true;
@@ -51,6 +70,31 @@ export class LoginSSOPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.header);
 
         await browser.waitForAngular();
+    }
+
+    async loginBasicAuth(username, password): Promise<void> {
+        await this.goToLoginPage();
+
+        await LocalStorageUtil.clearStorage();
+        await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
+        await LocalStorageUtil.apiReset();
+
+        await this.enterUsernameBasicAuth(username);
+        await this.enterPasswordBasicAuth(password);
+        await this.clickSignInBasicAuthButton();
+        await BrowserVisibility.waitUntilElementIsVisible(this.header);
+    }
+
+    async clickSignInBasicAuthButton(): Promise<void> {
+        await BrowserActions.click(this.signInButtonBasicAuth);
+    }
+
+    async enterUsernameBasicAuth(username): Promise<void> {
+        await BrowserActions.clearSendKeys(this.txtUsernameBasicAuth, username);
+    }
+
+    async enterPasswordBasicAuth(password): Promise<void> {
+        await BrowserActions.clearSendKeys(this.txtPasswordBasicAuth, password);
     }
 
     async clickOnSSOButton() {

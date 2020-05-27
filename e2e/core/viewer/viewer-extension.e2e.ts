@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monaco-extension.page';
@@ -29,7 +29,7 @@ describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
@@ -65,7 +65,7 @@ describe('Viewer', () => {
 
         jsFileUploaded = await uploadActions.uploadFile(jsFileInfo.location, jsFileInfo.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {

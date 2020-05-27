@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CreateLibraryDialogPage } from '../../pages/adf/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
@@ -26,7 +26,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Create library directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const createLibraryDialog = new CreateLibraryDialogPage();
     const customSourcesPage = new CustomSourcesPage();
@@ -52,7 +52,7 @@ describe('Create library directive', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         createSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),

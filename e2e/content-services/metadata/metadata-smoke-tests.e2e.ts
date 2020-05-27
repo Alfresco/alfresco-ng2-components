@@ -16,7 +16,7 @@
  */
 
 import {
-    LoginPage,
+    LoginSSOPage,
     LocalStorageUtil,
     BrowserActions,
     UploadActions,
@@ -47,7 +47,7 @@ describe('Metadata component', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
@@ -85,7 +85,7 @@ describe('Metadata component', () => {
     describe('Viewer Metadata', () => {
 
         beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
@@ -233,7 +233,7 @@ describe('Metadata component', () => {
         beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
         });
@@ -266,7 +266,7 @@ describe('Metadata component', () => {
     });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
-        await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginPage.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
 
@@ -283,7 +283,7 @@ describe('Metadata component', () => {
         await metadataViewPage.clickSaveMetadata();
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickContentServicesButton();
 
         await viewerPage.viewFile(pngFileModel.name);

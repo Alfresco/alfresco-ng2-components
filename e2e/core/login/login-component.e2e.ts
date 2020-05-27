@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, ErrorPage, LoginPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
+import { BrowserActions, ErrorPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -23,6 +23,7 @@ import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { Util } from '../../util/util';
+import { LoginPage } from '../../pages/adf/demo-shell/login.page';
 
 describe('Login component', () => {
 
@@ -64,19 +65,19 @@ describe('Login component', () => {
    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
-        await loginPage.loginToContentServicesUsingUserModel(userA);
+        await loginPage.login(userA.email, userA.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
 
-        await loginPage.loginToContentServicesUsingUserModel(userB);
+        await loginPage.login(userB.email, userB.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userB.email);
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
-        await loginPage.loginToContentServicesUsingUserModel(userA);
+        await loginPage.login(userA.email, userA.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await expect(await errorPage.getErrorCode()).toBe('403');
         await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');

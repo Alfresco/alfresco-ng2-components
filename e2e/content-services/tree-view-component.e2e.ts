@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TreeViewPage } from '../pages/adf/content-services/tree-view.page';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -24,7 +24,7 @@ import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Tree View Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const treeViewPage = new TreeViewPage();
 
@@ -69,7 +69,7 @@ describe('Tree View Component', () => {
             nodeType: 'cm:content'
         });
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickTreeViewButton();
     });

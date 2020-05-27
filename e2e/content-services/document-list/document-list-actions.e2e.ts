@@ -18,7 +18,7 @@
 import { browser, by, element } from 'protractor';
 import {
     BreadcrumbPage,
-    LoginPage,
+    LoginSSOPage,
     PaginationPage,
     UploadActions,
     StringUtil,
@@ -37,7 +37,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Document List Component - Actions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -90,7 +90,7 @@ describe('Document List Component - Actions', () => {
             fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await browser.sleep(10000);
         });
@@ -282,7 +282,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
+            await loginPage.login(contentServicesUser.email, contentServicesUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');

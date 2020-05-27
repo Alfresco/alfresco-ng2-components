@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
+import { DataTableComponentPage, LoginSSOPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 describe('Datatable component - selection', () => {
 
     const dataTablePage = new DataTablePage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const dataTableComponent = new DataTableComponentPage();
@@ -40,7 +40,7 @@ describe('Datatable component - selection', () => {
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.navigateToDatatable();
    });

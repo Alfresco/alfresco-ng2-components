@@ -17,14 +17,14 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Amount Widget', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
 
     let processUserModel;
     const taskPage = new TasksPage();
@@ -56,7 +56,7 @@ describe('Amount Widget', () => {
         });
         const processUtil = new ProcessUtil(alfrescoJsApi);
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async() => {

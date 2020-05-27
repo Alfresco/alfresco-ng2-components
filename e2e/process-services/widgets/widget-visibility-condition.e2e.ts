@@ -16,7 +16,7 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { LoginPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
@@ -46,7 +46,7 @@ const checkbox = {
 
 describe('Process-Services - Visibility conditions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
 
     let processUserModel;
     const taskPage = new TasksPage();
@@ -77,7 +77,7 @@ describe('Process-Services - Visibility conditions', () => {
             return currentApp.modelId === appModel.id;
         });
         process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     beforeEach(async () => {

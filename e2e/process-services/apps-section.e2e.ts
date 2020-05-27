@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
@@ -27,7 +27,7 @@ import { ModelsActions } from '../actions/APS/models.actions';
 
 describe('Modify applications', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
@@ -57,7 +57,7 @@ describe('Modify applications', () => {
         firstApp = await applicationService.importPublishDeployApp(app.file_path);
         appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     it('[C260198] Should the app be displayed on dashboard when is deployed on APS', async () => {

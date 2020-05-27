@@ -19,7 +19,7 @@ import {
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     IntegrationService,
-    LoginPage,
+    LoginSSOPage,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -40,7 +40,7 @@ describe('Attach Folder', () => {
     const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
 
     const users = new UsersActions();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
@@ -61,7 +61,7 @@ describe('Attach Folder', () => {
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs.host });
         await this.alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToAllUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {

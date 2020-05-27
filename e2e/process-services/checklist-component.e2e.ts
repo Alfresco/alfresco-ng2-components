@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
@@ -30,7 +30,7 @@ import path = require('path');
 
 describe('Checklist component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
@@ -68,7 +68,7 @@ describe('Checklist component', () => {
             this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[i] });
         }
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {

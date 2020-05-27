@@ -18,14 +18,14 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -75,7 +75,7 @@ describe('Document List Component', () => {
             folderNode = await uploadActions.createFolder(folderName, '-my-');
             filePDFSubNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, folderNode.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         afterAll(async () => {

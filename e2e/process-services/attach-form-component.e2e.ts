@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFields, LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { FormFields, LoginSSOPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -27,7 +27,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Attach Form Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();
@@ -70,7 +70,7 @@ describe('Attach Form Component', () => {
 
         await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: testNames.taskName });
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {

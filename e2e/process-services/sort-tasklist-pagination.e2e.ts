@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
@@ -26,7 +26,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Task List Pagination - Sorting', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
@@ -67,7 +67,7 @@ describe('Task List Pagination - Sorting', () => {
             await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskNames[i] });
         }
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {

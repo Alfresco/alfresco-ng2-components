@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { LoginSSOPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NotificationDemoPage } from '../pages/adf/demo-shell/notification.page';
@@ -24,7 +24,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Notifications Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const notificationPage = new NotificationDemoPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -43,7 +43,7 @@ describe('Notifications Component', () => {
 
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await notificationPage.goToNotificationsPage();
 

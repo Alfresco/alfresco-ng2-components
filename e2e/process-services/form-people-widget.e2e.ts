@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, Widget, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
@@ -27,7 +27,7 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 
 describe('Form widgets - People ', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     let processUserModel;
     const app = browser.params.resources.Files.APP_WITH_USER_WIDGET;
     const processFiltersPage = new ProcessFiltersPage();
@@ -57,7 +57,7 @@ describe('Form widgets - People ', () => {
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     afterAll(async () => {

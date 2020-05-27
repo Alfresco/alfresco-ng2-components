@@ -20,7 +20,7 @@ import {
     ContentNodeSelectorDialogPage,
     ExternalNodeSelectorDialogPage,
     IntegrationService,
-    LoginPage,
+    LoginSSOPage,
     UploadActions,
     Widget
 } from '@alfresco/adf-testing';
@@ -43,7 +43,7 @@ describe('Attach File - Content service', () => {
         hostEcm: browser.params.testConfig.adf_external_acs.host
     });
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
@@ -94,7 +94,7 @@ describe('Attach File - Content service', () => {
     });
 
     beforeEach( async () => {
-        await loginPage.loginToAllUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterEach( async () => {

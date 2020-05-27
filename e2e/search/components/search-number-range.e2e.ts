@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, UploadActions, DataTableComponentPage, DateUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil, UploadActions, DataTableComponentPage, DateUtil } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -28,7 +28,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Number Range Filter', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeRangeFilter = searchFilters.sizeRangeFilterPage();
@@ -67,7 +67,7 @@ describe('Search Number Range Filter', () => {
         file0Bytes = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
