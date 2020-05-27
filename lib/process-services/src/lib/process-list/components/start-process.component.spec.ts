@@ -617,7 +617,7 @@ describe('StartFormComponent', () => {
             expect(lableElement.innerText).toEqual('ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION');
 
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
-            expect(component.applications.length).toBe(7);
+            expect(component.applications.length).toBe(6);
 
             expect(component.selectedApplication).toEqual(deployedApps[2]);
             expect(component.selectedApplication.id).toEqual(component.appId);
@@ -658,25 +658,26 @@ describe('StartFormComponent', () => {
             expect(component.processDefinitions[0].name).toEqual('My Process 3');
         });
 
-        it('Should be able to show all option as default when defined appId is not exists', () => {
+        it('Should be able to select an application if the list has one application', () => {
+            getDeployedApplicationsSpy.and.returnValues(of([deployedApps[0]]));
             const change = new SimpleChange(null, 123, true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
-            expect(component.applications.length).toEqual(7);
-            expect(component.selectedApplication.name).toEqual('All');
+            expect(component.applications.length).toEqual(1);
+            expect(component.selectedApplication.name).toEqual('App1');
         });
 
         it('Should be able to select an application from the apps as default application when given appId is defined', () => {
-            component.appId = 1;
-            const change = new SimpleChange(null, 1, true);
+            component.appId = 2;
+            const change = new SimpleChange(null, 2, true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
             expect(getDeployedApplicationsSpy).toHaveBeenCalled();
-            expect(component.applications.length).toEqual(7);
+            expect(component.applications.length).toEqual(6);
             expect(component.selectedApplication.id).toEqual(component.appId);
-            expect(component.selectedApplication.id).toEqual(1);
-            expect(component.selectedApplication.name).toEqual('App1');
+            expect(component.selectedApplication.id).toEqual(2);
+            expect(component.selectedApplication.name).toEqual('App2');
         });
 
         it('Should not be able to show application drop-down if showSelectApplicationDropdown set to false', () => {
