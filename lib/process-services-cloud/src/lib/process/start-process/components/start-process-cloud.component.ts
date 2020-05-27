@@ -223,10 +223,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     private selectDefaultProcessDefinition() {
         const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
-            this.processDefinitionCurrent = selectedProcess;
-            this.isFormCloudLoaded = false;
             this.processDefinition.setValue(selectedProcess.name);
-            this.processPayloadCloud.processDefinitionKey = selectedProcess.key;
         }
     }
 
@@ -241,6 +238,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
                     this.processDefinitionList = processDefinitionRepresentations;
                     if (processDefinitionRepresentations.length === 1) {
                         this.selectDefaultProcessDefinition();
+                    } else if (this.processDefinitionName) {
+                        this.processDefinition.setValue(this.processDefinitionName);
                     }
                 },
                 () => {

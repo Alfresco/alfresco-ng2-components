@@ -88,6 +88,18 @@ export function fakeSingleProcessDefinition(name: string): ProcessDefinitionClou
     ];
 }
 
+export function fakeSingleProcessDefinitionWithoutForm(name: string): ProcessDefinitionCloud[] {
+    return [
+        new ProcessDefinitionCloud({
+            appName: 'startformwithoutupload',
+            formKey: '',
+            id: 'd00c0237-8772-11e9-859a-428f83d5904f',
+            key: 'process-5151ad1d-f992-4ee6-9742-3a04617469fe',
+            name: name
+        })
+    ];
+}
+
 export let fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
     new ProcessDefinitionCloud({
         appName: 'myApp',
