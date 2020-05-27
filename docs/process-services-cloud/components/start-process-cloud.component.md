@@ -60,7 +60,7 @@ Starts a process.
 
 ```html
  <adf-cloud-start-process 
-      [appName]="YOUR_APP_ID"
+      [appName]="YOUR_APP_NAME"
       [name]="PROCESS_NAME"
       [processDefinitionName]="PROCESS_DEFINITION_NAME">
  </adf-cloud-start-process>		 
@@ -74,7 +74,7 @@ If the app contains only one process definition, this process definition will be
 
 ```html
  <adf-cloud-start-process 
-      [appName]="YOUR_APP_ID"
+      [appName]="YOUR_APP_NAME"
       [variables]="{ 'my-key1' : 'myvalue', 'my-key2' : 'myvalue2'}">
  </adf-cloud-start-process>		 
 ```
@@ -83,7 +83,7 @@ If the app contains only one process definition, this process definition will be
 
 ```html
  <adf-cloud-start-process 
-      [appName]="YOUR_APP_ID"
+      [appName]="YOUR_APP_NAME"
       [values]="[{'name': 'firstName', 'value': 'MyName'}, {'name': 'lastName', 'value': 'MyLastName'}]">
  </adf-cloud-start-process>		 
 ```
