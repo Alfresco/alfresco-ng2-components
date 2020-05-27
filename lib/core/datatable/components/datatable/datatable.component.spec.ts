@@ -1228,6 +1228,18 @@ describe('DataTable', () => {
         expect(dataTable.data.getRows().length).toEqual(2);
         expect(dataTable.resolverFn).toHaveBeenCalledTimes(4);
     });
+
+    it('should update data columns when columns input changes', () => {
+        dataTable.data = new ObjectDataTableAdapter(
+            [{ id: 'fake-data' }],
+            [new ObjectDataColumn({ key: 'id' })]
+        );
+
+        const columnsChange = new SimpleChange(null, [{ key: 'fake-key' }], false);
+        dataTable.ngOnChanges({ 'columns': columnsChange });
+        const expectedDataColumns = [new ObjectDataColumn({ key: 'fake-key' })];
+        expect(dataTable.data.getColumns()).toEqual(expectedDataColumns);
+    });
 });
 
 describe('Accesibility', () => {

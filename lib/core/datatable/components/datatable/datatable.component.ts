@@ -32,6 +32,7 @@ import { DataTableAdapter } from '../../data/datatable-adapter';
 import { DataTableRowComponent } from './datatable-row.component';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
@@ -244,6 +245,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             return;
         }
 
+        if (this.isPropertyChanged(changes['columns'])) {
+            if (this.isTableEmpty()) {
+                this.initTable();
+            } else {
+                this.setTableColumns(changes['columns'].currentValue);
+            }
+            return;
+        }
+
         if (changes.selectionMode && !changes.selectionMode.isFirstChange()) {
             this.resetSelection();
             this.emitRowSelectionEvent('row-unselect', null);
@@ -278,6 +288,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
         return rows.map((row) => new ObjectDataRow(row, row.isSelected));
+    }
+
+    convertToColumnsData(columns: any []): ObjectDataColumn[] {
+        return columns.map((column) => new ObjectDataColumn(column));
     }
 
     convertToDataSorting(sorting: any[]): DataSorting | null {
@@ -366,7 +380,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows: any[]) {
         if (this.data) {
             this.resetSelection();
-            this.data.setRows(this.convertToRowsData(rows));
+            const rowsData = this.convertToRowsData(rows);
+            this.data.setRows(rowsData);
+        }
+    }
+
+    private setTableColumns(columns: any[]) {
+        if (this.data) {
+            this.resetSelection();
+            const columnsData = this.convertToColumnsData(columns);
+            this.data.setColumns(columnsData);
         }
     }
 

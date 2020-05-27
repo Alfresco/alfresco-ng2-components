@@ -437,6 +437,14 @@ describe('ProcessInstanceListComponent', () => {
 
             component.ngOnChanges({'processInstanceId': change});
         });
+
+        it('should update columns when presetColumn schema changes', () => {
+            component.ngAfterContentInit();
+            component.columns = [];
+            const presetColumnChange = new SimpleChange(null, 'fakeProcessCustomSchema', false);
+            component.ngOnChanges({ 'presetColumn': presetColumnChange });
+            expect(component.columns).toEqual(component.mergeJsonAndHtmlSchema());
+        });
     });
 });
 
