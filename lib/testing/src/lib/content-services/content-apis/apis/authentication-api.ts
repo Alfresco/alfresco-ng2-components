@@ -16,17 +16,17 @@
  */
 
 import { Api } from './api';
+import { AlfrescoApi } from '@alfresco/js-api';
 
 export class AuthenticationApi extends Api {
-
-    constructor(username: string, password: string) {
-        super(username, password);
+    constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+        super(username, password, alfrescoJsApi);
     }
 
     async logout(): Promise<void> {
       try {
         await this.apiLogin();
-        await this.alfrescoJsApi.logout();
+        await this.apiLogout();
       } catch (error) {
         this.handleError(`${this.constructor.name} ${this.logout.name}`, error);
       }

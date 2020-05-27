@@ -17,16 +17,17 @@
 
 import { PersonModel, Person } from './people-api-models';
 import { Api } from './api';
-import { PeopleApi as AdfPeopleApi } from '@alfresco/js-api';
+import { PeopleApi as AdfPeopleApi, AlfrescoApi, PersonEntry } from '@alfresco/js-api';
 
 export class PeopleApi extends Api {
-  peopleApi = new AdfPeopleApi(this.alfrescoJsApi);
+  peopleApi: AdfPeopleApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.peopleApi = new AdfPeopleApi(alfrescoJsApi);
   }
 
-  async createUser(user: PersonModel) {
+  async createUser(user: PersonModel): Promise<PersonEntry> {
     try {
       const person = new Person(user);
       await this.apiLogin();
@@ -37,7 +38,7 @@ export class PeopleApi extends Api {
     }
   }
 
-  async getUser(username: string) {
+  async getUser(username: string): Promise<PersonEntry> {
     try {
       await this.apiLogin();
       return await this.peopleApi.getPerson(username);
@@ -47,7 +48,7 @@ export class PeopleApi extends Api {
     }
   }
 
-  async updateUser(username: string, userDetails?: PersonModel) {
+  async updateUser(username: string, userDetails?: PersonModel): Promise<PersonEntry> {
     try {
       await this.apiLogin();
       return this.peopleApi.updatePerson(username, userDetails);
@@ -57,7 +58,7 @@ export class PeopleApi extends Api {
     }
   }
 
-  async disableUser(username: string) {
+  async disableUser(username: string): Promise<PersonEntry> {
     try {
       return await this.updateUser(username, { enabled: false });
     } catch (error) {
@@ -66,7 +67,7 @@ export class PeopleApi extends Api {
     }
   }
 
-  async changePassword(username: string, newPassword: string) {
+  async changePassword(username: string, newPassword: string): Promise<PersonEntry> {
     try {
       return await this.updateUser(username, { password: newPassword });
     } catch (error) {

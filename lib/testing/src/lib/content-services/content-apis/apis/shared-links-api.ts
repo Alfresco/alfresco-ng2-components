@@ -18,16 +18,17 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { SharedlinksApi as AdfSharedlinksApi, SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
+import { SharedlinksApi as AdfSharedLinksApi, SharedLinkEntry, SharedLinkPaging, AlfrescoApi } from '@alfresco/js-api';
 
 export class SharedLinksApi extends Api {
-    sharedlinksApi = new AdfSharedlinksApi(this.alfrescoJsApi);
+    sharedlinksApi: AdfSharedLinksApi;
 
-    constructor(username: string, password: string) {
-      super(username, password);
+    constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+      super(username, password, alfrescoJsApi);
+      this.sharedlinksApi = new AdfSharedLinksApi(alfrescoJsApi);
     }
 
-    async shareFileById(id: string, expireDate?: Date): Promise<SharedLinkEntry|null> {
+    async shareFileById(id: string, expireDate?: Date): Promise<SharedLinkEntry> {
       try {
         await this.apiLogin();
         const data = {
@@ -41,7 +42,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async shareFilesByIds(ids: string[]) {
+    async shareFilesByIds(ids: string[]): Promise<any> {
       try {
         return await ids.reduce(async (previous: any, current: any) => {
           await previous;
@@ -52,7 +53,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async getSharedIdOfNode(name: string) {
+    async getSharedIdOfNode(name: string): Promise<string> {
       try {
         const sharedLinks = (await this.getSharedLinks()).list.entries;
         const found = sharedLinks.find(sharedLink => sharedLink.entry.name === name);
@@ -63,7 +64,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async unshareFile(name: string) {
+    async unshareFile(name: string): Promise<any> {
       try {
         const id = await this.getSharedIdOfNode(name);
         return await this.sharedlinksApi.deleteSharedLink(id);
@@ -72,7 +73,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async getSharedLinks() {
+    async getSharedLinks(): Promise<SharedLinkPaging> {
       try {
         await this.apiLogin();
         return await this.sharedlinksApi.listSharedLinks();
@@ -82,7 +83,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async waitForApi(data: { expect: number }) {
+    async waitForApi(data: { expect: number }): Promise<any> {
       try {
         const sharedFiles = async () => {
           const totalItems = (await this.getSharedLinks()).list.pagination.totalItems;
@@ -100,7 +101,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async waitForSharedLink(nodeId: string) {
+    async waitForSharedLink(nodeId: string): Promise<any> {
         const predicate = (sharedLinkPaging: SharedLinkPaging) => {
             const sharedLink = sharedLinkPaging.list.entries.find((sharedLinkEntry: SharedLinkEntry) => {
                 return sharedLinkEntry.entry.nodeId === nodeId;

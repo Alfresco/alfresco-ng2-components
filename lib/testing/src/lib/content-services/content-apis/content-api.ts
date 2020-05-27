@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+import { AlfrescoApi } from '@alfresco/js-api';
 import { PeopleApi } from './apis/people-api';
 import { NodesApi } from './apis/nodes-api';
 import { CommentsApi } from './apis/comments-api';
@@ -28,52 +30,59 @@ import { UploadApi } from './apis/upload-api';
 import { AuthenticationApi } from './apis/authentication-api';
 
 export class ContentApi {
+    alfrescoJsApi = new AlfrescoApi();
+
     constructor(
         private username: string,
         private password: string
-    ) {}
+    ) {
+        this.alfrescoJsApi.setConfig({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+    }
 
     get people() {
-        return new PeopleApi(this.username, this.password);
+        return new PeopleApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get nodes() {
-        return new NodesApi(this.username, this.password);
+        return new NodesApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get comments() {
-        return new CommentsApi(this.username, this.password);
+        return new CommentsApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get sites() {
-        return new SitesApi(this.username, this.password);
+        return new SitesApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get favorites() {
-        return new FavoritesApi(this.username, this.password);
+        return new FavoritesApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get shared() {
-        return new SharedLinksApi(this.username, this.password);
+        return new SharedLinksApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get trashcan() {
-        return new TrashcanApi(this.username, this.password);
+        return new TrashcanApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get search() {
-        return new SearchApi(this.username, this.password);
+        return new SearchApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get queries() {
-        return new QueriesApi(this.username, this.password);
+        return new QueriesApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get upload() {
-        return new UploadApi(this.username, this.password);
+        return new UploadApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get authentication() {
-        return new AuthenticationApi(this.username, this.password);
+        return new AuthenticationApi(this.username, this.password, this.alfrescoJsApi);
     }
 }

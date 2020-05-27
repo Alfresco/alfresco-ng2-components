@@ -18,16 +18,17 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { QueriesApi as AdfQueriesApi } from '@alfresco/js-api';
+import { QueriesApi as AdfQueriesApi, AlfrescoApi, SitePaging, NodePaging } from '@alfresco/js-api';
 
 export class QueriesApi extends Api {
-  queriesApi = new AdfQueriesApi(this.alfrescoJsApi);
+  queriesApi: AdfQueriesApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.queriesApi = new AdfQueriesApi(alfrescoJsApi);
   }
 
-  async findSites(searchTerm: string) {
+  async findSites(searchTerm: string): Promise<SitePaging> {
     const data = {
         term: searchTerm,
         fields: ['title']
@@ -42,7 +43,7 @@ export class QueriesApi extends Api {
     }
   }
 
-  async findNodes(searchTerm: string) {
+  async findNodes(searchTerm: string): Promise<NodePaging> {
     const data = {
       term: searchTerm,
       fields: ['name']
@@ -57,7 +58,7 @@ export class QueriesApi extends Api {
     }
   }
 
-  async waitForSites(searchTerm: string, data: { expect: number }) {
+  async waitForSites(searchTerm: string, data: { expect: number }): Promise<any> {
     try {
       const sites = async () => {
         const totalItems = (await this.findSites(searchTerm)).list.pagination.totalItems;
@@ -75,7 +76,7 @@ export class QueriesApi extends Api {
     }
   }
 
-  async waitForFilesAndFolders(searchTerm: string, data: { expect: number }) {
+  async waitForFilesAndFolders(searchTerm: string, data: { expect: number }): Promise<any> {
     try {
       const nodes = async () => {
         const totalItems = (await this.findNodes(searchTerm)).list.pagination.totalItems;

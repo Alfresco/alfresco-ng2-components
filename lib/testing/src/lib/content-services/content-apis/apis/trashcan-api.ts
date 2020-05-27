@@ -18,16 +18,17 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { TrashcanApi as AdfTrashcanApi } from '@alfresco/js-api';
+import { TrashcanApi as AdfTrashcanApi, AlfrescoApi, NodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
 
 export class TrashcanApi extends Api {
-  trashcanApi = new AdfTrashcanApi(this.alfrescoJsApi);
+  trashcanApi: AdfTrashcanApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.trashcanApi = new AdfTrashcanApi(alfrescoJsApi);
   }
 
-  async permanentlyDelete(id: string) {
+  async permanentlyDelete(id: string): Promise<any> {
     try {
       await this.apiLogin();
       return await this.trashcanApi.deleteDeletedNode(id);
@@ -36,7 +37,7 @@ export class TrashcanApi extends Api {
     }
   }
 
-  async restore(id: string) {
+  async restore(id: string): Promise<NodeEntry> {
     try {
       await this.apiLogin();
       return await this.trashcanApi.restoreDeletedNode(id);
@@ -46,7 +47,7 @@ export class TrashcanApi extends Api {
     }
   }
 
-  async getDeletedNodes() {
+  async getDeletedNodes(): Promise<DeletedNodesPaging> {
     const opts = {
         maxItems: 1000
     };
@@ -59,7 +60,7 @@ export class TrashcanApi extends Api {
     }
   }
 
-  async emptyTrash() {
+  async emptyTrash(): Promise<any> {
     try {
       const ids = (await this.getDeletedNodes()).list.entries.map(entries => entries.entry.id);
 
@@ -72,7 +73,7 @@ export class TrashcanApi extends Api {
     }
   }
 
-  async waitForApi(data: { expect: number }) {
+  async waitForApi(data: { expect: number }): Promise<any> {
     try {
       const deletedFiles = async () => {
         const totalItems = (await this.getDeletedNodes()).list.pagination.totalItems;

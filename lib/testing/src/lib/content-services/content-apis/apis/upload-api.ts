@@ -16,18 +16,19 @@
  */
 
 import { Api } from './api';
-import { UploadApi as AdfUploadApi } from '@alfresco/js-api';
+import { UploadApi as AdfUploadApi, AlfrescoApi } from '@alfresco/js-api';
 
 import * as fs from 'fs';
 
 export class UploadApi extends Api {
-  upload = new AdfUploadApi(this.alfrescoJsApi);
+  uploadApi: AdfUploadApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.uploadApi = new AdfUploadApi(alfrescoJsApi);
   }
 
-  async uploadFile(filePath: string, fileName: string, parentId: string = '-my-') {
+  async uploadFile(filePath: string, fileName: string, parentId: string = '-my-'): Promise<any> {
     const file = fs.createReadStream(filePath);
     const opts = {
       name: fileName,
@@ -37,13 +38,13 @@ export class UploadApi extends Api {
 
     try {
       await this.apiLogin();
-      return await this.upload.uploadFile(file, '', parentId, null, opts);
+      return await this.uploadApi.uploadFile(file, '', parentId, null, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.uploadFile.name}`, error);
     }
   }
 
-  async uploadFileWithRename(filePath: string, parentId: string = '-my-', newName: string, title: string = '', description: string = '') {
+  async uploadFileWithRename(filePath: string, parentId: string = '-my-', newName: string, title: string = '', description: string = ''): Promise<any> {
     const file = fs.createReadStream(filePath);
 
     const nodeProps = {
@@ -60,7 +61,7 @@ export class UploadApi extends Api {
 
     try {
       await this.apiLogin();
-      return await this.upload.uploadFile(file, '', parentId, nodeProps, opts);
+      return await this.uploadApi.uploadFile(file, '', parentId, nodeProps, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.uploadFileWithRename.name}`, error);
     }

@@ -18,15 +18,17 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ContentApi } from '../content-api';
-import { FavoritesApi as AdfFavoritesApi, SitesApi as AdfSiteApi, FavoriteEntry, FavoritePaging } from '@alfresco/js-api';
+import { FavoritesApi as AdfFavoritesApi, SitesApi as AdfSitesApi, FavoriteEntry, FavoritePaging, AlfrescoApi } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
 export class FavoritesApi extends Api {
-  favoritesApi = new AdfFavoritesApi(this.alfrescoJsApi);
-  sitesApi = new AdfSiteApi(this.alfrescoJsApi);
+  favoritesApi: AdfFavoritesApi;
+  sitesApi: AdfSitesApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.favoritesApi = new AdfFavoritesApi(alfrescoJsApi);
+    this.sitesApi = new AdfSitesApi(alfrescoJsApi);
   }
 
   async addFavorite(api: ContentApi, nodeType: string, name: string): Promise<FavoriteEntry> {

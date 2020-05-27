@@ -18,16 +18,17 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { SearchApi as AdfSearchApi } from '@alfresco/js-api';
+import { SearchApi as AdfSearchApi, AlfrescoApi, ResultSetPaging } from '@alfresco/js-api';
 
 export class SearchApi extends Api {
-  searchApi = new AdfSearchApi(this.alfrescoJsApi);
+  searchApi: AdfSearchApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.searchApi = new AdfSearchApi(alfrescoJsApi);
   }
 
-  async queryRecentFiles(username: string) {
+  async queryRecentFiles(username: string): Promise<ResultSetPaging> {
     const data = {
         query: {
             query: '*',
@@ -49,7 +50,7 @@ export class SearchApi extends Api {
     }
   }
 
-  async queryNodesNames(searchTerm: string) {
+  async queryNodesNames(searchTerm: string): Promise<ResultSetPaging> {
     const data = {
       query: {
         query: `cm:name:\"${searchTerm}*\"`,
@@ -69,7 +70,7 @@ export class SearchApi extends Api {
     }
   }
 
-  async queryNodesExactNames(searchTerm: string) {
+  async queryNodesExactNames(searchTerm: string): Promise<ResultSetPaging> {
     const data = {
       query: {
         query: `cm:name:\"${searchTerm}\"`,
@@ -89,7 +90,7 @@ export class SearchApi extends Api {
     }
   }
 
-  async waitForApi(username: string, data: { expect: number }) {
+  async waitForApi(username: string, data: { expect: number }): Promise<any> {
     try {
       const recentFiles = async () => {
         const totalItems = (await this.queryRecentFiles(username)).list.pagination.totalItems;
@@ -107,7 +108,7 @@ export class SearchApi extends Api {
     }
   }
 
-  async waitForNodes(searchTerm: string, data: { expect: number }) {
+  async waitForNodes(searchTerm: string, data: { expect: number }): Promise<any> {
     try {
       const nodes = async () => {
         const totalItems = (await this.queryNodesNames(searchTerm)).list.pagination.totalItems;

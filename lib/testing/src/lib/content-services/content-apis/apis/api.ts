@@ -15,32 +15,30 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import { AlfrescoApi } from '@alfresco/js-api';
 import { Logger } from '../../../core/utils/logger';
 
 export abstract class Api {
-    alfrescoJsApi = new AlfrescoApi();
-
     constructor(
         private username: string,
-        private password: string
-    ) {
-        this.alfrescoJsApi.setConfig({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-    }
+        private password: string,
+        private alfrescoJsApi: AlfrescoApi
+    ) {}
 
     async apiLogin(): Promise<any> {
         return this.alfrescoJsApi.login(this.username, this.password);
+    }
+
+    async apiLogout(): Promise<any> {
+        await this.apiLogin();
+        return this.alfrescoJsApi.logout();
     }
 
     getUsername(): string {
         return this.username;
     }
 
-    protected handleError(message: string, response: any) {
+    protected handleError(message: string, response: any): void {
       Logger.error(`\n--- ${message} error :`);
       Logger.error('\t>>> username: ', this.username);
       if ( response.status && response.response ) {

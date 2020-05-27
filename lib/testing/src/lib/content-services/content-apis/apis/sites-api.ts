@@ -25,18 +25,21 @@ import {
     SiteMemberBody,
     SiteEntry,
     SiteMembershipRequestEntry,
-    SitesApi as AdfSiteApi,
-    SiteMemberEntry
+    SitesApi as AdfSitesApi,
+    SiteMemberEntry,
+    AlfrescoApi,
+    SiteRolePaging
 } from '@alfresco/js-api';
 
 export class SitesApi extends Api {
-  sitesApi = new AdfSiteApi(this.alfrescoJsApi);
+  sitesApi: AdfSitesApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.sitesApi = new AdfSitesApi(alfrescoJsApi);
   }
 
-  async getSite(siteId: string) {
+  async getSite(siteId: string): Promise<SiteEntry> {
     try {
       await this.apiLogin();
       return await this.sitesApi.getSite(siteId);
@@ -46,17 +49,17 @@ export class SitesApi extends Api {
     }
   }
 
-  async getSites() {
+  async getCurrentUserSites(): Promise<SiteRolePaging> {
     try {
       await this.apiLogin();
       return await this.sitesApi.listSiteMembershipsForPerson(this.getUsername());
     } catch (error) {
-      this.handleError(`${this.constructor.name} ${this.getSites.name}`, error);
+      this.handleError(`${this.constructor.name} ${this.getCurrentUserSites.name}`, error);
       return null;
     }
   }
 
-  async getDocLibId(siteId: string) {
+  async getDocLibId(siteId: string): Promise<string> {
     try {
       await this.apiLogin();
       return (await this.sitesApi.listSiteContainers(siteId)).list.entries[0].entry.id;
@@ -66,7 +69,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async getVisibility(siteId: string) {
+  async getVisibility(siteId: string): Promise<string> {
     try {
       const site = await this.getSite(siteId);
       return site.entry.visibility;
@@ -76,7 +79,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async getDescription(siteId: string) {
+  async getDescription(siteId: string): Promise<string> {
     try {
       const site = await this.getSite(siteId);
       return site.entry.description;
@@ -86,7 +89,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async getTitle(siteId: string) {
+  async getTitle(siteId: string): Promise<string> {
     try {
       const site = await this.getSite(siteId);
       return site.entry.title;
@@ -136,7 +139,7 @@ export class SitesApi extends Api {
     return this.createSites(siteNames, Site.VisibilityEnum.PRIVATE);
   }
 
-  async deleteSite(siteId: string, permanent: boolean = true) {
+  async deleteSite(siteId: string, permanent: boolean = true): Promise<any> {
     try {
       await this.apiLogin();
       return await this.sitesApi.deleteSite(siteId, { permanent });
@@ -145,7 +148,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async deleteSites(siteIds: string[], permanent: boolean = true) {
+  async deleteSites(siteIds: string[], permanent: boolean = true): Promise<any> {
     try {
       return siteIds.reduce(async (previous, current) => {
         await previous;
@@ -156,9 +159,9 @@ export class SitesApi extends Api {
     }
   }
 
-  async deleteAllUserSites(permanent: boolean = true) {
+  async deleteAllUserSites(permanent: boolean = true): Promise<any> {
     try {
-      const siteIds = (await this.getSites()).list.entries.map(entries => entries.entry.id);
+      const siteIds = (await this.getCurrentUserSites()).list.entries.map(entries => entries.entry.id);
 
       return await siteIds.reduce(async (previous, current) => {
         await previous;
@@ -169,7 +172,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async updateSiteMember(siteId: string, userId: string, role: string) {
+  async updateSiteMember(siteId: string, userId: string, role: string): Promise<SiteMemberEntry> {
     const siteRole = {
         role: role
     } as SiteMemberRoleBody;
@@ -183,7 +186,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async addSiteMember(siteId: string, userId: string, role: string) {
+  async addSiteMember(siteId: string, userId: string, role: string): Promise<SiteMemberEntry> {
     const memberBody = {
         id: userId,
         role: role
@@ -214,7 +217,7 @@ export class SitesApi extends Api {
     return this.addSiteMember(siteId, userId, Site.RoleEnum.SiteManager);
   }
 
-  async deleteSiteMember(siteId: string, userId: string) {
+  async deleteSiteMember(siteId: string, userId: string): Promise<any> {
     try {
       await this.apiLogin();
       return await this.sitesApi.deleteSiteMembership(siteId, userId);
@@ -237,7 +240,7 @@ export class SitesApi extends Api {
     }
   }
 
-  async hasMembershipRequest(siteId: string) {
+  async hasMembershipRequest(siteId: string): Promise<boolean> {
     try {
       await this.apiLogin();
       const requests = (await this.sitesApi.getSiteMembershipRequests('-me-')).list.entries.map(e => e.entry.id);
@@ -248,10 +251,10 @@ export class SitesApi extends Api {
     }
   }
 
-  async waitForApi(data: { expect: number }) {
+  async waitForApi(data: { expect: number }): Promise<any> {
     try {
       const sites = async () => {
-        const totalItems = (await this.getSites()).list.pagination.totalItems;
+        const totalItems = (await this.getCurrentUserSites()).list.pagination.totalItems;
         if ( totalItems !== data.expect ) {
             return Promise.reject(totalItems);
         } else {

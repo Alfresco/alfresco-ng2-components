@@ -18,14 +18,15 @@
 import { Api } from './api';
 import { NodeBodyCreate } from './node-body-create';
 import { NodeContentTree, flattenNodeContentTree } from './node-content-tree';
-import { NodesApi as AdfNodeApi, NodeBodyLock, NodeEntry, NodeChildAssociationPaging } from '@alfresco/js-api';
+import { NodesApi as AdfNodesApi, NodeBodyLock, NodeEntry, NodeChildAssociationPaging, AlfrescoApi } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
 export class NodesApi extends Api {
-  nodesApi = new AdfNodeApi(this.alfrescoJsApi);
+  nodesApi: AdfNodesApi;
 
-  constructor(username: string, password: string) {
-    super(username, password);
+  constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
+    super(username, password, alfrescoJsApi);
+    this.nodesApi = new AdfNodesApi(alfrescoJsApi);
   }
 
   async getNodeByPath(relativePath: string = '/'): Promise<NodeEntry> {
@@ -179,7 +180,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async getNodeChildren(nodeId: string): Promise<NodeChildAssociationPaging|null> {
+  async getNodeChildren(nodeId: string): Promise<NodeChildAssociationPaging> {
     try {
       const opts = {
         include: [ 'properties' ]
@@ -209,7 +210,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async createImageNode(name: string, parentId: string = '-my-', title: string = '', description: string = ''): Promise<NodeEntry|null> {
+  async createImageNode(name: string, parentId: string = '-my-', title: string = '', description: string = ''): Promise<NodeEntry> {
     const imageProps = {
       'exif:pixelXDimension': 1000,
       'exif:pixelYDimension': 1200
@@ -268,7 +269,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async createImage(name: string, parentId: string = '-my-', title: string = '', description: string = ''): Promise<NodeEntry|null> {
+  async createImage(name: string, parentId: string = '-my-', title: string = '', description: string = ''): Promise<NodeEntry> {
     try {
       return await this.createImageNode(name, parentId, title, description);
     } catch (error) {
@@ -277,7 +278,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async createFolder(name: string, parentId: string = '-my-', title: string = '', description: string = '', author: string = '', aspectNames: string[] = null): Promise<NodeEntry|null> {
+  async createFolder(name: string, parentId: string = '-my-', title: string = '', description: string = '', author: string = '', aspectNames: string[] = null): Promise<NodeEntry> {
     try {
       return await this.createNode('cm:folder', name, parentId, title, description, null, author, null, aspectNames);
     } catch (error) {
@@ -329,7 +330,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async createFileLink(originalNodeId: string, destinationId: string): Promise<NodeEntry|null> {
+  async createFileLink(originalNodeId: string, destinationId: string): Promise<NodeEntry> {
     const name = (await this.getNodeById(originalNodeId)).entry.name;
     const nodeBody = {
       name: `Link to ${name}.url`,
@@ -350,7 +351,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async createFolderLink(originalNodeId: string, destinationId: string): Promise<NodeEntry|null> {
+  async createFolderLink(originalNodeId: string, destinationId: string): Promise<NodeEntry> {
     const name = (await this.getNodeById(originalNodeId)).entry.name;
     const nodeBody = {
       name: `Link to ${name}.url`,
@@ -383,7 +384,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async editNodeContent(nodeId: string, content: string): Promise<NodeEntry|null> {
+  async editNodeContent(nodeId: string, content: string): Promise<NodeEntry> {
     try {
       await this.apiLogin();
       return await this.nodesApi.updateNodeContent(nodeId, content);
@@ -393,7 +394,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async renameNode(nodeId: string, newName: string): Promise<NodeEntry|null> {
+  async renameNode(nodeId: string, newName: string): Promise<NodeEntry> {
     try {
       await this.apiLogin();
       return this.nodesApi.updateNode(nodeId, { name: newName });
@@ -403,7 +404,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async setInheritPermissions(nodeId: string, inheritPermissions: boolean): Promise<NodeEntry|null> {
+  async setInheritPermissions(nodeId: string, inheritPermissions: boolean): Promise<NodeEntry> {
     const data = {
       permissions: {
         isInheritanceEnabled: inheritPermissions
@@ -419,7 +420,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async setGranularPermission(nodeId: string, inheritPermissions: boolean = false, username: string, role: string): Promise<NodeEntry|null> {
+  async setGranularPermission(nodeId: string, inheritPermissions: boolean = false, username: string, role: string): Promise<NodeEntry> {
     const data = {
       permissions: {
         isInheritanceEnabled: inheritPermissions,
@@ -441,8 +442,7 @@ export class NodesApi extends Api {
     }
   }
 
-  // lock node
-  async lockFile(nodeId: string, lockType: string = 'ALLOW_OWNER_CHANGES'): Promise<NodeEntry|null> {
+  async lockFile(nodeId: string, lockType: string = 'ALLOW_OWNER_CHANGES'): Promise<NodeEntry> {
     const data = {
         type: lockType
     } as NodeBodyLock;
@@ -456,7 +456,7 @@ export class NodesApi extends Api {
     }
   }
 
-  async unlockFile(nodeId: string): Promise<NodeEntry|null> {
+  async unlockFile(nodeId: string): Promise<NodeEntry> {
     try {
       await this.apiLogin();
       return await this.nodesApi.unlockNode(nodeId);
