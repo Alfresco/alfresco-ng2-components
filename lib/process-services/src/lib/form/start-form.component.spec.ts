@@ -88,7 +88,7 @@ describe('StartFormComponent', () => {
     });
 
     it('should not load start form when changes notified but no change to processDefinitionId', () => {
-        component.processDefinitionId = exampleId1;
+        component.processDefinitionId = undefined;
         component.ngOnChanges({ otherProp: new SimpleChange(exampleId1, exampleId2, true) });
         expect(formService.getStartFormDefinition).not.toHaveBeenCalled();
     });

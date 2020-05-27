@@ -43,6 +43,7 @@ Starts a process.
 | processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
+| showSelectApplicationDropdown | `boolean` | false | application selection dropdown. |
 | title | `string` |  | (optional) Define the header of the component. |
 | values | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md). |
@@ -174,6 +175,25 @@ Note that in the object above, the key `file` is the name of the attach file fie
 The result will be the start form prefilled with the file data:
 
 ![Start process load file](../../docassets/images/start_process.png)
+
+### Starting a process with a selected application
+
+Now you can start process based on selected application from the dropdown. The process definition dropdown will display based on the selected application. The application dropdown will be selected application based on the given `appId` otherwise first application will be selected as default.
+
+```html
+ <adf-start-process 
+      [appId]="YOUR_APP_ID"
+      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
+      [name]="PROCESS_NAME"
+      [showSelectApplicationDropdown]="true"
+      [processDefinitionName]="PROCESS_DEFINITION_NAME">
+ </adf-start-process>		 
+```
+
+You can use the `showSelectApplicationDropdown` property to Hide or show application drop down.
+
+![Start process with selected application](../../docassets/images/start-process-with-selected-application.png)
+
 
 ## See also
 

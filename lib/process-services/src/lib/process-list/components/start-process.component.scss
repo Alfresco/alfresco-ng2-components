@@ -5,15 +5,8 @@
             margin-left: auto;
             margin-right: auto;
             margin-top: 10px;
-            .mat-select-trigger {
-                font-size: 14px !important;
-            }
             mat-form-field {
                 width: 100%;
-            }
-            mat-select {
-                width: 100%;
-                padding: 16px 0 0;
             }
             .mat-form-field-label {
                 color: mat-color($mat-grey, A400);
@@ -49,6 +42,15 @@
         }
         &-start-form-actions {
             text-align: right !important;
+        }
+        &-start-process-definition-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: baseline;
+        }
+        &-start-process-app-list {
+            margin-right: 10px;
         }
     }
     @media (max-width: 600px) {
