@@ -61,7 +61,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         authType: 'OAUTH',
         oauth2: {
             host: browser.params.testConfig.adf.hostSso,
-            clientId: browser.params.config.oauth2.clientId,
+            clientId: browser.params.testConfig.appConfigoauth2.clientId,
             scope: 'openid',
             secret: '',
             implicitFlow: false,
@@ -78,7 +78,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
 
         beforeAll(async () => {
-            const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.hostSso, 'ECM');
+            const apiService = new ApiService(browser.params.testConfig.appConfigoauth2.clientId, browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.hostSso, 'ECM');
             await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             identityService = new IdentityService(apiService);
@@ -97,7 +97,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
                 browser.params.testConfig.adf.hostSso,
-                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.config.oauth2.clientId);
+                browser.params.testConfig.adf.hostIdentity, silentLogin, implicitFlow, browser.params.testConfig.appConfigoauth2.clientId);
 
             await loginSsoPage.clickOnSSOButton();
             await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);

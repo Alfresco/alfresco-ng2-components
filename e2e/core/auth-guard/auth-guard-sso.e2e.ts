@@ -28,7 +28,7 @@ describe('Auth Guard SSO', () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.adf.hostSso,
             browser.params.testConfig.adf.hostIdentity,
-            false, true, browser.params.config.oauth2.clientId);
+            false, true, browser.params.testConfig.appConfigoauth2.clientId);
         await loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');

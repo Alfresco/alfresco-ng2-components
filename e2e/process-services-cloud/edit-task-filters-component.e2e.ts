@@ -39,7 +39,7 @@ describe('Edit task filters cloud', () => {
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;
-        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+        const apiService = new ApiService(browser.params.testConfig.appConfigoauth2.clientId, browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, 'BPM');
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const completedTaskName = StringUtil.generateRandomString(),

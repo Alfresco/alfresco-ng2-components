@@ -28,8 +28,8 @@ describe('Start Process', () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const startProcessPage = new StartProcessCloudPage();
     const apiService = new ApiService(
-        browser.params.config.oauth2.clientId,
-        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        browser.params.testConfig.appConfigoauth2.clientId,
+        browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, browser.params.testConfig.appConfigproviders
     );
 
     const processName = StringUtil.generateRandomString(10);

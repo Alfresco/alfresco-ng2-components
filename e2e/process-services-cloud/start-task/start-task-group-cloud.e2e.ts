@@ -40,8 +40,8 @@ describe('Start Task - Group Cloud Component', () => {
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const apiService = new ApiService(
-        browser.params.config.oauth2.clientId,
-        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        browser.params.testConfig.appConfigoauth2.clientId,
+        browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, browser.params.testConfig.appConfigproviders
     );
     const groupCloud = new GroupCloudComponentPage();
 

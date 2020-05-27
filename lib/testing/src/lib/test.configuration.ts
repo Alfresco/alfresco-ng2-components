@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiConfig } from '@alfresco/js-api';
+
 export interface TestConfiguration {
 
-    appConfig: any;
+    appConfig: AlfrescoApiConfig;
 
     log: boolean;
 

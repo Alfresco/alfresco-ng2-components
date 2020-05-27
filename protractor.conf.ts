@@ -1,8 +1,10 @@
+import { TestConfiguration } from './lib/testing';
+
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
-const TestConfig = require('./e2e/test.config');
+const testConfig: TestConfiguration = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
@@ -115,12 +117,11 @@ exports.config = {
     baseUrl: HOST,
 
     params: {
-        testConfig: TestConfig,
+        testConfig: testConfig,
         loginRoute: '/login',
-        config: TestConfig.appConfig,
         groupSuffix: GROUP_SUFFIX,
-        identityAdmin: TestConfig.identityAdmin,
-        identityUser: TestConfig.identityUser,
+        identityAdmin: testConfig.identityAdmin,
+        identityUser: testConfig.identityUser,
         rootPath: __dirname,
         resources: RESOURCES
     },
@@ -132,7 +133,8 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 120000,
-        print: () => {},
+        print: () => {
+        },
         ...SmartRunner.withOptionalExclusions(
             resolve(__dirname, './e2e/protractor.excludes.json')
         )
