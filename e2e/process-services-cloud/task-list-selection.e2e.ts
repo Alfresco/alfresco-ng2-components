@@ -28,8 +28,8 @@ describe('Task list cloud - selection', () => {
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const apiService = new ApiService(
-            browser.params.testConfig.appConfigoauth2.clientId,
-            browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, browser.params.testConfig.appConfigproviders
+            browser.params.testConfig.appConfig.oauth2.clientId,
+            browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
         );
 
         let tasksService: TasksService;

@@ -37,7 +37,7 @@ describe('Process list cloud', () => {
         let testUser, groupInfo, editProcess, deleteProcess, editTask, deleteTask;
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-        const apiService = new ApiService(browser.params.testConfig.appConfigoauth2.clientId, browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, 'BPM');
+        const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
 
         beforeAll(async () => {
 

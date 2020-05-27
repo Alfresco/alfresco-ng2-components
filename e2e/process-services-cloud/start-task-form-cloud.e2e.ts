@@ -65,12 +65,12 @@ describe('Start Task Form', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const processHeaderCloud = new ProcessHeaderCloudPage();
     const apiService = new ApiService(
-        browser.params.testConfig.appConfigoauth2.clientId,
-        browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, browser.params.testConfig.appConfigproviders
+        browser.params.testConfig.appConfig.oauth2.clientId,
+        browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
     );
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfigbpmHost
+        hostEcm: browser.params.testConfig.appConfig.bpmHost
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -162,11 +162,11 @@ describe('Start Task Form', () => {
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
 
         await settingsPage.setProviderEcmBpmSso(
-            browser.params.testConfig.appConfigbpmHost,
-            browser.params.testConfig.appConfigbpmHost,
-            browser.params.testConfig.appConfigoauth2.host,
-            browser.params.testConfig.appConfigidentityHost,
-            browser.params.testConfig.appConfigoauth2.clientId,
+            browser.params.testConfig.appConfig.bpmHost,
+            browser.params.testConfig.appConfig.bpmHost,
+            browser.params.testConfig.appConfig.oauth2.host,
+            browser.params.testConfig.appConfig.identityHost,
+            browser.params.testConfig.appConfig.oauth2.clientId,
             false);
         await loginSSOPage.clickOnSSOButton();
 

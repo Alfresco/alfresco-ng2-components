@@ -40,7 +40,7 @@ export class LoginSSOPage {
     }
 
     async login(username: string, password: string) {
-        if (browser.params.testConfig.appConfigauthType === 'OAUTH') {
+        if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
             this.loginSSOIdentityService(username, password);
         } else {
             this.loginBasicAuth(username, password);

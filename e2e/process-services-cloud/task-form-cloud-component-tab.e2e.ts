@@ -50,8 +50,8 @@ describe('Task form cloud component', () => {
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
-    const apiService = new ApiService(browser.params.testConfig.appConfigoauth2.clientId, browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, browser.params.testConfig.appConfigproviders);
-    const apiServiceHrUser = new ApiService(browser.params.testConfig.appConfigoauth2.clientId, browser.params.testConfig.appConfigbpmHost, browser.params.testConfig.appConfigoauth2.host, browser.params.testConfig.appConfigproviders);
+    const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers);
+    const apiServiceHrUser = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers);
 
     const visibilityConditionTasks = [];
 

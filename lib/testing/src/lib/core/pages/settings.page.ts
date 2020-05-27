@@ -149,7 +149,7 @@ export class SettingsPage {
         await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
-    async setClientId(clientId: string = browser.params.testConfig.appConfigoauth2.clientId) {
+    async setClientId(clientId: string = browser.params.testConfig.appConfig.oauth2.clientId) {
         await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 
