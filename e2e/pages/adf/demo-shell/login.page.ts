@@ -204,7 +204,7 @@ export class LoginPage {
         await BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 
-    async login(username:string, password:string): Promise<void> {
+    async login(username: string, password: string): Promise<void> {
         await this.loginSSOPage.login(username, password);
     }
 }
