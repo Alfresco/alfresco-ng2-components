@@ -20,17 +20,15 @@ export class ArrayUtil {
     /**
      * Returns TRUE if the first array contains all elements from the second one.
      *
-     * @param {array} superset
-     * @param {array} subset
+     * @param  superset
+     * @param  subset
      *
-     * @return {boolean}
-     * @method arrayContainsArray
      */
-    static arrayContainsArray(superset: any[], subset: any[]) {
+    static arrayContainsArray(superset: any[], subset: any[]): boolean {
         if (0 === subset.length) {
             return false;
         }
-        return subset.every(function(value) {
+        return subset.every(function (value) {
             return (superset.indexOf(value) >= 0);
         });
     }

@@ -16,6 +16,7 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { browser } from 'protractor';
 
 export class ApiService {
 
@@ -23,24 +24,28 @@ export class ApiService {
 
     config: AlfrescoApiConfig;
 
-    constructor(clientId: string, host: string, hostSso: string, provider: string) {
-        this.config = {
-            provider,
-            hostBpm: host,
-            hostEcm: host,
-            authType: 'OAUTH',
-            oauth2: {
-                host: hostSso,
-                clientId,
-                scope: 'openid',
-                secret: '',
-                implicitFlow: false,
-                silentLogin: false,
-                redirectUri: '/',
-                redirectUriLogout: '/logout'
-            }
+    constructor(clientId?: string, host?: string, hostSso?: string, provider?: string) {
 
-        };
+        if (clientId && host && hostSso && provider) {
+            this.config = {
+                provider,
+                hostBpm: host,
+                hostEcm: host,
+                authType: 'OAUTH',
+                oauth2: {
+                    host: hostSso,
+                    clientId,
+                    scope: 'openid',
+                    secret: '',
+                    implicitFlow: false,
+                    silentLogin: false,
+                    redirectUri: '/',
+                    redirectUriLogout: '/logout'
+                }
+            };
+        } else {
+            this.config = browser.params.testConfig.appConfig;
+        }
 
         this.apiService = new AlfrescoApi(this.config);
     }

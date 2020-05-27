@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginSSOPage, AboutPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, AboutPage, ApiService } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -26,16 +26,14 @@ describe('About Content Services', () => {
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
     const acsUser = new AcsUserModel();
+    let alfrescoJsApi:AlfrescoApi;
 
     beforeAll(async() => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        alfrescoJsApi = new ApiService().apiService;
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickAboutButton();
     });

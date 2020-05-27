@@ -19,12 +19,7 @@ export * from './bread-crumb.page';
 export * from './header.page';
 export * from './user-info.page';
 export * from './settings.page';
-
 export * from './login-sso.page';
-
-import * as LoginPage from './login-sso.page';
-export { LoginPage };
-
 export * from './data-table-component.page';
 export * from './pagination.page';
 export * from './error.page';
