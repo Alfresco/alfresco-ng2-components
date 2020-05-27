@@ -81,7 +81,7 @@ export class StartProcessCloudService extends BaseCloudService {
 
         return this.post(url, payload).pipe(
             map((result: any) => result.entry),
-            map(processInstance => new ProcessInstanceCloud(processInstance.entry))
+            map(processInstance => new ProcessInstanceCloud(processInstance))
         );
     }
 
