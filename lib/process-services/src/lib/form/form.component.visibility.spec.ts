@@ -18,7 +18,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, SimpleChange } from '@angular/core';
 import { of } from 'rxjs';
 
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { formDefinitionDropdownField, formDefinitionTwoTextFields,
@@ -29,22 +29,14 @@ import { FormComponent } from './form.component';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-/** Duration of the select opening animation. */
-const SELECT_OPEN_ANIMATION = 200;
-
-/** Duration of the select closing animation and the timeout interval for the backdrop. */
-const SELECT_CLOSE_ANIMATION = 500;
-
 describe('FormComponent UI and visibility', () => {
     let component: FormComponent;
     let service: FormService;
     let fixture: ComponentFixture<FormComponent>;
 
     function openSelect() {
-        let trigger: HTMLElement;
-        trigger = fixture.debugElement.query(By.css('[class="mat-select-trigger"]')).nativeElement;
-        trigger.click();
-        fixture.detectChanges();
+        const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-select-trigger');
+        dropdown.click();
     }
 
     setupTestBed({
@@ -124,7 +116,7 @@ describe('FormComponent UI and visibility', () => {
             expect(lastNameEl).toBeDefined();
         });
 
-        it('should display dropdown field', fakeAsync(() => {
+        it('should display dropdown field', async(() => {
             spyOn(service, 'getTask').and.returnValue(of({}));
             spyOn(service, 'getTaskForm').and.returnValue(of(formDefinitionDropdownField));
 
@@ -133,24 +125,27 @@ describe('FormComponent UI and visibility', () => {
             fixture.detectChanges();
 
             openSelect();
-            tick(SELECT_OPEN_ANIMATION);
-
-            const dropdown = fixture.debugElement.queryAll(By.css('#country'));
-            expect(dropdown).toBeDefined();
-            expect(dropdown).not.toBeNull();
-            const options = fixture.debugElement.queryAll(By.css('mat-option'));
-            const optOne = options[1];
-            const optTwo = options[2];
-            const optThree = options[3];
-
-            expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
-            expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
-            expect(optThree.nativeElement.innerText.trim()).toEqual('france');
-
-            optTwo.nativeElement.click();
             fixture.detectChanges();
-            expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
-            tick(SELECT_CLOSE_ANIMATION);
+
+            fixture.whenStable().then(() => {
+                const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+
+                const optOne = options[1];
+                const optTwo = options[2];
+                const optThree = options[3];
+
+                expect(optOne.nativeElement.innerText.trim()).toEqual('united kingdom');
+                expect(optTwo.nativeElement.innerText.trim()).toEqual('italy');
+                expect(optThree.nativeElement.innerText.trim()).toEqual('france');
+
+                optTwo.nativeElement.click();
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const dropdown = fixture.debugElement.queryAll(By.css('#country'));
+                    expect(dropdown[0].nativeElement.innerText.trim()).toEqual('italy');
+                });
+            });
         }));
 
         describe('Visibility conditions', () => {
