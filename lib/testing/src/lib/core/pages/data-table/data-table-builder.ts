@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { Column } from './column';
 import { TextColumn } from './text-column';
 import { DateColumn } from './date-column';
 import { DataTableItem } from './data-table-item';
@@ -23,7 +22,7 @@ import { ElementFinder } from 'protractor';
 
 export class DataTableBuilder {
 
-    createDataTable(columns: Array<Column>, rootElement?: ElementFinder): DataTableItem {
+    createDataTable(columns: Array<any>, rootElement?: ElementFinder): DataTableItem {
         const datatable: DataTableItem = new DataTableItem(rootElement);
         for (const column of columns) {
             switch (column.columnType) {
