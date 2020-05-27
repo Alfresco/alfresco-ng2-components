@@ -53,65 +53,36 @@ libs=(`echo $affected | sed 's/^$/\n/g'`)
 
 echo "Builds"
 
-#extensions
 for i in "${libs[@]}"
 do
     if [ "$i" == "extensions$" ] ; then
         ./scripts/build/build-extensions.sh || exit 1;
     fi
-done
 
-#core
-for i in "${libs[@]}"
-do
     if [ "$i" == "core$" ] ; then
         ./scripts/build/build-core.sh || exit 1;
     fi
-done
 
-#content-services
-for i in "${libs[@]}"
-do
     if [ "$i" == "content-services$" ] ; then
         ./scripts/build/build-content-services.sh || exit 1;
     fi
-done
 
-#process-services
-for i in "${libs[@]}"
-do
     if [ "$i" == "process-services$" ] ; then
         ./scripts/build/build-process-services.sh || exit 1;
     fi
-done
 
-#process-services-cloud
-for i in "${libs[@]}"
-do
     if [ "$i" == "process-services-cloud$" ] ; then
         ./scripts/build/build-process-services-cloud.sh || exit 1;
     fi
-done
 
-#insights
-for i in "${libs[@]}"
-do
     if [ "$i" == "insights$" ] ; then
         ./scripts/build/build-insights.sh || exit 1;
     fi
-done
 
-#testing
-for i in "${libs[@]}"
-do
     if [ "$i" == "testing$" ] ; then
         ./scripts/build/build-testing.sh || exit 1;
     fi
-done
 
-#cli
-for i in "${libs[@]}"
-do
     if [ "$i" == "cli$" ] ; then
         ./scripts/build/build-cli.sh || exit 1;
     fi
