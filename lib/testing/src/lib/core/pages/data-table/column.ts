@@ -18,7 +18,6 @@
 export abstract class Column {
     columnName: string;
     columnType: string;
-    locator: string;
 
     constructor(columnName: string) {
         this.columnName = columnName;
