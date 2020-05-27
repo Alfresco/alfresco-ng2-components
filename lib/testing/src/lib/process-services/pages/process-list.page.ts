@@ -45,4 +45,8 @@ export class ProcessListPage {
     checkContentIsNotDisplayedByColumn(column: string, processName: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(column, processName);
     }
+
+    selectRow(processName): Promise<void> {
+        return this.dataTable.selectRow('Name', processName);
+    }
 }
