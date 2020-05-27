@@ -26,7 +26,7 @@ describe('About Content Services', () => {
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
     const acsUser = new AcsUserModel();
-    let alfrescoJsApi:AlfrescoApi;
+    let alfrescoJsApi: AlfrescoApi;
 
     beforeAll(async() => {
         alfrescoJsApi = new ApiService().apiService;

@@ -18,7 +18,7 @@
 import { element, by, browser, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { LocalStorageUtil } from '../../../..';
+import { LocalStorageUtil } from '../utils/local-storage.util';
 
 export class LoginSSOPage {
 
