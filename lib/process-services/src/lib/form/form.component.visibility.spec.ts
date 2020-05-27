@@ -209,24 +209,22 @@ describe('FormComponent UI and visibility', () => {
         });
 
         describe('Readonly Form', () => {
-            it('should display two text fields readonly', () => {
+            it('should display two text fields readonly', async(() => {
                 spyOn(service, 'getTask').and.returnValue(of({}));
                 spyOn(service, 'getTaskForm').and.returnValue(of(formReadonlyTwoTextFields));
 
                 const change = new SimpleChange(null, 1, true);
                 component.ngOnChanges({ 'taskId': change });
+
                 fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const firstNameEl = fixture.debugElement.query(By.css('#firstname'));
+                    expect(firstNameEl.nativeElement.value).toEqual('fakeFirstName');
 
-                const firstNameEl = fixture.debugElement.query(By.css('#firstname'));
-                expect(firstNameEl).not.toBeNull();
-                expect(firstNameEl).toBeDefined();
-                expect(firstNameEl.nativeElement.value).toEqual('fakeFirstName');
-
-                const lastNameEl = fixture.debugElement.query(By.css('#lastname'));
-                expect(lastNameEl).not.toBeNull();
-                expect(lastNameEl).toBeDefined();
-                expect(lastNameEl.nativeElement.value).toEqual('fakeLastName');
-            });
+                    const lastNameEl = fixture.debugElement.query(By.css('#lastname'));
+                    expect(lastNameEl.nativeElement.value).toEqual('fakeLastName');
+                });
+            }));
         });
     });
 });
