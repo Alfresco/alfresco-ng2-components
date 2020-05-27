@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { setupTestBed } from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { StartProcessCloudService } from './start-process-cloud.service';
 import { fakeProcessPayload } from '../mock/start-process.component.mock';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
@@ -27,6 +27,19 @@ import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model
 describe('StartProcessCloudService', () => {
 
     let service: StartProcessCloudService;
+    let alfrescoApiService: AlfrescoApiService;
+
+    const mock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve({
+                entry: {
+                    id: 'fake-id',
+                    name: 'fake-name',
+                    status: 'RUNNING'
+                }
+            })
+        }
+};
 
     setupTestBed({
         imports: [HttpClientModule]
@@ -34,6 +47,7 @@ describe('StartProcessCloudService', () => {
 
     beforeEach(() => {
         service = TestBed.get(StartProcessCloudService);
+        alfrescoApiService = TestBed.get(AlfrescoApiService);
     });
 
     it('should be able to create a new process', (done) => {
@@ -117,6 +131,20 @@ describe('StartProcessCloudService', () => {
 
     it('should be able to start a created new process instance', (done) => {
         spyOn(service, 'startCreatedProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'RUNNING' }));
+        service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
+            .subscribe(
+                (res: ProcessInstanceCloud) => {
+                    expect(res).toBeDefined();
+                    expect(res.id).toEqual('fake-id');
+                    expect(res.name).toEqual('fake-name');
+                    expect(res.status).toEqual('RUNNING');
+                    done();
+                }
+            );
+    });
+
+    it('should map the response when create a new process instance', (done) => {
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
             .subscribe(
                 (res: ProcessInstanceCloud) => {
