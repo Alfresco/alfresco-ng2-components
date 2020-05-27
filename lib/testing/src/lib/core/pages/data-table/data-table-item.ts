@@ -60,7 +60,7 @@ export class DataTableItem {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
     }
 
-    async doubleClickRow(columnName: string, columnValue: string): Promise<void> {
+    async clickAndEnterOnRow(columnName: string, columnValue: string): Promise<void> {
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.click(row);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
