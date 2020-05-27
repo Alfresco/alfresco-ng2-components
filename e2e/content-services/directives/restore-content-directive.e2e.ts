@@ -282,7 +282,7 @@ describe('Restore content directive', () => {
             mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
-            await loginPage.login(anotherAcsUser);
+            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
         });

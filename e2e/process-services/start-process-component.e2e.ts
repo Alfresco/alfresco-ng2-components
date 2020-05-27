@@ -122,7 +122,7 @@ describe('Start Process Component', () => {
         describe(' Once logged with user without apps', () => {
 
             beforeEach(async () => {
-                await loginPage.login(procUserModel);
+                await loginPage.login(procUserModel.id, procUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
             });
@@ -139,7 +139,7 @@ describe('Start Process Component', () => {
         describe(' Once logged with user with app', () => {
 
             beforeAll(async () => {
-                await loginPage.login(secondProcUserModel);
+                await loginPage.login(secondProcUserModel.id, secondProcUserModel.password);
             });
 
             beforeEach(async () => {
@@ -388,7 +388,7 @@ describe('Start Process Component', () => {
             });
 
             it('[C260457] Should display process in Completed when cancelled', async () => {
-                await loginPage.login(secondProcUserModel);
+                await loginPage.login(secondProcUserModel.id, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
                 await processServicesPage.goToApp(app.title);

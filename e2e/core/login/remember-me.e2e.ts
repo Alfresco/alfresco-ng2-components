@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { SettingsPage } from '@alfresco/adf-testing';
+import { LoginPage } from '../../pages/adf/demo-shell/login.page';
 
 describe('Login component - Remember Me', () => {
 
     const settingsPage = new SettingsPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
 
     beforeAll(async () => {
         await loginPage.goToLoginPage();

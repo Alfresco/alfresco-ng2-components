@@ -132,7 +132,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.login(managerUser);
+            await loginPage.login(managerUser.id, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -172,7 +172,7 @@ describe('Version component permissions', () => {
     describe('Consumer', () => {
 
         beforeAll(async () => {
-            await loginPage.login(consumerUser);
+            await loginPage.login(consumerUser.id, consumerUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -205,7 +205,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.login(contributorUser);
+            await loginPage.login(contributorUser.id, contributorUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });
@@ -260,7 +260,7 @@ describe('Version component permissions', () => {
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
 
-            await loginPage.login(collaboratorUser);
+            await loginPage.login(collaboratorUser.id, collaboratorUser.password);
 
             await navigationBarPage.openContentServicesFolder(site.entry.guid);
         });

@@ -168,7 +168,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await browser.sleep(15000);
 
-            await loginPage.login(userUploadingImg);
+            await loginPage.login(userUploadingImg.id, userUploadingImg.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();

@@ -163,7 +163,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUserTwo);
+            await loginPage.login(acsUserTwo.email, acsUserTwo.pass);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
