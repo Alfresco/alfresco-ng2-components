@@ -222,7 +222,7 @@ describe('Search Sorting Picker', () => {
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
 
-    let getNodesDisplayed = async function (numberOfElements: number, idList: string[]) {
+    const getNodesDisplayed = async function (numberOfElements: number, idList: string[]) {
         const promises = [];
         let nodeList;
 
