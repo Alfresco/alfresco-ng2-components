@@ -5,21 +5,15 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-insights",
     "umdModuleIds": {
-      "@alfresco/js-api": "@alfresco/js-api",
       "minimatch": "minimatch",
-      "@angular/platform-browser/animations": "@angular/platform-browser/animations",
       "@angular/material": "@angular/material",
       "@angular/flex-layout": "@angular/flex-layout",
       "@alfresco/adf-core": "@alfresco/adf-core",
       "ng2-charts": "ng2-charts",
-      "@angular/material-moment-adapter": "@angular/material-moment-adapter",
-      "@angular/animations": "@angular/animations",
-      "@angular/cdk/platform": "@angular/cdk/platform",
       "@angular/material/core": "@angular/material/core",
       "raphael": "raphael",
       "moment": "moment",
       "moment-es6": "moment-es6",
-      "moment/src/moment": "moment/src/moment",
       "@ngx-translate/core": "@ngx-translate/core"
     }
   }
