@@ -25,7 +25,6 @@ import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { FileModel } from '../models/ACS/file.model';
-import { Util } from '../util/util';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
@@ -63,8 +62,8 @@ describe('Search component - Search Page', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        fileNames = Util.generateSequenceFiles(1, nrOfFiles, search.active.base, search.active.extension);
-        const adminFileNames = Util.generateSequenceFiles(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
+        fileNames = StringUtil.generateFilesNames(1, nrOfFiles, search.active.base, search.active.extension);
+        const adminFileNames = StringUtil.generateFilesNames(nrOfFiles + 1, nrOfFiles + adminNrOfFiles, search.active.base, search.active.extension);
         search.active.firstFile = fileNames[0];
         search.active.secondFile = fileNames[1];
         fileNames.splice(0, 1);

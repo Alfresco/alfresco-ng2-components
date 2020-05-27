@@ -90,4 +90,22 @@ export class StringUtil {
         return text;
     }
 
+    /**
+     * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
+     *
+     * @param startIndex {int}
+     * @param endIndex {int}
+     * @param baseName{string} the base name of all files
+     * @param extension{string} the extension of the file
+     * @return fileNames
+     * @method generateSequenceFiles
+     */
+    static generateFilesNames(startIndex, endIndex, baseName, extension) {
+        const fileNames = [];
+        for (let i = startIndex; i <= endIndex; i++) {
+            fileNames.push(baseName + i + extension);
+        }
+        return fileNames;
+    }
+
 }

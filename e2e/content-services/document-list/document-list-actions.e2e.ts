@@ -30,7 +30,6 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
-import { Util } from '../../util/util';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 import { InfinitePaginationPage } from '../../pages/adf/core/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -87,7 +86,7 @@ describe('Document List Component - Actions', () => {
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
             secondUploadedFolder = await uploadActions.createFolder('secondFolder', '-my-');
 
-            fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+            fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
             await loginPage.login(acsUser.email, acsUser.password);

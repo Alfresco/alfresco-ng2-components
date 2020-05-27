@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
+import { StringUtil, LoginSSOPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../pages/adf/trashcan.page';
-import { Util } from '../util/util';
 
 describe('Trashcan - Pagination', () => {
     const pagination = {
@@ -57,7 +56,7 @@ describe('Trashcan - Pagination', () => {
             hostEcm: browser.params.testConfig.adf_acs.host
         });
         const uploadActions = new UploadActions(this.alfrescoJsApi);
-        const fileNames = Util.generateSequenceFiles(10, noOfFiles + 9, pagination.base, pagination.extension);
+        const fileNames = StringUtil.generateFilesNames(10, noOfFiles + 9, pagination.base, pagination.extension);
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);

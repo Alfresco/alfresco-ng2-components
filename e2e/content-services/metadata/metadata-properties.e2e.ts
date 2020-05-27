@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { CheckboxPage, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { check, uncheck } from '../../util/material';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
@@ -96,7 +95,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
 
-        await check(metadataViewPage.displayEmptySwitch);
+        await CheckboxPage.check(metadataViewPage.displayEmptySwitch);
 
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
@@ -109,7 +108,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await check(metadataViewPage.readonlySwitch);
+        await CheckboxPage.check(metadataViewPage.readonlySwitch);
 
         await metadataViewPage.editIconIsNotDisplayed();
     });
@@ -135,7 +134,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
-        await check(metadataViewPage.multiSwitch);
+        await CheckboxPage.check(metadataViewPage.multiSwitch);
 
         await metadataViewPage.clickMetadataGroup('properties');
 
@@ -149,13 +148,13 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
 
-        await check(metadataViewPage.defaultPropertiesSwitch);
+        await CheckboxPage.check(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
@@ -169,7 +168,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.informationButtonIsDisplayed();
 
-        await uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.informationButtonIsNotDisplayed();
     });
@@ -185,7 +184,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-        await check(metadataViewPage.displayEmptySwitch);
+        await CheckboxPage.check(metadataViewPage.displayEmptySwitch);
 
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');

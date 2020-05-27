@@ -22,7 +22,6 @@ import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
-import { Util } from '../../util/util';
 import { LoginPage } from '../../pages/adf/demo-shell/login.page';
 
 describe('Login component', () => {
@@ -239,7 +238,7 @@ describe('Login component', () => {
         await settingsPage.setProviderEcmBpm();
         await loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        await Util.openNewTabInBrowser();
+        await browser.executeScript("window.open('about: blank', '_blank');");
 
         const handles = await browser.getAllWindowHandles();
         await browser.switchTo().window(handles[1]);

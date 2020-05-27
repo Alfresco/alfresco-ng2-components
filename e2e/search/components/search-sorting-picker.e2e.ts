@@ -26,7 +26,6 @@ import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { NodeActions } from '../../actions/ACS/node.actions';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
@@ -41,7 +40,6 @@ describe('Search Sorting Picker', () => {
     const navigationBarPage = new NavigationBarPage();
     const searchSortingPicker = new SearchSortingPickerPage();
     const contentServices = new ContentServicesPage();
-    const nodeActions = new NodeActions();
     const acsUser = new AcsUserModel();
 
     const pngAModel = {
@@ -56,9 +54,9 @@ describe('Search Sorting Picker', () => {
 
     let pngA, pngD;
     this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
     const search = '_png_file.png';
     let jsonFile;
@@ -74,14 +72,14 @@ describe('Search Sorting Picker', () => {
         await browser.sleep(12000);
 
         await loginPage.login(acsUser.id, acsUser.password);
-   });
+    });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngA.entry.id);
         await uploadActions.deleteFileOrFolder(pngD.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-   });
+    });
 
     beforeEach(async () => {
         await searchDialog.clickOnSearchIcon();
@@ -214,11 +212,26 @@ describe('Search Sorting Picker', () => {
         const idList = await contentServices.getElementsDisplayedId();
         const numberOfElements = await contentServices.numberOfResultsDisplayed();
 
-        const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
+        const nodeList = await getNodesDisplayed(numberOfElements, idList);
+
         const modifiedDateList = [];
         for (let i = 0; i < nodeList.length; i++) {
             modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
         }
+
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
+
+    let getNodesDisplayed = async function (numberOfElements: number, idList: string[]) {
+        const promises = [];
+        let nodeList;
+
+        for (let i = 0; i < (numberOfElements - 1); i++) {
+            if (idList[i] && idList[i].trim() !== '') {
+                promises.push(this.alfrescoJsApi.core.nodesApi.getNode(idList[i]));
+            }
+        }
+        nodeList = await Promise.all(promises);
+        return nodeList;
+    };
 });

@@ -24,7 +24,6 @@ import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { NodeActions } from '../../actions/ACS/node.actions';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
@@ -64,7 +63,6 @@ describe('Version component permissions', () => {
         hostEcm: browser.params.testConfig.adf_acs.host
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
-    const nodeActions = new NodeActions();
 
     beforeAll(async () => {
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
@@ -108,7 +106,10 @@ describe('Version component permissions', () => {
         const lockFileUploaded = await uploadActions.uploadFile(lockFileModel.location, lockFileModel.name, site.entry.guid);
         Object.assign(lockFileModel, lockFileUploaded.entry);
 
-        nodeActions.lockNode(this.alfrescoJsApi, lockFileModel.id);
+        await this.alfrescoJsApi.nodes.lockNode(lockFileModel.id, {
+                type: 'FULL',
+                lifetime: 'PERSISTENT'
+            });
 
         await this.alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
 

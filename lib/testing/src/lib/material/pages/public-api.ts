@@ -22,3 +22,4 @@ export * from './date-picker.page';
 export * from './date-time-picker-calendar.page';
 export * from './dropdown.page';
 export * from './toggle.page';
+export * from './checkbox.page';
