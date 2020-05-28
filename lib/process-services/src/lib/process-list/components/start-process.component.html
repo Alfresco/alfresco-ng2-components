@@ -14,7 +14,7 @@
                     <mat-option 
                         *ngFor="let application of applications"
                         [value]="application"
-                        [attr.data-automation-id]="'adf-start-process-apps-option' + application.name">
+                        [attr.data-automation-id]="'adf-start-process-apps-option-' + application.name">
                         {{ application.name }}
                     </mat-option>
                 </mat-select>
@@ -38,13 +38,18 @@
                             {{ processDef.name }}
                         </mat-option>
                     </mat-autocomplete>
-                    <button
-                        id="adf-select-process-dropdown"
-                        *ngIf="showSelectProcessDropdown"
-                        mat-icon-button
-                        (click)="displayDropdown($event)">
-                        <mat-icon>arrow_drop_down</mat-icon>
-                    </button>
+                    <ng-container *ngIf="!isProcessDefinitionsLoading ; else showProcessDefLoadingTemplate">
+                        <button
+                            id="adf-select-process-dropdown"
+                            *ngIf="showSelectProcessDropdown"
+                            mat-icon-button
+                            (click)="displayDropdown($event)">
+                            <mat-icon>arrow_drop_down</mat-icon>
+                        </button>
+                    </ng-container>
+                    <ng-template #showProcessDefLoadingTemplate>
+                        <mat-spinner id="adf-select-process-spinner" [diameter]="20"></mat-spinner>
+                    </ng-template>
                 </div>
             </mat-form-field>
         </div>
