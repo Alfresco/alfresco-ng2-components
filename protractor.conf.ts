@@ -43,8 +43,6 @@ const LOG = !!process.env.LOG;
 
 let arraySpecs = [];
 
-declare const browser: any;
-
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
     console.log('BROWSER_RUN : ' + BROWSER_RUN);
