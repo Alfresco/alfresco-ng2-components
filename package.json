@@ -206,11 +206,11 @@
   "bundlesize": [
     {
       "path": "./lib/dist/content-services/bundles/adf-content-services.umd.min.js",
-      "maxSize": "70 kb"
+      "maxSize": "80 kb"
     },
     {
       "path": "./lib/dist/process-services/bundles/adf-process-services.umd.min.js",
-      "maxSize": "50 kb"
+      "maxSize": "60 kb"
     },
     {
       "path": "./lib/dist/insights/bundles/adf-insights.umd.min.js",
@@ -218,11 +218,11 @@
     },
     {
       "path": "./lib/dist/core/bundles/adf-core.umd.min.js",
-      "maxSize": "131 kb"
+      "maxSize": "165 kb"
     },
     {
       "path": "./lib/dist/process-services-cloud/bundles/adf-process-services-cloud.umd.min.js",
-      "maxSize": "50 kb"
+      "maxSize": "60 kb"
     },
     {
       "path": "./lib/dist/extensions/bundles/adf-extensions.umd.min.js",
