@@ -122,7 +122,8 @@ exports.config = {
         identityAdmin: TestConfig.identityAdmin,
         identityUser: TestConfig.identityUser,
         rootPath: __dirname,
-        resources: RESOURCES
+        resources: RESOURCES,
+        API_CONTENT_HOST: TestConfig.adf_acs.host
     },
 
     framework: 'jasmine2',

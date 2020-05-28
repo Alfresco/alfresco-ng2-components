@@ -38,7 +38,7 @@ export class ContentApi {
     ) {
         this.alfrescoJsApi.setConfig({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
+            hostEcm: browser.params.API_CONTENT_HOST
         });
     }
 
