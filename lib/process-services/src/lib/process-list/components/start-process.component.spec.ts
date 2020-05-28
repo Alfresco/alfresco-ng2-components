@@ -686,5 +686,65 @@ describe('StartFormComponent', () => {
             const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
             expect(appsSelector).toBeNull();
         });
+
+        it('Should be able to disable process name and definitions inputs if there is no application selected by default', () => {
+            component.appId = 12345;
+            const change = new SimpleChange(null, 12345, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toEqual(6);
+            expect(component.selectedApplication).toBeUndefined();
+
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+
+            expect(processDefinitionSelectInput.disabled).toEqual(true);
+            expect(processNameInput.disabled).toEqual(true);
+        });
+
+        it('Should be able to enable process name and definitions inputs if the application selected by given appId', () => {
+            component.appId = 2;
+            const change = new SimpleChange(null, 2, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toEqual(6);
+            expect(component.selectedApplication.id).toEqual(component.appId);
+
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+
+            expect(processDefinitionSelectInput.disabled).toEqual(false);
+            expect(processNameInput.disabled).toEqual(false);
+        });
+
+        it('Should be able to enable process name and definitions inputs when the application selected from the apps drop-down', () => {
+            component.appId = 12345;
+            const change = new SimpleChange(null, 12345, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toEqual(6);
+            expect(component.selectedApplication).toBeUndefined();
+
+            const appsSelectElement = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+
+            expect(processDefinitionSelectInput.disabled).toEqual(true);
+            expect(processNameInput.disabled).toEqual(true);
+
+            appsSelectElement.click();
+            fixture.detectChanges();
+            const sortOptions = document.querySelector('[data-automation-id="adf-start-process-apps-option-App2"]');
+            sortOptions.dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+            expect(component.selectedApplication.id).toBe(2);
+            expect(component.selectedApplication.name).toBe('App2');
+
+            expect(processDefinitionSelectInput.disabled).toEqual(false);
+            expect(processNameInput.disabled).toEqual(false);
+        });
    });
 });

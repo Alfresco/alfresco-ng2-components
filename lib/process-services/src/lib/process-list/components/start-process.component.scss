@@ -33,6 +33,11 @@
                 right: -14px;
                 top: 0;
             }
+            mat-spinner {
+                position: absolute;
+                right: -1px;
+                top: 0;
+            }
         }
         &-start-form-container {
             .mat-card {
