@@ -1047,7 +1047,7 @@ describe('FormCloudComponent', () => {
 
 class FormCloudWithCustomOutComesComponent {
 
-    @ViewChild('adfCloudForm')
+    @ViewChild('adfCloudForm', { static: true })
     adfCloudForm: FormCloudComponent;
 
     onCustomButtonOneClick() { }
@@ -1090,7 +1090,9 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         fixture.destroy();
     });
 
-    it('should be able to inject custom outcomes and click on custom outcomes', () => {
+    it('should be able to inject custom outcomes and click on custom outcomes', async(() => {
+        fixture.detectChanges();
+
         const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
         const buttonOneBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
         const buttonTwoBtn = debugElement.query(By.css('#adf-custom-outcome-2'));
@@ -1098,8 +1100,10 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         expect(buttonTwoBtn).not.toBeNull();
 
         buttonOneBtn.nativeElement.click();
+        fixture.detectChanges();
+
         expect(onCustomButtonOneSpy).toHaveBeenCalled();
         expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
         expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
-    });
+    }));
 });

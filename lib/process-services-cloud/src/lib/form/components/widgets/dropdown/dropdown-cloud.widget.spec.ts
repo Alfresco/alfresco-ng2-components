@@ -40,9 +40,9 @@ describe('DropdownCloudWidgetComponent', () => {
     let fixture: ComponentFixture<DropdownCloudWidgetComponent>;
     let element: HTMLElement;
 
-    function openSelect(fieldId) {
-        const dropDownElement: any = element.querySelector(fieldId);
-        dropDownElement.click();
+    function openSelect(_selector?: string) {
+        const dropdown: any = element.querySelector('.mat-select-trigger');
+        dropdown.click();
         fixture.detectChanges();
     }
 
@@ -167,7 +167,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     }
                 });
 
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
+                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
                     {
                         id: 'opt1',
                         name: 'default1_value'
@@ -180,12 +180,13 @@ describe('DropdownCloudWidgetComponent', () => {
 
                 widget.ngOnInit();
                 fixture.detectChanges();
-                openSelect('#dropdown-id');
+
+                openSelect();
+                fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt1"]'));
-                    expect(dropdownSpy).toHaveBeenCalled();
-                    expect(optOne[0].nativeElement.className).toBe('mat-option ng-star-inserted mat-active');
+                    const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                    expect(options[0].nativeElement.innerText).toBe('default1_value');
                     done();
                 });
             });
@@ -201,7 +202,7 @@ describe('DropdownCloudWidgetComponent', () => {
                     value: 'opt1'
                 });
 
-                const dropdownSpy = spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
+                spyOn(formCloudService, 'getDropDownJsonData').and.returnValue(of([
                     {
                         id: 'opt1',
                         name: 'default1_value'
@@ -215,12 +216,12 @@ describe('DropdownCloudWidgetComponent', () => {
                 widget.ngOnInit();
                 fixture.detectChanges();
 
-                openSelect('#dropdown-id');
+                openSelect();
+                fixture.detectChanges();
 
                 fixture.whenStable().then(() => {
-                    const optOne: any = fixture.debugElement.queryAll(By.css('[id="opt1"]'));
-                    expect(dropdownSpy).toHaveBeenCalled();
-                    expect(optOne[0].nativeElement.className).toBe('mat-option ng-star-inserted mat-active');
+                    const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                    expect(options[0].nativeElement.innerText).toBe('default1_value');
                     done();
                 });
             });
