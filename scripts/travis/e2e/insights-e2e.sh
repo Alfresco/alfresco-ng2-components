@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+PROVIDER='BPM'
+
 cd $DIR/../../../
 
 ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;

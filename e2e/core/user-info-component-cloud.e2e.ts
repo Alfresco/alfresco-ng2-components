@@ -27,7 +27,7 @@ describe('User Info - SSO', () => {
     let identityService: IdentityService;
 
     beforeAll(async () => {
-        const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
+        const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.appConfig.oauth2.host, 'ECM');
         await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         identityService = new IdentityService(apiService);
@@ -35,8 +35,8 @@ describe('User Info - SSO', () => {
 
         silentLogin = false;
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
-            browser.params.testConfig.adf.hostSso,
-            browser.params.testConfig.adf.hostIdentity, silentLogin, true, browser.params.testConfig.appConfig.oauth2.clientId);
+            browser.params.testConfig.appConfig.oauth2.host,
+            browser.params.testConfig.appConfig.identityHost, silentLogin, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
         await loginSSOPage.clickOnSSOButton();
 
