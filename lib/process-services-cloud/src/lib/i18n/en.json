@@ -98,6 +98,7 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "My Tasks",
+    "QUEUED_TASKS": "Queued Tasks",
     "COMPLETED_TASKS": "Completed Tasks"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {

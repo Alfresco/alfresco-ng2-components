@@ -250,7 +250,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     it('should create default task filters if there are no task filter preferences', (done) => {
         const appName = 'fakeAppName';
         service.getTaskListFilters(appName).subscribe((res) => {
-            expect(res.length).toEqual(2);
+            expect(res.length).toEqual(3);
 
             expect(res[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
             expect(res[0].key).toEqual('my-tasks');
@@ -264,6 +264,12 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             expect(res[1].appName).toEqual(appName);
             expect(res[1].icon).toEqual('done');
             expect(res[1].status).toEqual('COMPLETED');
+
+            expect(res[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
+            expect(res[1].key).toEqual('queued-tasks');
+            expect(res[1].appName).toEqual(appName);
+            expect(res[1].icon).toEqual('done');
+            expect(res[1].status).toEqual('CREATED');
             done();
         });
         expect(getPreferencesSpy).toHaveBeenCalled();
