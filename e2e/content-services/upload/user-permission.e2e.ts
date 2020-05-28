@@ -16,13 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { StringUtil, LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { StringUtil, LoginSSOPage, NotificationHistoryPage, ApiService } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Upload - User permission', () => {
@@ -34,6 +33,7 @@ describe('Upload - User permission', () => {
     let acsUserTwo;
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const emptyFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -50,49 +50,42 @@ describe('Upload - User permission', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-    });
-
     beforeEach(async () => {
         acsUser = new AcsUserModel();
         acsUserTwo = new AcsUserModel();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        this.consumerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
+        this.consumerSite = await alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        this.managerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
+        this.managerSite = await alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(this.managerSite.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(this.managerSite.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
 
     afterEach(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
+        await alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
+        await alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
     });
 
     describe('Consumer permissions', () => {

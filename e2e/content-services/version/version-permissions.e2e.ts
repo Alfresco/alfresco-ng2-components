@@ -16,14 +16,20 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { LoginSSOPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    BrowserActions,
+    UploadActions,
+    StringUtil,
+    NotificationHistoryPage,
+    ApiService
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
@@ -42,6 +48,7 @@ describe('Version component permissions', () => {
     const contributorUser = new AcsUserModel();
     const managerUser = new AcsUserModel();
     const fileCreatorUser = new AcsUserModel();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const newVersionFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
@@ -58,47 +65,43 @@ describe('Version component permissions', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     });
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(managerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(fileCreatorUser);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(fileCreatorUser);
 
-        site = await this.alfrescoJsApi.core.sitesApi.createSite({
+        site = await alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: consumerUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: collaboratorUser.id,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: contributorUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: managerUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: fileCreatorUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
@@ -106,18 +109,18 @@ describe('Version component permissions', () => {
         const lockFileUploaded = await uploadActions.uploadFile(lockFileModel.location, lockFileModel.name, site.entry.guid);
         Object.assign(lockFileModel, lockFileUploaded.entry);
 
-        await this.alfrescoJsApi.nodes.lockNode(lockFileModel.id, {
+        await alfrescoJsApi.nodes.lockNode(lockFileModel.id, {
                 type: 'FULL',
                 lifetime: 'PERSISTENT'
             });
 
-        await this.alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
+        await alfrescoJsApi.login(fileCreatorUser.id, fileCreatorUser.password);
 
         await uploadActions.uploadFile(differentCreatorFile.location, differentCreatorFile.name, site.entry.guid);
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Manager', () => {
@@ -128,7 +131,7 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(managerUser.id, managerUser.password);
+            await alfrescoJsApi.login(managerUser.id, managerUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
@@ -139,7 +142,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
+            await alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -201,7 +204,7 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(contributorUser.id, contributorUser.password);
+            await alfrescoJsApi.login(contributorUser.id, contributorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
@@ -212,7 +215,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
+            await alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -256,7 +259,7 @@ describe('Version component permissions', () => {
         });
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(collaboratorUser.id, collaboratorUser.password);
+            await alfrescoJsApi.login(collaboratorUser.id, collaboratorUser.password);
 
             const sameCreatorFileUploaded = await uploadActions.uploadFile(sameCreatorFile.location, sameCreatorFile.name, site.entry.guid);
             Object.assign(sameCreatorFile, sameCreatorFileUploaded.entry);
@@ -267,7 +270,7 @@ describe('Version component permissions', () => {
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
+            await alfrescoJsApi.nodes.deleteNode(sameCreatorFile.id);
             await navigationBarPage.clickLogoutButton();
         });
 

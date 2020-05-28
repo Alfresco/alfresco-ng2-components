@@ -16,14 +16,12 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { LoginSSOPage, LocalStorageUtil } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, LocalStorageUtil, ApiService } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { DropActions } from '../../actions/drop.actions';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
@@ -35,6 +33,7 @@ describe('Upload component - Excluded Files', () => {
     const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const iniExcludedFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_name,
@@ -67,16 +66,11 @@ describe('Upload component - Excluded Files', () => {
     });
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await loginPage.login(acsUser.email, acsUser.password);
 

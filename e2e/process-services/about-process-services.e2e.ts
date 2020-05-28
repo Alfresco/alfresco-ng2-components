@@ -39,7 +39,6 @@ describe('About Process Services', () => {
         await this.alfrescoJsApi.login(user.email, user.password);
         await loginPage.login(user.email, user.password);
         await navigationBarPage.clickAboutButton();
-
     });
 
     afterAll(async() => {

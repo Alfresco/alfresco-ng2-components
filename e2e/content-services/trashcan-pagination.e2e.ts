@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { StringUtil, LoginSSOPage, PaginationPage, UploadActions, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
@@ -45,26 +44,23 @@ describe('Trashcan - Pagination', () => {
     const trashcanPage = new TrashcanPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     const noOfFiles = 20;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        const uploadActions = new UploadActions(alfrescoJsApi);
         const fileNames = StringUtil.generateFilesNames(10, noOfFiles + 9, pagination.base, pagination.extension);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
         for (const entry of emptyFiles.list.entries) {
-            await this.alfrescoJsApi.node.deleteNode(entry.entry.id).then(() => {}, () => {
-                this.alfrescoJsApi.node.deleteNode(entry.entry.id);
+            await alfrescoJsApi.node.deleteNode(entry.entry.id).then(() => {}, async () => {
+                await alfrescoJsApi.node.deleteNode(entry.entry.id);
             });
         }
         await loginPage.login(acsUser.email, acsUser.password);

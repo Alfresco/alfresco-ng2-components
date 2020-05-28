@@ -17,15 +17,13 @@
 
 import { element, by, browser } from 'protractor';
 
-import { LoginSSOPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { DropActions } from '../../actions/drop.actions';
 
 describe('Upload component', () => {
 
@@ -34,11 +32,9 @@ describe('Upload component', () => {
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const navigationBarPage = new NavigationBarPage();
 
     const firstPdfFileModel = new FileModel({
@@ -67,9 +63,9 @@ describe('Upload component', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);

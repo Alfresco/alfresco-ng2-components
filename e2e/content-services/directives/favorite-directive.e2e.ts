@@ -15,11 +15,16 @@
  * limitations under the License.
  */
 
-import { ContentNodeSelectorDialogPage, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ContentNodeSelectorDialogPage,
+    LoginSSOPage,
+    StringUtil,
+    UploadActions
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -36,23 +41,20 @@ describe('Favorite directive', () => {
     const trashcanPage = new TrashcanPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         testFolder1 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFolder2 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -66,7 +68,7 @@ describe('Favorite directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(testFolder1.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder3.entry.id);

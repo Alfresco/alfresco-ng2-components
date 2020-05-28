@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { DropActions } from '../../actions/drop.actions';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';

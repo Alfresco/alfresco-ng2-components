@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
@@ -33,16 +32,12 @@ describe('Create folder directive', () => {
     const metadataViewPage = new MetadataViewPage();
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await loginPage.login(acsUser.email, acsUser.password);
 

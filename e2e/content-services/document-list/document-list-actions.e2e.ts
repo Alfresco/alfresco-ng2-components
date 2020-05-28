@@ -23,12 +23,11 @@ import {
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    ViewerPage
+    ViewerPage, ApiService
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 import { InfinitePaginationPage } from '../../pages/adf/core/infinite-pagination.page';
@@ -45,11 +44,9 @@ describe('Document List Component - Actions', () => {
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const breadCrumbPage = new BreadcrumbPage();
     const viewerPage = new ViewerPage();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
     describe('Document List Component - Check Actions', () => {
@@ -78,9 +75,9 @@ describe('Document List Component - Actions', () => {
         beforeAll(async () => {
             acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
@@ -268,9 +265,9 @@ describe('Document List Component - Actions', () => {
         const contentServicesUser = new AcsUserModel();
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
-            await this.alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
+            await alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
             folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
             folder2 = await uploadActions.createFolder('B' + folderModel2.name, '-my-');
             folder3 = await uploadActions.createFolder('C' + folderModel3.name, '-my-');
@@ -290,7 +287,7 @@ describe('Document List Component - Actions', () => {
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             for (const folder of folders) {
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
             }

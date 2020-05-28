@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
 
 describe('permissions', () => {
@@ -53,36 +52,34 @@ describe('permissions', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
 
-        site = await this.alfrescoJsApi.core.sitesApi.createSite({
+        site = await alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: consumerUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: collaboratorUser.id,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
             id: contributorUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
@@ -92,7 +89,7 @@ describe('permissions', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {

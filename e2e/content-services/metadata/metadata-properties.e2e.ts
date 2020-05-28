@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { CheckboxPage, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
@@ -51,17 +50,14 @@ describe('CardView Component - properties', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pdfUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 

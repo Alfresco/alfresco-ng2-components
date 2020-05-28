@@ -16,12 +16,11 @@
  */
 
 import { by, element, browser } from 'protractor';
-import { LoginSSOPage, UploadActions, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, BrowserVisibility, BrowserActions, ApiService } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Version Properties', () => {
@@ -30,6 +29,7 @@ describe('Version Properties', () => {
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const acsUser = new AcsUserModel();
 
@@ -42,19 +42,16 @@ describe('Version Properties', () => {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
 

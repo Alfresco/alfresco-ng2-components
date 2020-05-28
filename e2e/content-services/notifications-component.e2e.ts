@@ -27,21 +27,22 @@ describe('Notifications Component', () => {
     const loginPage = new LoginSSOPage();
     const notificationPage = new NotificationDemoPage();
     const navigationBarPage = new NavigationBarPage();
+    let alfrescoJsApi: AlfrescoApi;
 
     const acsUser = new AcsUserModel();
 
     beforeAll(async () => {
 
-        this.alfrescoJsApi = new AlfrescoApi({
+        alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await loginPage.login(acsUser.email, acsUser.password);
 

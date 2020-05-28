@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
-import { ArrayUtil, StringUtil, LoginSSOPage, UploadActions, PaginationPage, LocalStorageUtil, FileBrowserUtil } from '@alfresco/adf-testing';
+import {
+    ArrayUtil,
+    StringUtil,
+    LoginSSOPage,
+    UploadActions,
+    PaginationPage,
+    LocalStorageUtil,
+    FileBrowserUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
@@ -63,12 +71,9 @@ describe('Document List - Pagination', () => {
     const folderTwoModel = new FolderModel({ name: 'folderTwo' });
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
     const numberOfSubFolders = 6;
+    const alfrescoJsApi = new ApiService().apiService;
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -79,9 +84,9 @@ describe('Document List - Pagination', () => {
         fileNames = StringUtil.generateFilesNames(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = StringUtil.generateFilesNames(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const folderThreeUploadedModel = await uploadActions.createFolder(folderThreeModel.name, '-my-');
         const newFolderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');

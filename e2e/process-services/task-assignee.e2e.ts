@@ -110,7 +110,6 @@ describe('Task Assignee', () => {
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.simple.two);
         });
-
     });
 
     describe('Candidate Group Assignee', () => {

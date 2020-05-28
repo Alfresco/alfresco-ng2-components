@@ -18,8 +18,7 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
@@ -27,11 +26,9 @@ describe('Document List Component', () => {
 
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
-    this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+
+    const uploadActions = new UploadActions(alfrescoJsApi);
     let acsUser = null;
     const navigationBarPage = new NavigationBarPage();
 
@@ -66,9 +63,9 @@ describe('Document List Component', () => {
 
         beforeAll(async () => {
             acsUser = new AcsUserModel();
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            funnyUser = await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            funnyUser = await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
@@ -81,7 +78,7 @@ describe('Document List Component', () => {
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }
@@ -97,8 +94,7 @@ describe('Document List Component', () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-
-        });
+    });
 
         beforeEach(async () => {
             await navigationBarPage.clickHomeButton();

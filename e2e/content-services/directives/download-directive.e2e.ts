@@ -18,9 +18,8 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { LoginSSOPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, BrowserVisibility, FileBrowserUtil, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
@@ -58,17 +57,14 @@ describe('Version component actions', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, '-my-');
         await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');

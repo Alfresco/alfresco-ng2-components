@@ -55,7 +55,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     let pdfUploadedFile, pngUploadedFile, folder;
 
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_acs.host,
         authType: 'OAUTH',
@@ -70,7 +70,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             redirectUriLogout: '/logout'
         }
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const folderName = StringUtil.generateRandomString(5);
     const acsUser = new UserModel();
     let identityService: IdentityService;
@@ -85,7 +85,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             await identityService.createIdentityUserAndSyncECMBPM(acsUser);
 
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
             folder = await uploadActions.createFolder(folderName, '-my-');
 
@@ -110,12 +110,12 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         afterAll(async () => {
             try {
-                await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+                await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
                 await identityService.deleteIdentityUser(acsUser.id);
             } catch (error) {
             }
-            await this.alfrescoJsApi.logout();
+            await alfrescoJsApi.logout();
             await browser.executeScript('window.sessionStorage.clear();');
             await browser.executeScript('window.localStorage.clear();');
         });

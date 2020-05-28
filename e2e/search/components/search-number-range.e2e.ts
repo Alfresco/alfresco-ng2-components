@@ -418,8 +418,7 @@ describe('Search Number Range Filter', () => {
                 await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
                 await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
             }
-
-        });
+    });
 
         it('[C277139] Should be able to set To field to be exclusive', async () => {
             await navigationBarPage.clickContentServicesButton();

@@ -42,17 +42,6 @@ export class UsersActions {
         return { ...user, id };
     }
 
-    async getApsUserByEmail(alfrescoJsApi, email) {
-
-        const users = await alfrescoJsApi.activiti.adminUsersApi.getUsers();
-
-        const user = users.data.filter((currentUser) => {
-            return currentUser.email === email;
-        });
-
-        return user;
-    }
-
     async createApsUserWithName(alfrescoJsApi, tenantId, email, firstName, lastName) {
         const user = new User({ tenantId , email, firstName, lastName});
 

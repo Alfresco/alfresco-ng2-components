@@ -15,13 +15,19 @@
  * limitations under the License.
  */
 
-import { CheckboxPage, LoginSSOPage, UploadActions, LocalStorageUtil, ViewerPage } from '@alfresco/adf-testing';
+import {
+    CheckboxPage,
+    LoginSSOPage,
+    UploadActions,
+    LocalStorageUtil,
+    ViewerPage,
+    ApiService
+} from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
 describe('Aspect oriented config', () => {
@@ -33,6 +39,7 @@ describe('Aspect oriented config', () => {
     const contentServicesPage = new ContentServicesPage();
     const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
+    const alfrescoJsApi = new ApiService().apiService;
 
     const acsUser = new AcsUserModel();
 
@@ -43,39 +50,35 @@ describe('Aspect oriented config', () => {
     let uploadActions;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-        uploadActions = new UploadActions(this.alfrescoJsApi);
+        uploadActions = new UploadActions(alfrescoJsApi);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         try {
-            await this.alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
+            await alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
         } catch (e) {
         }
 
         try {
-            await this.alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
+            await alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
         } catch (e) {
         }
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        const aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
+        const aspects = await alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
 
         aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
 
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
+        await alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
    });
 
     afterAll(async () => {

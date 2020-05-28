@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, PaginationPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
@@ -38,17 +37,13 @@ describe('Document List - Selection', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const displayColumnName = 'Display name';
-
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
         try {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
             await loginPage.login(acsUser.email, acsUser.password);
 

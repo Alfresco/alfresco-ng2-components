@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -33,11 +32,9 @@ describe('Social component', () => {
     const componentOwner = new AcsUserModel();
     const componentVisitor = new AcsUserModel();
     const secondComponentVisitor = new AcsUserModel();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
@@ -52,19 +49,19 @@ describe('Social component', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(componentOwner);
+        await alfrescoJsApi.core.peopleApi.addPerson(componentOwner);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(componentVisitor);
+        await alfrescoJsApi.core.peopleApi.addPerson(componentVisitor);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(secondComponentVisitor);
+        await alfrescoJsApi.core.peopleApi.addPerson(secondComponentVisitor);
 
-        await this.alfrescoJsApi.login(componentOwner.id, componentOwner.password);
+        await alfrescoJsApi.login(componentOwner.id, componentOwner.password);
 
         emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(emptyFile.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(emptyFile.entry.id,
 
             {
                 permissions: {

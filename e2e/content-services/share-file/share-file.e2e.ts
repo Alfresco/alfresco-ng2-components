@@ -21,7 +21,7 @@ import {
     LocalStorageUtil,
     NotificationHistoryPage,
     UploadActions,
-    ViewerPage, ApiUtil
+    ViewerPage, ApiUtil, ApiService
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -29,15 +29,12 @@ import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi, SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
+import { SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 
 describe('Share file', () => {
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -47,7 +44,7 @@ describe('Share file', () => {
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
@@ -65,17 +62,17 @@ describe('Share file', () => {
         };
 
         const apiCall = async () => {
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-            return this.alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            return alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
         };
 
         return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
     };
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -83,7 +80,7 @@ describe('Share file', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(nodeId);
     });
 

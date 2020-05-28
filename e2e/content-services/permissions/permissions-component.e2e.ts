@@ -18,9 +18,16 @@
 import { PermissionsPage } from '../../pages/adf/permissions.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
-import { StringUtil, BrowserActions, NotificationHistoryPage, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import {
+    StringUtil,
+    BrowserActions,
+    NotificationHistoryPage,
+    LoginSSOPage,
+    UploadActions,
+    ViewerPage,
+    ApiService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
@@ -29,15 +36,12 @@ import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
 describe('Permissions Component', () => {
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
     const navigationBarPage = new NavigationBarPage();
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -82,11 +86,11 @@ describe('Permissions Component', () => {
 
     beforeAll(async () => {
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
-        await this.alfrescoJsApi.core.groupsApi.createGroup(groupBody);
-        await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
+        await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
+        await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
 
         roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
         roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
@@ -96,7 +100,7 @@ describe('Permissions Component', () => {
 
         folders = [roleConsumerFolder, roleContributorFolder, roleCoordinatorFolder, roleCollaboratorFolder, roleEditorFolder];
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
 
             {
                 permissions: {
@@ -108,7 +112,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{
@@ -119,7 +123,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{
@@ -130,7 +134,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(roleContributorFolder.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(roleContributorFolder.entry.id,
 
             {
                 permissions: {
@@ -142,7 +146,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(roleEditorFolder.entry.id,
+        await alfrescoJsApi.core.nodesApi.updateNode(roleEditorFolder.entry.id,
 
             {
                 permissions: {
@@ -164,17 +168,16 @@ describe('Permissions Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
         }
-
     });
 
     describe('Inherit and assigning permissions', () => {
 
         beforeEach(async () => {
-            await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.login(fileOwnerUser.id, fileOwnerUser.password);
             await contentServicesPage.goToDocumentList();
@@ -191,8 +194,7 @@ describe('Permissions Component', () => {
                 await uploadActions.deleteFileOrFolder(file.entry.id);
             } catch (error) {
             }
-
-        });
+    });
 
         it('[C268974] Inherit Permission', async () => {
             await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
@@ -242,7 +244,7 @@ describe('Permissions Component', () => {
     describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async () => {
-            await this.alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.login(fileOwnerUser.id, fileOwnerUser.password);
             await contentServicesPage.goToDocumentList();

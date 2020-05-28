@@ -86,8 +86,7 @@ describe('Process List - Pagination', () => {
             for (let i = 0; i < nrOfProcesses; i++) {
                 await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
             }
-
-        });
+    });
 
         beforeEach(async () => {
             await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();

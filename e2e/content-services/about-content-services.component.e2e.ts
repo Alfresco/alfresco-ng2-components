@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 import { LoginSSOPage, AboutPage, ApiService } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -26,11 +25,9 @@ describe('About Content Services', () => {
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
     const acsUser = new AcsUserModel();
-    let alfrescoJsApi: AlfrescoApi;
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async() => {
-        alfrescoJsApi = new ApiService().apiService;
-
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);

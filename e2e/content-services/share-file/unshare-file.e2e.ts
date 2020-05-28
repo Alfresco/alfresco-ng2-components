@@ -22,22 +22,18 @@ import {
     NotificationHistoryPage,
     LoginSSOPage,
     ErrorPage,
-    UploadActions
+    UploadActions, ApiService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
 describe('Unshare file', () => {
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -49,7 +45,7 @@ describe('Unshare file', () => {
     const shareDialog = new ShareDialogPage();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     let nodeBody;
     let nodeId;
     let testSite;
@@ -78,15 +74,15 @@ describe('Unshare file', () => {
             }
         };
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        testSite = await this.alfrescoJsApi.core.sitesApi.createSite(site);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        testSite = await alfrescoJsApi.core.sitesApi.createSite(site);
 
-        const docLibId = (await this.alfrescoJsApi.core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
-        const testFile1Id = (await this.alfrescoJsApi.core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(siteName, memberBody);
+        const docLibId = (await alfrescoJsApi.core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
+        const testFile1Id = (await alfrescoJsApi.core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
+        await alfrescoJsApi.core.sitesApi.addSiteMember(siteName, memberBody);
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(testFile1Id, {
+        await alfrescoJsApi.core.nodesApi.updateNode(testFile1Id, {
             permissions: {
                 isInheritanceEnabled: false,
                 locallySet: [
@@ -97,8 +93,8 @@ describe('Unshare file', () => {
                 ]
             }
         });
-        await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
@@ -110,7 +106,7 @@ describe('Unshare file', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
+        await alfrescoJsApi.core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
     });
 
     afterEach(async () => {
@@ -166,8 +162,8 @@ describe('Unshare file', () => {
 
     describe('without permission', () => {
         afterAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
         });
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {

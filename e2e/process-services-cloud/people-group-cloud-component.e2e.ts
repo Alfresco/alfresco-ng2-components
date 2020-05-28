@@ -89,8 +89,7 @@ describe('People Groups Cloud Component', () => {
             for (const group of groups) {
                 await groupIdentityService.deleteIdentityGroup(group);
             }
-
-        });
+    });
 
         beforeEach(async () => {
             await navigationBarPage.navigateToPeopleGroupCloudPage();
