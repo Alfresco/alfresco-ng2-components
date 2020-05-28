@@ -46,7 +46,7 @@ export class ProcessListPage {
         return this.dataTable.checkContentIsNotDisplayed(column, processName);
     }
 
-    selectRow(processName): Promise<void> {
-        return this.dataTable.selectRow('Name', processName);
+    async selectRow(processName): Promise<void> {
+        return await this.dataTable.selectRow('Name', processName);
     }
 }
