@@ -78,7 +78,7 @@ describe('Diagrams swim', () => {
 
                     const shapeText: any = element.querySelector('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes[2].value).toEqual('Activiti');
+                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Activiti');
                 });
             });
             component.ngOnChanges();
@@ -99,7 +99,7 @@ describe('Diagrams swim', () => {
 
                     const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes[2].value).toEqual('Backend');
+                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Backend');
                 });
             });
             component.ngOnChanges();
@@ -120,7 +120,7 @@ describe('Diagrams swim', () => {
 
                     const shapeText: any = element.querySelector('diagram-pool > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes[2].value).toEqual('Activiti');
+                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Activiti');
                 });
             });
             component.ngOnChanges();
@@ -141,7 +141,7 @@ describe('Diagrams swim', () => {
 
                     const shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
                     expect(shapeText).not.toBeNull();
-                    expect(shapeText.attributes[2].value).toEqual('Backend');
+                    expect(shapeText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Backend');
                 });
             });
             component.ngOnChanges();

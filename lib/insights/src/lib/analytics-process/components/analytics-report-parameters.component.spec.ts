@@ -119,20 +119,22 @@ describe('AnalyticsReportParametersComponent', () => {
             });
         });
 
-        it('Should render a duration component when the definition parameter type is \'duration\' ', (done) => {
+        it('Should render a duration component when the definition parameter type is "duration"', (done) => {
             component.successReportParams.subscribe(() => {
                 fixture.detectChanges();
-                const numberElement: any = element.querySelector('#duration');
-                expect(numberElement.value).toEqual('0');
+                fixture.whenStable().then(() => {
+                    const numberElement: any = element.querySelector('#duration');
+                    expect(numberElement.value).toEqual('0');
 
-                const dropDown: any = element.querySelector('#select-duration');
-                expect(dropDown).toBeDefined();
-                expect(dropDown.length).toEqual(4);
-                expect(dropDown[0].innerHTML).toEqual('Seconds');
-                expect(dropDown[1].innerHTML).toEqual('Minutes');
-                expect(dropDown[2].innerHTML).toEqual('Hours');
-                expect(dropDown[3].innerHTML).toEqual('Days');
-                done();
+                    const dropDown: any = element.querySelector('#select-duration');
+                    expect(dropDown).toBeDefined();
+                    expect(dropDown.length).toEqual(4);
+                    expect(dropDown[0].innerHTML).toEqual('Seconds');
+                    expect(dropDown[1].innerHTML).toEqual('Minutes');
+                    expect(dropDown[2].innerHTML).toEqual('Hours');
+                    expect(dropDown[3].innerHTML).toEqual('Days');
+                    done();
+                });
             });
 
             const reportId = 1;
