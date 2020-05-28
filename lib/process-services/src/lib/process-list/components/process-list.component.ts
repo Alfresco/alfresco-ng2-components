@@ -182,7 +182,8 @@ export class ProcessInstanceListComponent extends DataTableSchema implements OnC
             this.reload();
         }
 
-        if (changes['presetColumn']) {
+        const presetColumnChanges = changes['presetColumn'];
+        if (presetColumnChanges && !presetColumnChanges.firstChange) {
             this.columns = this.mergeJsonAndHtmlSchema();
         }
     }

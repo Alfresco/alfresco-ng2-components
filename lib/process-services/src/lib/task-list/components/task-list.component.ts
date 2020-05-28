@@ -235,6 +235,11 @@ export class TaskListComponent extends DataTableSchema implements OnChanges, Aft
             }
             this.reload();
         }
+
+        const presetColumnChanges = changes['presetColumn'];
+        if (presetColumnChanges && !presetColumnChanges.firstChange) {
+            this.columns = this.mergeJsonAndHtmlSchema();
+        }
     }
 
     private isSortChanged(changes: SimpleChanges): boolean {

@@ -533,6 +533,14 @@ describe('TaskListComponent', () => {
                 responseText: JSON.stringify(fakeGlobalTask)
             });
         });
+
+        it('should update columns when presetColumn schema changes', () => {
+            component.ngAfterContentInit();
+            component.columns = [];
+            const presetColumnChange = new SimpleChange(null, 'fakeCustomSchema', false);
+            component.ngOnChanges({ 'presetColumn': presetColumnChange });
+            expect(component.columns).toEqual(component.mergeJsonAndHtmlSchema());
+        });
     });
 
     it('should show the updated list when pagination changes', async(() => {
