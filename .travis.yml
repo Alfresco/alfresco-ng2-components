@@ -54,10 +54,14 @@ jobs:
     include:
         # Run Only for any PR
         - stage: Lint & Build Dist
-          name:  Lint & Build Dist
+          name:  Build
           script:
-            - ./scripts/travis/build/build.sh || exit 1;
-            - ./scripts/lint.sh || exit 1;
+            - ./scripts/travis/build/build.sh
+        - stage: Lint & Build Dist
+          name: Lint
+          script:
+            - ./scripts/lint.sh
+
 
         # Run Only on develop and master
         - stage: Lint & Build Dist & Release
