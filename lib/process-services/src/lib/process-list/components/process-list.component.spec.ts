@@ -442,11 +442,14 @@ describe('ProcessInstanceListComponent', () => {
             component.ngOnChanges({ 'presetColumn': presetColumnChange });
 
             const newColumnSchema = component.mergeJsonAndHtmlSchema();
+            const expectedColumn1 = new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[0]);
+            const expectedColumn2 = new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[1]);
+
             expect(component.columns).toEqual(newColumnSchema);
             expect(initialColumnSchema).not.toEqual(newColumnSchema);
             expect(component.columns.length).toEqual(2);
-            expect(component.columns[0]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[0]));
-            expect(component.columns[1]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[1]));
+            expect(component.columns[0]).toEqual(expectedColumn1);
+            expect(component.columns[1]).toEqual(expectedColumn2);
         });
     });
 });

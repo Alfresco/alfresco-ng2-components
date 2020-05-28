@@ -545,13 +545,14 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'presetColumn': presetColumnChange });
 
         const newColumnSchema = component.mergeJsonAndHtmlSchema();
+        const expectedColumn1 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[0]);
+        const expectedColumn2 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[1]);
+
         expect(component.columns).toEqual(newColumnSchema);
         expect(initialColumnSchema).not.toEqual(newColumnSchema);
         expect(component.columns.length).toEqual(2);
-        const expCol1 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[0]);
-        const expCol2 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[1]);
-        expect(component.columns[0]).toEqual(expCol1);
-        expect(component.columns[1]).toEqual(expCol2);
+        expect(component.columns[0]).toEqual(expectedColumn1);
+        expect(component.columns[1]).toEqual(expectedColumn2);
     });
 
     it('should show the updated list when pagination changes', async(() => {

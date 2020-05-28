@@ -94,7 +94,7 @@ export let fakeCustomSchema = [
 export let fakeColumnSchema = {
     default: [
         {
-            key: 'fake-name',
+            key: 'default-name',
             type: 'text',
             title: 'ADF_TASK_LIST.PROPERTIES.NAME',
             sortable: true
