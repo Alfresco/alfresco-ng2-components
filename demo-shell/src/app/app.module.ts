@@ -60,7 +60,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
-import { AppExtensionsModule } from './app-extension.module';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
 import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
 import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
@@ -130,7 +129,6 @@ registerLocaleData(localeSv);
         FormsModule,
         HttpClientModule,
         MaterialModule,
-        AppExtensionsModule,
         FlexLayoutModule,
         TranslateModule.forRoot(),
         CoreModule.forRoot(),
