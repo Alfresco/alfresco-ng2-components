@@ -1,10 +1,8 @@
-import { TestConfiguration } from './lib/testing';
-
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
-const testConfig: TestConfiguration = require('./e2e/test.config');
+const testConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
