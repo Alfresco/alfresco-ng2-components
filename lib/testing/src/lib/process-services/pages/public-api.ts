@@ -25,4 +25,3 @@ export * from './process-instance-tasks.page';
 export * from './start-process.page';
 export * from './select-apps-dialog.page';
 export * from './external-node-selector-dialog.page';
-export * from './context-menu.page';

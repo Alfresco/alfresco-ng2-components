@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { BrowserActions } from '../../core/utils/browser-actions';
+import { BrowserActions } from '../utils/browser-actions';
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../../core/public-api';
+import { BrowserVisibility } from '../public-api';
 
 export class ContextMenuPage {
     contextMenu: ElementFinder = element(by.id('adf-context-menu-content'));
