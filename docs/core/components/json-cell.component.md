@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2019-04-12
 ---
 
-# [Json Cell Component](../../../lib/core/datatable/components/datatable/json-cell.component.ts "Defined in json-cell.component.ts")
+# [Json Cell Component](../../../lib/core/datatable/components/json-cell/json-cell.component.ts "Defined in json-cell.component.ts")
 
 Shows a JSON-formatted value inside a datatable component.
 

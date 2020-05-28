@@ -16,7 +16,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { MatDialog } from '@angular/material';
 import { EditJsonDialogComponent, EditJsonDialogSettings } from '../../../dialogs/edit-json/edit-json.dialog';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';

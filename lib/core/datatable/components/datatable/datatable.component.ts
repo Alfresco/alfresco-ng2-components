@@ -29,12 +29,12 @@ import { DataRowEvent } from '../../data/data-row-event.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { DataTableAdapter } from '../../data/datatable-adapter';
-import { DataTableRowComponent } from './datatable-row.component';
+import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-import { DataCellEvent } from './data-cell.event';
-import { DataRowActionEvent } from './data-row-action.event';
+import { DataCellEvent } from '../data-cell.event';
+import { DataRowActionEvent } from '../data-row-action.event';
 import { share, buffer, map, filter, debounceTime } from 'rxjs/operators';
 
 export enum DisplayMode {

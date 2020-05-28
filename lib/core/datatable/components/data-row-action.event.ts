@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { BaseEvent } from '../../../events';
-import { DataRow } from '../../data/data-row.model';
+import { BaseEvent } from '../../events';
+import { DataRow } from '../data/data-row.model';
 
 export class DataRowActionModel {
 
