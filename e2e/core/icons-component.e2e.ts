@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { IconsPage } from '../pages/adf/icons.page';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
-
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Universal Icon component', () => {
 
@@ -29,15 +27,11 @@ describe('Universal Icon component', () => {
     const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const iconsPage = new IconsPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);
    });
 

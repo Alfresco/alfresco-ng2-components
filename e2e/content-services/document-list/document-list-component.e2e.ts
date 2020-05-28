@@ -54,7 +54,6 @@ describe('Document List Component', () => {
     });
 
     describe('Custom Column', () => {
-
         let folderName;
         const pdfFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -76,20 +75,19 @@ describe('Document List Component', () => {
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
 
         beforeAll(async () => {
-
-            acsUser = new AcsUserModel();
+        acsUser = new AcsUserModel();
 
             /* cspell:disable-next-line */
-            folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
+        folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
-            uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
-            pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
-            docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
+        pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
+        docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
         });
 
         afterAll(async () => {
@@ -149,7 +147,6 @@ describe('Document List Component', () => {
     });
 
     describe('Column Sorting', () => {
-
         const fakeFileA = new FileModel({
             name: 'A',
             location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
@@ -168,20 +165,19 @@ describe('Document List Component', () => {
         let fileANode, fileBNode, fileCNode;
 
         beforeAll(async () => {
+        const user = new AcsUserModel();
 
-            const user = new AcsUserModel();
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(user);
 
-            await alfrescoJsApi.core.peopleApi.addPerson(user);
+        await alfrescoJsApi.login(user.id, user.password);
+        fileANode = await uploadActions.uploadFile(fakeFileA.location, fakeFileA.name, '-my-');
+        fileBNode = await uploadActions.uploadFile(fakeFileB.location, fakeFileB.name, '-my-');
+        fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
 
-            await alfrescoJsApi.login(user.id, user.password);
-            fileANode = await uploadActions.uploadFile(fakeFileA.location, fakeFileA.name, '-my-');
-            fileBNode = await uploadActions.uploadFile(fakeFileB.location, fakeFileB.name, '-my-');
-            fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
-
-            await loginPage.login(user.email, user.password);
-            await contentServicesPage.goToDocumentList();
+        await loginPage.login(user.email, user.password);
+        await contentServicesPage.goToDocumentList();
         });
 
         afterAll(async () => {
@@ -311,7 +307,6 @@ describe('Document List Component', () => {
     });
 
     describe('Once uploaded 20 folders', () => {
-
         let folderCreated;
 
         beforeAll(async () => {
@@ -344,7 +339,6 @@ describe('Document List Component', () => {
     });
 
     describe('Column Template', () => {
-
         const file0BytesModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path

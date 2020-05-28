@@ -14,8 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { HeaderPage, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, HeaderPage, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -26,6 +25,7 @@ describe('Header Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     let user, tenantId;
 
@@ -44,20 +44,15 @@ describe('Header Component', () => {
     };
 
     beforeAll(async() => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
         const users = new UsersActions();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        user = await users.createTenantAndUser(alfrescoJsApi);
 
         tenantId = user.tenantId;
 
-        await this.alfrescoJsApi.login(user.email, user.password);
+        await alfrescoJsApi.login(user.email, user.password);
 
         await loginPage.login(user.email, user.password);
    });
@@ -68,8 +63,8 @@ describe('Header Component', () => {
 
     afterAll(async() => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     it('[C280002] Should be able to view Header component', async () => {

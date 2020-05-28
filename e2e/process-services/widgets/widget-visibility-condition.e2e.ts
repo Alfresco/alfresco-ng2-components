@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
@@ -51,18 +50,13 @@ describe('Process-Services - Visibility conditions', () => {
     let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
-    let alfrescoJsApi;
+    const alfrescoJsApi = new ApiService().apiService;
     let appModel;
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
     let deployedApp, process;
 
     beforeAll(async () => {
         const users = new UsersActions();
-
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -101,7 +95,6 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
 
@@ -113,7 +106,6 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
 
@@ -125,7 +117,6 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
         await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);

@@ -31,7 +31,6 @@ describe('Login component - SSO', () => {
     let implicitFlow;
 
     describe('Login component - SSO implicit Flow', () => {
-
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
             await browser.executeScript('window.sessionStorage.clear();');
@@ -58,7 +57,6 @@ describe('Login component - SSO', () => {
    });
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
-
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
             implicitFlow = false;
             await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,

@@ -16,13 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
@@ -34,6 +33,7 @@ describe('Empty Process List Test', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const processListPage = new ProcessListPage();
     const startProcessPage = new StartProcessPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const appA = browser.params.resources.Files.APP_WITH_PROCESSES;
     const appB = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -43,18 +43,13 @@ describe('Empty Process List Test', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        user = await users.createTenantAndUser(alfrescoJsApi);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(user.email, user.password);
+        await alfrescoJsApi.login(user.email, user.password);
 
         await applicationsService.importPublishDeployApp(appA.file_path);
         await applicationsService.importPublishDeployApp(appB.file_path);

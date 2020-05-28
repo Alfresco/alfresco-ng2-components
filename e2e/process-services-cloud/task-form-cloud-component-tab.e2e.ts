@@ -156,7 +156,6 @@ describe('Task form cloud component', () => {
     });
 
     describe('Complete task with form - cloud directive', () => {
-
         it('[C315174] Should be able to complete a standalone task with visible tab with empty value for field', async () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');

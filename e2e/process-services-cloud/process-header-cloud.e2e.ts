@@ -27,7 +27,6 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
-
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const subProcessApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name;
         const formatDate = 'MMM D, YYYY';

@@ -15,25 +15,24 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 const formInstance = new FormDefinitionModel();
 
 describe('Form widgets', () => {
-    let alfrescoJsApi;
     const taskPage = new TasksPage();
     const newTask = 'First task';
     const loginPage = new LoginSSOPage();
     let processUserModel;
     let appModel;
     const widget = new Widget();
+    const alfrescoJsApi = new ApiService().apiService;
 
     describe('Form widgets', () => {
         const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
@@ -41,11 +40,6 @@ describe('Form widgets', () => {
 
         beforeAll(async () => {
             const users = new UsersActions();
-
-            alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
 
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -141,12 +135,11 @@ describe('Form widgets', () => {
         });
 
         it('[C272783] Should display displayText and displayValue in form', async () => {
-
-            await expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
+        await expect(await widget.displayTextWidget().getFieldLabel(appFields.displayText_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayText_id).value);
-            await expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id))
+        await expect(await widget.displayValueWidget().getFieldLabel(appFields.displayValue_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || 'Display value' || '');
-            await expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
+        await expect(await widget.displayValueWidget().getFieldValue(appFields.displayValue_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.displayValue_id).value || '');
         });
 
@@ -172,38 +165,30 @@ describe('Form widgets', () => {
         });
 
         it('[C268149] Should display hyperlink, dropdown and dynamic table in form', async () => {
-
-            await expect(await widget.hyperlink().getFieldText(appFields.hyperlink_id))
+        await expect(await widget.hyperlink().getFieldText(appFields.hyperlink_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).hyperlinkUrl || '');
-            await expect(await taskPage.formFields().getFieldLabel(appFields.hyperlink_id))
+        await expect(await taskPage.formFields().getFieldLabel(appFields.hyperlink_id))
                 .toEqual(formInstance.getWidgetBy('id', appFields.hyperlink_id).name);
 
-            await expect(await taskPage.formFields().getFieldLabel(appFields.dropdown_id))
+        await expect(await taskPage.formFields().getFieldLabel(appFields.dropdown_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).name);
-            await expect(widget.dropdown().getSelectedOptionText(appFields.dropdown_id))
+        await expect(widget.dropdown().getSelectedOptionText(appFields.dropdown_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dropdown_id).value);
 
-            await expect(await widget.dynamicTable().getFieldLabel(appFields.dynamicTable_id))
+        await expect(await widget.dynamicTable().getFieldLabel(appFields.dynamicTable_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).name);
-            await expect(await widget.dynamicTable().getColumnName(appFields.dynamicTable_id))
+        await expect(await widget.dynamicTable().getColumnName(appFields.dynamicTable_id))
                 .toContain(formInstance.getWidgetBy('id', appFields.dynamicTable_id).columnDefinitions[0].name);
         });
    });
 
     describe('with fields involving other people', () => {
-
         const app = browser.params.resources.Files.FORM_ADF;
         let deployedApp, process;
         const appFields = app.form_fields;
 
         beforeAll(async () => {
             const users = new UsersActions();
-
-            alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
-
             await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);

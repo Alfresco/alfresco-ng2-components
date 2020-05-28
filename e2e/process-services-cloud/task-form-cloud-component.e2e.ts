@@ -165,7 +165,6 @@ describe('Task form cloud component', () => {
     });
 
     describe('Candidate Base App', () => {
-
         beforeEach(async () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
         });

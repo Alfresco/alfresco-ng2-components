@@ -107,7 +107,6 @@ describe('Delete Directive', () => {
     });
 
     describe('Handling multiselection', () => {
-
         beforeEach(async () => {
             await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
@@ -181,7 +180,6 @@ describe('Delete Directive', () => {
     });
 
     describe('When selection on multiple pages', () => {
-
         beforeEach(async () => {
             await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
@@ -211,7 +209,6 @@ describe('Delete Directive', () => {
     });
 
     describe('when user does not have `delete` permission', () => {
-
         let createdSite = null;
         let fileTxt, filePdf, folderA, folderB;
 

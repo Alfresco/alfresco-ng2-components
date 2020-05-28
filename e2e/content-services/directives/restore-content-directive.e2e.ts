@@ -95,7 +95,6 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore same name folders', () => {
-
         beforeAll(async () => {
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
@@ -234,7 +233,6 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore deleted library', () => {
-
         beforeAll(async () => {
             await alfrescoJsApi.login(acsUser.id, acsUser.password);
             const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
@@ -272,7 +270,6 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore with folder hierarchies', () => {
-
         let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
         beforeAll(async () => {

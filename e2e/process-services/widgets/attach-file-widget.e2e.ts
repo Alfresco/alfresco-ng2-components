@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
 import { TaskDetailsPage } from '../../pages/adf/process-services/task-details.page';
 import { TasksListPage } from '../../pages/adf/process-services/tasks-list.page';
@@ -36,6 +35,7 @@ describe('Attach widget - File', () => {
     const taskDetailsPage = new TaskDetailsPage();
     const tasksListPage = new TasksListPage();
     const filtersPage = new FiltersPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     let processUserModel;
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
@@ -45,16 +45,11 @@ describe('Attach widget - File', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(processUserModel.email, processUserModel.password);
     });
@@ -74,12 +69,8 @@ describe('Attach widget - File', () => {
     });
 
     afterAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C268067] Should be able to preview, download and remove attached files from an active form', async () => {

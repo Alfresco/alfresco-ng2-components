@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
@@ -30,6 +29,7 @@ describe('User Info component', () => {
     const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
     const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new ApiService({ provider: 'ALL' }).apiService;
 
     const acsAvatarFileModel = new FileModel({
         'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
@@ -43,15 +43,9 @@ describe('User Info component', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ALL',
-            hostEcm: browser.params.testConfig.adf_acs.host,
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
         contentUserModel = new AcsUserModel({
             'id': processUserModel.email,
@@ -61,8 +55,8 @@ describe('User Info component', () => {
             'email': processUserModel.email
         });
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
-   });
+        await alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -133,7 +127,7 @@ describe('User Info component', () => {
 
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
         await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-',  async() => {
+        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', async () => {
         });
 
         await loginPage.login(contentUserModel.email, contentUserModel.password);
@@ -147,8 +141,8 @@ describe('User Info component', () => {
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
         const users = new UsersActions();
-        await this.alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
-        await users.changeProfilePictureAps(this.alfrescoJsApi, apsAvatarFileModel.getLocation());
+        await alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
+        await users.changeProfilePictureAps(alfrescoJsApi, apsAvatarFileModel.getLocation());
 
         await loginPage.login(contentUserModel.email, contentUserModel.password);
 

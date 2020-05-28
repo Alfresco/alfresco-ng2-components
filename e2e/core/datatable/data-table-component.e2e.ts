@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { DropActions, LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
@@ -25,6 +24,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Datatable component', () => {
 
+    const alfrescoJsApi = new ApiService().apiService;
     const dataTablePage = new DataTablePage('defaultTable');
     const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
     const dragAndDropDataTablePage = new DataTablePage();
@@ -39,14 +39,9 @@ describe('Datatable component', () => {
     });
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await loginPage.login(acsUser.email, acsUser.password);
     });
@@ -56,7 +51,6 @@ describe('Datatable component', () => {
     });
 
     describe('Datatable component - copyContent', () => {
-
         beforeAll(async () => {
             await navigationBarPage.navigateToCopyContentDatatable();
             await dataTablePage.dataTable.waitForTableBody();
@@ -141,7 +135,6 @@ describe('Datatable component', () => {
     });
 
     describe('Datatable component - Drag and Drop', () => {
-
         beforeAll(async () => {
             await navigationBarPage.navigateToDragAndDropDatatable();
             await dragAndDropDataTablePage.dataTable.waitForTableBody();

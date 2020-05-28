@@ -84,7 +84,6 @@ describe('Social component', () => {
    });
 
     describe('User interaction on their own components', () => {
-
         beforeEach(async () => {
             await loginPage.login(componentOwner.id, componentOwner.password);
             await navigationBarPage.clickSocialButton();
@@ -109,7 +108,6 @@ describe('Social component', () => {
    });
 
     describe('User interaction on components that belong to other users', () => {
-
         beforeEach(async () => {
             await loginPage.login(componentVisitor.id, componentVisitor.password);
             await navigationBarPage.clickSocialButton();
@@ -145,7 +143,6 @@ describe('Social component', () => {
    });
 
     describe('Multiple Users interaction', () => {
-
         beforeEach(async () => {
             await loginPage.login(componentVisitor.id, componentVisitor.password);
             await navigationBarPage.clickSocialButton();

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, ErrorPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, BrowserActions, ErrorPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
@@ -49,18 +48,13 @@ describe('Login component', () => {
     };
     const invalidUsername = 'invaliduser';
     const invalidPassword = 'invalidpassword';
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ALL',
-            hostEcm: browser.params.testConfig.adf_acs.host,
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
+        await alfrescoJsApi.core.peopleApi.addPerson(userA);
+        await alfrescoJsApi.core.peopleApi.addPerson(userB);
    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {

@@ -274,7 +274,6 @@ describe('Search Checklist Component', () => {
    });
 
     describe('Properties', () => {
-
         let jsonFile;
 
         beforeEach(() => {

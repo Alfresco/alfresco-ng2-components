@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-import { ArrayUtil, StringUtil, LoginSSOPage, PaginationPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import {
+    ArrayUtil,
+    StringUtil,
+    LoginSSOPage,
+    PaginationPage,
+    UploadActions,
+    ViewerPage,
+    ApiService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
@@ -29,6 +36,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const viewerPage = new ViewerPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const acsUser = new AcsUserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
@@ -58,19 +66,15 @@ describe('Pagination - returns to previous page when current is empty', () => {
     });
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        const uploadActions = new UploadActions(alfrescoJsApi);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
 

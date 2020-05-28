@@ -15,12 +15,18 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, DatePickerCalendarPage, DateUtil, ApplicationsUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    Widget,
+    DatePickerCalendarPage,
+    DateUtil,
+    ApplicationsUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Dynamic Table', () => {
@@ -32,10 +38,7 @@ describe('Dynamic Table', () => {
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
     const users = new UsersActions();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'BPM',
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
 
     let user, tenantId, appId;
 

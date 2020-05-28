@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, LoginSSOPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, DataTableComponentPage, LoginSSOPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
@@ -24,6 +23,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Datatable component - selection', () => {
 
+    const alfrescoJsApi = new ApiService().apiService;
     const dataTablePage = new DataTablePage();
     const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
@@ -31,14 +31,9 @@ describe('Datatable component - selection', () => {
     const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
         await loginPage.login(acsUser.email, acsUser.password);
 

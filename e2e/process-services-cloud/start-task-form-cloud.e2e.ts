@@ -43,7 +43,6 @@ import { StartProcessCloudConfiguration } from './config/start-process-cloud.con
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { FileModel } from '../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 
@@ -68,11 +67,8 @@ describe('Start Task Form', () => {
         browser.params.testConfig.appConfig.oauth2.clientId,
         browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
     );
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.bpmHost
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     const startProcessCloudConfiguration = new StartProcessCloudConfiguration();
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
@@ -154,9 +150,9 @@ describe('Start Task Form', () => {
             firstName: testUser.firstName,
             lastName: testUser.lastName
         });
-        await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
@@ -186,7 +182,6 @@ describe('Start Task Form', () => {
     });
 
     describe('StandaloneTask with form', () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
@@ -238,7 +233,6 @@ describe('Start Task Form', () => {
    });
 
     describe('Start a process with a start event form', async () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
@@ -312,7 +306,6 @@ describe('Start Task Form', () => {
    });
 
     describe('Attach content to process-cloud task form using upload widget', async () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

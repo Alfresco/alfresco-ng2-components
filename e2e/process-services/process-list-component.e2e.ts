@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
@@ -26,6 +25,7 @@ describe('Process List Test', () => {
 
     const loginPage = new LoginSSOPage();
     const processListDemoPage = new ProcessListDemoPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
@@ -52,22 +52,17 @@ describe('Process List Test', () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(alfrescoJsApi);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await alfrescoJsApi.login(user.email, user.password);
 
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
         appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
 
-        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const processUtil = new ProcessUtil(alfrescoJsApi);
         procWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.procWithDate);
         completedProcWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.completedProcWithDate);
 
@@ -76,24 +71,24 @@ describe('Process List Test', () => {
         await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
         completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
-        appWithDateFieldId = await apps.getAppDefinitionId(this.alfrescoJsApi, appDateModel.id);
+        appWithDateFieldId = await apps.getAppDefinitionId(alfrescoJsApi, appDateModel.id);
 
-        const procWithDateTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithDate.id);
-        const procWithUserWidgetTaskId = await apps.getProcessTaskId(this.alfrescoJsApi, completedProcWithUserWidget.id);
+        const procWithDateTaskId = await apps.getProcessTaskId(alfrescoJsApi, completedProcWithDate.id);
+        const procWithUserWidgetTaskId = await apps.getProcessTaskId(alfrescoJsApi, completedProcWithUserWidget.id);
 
-        await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
-        await this.alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
+        await alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
+        await alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
 
         await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
+        await alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
+        await alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     beforeEach(async () => {

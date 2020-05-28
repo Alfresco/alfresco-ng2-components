@@ -23,9 +23,8 @@ import {
     StringUtil,
     Widget,
     ApplicationsUtil,
-    StartProcessPage
+    StartProcessPage, ApiService
 } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { Tenant } from '../models/APS/tenant';
@@ -63,6 +62,8 @@ describe('Start Process Component', () => {
     const processName255Characters = StringUtil.generateRandomString(255);
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
+    const alfrescoJsApi = new ApiService().apiService;
+    const alfrescoJsApiUserTwo = new ApiService().apiService;
 
     const auditLogFile = 'Audit.pdf';
 
@@ -72,33 +73,23 @@ describe('Start Process Component', () => {
     });
 
     describe('Provider: BPM', () => {
-
         beforeAll(async () => {
             try {
-                this.alfrescoJsApi = new AlfrescoApi({
-                    provider: 'BPM',
-                    hostBpm: browser.params.testConfig.adf_aps.host
-                });
 
-                await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+                await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-                const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+                const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
                 tenantId = newTenant.id;
                 procUserModel = new User({tenantId: tenantId});
                 secondProcUserModel = new User({tenantId: tenantId});
 
-                await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
-                await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
+                await alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+                await alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
 
-                this.alfrescoJsApiUserTwo = new AlfrescoApi({
-                    provider: 'BPM',
-                    hostBpm: browser.params.testConfig.adf_aps.host
-                });
+                await alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-                await this.alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
-
-                const applicationsService = new ApplicationsUtil(this.alfrescoJsApiUserTwo);
+                const applicationsService = new ApplicationsUtil(alfrescoJsApiUserTwo);
 
                 const appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -113,21 +104,20 @@ describe('Start Process Component', () => {
         });
 
         afterAll(async () => {
-            await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
-            await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
-            await this.alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
-            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+            await alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
+            await alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
+            await alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
+            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
         });
 
         describe(' Once logged with user without apps', () => {
-
-            beforeEach(async () => {
+        beforeEach(async () => {
                 await loginPage.login(procUserModel.id, procUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
             });
 
-            it('[C260458] Should NOT be able to start a process without process model', async () => {
+        it('[C260458] Should NOT be able to start a process without process model', async () => {
                 await processServicesPage.goToApp('Task App');
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -137,17 +127,16 @@ describe('Start Process Component', () => {
         });
 
         describe(' Once logged with user with app', () => {
-
-            beforeAll(async () => {
+        beforeAll(async () => {
                 await loginPage.login(secondProcUserModel.id, secondProcUserModel.password);
             });
 
-            beforeEach(async () => {
+        beforeEach(async () => {
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
             });
 
-            it('[C260441] Should display start process form and default name when creating a new process', async () => {
+        it('[C260441] Should display start process form and default name when creating a new process', async () => {
                 await processServicesPage.goToApp('Task App');
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -155,7 +144,7 @@ describe('Start Process Component', () => {
                 await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
             });
 
-            it('[C260445] Should require process definition and be possible to click cancel button', async () => {
+        it('[C260445] Should require process definition and be possible to click cancel button', async () => {
                 await processServicesPage.goToApp('Task App');
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -167,7 +156,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.checkNoContentMessage();
             });
 
-            it('[C260444] Should require process name', async () => {
+        it('[C260444] Should require process name', async () => {
                 await processServicesPage.goToApp(app.title);
 
                 await processServiceTabBarPage.clickProcessButton();
@@ -186,7 +175,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkProcessOptionIsDisplayed(processModelWithoutSe);
             });
 
-            it('[C260443] Should be possible to start a process without start event', async () => {
+        it('[C260443] Should be possible to start a process without start event', async () => {
                 await processServicesPage.goToApp(app.title);
 
                 await processServiceTabBarPage.clickProcessButton();
@@ -203,7 +192,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
-            it('[C260449] Should be possible to start a process with start event', async () => {
+        it('[C260449] Should be possible to start a process with start event', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -213,7 +202,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processDetailsPage.checkDetailsAreDisplayed();
                 const processId = await processDetailsPage.getId();
-                const response = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processId);
+                const response = await alfrescoJsApi.activiti.processApi.getProcessInstance(processId);
 
                 await expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
                 await expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
@@ -225,7 +214,7 @@ describe('Start Process Component', () => {
                 await expect(await processDetailsPage.checkProcessTitleIsDisplayed()).toEqual(response.name);
             });
 
-            it('[C286503] Should NOT display any process definition when typing a non-existent one', async () => {
+        it('[C286503] Should NOT display any process definition when typing a non-existent one', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -235,7 +224,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsDisabled();
             });
 
-            it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
+        it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -247,7 +236,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
-            it('[C286508] Should display only one option when typing an existent process definition', async () => {
+        it('[C286508] Should display only one option when typing an existent process definition', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -259,7 +248,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
-            it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
+        it('[C286509] Should select automatically the processDefinition when the app contains only one', async () => {
                 await processServicesPage.goToApp(simpleApp.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -268,7 +257,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
-            it('[C286511] Should be able to type the process definition and start a process', async () => {
+        it('[C286511] Should be able to type the process definition and start a process', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -283,7 +272,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.selectFromProcessList('Type');
             });
 
-            it('[C286513] Should be able to use down arrow key when navigating throw suggestions', async () => {
+        it('[C286513] Should be able to use down arrow key when navigating throw suggestions', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -294,7 +283,7 @@ describe('Start Process Component', () => {
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
             });
 
-            it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
+        it('[C286514] Should the process definition input be cleared when clicking on options drop down ', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -307,7 +296,7 @@ describe('Start Process Component', () => {
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe('');
             });
 
-            it('[C260453] Should be possible to add a comment on an active process', async () => {
+        it('[C260453] Should be possible to add a comment on an active process', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -321,7 +310,7 @@ describe('Start Process Component', () => {
                 await processDetailsPage.checkCommentIsDisplayed('comment1');
             });
 
-            it('[C260454] Should be possible to download audit log file', async () => {
+        it('[C260454] Should be possible to download audit log file', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -336,7 +325,7 @@ describe('Start Process Component', () => {
                 await FileBrowserUtil.isFileDownloaded(auditLogFile);
             });
 
-            it('Should be able to attach a file using the button', async () => {
+        it('Should be able to attach a file using the button', async () => {
                 await processServicesPage.goToApp(app.title);
 
                 await processServiceTabBarPage.clickProcessButton();
@@ -355,7 +344,7 @@ describe('Start Process Component', () => {
                 await attachmentListPage.checkFileIsAttached(jpgFile.name);
             });
 
-            it('[C260451] Should be possible to display process diagram', async () => {
+        it('[C260451] Should be possible to display process diagram', async () => {
                 await processServicesPage.goToApp(app.title);
 
                 await processServiceTabBarPage.clickProcessButton();
@@ -373,7 +362,7 @@ describe('Start Process Component', () => {
                 await processDetailsPage.clickShowDiagram();
             });
 
-            it('[C260452] Should redirect user when clicking on active/completed task', async () => {
+        it('[C260452] Should redirect user when clicking on active/completed task', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -387,7 +376,7 @@ describe('Start Process Component', () => {
                 await processDetailsPage.checkActiveTaskTitleIsDisplayed();
             });
 
-            it('[C260457] Should display process in Completed when cancelled', async () => {
+        it('[C260457] Should display process in Completed when cancelled', async () => {
                 await loginPage.login(secondProcUserModel.id, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
@@ -406,7 +395,7 @@ describe('Start Process Component', () => {
                 await processDetailsPage.checkShowDiagramIsDisabled();
             });
 
-            it('[C260461] Should be possible to add a comment on a completed/canceled process', async () => {
+        it('[C260461] Should be possible to add a comment on a completed/canceled process', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -423,7 +412,7 @@ describe('Start Process Component', () => {
                 await processDetailsPage.checkCommentIsDisplayed('goodbye');
             });
 
-            it('[C260467] Should NOT be possible to attach a file on a completed process', async () => {
+        it('[C260467] Should NOT be possible to attach a file on a completed process', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -439,7 +428,7 @@ describe('Start Process Component', () => {
                 await attachmentListPage.checkAttachFileButtonIsNotDisplayed();
             });
 
-            it('[C291781] Should be displayed an error message if process name exceed 255 characters', async () => {
+        it('[C291781] Should be displayed an error message if process name exceed 255 characters', async () => {
                 await processServicesPage.goToApp(app.title);
 
                 await processServiceTabBarPage.clickProcessButton();
@@ -456,7 +445,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsDisabled();
             });
 
-            it('[C261039] Advanced date time widget', async () => {
+        it('[C261039] Advanced date time widget', async () => {
                 await processServicesPage.goToApp(dateFormApp.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -490,15 +479,15 @@ describe('Start Process Component', () => {
         beforeAll(async () => {
             const users = new UsersActions();
 
-            this.alfrescoJsApi = new AlfrescoApi({
+            const alfrescoJsApiAll = new ApiService({
                 provider: 'ALL',
                 hostEcm: browser.params.testConfig.adf_acs.host,
                 hostBpm: browser.params.testConfig.adf_aps.host
-            });
+            }).apiService;
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApiAll.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+            processUserModel = await users.createTenantAndUser(alfrescoJsApiAll);
 
             contentUserModel = new AcsUserModel({
                 'id': processUserModel.email,
@@ -508,12 +497,10 @@ describe('Start Process Component', () => {
                 'email': processUserModel.email
             });
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
+            await alfrescoJsApiAll.core.peopleApi.addPerson(contentUserModel);
 
-            this.alfrescoJsBPMAdminUser = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
+            this.alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.adf_aps.host}).apiService;
+
             await this.alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
 
             const applicationsService = new ApplicationsUtil(this.alfrescoJsBPMAdminUser);

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { User } from '../../models/APS/user';
@@ -31,10 +30,7 @@ describe('Typeahead widget', () => {
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
     const usersActions = new UsersActions();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'BPM',
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
     let user: User;

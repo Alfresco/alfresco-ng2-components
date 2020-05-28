@@ -15,8 +15,15 @@
  * limitations under the License.
  */
 
-import { ArrayUtil, DateUtil, LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import {
+    ArrayUtil,
+    DateUtil,
+    LoginSSOPage,
+    PaginationPage,
+    ApplicationsUtil,
+    ProcessUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
 import { UsersActions } from '../actions/users.actions';
@@ -24,6 +31,7 @@ import { Tenant } from '../models/APS/tenant';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import moment = require('moment');
+import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
 
 describe('Start Task - Custom App', () => {
 
@@ -52,6 +60,7 @@ describe('Start Task - Custom App', () => {
     const afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
+    const alfrescoJsApi = new ApiService().apiService;
 
     const itemsPerPage = {
         five: '5',
@@ -69,57 +78,51 @@ describe('Start Task - Custom App', () => {
         const appsRuntime = new AppsRuntimeActions();
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        processUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
 
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        appRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, app.title);
+        appRuntime = await appsRuntime.getRuntimeAppByName(alfrescoJsApi, app.title);
 
         await applicationsService.importPublishDeployApp(secondApp.file_path);
 
-        secondAppRuntime = await appsRuntime.getRuntimeAppByName(this.alfrescoJsApi, secondApp.title);
+        secondAppRuntime = await appsRuntime.getRuntimeAppByName(alfrescoJsApi, secondApp.title);
 
-        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const processUtil = new ProcessUtil(alfrescoJsApi);
         processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
 
         for (let i = 1; i < paginationTasksName.length; i++) {
-            await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': paginationTasksName[i] });
+            await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': paginationTasksName[i] }));
         }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await this.alfrescoJsApi.activiti.taskApi.createNewTask({
+            completedTasks[i] = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({
                 'name': completedTasksName[i],
                 'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
-            });
-            await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
+            }));
+            await alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
         }
 
-        taskWithDueDate = await this.alfrescoJsApi.activiti.taskApi.createNewTask({
+        taskWithDueDate = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({
             'name': paginationTasksName[0],
             'dueDate': currentDateStandardFormat
-        });
+        }));
 
         await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     describe('', () => {
-
         beforeEach(async () => {
             await navigationBarPage.clickTaskListButton();
             await taskListSinglePage.clickResetButton();

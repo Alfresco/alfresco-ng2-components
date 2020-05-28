@@ -18,7 +18,6 @@
 import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleTextVisibilityFormJson, multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
@@ -83,20 +82,12 @@ describe('Visibility conditions - cloud', () => {
     };
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-
         await navigationBarPage.navigateToFormCloudPage();
-
         await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
     });
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldValue);
         await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);
@@ -107,7 +98,6 @@ describe('Visibility conditions - cloud', () => {
     });
 
     it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
 
@@ -119,7 +109,6 @@ describe('Visibility conditions - cloud', () => {
     });
 
     it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
 
@@ -131,7 +120,6 @@ describe('Visibility conditions - cloud', () => {
     });
 
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
-
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.textWidget().isWidgetVisible(widgets.textTwoId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldField);

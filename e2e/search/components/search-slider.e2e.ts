@@ -51,7 +51,6 @@ describe('Search Slider Filter', () => {
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-
         await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);

@@ -45,7 +45,6 @@ describe('Edit task filters and task list properties', () => {
     const priority = 30;
 
     beforeAll(async () => {
-
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
@@ -122,7 +121,6 @@ describe('Edit task filters and task list properties', () => {
     });
 
     describe('Edit task filters and task list properties - sort properties', () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

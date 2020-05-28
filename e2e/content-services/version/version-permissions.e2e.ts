@@ -124,7 +124,6 @@ describe('Version component permissions', () => {
     });
 
     describe('Manager', () => {
-
         const sameCreatorFile = new FileModel({
             'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
             'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
@@ -174,7 +173,6 @@ describe('Version component permissions', () => {
     });
 
     describe('Consumer', () => {
-
         beforeAll(async () => {
             await loginPage.login(consumerUser.id, consumerUser.password);
 

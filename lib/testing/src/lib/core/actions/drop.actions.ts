@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import fs = require('fs');
-import path = require('path');
 import { browser } from 'protractor';
-import remote = require('selenium-webdriver/remote');
+
+import * as path from 'path';
+import * as fs from 'fs';
+import * as remote from 'selenium-webdriver/remote';
 
 const JS_BIND_INPUT = function(target) {
     const input = document.createElement('input');

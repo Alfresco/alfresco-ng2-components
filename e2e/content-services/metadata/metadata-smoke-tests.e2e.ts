@@ -78,7 +78,6 @@ describe('Metadata component', () => {
     });
 
     describe('Viewer Metadata', () => {
-
         beforeAll(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
@@ -224,7 +223,6 @@ describe('Metadata component', () => {
     });
 
     describe('Folder metadata', () => {
-
         beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 

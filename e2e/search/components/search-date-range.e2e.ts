@@ -36,7 +36,6 @@ describe('Search Date Range Filter', () => {
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async () => {
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -130,12 +129,11 @@ describe('Search Date Range Filter', () => {
 
         const results: any = dataTable.geCellElementDetail('Created');
         for (const currentResult of results) {
+        const currentDate = currentResult.getAttribute('title');
+        const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
-            const currentDate = currentResult.getAttribute('title');
-            const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
-
-            await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
-            await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+        await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
+        await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
         }
     });
 
@@ -176,7 +174,6 @@ describe('Search Date Range Filter', () => {
     });
 
     describe('configuration change', () => {
-
         let jsonFile;
 
         beforeAll(async () => {

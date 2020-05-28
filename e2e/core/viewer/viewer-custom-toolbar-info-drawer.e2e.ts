@@ -16,11 +16,10 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Viewer', () => {
@@ -29,11 +28,8 @@ describe('Viewer', () => {
     const viewerPage = new ViewerPage();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
-    this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const acsUser = new AcsUserModel();
     let txtFileUploaded;
 
@@ -43,10 +39,10 @@ describe('Viewer', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         txtFileUploaded = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
 

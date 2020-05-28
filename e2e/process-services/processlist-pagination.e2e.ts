@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -50,49 +49,38 @@ describe('Process List - Pagination', () => {
     const nrOfProcesses = 20;
     let page;
     let totalPages;
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
-        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.login(processUserModel.email, processUserModel.password);
-   });
+    });
 
     describe('With processes Pagination', () => {
-
         beforeAll(async () => {
-
-            this.alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
-
-            await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
-                await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
+                await new ProcessUtil(alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
             }
-    });
+        });
 
         beforeEach(async () => {
             await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
         });
 
-        it('[C261042] Should display default pagination',  async() => {
+        it('[C261042] Should display default pagination', async () => {
             page = 1;
             totalPages = 1;
             await processFiltersPage.clickRunningFilterButton();
@@ -109,7 +97,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261043] Should be possible to Items per page to 15',  async() => {
+        it('[C261043] Should be possible to Items per page to 15', async () => {
             page = 1;
             totalPages = 2;
             await processFiltersPage.clickRunningFilterButton();
@@ -150,7 +138,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         });
 
-        it('[C261044] Should be possible to Items per page to 10',  async() => {
+        it('[C261044] Should be possible to Items per page to 10', async () => {
             page = 1;
             totalPages = 2;
             await processFiltersPage.clickRunningFilterButton();
@@ -191,7 +179,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         });
 
-        it('[C261047] Should be possible to Items per page to 20',  async() => {
+        it('[C261047] Should be possible to Items per page to 20', async () => {
             page = 1;
             totalPages = 1;
             await processFiltersPage.clickRunningFilterButton();
@@ -219,7 +207,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         });
 
-        it('[C261045] Should be possible to Items per page to 5',  async() => {
+        it('[C261045] Should be possible to Items per page to 5', async () => {
             let showing;
             page = 1;
             totalPages = 4;
@@ -293,7 +281,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         });
 
-        it('[C261049] Should be possible to open page number dropdown',  async() => {
+        it('[C261049] Should be possible to open page number dropdown', async () => {
             let showing;
             page = 1;
             totalPages = 2;
@@ -346,7 +334,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261048] Should be possible to sort processes by name',  async() => {
+        it('[C261048] Should be possible to sort processes by name', async () => {
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -365,7 +353,7 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkProcessesSortedByNameDesc();
         });
 
-        it('[C286260] Should keep sorting when changing \'Items per page\'',  async() => {
+        it('[C286260] Should keep sorting when changing \'Items per page\'', async () => {
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();

@@ -85,7 +85,6 @@ describe('Permissions Component', () => {
     managerUser = new AcsUserModel();
 
     beforeAll(async () => {
-
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
@@ -161,7 +160,6 @@ describe('Permissions Component', () => {
     });
 
     describe('Role Site Dropdown', () => {
-
         beforeAll(async () => {
             await loginPage.login(folderOwnerUser.id, folderOwnerUser.password);
 
@@ -204,7 +202,6 @@ describe('Permissions Component', () => {
     });
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', () => {
-
         it('[C276994] Role SiteConsumer', async () => {
             await loginPage.login(siteConsumerUser.id, siteConsumerUser.password);
 
@@ -342,7 +339,6 @@ describe('Permissions Component', () => {
     });
 
     describe('Roles: Private site and Manager User', () => {
-
         it('[C277196] should a user with Manager permissions be able to upload a new version for the created file', async () => {
             await loginPage.login(managerUser.id, managerUser.password);
 

@@ -33,7 +33,6 @@ describe('Document List Component', () => {
     let acsUser = null;
 
     describe('Permission Message', () => {
-
         beforeAll(async () => {
             acsUser = new AcsUserModel();
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;

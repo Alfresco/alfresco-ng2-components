@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import {
     ApiService,
@@ -67,8 +66,8 @@ describe('Process Task - Attach content file', () => {
     };
 
     const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
-    this.alfrescoJsApi = new AlfrescoApi({ provider: 'ECM', hostEcm: browser.params.testConfig.appConfig.bpmHost });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
         await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
@@ -76,7 +75,7 @@ describe('Process Task - Attach content file', () => {
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
         processInstancesService = new ProcessInstancesService(apiService);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
-        await this.alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);

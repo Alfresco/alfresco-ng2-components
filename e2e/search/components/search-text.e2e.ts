@@ -43,7 +43,6 @@ describe('Search component - Text widget', () => {
     const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
 
     beforeAll(async () => {
-
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host
@@ -82,7 +81,6 @@ describe('Search component - Text widget', () => {
     });
 
     describe('configuration change', () => {
-
         let jsonFile;
 
         beforeAll(async () => {

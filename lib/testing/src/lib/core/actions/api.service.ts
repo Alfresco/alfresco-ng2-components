@@ -24,27 +24,23 @@ export class ApiService {
 
     config: AlfrescoApiConfig;
 
+    constructor(obj?: any);
+    constructor(clientId?: string, host?: string, hostSso?: string, provider?: string);
     constructor(clientId?: string, host?: string, hostSso?: string, provider?: string) {
+        this.config = browser.params.testConfig.appConfig;
 
-        if (clientId && host && hostSso && provider) {
-            this.config = {
-                provider,
-                hostBpm: host,
-                hostEcm: host,
-                authType: 'OAUTH',
-                oauth2: {
-                    host: hostSso,
-                    clientId,
-                    scope: 'openid',
-                    secret: '',
-                    implicitFlow: false,
-                    silentLogin: false,
-                    redirectUri: '/',
-                    redirectUriLogout: '/logout'
-                }
-            };
-        } else {
-            this.config = browser.params.testConfig.appConfig;
+        if (clientId) {
+            this.config.oauth2.clientId = clientId;
+        }
+        if (hostSso) {
+            this.config.oauth2.host = hostSso;
+        }
+        if (host) {
+            this.config.hostBpm = host;
+            this.config.hostEcm = host;
+        }
+        if (provider) {
+            this.config.provider = provider;
         }
 
         this.apiService = new AlfrescoApi(this.config);

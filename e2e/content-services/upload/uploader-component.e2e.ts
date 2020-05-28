@@ -80,7 +80,6 @@ describe('Upload component', () => {
     });
 
     describe('', () => {
-
         afterEach(async () => {
             const nodeList = await contentServicesPage.getElementsDisplayedId();
             for (const node of nodeList) {

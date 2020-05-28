@@ -16,10 +16,9 @@
  */
 
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { LoginSSOPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
@@ -34,6 +33,7 @@ describe('Process Instance Details', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     let appModel, process, user;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -42,20 +42,15 @@ describe('Process Instance Details', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(alfrescoJsApi);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await alfrescoJsApi.login(user.email, user.password);
 
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        const processModel = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
+        const processModel = await new ProcessUtil(alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await loginPage.login(user.email, user.password);
 
@@ -65,13 +60,13 @@ describe('Process Instance Details', () => {
         await processServiceTabBarPage.clickProcessButton();
         await processListPage.checkProcessListIsDisplayed();
 
-        process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
+        process = await alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     it('[C307031] Should display the created date in the default format', async () => {

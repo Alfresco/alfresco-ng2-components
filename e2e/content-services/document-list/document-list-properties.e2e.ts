@@ -39,7 +39,6 @@ describe('Document List Component - Properties', () => {
     });
 
     describe('Allow drop files property', () => {
-
         beforeEach(async () => {
             acsUser = new AcsUserModel();
 

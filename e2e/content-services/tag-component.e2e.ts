@@ -50,7 +50,6 @@ describe('Tag component', () => {
     let pdfUploadedFile, nodeId;
 
     beforeAll(async () => {
-
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);

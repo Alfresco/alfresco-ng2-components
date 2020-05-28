@@ -109,7 +109,6 @@ describe('Document List Component', () => {
     });
 
     describe('Document List Component - Actions Move and Copy', () => {
-
         beforeAll(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
         });
@@ -204,7 +203,6 @@ describe('Document List Component', () => {
     });
 
     describe('Document List actionns - Move, Copy on no permission folder', () => {
-
         beforeAll(async () => {
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);

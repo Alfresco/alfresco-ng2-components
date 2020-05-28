@@ -50,7 +50,6 @@ describe('Task claim/release', () => {
     let processInstance: ProcessInstanceCloud;
 
     describe('candidate user', () => {
-
         beforeAll(async () => {
             await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.candidateUserProcess, candidateApp.name);

@@ -33,7 +33,6 @@ describe('Document List Component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     describe('Gallery View', () => {
-
         const cardProperties = {
             DISPLAY_NAME: 'Display name',
             SIZE: 'Size',

@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, ApplicationsUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { StringUtil, LoginSSOPage, PaginationPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
+import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
 
 describe('Task List Pagination - Sorting', () => {
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfTasks = 20;
@@ -47,23 +48,18 @@ describe('Task List Pagination - Sorting', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
-        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
         await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskNames[i] });
+            await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskNames[i] }));
         }
 
         await loginPage.login(processUserModel.email, processUserModel.password);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -24,7 +24,7 @@ import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
-import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { User } from '../models/APS/user';
@@ -32,7 +32,6 @@ import { User } from '../models/APS/user';
 describe('Task', () => {
 
     describe('Filters', () => {
-
         const loginPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
@@ -43,36 +42,29 @@ describe('Task', () => {
 
         const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
         let appId: number, user: User;
-
-        beforeAll(async () => {
-            this.alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
-        });
+        const alfrescoJsApi = new ApiService().apiService;
 
         beforeEach(async () => {
+        const users = new UsersActions();
 
-            const users = new UsersActions();
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(alfrescoJsApi);
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await alfrescoJsApi.login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const { id } = await applicationsService.importPublishDeployApp(app.file_path);
+        appId = id;
 
-            await this.alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
-            const { id } = await applicationsService.importPublishDeployApp(app.file_path);
-            appId = id;
-
-            await loginPage.login(user.email, user.password);
-            await navigationBarPage.navigateToProcessServicesPage();
-            await processServicesPage.checkApsContainer();
-            await processServicesPage.goToApp(app.title);
+        await loginPage.login(user.email, user.password);
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+        await processServicesPage.goToApp(app.title);
         });
 
         afterEach(async () => {
-            await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
         it('[C279967] Should display default filters when an app is deployed', async () => {
@@ -178,13 +170,13 @@ describe('Task', () => {
     });
 
     describe('Custom Filters', () => {
-
         const loginPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
         const processServiceTabBarPage = new ProcessServiceTabBarPage();
         const appSettingsToggles = new AppSettingsTogglesPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
+        const alfrescoJsApi = new ApiService().apiService;
 
         let user;
         let appId: number;
@@ -193,27 +185,21 @@ describe('Task', () => {
 
         beforeAll(async () => {
             const users = new UsersActions();
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            user = await users.createTenantAndUser(alfrescoJsApi);
 
-            this.alfrescoJsApi = new AlfrescoApi({
-                provider: 'BPM',
-                hostBpm: browser.params.testConfig.adf_aps.host
-            });
-
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-            await this.alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+            await alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-            const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
             appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 
             await loginPage.login(user.email, user.password);
         });
 
         afterAll( async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
         beforeEach(async () => {
@@ -229,11 +215,11 @@ describe('Task', () => {
                 icon: 'glyphicon-filter',
                 filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
             });
-            const { id } = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+            const { id } = await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
             await browser.refresh();
             await taskFiltersDemoPage.customTaskFilter('New Task Filter').checkTaskFilterIsDisplayed();
-            await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(id);
+            await alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(id);
         });
 
         it('[C286447] Should display the task filter icon when a custom filter is added', async () => {
@@ -243,7 +229,7 @@ describe('Task', () => {
                 icon: 'glyphicon-cloud',
                 filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
             });
-            const { id } = await this.alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+            const { id } = await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
             await browser.refresh();
             await processServiceTabBarPage.clickSettingsButton();
@@ -253,7 +239,7 @@ describe('Task', () => {
 
             await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').checkTaskFilterIsDisplayed();
             await expect(await taskFiltersDemoPage.customTaskFilter('New Task Filter with icon').getTaskFilterIcon()).toEqual('cloud');
-            await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(id);
+            await alfrescoJsApi.activiti.userFiltersApi.deleteUserTaskFilter(id);
         });
 
         it('[C286449] Should display task filter icons only when showIcon property is set on true', async () => {

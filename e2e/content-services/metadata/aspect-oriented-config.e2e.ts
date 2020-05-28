@@ -91,7 +91,6 @@ describe('Aspect oriented config', () => {
    });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: [
@@ -132,7 +131,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: {
@@ -159,7 +157,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{}');
 
         await navigationBarPage.clickContentServicesButton();
@@ -177,7 +174,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: '*'
@@ -199,7 +195,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '  "presets": {' +
             '    "default": [' +
@@ -243,7 +238,6 @@ describe('Aspect oriented config', () => {
    });
 
     it('[C279968] Should be possible use a custom preset', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": {' +
             '        "custom-preset": {' +
@@ -272,7 +266,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C299186] The aspect without properties is not displayed', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + modelOneName +
             '       ": { "' + modelOneName + ':' + emptyAspectName +
@@ -295,7 +288,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +

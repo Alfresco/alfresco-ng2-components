@@ -23,7 +23,6 @@ export class ModelsActions {
     }
 
     async deleteEntireModel(alfrescoJsApi, modelId) {
-
         return alfrescoJsApi.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
     }
 

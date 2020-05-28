@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -23,8 +23,6 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 import { browser } from 'protractor';
 import { Tenant } from '../models/APS/tenant';
 import { User } from '../models/APS/user';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Analytics Smoke Test', () => {
 
@@ -35,27 +33,23 @@ describe('Analytics Smoke Test', () => {
     const processServicesPage = new ProcessServicesPage();
     let tenantId;
     const reportTitle = 'New Title';
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         tenantId = newTenant.id;
         const procUserModel = new User({ tenantId: tenantId });
 
-        await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+        await alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 
         await loginPage.login(procUserModel.email, procUserModel.password);
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     it('[C260346] Should be able to change title of a report', async () => {

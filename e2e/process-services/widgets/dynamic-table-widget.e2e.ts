@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -30,10 +29,7 @@ describe('Dynamic Table widget ', () => {
     const widget = new Widget();
     const users = new UsersActions();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'BPM',
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
+    const alfrescoJsApi = new ApiService().apiService;
 
     let processUserModel;
     let appModel;
@@ -146,7 +142,6 @@ describe('Dynamic Table widget ', () => {
     });
 
     describe('Custom validation', () => {
-
         const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
         beforeAll(async () => {

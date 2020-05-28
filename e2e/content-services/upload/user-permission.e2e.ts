@@ -89,7 +89,6 @@ describe('Upload - User permission', () => {
     });
 
     describe('Consumer permissions', () => {
-
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
         });
@@ -128,7 +127,6 @@ describe('Upload - User permission', () => {
     });
 
     describe('full permissions', () => {
-
         beforeEach(async () => {
             await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
@@ -143,7 +141,6 @@ describe('Upload - User permission', () => {
     });
 
     describe('multiple users', () => {
-
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
         });

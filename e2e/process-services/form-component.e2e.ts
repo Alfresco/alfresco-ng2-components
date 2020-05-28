@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, FormPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, FormPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Form Component', () => {
@@ -28,6 +26,7 @@ describe('Form Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
     const widget = new Widget();
+    const alfrescoJsApi = new ApiService().apiService;
 
     let tenantId, user;
 
@@ -48,20 +47,15 @@ describe('Form Component', () => {
     };
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
         const users = new UsersActions();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        user = await users.createTenantAndUser(alfrescoJsApi);
 
         tenantId = user.tenantId;
 
-        await this.alfrescoJsApi.login(user.email, user.password);
+        await alfrescoJsApi.login(user.email, user.password);
 
         await loginPage.login(user.email, user.password);
 
@@ -69,9 +63,9 @@ describe('Form Component', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', async () => {

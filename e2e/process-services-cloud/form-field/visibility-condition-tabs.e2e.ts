@@ -18,7 +18,6 @@
 import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisibilityJson,
     tabFieldFieldVisibilityJson, tabFieldVarVisibilityJson, tabVarVarVisibilityJson,
@@ -54,13 +53,7 @@ describe('Visibility conditions on tabs - cloud', () => {
     };
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-
         await navigationBarPage.navigateToFormCloudPage();
     });
 

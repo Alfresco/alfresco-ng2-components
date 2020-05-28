@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -23,7 +23,7 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 
-import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
@@ -41,6 +41,7 @@ describe('Process Filters Test', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     let appModel, user;
+    const alfrescoJsApi = new ApiService().apiService;
 
     const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
@@ -60,15 +61,10 @@ describe('Process Filters Test', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-        await this.alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(alfrescoJsApi);
+        await alfrescoJsApi.login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);
     });
@@ -133,24 +129,23 @@ describe('Process Filters Test', () => {
     });
 
     it('[C280407] Should be able to access the filters with URL', async () => {
-
         const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-        const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
 
         processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
-        const taskAppFilters = await this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
+        const taskAppFilters = await alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
         await processListPage.checkProcessListIsDisplayed();
 
         await expect(taskAppFilters.size).toBe(defaultFiltersNumber);
-        for (const filter of taskAppFilters) {
+        for (const filter of taskAppFilters.data) {
             await BrowserActions.getUrl(processFilterUrl + filter.id);
             await processListPage.checkProcessListIsDisplayed();
             await processFiltersPage.checkFilterIsHighlighted(filter.name);
@@ -218,8 +213,8 @@ describe('Process Filters Test', () => {
     });
 
     it('[C260384] Edit default filter', async () => {
-        const runningFilter =  (await getFilter(this.alfrescoJsApi)).find(filter => filter.name === 'Running');
-        await this.alfrescoJsApi.activiti.userFiltersApi
+        const runningFilter =  (await getFilter()).find(filter => filter.name === 'Running');
+        await alfrescoJsApi.activiti.userFiltersApi
             .updateUserProcessInstanceFilter(runningFilter.id, { ...runningFilter, name: 'Edited Running' });
 
         await processServicesPage.goToApp(app.title);
@@ -229,15 +224,15 @@ describe('Process Filters Test', () => {
     });
 
     it('[C260385] Delete default filter', async () => {
-        const allFilter =  (await getFilter(this.alfrescoJsApi)).find(filter => filter.name === 'All');
-        await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
+        const allFilter =  (await getFilter()).find(filter => filter.name === 'All');
+        await alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
         await processFiltersPage.checkFilterIsNotDisplayed('All');
     });
 
-    async function getFilter(alfrescoJsApi): Promise<UserProcessInstanceFilterRepresentation[]> {
+    async function getFilter(): Promise<UserProcessInstanceFilterRepresentation[]> {
         const apps = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         const { id: appId = 0 } = apps.data.find((application) => application.name === appModel.name);
         const filters = await alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });

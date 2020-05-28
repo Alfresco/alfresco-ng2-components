@@ -55,7 +55,6 @@ describe('Document List Component', () => {
     });
 
     describe('Thumbnails and tooltips', () => {
-
         const pdfFile = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path

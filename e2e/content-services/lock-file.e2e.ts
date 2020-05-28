@@ -76,7 +76,6 @@ describe('Lock File', () => {
     });
 
     describe('Lock file interaction with the UI', () => {
-
         beforeAll(async () => {
             const pngLockedUploadedFile = await uploadActions.uploadFile(pngFileToLock.location, pngFileToLock.name, documentLibrary);
 
@@ -92,8 +91,7 @@ describe('Lock File', () => {
 
                 await contentServices.waitForTableBody();
             } catch (error) {
-
-            }
+        }
     });
 
         afterEach(async () => {
@@ -103,8 +101,7 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
 
             } catch (error) {
-
-            }
+        }
     });
 
         afterAll(async () => {
@@ -116,8 +113,7 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(lockedFileNodeId);
 
             } catch (error) {
-
-            }
+        }
     });
 
         it('[C286604] Should be able to open Lock file option by clicking the lock image', async () => {
@@ -165,7 +161,6 @@ describe('Lock File', () => {
    });
 
     describe('Locked file without owner permissions', () => {
-
         beforeEach(async () => {
             const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
 
@@ -247,7 +242,6 @@ describe('Lock File', () => {
    });
 
     describe('Locked file with owner permissions', () => {
-
         let pngFileToBeLocked;
 
         beforeAll(async () => {

@@ -17,12 +17,11 @@
 
 import { browser } from 'protractor';
 
-import { SettingsPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { SettingsPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
 import { LoginPage } from '../../pages/adf/demo-shell/login.page';
 
@@ -41,22 +40,17 @@ describe('Login component - Redirect', () => {
     });
     let uploadedFolder;
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host,
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const alfrescoJsApi = new ApiService().apiService;
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const logoutPage = new LogoutPage();
 
     beforeAll(async () => {
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.core.peopleApi.addPerson(user);
+        await alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(user);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);
-
-        await this.alfrescoJsApi.login(user.id, user.password);
+        await alfrescoJsApi.login(user.id, user.password);
 
         uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
    });

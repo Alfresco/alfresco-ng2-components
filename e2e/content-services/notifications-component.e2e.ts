@@ -32,7 +32,6 @@ describe('Notifications Component', () => {
     const acsUser = new AcsUserModel();
 
     beforeAll(async () => {
-
         alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.adf_acs.host

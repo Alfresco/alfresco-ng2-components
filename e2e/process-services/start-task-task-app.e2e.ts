@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, StringUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, StringUtil } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
@@ -29,6 +28,7 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import fs = require('fs');
 import path = require('path');
+import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
 
 describe('Start Task - Task App', () => {
 
@@ -36,6 +36,7 @@ describe('Start Task - Task App', () => {
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     let processUserModel, assigneeUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -56,27 +57,22 @@ describe('Start Task - Task App', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        assigneeUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
 
-        assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        processUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: showHeaderTask });
+        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
 
         await loginPage.login(processUserModel.email, processUserModel.password);
    });

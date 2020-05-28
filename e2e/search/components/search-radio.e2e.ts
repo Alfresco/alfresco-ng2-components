@@ -122,7 +122,6 @@ describe('Search Radio Component', () => {
     });
 
     describe('configuration change', () => {
-
         let jsonFile;
 
         beforeEach(() => {
@@ -251,7 +250,6 @@ describe('Search Radio Component', () => {
    });
 
     describe('Properties', () => {
-
         let jsonFile;
 
         beforeEach(() => {

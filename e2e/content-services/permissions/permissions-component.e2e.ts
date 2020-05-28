@@ -85,7 +85,6 @@ describe('Permissions Component', () => {
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
     beforeAll(async () => {
-
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
@@ -175,7 +174,6 @@ describe('Permissions Component', () => {
     });
 
     describe('Inherit and assigning permissions', () => {
-
         beforeEach(async () => {
             await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
@@ -242,7 +240,6 @@ describe('Permissions Component', () => {
    });
 
     describe('Changing and duplicate Permissions', () => {
-
         beforeEach(async () => {
             await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
@@ -307,7 +304,6 @@ describe('Permissions Component', () => {
    });
 
     describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
-
         it('[C276993] Role Consumer', async () => {
             await loginPage.login(filePermissionUser.id, filePermissionUser.password);
             await navigationBarPage.openContentServicesFolder(roleConsumerFolder.entry.id);

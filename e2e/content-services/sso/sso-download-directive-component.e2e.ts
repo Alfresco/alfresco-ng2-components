@@ -76,7 +76,6 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     let identityService: IdentityService;
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
-
         beforeAll(async () => {
             const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.hostSso, 'ECM');
             await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);

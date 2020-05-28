@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -30,6 +29,7 @@ describe('Task List Pagination', () => {
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
+    const alfrescoJsApi = new ApiService().apiService;
 
     let processUserModel: User;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -52,28 +52,23 @@ describe('Task List Pagination', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         const resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(resultApp.name);
+            await new ProcessUtil(alfrescoJsApi).startProcessOfApp(resultApp.name);
         }
 
         await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll( async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C260301] Should display default pagination', async () => {

@@ -49,30 +49,29 @@ describe('Process list cloud', () => {
         const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
 
         beforeAll(async () => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-
-            await apiService.login(testUser.email, testUser.password);
-            processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService
+        await apiService.login(testUser.email, testUser.password);
+        processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
-            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+        processInstancesService = new ProcessInstancesService(apiService);
+        editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
-            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+        deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 
         afterAll(async () => {

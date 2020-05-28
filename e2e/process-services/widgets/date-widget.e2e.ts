@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, BrowserActions, Widget, FormPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    BrowserActions,
+    Widget,
+    FormPage,
+    ApplicationsUtil,
+    ProcessUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -31,18 +38,13 @@ describe('Date widget', () => {
     const taskPage = new TasksPage();
     const widget = new Widget();
     const dateWidget = widget.dateWidget();
-    let alfrescoJsApi;
     let appModel;
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.DATE;
     let deployedApp, process;
+    const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
         const users = new UsersActions();
-
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
 
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
@@ -67,7 +69,6 @@ describe('Date widget', () => {
    });
 
     describe('Simple App', () => {
-
         beforeEach(async () => {
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
@@ -95,7 +96,6 @@ describe('Date widget', () => {
     });
 
     describe('Form Demo Page', () => {
-
         const formDemoPage = new FormDemoPage();
         const formJson = JSON.parse(customDateFormAPS1);
         const formPage = new FormPage();

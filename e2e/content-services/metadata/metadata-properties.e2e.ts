@@ -54,7 +54,6 @@ describe('CardView Component - properties', () => {
     const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
-
         await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
