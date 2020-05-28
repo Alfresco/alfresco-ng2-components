@@ -18,14 +18,14 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { SearchApi as AdfSearchApi, AlfrescoApi, ResultSetPaging } from '@alfresco/js-api';
+import { SearchApi as SearchJsApi, AlfrescoApi, ResultSetPaging } from '@alfresco/js-api';
 
 export class SearchApi extends Api {
-  searchApi: AdfSearchApi;
+  searchApi: SearchJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.searchApi = new AdfSearchApi(alfrescoJsApi);
+    this.searchApi = new SearchJsApi(alfrescoJsApi);
   }
 
   async queryRecentFiles(username: string): Promise<ResultSetPaging> {

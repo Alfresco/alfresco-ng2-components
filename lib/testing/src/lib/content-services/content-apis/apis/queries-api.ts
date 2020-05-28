@@ -18,14 +18,14 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { QueriesApi as AdfQueriesApi, AlfrescoApi, SitePaging, NodePaging } from '@alfresco/js-api';
+import { QueriesApi as QueriesJsApi, AlfrescoApi, SitePaging, NodePaging } from '@alfresco/js-api';
 
 export class QueriesApi extends Api {
-  queriesApi: AdfQueriesApi;
+  queriesApi: QueriesJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.queriesApi = new AdfQueriesApi(alfrescoJsApi);
+    this.queriesApi = new QueriesJsApi(alfrescoJsApi);
   }
 
   async findSites(searchTerm: string): Promise<SitePaging> {

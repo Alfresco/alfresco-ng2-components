@@ -16,14 +16,14 @@
  */
 
 import { Api } from './api';
-import { CommentsApi as AdfCommentsApi, CommentPaging, CommentEntry, AlfrescoApi } from '@alfresco/js-api';
+import { CommentsApi as CommentsJsApi, CommentPaging, CommentEntry, AlfrescoApi } from '@alfresco/js-api';
 
 export class CommentsApi extends Api {
-  commentsApi: AdfCommentsApi;
+  commentsApi: CommentsJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.commentsApi = new AdfCommentsApi(alfrescoJsApi);
+    this.commentsApi = new CommentsJsApi(alfrescoJsApi);
   }
 
   async getNodeComments(nodeId: string): Promise<CommentPaging> {

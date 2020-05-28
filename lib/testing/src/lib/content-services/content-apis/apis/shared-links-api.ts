@@ -18,14 +18,14 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { SharedlinksApi as AdfSharedLinksApi, SharedLinkEntry, SharedLinkPaging, AlfrescoApi } from '@alfresco/js-api';
+import { SharedlinksApi as SharedLinksJsApi, SharedLinkEntry, SharedLinkPaging, AlfrescoApi } from '@alfresco/js-api';
 
 export class SharedLinksApi extends Api {
-    sharedlinksApi: AdfSharedLinksApi;
+    sharedlinksApi: SharedLinksJsApi;
 
     constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
       super(username, password, alfrescoJsApi);
-      this.sharedlinksApi = new AdfSharedLinksApi(alfrescoJsApi);
+      this.sharedlinksApi = new SharedLinksJsApi(alfrescoJsApi);
     }
 
     async shareFileById(id: string, expireDate?: Date): Promise<SharedLinkEntry> {
@@ -42,7 +42,7 @@ export class SharedLinksApi extends Api {
       }
     }
 
-    async shareFilesByIds(ids: string[]): Promise<any> {
+    async shareFilesByIds(ids: string[]): Promise<SharedLinkEntry[]> {
       try {
         return await ids.reduce(async (previous: any, current: any) => {
           await previous;
@@ -50,6 +50,7 @@ export class SharedLinksApi extends Api {
         }, Promise.resolve());
       } catch (error) {
         this.handleError(`${this.constructor.name} ${this.shareFilesByIds.name}`, error);
+        return null;
       }
     }
 

@@ -18,14 +18,14 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
-import { TrashcanApi as AdfTrashcanApi, AlfrescoApi, NodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
+import { TrashcanApi as TrashcanJsApi, AlfrescoApi, NodeEntry, DeletedNodesPaging } from '@alfresco/js-api';
 
 export class TrashcanApi extends Api {
-  trashcanApi: AdfTrashcanApi;
+  trashcanApi: TrashcanJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.trashcanApi = new AdfTrashcanApi(alfrescoJsApi);
+    this.trashcanApi = new TrashcanJsApi(alfrescoJsApi);
   }
 
   async permanentlyDelete(id: string): Promise<any> {

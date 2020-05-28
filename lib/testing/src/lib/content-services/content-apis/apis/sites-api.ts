@@ -25,18 +25,18 @@ import {
     SiteMemberBody,
     SiteEntry,
     SiteMembershipRequestEntry,
-    SitesApi as AdfSitesApi,
+    SitesApi as SitesJsApi,
     SiteMemberEntry,
     AlfrescoApi,
     SiteRolePaging
 } from '@alfresco/js-api';
 
 export class SitesApi extends Api {
-  sitesApi: AdfSitesApi;
+  sitesApi: SitesJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.sitesApi = new AdfSitesApi(alfrescoJsApi);
+    this.sitesApi = new SitesJsApi(alfrescoJsApi);
   }
 
   async getSite(siteId: string): Promise<SiteEntry> {
@@ -124,7 +124,7 @@ export class SitesApi extends Api {
     return this.createSite(title, Site.VisibilityEnum.MODERATED, description, siteId);
   }
 
-  async createSites(titles: string[], visibility?: string): Promise<any> {
+  async createSites(titles: string[], visibility?: string): Promise<SiteEntry[]> {
     try {
       return titles.reduce(async (previous: any, current: any) => {
         await previous;
@@ -132,10 +132,11 @@ export class SitesApi extends Api {
       }, Promise.resolve());
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createSites.name}`, error);
+      return null;
     }
   }
 
-  async createSitesPrivate(siteNames: string[]): Promise<any> {
+  async createSitesPrivate(siteNames: string[]): Promise<SiteEntry[]> {
     return this.createSites(siteNames, Site.VisibilityEnum.PRIVATE);
   }
 

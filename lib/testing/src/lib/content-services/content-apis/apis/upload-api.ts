@@ -16,16 +16,16 @@
  */
 
 import { Api } from './api';
-import { UploadApi as AdfUploadApi, AlfrescoApi } from '@alfresco/js-api';
+import { UploadApi as UploadJsApi, AlfrescoApi } from '@alfresco/js-api';
 
 import * as fs from 'fs';
 
 export class UploadApi extends Api {
-  uploadApi: AdfUploadApi;
+  uploadApi: UploadJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.uploadApi = new AdfUploadApi(alfrescoJsApi);
+    this.uploadApi = new UploadJsApi(alfrescoJsApi);
   }
 
   async uploadFile(filePath: string, fileName: string, parentId: string = '-my-'): Promise<any> {

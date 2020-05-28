@@ -18,15 +18,15 @@
 import { Api } from './api';
 import { NodeBodyCreate } from './node-body-create';
 import { NodeContentTree, flattenNodeContentTree } from './node-content-tree';
-import { NodesApi as AdfNodesApi, NodeBodyLock, NodeEntry, NodeChildAssociationPaging, AlfrescoApi } from '@alfresco/js-api';
+import { NodesApi as NodesJsApi, NodeBodyLock, NodeEntry, NodeChildAssociationPaging, AlfrescoApi } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
 export class NodesApi extends Api {
-  nodesApi: AdfNodesApi;
+  nodesApi: NodesJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.nodesApi = new AdfNodesApi(alfrescoJsApi);
+    this.nodesApi = new NodesJsApi(alfrescoJsApi);
   }
 
   async getNodeByPath(relativePath: string = '/'): Promise<NodeEntry> {

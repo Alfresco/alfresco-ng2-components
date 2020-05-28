@@ -17,14 +17,14 @@
 
 import { PersonModel, Person } from './people-api-models';
 import { Api } from './api';
-import { PeopleApi as AdfPeopleApi, AlfrescoApi, PersonEntry } from '@alfresco/js-api';
+import { PeopleApi as PeopleJsApi, AlfrescoApi, PersonEntry } from '@alfresco/js-api';
 
 export class PeopleApi extends Api {
-  peopleApi: AdfPeopleApi;
+  peopleApi: PeopleJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.peopleApi = new AdfPeopleApi(alfrescoJsApi);
+    this.peopleApi = new PeopleJsApi(alfrescoJsApi);
   }
 
   async createUser(user: PersonModel): Promise<PersonEntry> {

@@ -18,17 +18,17 @@
 import { Api } from './api';
 import { Logger } from '../../../core/utils/logger';
 import { ContentApi } from '../content-api';
-import { FavoritesApi as AdfFavoritesApi, SitesApi as AdfSitesApi, FavoriteEntry, FavoritePaging, AlfrescoApi } from '@alfresco/js-api';
+import { FavoritesApi as FavoritesJsApi, SitesApi as SitesJsApi, FavoriteEntry, FavoritePaging, AlfrescoApi } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
 export class FavoritesApi extends Api {
-  favoritesApi: AdfFavoritesApi;
-  sitesApi: AdfSitesApi;
+  favoritesApi: FavoritesJsApi;
+  sitesApi: SitesJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
     super(username, password, alfrescoJsApi);
-    this.favoritesApi = new AdfFavoritesApi(alfrescoJsApi);
-    this.sitesApi = new AdfSitesApi(alfrescoJsApi);
+    this.favoritesApi = new FavoritesJsApi(alfrescoJsApi);
+    this.sitesApi = new SitesJsApi(alfrescoJsApi);
   }
 
   async addFavorite(api: ContentApi, nodeType: string, name: string): Promise<FavoriteEntry> {
@@ -111,7 +111,7 @@ export class FavoritesApi extends Api {
     }
   }
 
-  async isFavoriteWithRetry(nodeId: string, data: { expect: boolean }): Promise<any> {
+  async isFavoriteWithRetry(nodeId: string, data: { expect: boolean }): Promise<boolean> {
     let isFavorite: boolean;
     try {
       const favorite = async () => {
