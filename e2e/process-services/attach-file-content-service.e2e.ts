@@ -33,9 +33,7 @@ import { User } from '../models/APS/user';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach File - Content service', () => {
-    const alfrescoJsApi = new ApiService({ provider: 'ALL',
-        hostEcm: browser.params.testConfig.adf_acs.host,
-        hostBpm: browser.params.testConfig.adf_aps.host}).apiService;
+    const alfrescoJsApi = new ApiService({ provider: 'ALL'}).apiService;
 
     const alfrescoJsApiExternal = new ApiService({
         provider: 'ECM',
@@ -50,7 +48,7 @@ describe('Attach File - Content service', () => {
     const externalNodeSelector = new ExternalNodeSelectorDialogPage();
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-    const { adminEmail, adminPassword } = browser.params.testConfig.adf;
+    const { email, password } = browser.params.testConfig.admin;
 
     const pdfFileOne = {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -72,14 +70,14 @@ describe('Attach File - Content service', () => {
         const uploadActions = new UploadActions(alfrescoJsApi);
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(adminEmail, adminPassword);
+        await alfrescoJsApi.login(email, password);
         user = await users.createTenantAndUser(alfrescoJsApi);
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApiExternal.login(adminEmail, adminPassword);
+        await alfrescoJsApiExternal.login(email, password);
         await alfrescoJsApiExternal.core.peopleApi.addPerson(acsUser);
 
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.adf_acs.host });
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.hostEcm });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
 
         await alfrescoJsApi.login(user.email, user.password);
@@ -88,7 +86,7 @@ describe('Attach File - Content service', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(adminEmail, adminPassword);
+        await alfrescoJsApi.login(email, password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

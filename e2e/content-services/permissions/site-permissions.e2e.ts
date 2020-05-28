@@ -85,7 +85,7 @@ describe('Permissions Component', () => {
     managerUser = new AcsUserModel();
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
@@ -154,7 +154,7 @@ describe('Permissions Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
         await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });

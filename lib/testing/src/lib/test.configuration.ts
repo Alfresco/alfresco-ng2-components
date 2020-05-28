@@ -33,46 +33,21 @@ export interface TestConfiguration {
         password: string
     };
 
+    admin: {
+        email: string,
+        password: string
+    };
+
     main: {
-        timeout: number;
         rootPath: string;
     };
 
     adf: {
         url: string;
-        port: string;
-        login: string;
-        adminUser: string;
-        adminEmail: string;
-        adminPassword: string;
-        hostBPM: string;
-        clientIdSso: string;
-
-        hostSso: () => string;
-        hostIdentity: () => string;
-    };
-
-    adf_acs: {
-        protocol: string;
-        host: string;
-        port: string;
-        apiContextRoot: string;
-        clientIdSso: string;
     };
 
     adf_external_acs: {
-        protocol: string;
         host: string;
-        port: string;
-        apiContextRoot: string;
-        clientIdSso: string;
     };
 
-    adf_aps: {
-        protocol: string;
-        host: string;
-        port: string;
-        apiContextRoot: string;
-        clientIdSso: string;
-    };
 }

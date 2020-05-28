@@ -52,7 +52,7 @@ describe('Attachment list action menu for tasks', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         const user = await users.createTenantAndUser(alfrescoJsApi);
         tenantId = user.tenantId;
 
@@ -66,7 +66,7 @@ describe('Attachment list action menu for tasks', () => {
 
     afterAll(async () => {
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 

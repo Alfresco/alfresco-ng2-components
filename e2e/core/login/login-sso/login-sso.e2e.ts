@@ -39,34 +39,34 @@ describe('Login component - SSO', () => {
         });
 
         it('[C261050] Should be possible login with SSO', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
             await loginSSOPage.clickOnSSOButton();
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, true, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
             await browser.refresh();
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         });
    });
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
             implicitFlow = false;
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, silentLogin, implicitFlow, browser.params.testConfig.appConfig.oauth2.clientId);
 
             await loginPage.waitForElements();
 
-            await loginPage.enterUsername(browser.params.testConfig.adf.adminEmail);
-            await loginPage.enterPassword(browser.params.testConfig.adf.adminPassword);
+            await loginPage.enterUsername(browser.params.testConfig.admin.email);
+            await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
 
             await BrowserVisibility.waitUntilElementIsVisible(loginPage.sidenavLayout);

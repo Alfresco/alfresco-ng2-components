@@ -74,7 +74,7 @@ describe('Unshare file', () => {
             }
         };
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         testSite = await alfrescoJsApi.core.sitesApi.createSite(site);
 
@@ -155,14 +155,14 @@ describe('Unshare file', () => {
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.adf_acs.host, browser.params.testConfig.adf.host));
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.hostEcm, browser.params.testConfig.adf.host));
             await errorPage.checkErrorCode();
         });
     });
 
     describe('without permission', () => {
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
         });
 

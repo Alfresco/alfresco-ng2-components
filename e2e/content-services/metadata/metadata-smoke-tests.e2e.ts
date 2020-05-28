@@ -65,7 +65,7 @@ describe('Metadata component', () => {
     const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -259,7 +259,7 @@ describe('Metadata component', () => {
     });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
-        await loginPage.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
 

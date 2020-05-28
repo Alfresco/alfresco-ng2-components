@@ -45,10 +45,10 @@ describe('Search component - Text widget', () => {
     beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
+            hostEcm: browser.params.testConfig.appConfig.hostEcm
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 

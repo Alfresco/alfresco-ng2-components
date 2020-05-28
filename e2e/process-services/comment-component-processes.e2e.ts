@@ -38,7 +38,7 @@ describe('Comment component for Processes', () => {
         const users = new UsersActions();
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser(alfrescoJsApi);
 
@@ -57,7 +57,7 @@ describe('Comment component for Processes', () => {
 
     afterAll(async () => {
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 

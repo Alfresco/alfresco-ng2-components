@@ -61,7 +61,7 @@ describe('Task Details - Form', () => {
             'stencilSet': 0
         };
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser(alfrescoJsApi);
         await alfrescoJsApi.login(user.email, user.password);
 
@@ -78,7 +78,7 @@ describe('Task Details - Form', () => {
    });
 
     afterAll( async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

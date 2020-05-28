@@ -60,7 +60,7 @@ describe('Document List Component', () => {
         anotherAcsUser = new AcsUserModel();
         folderName = StringUtil.generateRandomString(5);
         sameNameFolder = StringUtil.generateRandomString(5);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
         site = await alfrescoJsApi.core.sitesApi.createSite({
@@ -100,7 +100,7 @@ describe('Document List Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);

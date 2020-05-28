@@ -39,7 +39,7 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
@@ -61,7 +61,7 @@ describe('Dynamic Table widget ', () => {
 
         afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -89,7 +89,7 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
@@ -104,7 +104,7 @@ describe('Dynamic Table widget ', () => {
 
         afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
@@ -145,7 +145,7 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             processUserModel = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
@@ -159,7 +159,7 @@ describe('Dynamic Table widget ', () => {
 
         afterAll(async () => {
             await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
 

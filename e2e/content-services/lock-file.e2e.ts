@@ -49,7 +49,7 @@ describe('Lock File', () => {
     let nodeId, site, documentLibrary, lockedFileNodeId;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.core.peopleApi.addPerson(adminUser);
         await alfrescoJsApi.core.peopleApi.addPerson(managerUser);

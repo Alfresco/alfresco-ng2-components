@@ -48,7 +48,7 @@ describe('Task Assignee', () => {
         let user: User;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await users.createTenantAndUser(alfrescoJsApi);
             try {// creates user and group if not available
                 await users.createApsUserWithName(alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
@@ -68,7 +68,7 @@ describe('Task Assignee', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
@@ -114,7 +114,7 @@ describe('Task Assignee', () => {
         let candidate2: User;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await users.createTenantAndUser(alfrescoJsApi);
             candidate1 = await users.createApsUser(alfrescoJsApi, user.tenantId);
             candidate2 = await users.createApsUser(alfrescoJsApi, user.tenantId);
@@ -142,7 +142,7 @@ describe('Task Assignee', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 

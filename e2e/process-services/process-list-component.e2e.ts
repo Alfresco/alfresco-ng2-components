@@ -52,7 +52,7 @@ describe('Process List Test', () => {
         const apps = new AppsActions();
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser(alfrescoJsApi);
 
@@ -86,7 +86,7 @@ describe('Process List Test', () => {
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });

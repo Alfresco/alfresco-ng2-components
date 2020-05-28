@@ -30,7 +30,7 @@ describe('Universal Icon component', () => {
     const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);
    });

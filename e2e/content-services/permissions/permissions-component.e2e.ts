@@ -85,7 +85,7 @@ describe('Permissions Component', () => {
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
         await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
         await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
@@ -167,7 +167,7 @@ describe('Permissions Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
         }

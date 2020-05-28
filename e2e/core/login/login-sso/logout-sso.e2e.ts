@@ -30,7 +30,7 @@ describe('Logout component - SSO', () => {
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '/login');
         await loginSSOPage.clickOnSSOButton();
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await navigationBarPage.clickLogoutButton();
 
         await browser.sleep(2000);

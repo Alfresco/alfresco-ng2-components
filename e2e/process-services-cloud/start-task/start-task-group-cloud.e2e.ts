@@ -41,7 +41,7 @@ describe('Start Task - Group Cloud Component', () => {
     const peopleCloudComponent = new PeopleCloudComponentPage();
     const apiService = new ApiService(
         browser.params.testConfig.appConfig.oauth2.clientId,
-        browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
+        browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
     );
     const groupCloud = new GroupCloudComponentPage();
 

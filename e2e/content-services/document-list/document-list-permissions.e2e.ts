@@ -38,7 +38,7 @@ describe('Document List Component', () => {
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 

@@ -36,7 +36,7 @@ describe('Search Checklist Component', () => {
     const acsUser = new AcsUserModel();
     this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
+            hostEcm: browser.params.testConfig.appConfig.hostEcm
         });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -55,7 +55,7 @@ describe('Search Checklist Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -75,7 +75,7 @@ describe('Search Checklist Component', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);

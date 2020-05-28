@@ -61,7 +61,7 @@ describe('Process Filters Test', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser(alfrescoJsApi);
         await alfrescoJsApi.login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);

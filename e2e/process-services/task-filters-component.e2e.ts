@@ -47,7 +47,7 @@ describe('Task', () => {
         beforeEach(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser(alfrescoJsApi);
 
         await alfrescoJsApi.login(user.email, user.password);
@@ -63,7 +63,7 @@ describe('Task', () => {
 
         afterEach(async () => {
             await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
@@ -185,7 +185,7 @@ describe('Task', () => {
 
         beforeAll(async () => {
             const users = new UsersActions();
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await users.createTenantAndUser(alfrescoJsApi);
 
             await alfrescoJsApi.login(user.email, user.password);
@@ -198,7 +198,7 @@ describe('Task', () => {
         });
 
         afterAll( async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 

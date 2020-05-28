@@ -58,7 +58,7 @@ describe('Task Details component', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         const { id } = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
         processUserModel = await users.createApsUser(alfrescoJsApi, id);
 
@@ -69,7 +69,7 @@ describe('Task Details component', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

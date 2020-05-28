@@ -31,11 +31,7 @@ import { User } from '../models/APS/user';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach Folder', () => {
-    const alfrescoJsApi = new ApiService({
-        provider: 'ALL',
-        hostEcm: browser.params.testConfig.adf_acs.host,
-        hostBpm: browser.params.testConfig.adf_aps.host
-    }).apiService;
+    const alfrescoJsApi = new ApiService({ provider: 'ALL' }).apiService;
 
     const integrationService = new IntegrationService(alfrescoJsApi);
     const applicationService = new ApplicationsUtil(alfrescoJsApi);
@@ -49,26 +45,32 @@ describe('Attach Folder', () => {
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
     const meetingNotes = 'Meeting Notes';
-    const { adminEmail, adminPassword } = browser.params.testConfig.adf;
+    const { email, password } = browser.params.testConfig.admin;
     let user: User;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(adminEmail, adminPassword);
+        await alfrescoJsApi.login(email, password);
         user = await users.createTenantAndUser(alfrescoJsApi);
 
-        const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
+        const acsUser = { ...user, id: user.email };
+        delete acsUser.type;
+        delete acsUser.tenantId;
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs.host });
+        await integrationService.addCSIntegration({
+            tenantId: user.tenantId,
+            name: 'adf dev',
+            host: browser.params.testConfig.appConfig.hostEcm
+        });
         await alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(adminEmail, adminPassword);
+        await alfrescoJsApi.login(email, password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
-   });
+    });
 
     it('[C246534] Attach folder - ACS', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();

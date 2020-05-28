@@ -51,7 +51,7 @@ describe('Edit folder directive', () => {
     let editFolder, anotherFolder, filePdfNode, subFolder;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -78,7 +78,7 @@ describe('Edit folder directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);
         await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);

@@ -28,7 +28,7 @@ describe('User Info - SSO', () => {
 
     beforeAll(async () => {
         const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.appConfig.oauth2.host, 'ECM');
-        await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         identityService = new IdentityService(apiService);
         identityUser = await identityService.createIdentityUser();

@@ -56,7 +56,7 @@ describe('Comment Component', () => {
     };
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
     });
 
@@ -80,7 +80,7 @@ describe('Comment Component', () => {
     });
 
     afterEach(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(nodeId);
     });
 
@@ -161,7 +161,7 @@ describe('Comment Component', () => {
         let site, pngUploadedFile;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             site = await alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),

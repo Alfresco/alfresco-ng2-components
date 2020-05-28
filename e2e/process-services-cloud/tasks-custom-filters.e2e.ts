@@ -41,7 +41,7 @@ describe('Task filters cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const apiService = new ApiService(
             browser.params.testConfig.appConfig.oauth2.clientId,
-            browser.params.testConfig.appConfig.bpmHost, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
+            browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
         );
         let tasksService: TasksService;
         let identityService: IdentityService;

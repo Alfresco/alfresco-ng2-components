@@ -46,12 +46,12 @@ describe('Search Slider Filter', () => {
     let file2Bytes;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
+        hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 

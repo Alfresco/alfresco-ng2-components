@@ -36,7 +36,7 @@ describe('People and Group widget', () => {
     let user: User;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createTenantAndUser(alfrescoJsApi);
         await createGroupAndUsers(user.tenantId);
 
@@ -49,7 +49,7 @@ describe('People and Group widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
@@ -120,7 +120,7 @@ describe('People and Group widget', () => {
     });
 
     async function createGroupAndUsers(tenantId) {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         try {
             const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>

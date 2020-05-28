@@ -43,7 +43,7 @@ describe('Tree View Component', () => {
     };
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
@@ -74,7 +74,7 @@ describe('Tree View Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
         await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);

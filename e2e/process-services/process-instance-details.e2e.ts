@@ -42,7 +42,7 @@ describe('Process Instance Details', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser(alfrescoJsApi);
 
@@ -65,7 +65,7 @@ describe('Process Instance Details', () => {
 
     afterAll(async () => {
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 

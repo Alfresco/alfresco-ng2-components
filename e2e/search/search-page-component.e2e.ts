@@ -57,7 +57,7 @@ describe('Search component - Search Page', () => {
     const adminNrOfFiles = 5;
     this.alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
+        hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
     const uploadActions = new UploadActions(this.alfrescoJsApi);
 
@@ -73,7 +73,7 @@ describe('Search component - Search Page', () => {
             'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -85,7 +85,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 

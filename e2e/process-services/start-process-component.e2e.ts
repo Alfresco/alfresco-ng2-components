@@ -76,7 +76,7 @@ describe('Start Process Component', () => {
         beforeAll(async () => {
             try {
 
-                await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+                await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
                 const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
@@ -481,11 +481,11 @@ describe('Start Process Component', () => {
 
             const alfrescoJsApiAll = new ApiService({
                 provider: 'ALL',
-                hostEcm: browser.params.testConfig.adf_acs.host,
-                hostBpm: browser.params.testConfig.adf_aps.host
+                hostEcm: browser.params.testConfig.appConfig.hostEcm,
+                hostBpm: browser.params.testConfig.appConfig.hostBpm
             }).apiService;
 
-            await alfrescoJsApiAll.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApiAll.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             processUserModel = await users.createTenantAndUser(alfrescoJsApiAll);
 
@@ -499,7 +499,7 @@ describe('Start Process Component', () => {
 
             await alfrescoJsApiAll.core.peopleApi.addPerson(contentUserModel);
 
-            this.alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.adf_aps.host}).apiService;
+            this.alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.hostBpm}).apiService;
 
             await this.alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
 

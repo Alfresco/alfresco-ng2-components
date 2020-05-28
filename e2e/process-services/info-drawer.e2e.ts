@@ -75,7 +75,7 @@ describe('Info Drawer', () => {
     beforeAll(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
         const assigneeUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
@@ -90,7 +90,7 @@ describe('Info Drawer', () => {
 
     afterAll(async () => {
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appCreated.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(newTenant.id);
     });
 

@@ -38,10 +38,10 @@ describe('Search Date Range Filter', () => {
     beforeAll(async () => {
         this.alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
+            hostEcm: browser.params.testConfig.appConfig.hostEcm
         });
 
-        await loginPage.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();

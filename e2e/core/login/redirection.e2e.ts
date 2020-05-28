@@ -35,8 +35,8 @@ describe('Login component - Redirect', () => {
     const user = new AcsUserModel();
     const userFolderOwner = new AcsUserModel();
     const adminUserModel = new AcsUserModel({
-        'id': browser.params.testConfig.adf.adminUser,
-        'password': browser.params.testConfig.adf.adminPassword
+        'id': browser.params.testConfig.admin.email,
+        'password': browser.params.testConfig.admin.password
     });
     let uploadedFolder;
 
@@ -45,7 +45,7 @@ describe('Login component - Redirect', () => {
     const logoutPage = new LogoutPage();
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.core.peopleApi.addPerson(user);
         await alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);

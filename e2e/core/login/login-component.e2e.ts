@@ -33,8 +33,8 @@ describe('Login component', () => {
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
     const adminUserModel = new AcsUserModel({
-        'id': browser.params.testConfig.adf.adminUser,
-        'password': browser.params.testConfig.adf.adminPassword
+        'id': browser.params.testConfig.admin.email,
+        'password': browser.params.testConfig.admin.password
     });
 
     const userA = new AcsUserModel();
@@ -51,7 +51,7 @@ describe('Login component', () => {
     const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.core.peopleApi.addPerson(userA);
         await alfrescoJsApi.core.peopleApi.addPerson(userB);
@@ -175,7 +175,7 @@ describe('Login component', () => {
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(browser.params.testConfig.adf.adminUser, browser.params.testConfig.adf.adminPassword);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
     });

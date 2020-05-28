@@ -24,15 +24,13 @@ export class ApiService {
 
     config: AlfrescoApiConfig;
 
-    constructor(clientId?: any);
-    constructor(clientId?: string, host?: string, hostSso?: string, provider?: string);
-    constructor(clientId?: string, host?: string, hostSso?: string, provider?: string) {
-        this.config = browser.params.testConfig.appConfig;
+    constructor(clientIdOrAppConfig?: object | string, host?: string, hostSso?: string, provider?: string) {
+        this.config = { ...browser.params.testConfig.appConfig };
 
-        if (typeof clientId !== 'string') {
-            Object.assign(this.config, clientId);
+        if (typeof clientIdOrAppConfig !== 'string') {
+            this.config = { ...browser.params.testConfig.appConfig, ...clientIdOrAppConfig };
         } else {
-            this.config.oauth2.clientId = clientId;
+            this.config.oauth2.clientId = clientIdOrAppConfig;
         }
 
         if (hostSso) {

@@ -57,7 +57,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host,
+        hostEcm: browser.params.testConfig.appConfig.hostEcm,
         authType: 'OAUTH',
         oauth2: {
             host: browser.params.testConfig.appConfig.oauth2.host,
@@ -77,8 +77,8 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
         beforeAll(async () => {
-            const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.adf_acs.host, browser.params.testConfig.appConfig.oauth2.host, 'ECM');
-            await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostEcm, browser.params.testConfig.appConfig.oauth2.host, 'ECM');
+            await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             identityService = new IdentityService(apiService);
 
@@ -94,7 +94,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             silentLogin = false;
             implicitFlow = true;
 
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.adf_acs.host,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, silentLogin, implicitFlow, browser.params.testConfig.appConfig.oauth2.clientId);
 
@@ -109,7 +109,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         afterAll(async () => {
             try {
-                await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+                await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
                 await identityService.deleteIdentityUser(acsUser.id);
             } catch (error) {

@@ -66,7 +66,7 @@ describe('Restore content directive', () => {
         siteFile;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
@@ -83,7 +83,7 @@ describe('Restore content directive', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
     });
@@ -288,7 +288,7 @@ describe('Restore content directive', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFile.entry.id);

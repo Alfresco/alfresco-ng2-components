@@ -49,7 +49,7 @@ describe('Sorting for process filters', () => {
     beforeEach(async () => {
         const users = new UsersActions();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
@@ -67,7 +67,7 @@ describe('Sorting for process filters', () => {
     afterEach(async () => {
         await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
    });

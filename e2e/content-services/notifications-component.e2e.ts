@@ -34,10 +34,10 @@ describe('Notifications Component', () => {
     beforeAll(async () => {
         alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
+            hostEcm: browser.params.testConfig.appConfig.hostEcm
         });
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 

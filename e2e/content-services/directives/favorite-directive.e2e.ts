@@ -52,7 +52,7 @@ describe('Favorite directive', () => {
     let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
@@ -68,7 +68,7 @@ describe('Favorite directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(testFolder1.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder3.entry.id);
