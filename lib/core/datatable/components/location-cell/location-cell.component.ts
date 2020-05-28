@@ -23,7 +23,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { PathInfoEntity } from '@alfresco/js-api';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import { AlfrescoApiService } from '../../../services/alfresco-api.service';
 
 @Component({

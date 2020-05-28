@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation } from '@angular/core';
-import { DataTableCellComponent } from './datatable-cell.component';
+import { DataTableCellComponent } from '../datatable-cell/datatable-cell.component';
 import {
     UserPreferencesService,
     UserPreferenceValues

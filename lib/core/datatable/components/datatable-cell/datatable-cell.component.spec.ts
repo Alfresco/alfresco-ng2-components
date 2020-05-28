@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateCellComponent } from './date-cell.component';
+import { DateCellComponent } from '../date-cell/date-cell.component';
 import { Subject } from 'rxjs';
 import { AlfrescoApiServiceMock, AppConfigService, StorageService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';

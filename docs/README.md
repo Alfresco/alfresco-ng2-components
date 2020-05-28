@@ -92,7 +92,7 @@ for more information about installing and using the source code.
 | [Data Column Component](core/components/data-column.component.md) | Defines column properties for DataTable, Tasklist, Document List and other components. | [Source](../lib/core/data-column/data-column.component.ts) |
 | [DataTable component](core/components/datatable.component.md) | Displays data as a table with customizable columns and presentation. | [Source](../lib/core/datatable/components/datatable/datatable.component.ts) |
 | [Empty Content Component](core/components/empty-content.component.md) | Provides a generic "Empty Content" placeholder for components. | [Source](../lib/core/templates/empty-content/empty-content.component.ts) |
-| [Empty list component](core/components/empty-list.component.md) | Displays a message indicating that a list is empty. | [Source](../lib/core/datatable/components/datatable/empty-list.component.ts) |
+| [Empty list component](core/components/empty-list.component.md) | Displays a message indicating that a list is empty. | [Source](../lib/core/datatable/components/empty-list/empty-list.component.ts) |
 | [Error Content Component](core/components/error-content.component.md) | Displays info about a specific error. | [Source](../lib/core/templates/error-content/error-content.component.ts) |
 | [Form field component](core/components/form-field.component.md) | Represents a UI field in a form. | [Source](../lib/core/form/components/form-field/form-field.component.ts) |
 | [Form List Component](core/components/form-list.component.md) | Shows forms as a list. | [Source](../lib/core/form/components/form-list.component.ts) |
@@ -103,7 +103,7 @@ for more information about installing and using the source code.
 | [Info drawer layout component](core/components/info-drawer-layout.component.md) | Displays a sidebar-style information panel. | [Source](../lib/core/info-drawer/info-drawer-layout.component.ts) |
 | [Info Drawer Tab component](core/components/info-drawer-tab.component.md) | Renders tabs in a Info drawer component. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
 | [Info Drawer component](core/components/info-drawer.component.md) | Displays a sidebar-style information panel with tabs. | [Source](../lib/core/info-drawer/info-drawer.component.ts) |
-| [Json Cell component](core/components/json-cell.component.md) | Shows a JSON-formatted value inside a datatable component. | [Source](../lib/core/datatable/components/datatable/json-cell.component.ts) |
+| [Json Cell component](core/components/json-cell.component.md) | Shows a JSON-formatted value inside a datatable component. | [Source](../lib/core/datatable/components/json-cell/json-cell.component.ts) |
 | [Language Menu component](core/components/language-menu.component.md) | Displays all the languages that are present in "app.config.json" and the default (EN). | [Source](../lib/core/language-menu/language-menu.component.ts) |
 | [Login Dialog Panel component](core/components/login-dialog-panel.component.md) | Shows and manages a login dialog. | [Source](../lib/core/login/components/login-dialog-panel.component.ts) |
 | [Login Dialog component](core/components/login-dialog.component.md) | Allows a user to perform a login via a dialog. | [Source](../lib/core/login/components/login-dialog.component.ts) |

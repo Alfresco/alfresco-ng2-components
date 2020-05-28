@@ -25,25 +25,25 @@ import { ContextMenuModule } from '../context-menu/context-menu.module';
 import { PipeModule } from '../pipes/pipe.module';
 
 import { DirectiveModule } from '../directives/directive.module';
-import { DataTableCellComponent } from './components/datatable/datatable-cell.component';
-import { DataTableRowComponent } from './components/datatable/datatable-row.component';
+import { DataTableCellComponent } from './components/datatable-cell/datatable-cell.component';
+import { DataTableRowComponent } from './components/datatable-row/datatable-row.component';
 import { DataTableComponent } from './components/datatable/datatable.component';
-import { DateCellComponent } from './components/datatable/date-cell.component';
+import { DateCellComponent } from './components/date-cell/date-cell.component';
 import { EmptyListBodyDirective,
     EmptyListComponent,
     EmptyListFooterDirective,
-    EmptyListHeaderDirective } from './components/datatable/empty-list.component';
-import { FileSizeCellComponent } from './components/datatable/filesize-cell.component';
-import { LocationCellComponent } from './components/datatable/location-cell.component';
+    EmptyListHeaderDirective } from './components/empty-list/empty-list.component';
+import { FileSizeCellComponent } from './components/filesize-cell/filesize-cell.component';
+import { LocationCellComponent } from './components/location-cell/location-cell.component';
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
 import { NoContentTemplateDirective } from './directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
-import { JsonCellComponent } from './components/datatable/json-cell.component';
+import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
-import { DropZoneDirective } from './components/datatable/drop-zone.directive';
+import { DropZoneDirective } from './directives/drop-zone.directive';
 import { DataColumnModule } from '../data-column/data-column.module';
 
 @NgModule({

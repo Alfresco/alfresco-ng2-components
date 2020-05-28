@@ -26,16 +26,16 @@ export * from './data/object-datarow.model';
 export * from './data/object-datatable-adapter';
 export * from './data/object-datacolumn.model';
 
-export * from './components/datatable/data-cell.event';
-export * from './components/datatable/data-row-action.event';
-export * from './components/datatable/drop-zone.directive';
-export * from './components/datatable/datatable-cell.component';
-export * from './components/datatable/datatable-row.component';
+export * from './components/data-cell.event';
+export * from './components/data-row-action.event';
+export * from './directives/drop-zone.directive';
+export * from './components/datatable-cell/datatable-cell.component';
+export * from './components/datatable-row/datatable-row.component';
 export * from './components/datatable/datatable.component';
-export * from './components/datatable/date-cell.component';
-export * from './components/datatable/empty-list.component';
-export * from './components/datatable/filesize-cell.component';
-export * from './components/datatable/location-cell.component';
+export * from './components/date-cell/date-cell.component';
+export * from './components/empty-list/empty-list.component';
+export * from './components/filesize-cell/filesize-cell.component';
+export * from './components/location-cell/location-cell.component';
 export * from './data/data-table.schema';
 
 export * from './directives/loading-template.directive';

@@ -16,8 +16,8 @@
  */
 
 import { Directive, Input, ElementRef, NgZone, OnInit, OnDestroy } from '@angular/core';
-import { DataRow } from '../../data/data-row.model';
-import { DataColumn } from '../../data/data-column.model';
+import { DataRow } from '../data/data-row.model';
+import { DataColumn } from '../data/data-column.model';
 
 @Directive({
     selector: '[adf-drop-zone]'
