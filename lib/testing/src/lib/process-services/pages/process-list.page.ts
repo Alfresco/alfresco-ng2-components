@@ -47,6 +47,6 @@ export class ProcessListPage {
     }
 
     async selectRow(processName): Promise<void> {
-        return await this.dataTable.selectRow('Name', processName);
+        await this.dataTable.selectRow('Name', processName);
     }
 }
