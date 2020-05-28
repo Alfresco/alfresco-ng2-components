@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { ObjectDataColumn } from '@alfresco/adf-core';
-
 export let fakeProcessInstance = {
     size: 2,
     total: 2,
@@ -133,26 +131,40 @@ export let fakeProcessInstancesEmpty = {
 };
 
 export let fakeProcessCustomSchema = [
-    new ObjectDataColumn({
+    {
         key: 'fakeName',
         type: 'text',
         title: 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
         sortable: true
-    }),
-    new ObjectDataColumn({
+    },
+    {
         key: 'fakeProcessName',
         type: 'text',
         title: 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
         sortable: true
-    })
+    }
 ];
 
 export let fakeProcessColumnSchema = {
     default: [
         {
-            key: 'name',
+            key: 'default-name',
             type: 'text',
             title: 'ADF_PROCESS_LIST.PROPERTIES.NAME',
+            sortable: true
+        }
+    ],
+    fakeRunningProcessSchema: [
+        {
+            key: 'process-id',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
+            sortable: true
+        },
+        {
+            key: 'process-name',
+            type: 'text',
+            title: 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
             sortable: true
         }
     ],

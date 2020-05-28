@@ -226,30 +226,23 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     ngOnChanges(changes: SimpleChanges) {
         this.initAndSubscribeClickStream();
-        if (this.isPropertyChanged(changes['data'])) {
-            if (this.isTableEmpty()) {
-                this.initTable();
-            } else {
-                this.data = changes['data'].currentValue;
-                this.resetSelection();
-            }
-            return;
-        }
 
-        if (this.isPropertyChanged(changes['rows'])) {
-            if (this.isTableEmpty()) {
-                this.initTable();
-            } else {
-                this.setTableRows(changes['rows'].currentValue);
-            }
-            return;
-        }
+        const dataChanges = changes['data'];
+        const rowChanges = changes['rows'];
+        const columnChanges = changes['columns'];
 
-        if (this.isPropertyChanged(changes['columns'])) {
+        if (this.isPropertyChanged(dataChanges) || this.isPropertyChanged(rowChanges) || this.isPropertyChanged(columnChanges)) {
             if (this.isTableEmpty()) {
                 this.initTable();
             } else {
-                this.setTableColumns(changes['columns'].currentValue);
+                if (dataChanges) {
+                    this.data = changes['data'].currentValue;
+                    this.resetSelection();
+                } else if (rowChanges) {
+                    this.setTableRows(changes['rows'].currentValue);
+                } else {
+                    this.setTableColumns(changes['columns'].currentValue);
+                }
             }
             return;
         }

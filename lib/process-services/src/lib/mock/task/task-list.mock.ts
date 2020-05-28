@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-import { ObjectDataColumn } from '@alfresco/adf-core';
-
 export const fakeGlobalTask = {
     size: 2,
     start: 0,
@@ -79,26 +77,40 @@ export const fakeGlobalTask = {
 };
 
 export let fakeCustomSchema = [
-    new ObjectDataColumn({
+    {
         key: 'fakeName',
         type: 'text',
         title: 'ADF_TASK_LIST.PROPERTIES.FAKE',
         sortable: true
-    }),
-    new ObjectDataColumn({
+    },
+    {
         key: 'fakeTaskName',
         type: 'text',
         title: 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
         sortable: true
-    })
+    }
 ];
 
 export let fakeColumnSchema = {
     default: [
         {
-            key: 'name',
+            key: 'fake-name',
             type: 'text',
             title: 'ADF_TASK_LIST.PROPERTIES.NAME',
+            sortable: true
+        }
+    ],
+    fakeMyTasksSchema: [
+        {
+            key: 'task-id',
+            type: 'text',
+            title: 'ADF_TASK_LIST.PROPERTIES.FAKE',
+            sortable: true
+        },
+        {
+            key: 'task-name',
+            type: 'text',
+            title: 'ADF_TASK_LIST.PROPERTIES.PROCESS_FAKE',
             sortable: true
         }
     ],

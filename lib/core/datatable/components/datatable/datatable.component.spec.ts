@@ -1230,15 +1230,18 @@ describe('DataTable', () => {
     });
 
     it('should update data columns when columns input changes', () => {
+        const existingDataColumnsSchema = [new ObjectDataColumn({ key: 'id' })];
+        const existingData = [{ id: 'fake-data' }];
         dataTable.data = new ObjectDataTableAdapter(
-            [{ id: 'fake-data' }],
-            [new ObjectDataColumn({ key: 'id' })]
+            existingData,
+            existingDataColumnsSchema
         );
 
-        const columnsChange = new SimpleChange(null, [{ key: 'fake-key' }], false);
+        const newDataColumnsSchema = { key: 'new-column'};
+        const columnsChange = new SimpleChange(null, [newDataColumnsSchema], false);
         dataTable.ngOnChanges({ 'columns': columnsChange });
-        const expectedDataColumns = [new ObjectDataColumn({ key: 'fake-key' })];
-        expect(dataTable.data.getColumns()).toEqual(expectedDataColumns);
+        const expectedNewDataColumns = [new ObjectDataColumn(newDataColumnsSchema)];
+        expect(dataTable.data.getColumns()).toEqual(expectedNewDataColumns);
     });
 });
 

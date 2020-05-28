@@ -22,9 +22,14 @@ import { By } from '@angular/platform-browser';
 import { ProcessInstanceListComponent } from './process-list.component';
 import {
     AppConfigService, setupTestBed, DataRow, DataColumn,
-    DataRowEvent, ObjectDataRow, ObjectDataTableAdapter, DataCellEvent
+    DataRowEvent, ObjectDataRow, ObjectDataTableAdapter, DataCellEvent, ObjectDataColumn
 } from '@alfresco/adf-core';
-import { fakeProcessInstance, fakeProcessInstancesWithNoName, fakeProcessInstancesEmpty, fakeProcessCustomSchema } from '../../mock';
+import {
+    fakeProcessInstance,
+    fakeProcessInstancesWithNoName,
+    fakeProcessInstancesEmpty,
+    fakeProcessColumnSchema
+} from '../../mock';
 import { ProcessService } from '../services/process.service';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -60,22 +65,7 @@ describe('ProcessInstanceListComponent', () => {
 
         getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
-            'presets': {
-                'fakeProcessCustomSchema': [
-                    {
-                        'key': 'fakeName',
-                        'type': 'text',
-                        'title': 'ADF_PROCESS_LIST.PROPERTIES.FAKE',
-                        'sortable': true
-                    },
-                    {
-                        'key': 'fakeProcessName',
-                        'type': 'text',
-                        'title': 'ADF_PROCESS_LIST.PROPERTIES.PROCESS_FAKE',
-                        'sortable': true
-                    }
-                ]
-            }
+            'presets': fakeProcessColumnSchema
         };
     }));
 
@@ -89,7 +79,8 @@ describe('ProcessInstanceListComponent', () => {
     it('should use the default schemaColumn as default', () => {
         component.ngAfterContentInit();
         expect(component.columns).toBeDefined();
-        expect(component.columns.length).toEqual(2);
+        expect(component.columns.length).toEqual(1);
+        expect(component.columns[0]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.default[0]));
     });
 
     it('should use the schemaColumn passed in input', () => {
@@ -109,7 +100,9 @@ describe('ProcessInstanceListComponent', () => {
         component.presetColumn = 'fakeProcessCustomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.columns).toEqual(fakeProcessCustomSchema);
+        expect(component.columns.length).toEqual(2);
+        expect(component.columns[0]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.fakeProcessCustomSchema[0]));
+        expect(component.columns[1]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.fakeProcessCustomSchema[1]));
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
@@ -438,12 +431,22 @@ describe('ProcessInstanceListComponent', () => {
             component.ngOnChanges({'processInstanceId': change});
         });
 
-        it('should update columns when presetColumn schema changes', () => {
+        it('should update the columns when presetColumn schema changes', () => {
+            component.presetColumn = 'fakeProcessCustomSchema';
             component.ngAfterContentInit();
-            component.columns = [];
-            const presetColumnChange = new SimpleChange(null, 'fakeProcessCustomSchema', false);
+            const initialColumnSchema = component.mergeJsonAndHtmlSchema();
+            expect(component.columns).toEqual(initialColumnSchema);
+
+            component.presetColumn = 'fakeRunningProcessSchema';
+            const presetColumnChange = new SimpleChange(null, 'fakeRunningProcessSchema', false);
             component.ngOnChanges({ 'presetColumn': presetColumnChange });
-            expect(component.columns).toEqual(component.mergeJsonAndHtmlSchema());
+
+            const newColumnSchema = component.mergeJsonAndHtmlSchema();
+            expect(component.columns).toEqual(newColumnSchema);
+            expect(initialColumnSchema).not.toEqual(newColumnSchema);
+            expect(component.columns.length).toEqual(2);
+            expect(component.columns[0]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[0]));
+            expect(component.columns[1]).toEqual(new ObjectDataColumn(fakeProcessColumnSchema.fakeRunningProcessSchema[1]));
         });
     });
 });
