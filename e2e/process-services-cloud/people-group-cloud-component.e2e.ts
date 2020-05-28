@@ -31,10 +31,7 @@ describe('People Groups Cloud Component', () => {
         let identityService: IdentityService;
         let groupIdentityService: GroupIdentityService;
         let rolesService: RolesService;
-        const apiService = new ApiService(
-            browser.params.testConfig.appConfig.oauth2.clientId,
-            browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
-        );
+        const apiService = new ApiService();
 
         let apsUser;
         let testUser;

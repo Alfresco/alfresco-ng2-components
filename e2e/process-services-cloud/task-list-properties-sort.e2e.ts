@@ -36,7 +36,7 @@ describe('Edit task filters and task list properties', () => {
     let tasksService: TasksService;
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;
-    const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers);
+    const apiService = new ApiService();
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;

@@ -40,10 +40,7 @@ describe('Task claim/release', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const apiService = new ApiService(
-        browser.params.testConfig.appConfig.oauth2.clientId,
-        browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
-    );
+    const apiService = new ApiService();
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
     const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;

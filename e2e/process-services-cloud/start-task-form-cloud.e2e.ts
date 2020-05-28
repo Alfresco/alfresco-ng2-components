@@ -63,10 +63,7 @@ describe('Start Task Form', () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const processHeaderCloud = new ProcessHeaderCloudPage();
-    const apiService = new ApiService(
-        browser.params.testConfig.appConfig.oauth2.clientId,
-        browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
-    );
+    const apiService = new ApiService();
     const alfrescoJsApi = new ApiService().apiService;
     const uploadActions = new UploadActions(alfrescoJsApi);
 

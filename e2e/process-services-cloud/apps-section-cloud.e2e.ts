@@ -31,7 +31,7 @@ describe('Applications list', () => {
     let testUser;
     const appNames = [];
     let applications;
-    const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
+    const apiService = new ApiService();
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);

@@ -31,10 +31,7 @@ describe('Process list cloud', () => {
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const apiService = new ApiService(
-            browser.params.testConfig.appConfig.oauth2.clientId,
-            browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
-        );
+        const apiService = new ApiService();
         const processListCloudConfiguration = new ProcessListCloudConfiguration();
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();

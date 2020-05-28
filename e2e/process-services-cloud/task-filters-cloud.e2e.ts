@@ -42,7 +42,7 @@ describe('Task filters cloud', () => {
         let groupIdentityService: GroupIdentityService;
         let queryService: QueryService;
         let testUser, groupInfo;
-        const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
+        const apiService = new ApiService();
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;

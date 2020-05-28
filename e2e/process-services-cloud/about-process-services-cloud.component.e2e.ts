@@ -26,7 +26,7 @@ describe('About Process Services Cloud', () => {
     const aboutPage = new AboutPage();
     let identityService: IdentityService;
     let testUser;
-    const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
+    const apiService = new ApiService();
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);

@@ -45,10 +45,7 @@ describe('Process filters cloud', () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const processListPage = new ProcessListPage();
-    const apiService = new ApiService(
-        browser.params.testConfig.appConfig.oauth2.clientId,
-        browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers
-    );
+    const apiService = new ApiService();
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
     const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');

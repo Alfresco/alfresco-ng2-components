@@ -69,7 +69,7 @@ describe('Task Header cloud component', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTaskCloudPage = new StartTasksCloudPage();
     const peopleCloudComponentPage = new PeopleCloudComponentPage();
-    const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, browser.params.testConfig.appConfig.providers);
+    const apiService = new ApiService();
     let tasksService: TasksService;
     let identityService: IdentityService;
     let groupIdentityService: GroupIdentityService;

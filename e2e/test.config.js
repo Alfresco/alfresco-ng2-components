@@ -7,7 +7,6 @@ require('dotenv').config({path: process.env.ENV_FILE});
 
 const HOST = process.env.URL_HOST_ADF;
 
-const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 const LOG = process.env.LOG;
 
 const ECM_HOST = process.env.URL_HOST_BPM_ADF || process.env.PROXY_HOST_ADF || HOST || 'ecm';

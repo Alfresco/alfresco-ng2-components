@@ -65,7 +65,7 @@ describe('Process Task - Attach content file', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
-    const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostBpm, browser.params.testConfig.appConfig.oauth2.host, 'BPM');
+    const apiService = new ApiService();
     const alfrescoJsApi = new ApiService().apiService;
     const uploadActions = new UploadActions(alfrescoJsApi);
 
