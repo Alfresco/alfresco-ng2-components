@@ -10,7 +10,7 @@ const testConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
-const ACTIVITI_CLOUD_APPS = require('lib/testing/src/lib/process-services-cloud/resources/resources.json');
+const ACTIVITI_CLOUD_APPS = require('./lib/testing/src/lib/process-services-cloud/resources/resources.json');
 
 const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
