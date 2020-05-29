@@ -1228,6 +1228,21 @@ describe('DataTable', () => {
         expect(dataTable.data.getRows().length).toEqual(2);
         expect(dataTable.resolverFn).toHaveBeenCalledTimes(4);
     });
+
+    it('should update data columns when columns input changes', () => {
+        const existingDataColumnsSchema = [new ObjectDataColumn({ key: 'id' })];
+        const existingData = [{ id: 'fake-data' }];
+        dataTable.data = new ObjectDataTableAdapter(
+            existingData,
+            existingDataColumnsSchema
+        );
+
+        const newDataColumnsSchema = { key: 'new-column'};
+        const columnsChange = new SimpleChange(null, [newDataColumnsSchema], false);
+        dataTable.ngOnChanges({ 'columns': columnsChange });
+        const expectedNewDataColumns = [new ObjectDataColumn(newDataColumnsSchema)];
+        expect(dataTable.data.getColumns()).toEqual(expectedNewDataColumns);
+    });
 });
 
 describe('Accesibility', () => {

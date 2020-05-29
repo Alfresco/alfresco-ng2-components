@@ -32,6 +32,7 @@ import { DataTableAdapter } from '../../data/datatable-adapter';
 import { DataTableRowComponent } from '../datatable-row/datatable-row.component';
 
 import { ObjectDataRow } from '../../data/object-datarow.model';
+import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
 import { DataCellEvent } from '../data-cell.event';
 import { DataRowActionEvent } from '../data-row-action.event';
@@ -225,21 +226,23 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     ngOnChanges(changes: SimpleChanges) {
         this.initAndSubscribeClickStream();
-        if (this.isPropertyChanged(changes['data'])) {
-            if (this.isTableEmpty()) {
-                this.initTable();
-            } else {
-                this.data = changes['data'].currentValue;
-                this.resetSelection();
-            }
-            return;
-        }
 
-        if (this.isPropertyChanged(changes['rows'])) {
+        const dataChanges = changes['data'];
+        const rowChanges = changes['rows'];
+        const columnChanges = changes['columns'];
+
+        if (this.isPropertyChanged(dataChanges) || this.isPropertyChanged(rowChanges) || this.isPropertyChanged(columnChanges)) {
             if (this.isTableEmpty()) {
                 this.initTable();
             } else {
-                this.setTableRows(changes['rows'].currentValue);
+                if (dataChanges) {
+                    this.data = changes['data'].currentValue;
+                    this.resetSelection();
+                } else if (rowChanges) {
+                    this.setTableRows(changes['rows'].currentValue);
+                } else {
+                    this.setTableColumns(changes['columns'].currentValue);
+                }
             }
             return;
         }
@@ -278,6 +281,10 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
         return rows.map((row) => new ObjectDataRow(row, row.isSelected));
+    }
+
+    convertToColumnsData(columns: any []): ObjectDataColumn[] {
+        return columns.map((column) => new ObjectDataColumn(column));
     }
 
     convertToDataSorting(sorting: any[]): DataSorting | null {
@@ -366,7 +373,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     private setTableRows(rows: any[]) {
         if (this.data) {
             this.resetSelection();
-            this.data.setRows(this.convertToRowsData(rows));
+            const rowsData = this.convertToRowsData(rows);
+            this.data.setRows(rowsData);
+        }
+    }
+
+    private setTableColumns(columns: any[]) {
+        if (this.data) {
+            this.resetSelection();
+            const columnsData = this.convertToColumnsData(columns);
+            this.data.setColumns(columnsData);
         }
     }
 

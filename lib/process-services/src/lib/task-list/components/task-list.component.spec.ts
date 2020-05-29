@@ -18,11 +18,16 @@
 import { Component, SimpleChange, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent } from '@alfresco/adf-core';
+import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow, DataCellEvent, ObjectDataColumn } from '@alfresco/adf-core';
 import { TaskListService } from '../services/tasklist.service';
 import { TaskListComponent } from './task-list.component';
 import { ProcessTestingModule } from '../../testing/process.testing.module';
-import { fakeGlobalTask, fakeCustomSchema, fakeEmptyTask, paginatedTask } from '../../mock';
+import {
+    fakeGlobalTask,
+    fakeEmptyTask,
+    paginatedTask,
+    fakeColumnSchema, fakeCustomSchema
+} from '../../mock';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of, Subject } from 'rxjs';
 
@@ -52,24 +57,10 @@ describe('TaskListComponent', () => {
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
                 'presets': {
-                    'fakeCustomSchema': [
-                        {
-                            'key': 'fakeName',
-                            'type': 'text',
-                            'title': 'ADF_TASK_LIST.PROPERTIES.FAKE',
-                            'sortable': true
-                        },
-                        {
-                            'key': 'fakeTaskName',
-                            'type': 'text',
-                            'title': 'ADF_TASK_LIST.PROPERTIES.TASK_FAKE',
-                            'sortable': true
-                        }
-                    ]
+                    fakeCustomSchema
                 }
             }
         });
-
     });
 
     beforeEach(() => {
@@ -114,7 +105,9 @@ describe('TaskListComponent', () => {
         component.presetColumn = 'fakeCustomSchema';
         component.ngAfterContentInit();
         fixture.detectChanges();
-        expect(component.columns).toEqual(fakeCustomSchema);
+        expect(component.columns.length).toEqual(2);
+        expect(component.columns[0]).toEqual(new ObjectDataColumn(fakeCustomSchema[0]));
+        expect(component.columns[1]).toEqual(new ObjectDataColumn(fakeCustomSchema[1]));
     });
 
     it('should fetch custom schemaColumn when the input presetColumn is defined', () => {
@@ -533,6 +526,33 @@ describe('TaskListComponent', () => {
                 responseText: JSON.stringify(fakeGlobalTask)
             });
         });
+    });
+
+    it('should update the columns when presetColumn schema changes', () => {
+        appConfig.config = Object.assign(appConfig.config, {
+            'adf-task-list': {
+                'presets': fakeColumnSchema
+            }
+        });
+
+        component.presetColumn = 'fakeCustomSchema';
+        component.ngAfterContentInit();
+        const initialColumnSchema = component.mergeJsonAndHtmlSchema();
+        expect(component.columns).toEqual(initialColumnSchema);
+
+        component.presetColumn = 'fakeMyTasksSchema';
+        const presetColumnChange = new SimpleChange(null, 'fakeMyTasksSchema', false);
+        component.ngOnChanges({ 'presetColumn': presetColumnChange });
+
+        const newColumnSchema = component.mergeJsonAndHtmlSchema();
+        const expectedColumn1 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[0]);
+        const expectedColumn2 = new ObjectDataColumn(fakeColumnSchema.fakeMyTasksSchema[1]);
+
+        expect(component.columns).toEqual(newColumnSchema);
+        expect(initialColumnSchema).not.toEqual(newColumnSchema);
+        expect(component.columns.length).toEqual(2);
+        expect(component.columns[0]).toEqual(expectedColumn1);
+        expect(component.columns[1]).toEqual(expectedColumn2);
     });
 
     it('should show the updated list when pagination changes', async(() => {
