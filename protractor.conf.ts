@@ -123,10 +123,10 @@ exports.config = {
         identityUser: TestConfig.identityUser,
         rootPath: __dirname,
         resources: RESOURCES,
-        API_CONTENT_HOST: HOST || 'http://localhost:8080',
+        API_CONTENT_HOST: TestConfig.adf_acs.host,
         ACS_ADMIN: {
-            USERNAME: process.env.USERNAME_ADF || 'admin',
-            PASSWORD: process.env.PASSWORD_ADF || 'admin'
+            USERNAME: TestConfig.adf.adminEmail,
+            PASSWORD: TestConfig.adf.adminPassword
         }
     },
 
