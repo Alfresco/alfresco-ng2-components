@@ -185,7 +185,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     private selectProcessDefinitionByProcesDefinitionName(processDefinitionName: string): void {
-        this.filteredProcesses = this.getProcessDefinitionList(processDefinitionName);
+        this.filteredProcesses = this.getProcessDefinitionListByNameOrKey(processDefinitionName);
         if (this.isProcessFormValid() &&
             this.filteredProcesses && this.filteredProcesses.length === 1) {
             this.setProcessDefinitionOnForm(this.filteredProcesses[0].name);
@@ -200,9 +200,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.processPayloadCloud.processDefinitionKey = this.processDefinitionCurrent.key;
     }
 
-    private getProcessDefinitionList(processDefinition: string): ProcessDefinitionCloud[] {
-        return this.processDefinitionList.filter((option) => {
-            return !processDefinition || this.getProcessDefinition(option, processDefinition);
+    private getProcessDefinitionListByNameOrKey(processDefinitionName: string): ProcessDefinitionCloud[] {
+        return this.processDefinitionList.filter((processDefinitionCloud) => {
+            return !processDefinitionName || this.getProcessDefinition(processDefinitionCloud, processDefinitionName);
         });
     }
 
@@ -263,9 +263,9 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         return !!this.processPayloadCloud.processDefinitionKey;
     }
 
-    private getProcessDefinition(option: ProcessDefinitionCloud, processDefinition: string): boolean {
-        return (this.isValidName(option.name) && option.name.toLowerCase().includes(processDefinition.toLowerCase())) ||
-            (option.key && option.key.toLowerCase().includes(processDefinition.toLowerCase()));
+    private getProcessDefinition(processDefinitionCloud: ProcessDefinitionCloud, processDefinitionName: string): boolean {
+        return (this.isValidName(processDefinitionCloud.name) && processDefinitionCloud.name.toLowerCase().includes(processDefinitionName.toLowerCase())) ||
+            (processDefinitionCloud.key && processDefinitionCloud.key.toLowerCase().includes(processDefinitionName.toLowerCase()));
     }
 
     isProcessDefinitionsEmpty(): boolean {

@@ -224,6 +224,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                 takeUntil(this.onDestroy$))
             .subscribe(
                 (form) => {
+                    this.formCloudRepresentationJSON = form;
                     const parsedForm = this.parseForm(form);
                     this.visibilityService.refreshVisibility(<any> parsedForm);
                     parsedForm.validateForm();
