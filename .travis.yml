@@ -142,4 +142,5 @@ cache:
   directories:
   - node_modules
   - demo-shell/dist
+  - lib/dist
   - tmp
