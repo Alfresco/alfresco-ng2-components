@@ -32,10 +32,6 @@ export class ContextMenuPage {
     }
 
     async clickContextMenuActionNamed(actionName: string): Promise<void> {
-        await BrowserActions.click(
-            element(
-                by.css(`button[data-automation-id="context-${actionName}"]`)
-            )
-        );
+        await BrowserActions.click(element(by.css(`button[data-automation-id="context-${actionName}"]`)));
     }
 }

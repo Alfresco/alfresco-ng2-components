@@ -63,8 +63,8 @@ export class TaskListPage {
         return this.dataTable.checkRowIsSelected('Name', taskName);
     }
 
-    selectRow(taskName): Promise<void> {
-        return this.dataTable.selectRow('Name', taskName);
+    async selectRowByName(taskName: string): Promise<void> {
+        await this.dataTable.selectRow('Name', taskName);
     }
 
     getAllRowsNameColumn(): Promise<any> {
