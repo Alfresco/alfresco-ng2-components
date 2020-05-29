@@ -19,6 +19,7 @@
     "baseUrl": ".",
     "types": ["jasmine"],
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "paths": {
       "@alfresco/adf-process-services-cloud": ["./process-services-cloud/"],
       "@alfresco/adf-testing": ["./testing/"],
