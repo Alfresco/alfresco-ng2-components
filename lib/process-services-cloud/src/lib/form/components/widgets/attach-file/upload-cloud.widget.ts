@@ -151,7 +151,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
         if (values && values.length > 0) {
             this.field.value = values;
             this.field.form.values[this.field.id] = values;
-            this.hasFile = this.field.form.values[this.field.id].length > 0;
+            this.hasFile = true;
         } else {
             this.field.value = [];
             this.field.form.values[this.field.id] = [];
