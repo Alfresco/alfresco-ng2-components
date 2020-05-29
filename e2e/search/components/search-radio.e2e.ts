@@ -73,7 +73,7 @@ describe('Search Radio Component', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
    });
@@ -257,7 +257,7 @@ describe('Search Radio Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
         });
 
         it('[C277033] Should be able to add a new option', async () => {

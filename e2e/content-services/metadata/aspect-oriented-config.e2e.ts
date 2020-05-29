@@ -70,7 +70,7 @@ describe('Aspect oriented config', () => {
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         const aspects = await alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
 

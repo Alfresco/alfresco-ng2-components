@@ -67,7 +67,7 @@ describe('Viewer', () => {
 
             uploadedExcels = await uploadActions.uploadFolder(excelFolderInfo.location, excelFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

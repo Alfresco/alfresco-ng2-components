@@ -63,7 +63,7 @@ describe('Trashcan - Pagination', () => {
                 await alfrescoJsApi.node.deleteNode(entry.entry.id);
             });
         }
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
     });

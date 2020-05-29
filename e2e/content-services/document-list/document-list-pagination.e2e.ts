@@ -94,7 +94,7 @@ describe('Document List - Pagination', () => {
         await uploadActions.createEmptyFiles(fileNames, newFolderUploadedModel.entry.id);
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
     });
 
     afterAll(async () => {
@@ -131,12 +131,12 @@ describe('Document List - Pagination', () => {
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
@@ -178,7 +178,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
@@ -205,7 +205,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.waitForTableBody();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         currentPage = 1;
     });
 

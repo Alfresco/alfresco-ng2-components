@@ -62,7 +62,7 @@ describe('Viewer', () => {
 
         jsFileUploaded = await uploadActions.uploadFile(jsFileInfo.location, jsFileInfo.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
     });
 
     afterAll(async () => {

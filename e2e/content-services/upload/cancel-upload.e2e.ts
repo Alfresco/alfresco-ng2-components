@@ -53,7 +53,7 @@ describe('Upload component', async () => {
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.goToDocumentList();
     });
 

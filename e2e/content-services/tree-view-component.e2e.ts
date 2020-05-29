@@ -66,7 +66,7 @@ describe('Tree View Component', () => {
             nodeType: 'cm:content'
         });
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.clickTreeViewButton();
     });

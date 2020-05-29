@@ -104,7 +104,7 @@ describe('Document List Component', () => {
     });
 
         beforeEach(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

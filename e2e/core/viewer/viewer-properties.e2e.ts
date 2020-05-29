@@ -57,7 +57,7 @@ describe('Viewer - properties', () => {
         pngFileUploaded = await uploadActions.uploadFile(fileForOverlay.location, fileForOverlay.name, '-my-');
         Object.assign(fileForOverlay, pngFileUploaded.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
 

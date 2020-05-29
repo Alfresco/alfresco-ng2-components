@@ -74,7 +74,7 @@ describe('Version component actions', () => {
 
         await uploadActions.createFolder(folderSecond.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

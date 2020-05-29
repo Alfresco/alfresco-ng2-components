@@ -66,7 +66,7 @@ describe('Version component actions', () => {
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
    });

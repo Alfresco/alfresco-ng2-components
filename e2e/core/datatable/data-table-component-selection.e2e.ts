@@ -35,7 +35,7 @@ describe('Datatable component - selection', () => {
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.navigateToDatatable();
    });

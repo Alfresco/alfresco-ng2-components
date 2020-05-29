@@ -73,7 +73,7 @@ describe('Comment Component', () => {
 
         userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
@@ -175,7 +175,7 @@ describe('Comment Component', () => {
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
 
             await navigationBarPage.clickContentServicesButton();
         });

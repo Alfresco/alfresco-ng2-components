@@ -99,7 +99,7 @@ describe('Unshare file', () => {
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         await navBar.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
     });

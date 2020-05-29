@@ -72,7 +72,7 @@ describe('Viewer', () => {
     });
 
     it('[C272813] Should be redirected to site when opening and closing a file in a site', async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.goToSite(site);
         await contentServicesPage.checkAcsContainer();
@@ -93,7 +93,7 @@ describe('Viewer', () => {
 
             uploadedOthers = await uploadActions.uploadFolder(otherFolderInfo.location, otherFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

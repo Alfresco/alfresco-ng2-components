@@ -66,7 +66,7 @@ describe('Search Checklist Component', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
    });
 
     beforeEach(async () => {
@@ -281,7 +281,7 @@ describe('Search Checklist Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
         });
 
         it('[C277018] Should be able to change the operator', async () => {

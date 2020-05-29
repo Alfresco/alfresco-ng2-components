@@ -103,7 +103,7 @@ describe('Search component - Search Bar', () => {
 
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
    });
 
     afterAll(async () => {

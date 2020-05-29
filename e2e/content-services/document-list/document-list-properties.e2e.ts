@@ -52,7 +52,7 @@ describe('Document List Component - Properties', () => {
 
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
         });
 
         afterEach(async () => {

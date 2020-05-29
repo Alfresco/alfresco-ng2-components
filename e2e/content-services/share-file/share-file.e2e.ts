@@ -86,7 +86,7 @@ describe('Share file', () => {
 
     describe('Shared link dialog', () => {
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentListPage.selectRow(pngFileModel.name);
             await BrowserActions.closeMenuAndDialogs();
@@ -159,7 +159,7 @@ describe('Share file', () => {
 
     describe('Shared link preview', () => {
         beforeEach(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
         });

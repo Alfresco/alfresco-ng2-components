@@ -90,7 +90,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

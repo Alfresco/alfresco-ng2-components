@@ -54,7 +54,7 @@ describe('Header Component', () => {
 
         await alfrescoJsApi.login(user.email, user.password);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.login(user.id, user.password);
    });
 
     beforeEach(async() => {

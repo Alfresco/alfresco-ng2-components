@@ -71,7 +71,7 @@ describe('Document List Component', () => {
             folderNode = await uploadActions.createFolder(folderName, '-my-');
             filePDFSubNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, folderNode.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
         });
 
         afterAll(async () => {

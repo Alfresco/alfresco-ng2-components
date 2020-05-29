@@ -44,7 +44,7 @@ describe('Document List Component', () => {
 
             privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
         });
 
         afterAll(async () => {

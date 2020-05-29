@@ -67,7 +67,7 @@ describe('Viewer', () => {
         beforeAll(async () => {
             archiveFolderUploaded = await uploadActions.createFolder(archiveFolderInfo.name, '-my-');
             uploadedArchives = await uploadActions.uploadFolder(archiveFolderInfo.location, archiveFolderUploaded.entry.id);
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

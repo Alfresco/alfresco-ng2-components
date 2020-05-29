@@ -43,7 +43,7 @@ describe('Notifications Component', () => {
 
         await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await notificationPage.goToNotificationsPage();
 

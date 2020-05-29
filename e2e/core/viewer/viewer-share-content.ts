@@ -83,7 +83,7 @@ describe('Viewer', () => {
     });
 
     beforeEach(async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {

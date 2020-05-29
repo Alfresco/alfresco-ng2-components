@@ -54,7 +54,7 @@ describe('Enable infinite scrolling', () => {
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
         deleteFileNames = StringUtil.generateFilesNames(1, nrOfDeletedFiles, files.base, files.extension);

@@ -67,7 +67,7 @@ describe('Info Drawer', () => {
     });
 
     beforeEach(async() => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.goToSite(site);
         await contentServicesPage.checkAcsContainer();

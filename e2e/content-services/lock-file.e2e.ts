@@ -86,7 +86,7 @@ describe('Lock File', () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
-                await loginPage.login(adminUser.email, adminUser.password);
+                await loginPage.login(adminUser.id, adminUser.password);
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
 
                 await contentServices.waitForTableBody();
@@ -166,7 +166,7 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            await loginPage.login(managerUser.email, managerUser.password);
+            await loginPage.login(managerUser.id, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
         });

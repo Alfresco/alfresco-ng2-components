@@ -62,7 +62,7 @@ describe('Favorite directive', () => {
         testFolder4 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.goToDocumentList();
    });
 

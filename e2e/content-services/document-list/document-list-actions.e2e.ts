@@ -85,7 +85,7 @@ describe('Document List Component - Actions', () => {
             fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
 
             await browser.sleep(10000);
         });
@@ -274,7 +274,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.login(contentServicesUser.email, contentServicesUser.password);
+            await loginPage.login(contentServicesUser.id, contentServicesUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');

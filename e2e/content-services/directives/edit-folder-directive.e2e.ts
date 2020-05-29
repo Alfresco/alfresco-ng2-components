@@ -73,7 +73,7 @@ describe('Edit folder directive', () => {
                 }
             });
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
    });
 
     afterAll(async () => {

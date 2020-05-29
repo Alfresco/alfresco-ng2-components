@@ -60,7 +60,7 @@ describe('Upload - User permission', () => {
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         this.consumerSite = await alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -153,7 +153,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUserTwo.email, acsUserTwo.pass);
+            await loginPage.login(acsUserTwo.id, acsUserTwo.pass);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -163,7 +163,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.login(acsUser.id, acsUser.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

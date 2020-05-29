@@ -73,7 +73,7 @@ describe('Version component', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

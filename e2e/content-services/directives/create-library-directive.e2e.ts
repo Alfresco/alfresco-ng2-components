@@ -47,7 +47,7 @@ describe('Create library directive', () => {
 
         await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
 
         createSite = await alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),

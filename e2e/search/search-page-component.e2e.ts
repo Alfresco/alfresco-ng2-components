@@ -91,7 +91,7 @@ describe('Search component - Search Page', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.id, acsUser.password);
    });
 
     afterAll(async () => {
