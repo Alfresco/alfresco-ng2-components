@@ -25,7 +25,9 @@ export class StartProcessPage {
 
     defaultProcessName: ElementFinder = element(by.css('input[id="processName"]'));
     processNameInput: ElementFinder = element(by.id('processName'));
+    disabledSelectProcessDropdown: ElementFinder = element(by.css('input[id="processDefinitionName"][disabled]'));
     selectProcessDropdownArrow: ElementFinder = element(by.css('button[id="adf-select-process-dropdown"]'));
+    selectApplicationDropdownArrow: ElementFinder = element(by.css('[data-automation-id*="start-process-app"] div[class="mat-select-arrow"]'));
     cancelProcessButton: ElementFinder = element(by.id('cancel_process'));
     formStartProcessButton: ElementFinder = element(by.css('button[data-automation-id="adf-form-start process"]'));
     startProcessButton: ElementFinder = element(by.css('button[data-automation-id="btn-start"]'));
@@ -67,8 +69,17 @@ export class StartProcessPage {
         await this.selectOption(name);
     }
 
+    async selectFromApplicationDropdown(name): Promise<void> {
+        await this.clickApplicationDropdownArrow();
+        await this.selectOption(name);
+    }
+
     async clickProcessDropdownArrow(): Promise<void> {
         await BrowserActions.click(this.selectProcessDropdownArrow);
+    }
+
+    async clickApplicationDropdownArrow(): Promise<void> {
+        await BrowserActions.click(this.selectApplicationDropdownArrow);
     }
 
     async checkOptionIsDisplayed(name): Promise<void> {
@@ -145,8 +156,20 @@ export class StartProcessPage {
         return new FormFields();
     }
 
+    async checkSelectProcessField(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.disabledSelectProcessDropdown);
+    }
+
     async startProcess({name, processName }) {
         await this.enterProcessName(name);
+        await this.selectFromProcessDropdown(processName);
+        await this.clickStartProcessButton();
+    }
+
+    async startProcessWithApplication({name, applicationName, processName }) {
+        await this.enterProcessName(name);
+        await this.selectFromApplicationDropdown(applicationName);
+        await this.checkSelectProcessField();
         await this.selectFromProcessDropdown(processName);
         await this.clickStartProcessButton();
     }
