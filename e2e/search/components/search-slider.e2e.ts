@@ -44,18 +44,18 @@ describe('Search Slider Filter', () => {
     });
 
     let file2Bytes;
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         await browser.sleep(15000);
@@ -69,7 +69,7 @@ describe('Search Slider Filter', () => {
 
     afterAll(async () => {
         try {
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         } catch (error) {
         }

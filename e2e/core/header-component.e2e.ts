@@ -16,8 +16,8 @@
  */
 import { ApiService, HeaderPage, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('Header Component', () => {
 
@@ -27,7 +27,7 @@ describe('Header Component', () => {
     const settingsPage = new SettingsPage();
     const alfrescoJsApi = new ApiService().apiService;
 
-    let user, tenantId;
+    const acsUser = new AcsUserModel();
 
     const names = {
         app_title_default: 'ADF Demo Application',
@@ -43,29 +43,16 @@ describe('Header Component', () => {
         logo_tooltip: 'test_tooltip'
     };
 
-    beforeAll(async() => {
-        const users = new UsersActions();
-
+    beforeAll(async () => {
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await users.createTenantAndUser(alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        await alfrescoJsApi.login(user.email, user.password);
-
-        await loginPage.login(user.id, user.password);
-   });
-
-    beforeEach(async() => {
-        await navigationBarPage.clickHeaderDataButton();
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await loginPage.login(acsUser.id, acsUser.password);
     });
 
-    afterAll(async() => {
-        await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-   });
+    beforeEach(async () => {
+        await navigationBarPage.clickHeaderDataButton();
+    });
 
     it('[C280002] Should be able to view Header component', async () => {
         await headerPage.checkShowMenuCheckBoxIsDisplayed();

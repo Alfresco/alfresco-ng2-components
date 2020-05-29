@@ -16,7 +16,6 @@
  */
 
 import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -36,11 +35,6 @@ describe('Search Date Range Filter', () => {
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.appConfig.hostEcm
-        });
-
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await searchDialog.checkSearchIconIsVisible();

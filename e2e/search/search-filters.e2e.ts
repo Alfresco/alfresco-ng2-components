@@ -39,11 +39,11 @@ describe('Search Filters', () => {
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFiltersPage = new SearchFiltersPage();
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
     const searchResults = new SearchResultsPage();
@@ -88,11 +88,11 @@ describe('Search Filters', () => {
     let jsonFile;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -108,7 +108,7 @@ describe('Search Filters', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypePng.entry.id);

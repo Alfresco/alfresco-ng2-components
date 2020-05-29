@@ -55,11 +55,11 @@ describe('Search component - Search Page', () => {
     let fileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, search.active.base, search.active.extension);
@@ -73,10 +73,10 @@ describe('Search component - Search Page', () => {
             'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.createFolder(emptyFolderModel.name, '-my-');
         const newFolderModelUploaded = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -85,7 +85,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 

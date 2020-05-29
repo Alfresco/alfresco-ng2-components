@@ -34,7 +34,17 @@ export class LoginSSOPage {
     signInButtonBasicAuth: ElementFinder = element(by.id('login-button'));
 
     async goToLoginPage(): Promise<void> {
-        await BrowserActions.getUrl(browser.baseUrl + '/login');
+        let currentUrl;
+
+        try {
+            currentUrl = await browser.getCurrentUrl();
+        } catch (e) {
+        }
+
+        if (currentUrl !== `${browser.baseUrl}/login`) {
+            await  BrowserActions.getUrl(browser.baseUrl + '/login');
+        }
+
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsernameBasicAuth);
         await BrowserVisibility.waitUntilElementIsVisible(this.txtPasswordBasicAuth);
     }

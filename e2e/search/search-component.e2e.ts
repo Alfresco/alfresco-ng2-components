@@ -48,11 +48,11 @@ describe('Search component - Search Bar', () => {
     const viewerPage = new ViewerPage();
 
     const acsUser = new AcsUserModel();
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     const filename = StringUtil.generateRandomString(16);
     const firstFolderName = StringUtil.generateRandomString(16);
@@ -79,14 +79,14 @@ describe('Search component - Search Bar', () => {
     let fileHighlightUploaded;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const firstFileUploaded = await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
-        fileHighlightUploaded = await this.alfrescoJsApi.nodes.addNode('-my-', {
+        fileHighlightUploaded = await alfrescoJsApi.nodes.addNode('-my-', {
             'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {

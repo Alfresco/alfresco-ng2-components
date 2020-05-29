@@ -30,11 +30,11 @@ describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchResultsPage = new SearchResultsPage();
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.appConfig.hostEcm
         });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -55,13 +55,13 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-            site = await this.alfrescoJsApi.core.sitesApi.createSite({
+            site = await alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
@@ -96,7 +96,7 @@ describe('Search Component - Multi-Select Facet', () => {
                 uploadActions.deleteFileOrFolder(txtFileSite.entry.id)
             ]);
 
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+            await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -143,26 +143,26 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(userUploadingTxt);
-            await this.alfrescoJsApi.core.peopleApi.addPerson(userUploadingImg);
+            await alfrescoJsApi.core.peopleApi.addPerson(userUploadingTxt);
+            await alfrescoJsApi.core.peopleApi.addPerson(userUploadingImg);
 
-            await this.alfrescoJsApi.login(userUploadingTxt.id, userUploadingTxt.password);
+            await alfrescoJsApi.login(userUploadingTxt.id, userUploadingTxt.password);
 
-            site = await this.alfrescoJsApi.core.sitesApi.createSite({
+            site = await alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 
-            await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+            await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
                 id: userUploadingImg.id,
                 role: CONSTANTS.CS_USER_ROLES.MANAGER
             });
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await this.alfrescoJsApi.login(userUploadingImg.id, userUploadingImg.password);
+            await alfrescoJsApi.login(userUploadingImg.id, userUploadingImg.password);
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
@@ -201,13 +201,13 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-            site = await this.alfrescoJsApi.core.sitesApi.createSite({
+            site = await alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
@@ -226,7 +226,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(txtFile.entry.id);
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+            await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {

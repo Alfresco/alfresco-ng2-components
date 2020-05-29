@@ -53,19 +53,19 @@ describe('Search Sorting Picker', () => {
     };
 
     let pngA, pngD;
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
     const search = '_png_file.png';
     let jsonFile;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
@@ -228,7 +228,7 @@ describe('Search Sorting Picker', () => {
 
         for (let i = 0; i < (numberOfElements - 1); i++) {
             if (idList[i] && idList[i].trim() !== '') {
-                promises.push(this.alfrescoJsApi.core.nodesApi.getNode(idList[i]));
+                promises.push(alfrescoJsApi.core.nodesApi.getNode(idList[i]));
             }
         }
         nodeList = await Promise.all(promises);

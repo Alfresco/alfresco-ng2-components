@@ -34,11 +34,11 @@ describe('Search Radio Component', () => {
     const searchResults = new SearchResultsPage();
 
     const acsUser = new AcsUserModel();
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     const filterType = {
         none: 'None',
@@ -57,16 +57,16 @@ describe('Search Radio Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {
+        createdFolder = await alfrescoJsApi.nodes.addNode('-my-', {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
+        createdFile = await alfrescoJsApi.nodes.addNode('-my-', {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });
@@ -79,7 +79,7 @@ describe('Search Radio Component', () => {
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);

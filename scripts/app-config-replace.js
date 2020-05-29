@@ -10,10 +10,10 @@ fs.readFile(configPath, (err, appConfigString) => {
     if (err) throw err;
     let appConfig = JSON.parse(appConfigString);
     appConfig.providers = process.env.PROVIDERS || 'ALL';
-    appConfig.bpmHost = (process.env.PROXY_HOST_ADF || process.env.URL_HOST_BPM_ADF || process.env.URL_HOST_ADF);
+    appConfig.bpmHost = (process.env.PROXY_HOST_ADF || process.env.URL_HOST_ADF);
     appConfig.ecmHost = (process.env.PROXY_HOST_ADF || process.env.URL_HOST_ADF);
     appConfig.identityHost = process.env.URL_HOST_IDENTITY;
-    appConfig.oauth2.host = process.env.URL_HOST_SSO_ADF;
+    appConfig.oauth2.host = process.env.HOST_SSO;
     appConfig.notificationDefaultDuration = process.env.NOTIFICATION_LAST || 8000;
     appConfig.authType = process.env.AUTH_TYPE || 'BASIC';
 

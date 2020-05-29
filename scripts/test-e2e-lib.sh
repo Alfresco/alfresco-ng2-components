@@ -26,7 +26,6 @@ show_help() {
     echo "-proxy or --proxy proxy Back end URL to use only possible to use with -dev option"
     echo "-dev or --dev run it against local development environment it will deploy on localhost:4200 the current version of your branch"
     echo "-host or --host URL of the Front end to test"
-    echo "-host_bpm URL of the Back end to test"
     echo "-host_identity URL of the identity service backend to test"
     echo "-host_sso the entire path including the name of the realm"
     echo "-save  save the error screenshot and report in the remote env"
@@ -69,14 +68,9 @@ set_host(){
     export URL_HOST_ADF=$HOST
 }
 
-set_host_bpm(){
-    HOST_BPM=$1
-    export URL_HOST_BPM_ADF=$HOST_BPM
-}
-
 set_host_sso(){
     HOST_SSO=$1
-    export URL_HOST_SSO_ADF=$HOST_SSO
+    export HOST_SSO=$HOST_SSO
 }
 
 set_host_identity(){
@@ -182,7 +176,6 @@ while [[ $1 == -* ]]; do
       -s|--seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -log|--log)  set_log; shift ;;
-      -host_bpm|--host_bpm) set_host_bpm $2; shift 2;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
       -host_identity|--host_identity) set_host_identity $2; shift 2;;
       -l|--lint)  lint; shift;;

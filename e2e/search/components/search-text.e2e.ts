@@ -43,25 +43,25 @@ describe('Search component - Text widget', () => {
     const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
+        const alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
             hostEcm: browser.params.testConfig.appConfig.hostEcm
         });
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        await this.alfrescoJsApi.nodes.addNode('-my-', {
+        await alfrescoJsApi.nodes.addNode('-my-', {
             'name': newFolderModel.name,
             'nodeType': 'cm:folder',
             'properties':
                 {
                     'cm:description': newFolderModel.description
                 }
-        }, {}, {});
+        }, {});
 
         await browser.sleep(15000);
 

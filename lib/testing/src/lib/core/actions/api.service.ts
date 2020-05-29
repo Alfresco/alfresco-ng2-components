@@ -24,7 +24,7 @@ export class ApiService {
 
     config: AlfrescoApiConfig;
 
-    constructor(clientIdOrAppConfig?: object | string, host?: string, hostSso?: string, provider?: string) {
+    constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
         this.config = { ...browser.params.testConfig.appConfig };
 
         if (typeof clientIdOrAppConfig !== 'string') {

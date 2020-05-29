@@ -49,18 +49,18 @@ describe('Search Number Range Filter', () => {
     });
 
     let file2Bytes, file0Bytes;
-    this.alfrescoJsApi = new AlfrescoApi({
+    const alfrescoJsApi = new AlfrescoApi({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm
     });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(alfrescoJsApi);
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         file0Bytes = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
@@ -74,7 +74,7 @@ describe('Search Number Range Filter', () => {
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
 

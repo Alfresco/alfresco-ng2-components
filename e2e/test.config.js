@@ -9,12 +9,13 @@ const HOST = process.env.URL_HOST_ADF;
 
 const LOG = process.env.LOG;
 
-const ECM_HOST = process.env.URL_HOST_BPM_ADF || process.env.PROXY_HOST_ADF || HOST || 'ecm';
-const BPM_HOST = process.env.URL_HOST_ECM_ADF || process.env.PROXY_HOST_ADF || HOST || 'bpm';
+const ECM_HOST = process.env.PROXY_HOST_ADF || HOST || 'ecm';
+const BPM_HOST = process.env.PROXY_HOST_ADF || HOST || 'bpm';
+
 const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'BASIC';
 const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'OAUTH';
 
-const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || process.env.PROXY_HOST_ADF || HOST || 'oauth';
+const OAUTH_HOST = process.env.HOST_SSO || process.env.PROXY_HOST_ADF || HOST || 'oauth';
 const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || 'alfresco';
 
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
