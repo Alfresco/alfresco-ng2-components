@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-export abstract class Column {
+export class Column {
     columnName: string;
     columnType: string;
 
-    constructor(columnName: string) {
+    constructor(columnName: string, columnType: string) {
         this.columnName = columnName;
+        this.columnType = columnType;
     }
 
     createLocator(columnValue: string): string {
