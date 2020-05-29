@@ -47,13 +47,16 @@ describe('Share file', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    const adminAcsApi = new ContentApi(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-    const userAcsApi = new ContentApi(acsUser.id, acsUser.password);
+    let adminAcsApi: ContentApi;
+    let userAcsApi: ContentApi;
 
     let nodeId;
 
     beforeAll(async () => {
+        adminAcsApi = await new ContentApi(browser.params.ACS_ADMIN.USERNAME, browser.params.ACS_ADMIN.PASSWORD).setup();
         await adminAcsApi.people.createUser({ username: acsUser.id, password: acsUser.password });
+
+        userAcsApi = await new ContentApi(acsUser.id, acsUser.password).setup();
 
         const pngUploadedFile = await userAcsApi.nodes.createFile(pngFileModel.name);
         nodeId = pngUploadedFile.entry.id;
@@ -196,7 +199,7 @@ describe('Share file', () => {
 
             await BrowserActions.closeMenuAndDialogs();
 
-            await userAcsApi.shared.waitForSharedLink(nodeId);
+            await userAcsApi.sharedLinks.waitForSharedLink(nodeId);
 
             await customSourcesPage.navigateToCustomSources();
             await customSourcesPage.selectSharedLinksSourceType();

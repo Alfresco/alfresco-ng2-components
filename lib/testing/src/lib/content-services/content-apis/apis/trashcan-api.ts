@@ -30,7 +30,6 @@ export class TrashcanApi extends Api {
 
   async permanentlyDelete(id: string): Promise<any> {
     try {
-      await this.apiLogin();
       return await this.trashcanApi.deleteDeletedNode(id);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.permanentlyDelete.name}`, error);
@@ -39,7 +38,6 @@ export class TrashcanApi extends Api {
 
   async restore(id: string): Promise<NodeEntry> {
     try {
-      await this.apiLogin();
       return await this.trashcanApi.restoreDeletedNode(id);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.restore.name}`, error);
@@ -52,7 +50,6 @@ export class TrashcanApi extends Api {
         maxItems: 1000
     };
     try {
-      await this.apiLogin();
       return await this.trashcanApi.listDeletedNodes(opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getDeletedNodes.name}`, error);

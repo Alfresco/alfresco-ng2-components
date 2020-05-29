@@ -41,7 +41,6 @@ export class SitesApi extends Api {
 
   async getSite(siteId: string): Promise<SiteEntry> {
     try {
-      await this.apiLogin();
       return await this.sitesApi.getSite(siteId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getSite.name}`, error);
@@ -51,7 +50,6 @@ export class SitesApi extends Api {
 
   async getCurrentUserSites(): Promise<SiteRolePaging> {
     try {
-      await this.apiLogin();
       return await this.sitesApi.listSiteMembershipsForPerson(this.getUsername());
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getCurrentUserSites.name}`, error);
@@ -61,7 +59,6 @@ export class SitesApi extends Api {
 
   async getDocLibId(siteId: string): Promise<string> {
     try {
-      await this.apiLogin();
       return (await this.sitesApi.listSiteContainers(siteId)).list.entries[0].entry.id;
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getDocLibId.name}`, error);
@@ -108,7 +105,6 @@ export class SitesApi extends Api {
     } as SiteBody;
 
     try {
-      await this.apiLogin();
       return await this.sitesApi.createSite(site);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createSite.name}`, error);
@@ -142,7 +138,6 @@ export class SitesApi extends Api {
 
   async deleteSite(siteId: string, permanent: boolean = true): Promise<any> {
     try {
-      await this.apiLogin();
       return await this.sitesApi.deleteSite(siteId, { permanent });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.deleteSite.name}`, error);
@@ -179,7 +174,6 @@ export class SitesApi extends Api {
     } as SiteMemberRoleBody;
 
     try {
-      await this.apiLogin();
       return await this.sitesApi.updateSiteMembership(siteId, userId, siteRole);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.updateSiteMember.name}`, error);
@@ -194,7 +188,6 @@ export class SitesApi extends Api {
     } as SiteMemberBody;
 
     try {
-      await this.apiLogin();
       return await this.sitesApi.createSiteMembership(siteId, memberBody);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.addSiteMember.name}`, error);
@@ -220,7 +213,6 @@ export class SitesApi extends Api {
 
   async deleteSiteMember(siteId: string, userId: string): Promise<any> {
     try {
-      await this.apiLogin();
       return await this.sitesApi.deleteSiteMembership(siteId, userId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.deleteSiteMember.name}`, error);
@@ -233,7 +225,6 @@ export class SitesApi extends Api {
     };
 
     try {
-      await this.apiLogin();
       return await this.sitesApi.createSiteMembershipRequestForPerson('-me-', body);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.requestToJoin.name}`, error);
@@ -243,7 +234,6 @@ export class SitesApi extends Api {
 
   async hasMembershipRequest(siteId: string): Promise<boolean> {
     try {
-      await this.apiLogin();
       const requests = (await this.sitesApi.getSiteMembershipRequests('-me-')).list.entries.map(e => e.entry.id);
       return requests.includes(siteId);
     } catch (error) {

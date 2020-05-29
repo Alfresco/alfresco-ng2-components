@@ -28,7 +28,6 @@ export class CommentsApi extends Api {
 
   async getNodeComments(nodeId: string): Promise<CommentPaging> {
     try {
-      await this.apiLogin();
       return await this.commentsApi.listComments(nodeId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getNodeComments.name}`, error);
@@ -38,7 +37,6 @@ export class CommentsApi extends Api {
 
   async addComment(nodeId: string, comment: string): Promise<CommentEntry> {
     try {
-      await this.apiLogin();
       return await this.commentsApi.createComment(nodeId, { 'content': comment });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.addComment.name}`, error);

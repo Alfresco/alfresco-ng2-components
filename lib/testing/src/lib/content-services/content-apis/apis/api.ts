@@ -30,7 +30,6 @@ export abstract class Api {
     }
 
     async apiLogout(): Promise<any> {
-        await this.apiLogin();
         return this.alfrescoJsApi.logout();
     }
 

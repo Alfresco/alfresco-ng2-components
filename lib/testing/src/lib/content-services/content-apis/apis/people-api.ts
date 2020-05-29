@@ -30,7 +30,6 @@ export class PeopleApi extends Api {
   async createUser(user: PersonModel): Promise<PersonEntry> {
     try {
       const person = new Person(user);
-      await this.apiLogin();
       return await this.peopleApi.createPerson(person);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createUser.name}`, error);
@@ -40,7 +39,6 @@ export class PeopleApi extends Api {
 
   async getUser(username: string): Promise<PersonEntry> {
     try {
-      await this.apiLogin();
       return await this.peopleApi.getPerson(username);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getUser.name}`, error);
@@ -50,7 +48,6 @@ export class PeopleApi extends Api {
 
   async updateUser(username: string, userDetails?: PersonModel): Promise<PersonEntry> {
     try {
-      await this.apiLogin();
       return this.peopleApi.updatePerson(username, userDetails);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.updateUser.name}`, error);

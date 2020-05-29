@@ -26,6 +26,5 @@ export * from './apis/queries-api';
 export * from './apis/trashcan-api';
 export * from './apis/search-api';
 export * from './apis/upload-api';
-export * from './apis/authentication-api';
 export * from './apis/node-body-create';
 export * from './apis/node-content-tree';

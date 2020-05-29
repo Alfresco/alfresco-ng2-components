@@ -30,7 +30,6 @@ export class SharedLinksApi extends Api {
 
     async shareFileById(id: string, expireDate?: Date): Promise<SharedLinkEntry> {
       try {
-        await this.apiLogin();
         const data = {
           nodeId: id,
           expiresAt: expireDate
@@ -76,7 +75,6 @@ export class SharedLinksApi extends Api {
 
     async getSharedLinks(): Promise<SharedLinkPaging> {
       try {
-        await this.apiLogin();
         return await this.sharedlinksApi.listSharedLinks();
       } catch (error) {
         this.handleError(`${this.constructor.name} ${this.getSharedLinks.name}`, error);

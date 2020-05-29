@@ -123,7 +123,11 @@ exports.config = {
         identityUser: TestConfig.identityUser,
         rootPath: __dirname,
         resources: RESOURCES,
-        API_CONTENT_HOST: TestConfig.adf_acs.host
+        API_CONTENT_HOST: HOST || 'http://localhost:8080',
+        ACS_ADMIN: {
+            USERNAME: process.env.USERNAME_ADF || 'admin',
+            PASSWORD: process.env.PASSWORD_ADF || 'admin'
+        }
     },
 
     framework: 'jasmine2',
