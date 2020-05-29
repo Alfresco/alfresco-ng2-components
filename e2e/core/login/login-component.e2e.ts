@@ -57,7 +57,7 @@ describe('Login component', () => {
    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
-        browser.params.testConfig.appConfig.provider ='ECM';
+        browser.params.testConfig.appConfig.provider = 'ECM';
         await loginPage.login(userA.id, userA.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
@@ -159,7 +159,7 @@ describe('Login component', () => {
     });
 
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {
-        browser.params.testConfig.appConfig.provider ='BPM';
+        browser.params.testConfig.appConfig.provider = 'BPM';
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -171,7 +171,7 @@ describe('Login component', () => {
     });
 
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
-        browser.params.testConfig.appConfig.provider ='ECM';
+        browser.params.testConfig.appConfig.provider = 'ECM';
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -181,7 +181,7 @@ describe('Login component', () => {
     });
 
     it('[C260051] Should be able to login to both Content Services and Process Services', async () => {
-        browser.params.testConfig.appConfig.provider ='ALL';
+        browser.params.testConfig.appConfig.provider = 'ALL';
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
