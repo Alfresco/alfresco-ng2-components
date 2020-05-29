@@ -176,11 +176,13 @@ exports.config = {
             paths: tsConfig.compilerOptions.paths
         });
 
+        // @ts-ignore
         browser.driver.sendChromiumCommand('Page.setDownloadBehavior', {
             behavior: 'allow',
             downloadPath: downloadFolder
         });
 
+        // @ts-ignore
         browser.manage().window().setSize(width, height);
 
         jasmine.getEnv().addReporter(
