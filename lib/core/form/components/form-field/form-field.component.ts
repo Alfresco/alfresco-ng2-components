@@ -159,8 +159,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
     }
 
     focusToggle() {
-        setTimeout(() => {
-            this.focus = !this.focus;
-        });
+        this.focus = !this.focus;
     }
 }
