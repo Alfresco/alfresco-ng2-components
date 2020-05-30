@@ -16,12 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FolderModel } from '../../../models/ACS/folder.model';
-import { AcsUserModel } from '../../../models/ACS/acs-user.model';
 import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../../actions/users.actions';
 
 describe('Viewer', () => {
 
@@ -29,11 +29,12 @@ describe('Viewer', () => {
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     let site;
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
 
     const wordFolderInfo = new FolderModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
@@ -42,7 +43,7 @@ describe('Viewer', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),

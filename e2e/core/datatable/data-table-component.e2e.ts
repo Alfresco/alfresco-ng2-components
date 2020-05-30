@@ -15,33 +15,35 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Datatable component', () => {
 
-    const apiService = new ApiService();
     const dataTablePage = new DataTablePage('defaultTable');
     const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
     const dragAndDropDataTablePage = new DataTablePage();
     const loginPage = new LoginSSOPage();
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const dragAndDrop = new DropActions();
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const dragAndDrop = new DropActions();
+
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await loginPage.login(acsUser.id, acsUser.password);
     });

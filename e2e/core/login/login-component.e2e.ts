@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, BrowserActions, ErrorPage, UserInfoPage } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, ErrorPage, UserInfoPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Login component', () => {
 
@@ -31,13 +31,13 @@ describe('Login component', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
-    const adminUserModel = new AcsUserModel({
+    const adminUserModel = new UserModel({
         'id': browser.params.testConfig.admin.email,
         'password': browser.params.testConfig.admin.password
     });
 
-    const userA = new AcsUserModel();
-    const userB = new AcsUserModel();
+    const userA = new UserModel();
+    const userB = new UserModel();
 
     const errorMessages = {
         username: 'Your username needs to be at least 2 characters.',
@@ -47,13 +47,15 @@ describe('Login component', () => {
     };
     const invalidUsername = 'invaliduser';
     const invalidPassword = 'invalidpassword';
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(userA);
-        await apiService.getInstance().core.peopleApi.addPerson(userB);
+        await usersActions.createUser(userA);
+        await usersActions.createUser(userB);
    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {

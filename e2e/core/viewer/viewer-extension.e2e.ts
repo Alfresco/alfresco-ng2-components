@@ -16,13 +16,13 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monaco-extension.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer', () => {
 
@@ -30,12 +30,14 @@ describe('Viewer', () => {
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
-    const apiService = new ApiService();
-
-    const uploadActions = new UploadActions(apiService);
-    let site;
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const monacoExtensionPage = new MonacoExtensionPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const uploadActions = new UploadActions(apiService);
+
+    let site;
 
     let jsFileUploaded;
     const jsFileInfo = new FileModel({
@@ -46,7 +48,7 @@ describe('Viewer', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),

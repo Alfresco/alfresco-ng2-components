@@ -15,23 +15,25 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { IconsPage } from '../pages/adf/icons.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Universal Icon component', () => {
 
     const loginPage = new LoginSSOPage();
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const iconsPage = new IconsPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.id, acsUser.password);
    });
 

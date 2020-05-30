@@ -16,11 +16,11 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer', () => {
 
@@ -28,9 +28,12 @@ describe('Viewer', () => {
     const viewerPage = new ViewerPage();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
+
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
-    const acsUser = new AcsUserModel();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
     let txtFileUploaded;
 
     const txtFileInfo = new FileModel({
@@ -40,7 +43,7 @@ describe('Viewer', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 

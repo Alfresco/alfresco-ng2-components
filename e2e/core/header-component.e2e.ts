@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ApiService, HeaderPage, LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { ApiService, HeaderPage, LoginSSOPage, SettingsPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Header Component', () => {
 
@@ -25,9 +25,11 @@ describe('Header Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();
-    const apiService = new ApiService();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
 
     const names = {
         app_title_default: 'ADF Demo Application',
@@ -46,7 +48,7 @@ describe('Header Component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.id, acsUser.password);
     });
 

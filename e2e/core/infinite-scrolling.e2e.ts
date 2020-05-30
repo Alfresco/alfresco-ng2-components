@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { StringUtil, LocalStorageUtil, LoginSSOPage, UploadActions, ApiService } from '@alfresco/adf-testing';
+import { StringUtil, LocalStorageUtil, LoginSSOPage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { InfinitePaginationPage } from '../pages/adf/core/infinite-pagination.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Enable infinite scrolling', () => {
 
@@ -29,9 +29,11 @@ describe('Enable infinite scrolling', () => {
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
 
     let fileNames = [];
@@ -52,7 +54,7 @@ describe('Enable infinite scrolling', () => {
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await loginPage.login(acsUser.id, acsUser.password);
 

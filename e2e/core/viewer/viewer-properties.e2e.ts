@@ -16,15 +16,15 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer - properties', () => {
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginSSOPage();
@@ -41,13 +41,13 @@ describe('Viewer - properties', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
     const apiService = new ApiService();
-
+    const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 

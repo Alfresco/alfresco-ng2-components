@@ -17,13 +17,13 @@
 
 import { browser } from 'protractor';
 
-import { SettingsPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { SettingsPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
 import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Login component - Redirect', () => {
 
@@ -32,9 +32,11 @@ describe('Login component - Redirect', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
-    const user = new AcsUserModel();
-    const userFolderOwner = new AcsUserModel();
-    const adminUserModel = new AcsUserModel({
+    const logoutPage = new LogoutPage();
+
+    const user = new UserModel();
+    const userFolderOwner = new UserModel();
+    const adminUserModel = new UserModel({
         'id': browser.params.testConfig.admin.email,
         'password': browser.params.testConfig.admin.password
     });
@@ -42,13 +44,13 @@ describe('Login component - Redirect', () => {
 
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
-    const logoutPage = new LogoutPage();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(user);
-        await apiService.getInstance().core.peopleApi.addPerson(userFolderOwner);
+        await usersActions.createUser(user);
+        await usersActions.createUser(userFolderOwner);
 
         await apiService.getInstance().login(user.id, user.password);
 

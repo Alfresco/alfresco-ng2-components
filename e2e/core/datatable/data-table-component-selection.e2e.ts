@@ -15,25 +15,27 @@
  * limitations under the License.
  */
 
-import { ApiService, DataTableComponentPage, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, DataTableComponentPage, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Datatable component - selection', () => {
 
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
     const dataTablePage = new DataTablePage();
     const loginPage = new LoginSSOPage();
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await loginPage.login(acsUser.id, acsUser.password);
 

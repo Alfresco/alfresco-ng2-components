@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserInfoPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
@@ -29,7 +28,9 @@ describe('User Info component', () => {
     const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
     const navigationBarPage = new NavigationBarPage();
+
     const apiService = new ApiService({ provider: 'ALL' });
+    const usersActions = new UsersActions(apiService);
 
     const acsAvatarFileModel = new FileModel({
         'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
@@ -47,7 +48,7 @@ describe('User Info component', () => {
 
         processUserModel = await users.createTenantAndUser();
 
-        contentUserModel = new AcsUserModel({
+        contentUserModel = new UserModel({
             'id': processUserModel.email,
             'password': processUserModel.password,
             'firstName': processUserModel.firstName,
@@ -55,7 +56,7 @@ describe('User Info component', () => {
             'email': processUserModel.email
         });
 
-        await apiService.getInstance().core.peopleApi.addPerson(contentUserModel);
+        await usersActions.createUser(contentUserModel);
     });
 
     afterAll(async () => {

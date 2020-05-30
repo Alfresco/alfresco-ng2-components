@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { BrowserActions, SettingsPage } from '@alfresco/adf-testing';
+import { BrowserActions, SettingsPage, UserModel } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -33,7 +32,7 @@ describe('Settings component', () => {
     const loginError = 'Request has been terminated ' +
         'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
 
-    const adminUserModel = new AcsUserModel({
+    const adminUserModel = new UserModel({
         'id': browser.params.testConfig.admin.email,
         'password': browser.params.testConfig.admin.password
     });
