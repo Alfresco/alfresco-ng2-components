@@ -28,6 +28,9 @@ export class UserModel {
     email: string = StringUtil.generateRandomEmail(`@${this.EMAIL_DOMAIN}.com`);
     username: string = StringUtil.generateRandomString().toLowerCase();
     idIdentityService: string;
+    type = 'enterprise';
+    tenantId = 1;
+    company = null;
 
     constructor(details?: any) {
         Object.assign(this, details);

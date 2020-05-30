@@ -20,7 +20,7 @@ import * as fs from 'fs';
 import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
 import { ApiUtil } from '../../core/structure/api.util';
 import { Logger } from '../../core/utils/logger';
-import { ApiService } from '../../../..';
+import { ApiService } from '../../core/actions/api.service';
 
 export class UploadActions {
 

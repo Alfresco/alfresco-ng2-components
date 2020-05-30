@@ -22,11 +22,8 @@ import remote = require('selenium-webdriver/remote');
 import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { ApsUserModel } from '../models/APS/aps-user.model';
-import { PersonEntry } from '@alfresco/js-api/src/api/content-rest-api/model/personEntry';
-import { ImageUploadRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/imageUploadRepresentation';
-import { Person } from '@alfresco/js-api/src/api/content-rest-api/model/person';
-import { UserRepresentation } from '@alfresco/js-api';
-import { ApiService, IdentityService } from '@alfresco/adf-testing';
+import { PersonEntry, ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
+import { ApiService, IdentityService, UserModel } from '@alfresco/adf-testing';
 
 export class UsersActions {
 
@@ -35,30 +32,31 @@ export class UsersActions {
 
     constructor(alfrescoApi: ApiService) {
         this.api = alfrescoApi;
-        this.identityService = new IdentityService(this.api);
+        if (this.api.apiService.isOauthConfiguration()) {
+            this.identityService = new IdentityService(this.api);
+        }
     }
 
-    async createUser(email?: string, firstName?: string, lastName?: string, tenantId?: number): Promise<{ apsUser: UserRepresentation, acsUser: Person }> {
-        let apsUser: UserRepresentation;
-        let acsUser: PersonEntry;
+    async createUser(email?: string, firstName?: string, lastName?: string, tenantId?: number): Promise<UserModel> {
+        const user = new UserModel({ email, firstName, lastName, tenantId });
 
         if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
-            acsUser = await this.createAcsUser(email, firstName, lastName);
+            await this.createAcsUser(user.email, user.firstName, user.lastName);
         }
 
         if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
             if (tenantId) {
-                apsUser = await this.createApsUser(tenantId, email, firstName, lastName);
+                await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName);
             } else {
-                apsUser = await this.createTenantAndUser(email, firstName, lastName);
+                await this.createTenantAndUser(user.email, user.firstName, user.lastName);
             }
         }
 
         if (this.api.apiService.isOauthConfiguration()) {
-
+            await this.identityService.createIdentityUser();
         }
 
-        return { apsUser: apsUser, acsUser: acsUser.entry };
+        return user;
     }
 
     async createAcsUser(email?: string, firstName?: string, lastName?: string): Promise<PersonEntry> {

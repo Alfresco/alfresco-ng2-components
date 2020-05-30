@@ -35,10 +35,10 @@ export class ApsUserModel {
     id = 0;
 
     constructor(details: any = {}) {
-        this.email = details.email ? details.email : StringUtil.generateRandomEmail('@activiti.test.com');
-        this.firstName = details.firstName ? details.firstName : StringUtil.generateRandomString();
-        this.lastName = details.lastName ? details.lastName : StringUtil.generateRandomString();
-        this.password = details.password ? details.password : StringUtil.generateRandomString();
+        this.email = details.email ? details.email : this.email;
+        this.firstName = details.firstName ? details.firstName : this.firstName;
+        this.lastName = details.lastName ? details.lastName : this.lastName;
+        this.password = details.password ? details.password : this.password;
         this.type = details.type ? details.type : 'enterprise';
         this.tenantId = details.tenantId ? details.tenantId : 1;
         this.company = details.company ? details.company : null;

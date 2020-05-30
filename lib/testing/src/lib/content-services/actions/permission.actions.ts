@@ -16,7 +16,7 @@
  */
 
 import { NodeEntry, NodeBodyUpdate } from '@alfresco/js-api';
-import { ApiService } from '../../../..';
+import { ApiService } from '../../core/actions/api.service';
 
 export class PermissionActions {
     api: ApiService;

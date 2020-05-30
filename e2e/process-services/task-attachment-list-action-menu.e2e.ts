@@ -25,7 +25,7 @@ import path = require('path');
 import fs = require('fs');
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attachment list action menu for tasks', () => {
 

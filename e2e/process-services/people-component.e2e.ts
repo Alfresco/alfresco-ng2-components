@@ -25,7 +25,7 @@ import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('People component', () => {
 

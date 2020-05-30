@@ -22,7 +22,7 @@ import CONSTANTS = require('../util/constants');
 import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {
 

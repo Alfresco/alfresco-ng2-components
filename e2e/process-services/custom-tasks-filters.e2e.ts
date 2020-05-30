@@ -31,7 +31,7 @@ import { Tenant } from '../models/APS/tenant';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import moment = require('moment');
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Custom App', () => {
 

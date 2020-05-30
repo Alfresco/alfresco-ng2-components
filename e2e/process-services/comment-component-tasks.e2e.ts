@@ -23,7 +23,7 @@ import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import { UsersActions } from '../actions/users.actions';
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Comment component for Processes', () => {
 

@@ -23,7 +23,7 @@ import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import CONSTANTS = require('../util/constants');
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attach Form Component', () => {
 

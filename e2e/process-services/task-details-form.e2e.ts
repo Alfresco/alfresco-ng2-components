@@ -26,7 +26,7 @@ import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
 import CONSTANTS = require('../util/constants');
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
-import { TaskRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/taskRepresentation';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginSSOPage();
