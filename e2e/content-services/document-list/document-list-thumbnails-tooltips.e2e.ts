@@ -16,11 +16,11 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { ApiService, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
@@ -33,6 +33,7 @@ describe('Document List Component', () => {
     let acsUser = null;
     let testFileNode, pdfBFileNode;
     const navigationBarPage = new NavigationBarPage();
+    const usersActions = new UsersActions(apiService);
 
     afterEach(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -73,12 +74,11 @@ describe('Document List Component', () => {
         let filePdfNode, fileTestNode, fileDocxNode, folderNode;
 
         beforeAll(async () => {
-            acsUser = new AcsUserModel();
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            acsUser = await usersActions.createUser();
 
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
@@ -104,7 +104,7 @@ describe('Document List Component', () => {
     });
 
         beforeEach(async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

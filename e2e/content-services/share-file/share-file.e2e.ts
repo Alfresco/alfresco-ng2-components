@@ -21,20 +21,21 @@ import {
     LocalStorageUtil,
     NotificationHistoryPage,
     UploadActions,
-    ViewerPage, ApiUtil, ApiService
+    ViewerPage, ApiUtil, ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Share file', () => {
 
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -43,7 +44,7 @@ describe('Share file', () => {
     const customSourcesPage = new CustomSourcesPage();
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const uploadActions = new UploadActions(apiService);
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -62,7 +63,7 @@ describe('Share file', () => {
         };
 
         const apiCall = async () => {
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             return apiService.getInstance().core.sharedlinksApi.findSharedLinks();
         };
 
@@ -71,8 +72,8 @@ describe('Share file', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -86,7 +87,7 @@ describe('Share file', () => {
 
     describe('Shared link dialog', () => {
         beforeAll(async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentListPage.selectRow(pngFileModel.name);
             await BrowserActions.closeMenuAndDialogs();
@@ -159,7 +160,7 @@ describe('Share file', () => {
 
     describe('Shared link preview', () => {
         beforeEach(async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
         });

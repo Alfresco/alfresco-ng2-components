@@ -82,7 +82,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             await identityService.createIdentityUserAndSyncECMBPM(acsUser);
 
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
 
             folder = await uploadActions.createFolder(folderName, '-my-');
 
@@ -97,7 +97,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
                 browser.params.testConfig.appConfig.identityHost, silentLogin, implicitFlow, browser.params.testConfig.appConfig.oauth2.clientId);
 
             await loginSsoPage.clickOnSSOButton();
-            await loginSsoPage.loginSSOIdentityService(acsUser.id, acsUser.password);
+            await loginSsoPage.loginSSOIdentityService(acsUser.email, acsUser.password);
 
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();
@@ -109,7 +109,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             try {
                 await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
-                await identityService.deleteIdentityUser(acsUser.id);
+                await identityService.deleteIdentityUser(acsUser.email);
             } catch (error) {
             }
             await apiService.getInstance().logout();

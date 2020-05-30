@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
-import { LoginSSOPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tag.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Tag component', () => {
 
@@ -28,8 +28,9 @@ describe('Tag component', () => {
     const tagPage = new TagPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
     const pdfFileModel = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
@@ -52,9 +53,9 @@ describe('Tag component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         pdfUploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
 
@@ -68,7 +69,7 @@ describe('Tag component', () => {
 
         await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {

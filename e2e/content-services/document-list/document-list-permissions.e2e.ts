@@ -18,8 +18,8 @@
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { LoginSSOPage, ErrorPage, StringUtil, BrowserActions, ApiService } from '@alfresco/adf-testing';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
@@ -28,23 +28,23 @@ describe('Document List Component', () => {
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let privateSite;
     let acsUser = null;
 
     describe('Permission Message', () => {
         beforeAll(async () => {
-            acsUser = new AcsUserModel();
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            acsUser = await usersActions.createUser();
 
             privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         afterAll(async () => {

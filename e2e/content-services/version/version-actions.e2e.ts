@@ -21,15 +21,15 @@ import {
     BrowserVisibility,
     FileBrowserUtil,
     LoginSSOPage,
-    UploadActions
+    UploadActions, UserModel
 } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component actions', () => {
 
@@ -39,8 +39,9 @@ describe('Version component actions', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
@@ -61,12 +62,12 @@ describe('Version component actions', () => {
     beforeAll(async () => {
         uploadActions = new UploadActions(apiService);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
    });

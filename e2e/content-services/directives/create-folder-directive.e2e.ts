@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, NotificationHistoryPage, StringUtil, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser, Key } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Create folder directive', () => {
 
@@ -30,16 +30,17 @@ describe('Create folder directive', () => {
     const createFolderDialog = new FolderDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

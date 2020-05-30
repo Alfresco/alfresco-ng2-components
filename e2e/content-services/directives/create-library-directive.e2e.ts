@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CreateLibraryDialogPage } from '../../pages/adf/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Create library directive', () => {
 
@@ -31,6 +31,7 @@ describe('Create library directive', () => {
     const customSourcesPage = new CustomSourcesPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const visibility = {
         public: 'Public',
@@ -40,14 +41,14 @@ describe('Create library directive', () => {
 
     let createSite;
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         createSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),

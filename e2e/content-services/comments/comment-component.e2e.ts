@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CommentsPage } from '../../pages/adf/comments.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Comment Component', () => {
 
@@ -31,10 +31,10 @@ describe('Comment Component', () => {
     const viewerPage: ViewerPage = new ViewerPage();
     const commentsPage: CommentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
-    const acsUser: AcsUserModel = new AcsUserModel();
     const apiService = new ApiService();
 
     let userFullName, nodeId;
+    let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -42,6 +42,7 @@ describe('Comment Component', () => {
     });
 
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const comments = {
         first: 'This is a comment',
@@ -57,7 +58,7 @@ describe('Comment Component', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
     });
 
     afterAll(async () => {
@@ -65,7 +66,7 @@ describe('Comment Component', () => {
     });
 
     beforeEach(async () => {
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -73,7 +74,7 @@ describe('Comment Component', () => {
 
         userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
@@ -169,13 +170,13 @@ describe('Comment Component', () => {
             });
 
             await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-                id: acsUser.id,
+                id: acsUser.email,
                 role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await navigationBarPage.clickContentServicesButton();
         });

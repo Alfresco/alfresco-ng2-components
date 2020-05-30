@@ -24,12 +24,12 @@ async function uploadScreenshot(retryCount) {
             hostEcm: TestConfig.screenshot.url
         });
 
-        await alfrescoJsApi.apiService.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
+        await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
 
         let folder;
 
         try {
-            folder = await alfrescoJsApi.apiService.nodes.addNode('-my-', {
+            folder = await alfrescoJsApi.nodes.addNode('-my-', {
                 'name': `retry-${retryCount}`,
                 'relativePath': `Builds/${buildNumber()}/screenshot`,
                 'nodeType': 'cm:folder'
@@ -37,7 +37,7 @@ async function uploadScreenshot(retryCount) {
                 'overwrite': true
             });
         } catch (error) {
-            folder = await alfrescoJsApi.apiService.nodes.getNode('-my-', {
+            folder = await alfrescoJsApi.nodes.getNode('-my-', {
                 'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
                 'nodeType': 'cm:folder'
             }, {}, {
@@ -54,7 +54,7 @@ async function uploadScreenshot(retryCount) {
             if (safeFileName) {
                 const safeFileNameMatch = safeFileName[1];
                 try {
-                    await alfrescoJsApi.apiService.upload.uploadFile(
+                    await alfrescoJsApi.upload.uploadFile(
                         file,
                         '',
                         folder.entry.id,

@@ -22,14 +22,14 @@ import {
     NotificationHistoryPage,
     LoginSSOPage,
     ErrorPage,
-    UploadActions, ApiService
+    UploadActions, ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Unshare file', () => {
 
@@ -44,8 +44,10 @@ describe('Unshare file', () => {
 
     const shareDialog = new ShareDialogPage();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
     let nodeBody;
     let nodeId;
     let testSite;
@@ -62,7 +64,7 @@ describe('Unshare file', () => {
         };
 
         const memberBody = {
-            id: acsUser.id,
+            id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         };
 
@@ -75,7 +77,7 @@ describe('Unshare file', () => {
         };
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
         testSite = await apiService.getInstance().core.sitesApi.createSite(site);
 
         const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
@@ -87,19 +89,19 @@ describe('Unshare file', () => {
                 isInheritanceEnabled: false,
                 locallySet: [
                     {
-                        authorityId: acsUser.id,
+                        authorityId: acsUser.email,
                         name: CONSTANTS.CS_USER_ROLES.CONSUMER
                     }
                 ]
             }
         });
         await apiService.getInstance().core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navBar.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
     });

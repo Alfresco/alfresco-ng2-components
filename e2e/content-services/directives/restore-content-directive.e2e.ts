@@ -17,7 +17,6 @@
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -29,20 +28,22 @@ import {
     UploadActions,
     BrowserActions,
     BreadcrumbPage,
-    ApiService
+    ApiService, UserModel
 } from '@alfresco/adf-testing';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Restore content directive', () => {
 
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
-    const acsUser = new AcsUserModel();
-    const anotherAcsUser = new AcsUserModel();
+    const acsUser = new UserModel();
+    const anotherAcsUser = new UserModel();
     const trashcanPage = new TrashcanPage();
     const breadCrumbPage = new BreadcrumbPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const pdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -67,9 +68,9 @@ describe('Restore content directive', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().core.peopleApi.addPerson(anotherAcsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await usersActions.createUser(acsUser);
+        await usersActions.createUser(anotherAcsUser);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         await uploadActions.createFolder(folderName, '-my-');
         folderWithContent = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -79,7 +80,7 @@ describe('Restore content directive', () => {
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
@@ -176,7 +177,7 @@ describe('Restore content directive', () => {
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         await contentServicesPage.deleteContent(subFolder.entry.name);
         await contentServicesPage.checkContentIsNotDisplayed(subFolder.entry.name);
-        await breadCrumbPage.chooseBreadCrumb(acsUser.id);
+        await breadCrumbPage.chooseBreadCrumb(acsUser.email);
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
         await contentServicesPage.deleteContent(folderWithFolder.entry.name);
@@ -234,7 +235,7 @@ describe('Restore content directive', () => {
 
     describe('Restore deleted library', () => {
         beforeAll(async () => {
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
             const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
             publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
@@ -273,7 +274,7 @@ describe('Restore content directive', () => {
         let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(anotherAcsUser.id, anotherAcsUser.password);
+            await apiService.getInstance().login(anotherAcsUser.email, anotherAcsUser.password);
             await uploadActions.createFolder(folderName, '-my-');
             parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
             folderWithin = await uploadActions.createFolder(StringUtil.generateRandomString(5), parentFolder.entry.id);
@@ -282,7 +283,7 @@ describe('Restore content directive', () => {
             mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
-            await loginPage.login(anotherAcsUser.id, anotherAcsUser.password);
+            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
         });

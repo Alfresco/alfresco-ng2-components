@@ -16,12 +16,19 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, BrowserVisibility, BrowserActions, ApiService } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    UploadActions,
+    BrowserVisibility,
+    BrowserActions,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component', () => {
 
@@ -30,9 +37,11 @@ describe('Version component', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const versionManagePage = new VersionManagePage();
-    const apiService = new ApiService();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
@@ -64,16 +73,16 @@ describe('Version component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

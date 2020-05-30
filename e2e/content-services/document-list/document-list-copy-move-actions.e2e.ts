@@ -21,13 +21,13 @@ import {
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    NotificationHistoryPage, BrowserActions, ApiService
+    NotificationHistoryPage, BrowserActions, ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
@@ -37,12 +37,14 @@ describe('Document List Component', () => {
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
     let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
         duplicateFolderName;
-    let acsUser = null, anotherAcsUser: AcsUserModel;
+    const acsUser = new UserModel();
+    const anotherAcsUser = new UserModel();
     let folderName, sameNameFolder, site;
 
     const pdfFileModel = new FileModel({
@@ -56,22 +58,20 @@ describe('Document List Component', () => {
     });
 
     beforeAll(async () => {
-        acsUser = new AcsUserModel();
-        anotherAcsUser = new AcsUserModel();
         folderName = StringUtil.generateRandomString(5);
         sameNameFolder = StringUtil.generateRandomString(5);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().core.peopleApi.addPerson(anotherAcsUser);
+        await usersActions.createUser(acsUser);
+        await usersActions.createUser(anotherAcsUser);
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: anotherAcsUser.getId(),
+            id: anotherAcsUser.email,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         destinationFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         sourceFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -87,7 +87,7 @@ describe('Document List Component', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: anotherAcsUser.getId(),
+                        authorityId: anotherAcsUser.email,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
@@ -110,7 +110,7 @@ describe('Document List Component', () => {
 
     describe('Document List Component - Actions Move and Copy', () => {
         beforeAll(async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         beforeEach(async () => {
@@ -204,7 +204,7 @@ describe('Document List Component', () => {
 
     describe('Document List actionns - Move, Copy on no permission folder', () => {
         beforeAll(async () => {
-            await loginPage.login(anotherAcsUser.id, anotherAcsUser.password);
+            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
@@ -265,7 +265,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             await contentServicesPage.checkDeleteIsDisabled(pdfFileModel.name);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 

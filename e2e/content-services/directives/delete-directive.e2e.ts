@@ -16,7 +16,6 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import {
     BrowserActions,
@@ -25,10 +24,11 @@ import {
     PaginationPage,
     StringUtil,
     PermissionActions,
-    ApiService
+    ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Delete Directive', () => {
 
@@ -37,11 +37,12 @@ describe('Delete Directive', () => {
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();
-    const acsUser = new AcsUserModel();
-    const secondAcsUser = new AcsUserModel();
+    const acsUser = new UserModel();
+    const secondAcsUser = new UserModel();
     const uploadActions = new UploadActions(apiService);
     const permissionActions = new PermissionActions(apiService);
     let baseFolderUploaded;
+    const usersActions = new UsersActions(apiService);
 
     const txtFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
@@ -90,9 +91,9 @@ describe('Delete Directive', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().core.peopleApi.addPerson(secondAcsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await usersActions.createUser(acsUser);
+        await usersActions.createUser(secondAcsUser);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
     });
 
     beforeEach(async () => {
@@ -115,7 +116,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, textFolderUploaded.entry.id);
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -188,7 +189,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -219,7 +220,7 @@ describe('Delete Directive', () => {
             });
 
             await apiService.getInstance().core.sitesApi.addSiteMember(createdSite.entry.id, {
-                id: secondAcsUser.id,
+                id: secondAcsUser.email,
                 role: 'SiteCollaborator'
             });
 
@@ -228,17 +229,17 @@ describe('Delete Directive', () => {
             folderA = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
             folderB = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
 
-            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteManager', folderA);
-            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteManager', fileTxt);
-            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteConsumer', folderB);
-            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteConsumer', filePdf);
+            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', folderA);
+            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', fileTxt);
+            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', folderB);
+            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', filePdf);
 
             await permissionActions.disableInheritedPermissionsForNode(folderA.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(folderB.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(fileTxt.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
-            await loginPage.login(secondAcsUser.id, secondAcsUser.password);
+            await loginPage.login(secondAcsUser.email, secondAcsUser.password);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });

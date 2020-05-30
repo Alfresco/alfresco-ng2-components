@@ -21,25 +21,26 @@ import {
     LoginSSOPage,
     NotificationHistoryPage,
     StringUtil,
-    UploadActions
+    UploadActions, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Edit folder directive', () => {
 
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const editFolderDialog = new FolderDialogPage();
-    const acsUser = new AcsUserModel();
-    const anotherAcsUser = new AcsUserModel();
+    const acsUser = new UserModel();
+    const anotherAcsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -52,9 +53,9 @@ describe('Edit folder directive', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().core.peopleApi.addPerson(anotherAcsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await usersActions.createUser(acsUser);
+        await usersActions.createUser(anotherAcsUser);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         editFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         anotherFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -66,14 +67,14 @@ describe('Edit folder directive', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: anotherAcsUser.getId(),
+                        authorityId: anotherAcsUser.email,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
             });
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

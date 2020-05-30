@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
+import { UsersActions } from '../../actions/users.actions';
 
 describe('permissions', () => {
 
@@ -43,9 +43,9 @@ describe('permissions', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const consumerUser = new AcsUserModel();
-    const collaboratorUser = new AcsUserModel();
-    const contributorUser = new AcsUserModel();
+    const consumerUser = new UserModel();
+    const collaboratorUser = new UserModel();
+    const contributorUser = new UserModel();
     let site;
 
     const pngFileModel = new FileModel({
@@ -53,15 +53,16 @@ describe('permissions', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(consumerUser);
-        await apiService.getInstance().core.peopleApi.addPerson(collaboratorUser);
-        await apiService.getInstance().core.peopleApi.addPerson(contributorUser);
+        await usersActions.createUser(consumerUser);
+        await usersActions.createUser(collaboratorUser);
+        await usersActions.createUser(contributorUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -69,22 +70,22 @@ describe('permissions', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: consumerUser.id,
+            id: consumerUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: collaboratorUser.id,
+            id: collaboratorUser.email,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: contributorUser.id,
+            id: contributorUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
         await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -92,7 +93,7 @@ describe('permissions', () => {
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {
-        await loginPage.login(consumerUser.id, consumerUser.password);
+        await loginPage.login(consumerUser.email, consumerUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -104,7 +105,7 @@ describe('permissions', () => {
     });
 
     it('[C279971] Should be possible edit metadata properties when the user is a collaborator user', async () => {
-        await loginPage.login(collaboratorUser.id, collaboratorUser.password);
+        await loginPage.login(collaboratorUser.email, collaboratorUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 
@@ -124,7 +125,7 @@ describe('permissions', () => {
     });
 
     it('[C279972] Should be possible edit metadata properties when the user is a contributor user', async () => {
-        await loginPage.login(collaboratorUser.id, collaboratorUser.password);
+        await loginPage.login(collaboratorUser.email, collaboratorUser.password);
 
         await navigationBarPage.openContentServicesFolder(site.entry.guid);
 

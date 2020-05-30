@@ -16,12 +16,19 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { LoginSSOPage, UploadActions, BrowserVisibility, FileBrowserUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    UploadActions,
+    BrowserVisibility,
+    FileBrowserUtil,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component actions', () => {
 
@@ -30,7 +37,7 @@ describe('Version component actions', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const txtFileComma = new FileModel({
         name: 'comma,name',
@@ -59,11 +66,12 @@ describe('Version component actions', () => {
 
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, '-my-');
         await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
@@ -74,7 +82,7 @@ describe('Version component actions', () => {
 
         await uploadActions.createFolder(folderSecond.name, '-my-');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

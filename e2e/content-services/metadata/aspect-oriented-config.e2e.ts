@@ -21,14 +21,14 @@ import {
     UploadActions,
     LocalStorageUtil,
     ViewerPage,
-    ApiService
+    ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Aspect oriented config', () => {
 
@@ -40,8 +40,9 @@ describe('Aspect oriented config', () => {
     const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -64,13 +65,13 @@ describe('Aspect oriented config', () => {
         } catch (e) {
         }
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         const aspects = await apiService.getInstance().core.nodesApi.getNode(uploadedFile.entry.id);
 

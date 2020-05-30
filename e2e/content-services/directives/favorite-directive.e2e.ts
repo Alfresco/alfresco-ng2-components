@@ -20,28 +20,29 @@ import {
     ContentNodeSelectorDialogPage,
     LoginSSOPage,
     StringUtil,
-    UploadActions
+    UploadActions, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Favorite directive', () => {
 
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const customSourcesPage = new CustomSourcesPage();
     const trashcanPage = new TrashcanPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -53,8 +54,8 @@ describe('Favorite directive', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         testFolder1 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFolder2 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -62,7 +63,7 @@ describe('Favorite directive', () => {
         testFolder4 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFile = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
    });
 

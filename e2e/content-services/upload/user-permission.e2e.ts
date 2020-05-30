@@ -16,24 +16,23 @@
  */
 
 import { browser } from 'protractor';
-import { StringUtil, LoginSSOPage, NotificationHistoryPage, ApiService } from '@alfresco/adf-testing';
+import { StringUtil, LoginSSOPage, NotificationHistoryPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const loginPage = new LoginSSOPage();
-    let acsUser;
-    let acsUserTwo;
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const emptyFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -50,17 +49,16 @@ describe('Upload - User permission', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    beforeEach(async () => {
-        acsUser = new AcsUserModel();
-        acsUserTwo = new AcsUserModel();
+    const acsUser = new UserModel();
+    const acsUserTwo = new UserModel();
 
+    beforeEach(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
+        await usersActions.createUser(acsUserTwo);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUserTwo);
-
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         this.consumerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -73,12 +71,12 @@ describe('Upload - User permission', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
-            id: acsUser.id,
+            id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(this.managerSite.entry.id, {
-            id: acsUser.id,
+            id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
@@ -153,7 +151,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUserTwo.id, acsUserTwo.pass);
+            await loginPage.login(acsUserTwo.id, acsUserTwo.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -163,7 +161,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

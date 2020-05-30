@@ -21,19 +21,28 @@ import { browser } from 'protractor';
 export class UserModel {
 
     EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
+    USER_IDENTIFY = StringUtil.generateRandomString();
 
     firstName: string = StringUtil.generateRandomString();
     lastName: string = StringUtil.generateRandomString();
     password: string = StringUtil.generateRandomString();
-    email: string = StringUtil.generateRandomEmail(`@${this.EMAIL_DOMAIN}.com`);
-    username: string = StringUtil.generateRandomString().toLowerCase();
+    email: string = `${this.USER_IDENTIFY}@${this.EMAIL_DOMAIN}.com`;
+    username: string = this.USER_IDENTIFY.toLowerCase();
     idIdentityService: string;
     type = 'enterprise';
     tenantId = 1;
     company = null;
 
     constructor(details?: any) {
-        Object.assign(this, details);
+        this.firstName = details.firstName ? details.firstName : this.firstName;
+        this.lastName = details.lastName ? details.lastName : this.lastName;
+        this.password = details.password ? details.password : this.password;
+        this.email = details.email ? details.email : this.email;
+        this.username = details.username ? details.username : this.username;
+        this.idIdentityService = details.idIdentityService ? details.idIdentityService : this.idIdentityService;
+        this.type = details.type ? details.type : this.type;
+        this.tenantId = details.tenantId ? details.tenantId : this.tenantId;
+        this.company = details.company ? details.company : this.company;
     }
 
     get id() {

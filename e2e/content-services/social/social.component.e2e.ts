@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService } from '@alfresco/adf-testing';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SocialPage } from '../../pages/adf/demo-shell/social.page';
 import { browser } from 'protractor';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Social component', () => {
 
@@ -29,10 +29,11 @@ describe('Social component', () => {
     const ratePage = new RatePage();
     const socialPage = new SocialPage();
     const navigationBarPage = new NavigationBarPage();
-    const componentOwner = new AcsUserModel();
-    const componentVisitor = new AcsUserModel();
-    const secondComponentVisitor = new AcsUserModel();
+    const componentOwner = new UserModel();
+    const componentVisitor = new UserModel();
+    const secondComponentVisitor = new UserModel();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
@@ -51,11 +52,11 @@ describe('Social component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(componentOwner);
+        await usersActions.createUser(componentOwner);
 
-        await apiService.getInstance().core.peopleApi.addPerson(componentVisitor);
+        await usersActions.createUser(componentVisitor);
 
-        await apiService.getInstance().core.peopleApi.addPerson(secondComponentVisitor);
+        await usersActions.createUser(secondComponentVisitor);
 
         await apiService.getInstance().login(componentOwner.id, componentOwner.password);
 
@@ -66,22 +67,22 @@ describe('Social component', () => {
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: componentVisitor.getId(),
+                        authorityId: componentVisitor.id,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }, {
-                        authorityId: secondComponentVisitor.getId(),
+                        authorityId: secondComponentVisitor.id,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
             });
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
         await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
-   });
+    });
 
     describe('User interaction on their own components', () => {
         beforeEach(async () => {
@@ -105,7 +106,7 @@ describe('Social component', () => {
             await likePage.removeHoverFromLikeButton();
             await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
         });
-   });
+    });
 
     describe('User interaction on components that belong to other users', () => {
         beforeEach(async () => {
@@ -140,7 +141,7 @@ describe('Social component', () => {
             await expect(await ratePage.getRatingCounter()).toBe('0');
             await expect(await ratePage.isNotStarRated(4));
         });
-   });
+    });
 
     describe('Multiple Users interaction', () => {
         beforeEach(async () => {

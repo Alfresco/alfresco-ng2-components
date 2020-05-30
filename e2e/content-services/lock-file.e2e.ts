@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { LockFilePage } from '../pages/adf/lock-file.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Lock File', () => {
 
@@ -30,9 +30,10 @@ describe('Lock File', () => {
     const navigationBarPage = new NavigationBarPage();
     const lockFilePage = new LockFilePage();
     const contentServices = new ContentServicesPage();
-    const adminUser = new AcsUserModel();
-    const managerUser = new AcsUserModel();
+    const adminUser = new UserModel();
+    const managerUser = new UserModel();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
@@ -51,10 +52,10 @@ describe('Lock File', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(adminUser);
-        await apiService.getInstance().core.peopleApi.addPerson(managerUser);
+        await usersActions.createUser(adminUser);
+        await usersActions.createUser(managerUser);
 
-        await apiService.getInstance().login(adminUser.id, adminUser.password);
+        await apiService.getInstance().login(adminUser.email, adminUser.password);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
@@ -66,7 +67,7 @@ describe('Lock File', () => {
         documentLibrary = resultNode.list.entries[0].entry.id;
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: managerUser.id,
+            id: managerUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
@@ -86,7 +87,7 @@ describe('Lock File', () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
-                await loginPage.login(adminUser.id, adminUser.password);
+                await loginPage.login(adminUser.email, adminUser.password);
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
 
                 await contentServices.waitForTableBody();
@@ -96,7 +97,7 @@ describe('Lock File', () => {
 
         afterEach(async () => {
             try {
-                await apiService.getInstance().login(adminUser.id, adminUser.password);
+                await apiService.getInstance().login(adminUser.email, adminUser.password);
 
                 await uploadActions.deleteFileOrFolder(nodeId);
 
@@ -106,7 +107,7 @@ describe('Lock File', () => {
 
         afterAll(async () => {
             try {
-                await apiService.getInstance().login(adminUser.id, adminUser.password);
+                await apiService.getInstance().login(adminUser.email, adminUser.password);
 
                 await apiService.getInstance().core.nodesApi.unlockNode(lockedFileNodeId);
 
@@ -166,13 +167,13 @@ describe('Lock File', () => {
 
             nodeId = pngUploadedFile.entry.id;
 
-            await loginPage.login(managerUser.id, managerUser.password);
+            await loginPage.login(managerUser.email, managerUser.password);
 
             await navigationBarPage.openContentServicesFolder(documentLibrary);
         });
 
         afterEach(async () => {
-            await apiService.getInstance().login(adminUser.id, adminUser.password);
+            await apiService.getInstance().login(adminUser.email, adminUser.password);
 
             try {
                 await apiService.getInstance().core.nodesApi.unlockNode(nodeId);
@@ -256,14 +257,14 @@ describe('Lock File', () => {
             try {
                 const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, documentLibrary);
                 nodeId = pngUploadedFile.entry.id;
-                await loginPage.login(adminUser.id, adminUser.password);
+                await loginPage.login(adminUser.email, adminUser.password);
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
             } catch (error) {
             }
     });
 
         afterEach(async () => {
-            await apiService.getInstance().login(adminUser.id, adminUser.password);
+            await apiService.getInstance().login(adminUser.email, adminUser.password);
 
             try {
                 await uploadActions.deleteFileOrFolder(nodeId);

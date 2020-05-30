@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, UserModel, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('CardView Component - properties', () => {
 
@@ -44,7 +44,7 @@ describe('CardView Component - properties', () => {
     const metadataViewPage = new MetadataViewPage();
     const contentServicesPage = new ContentServicesPage();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -52,11 +52,12 @@ describe('CardView Component - properties', () => {
     });
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const pdfUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -64,7 +65,7 @@ describe('CardView Component - properties', () => {
 
         pngFileModel.update(pdfUploadedFile.entry);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

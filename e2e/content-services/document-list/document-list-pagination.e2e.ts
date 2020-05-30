@@ -23,15 +23,15 @@ import {
     PaginationPage,
     LocalStorageUtil,
     FileBrowserUtil,
-    ApiService
+    ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List - Pagination', () => {
     const pagination = {
@@ -60,7 +60,7 @@ describe('Document List - Pagination', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     let fileNames = [];
     const nrOfFiles = 20;
@@ -72,6 +72,7 @@ describe('Document List - Pagination', () => {
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
     const numberOfSubFolders = 6;
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
@@ -85,8 +86,8 @@ describe('Document List - Pagination', () => {
         secondSetOfFiles = StringUtil.generateFilesNames(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const folderThreeUploadedModel = await uploadActions.createFolder(folderThreeModel.name, '-my-');
         const newFolderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -94,7 +95,7 @@ describe('Document List - Pagination', () => {
         await uploadActions.createEmptyFiles(fileNames, newFolderUploadedModel.entry.id);
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
@@ -131,12 +132,12 @@ describe('Document List - Pagination', () => {
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
@@ -178,7 +179,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
@@ -205,7 +206,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.waitForTableBody();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         currentPage = 1;
     });
 

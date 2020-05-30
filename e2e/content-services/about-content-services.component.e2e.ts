@@ -14,24 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginSSOPage, AboutPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, AboutPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { UsersActions } from '../actions/users.actions';
 
 describe('About Content Services', () => {
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async() => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
-        await loginPage.login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickAboutButton();
     });
 

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { NotificationDemoPage } from '../pages/adf/demo-shell/notification.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Notifications Component', () => {
 
@@ -27,17 +27,18 @@ describe('Notifications Component', () => {
     const notificationPage = new NotificationDemoPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await notificationPage.goToNotificationsPage();
 

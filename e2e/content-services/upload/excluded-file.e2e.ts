@@ -16,14 +16,14 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { DropActions, LoginSSOPage, LocalStorageUtil, ApiService } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, LocalStorageUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component - Excluded Files', () => {
 
@@ -31,9 +31,11 @@ describe('Upload component - Excluded Files', () => {
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginSSOPage();
-    const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let acsUser: UserModel;
 
     const iniExcludedFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_name,
@@ -68,11 +70,11 @@ describe('Upload component - Excluded Files', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
    });

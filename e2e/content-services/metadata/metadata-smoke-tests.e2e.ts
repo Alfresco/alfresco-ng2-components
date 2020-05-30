@@ -21,15 +21,15 @@ import {
     BrowserActions,
     UploadActions,
     ViewerPage,
-    StringUtil, ApiService
+    StringUtil, ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import moment = require('moment');
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Metadata component', () => {
 
@@ -52,7 +52,7 @@ describe('Metadata component', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const folderName = StringUtil.generateRandomString();
 
@@ -63,11 +63,12 @@ describe('Metadata component', () => {
 
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);
@@ -79,7 +80,7 @@ describe('Metadata component', () => {
 
     describe('Viewer Metadata', () => {
         beforeAll(async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
@@ -226,7 +227,7 @@ describe('Metadata component', () => {
         beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
         });
@@ -276,7 +277,7 @@ describe('Metadata component', () => {
         await metadataViewPage.clickSaveMetadata();
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickContentServicesButton();
 
         await viewerPage.viewFile(pngFileModel.name);

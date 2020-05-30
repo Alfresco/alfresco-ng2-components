@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, PaginationPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, PaginationPage, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List - Selection', () => {
     const loginPage = new LoginSSOPage();
@@ -30,7 +30,7 @@ describe('Document List - Selection', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
     const paginationPage = new PaginationPage();
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const folderModel = new FolderModel({ name: 'folder' });
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -38,14 +38,15 @@ describe('Document List - Selection', () => {
     });
     const displayColumnName = 'Display name';
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         try {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            acsUser = await usersActions.createUser();
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkDocumentListElementsAreDisplayed();

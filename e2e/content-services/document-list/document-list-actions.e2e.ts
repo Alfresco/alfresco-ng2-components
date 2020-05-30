@@ -23,15 +23,15 @@ import {
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    ViewerPage, ApiService
+    ViewerPage, ApiService, UserModel
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 import { InfinitePaginationPage } from '../../pages/adf/core/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component - Actions', () => {
 
@@ -45,6 +45,7 @@ describe('Document List Component - Actions', () => {
     const breadCrumbPage = new BreadcrumbPage();
     const viewerPage = new ViewerPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
@@ -72,11 +73,10 @@ describe('Document List Component - Actions', () => {
         };
 
         beforeAll(async () => {
-            acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            acsUser = await usersActions.createUser();
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
@@ -85,7 +85,7 @@ describe('Document List Component - Actions', () => {
             fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await browser.sleep(10000);
         });
@@ -99,7 +99,7 @@ describe('Document List Component - Actions', () => {
         });
 
         describe('File Actions', () => {
-        it('[C213257] Should be able to copy a file', async () => {
+            it('[C213257] Should be able to copy a file', async () => {
                 await contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
                 await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 await contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -112,7 +112,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             });
 
-        it('[C260131] Copy - Destination picker search', async () => {
+            it('[C260131] Copy - Destination picker search', async () => {
                 await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 await contentServicesPage.pressContextMenuActionNamed('Copy');
@@ -123,7 +123,7 @@ describe('Document List Component - Actions', () => {
                 await contentNodeSelector.checkDialogIsNotDisplayed();
             });
 
-        it('[C297491] Should be able to move a file', async () => {
+            it('[C297491] Should be able to move a file', async () => {
                 await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
 
                 await contentServicesPage.getDocumentList().rightClickOnRow(testFileModel.name);
@@ -137,7 +137,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
             });
 
-        it('[C260127] Move - Destination picker search', async () => {
+            it('[C260127] Move - Destination picker search', async () => {
                 await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
                 await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 await contentServicesPage.pressContextMenuActionNamed('Move');
@@ -148,7 +148,7 @@ describe('Document List Component - Actions', () => {
                 await contentNodeSelector.checkDialogIsNotDisplayed();
             });
 
-        it('[C280561] Should be able to delete a file via dropdown menu', async () => {
+            it('[C280561] Should be able to delete a file via dropdown menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 await contentServicesPage.checkContentIsDisplayed(fileNames[0]);
@@ -156,7 +156,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsNotDisplayed(fileNames[0]);
             });
 
-        it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', async () => {
+            it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 await contentServicesPage.getDocumentList().selectRow(fileNames[1]);
@@ -166,7 +166,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsDisplayed(fileNames[2]);
             });
 
-        it('[C280565] Should be able to delete a file using context menu', async () => {
+            it('[C280565] Should be able to delete a file using context menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
                 await contentServicesPage.checkContentIsDisplayed(fileNames[2]);
                 await contentServicesPage.getDocumentList().rightClickOnRow(fileNames[2]);
@@ -174,7 +174,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsNotDisplayed(fileNames[2]);
             });
 
-        it('[C280567] Only one file is deleted when multiple files are selected using context menu', async () => {
+            it('[C280567] Only one file is deleted when multiple files are selected using context menu', async () => {
                 await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
 
                 await contentServicesPage.getDocumentList().selectRow(fileNames[3]);
@@ -185,7 +185,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsDisplayed(fileNames[4]);
             });
 
-        it('[C280566] Should be able to open context menu with right click', async () => {
+            it('[C280566] Should be able to open context menu with right click', async () => {
                 await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
                 await contentServicesPage.checkContextActionIsVisible('Download');
                 await contentServicesPage.checkContextActionIsVisible('Copy');
@@ -198,7 +198,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.closeActionContext();
             });
 
-        it('[C260060] Should be able to open a file/folder through double click action - file', async () => {
+            it('[C260060] Should be able to open a file/folder through double click action - file', async () => {
                 await contentServicesPage.doubleClickRow(pdfFileModel.name);
                 await expect(await viewerPage.getDisplayedFileName()).toEqual(pdfFileModel.name);
                 await viewerPage.checkPreviewFileDefaultOptionsAreDisplayed();
@@ -207,7 +207,7 @@ describe('Document List Component - Actions', () => {
         });
 
         describe('Folder Actions', () => {
-        it('[C260138] Should be able to copy a folder', async () => {
+            it('[C260138] Should be able to copy a folder', async () => {
                 await contentServicesPage.copyContent(folderName);
                 await contentNodeSelector.checkDialogIsDisplayed();
                 await contentNodeSelector.typeIntoNodeSelectorSearchField(secondUploadedFolder.entry.name);
@@ -218,7 +218,7 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentIsDisplayed(folderName);
             });
 
-        it('[C260060] Should be able to open a file/folder through double click action - folder', async () => {
+            it('[C260060] Should be able to open a file/folder through double click action - folder', async () => {
                 const folderTwoModel = new FolderModel({ name: 'folderTwo' });
                 const numberOfSubFolders = 3;
                 await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
@@ -228,12 +228,12 @@ describe('Document List Component - Actions', () => {
                 await contentServicesPage.checkContentsAreDisplayed(numberOfSubFolders);
             });
 
-        it('[C260123] Should be able to delete a folder using context menu', async () => {
+            it('[C260123] Should be able to delete a folder using context menu', async () => {
                 await contentServicesPage.deleteContent(folderName);
                 await contentServicesPage.checkContentIsNotDisplayed(folderName);
             });
 
-        it('[C280568] Should be able to open context menu with right click', async () => {
+            it('[C280568] Should be able to open context menu with right click', async () => {
                 await contentServicesPage.checkContentIsDisplayed(secondUploadedFolder.entry.name);
 
                 await contentServicesPage.getDocumentList().rightClickOnRow(secondUploadedFolder.entry.name);
@@ -258,12 +258,12 @@ describe('Document List Component - Actions', () => {
         let folder1, folder2, folder3, folder4, folder5, folder6;
 
         let folders;
-        const contentServicesUser = new AcsUserModel();
+        const contentServicesUser = new UserModel();
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await apiService.getInstance().core.peopleApi.addPerson(contentServicesUser);
-            await apiService.getInstance().login(contentServicesUser.id, contentServicesUser.password);
+            await usersActions.createUser(contentServicesUser);
+            await apiService.getInstance().login(contentServicesUser.email, contentServicesUser.password);
             folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
             folder2 = await uploadActions.createFolder('B' + folderModel2.name, '-my-');
             folder3 = await uploadActions.createFolder('C' + folderModel3.name, '-my-');
@@ -274,7 +274,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.login(contentServicesUser.id, contentServicesUser.password);
+            await loginPage.login(contentServicesUser.email, contentServicesUser.password);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');
@@ -335,11 +335,11 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.checkDialogIsDisplayed();
             await breadCrumbDropdownPage.clickParentFolder();
             await breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
-            await breadCrumbDropdownPage.choosePath(contentServicesUser.id);
+            await breadCrumbDropdownPage.choosePath(contentServicesUser.email);
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
-            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
+            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.email);
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });
@@ -382,5 +382,5 @@ describe('Document List Component - Actions', () => {
             await contentServicesPage.doubleClickRow('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });
-   });
+    });
 });

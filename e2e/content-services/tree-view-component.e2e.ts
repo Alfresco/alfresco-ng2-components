@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TreeViewPage } from '../pages/adf/content-services/tree-view.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Tree View Component', () => {
 
@@ -27,8 +27,9 @@ describe('Tree View Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const treeViewPage = new TreeViewPage();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
@@ -45,9 +46,9 @@ describe('Tree View Component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         treeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.folder,
@@ -66,7 +67,7 @@ describe('Tree View Component', () => {
             nodeType: 'cm:content'
         });
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickTreeViewButton();
     });

@@ -16,17 +16,18 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { ApiService, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
@@ -61,17 +62,16 @@ describe('Document List Component', () => {
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
         beforeAll(async () => {
-            acsUser = new AcsUserModel();
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            funnyUser = await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            funnyUser = acsUser = await usersActions.createUser();
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
             folderNode = await uploadActions.createFolder(folderName, '-my-');
             filePDFSubNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, folderNode.entry.id);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         afterAll(async () => {

@@ -17,13 +17,13 @@
 
 import { element, by, browser } from 'protractor';
 
-import { DropActions, LoginSSOPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component', () => {
 
@@ -31,11 +31,13 @@ describe('Upload component', () => {
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginSSOPage();
-    const acsUser = new AcsUserModel();
-    const apiService = new ApiService();
-
-    const uploadActions = new UploadActions(apiService);
     const navigationBarPage = new NavigationBarPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const uploadActions = new UploadActions(apiService);
+
+    let acsUser: UserModel;
 
     const firstPdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -64,9 +66,9 @@ describe('Upload component', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
-        await loginPage.login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
     });

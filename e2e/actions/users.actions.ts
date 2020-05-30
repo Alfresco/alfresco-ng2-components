@@ -23,7 +23,7 @@ import { browser } from 'protractor';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { ApsUserModel } from '../models/APS/aps-user.model';
 import { PersonEntry, ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
-import { ApiService, IdentityService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
 
 export class UsersActions {
 
@@ -37,43 +37,54 @@ export class UsersActions {
         }
     }
 
-    async createUser(email?: string, firstName?: string, lastName?: string, tenantId?: number): Promise<UserModel> {
-        const user = new UserModel({ email, firstName, lastName, tenantId });
+    async createUser(emailOrUserModel?: string | UserModel, firstName?: string, lastName?: string, tenantId?: number, password?: string): Promise<UserModel> {
+        let user;
+
+        if (typeof emailOrUserModel !== 'string') {
+            user = new UserModel(emailOrUserModel);
+        } else {
+            user = new UserModel({ emailOrUserModel, firstName, lastName, tenantId, password });
+        }
 
         if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
-            await this.createAcsUser(user.email, user.firstName, user.lastName);
+            Logger.log('Create user ECM');
+            await this.createAcsUser(user.email, user.firstName, user.lastName, user.password);
         }
 
         if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+            Logger.log('Create user BPM');
+
             if (tenantId) {
-                await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName);
+                await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
             } else {
-                await this.createTenantAndUser(user.email, user.firstName, user.lastName);
+                await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
             }
         }
 
         if (this.api.apiService.isOauthConfiguration()) {
-            await this.identityService.createIdentityUser();
+            Logger.log('Create user identity');
+
+            await this.identityService.createIdentityUser(user);
         }
 
         return user;
     }
 
-    async createAcsUser(email?: string, firstName?: string, lastName?: string): Promise<PersonEntry> {
-        const acsUser = new AcsUserModel({ email, firstName, lastName });
+    async createAcsUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<PersonEntry> {
+        const acsUser = new AcsUserModel({ email, firstName, lastName, password });
         return this.api.apiService.core.peopleApi.addPerson(acsUser);
     }
 
-    async createTenantAndUser(email?: string, firstName?: string, lastName?: string): Promise<UserRepresentation> {
+    async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        const user = new ApsUserModel({ tenantId: newTenant.id, email, firstName, lastName });
+        const user = new ApsUserModel({ tenantId: newTenant.id, email, firstName, lastName, password });
 
         return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
     }
 
-    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string): Promise<UserRepresentation> {
-        const user = new ApsUserModel({ tenantId, email, firstName, lastName });
+    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
+        const user = new ApsUserModel({ tenantId, email, firstName, lastName, password });
 
         return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
     }

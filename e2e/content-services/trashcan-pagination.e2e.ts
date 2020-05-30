@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, UploadActions, ApiService } from '@alfresco/adf-testing';
+import { StringUtil, LoginSSOPage, PaginationPage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../pages/adf/trashcan.page';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Trashcan - Pagination', () => {
     const pagination = {
@@ -45,8 +45,9 @@ describe('Trashcan - Pagination', () => {
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     const noOfFiles = 20;
 
@@ -54,8 +55,8 @@ describe('Trashcan - Pagination', () => {
         const uploadActions = new UploadActions(apiService);
         const fileNames = StringUtil.generateFilesNames(10, noOfFiles + 9, pagination.base, pagination.extension);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
         for (const entry of emptyFiles.list.entries) {
@@ -63,7 +64,7 @@ describe('Trashcan - Pagination', () => {
                 await apiService.getInstance().node.deleteNode(entry.entry.id);
             });
         }
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
     });
