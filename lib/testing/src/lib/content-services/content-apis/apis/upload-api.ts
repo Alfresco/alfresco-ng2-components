@@ -37,6 +37,7 @@ export class UploadApi extends Api {
     };
 
     try {
+      await this.apiLogin();
       return await this.uploadApi.uploadFile(file, '', parentId, null, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.uploadFile.name}`, error);
@@ -59,6 +60,7 @@ export class UploadApi extends Api {
     };
 
     try {
+      await this.apiLogin();
       return await this.uploadApi.uploadFile(file, '', parentId, nodeProps, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.uploadFileWithRename.name}`, error);

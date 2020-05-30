@@ -27,21 +27,10 @@ import { SharedLinksApi } from './apis/shared-links-api';
 import { TrashcanApi } from './apis/trashcan-api';
 import { SearchApi } from './apis/search-api';
 import { UploadApi } from './apis/upload-api';
-import { Logger } from '../../core/utils/logger';
+import { AuthenticationApi } from './apis/authentication-api';
 
 export class ContentApi {
     alfrescoJsApi = new AlfrescoApi();
-
-    comments: CommentsApi;
-    favorites: FavoritesApi;
-    nodes: NodesApi;
-    people: PeopleApi;
-    queries: QueriesApi;
-    search: SearchApi;
-    sharedLinks: SharedLinksApi;
-    sites: SitesApi;
-    trashcan: TrashcanApi;
-    upload: UploadApi;
 
     constructor(
         private username: string,
@@ -53,37 +42,47 @@ export class ContentApi {
         });
     }
 
-    async setup() {
-        await this.login();
-
-        this.comments = new CommentsApi(this.username, this.password, this.alfrescoJsApi);
-        this.favorites = new FavoritesApi(this.username, this.password, this.alfrescoJsApi);
-        this.nodes = new NodesApi(this.username, this.password, this.alfrescoJsApi);
-        this.people = new PeopleApi(this.username, this.password, this.alfrescoJsApi);
-        this.queries = new QueriesApi(this.username, this.password, this.alfrescoJsApi);
-        this.search = new SearchApi(this.username, this.password, this.alfrescoJsApi);
-        this.sharedLinks = new SharedLinksApi(this.username, this.password, this.alfrescoJsApi);
-        this.sites = new SitesApi(this.username, this.password, this.alfrescoJsApi);
-        this.trashcan = new TrashcanApi(this.username, this.password, this.alfrescoJsApi);
-        this.upload = new UploadApi(this.username, this.password, this.alfrescoJsApi);
-
-        return this;
+    get authentication() {
+        return new AuthenticationApi(this.username, this.password, this.alfrescoJsApi);
     }
 
-    async login() {
-        try {
-            await this.alfrescoJsApi.login(this.username, this.password);
-        } catch (error) {
-            Logger.error('>>>> api login error : ', error);
-            throw error;
-        }
+    get comments() {
+        return new CommentsApi(this.username, this.password, this.alfrescoJsApi);
     }
 
-    async logout() {
-        try {
-            return this.alfrescoJsApi.logout();
-        } catch (error) {
-            Logger.error('>>>> api logout error : ', error);
-        }
+    get favorites() {
+        return new FavoritesApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get nodes() {
+        return new NodesApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get people() {
+        return new PeopleApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get queries() {
+        return new QueriesApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get search() {
+        return new SearchApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get sharedLinks() {
+        return new SharedLinksApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get sites() {
+        return new SitesApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get trashcan() {
+        return new TrashcanApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get upload() {
+        return new UploadApi(this.username, this.password, this.alfrescoJsApi);
     }
 }

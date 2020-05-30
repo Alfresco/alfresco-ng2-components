@@ -47,16 +47,13 @@ describe('Share file', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    let adminAcsApi: ContentApi;
-    let userAcsApi: ContentApi;
+    const adminAcsApi = new ContentApi(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+    const userAcsApi = new ContentApi(acsUser.id, acsUser.password);
 
     let nodeId;
 
     beforeAll(async () => {
-        adminAcsApi = await new ContentApi(browser.params.ACS_ADMIN.USERNAME, browser.params.ACS_ADMIN.PASSWORD).setup();
         await adminAcsApi.people.createUser({ username: acsUser.id, password: acsUser.password });
-
-        userAcsApi = await new ContentApi(acsUser.id, acsUser.password).setup();
 
         const pngUploadedFile = await userAcsApi.nodes.createFile(pngFileModel.name);
         nodeId = pngUploadedFile.entry.id;
