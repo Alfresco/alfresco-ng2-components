@@ -57,11 +57,11 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const user = await users.createTenantAndUser(alfrescoJsApi);
+        const user = await users.createTenantAndUser();
 
         tenantId = user.tenantId;
 

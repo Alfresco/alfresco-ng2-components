@@ -56,11 +56,11 @@ describe('Task Details component', () => {
     const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         const { id } = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-        processUserModel = await users.createApsUser(alfrescoJsApi, id);
+        processUserModel = await users.createApsUser(id);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);

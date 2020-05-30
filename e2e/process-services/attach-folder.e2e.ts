@@ -27,8 +27,9 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
-import { User } from '../models/APS/user';
 import CONSTANTS = require('../util/constants');
+import { UserRepresentation } from '@alfresco/js-api';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('Attach Folder', () => {
     const alfrescoJsApi = new ApiService({ provider: 'ALL' }).apiService;
@@ -36,7 +37,7 @@ describe('Attach Folder', () => {
     const integrationService = new IntegrationService(alfrescoJsApi);
     const applicationService = new ApplicationsUtil(alfrescoJsApi);
 
-    const users = new UsersActions();
+    const users = new UsersActions(alfrescoJsApi);
     const loginPage = new LoginSSOPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
@@ -45,17 +46,18 @@ describe('Attach Folder', () => {
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
     const meetingNotes = 'Meeting Notes';
-    const { email, password } = browser.params.testConfig.admin;
-    let user: User;
+    let user: UserRepresentation;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(email, password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        browser.params.testConfig.appConfig.provider = 'ALL';
+
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        user = await users.createTenantAndUser();
 
         const acsUser = { ...user, id: user.email };
         delete acsUser.type;
         delete acsUser.tenantId;
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(new AcsUserModel(acsUser));
 
         await integrationService.addCSIntegration({
             tenantId: user.tenantId,
@@ -68,7 +70,7 @@ describe('Attach Folder', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(email, password);
+        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

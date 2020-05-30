@@ -30,7 +30,6 @@ let HOST = process.env.URL_HOST_ADF;
 let BROWSER_RUN = !!process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
-let DIRECT_CONNECCT = !SELENIUM_SERVER;
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
@@ -110,7 +109,7 @@ exports.config = {
         }
     },
 
-    directConnect: DIRECT_CONNECCT,
+    directConnect: !SELENIUM_SERVER,
 
     baseUrl: HOST,
 
@@ -217,7 +216,6 @@ exports.config = {
 
     afterLaunch: async function () {
         if (SAVE_SCREENSHOT) {
-
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;

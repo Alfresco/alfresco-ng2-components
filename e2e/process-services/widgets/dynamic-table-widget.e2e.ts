@@ -27,9 +27,9 @@ describe('Dynamic Table widget ', () => {
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    const users = new UsersActions();
     const navigationBarPage = new NavigationBarPage();
     const alfrescoJsApi = new ApiService().apiService;
+    const users = new UsersActions(alfrescoJsApi);
 
     let processUserModel;
     let appModel;
@@ -40,7 +40,7 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+            processUserModel = await users.createTenantAndUser();
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);
@@ -90,7 +90,7 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+            processUserModel = await users.createTenantAndUser();
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);
@@ -146,7 +146,7 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+            processUserModel = await users.createTenantAndUser();
 
             await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);

@@ -37,14 +37,14 @@ describe('Dynamic Table', () => {
     const datePicker = new DatePickerCalendarPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    const users = new UsersActions();
     const alfrescoJsApi = new ApiService().apiService;
+    const users = new UsersActions(alfrescoJsApi);
 
     let user, tenantId, appId;
 
     beforeAll(async () => {
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        user = await users.createTenantAndUser();
         tenantId = user.tenantId;
    });
 

@@ -22,12 +22,12 @@ import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
-import { User } from '../models/APS/user';
+import { UserRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
     const alfrescoJsApi = new ApiService().apiService;
 
-    const users = new UsersActions();
+    const users = new UsersActions(alfrescoJsApi);
     const applicationService = new ApplicationsUtil(alfrescoJsApi);
 
     const loginPage = new LoginSSOPage();
@@ -36,7 +36,7 @@ describe('Start Task - Task App', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let user: User;
+    let user: UserRepresentation;
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const wordFile = new FileModel({
@@ -47,7 +47,7 @@ describe('Start Task - Task App', () => {
 
     beforeAll(async () => {
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        user = await users.createTenantAndUser();
         await alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);

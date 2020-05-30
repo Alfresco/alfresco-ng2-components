@@ -76,7 +76,7 @@ describe('Start Task - Custom App', () => {
 
     beforeAll(async () => {
         const appsRuntime = new AppsRuntimeActions();
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
@@ -84,7 +84,7 @@ describe('Start Task - Custom App', () => {
 
         const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        processUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
+        processUserModel = await users.createApsUser(newTenant.id);
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 

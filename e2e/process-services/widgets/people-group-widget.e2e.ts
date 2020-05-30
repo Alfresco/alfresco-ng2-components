@@ -19,9 +19,9 @@ import { UsersActions } from '../../actions/users.actions';
 import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
-import { User } from '../../models/APS/user';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
+import { UserRepresentation } from '@alfresco/js-api';
 
 describe('People and Group widget', () => {
 
@@ -29,28 +29,25 @@ describe('People and Group widget', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    const usersActions = new UsersActions();
     const alfrescoJsApi = new ApiService().apiService;
+    const usersActions = new UsersActions(alfrescoJsApi);
 
     const app = browser.params.resources.Files.MORE_WIDGETS;
-    let user: User;
+    let user: UserRepresentation;
 
     beforeAll(async () => {
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createTenantAndUser(alfrescoJsApi);
-        await createGroupAndUsers(user.tenantId);
 
+        user = await usersActions.createTenantAndUser();
+        await createGroupAndUsers(user.tenantId);
         await alfrescoJsApi.login(user.email, user.password);
+
         try {
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         } catch (e) { console.error('failed to deploy the application'); }
-        await loginPage.login(user.email, user.password);
-    });
 
-    afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await loginPage.login(user.email, user.password);
     });
 
     beforeEach(async () => {
@@ -124,9 +121,9 @@ describe('People and Group widget', () => {
 
         try {
             const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
-                usersActions.createApsUserWithName(alfrescoJsApi, tenantId, StringUtil.generateRandomString(), happyUser.firstName, happyUser.lastName)));
-            const subgroupUser = await usersActions.createApsUserWithName(
-                alfrescoJsApi, tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
+                usersActions.createApsUser(tenantId, StringUtil.generateRandomString(), happyUser.firstName, happyUser.lastName)));
+            const subgroupUser = await usersActions.createApsUser(
+                 tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
 
             const group = await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ name: app.group.name, tenantId, type: 1 });
             await  Promise.all(happyUsers.map(happyUser => alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));

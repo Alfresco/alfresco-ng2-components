@@ -24,10 +24,9 @@ import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
-import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { UserProcessInstanceFilterRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
-import { User } from '../models/APS/user';
 
 describe('Task', () => {
 
@@ -41,24 +40,24 @@ describe('Task', () => {
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
         const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
-        let appId: number, user: User;
+        let appId: number, user: UserRepresentation;
         const alfrescoJsApi = new ApiService().apiService;
 
         beforeEach(async () => {
-        const users = new UsersActions();
+            const users = new UsersActions(alfrescoJsApi);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            user = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
-        const { id } = await applicationsService.importPublishDeployApp(app.file_path);
-        appId = id;
+            await alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            const { id } = await applicationsService.importPublishDeployApp(app.file_path);
+            appId = id;
 
-        await loginPage.login(user.email, user.password);
-        await navigationBarPage.navigateToProcessServicesPage();
-        await processServicesPage.checkApsContainer();
-        await processServicesPage.goToApp(app.title);
+            await loginPage.login(user.email, user.password);
+            await navigationBarPage.navigateToProcessServicesPage();
+            await processServicesPage.checkApsContainer();
+            await processServicesPage.goToApp(app.title);
         });
 
         afterEach(async () => {
@@ -75,7 +74,7 @@ describe('Task', () => {
         });
 
         it('[C260330] Should display Task Filter List when app is in Task Tab', async () => {
-            await tasksPage.createTask({name: 'Test'});
+            await tasksPage.createTask({ name: 'Test' });
             await taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
             await tasksListPage.checkContentIsDisplayed('Test');
             await expect(await taskFiltersDemoPage.checkActiveFilterActive()).toBe('My Tasks');
@@ -128,14 +127,14 @@ describe('Task', () => {
         });
 
         it('[C260349] Should sort task by name when Name sorting is clicked', async () => {
-            await tasksPage.createTask({name: 'Test1'});
+            await tasksPage.createTask({ name: 'Test1' });
             await taskDetailsPage.clickCompleteTask();
 
-            await tasksPage.createTask({name: 'Test2'});
+            await tasksPage.createTask({ name: 'Test2' });
             await taskDetailsPage.clickCompleteTask();
 
-            await tasksPage.createTask({name: 'Test3'});
-            await tasksPage.createTask({name: 'Test4'});
+            await tasksPage.createTask({ name: 'Test3' });
+            await tasksPage.createTask({ name: 'Test4' });
 
             await tasksListPage.checkContentIsDisplayed('Test4');
             await tasksListPage.checkRowIsSelected('Test4');
@@ -161,7 +160,7 @@ describe('Task', () => {
         });
 
         it('[C277264] Should display task filter results when task filter is selected', async () => {
-            await tasksPage.createTask({name: 'Test'});
+            await tasksPage.createTask({ name: 'Test' });
 
             await taskFiltersDemoPage.myTasksFilter().clickTaskFilter();
             await tasksListPage.checkContentIsDisplayed('Test');
@@ -184,9 +183,9 @@ describe('Task', () => {
         const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async () => {
-            const users = new UsersActions();
+            const users = new UsersActions(alfrescoJsApi);
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser(alfrescoJsApi);
+            user = await users.createTenantAndUser();
 
             await alfrescoJsApi.login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);
@@ -197,7 +196,7 @@ describe('Task', () => {
             await loginPage.login(user.email, user.password);
         });
 
-        afterAll( async () => {
+        afterAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
@@ -224,7 +223,7 @@ describe('Task', () => {
 
         it('[C286447] Should display the task filter icon when a custom filter is added', async () => {
             const newFilter = new UserProcessInstanceFilterRepresentation({
-                name : 'New Task Filter with icon',
+                name: 'New Task Filter with icon',
                 appId,
                 icon: 'glyphicon-cloud',
                 filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
@@ -252,5 +251,5 @@ describe('Task', () => {
             await taskFiltersDemoPage.myTasksFilter().checkTaskFilterIsDisplayed();
             await expect(await taskFiltersDemoPage.myTasksFilter().getTaskFilterIcon()).toEqual('inbox');
         });
-   });
+    });
 });

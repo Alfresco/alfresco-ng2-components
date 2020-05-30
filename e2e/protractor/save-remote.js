@@ -14,7 +14,7 @@ function buildNumber() {
     return process.env.TRAVIS_BUILD_NUMBER;
 }
 
-async function uploadScreenshot(alfrescoJsApi, retryCount) {
+async function uploadScreenshot(retryCount) {
     let files = fs.readdirSync(path.join(__dirname, '../../e2e-output/screenshots'));
 
     if (files && files.length > 0) {
@@ -49,22 +49,25 @@ async function uploadScreenshot(alfrescoJsApi, retryCount) {
             let pathFile = path.join(__dirname, '../../e2e-output/screenshots', fileName);
             let file = fs.createReadStream(pathFile);
 
-            let safeFileName = fileName.replace(new RegExp('"', 'g'), '');
+            let safeFileName = fileName.match(/\[(.*?)\]/);
 
-            try {
-                await alfrescoJsApi.upload.uploadFile(
-                    file,
-                    '',
-                    folder.entry.id,
-                    null,
-                    {
-                        'name': safeFileName,
-                        'nodeType': 'cm:content',
-                        'autoRename': true
-                    }
-                );
-            } catch (error) {
-                console.log(error);
+            if (safeFileName) {
+                const safeFileNameMatch = safeFileName[1];
+                try {
+                    await alfrescoJsApi.upload.uploadFile(
+                        file,
+                        '',
+                        folder.entry.id,
+                        null,
+                        {
+                            'name': safeFileNameMatch,
+                            'nodeType': 'cm:content',
+                            'autoRename': true
+                        }
+                    );
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
     }

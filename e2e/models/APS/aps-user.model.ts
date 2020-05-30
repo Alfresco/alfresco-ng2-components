@@ -15,25 +15,26 @@
  * limitations under the License.
  */
 
+import { StringUtil } from '@alfresco/adf-testing';
+
 /**
- * App definition representation JSON Object
+ * Create tenant JSON Object
  *
  * @param details - JSON object used to overwrite the default values
  * @constructor
  */
+export class ApsUserModel {
 
-var AppDefinition = function (details) {
-    this.defaultAppId = "1";
-    this.deploymentId = "1";
-    this.description = "App deployment";
-    this.icon = "default icon";
-    this.id = 0;
-    this.modelId = 0;
-    this.name = "App name";
-    this.tenantId = 0;
-    this.theme = "default theme";
+    email = StringUtil.generateRandomEmail('@activiti.test.com');
+    firstName = StringUtil.generateRandomString();
+    lastName = StringUtil.generateRandomString();
+    password = StringUtil.generatePasswordString();
+    type = 'enterprise';
+    tenantId = 1;
+    company = null;
+    id = 0;
 
-    Object.assign(this, details);
-};
-
-module.exports = AppDefinition;
+    constructor(details?: any) {
+        Object.assign(this, details);
+    }
+}

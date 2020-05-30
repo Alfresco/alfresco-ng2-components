@@ -42,15 +42,15 @@ describe('Comment component for Processes', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        user = await users.createTenantAndUser();
 
         tenantId = user.tenantId;
 
-        secondUser = await users.createApsUser(alfrescoJsApi, tenantId);
+        secondUser = await users.createApsUser(tenantId);
 
         await alfrescoJsApi.login(user.email, user.password);
 
@@ -118,7 +118,7 @@ describe('Comment component for Processes', () => {
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
-        await loginPage.login(secondUser.id, secondUser.password);
+        await loginPage.login(secondUser.email, secondUser.password);
 
         await alfrescoJsApi.activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
 

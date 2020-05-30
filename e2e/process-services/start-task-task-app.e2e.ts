@@ -55,15 +55,15 @@ describe('Start Task - Task App', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        assigneeUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
+        assigneeUserModel = await users.createApsUser(newTenant.id);
 
-        processUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
+        processUserModel = await users.createApsUser(newTenant.id);
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);

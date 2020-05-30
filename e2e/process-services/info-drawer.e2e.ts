@@ -73,13 +73,13 @@ describe('Info Drawer', () => {
     let newTenant: LightTenantRepresentation;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-        const assigneeUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
+        const assigneeUserModel = await users.createApsUser(newTenant.id);
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
-        const processUserModel = await users.createApsUser(alfrescoJsApi, newTenant.id);
+        const processUserModel = await users.createApsUser(newTenant.id);
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);

@@ -26,7 +26,12 @@ export class AcsUserModel {
     id = StringUtil.generateRandomString();
 
     constructor(details?: any) {
-        Object.assign(this, details);
+        this.email = this.email ? details.email : StringUtil.generateRandomEmail('@alfresco.com');
+        this.id = this.email ? details.email : this.email;
+
+        this.firstName = this.firstName ? details.firstName : StringUtil.generateRandomString();
+        this.lastName = this.lastName ? details.lastName : StringUtil.generateRandomString();
+        this.password = this.password ? details.password : StringUtil.generateRandomString();
     }
 
     getFirstName = function () {

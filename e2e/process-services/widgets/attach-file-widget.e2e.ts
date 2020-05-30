@@ -43,10 +43,10 @@ describe('Attach widget - File', () => {
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+        processUserModel = await users.createTenantAndUser();
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);

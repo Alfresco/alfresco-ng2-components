@@ -41,7 +41,7 @@ describe('Task Details - Form', () => {
     const alfrescoJsApi = new ApiService().apiService;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
             'description': '',
@@ -62,7 +62,7 @@ describe('Task Details - Form', () => {
         };
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        user = await users.createTenantAndUser();
         await alfrescoJsApi.login(user.email, user.password);
 
         attachedForm = await alfrescoJsApi.activiti.modelsApi.createModel(attachedFormModel);

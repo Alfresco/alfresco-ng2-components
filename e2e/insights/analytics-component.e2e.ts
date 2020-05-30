@@ -22,7 +22,7 @@ import { ProcessServicesPage } from '../pages/adf/process-services/process-servi
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { browser } from 'protractor';
 import { Tenant } from '../models/APS/tenant';
-import { User } from '../models/APS/user';
+import { ApsUserModel } from '../models/APS/aps-user.model';
 
 describe('Analytics Smoke Test', () => {
 
@@ -41,7 +41,7 @@ describe('Analytics Smoke Test', () => {
         const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
 
         tenantId = newTenant.id;
-        const procUserModel = new User({ tenantId: tenantId });
+        const procUserModel = new ApsUserModel({ tenantId: tenantId });
 
         await alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
 

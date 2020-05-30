@@ -43,11 +43,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+        processUserModel = await users.createTenantAndUser();
 
         await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 

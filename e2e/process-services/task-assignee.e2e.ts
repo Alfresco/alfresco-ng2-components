@@ -24,19 +24,19 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/process-detail
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
-import { User } from '../models/APS/user';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
+import { UserRepresentation } from '@alfresco/js-api';
 
 describe('Task Assignee', () => {
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const taskPage = new TasksPage();
-    const users = new UsersActions();
 
     const app = browser.params.resources.Files.TEST_ASSIGNEE;
     const alfrescoJsApi = new ApiService().apiService;
+    const users = new UsersActions(alfrescoJsApi);
 
     describe('Candidate User Assignee', () => {
         const processListPage = new ProcessListPage();
@@ -45,17 +45,23 @@ describe('Task Assignee', () => {
         const processServiceTabBarPage = new ProcessServiceTabBarPage();
         const processDetailsPage = new ProcessDetailsPage();
 
-        let user: User;
+        let user: UserRepresentation;
 
         beforeAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser(alfrescoJsApi);
+            user = await users.createTenantAndUser();
             try {// creates user and group if not available
-                await users.createApsUserWithName(alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
-            } catch (e) {}
+                await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
+            } catch (e) {
+            }
             try {// creates group if not available
-                await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 });
-            } catch (e) {}
+                await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({
+                    'name': app.candidateGroup,
+                    'tenantId': user.tenantId,
+                    'type': 1
+                });
+            } catch (e) {
+            }
 
             await alfrescoJsApi.login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);
@@ -109,15 +115,15 @@ describe('Task Assignee', () => {
     });
 
     describe('Candidate Group Assignee', () => {
-        let user: User;
-        let candidate1: User;
-        let candidate2: User;
+        let user: UserRepresentation;
+        let candidate1: UserRepresentation;
+        let candidate2: UserRepresentation;
 
         beforeAll(async () => {
             await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser(alfrescoJsApi);
-            candidate1 = await users.createApsUser(alfrescoJsApi, user.tenantId);
-            candidate2 = await users.createApsUser(alfrescoJsApi, user.tenantId);
+            user = await users.createTenantAndUser();
+            candidate1 = await users.createApsUser(user.tenantId);
+            candidate2 = await users.createApsUser(user.tenantId);
             const adminGroup = await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );
@@ -131,9 +137,10 @@ describe('Task Assignee', () => {
             await alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
             await alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
-            try {// for creates user if not available
-                await users.createApsUserWithName(alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
-            } catch (e) {}
+            try {
+                await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
+            } catch (e) {
+            }
 
             await alfrescoJsApi.login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(alfrescoJsApi);

@@ -51,10 +51,10 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 6', dueDate: '03/01/2019' }];
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        user = await users.createTenantAndUser();
 
         await alfrescoJsApi.login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(alfrescoJsApi);

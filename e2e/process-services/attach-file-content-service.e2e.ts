@@ -29,8 +29,9 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
-import { User } from '../models/APS/user';
 import CONSTANTS = require('../util/constants');
+import { UserRepresentation } from '@alfresco/js-api';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('Attach File - Content service', () => {
     const alfrescoJsApi = new ApiService({ provider: 'ALL'}).apiService;
@@ -62,20 +63,22 @@ describe('Attach File - Content service', () => {
 
     const externalFile = 'Project Overview.ppt';
     const csIntegrations = ['adf dev', 'adf master'];
-    let user: User;
+    let user: UserRepresentation;
 
     beforeAll(async () => {
+        browser.params.testConfig.appConfig.provider = 'ALL';
+
         const integrationService = new IntegrationService(alfrescoJsApi);
         const applicationService = new ApplicationsUtil(alfrescoJsApi);
         const uploadActions = new UploadActions(alfrescoJsApi);
-        const users = new UsersActions();
+        const users = new UsersActions(alfrescoJsApi);
 
         await alfrescoJsApi.login(email, password);
-        user = await users.createTenantAndUser(alfrescoJsApi);
+        user = await users.createTenantAndUser();
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApi.core.peopleApi.addPerson(new AcsUserModel(acsUser));
         await alfrescoJsApiExternal.login(email, password);
-        await alfrescoJsApiExternal.core.peopleApi.addPerson(acsUser);
+        await alfrescoJsApiExternal.core.peopleApi.addPerson(new AcsUserModel(acsUser));
 
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.hostEcm });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
