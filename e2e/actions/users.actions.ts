@@ -20,32 +20,42 @@ import path = require('path');
 import fs = require('fs');
 import remote = require('selenium-webdriver/remote');
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api/src/alfrescoApiCompatibility';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { ApsUserModel } from '../models/APS/aps-user.model';
 import { PersonEntry } from '@alfresco/js-api/src/api/content-rest-api/model/personEntry';
 import { ImageUploadRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/imageUploadRepresentation';
 import { Person } from '@alfresco/js-api/src/api/content-rest-api/model/person';
 import { UserRepresentation } from '@alfresco/js-api';
+import { ApiService, IdentityService } from '@alfresco/adf-testing';
 
 export class UsersActions {
 
-    alfrescoApi: AlfrescoApi;
+    api: ApiService;
+    identityService: IdentityService;
 
-    constructor(alfrescoApi: AlfrescoApi) {
-        this.alfrescoApi = alfrescoApi;
+    constructor(alfrescoApi: ApiService) {
+        this.api = alfrescoApi;
+        this.identityService = new IdentityService(this.api);
     }
 
     async createUser(email?: string, firstName?: string, lastName?: string, tenantId?: number): Promise<{ apsUser: UserRepresentation, acsUser: Person }> {
         let apsUser: UserRepresentation;
         let acsUser: PersonEntry;
 
-        acsUser = await this.createAcsUser(email, firstName, lastName);
+        if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+            acsUser = await this.createAcsUser(email, firstName, lastName);
+        }
 
-        if (tenantId) {
-            apsUser = await this.createApsUser(tenantId, email, firstName, lastName);
-        } else {
-            apsUser = await this.createTenantAndUser(email, firstName, lastName);
+        if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+            if (tenantId) {
+                apsUser = await this.createApsUser(tenantId, email, firstName, lastName);
+            } else {
+                apsUser = await this.createTenantAndUser(email, firstName, lastName);
+            }
+        }
+
+        if (this.api.apiService.isOauthConfiguration()) {
+
         }
 
         return { apsUser: apsUser, acsUser: acsUser.entry };
@@ -53,21 +63,21 @@ export class UsersActions {
 
     async createAcsUser(email?: string, firstName?: string, lastName?: string): Promise<PersonEntry> {
         const acsUser = new AcsUserModel({ email, firstName, lastName });
-        return this.alfrescoApi.core.peopleApi.addPerson(acsUser);
+        return this.api.apiService.core.peopleApi.addPerson(acsUser);
     }
 
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string): Promise<UserRepresentation> {
-        const newTenant = await this.alfrescoApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
         const user = new ApsUserModel({ tenantId: newTenant.id, email, firstName, lastName });
 
-        return this.alfrescoApi.activiti.adminUsersApi.createNewUser(user);
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
     }
 
     async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string): Promise<UserRepresentation> {
         const user = new ApsUserModel({ tenantId, email, firstName, lastName });
 
-        return this.alfrescoApi.activiti.adminUsersApi.createNewUser(user);
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
     }
 
     async changeProfilePictureAps(fileLocation): Promise<ImageUploadRepresentation> {
@@ -76,7 +86,7 @@ export class UsersActions {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return this.alfrescoApi.activiti.profileApi.uploadProfilePicture(file);
+        return this.api.apiService.activiti.profileApi.uploadProfilePicture(file);
     }
 
 }

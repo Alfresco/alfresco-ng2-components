@@ -32,9 +32,9 @@ describe('Social component', () => {
     const componentOwner = new AcsUserModel();
     const componentVisitor = new AcsUserModel();
     const secondComponentVisitor = new AcsUserModel();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
@@ -49,19 +49,19 @@ describe('Social component', () => {
     });
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(componentOwner);
+        await apiService.getInstance().core.peopleApi.addPerson(componentOwner);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(componentVisitor);
+        await apiService.getInstance().core.peopleApi.addPerson(componentVisitor);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(secondComponentVisitor);
+        await apiService.getInstance().core.peopleApi.addPerson(secondComponentVisitor);
 
-        await alfrescoJsApi.login(componentOwner.id, componentOwner.password);
+        await apiService.getInstance().login(componentOwner.id, componentOwner.password);
 
         emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
-        await alfrescoJsApi.core.nodesApi.updateNode(emptyFile.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(emptyFile.entry.id,
 
             {
                 permissions: {

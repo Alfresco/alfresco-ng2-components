@@ -34,28 +34,28 @@ describe('Viewer', () => {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
     });
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        site = await alfrescoJsApi.core.sitesApi.createSite({
+        site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Excel Folder Uploaded', () => {

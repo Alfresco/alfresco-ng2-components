@@ -30,9 +30,9 @@ describe('Viewer', () => {
     const navigationBarPage = new NavigationBarPage();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     let site;
     const acsUser = new AcsUserModel();
     let pngFileUploaded;
@@ -52,33 +52,33 @@ describe('Viewer', () => {
     let pngFileShared, wordFileUploaded;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        site = await alfrescoJsApi.core.sitesApi.createSite({
+        site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         wordFileUploaded = await uploadActions.uploadFile(wordFileInfo.location, wordFileInfo.name, '-my-');
 
-        pngFileShared = await alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
+        pngFileShared = await apiService.getInstance().core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);
     });
 

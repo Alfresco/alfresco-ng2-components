@@ -37,7 +37,7 @@ describe('Checklist component', () => {
     const processServices = new ProcessServicesPage();
     const checklistDialog = new ChecklistDialog();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
     const checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
@@ -45,23 +45,23 @@ describe('Checklist component', () => {
     const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(newTenant.id);
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
         for (let i = 0; i < tasks.length; i++) {
-            await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[i] }));
+            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[i] }));
         }
 
         await loginPage.login(processUserModel.email, processUserModel.password);

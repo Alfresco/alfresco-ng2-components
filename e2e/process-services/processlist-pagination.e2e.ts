@@ -49,18 +49,18 @@ describe('Process List - Pagination', () => {
     const nrOfProcesses = 20;
     let page;
     let totalPages;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -69,10 +69,10 @@ describe('Process List - Pagination', () => {
 
     describe('With processes Pagination', () => {
         beforeAll(async () => {
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
-                await new ProcessUtil(alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
+                await new ProcessUtil(apiService).startProcessOfApp(deployedTestApp.name);
             }
         });
 

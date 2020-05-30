@@ -61,13 +61,13 @@ describe('Metadata component', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);

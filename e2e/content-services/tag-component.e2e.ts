@@ -29,9 +29,9 @@ describe('Tag component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     const pdfFileModel = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const deleteFile = new FileModel({ name: StringUtil.generateRandomString() });
     const sameTag = StringUtil.generateRandomString().toLowerCase();
@@ -50,11 +50,11 @@ describe('Tag component', () => {
     let pdfUploadedFile, nodeId;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         pdfUploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
 
@@ -66,7 +66,7 @@ describe('Tag component', () => {
 
         Object.assign(deleteFile, uploadedDeleteFile.entry);
 
-        await alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
+        await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
 
         await loginPage.login(acsUser.id, acsUser.password);
     });

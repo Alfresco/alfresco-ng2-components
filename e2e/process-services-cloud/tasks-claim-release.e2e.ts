@@ -101,7 +101,7 @@ describe('Task claim/release', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
-            candidate = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            candidate = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
 

@@ -30,24 +30,24 @@ describe('Checkbox Widget', () => {
     let appModel;
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.CHECKBOX;
     let deployedApp, process;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
+        process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
@@ -59,9 +59,9 @@ describe('Checkbox Widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {

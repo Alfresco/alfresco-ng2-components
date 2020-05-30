@@ -28,9 +28,9 @@ describe('Tree View Component', () => {
     const treeViewPage = new TreeViewPage();
 
     const acsUser = new AcsUserModel();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     let treeFolder, secondTreeFolder, thirdTreeFolder;
 
@@ -43,25 +43,25 @@ describe('Tree View Component', () => {
     };
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
-        treeFolder = await alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
+        treeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        secondTreeFolder = await alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
+        secondTreeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.secondFolder,
             nodeType: 'cm:folder'
         });
-        thirdTreeFolder = await alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {
+        thirdTreeFolder = await apiService.getInstance().nodes.addNode(secondTreeFolder.entry.id, {
             name: nodeNames.thirdFolder,
             nodeType: 'cm:folder'
         });
-        await alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, {
+        await apiService.getInstance().nodes.addNode(thirdTreeFolder.entry.id, {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });
@@ -74,7 +74,7 @@ describe('Tree View Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
         await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);

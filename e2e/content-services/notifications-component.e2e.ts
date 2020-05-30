@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NotificationDemoPage } from '../pages/adf/demo-shell/notification.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -27,21 +26,16 @@ describe('Notifications Component', () => {
     const loginPage = new LoginSSOPage();
     const notificationPage = new NotificationDemoPage();
     const navigationBarPage = new NavigationBarPage();
-    let alfrescoJsApi: AlfrescoApi;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
 
     beforeAll(async () => {
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.appConfig.hostEcm
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         await loginPage.login(acsUser.id, acsUser.password);
 

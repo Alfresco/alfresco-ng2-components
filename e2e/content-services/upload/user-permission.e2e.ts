@@ -33,7 +33,7 @@ describe('Upload - User permission', () => {
     let acsUserTwo;
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const emptyFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -54,38 +54,38 @@ describe('Upload - User permission', () => {
         acsUser = new AcsUserModel();
         acsUserTwo = new AcsUserModel();
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUserTwo);
 
         await loginPage.login(acsUser.id, acsUser.password);
 
-        this.consumerSite = await alfrescoJsApi.core.sitesApi.createSite({
+        this.consumerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        this.managerSite = await alfrescoJsApi.core.sitesApi.createSite({
+        this.managerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(this.managerSite.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(this.managerSite.entry.id, {
             id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
 
     afterEach(async () => {
-        await alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
-        await alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
     });
 
     describe('Consumer permissions', () => {

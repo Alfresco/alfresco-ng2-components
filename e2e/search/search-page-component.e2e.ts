@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
 
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -25,7 +25,6 @@ import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { FileModel } from '../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Search component - Search Page', () => {
@@ -55,11 +54,8 @@ describe('Search component - Search Page', () => {
     let fileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm
-    });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, search.active.base, search.active.extension);
@@ -73,10 +69,10 @@ describe('Search component - Search Page', () => {
             'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         await uploadActions.createFolder(emptyFolderModel.name, '-my-');
         const newFolderModelUploaded = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -85,7 +81,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 

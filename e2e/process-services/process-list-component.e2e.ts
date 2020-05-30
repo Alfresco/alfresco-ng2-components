@@ -25,7 +25,7 @@ describe('Process List Test', () => {
 
     const loginPage = new LoginSSOPage();
     const processListDemoPage = new ProcessListDemoPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
@@ -50,19 +50,19 @@ describe('Process List Test', () => {
 
     beforeAll(async () => {
         const apps = new AppsActions();
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
 
-        const processUtil = new ProcessUtil(alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         procWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.procWithDate);
         completedProcWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.completedProcWithDate);
 
@@ -71,24 +71,24 @@ describe('Process List Test', () => {
         await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
         completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
-        appWithDateFieldId = await apps.getAppDefinitionId(alfrescoJsApi, appDateModel.id);
+        appWithDateFieldId = await apps.getAppDefinitionId(apiService, appDateModel.id);
 
-        const procWithDateTaskId = await apps.getProcessTaskId(alfrescoJsApi, completedProcWithDate.id);
-        const procWithUserWidgetTaskId = await apps.getProcessTaskId(alfrescoJsApi, completedProcWithUserWidget.id);
+        const procWithDateTaskId = await apps.getProcessTaskId(apiService, completedProcWithDate.id);
+        const procWithUserWidgetTaskId = await apps.getProcessTaskId(apiService, completedProcWithUserWidget.id);
 
-        await alfrescoJsApi.activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
-        await alfrescoJsApi.activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
+        await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
+        await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
 
         await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.modelsApi.deleteModel(appDateModel.id);
-        await alfrescoJsApi.activiti.modelsApi.deleteModel(appUserWidgetModel.id);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appDateModel.id);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     beforeEach(async () => {

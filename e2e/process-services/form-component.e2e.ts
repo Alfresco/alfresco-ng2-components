@@ -26,7 +26,7 @@ describe('Form Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
     const widget = new Widget();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let tenantId, user;
 
@@ -47,15 +47,15 @@ describe('Form Component', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser();
 
         tenantId = user.tenantId;
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
         await loginPage.login(user.email, user.password);
 
@@ -63,9 +63,9 @@ describe('Form Component', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C286505] Should be able to display errors under the Error Log section', async () => {

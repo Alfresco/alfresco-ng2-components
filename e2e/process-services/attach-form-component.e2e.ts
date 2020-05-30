@@ -33,7 +33,7 @@ describe('Attach Form Component', () => {
     const attachFormPage = new AttachFormPage();
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
@@ -48,31 +48,31 @@ describe('Attach Form Component', () => {
     };
 
     beforeAll(async () => {
-        const applicationService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationService = new ApplicationsUtil(apiService);
 
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser();
 
         tenantId = user.tenantId;
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
         const appModel = await applicationService.importPublishDeployApp(app.file_path);
 
         appId = appModel.id;
 
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: testNames.taskName }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: testNames.taskName }));
 
         await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', async () => {

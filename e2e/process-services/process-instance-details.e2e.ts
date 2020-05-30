@@ -33,24 +33,24 @@ describe('Process Instance Details', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let appModel, process, user;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        const processModel = await new ProcessUtil(alfrescoJsApi).startProcessOfApp(appModel.name);
+        const processModel = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
 
         await loginPage.login(user.email, user.password);
 
@@ -60,13 +60,13 @@ describe('Process Instance Details', () => {
         await processServiceTabBarPage.clickProcessButton();
         await processListPage.checkProcessListIsDisplayed();
 
-        process = await alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
+        process = await apiService.getInstance().activiti.processApi.getProcessInstance(processModel.id);
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     it('[C307031] Should display the created date in the default format', async () => {

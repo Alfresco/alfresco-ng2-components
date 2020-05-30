@@ -37,13 +37,13 @@ describe('Document List - Selection', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const displayColumnName = 'Display name';
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
         try {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
 
             await loginPage.login(acsUser.id, acsUser.password);
 

@@ -33,23 +33,23 @@ describe('Analytics Smoke Test', () => {
     const processServicesPage = new ProcessServicesPage();
     let tenantId;
     const reportTitle = 'New Title';
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         tenantId = newTenant.id;
         const procUserModel = new ApsUserModel({ tenantId: tenantId });
 
-        await alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
+        await apiService.getInstance().activiti.adminUsersApi.createNewUser(procUserModel);
 
         await loginPage.login(procUserModel.email, procUserModel.password);
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     it('[C260346] Should be able to change title of a report', async () => {

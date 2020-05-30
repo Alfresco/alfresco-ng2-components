@@ -32,9 +32,9 @@ describe('Upload component', () => {
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     const navigationBarPage = new NavigationBarPage();
 
     const firstPdfFileModel = new FileModel({
@@ -63,9 +63,9 @@ describe('Upload component', () => {
     });
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         await loginPage.login(acsUser.id, acsUser.password);
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);

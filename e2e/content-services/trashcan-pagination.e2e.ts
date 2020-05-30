@@ -44,23 +44,23 @@ describe('Trashcan - Pagination', () => {
     const trashcanPage = new TrashcanPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     const noOfFiles = 20;
 
     beforeAll(async () => {
-        const uploadActions = new UploadActions(alfrescoJsApi);
+        const uploadActions = new UploadActions(apiService);
         const fileNames = StringUtil.generateFilesNames(10, noOfFiles + 9, pagination.base, pagination.extension);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
         for (const entry of emptyFiles.list.entries) {
-            await alfrescoJsApi.node.deleteNode(entry.entry.id).then(() => {}, async () => {
-                await alfrescoJsApi.node.deleteNode(entry.entry.id);
+            await apiService.getInstance().node.deleteNode(entry.entry.id).then(() => {}, async () => {
+                await apiService.getInstance().node.deleteNode(entry.entry.id);
             });
         }
         await loginPage.login(acsUser.id, acsUser.password);

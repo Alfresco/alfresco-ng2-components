@@ -38,7 +38,7 @@ describe('Version component actions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
 
@@ -59,10 +59,10 @@ describe('Version component actions', () => {
     });
 
     beforeAll(async () => {
-        uploadActions = new UploadActions(alfrescoJsApi);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadActions = new UploadActions(apiService);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);

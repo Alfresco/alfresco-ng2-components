@@ -33,7 +33,7 @@ describe('Process List - Pagination when adding processes', () => {
     const paginationPage = new PaginationPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -43,19 +43,19 @@ describe('Process List - Pagination when adding processes', () => {
     let resultApp;
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        const processUtil = new ProcessUtil(alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         for (i = 0; i < (nrOfProcesses - 5); i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
@@ -83,7 +83,7 @@ describe('Process List - Pagination when adding processes', () => {
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        const processUtil = new ProcessUtil(alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         for (i; i < nrOfProcesses; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }

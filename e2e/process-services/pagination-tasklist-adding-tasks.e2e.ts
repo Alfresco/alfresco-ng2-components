@@ -27,7 +27,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -43,19 +43,19 @@ describe('Items per page set to 15 and adding of tasks', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        const processUtil = new ProcessUtil(alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         for (i = 0; i < (nrOfTasks - 5); i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
@@ -74,7 +74,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
 
-        const processUtil = new ProcessUtil(alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         for (i; i < nrOfTasks; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }

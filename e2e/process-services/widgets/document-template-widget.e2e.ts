@@ -30,24 +30,24 @@ describe('Document Template widget', () => {
     let appModel;
     const app = browser.params.resources.Files.FILE_FORM_ADF;
     let deployedApp, process;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp( app.file_path);
 
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessOfApp(appModel.name);
+        process = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
         await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
@@ -59,9 +59,9 @@ describe('Document Template widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C260406] should check that the template contains assigned file ', async () => {

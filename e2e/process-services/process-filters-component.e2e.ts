@@ -41,7 +41,7 @@ describe('Process Filters Test', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
     let appModel, user;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
@@ -59,12 +59,12 @@ describe('Process Filters Test', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser();
-        await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);
     });
@@ -132,13 +132,13 @@ describe('Process Filters Test', () => {
         const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
 
         processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
-        const taskAppFilters = await alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
+        const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
@@ -214,7 +214,7 @@ describe('Process Filters Test', () => {
 
     it('[C260384] Edit default filter', async () => {
         const runningFilter =  (await getFilter()).find(filter => filter.name === 'Running');
-        await alfrescoJsApi.activiti.userFiltersApi
+        await apiService.getInstance().activiti.userFiltersApi
             .updateUserProcessInstanceFilter(runningFilter.id, { ...runningFilter, name: 'Edited Running' });
 
         await processServicesPage.goToApp(app.title);
@@ -225,7 +225,7 @@ describe('Process Filters Test', () => {
 
     it('[C260385] Delete default filter', async () => {
         const allFilter =  (await getFilter()).find(filter => filter.name === 'All');
-        await alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
+        await apiService.getInstance().activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
@@ -233,9 +233,9 @@ describe('Process Filters Test', () => {
     });
 
     async function getFilter(): Promise<UserProcessInstanceFilterRepresentation[]> {
-        const apps = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const apps = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         const { id: appId = 0 } = apps.data.find((application) => application.name === appModel.name);
-        const filters = await alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
+        const filters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
         return filters.data;
     }
 

@@ -35,26 +35,26 @@ describe('Task Audit', () => {
     const taskCustomApp = 'Audit task custom app';
     const taskCompleteCustomApp = 'Audit completed task custom app';
     const auditLogFile = 'Audit.pdf';
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const { id } = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const { id } = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
         processUserModel = await users.createApsUser(id);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));
+        const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll( async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

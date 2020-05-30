@@ -47,6 +47,10 @@ export class ApiService {
         this.apiService = new AlfrescoApi(this.config);
     }
 
+    getInstance(): AlfrescoApi {
+        return this.apiService;
+    }
+
     async login(username: string, password: string): Promise<void> {
         await this.apiService.login(username, password);
     }

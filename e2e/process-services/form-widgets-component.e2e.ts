@@ -32,22 +32,22 @@ describe('Form widgets', () => {
     let processUserModel;
     let appModel;
     const widget = new Widget();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     describe('Form widgets', () => {
         const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
         const appFields = app.form_fields;
 
         beforeAll(async () => {
-            const users = new UsersActions(alfrescoJsApi);
+            const users = new UsersActions(apiService);
 
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             processUserModel = await users.createTenantAndUser();
 
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(apiService);
 
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -68,15 +68,15 @@ describe('Form widgets', () => {
 
             const response = await taskPage.taskDetails().getId();
 
-            const formDefinition = await alfrescoJsApi.activiti.taskFormsApi.getTaskForm(response);
+            const formDefinition = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(response);
             formInstance.setFields(formDefinition.fields);
             formInstance.setAllWidgets(formDefinition.fields);
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
 
         it('[C272778] Should display text and multi-line in form', async () => {
@@ -188,20 +188,20 @@ describe('Form widgets', () => {
         const appFields = app.form_fields;
 
         beforeAll(async () => {
-            const users = new UsersActions(alfrescoJsApi);
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            const users = new UsersActions(apiService);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             processUserModel = await users.createTenantAndUser();
 
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            const applicationsService = new ApplicationsUtil(apiService);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => {
                 return currentApp.modelId === appModel.id;
             });
-            const processUtil = new ProcessUtil(alfrescoJsApi);
+            const processUtil = new ProcessUtil(apiService);
             process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.login(processUserModel.email, processUserModel.password);
         });
@@ -214,9 +214,9 @@ describe('Form widgets', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
 
         it('[C260405] Value fields configured with process variables', async () => {

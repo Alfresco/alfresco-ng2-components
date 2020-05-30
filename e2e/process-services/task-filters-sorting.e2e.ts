@@ -35,7 +35,7 @@ describe('Task Filters Sorting', () => {
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
     const taskFiltersDemoPage = new TaskFiltersDemoPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let user;
     let appId;
@@ -51,15 +51,15 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 6', dueDate: '03/01/2019' }];
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         appId = appDefinitions.data.find((currentApp) => currentApp.modelId === importedApp.id).id;
 
         await loginPage.login(user.email, user.password);
@@ -82,8 +82,8 @@ describe('Task Filters Sorting', () => {
     });
 
     afterAll( async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     it('[C277254] Should display tasks under new filter from newest to oldest when they are completed', async () => {
@@ -93,7 +93,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'completed', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -110,7 +110,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'completed', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -127,7 +127,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'completed', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -144,7 +144,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'completed', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -161,7 +161,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-desc', state: 'open', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -178,7 +178,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'created-asc', state: 'open', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -195,7 +195,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-desc', state: 'open', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();
@@ -212,7 +212,7 @@ describe('Task Filters Sorting', () => {
             icon: 'glyphicon-filter',
             filter: { sort: 'due-asc', state: 'open', assignment: 'involved' }
         });
-        await alfrescoJsApi.activiti.userFiltersApi.createUserTaskFilter(newFilter);
+        await apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(newFilter);
 
         await browser.refresh();
         await taskFiltersDemoPage.customTaskFilter(newFilter.name).clickTaskFilter();

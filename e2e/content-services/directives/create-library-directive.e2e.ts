@@ -30,7 +30,7 @@ describe('Create library directive', () => {
     const createLibraryDialog = new CreateLibraryDialogPage();
     const customSourcesPage = new CustomSourcesPage();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const visibility = {
         public: 'Public',
@@ -43,13 +43,13 @@ describe('Create library directive', () => {
     const acsUser = new AcsUserModel();
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
         await loginPage.login(acsUser.id, acsUser.password);
 
-        createSite = await alfrescoJsApi.core.sitesApi.createSite({
+        createSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),
             visibility: 'PUBLIC'
         });
@@ -57,7 +57,7 @@ describe('Create library directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
     });
 
     beforeEach(async () => {

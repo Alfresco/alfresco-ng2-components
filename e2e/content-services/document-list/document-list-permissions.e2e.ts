@@ -27,7 +27,7 @@ describe('Document List Component', () => {
     const contentServicesPage = new ContentServicesPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let privateSite;
     let acsUser = null;
@@ -38,18 +38,18 @@ describe('Document List Component', () => {
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-            privateSite = await alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
+            privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
 
             await loginPage.login(acsUser.id, acsUser.password);
         });
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
-            await alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
+            await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {

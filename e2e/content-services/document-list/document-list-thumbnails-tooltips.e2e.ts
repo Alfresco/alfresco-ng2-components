@@ -27,15 +27,15 @@ describe('Document List Component', () => {
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     let uploadedFolder, uploadedFolderExtra;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     let testFileNode, pdfBFileNode;
     const navigationBarPage = new NavigationBarPage();
 
     afterEach(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -74,11 +74,11 @@ describe('Document List Component', () => {
 
         beforeAll(async () => {
             acsUser = new AcsUserModel();
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
@@ -88,7 +88,7 @@ describe('Document List Component', () => {
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
 
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }

@@ -32,9 +32,9 @@ describe('Lock File', () => {
     const contentServices = new ContentServicesPage();
     const adminUser = new AcsUserModel();
     const managerUser = new AcsUserModel();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -49,30 +49,30 @@ describe('Lock File', () => {
     let nodeId, site, documentLibrary, lockedFileNodeId;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(adminUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(managerUser);
+        await apiService.getInstance().core.peopleApi.addPerson(adminUser);
+        await apiService.getInstance().core.peopleApi.addPerson(managerUser);
 
-        await alfrescoJsApi.login(adminUser.id, adminUser.password);
+        await apiService.getInstance().login(adminUser.id, adminUser.password);
 
-        site = await alfrescoJsApi.core.sitesApi.createSite({
+        site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PRIVATE'
         });
 
-        const resultNode = await alfrescoJsApi.core.nodesApi.getNodeChildren(site.entry.guid);
+        const resultNode = await apiService.getInstance().core.nodesApi.getNodeChildren(site.entry.guid);
 
         documentLibrary = resultNode.list.entries[0].entry.id;
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: managerUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Lock file interaction with the UI', () => {
@@ -96,7 +96,7 @@ describe('Lock File', () => {
 
         afterEach(async () => {
             try {
-                await alfrescoJsApi.login(adminUser.id, adminUser.password);
+                await apiService.getInstance().login(adminUser.id, adminUser.password);
 
                 await uploadActions.deleteFileOrFolder(nodeId);
 
@@ -106,9 +106,9 @@ describe('Lock File', () => {
 
         afterAll(async () => {
             try {
-                await alfrescoJsApi.login(adminUser.id, adminUser.password);
+                await apiService.getInstance().login(adminUser.id, adminUser.password);
 
-                await alfrescoJsApi.core.nodesApi.unlockNode(lockedFileNodeId);
+                await apiService.getInstance().core.nodesApi.unlockNode(lockedFileNodeId);
 
                 await uploadActions.deleteFileOrFolder(lockedFileNodeId);
 
@@ -172,10 +172,10 @@ describe('Lock File', () => {
         });
 
         afterEach(async () => {
-            await alfrescoJsApi.login(adminUser.id, adminUser.password);
+            await apiService.getInstance().login(adminUser.id, adminUser.password);
 
             try {
-                await alfrescoJsApi.core.nodesApi.unlockNode(nodeId);
+                await apiService.getInstance().core.nodesApi.unlockNode(nodeId);
                 await uploadActions.deleteFileOrFolder(nodeId);
             } catch (error) {
             }
@@ -189,7 +189,7 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                await alfrescoJsApi.core.nodesApi.deleteNode(nodeId);
+                await apiService.getInstance().core.nodesApi.deleteNode(nodeId);
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
@@ -203,7 +203,7 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                await alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
+                await apiService.getInstance().core.nodesApi.updateNode(nodeId, { name: 'My new name' });
 
             } catch (error) {
                 await expect(error.status).toEqual(409);
@@ -218,7 +218,7 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                await alfrescoJsApi.core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
+                await apiService.getInstance().core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
 
             } catch (error) {
                 await expect(error.status).toEqual(409);
@@ -233,7 +233,7 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                await alfrescoJsApi.core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
+                await apiService.getInstance().core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
 
             } catch (error) {
                 await expect(error.status).toEqual(409);
@@ -263,7 +263,7 @@ describe('Lock File', () => {
     });
 
         afterEach(async () => {
-            await alfrescoJsApi.login(adminUser.id, adminUser.password);
+            await apiService.getInstance().login(adminUser.id, adminUser.password);
 
             try {
                 await uploadActions.deleteFileOrFolder(nodeId);
@@ -280,7 +280,7 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                const response = await alfrescoJsApi.core.nodesApi.updateNode(nodeId, { name: 'My new name' });
+                const response = await apiService.getInstance().core.nodesApi.updateNode(nodeId, { name: 'My new name' });
                 await expect(response.entry.name).toEqual('My new name');
             } catch (error) {
             }
@@ -295,7 +295,7 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                const response = await alfrescoJsApi.core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
+                const response = await apiService.getInstance().core.nodesApi.updateNodeContent(nodeId, 'NEW FILE CONTENT');
                 await expect(response.entry.modifiedAt.getTime()).toBeGreaterThan(response.entry.createdAt.getTime());
             } catch (error) {
             }
@@ -310,9 +310,9 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
-                await alfrescoJsApi.core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
+                await apiService.getInstance().core.nodesApi.moveNode(nodeId, { targetParentId: '-my-' });
 
-                const movedFile = await alfrescoJsApi.core.nodesApi.getNode(nodeId);
+                const movedFile = await apiService.getInstance().core.nodesApi.getNode(nodeId);
 
                 await expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
             } catch (error) {

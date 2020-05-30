@@ -39,29 +39,29 @@ describe('Edit folder directive', () => {
     const anotherAcsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     const updateFolderName = StringUtil.generateRandomString(5);
     let editFolder, anotherFolder, filePdfNode, subFolder;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(anotherAcsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         editFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         anotherFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), editFolder.entry.id);
         filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
-        await alfrescoJsApi.core.nodesApi.updateNode(editFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(editFolder.entry.id,
 
             {
                 permissions: {
@@ -78,7 +78,7 @@ describe('Edit folder directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);
         await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);

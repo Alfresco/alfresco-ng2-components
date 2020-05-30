@@ -57,13 +57,13 @@ describe('Version component actions', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, '-my-');
         await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');

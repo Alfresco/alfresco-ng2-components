@@ -28,8 +28,8 @@ describe('Viewer', () => {
     const viewerPage = new ViewerPage();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
     const acsUser = new AcsUserModel();
     let txtFileUploaded;
 
@@ -39,10 +39,10 @@ describe('Viewer', () => {
     });
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         txtFileUploaded = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
 

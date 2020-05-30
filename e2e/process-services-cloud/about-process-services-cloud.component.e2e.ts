@@ -31,7 +31,7 @@ describe('About Process Services Cloud', () => {
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
         identityService = new IdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
         await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
         await navigationBarPage.clickAboutButton();

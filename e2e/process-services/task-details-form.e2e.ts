@@ -38,10 +38,10 @@ describe('Task Details - Form', () => {
     const widget = new Widget();
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
     let newTask;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
             'description': '',
@@ -61,31 +61,31 @@ describe('Task Details - Form', () => {
             'stencilSet': 0
         };
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser();
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
-        attachedForm = await alfrescoJsApi.activiti.modelsApi.createModel(attachedFormModel);
-        newForm = await alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
+        attachedForm = await apiService.getInstance().activiti.modelsApi.createModel(attachedFormModel);
+        newForm = await apiService.getInstance().activiti.modelsApi.createModel(newFormModel);
 
-        const otherEmptyTask = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
-        otherAttachedForm = await alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
+        const otherEmptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+        otherAttachedForm = await apiService.getInstance().activiti.modelsApi.createModel(otherAttachedFormModel);
 
-        await alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
-        otherTask = await alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
+        await apiService.getInstance().activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
+        otherTask = await apiService.getInstance().activiti.taskApi.getTask(otherEmptyTask.id);
 
         await loginPage.login(user.email, user.password);
    });
 
     afterAll( async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {
-        const emptyTask = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
-        await alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
-        task = await alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
+        const emptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+        await apiService.getInstance().activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
+        task = await apiService.getInstance().activiti.taskApi.getTask(emptyTask.id);
 
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
@@ -170,14 +170,14 @@ describe('Task Details - Form', () => {
 
         beforeAll(async () => {
             app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(apiService);
             await applicationsService.importPublishDeployApp(app.file_path);
         });
 
         beforeEach(async () => {
-            newTask = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
-            const form = await formActions.getFormByName(alfrescoJsApi, app.visibilityProcess.formName);
-            await alfrescoJsApi.activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
+            newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+            const form = await formActions.getFormByName(apiService, app.visibilityProcess.formName);
+            await apiService.getInstance().activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
             await tasksListPage.checkTaskListIsLoaded();
@@ -339,7 +339,7 @@ describe('Task Details - Form', () => {
         });
 
         it('[C315197] Should be able to complete a process task with visible tab with empty value for field', async () => {
-            await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(app.name, app.visibilityProcess.name);
+            await new ProcessUtil(apiService).startProcessByDefinitionName(app.name, app.visibilityProcess.name);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
@@ -373,7 +373,7 @@ describe('Task Details - Form', () => {
         });
 
         it('[C212922] Should a User task form be refreshed, saved or completed.', async () => {
-            await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(app.name, app.processName);
+            await new ProcessUtil(apiService).startProcessByDefinitionName(app.name, app.processName);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();

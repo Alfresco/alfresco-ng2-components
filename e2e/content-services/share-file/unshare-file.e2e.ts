@@ -33,7 +33,7 @@ import { browser } from 'protractor';
 
 describe('Unshare file', () => {
 
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -45,7 +45,7 @@ describe('Unshare file', () => {
     const shareDialog = new ShareDialogPage();
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     let nodeBody;
     let nodeId;
     let testSite;
@@ -74,15 +74,15 @@ describe('Unshare file', () => {
             }
         };
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        testSite = await alfrescoJsApi.core.sitesApi.createSite(site);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        testSite = await apiService.getInstance().core.sitesApi.createSite(site);
 
-        const docLibId = (await alfrescoJsApi.core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
-        const testFile1Id = (await alfrescoJsApi.core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
-        await alfrescoJsApi.core.sitesApi.addSiteMember(siteName, memberBody);
+        const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;
+        const testFile1Id = (await apiService.getInstance().core.nodesApi.addNode(docLibId, nodeBody)).entry.id;
+        await apiService.getInstance().core.sitesApi.addSiteMember(siteName, memberBody);
 
-        await alfrescoJsApi.core.nodesApi.updateNode(testFile1Id, {
+        await apiService.getInstance().core.nodesApi.updateNode(testFile1Id, {
             permissions: {
                 isInheritanceEnabled: false,
                 locallySet: [
@@ -93,8 +93,8 @@ describe('Unshare file', () => {
                 ]
             }
         });
-        await alfrescoJsApi.core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().core.sharedlinksApi.addSharedLink({ nodeId: testFile1Id });
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         nodeId = pngUploadedFile.entry.id;
@@ -106,7 +106,7 @@ describe('Unshare file', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(testSite.entry.id, { permanent: true });
     });
 
     afterEach(async () => {
@@ -162,8 +162,8 @@ describe('Unshare file', () => {
 
     describe('without permission', () => {
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.core.sitesApi.deleteSite(siteName, { permanent: true });
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().core.sitesApi.deleteSite(siteName, { permanent: true });
         });
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {

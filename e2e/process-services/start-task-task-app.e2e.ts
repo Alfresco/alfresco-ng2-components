@@ -36,7 +36,7 @@ describe('Start Task - Task App', () => {
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let processUserModel, assigneeUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -55,11 +55,11 @@ describe('Start Task - Task App', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(newTenant.id);
 
@@ -68,11 +68,11 @@ describe('Start Task - Task App', () => {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
 
         await loginPage.login(processUserModel.email, processUserModel.password);
    });

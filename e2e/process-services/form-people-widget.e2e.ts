@@ -36,18 +36,18 @@ describe('Form widgets - People ', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const taskDetails = new TaskDetailsPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -55,9 +55,9 @@ describe('Form widgets - People ', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
@@ -75,7 +75,7 @@ describe('Form widgets - People ', () => {
         await processDetailsPage.clickOnActiveTask();
 
         const taskId = await taskDetails.getId();
-        const taskForm: any = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+        const taskForm: any = await apiService.getInstance().activiti.taskApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
         await expect(userEmail).toEqual(processUserModel.email);
     });
@@ -95,7 +95,7 @@ describe('Form widgets - People ', () => {
         await processDetailsPage.clickOnCompletedTask();
 
         const taskId = await taskDetails.getId();
-        const taskForm: any = await alfrescoJsApi.activiti.taskApi.getTaskForm(taskId);
+        const taskForm: any = await apiService.getInstance().activiti.taskApi.getTaskForm(taskId);
         const userEmail = taskForm['fields'][0].fields['1'][0].value.email;
         await expect(userEmail).toEqual(processUserModel.email);
     });

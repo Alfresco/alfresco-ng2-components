@@ -39,7 +39,7 @@ describe('Aspect oriented config', () => {
     const contentServicesPage = new ContentServicesPage();
     const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
 
@@ -50,35 +50,35 @@ describe('Aspect oriented config', () => {
     let uploadActions;
 
     beforeAll(async () => {
-        uploadActions = new UploadActions(alfrescoJsApi);
+        uploadActions = new UploadActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         try {
-            await alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
+            await apiService.getInstance().core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
         } catch (e) {
         }
 
         try {
-            await alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
+            await apiService.getInstance().core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
         } catch (e) {
         }
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
         await loginPage.login(acsUser.id, acsUser.password);
 
-        const aspects = await alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
+        const aspects = await apiService.getInstance().core.nodesApi.getNode(uploadedFile.entry.id);
 
         aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
 
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
-        await alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
+        await apiService.getInstance().core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
    });
 
     afterAll(async () => {

@@ -28,7 +28,7 @@ describe('Task List Pagination - Sorting', () => {
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfTasks = 20;
@@ -46,20 +46,20 @@ describe('Task List Pagination - Sorting', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskNames[i] }));
+            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskNames[i] }));
         }
 
         await loginPage.login(processUserModel.email, processUserModel.password);

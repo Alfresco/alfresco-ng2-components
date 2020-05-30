@@ -15,14 +15,20 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, UploadActions, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    BrowserActions,
+    UploadActions,
+    StringUtil,
+    LocalStorageUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
 describe('Search Checklist Component', () => {
@@ -34,11 +40,9 @@ describe('Search Checklist Component', () => {
     const navigationBarPage = new NavigationBarPage();
 
     const acsUser = new AcsUserModel();
-    const alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.appConfig.hostEcm
-        });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
 
     const filterType = {
         folder: 'Folder',
@@ -55,19 +59,25 @@ describe('Search Checklist Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
-        createdFolder = await alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.folder, nodeType: 'cm:folder' });
-        createdFile = await alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.document, nodeType: 'cm:content' });
+        createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
+            name: nodeNames.folder,
+            nodeType: 'cm:folder'
+        });
+        createdFile = await apiService.getInstance().nodes.addNode('-my-', {
+            name: nodeNames.document,
+            nodeType: 'cm:content'
+        });
 
         await browser.sleep(15000);
 
         await loginPage.login(acsUser.id, acsUser.password);
-   });
+    });
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
@@ -75,15 +85,15 @@ describe('Search Checklist Component', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-   });
+    });
 
-    it('[C276991] Should be able to click between options and Clear All button', async() => {
+    it('[C276991] Should be able to click between options and Clear All button', async () => {
         await searchFiltersPage.checkCheckListFilterIsDisplayed();
         await searchFiltersPage.checkCheckListFilterIsCollapsed();
         await searchFiltersPage.clickCheckListFilter();
@@ -271,7 +281,7 @@ describe('Search Checklist Component', () => {
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
         });
-   });
+    });
 
     describe('Properties', () => {
         let jsonFile;

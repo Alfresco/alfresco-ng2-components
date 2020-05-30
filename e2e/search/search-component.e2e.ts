@@ -17,14 +17,21 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, UploadActions, StringUtil, LocalStorageUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    UploadActions,
+    StringUtil,
+    LocalStorageUtil,
+    BrowserActions,
+    ViewerPage,
+    ApiService
+} from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
 
@@ -48,11 +55,9 @@ describe('Search component - Search Bar', () => {
     const viewerPage = new ViewerPage();
 
     const acsUser = new AcsUserModel();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm
-    });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
 
     const filename = StringUtil.generateRandomString(16);
     const firstFolderName = StringUtil.generateRandomString(16);
@@ -79,14 +84,14 @@ describe('Search component - Search Bar', () => {
     let fileHighlightUploaded;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const firstFileUploaded = await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
         Object.assign(firstFileModel, firstFileUploaded.entry);
 
-        fileHighlightUploaded = await alfrescoJsApi.nodes.addNode('-my-', {
+        fileHighlightUploaded = await apiService.getInstance().nodes.addNode('-my-', {
             'name': StringUtil.generateRandomString(16),
             'nodeType': 'cm:content',
             'properties': {

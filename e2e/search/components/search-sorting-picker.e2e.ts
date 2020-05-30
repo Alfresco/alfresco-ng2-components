@@ -19,14 +19,13 @@ import {
     LoginSSOPage,
     LocalStorageUtil,
     SearchSortingPickerPage,
-    UploadActions
+    UploadActions, ApiService
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
@@ -53,19 +52,17 @@ describe('Search Sorting Picker', () => {
     };
 
     let pngA, pngD;
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm
-    });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
     const search = '_png_file.png';
     let jsonFile;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
@@ -228,7 +225,7 @@ describe('Search Sorting Picker', () => {
 
         for (let i = 0; i < (numberOfElements - 1); i++) {
             if (idList[i] && idList[i].trim() !== '') {
-                promises.push(alfrescoJsApi.core.nodesApi.getNode(idList[i]));
+                promises.push(apiService.getInstance().core.nodesApi.getNode(idList[i]));
             }
         }
         nodeList = await Promise.all(promises);

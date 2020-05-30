@@ -70,8 +70,8 @@ describe('Start Process Component', () => {
 
     const lengthValidationError = 'Length exceeded, 255 characters max.';
 
-    const alfrescoJsApi = new ApiService().apiService;
-    const alfrescoJsApiUserTwo = new ApiService().apiService;
+    const apiService = new ApiService();
+    const apiServiceUserTwo = new ApiService();
 
     const auditLogFile = 'Audit.pdf';
 
@@ -83,20 +83,20 @@ describe('Start Process Component', () => {
     describe('Provider: BPM', () => {
         beforeAll(async () => {
             try {
-                await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+                await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-                const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+                const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
                 tenantId = newTenant.id;
                 procUserModel = new ApsUserModel({ tenantId: tenantId });
                 secondProcUserModel = new ApsUserModel({ tenantId: tenantId });
 
-                await alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
-                await alfrescoJsApi.activiti.adminUsersApi.createNewUser(secondProcUserModel);
+                await apiService.getInstance().activiti.adminUsersApi.createNewUser(procUserModel);
+                await apiService.getInstance().activiti.adminUsersApi.createNewUser(secondProcUserModel);
 
-                await alfrescoJsApiUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
+                await apiServiceUserTwo.login(secondProcUserModel.email, secondProcUserModel.password);
 
-                const applicationsService = new ApplicationsUtil(alfrescoJsApiUserTwo);
+                const applicationsService = new ApplicationsUtil(apiServiceUserTwo);
 
                 const appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
@@ -111,10 +111,10 @@ describe('Start Process Component', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(appId);
-            await alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(simpleAppCreated.id);
-            await alfrescoJsApiUserTwo.activiti.modelsApi.deleteModel(dateFormAppCreated.id);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(appId);
+            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(simpleAppCreated.id);
+            await apiServiceUserTwo.getInstance().activiti.modelsApi.deleteModel(dateFormAppCreated.id);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
         });
 
         describe(' Once logged with user without apps', () => {
@@ -209,7 +209,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.clickFormStartProcessButton();
                 await processDetailsPage.checkDetailsAreDisplayed();
                 const processId = await processDetailsPage.getId();
-                const response = await alfrescoJsApi.activiti.processApi.getProcessInstance(processId);
+                const response = await apiService.getInstance().activiti.processApi.getProcessInstance(processId);
 
                 await expect(await processDetailsPage.getProcessStatus()).toEqual(CONSTANTS.PROCESS_STATUS.RUNNING);
                 await expect(await processDetailsPage.getEndDate()).toEqual(CONSTANTS.PROCESS_END_DATE);
@@ -483,15 +483,15 @@ describe('Start Process Component', () => {
         });
 
         beforeAll(async () => {
-            const users = new UsersActions(alfrescoJsApi);
+            const users = new UsersActions(apiService);
 
-            const alfrescoJsApiAll = new ApiService({
+            const apiServiceAll = new ApiService({
                 provider: 'ALL',
                 hostEcm: browser.params.testConfig.appConfig.hostEcm,
                 hostBpm: browser.params.testConfig.appConfig.hostBpm
-            }).apiService;
+            });
 
-            await alfrescoJsApiAll.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiServiceAll.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             processUserModel = await users.createTenantAndUser();
 
@@ -503,9 +503,9 @@ describe('Start Process Component', () => {
                 'email': processUserModel.email
             });
 
-            await alfrescoJsApiAll.core.peopleApi.addPerson(contentUserModel);
+            await apiServiceAll.getInstance().core.peopleApi.addPerson(contentUserModel);
 
-            this.alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.hostBpm }).apiService;
+            this.alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.hostBpm });
 
             await this.alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
 

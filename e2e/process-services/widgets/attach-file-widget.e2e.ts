@@ -35,7 +35,7 @@ describe('Attach widget - File', () => {
     const taskDetailsPage = new TaskDetailsPage();
     const tasksListPage = new TasksListPage();
     const filtersPage = new FiltersPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let processUserModel;
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
@@ -43,13 +43,13 @@ describe('Attach widget - File', () => {
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         processUserModel = await users.createTenantAndUser();
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(processUserModel.email, processUserModel.password);
     });
@@ -69,8 +69,8 @@ describe('Attach widget - File', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C268067] Should be able to preview, download and remove attached files from an active form', async () => {

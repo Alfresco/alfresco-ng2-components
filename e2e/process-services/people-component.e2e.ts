@@ -36,16 +36,16 @@ describe('People component', () => {
     const taskPage = new TasksPage();
     const peopleTitle = 'People this task is shared with ';
     const processServices = new ProcessServicesPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(newTenant.id);
         secondAssigneeUserModel = await users.createApsUser(newTenant.id);
@@ -54,15 +54,15 @@ describe('People component', () => {
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[0] }));
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[1] }));
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[2] }));
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[3] }));
-        await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[4] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[0] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[1] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[2] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[3] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[4] }));
    });
 
     beforeEach(async () => {

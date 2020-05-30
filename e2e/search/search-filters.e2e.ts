@@ -28,9 +28,8 @@ import {
     LoginSSOPage,
     LocalStorageUtil,
     UploadActions,
-    BrowserActions
+    BrowserActions, ApiService
 } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
 
@@ -39,11 +38,8 @@ describe('Search Filters', () => {
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm
-    });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
     const searchResults = new SearchResultsPage();
@@ -88,11 +84,11 @@ describe('Search Filters', () => {
     let jsonFile;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -108,7 +104,7 @@ describe('Search Filters', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypePng.entry.id);

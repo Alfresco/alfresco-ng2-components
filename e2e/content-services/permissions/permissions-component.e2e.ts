@@ -36,12 +36,12 @@ import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
 describe('Permissions Component', () => {
 
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
     const navigationBarPage = new NavigationBarPage();
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const contentList = contentServicesPage.getDocumentList();
     const viewerPage = new ViewerPage();
@@ -85,11 +85,11 @@ describe('Permissions Component', () => {
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.getId() + ' / role -> Contributor';
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(fileOwnerUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(filePermissionUser);
-        await alfrescoJsApi.core.groupsApi.createGroup(groupBody);
-        await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(fileOwnerUser);
+        await apiService.getInstance().core.peopleApi.addPerson(filePermissionUser);
+        await apiService.getInstance().core.groupsApi.createGroup(groupBody);
+        await apiService.getInstance().login(fileOwnerUser.id, fileOwnerUser.password);
 
         roleConsumerFolder = await uploadActions.createFolder(roleConsumerFolderModel.name, '-my-');
         roleCoordinatorFolder = await uploadActions.createFolder(roleCoordinatorFolderModel.name, '-my-');
@@ -99,7 +99,7 @@ describe('Permissions Component', () => {
 
         folders = [roleConsumerFolder, roleContributorFolder, roleCoordinatorFolder, roleCollaboratorFolder, roleEditorFolder];
 
-        await alfrescoJsApi.core.nodesApi.updateNode(roleConsumerFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(roleConsumerFolder.entry.id,
 
             {
                 permissions: {
@@ -111,7 +111,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await alfrescoJsApi.core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(roleCollaboratorFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{
@@ -122,7 +122,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await alfrescoJsApi.core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(roleCoordinatorFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{
@@ -133,7 +133,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await alfrescoJsApi.core.nodesApi.updateNode(roleContributorFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(roleContributorFolder.entry.id,
 
             {
                 permissions: {
@@ -145,7 +145,7 @@ describe('Permissions Component', () => {
                 }
             });
 
-        await alfrescoJsApi.core.nodesApi.updateNode(roleEditorFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(roleEditorFolder.entry.id,
 
             {
                 permissions: {
@@ -167,7 +167,7 @@ describe('Permissions Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
         }
@@ -175,7 +175,7 @@ describe('Permissions Component', () => {
 
     describe('Inherit and assigning permissions', () => {
         beforeEach(async () => {
-            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            await apiService.getInstance().login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.login(fileOwnerUser.id, fileOwnerUser.password);
             await contentServicesPage.goToDocumentList();
@@ -241,7 +241,7 @@ describe('Permissions Component', () => {
 
     describe('Changing and duplicate Permissions', () => {
         beforeEach(async () => {
-            await alfrescoJsApi.login(fileOwnerUser.id, fileOwnerUser.password);
+            await apiService.getInstance().login(fileOwnerUser.id, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
             await loginPage.login(fileOwnerUser.id, fileOwnerUser.password);
             await contentServicesPage.goToDocumentList();

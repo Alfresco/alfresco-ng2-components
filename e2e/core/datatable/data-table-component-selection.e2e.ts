@@ -23,7 +23,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Datatable component - selection', () => {
 
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
     const dataTablePage = new DataTablePage();
     const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
@@ -31,9 +31,9 @@ describe('Datatable component - selection', () => {
     const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
         await loginPage.login(acsUser.id, acsUser.password);
 

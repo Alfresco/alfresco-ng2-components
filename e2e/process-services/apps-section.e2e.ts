@@ -36,18 +36,18 @@ describe('Modify applications', () => {
     const modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
     let applicationService;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        applicationService = new ApplicationsUtil(alfrescoJsApi);
+        applicationService = new ApplicationsUtil(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         const user = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
         firstApp = await applicationService.importPublishDeployApp(app.file_path);
         appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);
@@ -74,7 +74,7 @@ describe('Modify applications', () => {
         await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(alfrescoJsApi, replacingApp.file_location, firstApp.id);
+        await apps.importNewVersionAppDefinitionPublishDeployApp(apiService, replacingApp.file_location, firstApp.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -93,7 +93,7 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkAppIsDisplayed(app.title);
 
-        await modelActions.deleteEntireModel(alfrescoJsApi, firstApp.id);
+        await modelActions.deleteEntireModel(apiService, firstApp.id);
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
 
@@ -109,7 +109,7 @@ describe('Modify applications', () => {
         await processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
+        await apps.importNewVersionAppDefinitionPublishDeployApp(apiService, replacingApp.file_location, appVersionToBeDeleted.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -118,9 +118,9 @@ describe('Modify applications', () => {
 
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
 
-        await modelActions.deleteVersionModel(alfrescoJsApi, appVersionToBeDeleted.id);
-        await modelActions.deleteVersionModel(alfrescoJsApi, appVersionToBeDeleted.id);
-        await apps.publishDeployApp(alfrescoJsApi, appVersionToBeDeleted.id);
+        await modelActions.deleteVersionModel(apiService, appVersionToBeDeleted.id);
+        await modelActions.deleteVersionModel(apiService, appVersionToBeDeleted.id);
+        await apps.publishDeployApp(apiService, appVersionToBeDeleted.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -150,7 +150,7 @@ describe('Modify applications', () => {
             }, 'publish': true
         };
 
-        await alfrescoJsApi.activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
+        await apiService.getInstance().activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();

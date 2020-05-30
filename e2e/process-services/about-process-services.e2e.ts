@@ -25,22 +25,22 @@ describe('About Process Services', () => {
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
     let user, tenantId;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async() => {
-        const users = new UsersActions(alfrescoJsApi);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions(apiService);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser();
         tenantId = user.tenantId;
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
         await loginPage.login(user.email, user.password);
         await navigationBarPage.clickAboutButton();
     });
 
     afterAll(async() => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C280002] Should be able to view about process services info', async () => {

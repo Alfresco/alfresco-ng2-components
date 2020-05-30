@@ -27,14 +27,14 @@ describe('Document List Component', () => {
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     let uploadedFolder, uploadedFolderExtra;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     let testFileNode, pdfBFileNode;
 
     afterEach(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -80,18 +80,18 @@ describe('Document List Component', () => {
             /* cspell:disable-next-line */
         folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
         docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             if (pdfUploadedNode) {
                 await uploadActions.deleteFileOrFolder(pdfUploadedNode.entry.id);
@@ -128,7 +128,7 @@ describe('Document List Component', () => {
         });
 
         it('[C279928] Should be able to display date with timeAgo', async () => {
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             await contentServicesPage.goToDocumentList();
             const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
@@ -136,7 +136,7 @@ describe('Document List Component', () => {
         });
 
         it('[C279929] Should be able to display the date with date type', async () => {
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
             const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
             await contentServicesPage.goToDocumentList();
@@ -167,11 +167,11 @@ describe('Document List Component', () => {
         beforeAll(async () => {
         const user = new AcsUserModel();
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(user);
+        await apiService.getInstance().core.peopleApi.addPerson(user);
 
-        await alfrescoJsApi.login(user.id, user.password);
+        await apiService.getInstance().login(user.id, user.password);
         fileANode = await uploadActions.uploadFile(fakeFileA.location, fakeFileA.name, '-my-');
         fileBNode = await uploadActions.uploadFile(fakeFileB.location, fakeFileB.name, '-my-');
         fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
@@ -181,7 +181,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             if (fileANode) {
                 await uploadActions.deleteFileOrFolder(fileANode.entry.id);
             }
@@ -222,8 +222,8 @@ describe('Document List Component', () => {
         acsUser = new AcsUserModel();
 
         const folderName = 'BANANA';
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
         await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.createNewFolder(folderName);
@@ -240,9 +240,9 @@ describe('Document List Component', () => {
         acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.goToDocumentList();
@@ -254,8 +254,8 @@ describe('Document List Component', () => {
 
     it('[C261997] Should be able to clean Recent Files history', async () => {
         acsUser = new AcsUserModel();
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
         await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.clickOnContentServices();
         await contentServicesPage.checkRecentFileToBeShowed();
@@ -270,9 +270,9 @@ describe('Document List Component', () => {
         acsUser = new AcsUserModel();
         const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderNameA, '-my-');
         uploadedFolderExtra = await uploadActions.createFolder(folderNameB, '-my-');
         await loginPage.login(acsUser.id, acsUser.password);
@@ -293,9 +293,9 @@ describe('Document List Component', () => {
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
         acsUser = new AcsUserModel();
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         testFileNode = await uploadActions.uploadFile(testFileA.location, testFileA.name, '-my-');
         pdfBFileNode = await uploadActions.uploadFile(testFileB.location, testFileB.name, '-my-');
         await loginPage.login(acsUser.id, acsUser.password);
@@ -312,9 +312,9 @@ describe('Document List Component', () => {
         beforeAll(async () => {
             acsUser = new AcsUserModel();
             folderCreated = [];
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
             let folderName = '';
             let folder = null;
 
@@ -349,9 +349,9 @@ describe('Document List Component', () => {
 
         beforeAll(async () => {
             acsUser = new AcsUserModel();
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
             file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
 
             await loginPage.login(acsUser.id, acsUser.password);

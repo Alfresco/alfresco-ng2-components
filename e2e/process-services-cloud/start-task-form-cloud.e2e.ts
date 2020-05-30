@@ -64,8 +64,7 @@ describe('Start Task Form', () => {
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const processHeaderCloud = new ProcessHeaderCloudPage();
     const apiService = new ApiService();
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const startProcessCloudConfiguration = new StartProcessCloudConfiguration();
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
@@ -98,7 +97,7 @@ describe('Start Task Form', () => {
 
         identityService = new IdentityService(apiService);
         groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -147,9 +146,9 @@ describe('Start Task Form', () => {
             firstName: testUser.firstName,
             lastName: testUser.lastName
         });
-        await alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);

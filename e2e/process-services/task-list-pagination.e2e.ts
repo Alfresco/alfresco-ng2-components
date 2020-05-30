@@ -29,7 +29,7 @@ describe('Task List Pagination', () => {
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let processUserModel: UserRepresentation;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -50,25 +50,25 @@ describe('Task List Pagination', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         processUserModel = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         const resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await new ProcessUtil(alfrescoJsApi).startProcessOfApp(resultApp.name);
+            await new ProcessUtil(apiService).startProcessOfApp(resultApp.name);
         }
 
         await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll( async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C260301] Should display default pagination', async () => {

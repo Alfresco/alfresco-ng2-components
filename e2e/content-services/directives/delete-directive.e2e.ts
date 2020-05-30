@@ -32,15 +32,15 @@ import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Delete Directive', () => {
 
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const acsUser = new AcsUserModel();
     const secondAcsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(alfrescoJsApi);
-    const permissionActions = new PermissionActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
+    const permissionActions = new PermissionActions(apiService);
     let baseFolderUploaded;
 
     const txtFileModel = new FileModel({
@@ -89,10 +89,10 @@ describe('Delete Directive', () => {
     });
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(secondAcsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(secondAcsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
     });
 
     beforeEach(async () => {
@@ -213,12 +213,12 @@ describe('Delete Directive', () => {
         let fileTxt, filePdf, folderA, folderB;
 
         beforeAll(async () => {
-            createdSite = await alfrescoJsApi.core.sitesApi.createSite({
+            createdSite = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
                 visibility: 'PRIVATE'
             });
 
-            await alfrescoJsApi.core.sitesApi.addSiteMember(createdSite.entry.id, {
+            await apiService.getInstance().core.sitesApi.addSiteMember(createdSite.entry.id, {
                 id: secondAcsUser.id,
                 role: 'SiteCollaborator'
             });
@@ -245,7 +245,7 @@ describe('Delete Directive', () => {
 
         afterAll(async () => {
             try {
-                await alfrescoJsApi.core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
+                await apiService.getInstance().core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
         });
 

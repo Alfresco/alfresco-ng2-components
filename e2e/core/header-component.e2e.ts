@@ -25,7 +25,7 @@ describe('Header Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
 
@@ -44,9 +44,9 @@ describe('Header Component', () => {
     };
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
         await loginPage.login(acsUser.id, acsUser.password);
     });
 

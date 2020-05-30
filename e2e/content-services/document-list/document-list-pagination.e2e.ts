@@ -71,9 +71,9 @@ describe('Document List - Pagination', () => {
     const folderTwoModel = new FolderModel({ name: 'folderTwo' });
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
     const numberOfSubFolders = 6;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -84,9 +84,9 @@ describe('Document List - Pagination', () => {
         fileNames = StringUtil.generateFilesNames(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = StringUtil.generateFilesNames(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const folderThreeUploadedModel = await uploadActions.createFolder(folderThreeModel.name, '-my-');
         const newFolderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');

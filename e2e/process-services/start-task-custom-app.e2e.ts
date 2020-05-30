@@ -32,7 +32,7 @@ describe('Start Task - Custom App', () => {
     const navigationBarPage = new NavigationBarPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     let processUserModel, assigneeUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -49,19 +49,19 @@ describe('Start Task - Custom App', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         assigneeUserModel = await users.createApsUser(newTenant.id);
 
         processUserModel = await users.createApsUser(newTenant.id);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 

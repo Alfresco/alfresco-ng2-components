@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService } from '../api.service';
 
 export class IntegrationService {
-    api: AlfrescoApi;
+    api: ApiService;
 
-    constructor(api: AlfrescoApi) {
+    constructor(api: ApiService) {
         this.api = api;
     }
 
@@ -34,12 +34,12 @@ export class IntegrationService {
             version: '6.1.1',
             authenticationType: 'basic'
         };
-        return this.api.activiti.integrationAccountApi.apiClient.callApi('app/rest/integration/alfresco', 'POST',
+        return this.api.apiService.activiti.integrationAccountApi.apiClient.callApi('app/rest/integration/alfresco', 'POST',
             {}, {}, {}, {}, repository, [], [], Object);
     }
 
     authenticateRepository(id: number, body: { username: string, password: string }): Promise<any> {
-        return this.api.activiti.integrationAccountApi.apiClient.callApi(`app/rest/integration/alfresco/${id}/account`, 'POST',
+        return this.api.apiService.activiti.integrationAccountApi.apiClient.callApi(`app/rest/integration/alfresco/${id}/account`, 'POST',
             {}, {}, {}, body, {}, [], []);
     }
 }

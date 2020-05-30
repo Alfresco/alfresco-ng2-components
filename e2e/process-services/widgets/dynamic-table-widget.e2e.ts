@@ -28,8 +28,8 @@ describe('Dynamic Table widget ', () => {
     const taskPage = new TasksPage();
     const widget = new Widget();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
-    const users = new UsersActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const users = new UsersActions(apiService);
 
     let processUserModel;
     let appModel;
@@ -39,16 +39,16 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             processUserModel = await users.createTenantAndUser();
 
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            const applicationsService = new ApplicationsUtil(apiService);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === appModel.id);
-            process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
+            process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
             await loginPage.login(processUserModel.email, processUserModel.password);
         });
 
@@ -60,9 +60,9 @@ describe('Dynamic Table widget ', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -89,23 +89,23 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE_USERS;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             processUserModel = await users.createTenantAndUser();
 
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            const applicationsService = new ApplicationsUtil(apiService);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === appModel.id);
-            process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
+            process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
             await loginPage.login(processUserModel.email, processUserModel.password);
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
             await navigationBarPage.clickLogoutButton();
         });
 
@@ -145,22 +145,22 @@ describe('Dynamic Table widget ', () => {
         const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             processUserModel = await users.createTenantAndUser();
 
-            await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            const applicationsService = new ApplicationsUtil(apiService);
             const application = await applicationsService.importPublishDeployApp(app.file_path);
 
-            const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+            const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
             deployedApp = appDefinitions.data.find((currentApp) => currentApp.modelId === application.id);
-            process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(application.name, app.CUSTOM_VALIDATOR.processName);
+            process = await new ProcessUtil(apiService).startProcessByDefinitionName(application.name, app.CUSTOM_VALIDATOR.processName);
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
 
         beforeEach(async () => {

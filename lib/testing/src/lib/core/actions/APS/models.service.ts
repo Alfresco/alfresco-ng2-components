@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { Logger } from '../../utils/logger';
+import { ApiService } from '../api.service';
 
 export class ModelsActions {
 
-    api: AlfrescoApi;
+    api: ApiService;
 
-    constructor(api: AlfrescoApi) {
+    constructor(api: ApiService) {
         this.api = api;
     }
 
     async deleteVersionModel(modelId) {
         try {
-            return await this.api.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+            return await this.api.apiService.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
         } catch (error) {
             Logger.error('Delete Model Version - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -35,7 +35,7 @@ export class ModelsActions {
 
     async deleteEntireModel(modelId) {
         try {
-            return await this.api.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+            return await this.api.apiService.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
         } catch (error) {
             Logger.error('Delete Model - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -45,7 +45,7 @@ export class ModelsActions {
         const options = opts || {};
         let models;
         try {
-            models = await this.api.activiti.modelsApi.getModels(options);
+            models = await this.api.apiService.activiti.modelsApi.getModels(options);
         } catch (error) {
             Logger.error('Get Models - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }

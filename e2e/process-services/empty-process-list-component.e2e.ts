@@ -33,7 +33,7 @@ describe('Empty Process List Test', () => {
     const processDetailsPage = new ProcessDetailsPage();
     const processListPage = new ProcessListPage();
     const startProcessPage = new StartProcessPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const appA = browser.params.resources.Files.APP_WITH_PROCESSES;
     const appB = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
@@ -41,15 +41,15 @@ describe('Empty Process List Test', () => {
     let user;
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
         user = await users.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
         await applicationsService.importPublishDeployApp(appA.file_path);
         await applicationsService.importPublishDeployApp(appB.file_path);

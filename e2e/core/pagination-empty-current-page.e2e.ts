@@ -36,7 +36,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const viewerPage = new ViewerPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
@@ -66,15 +66,15 @@ describe('Pagination - returns to previous page when current is empty', () => {
     });
 
     beforeAll(async () => {
-        const uploadActions = new UploadActions(alfrescoJsApi);
+        const uploadActions = new UploadActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
 

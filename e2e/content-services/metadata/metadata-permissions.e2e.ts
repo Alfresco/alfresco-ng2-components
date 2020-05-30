@@ -52,33 +52,33 @@ describe('permissions', () => {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
+        await apiService.getInstance().core.peopleApi.addPerson(consumerUser);
+        await apiService.getInstance().core.peopleApi.addPerson(collaboratorUser);
+        await apiService.getInstance().core.peopleApi.addPerson(contributorUser);
 
-        site = await alfrescoJsApi.core.sitesApi.createSite({
+        site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: consumerUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: collaboratorUser.id,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: contributorUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
@@ -88,7 +88,7 @@ describe('permissions', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     it('[C274692] Should not be possible edit metadata properties when the user is a consumer user', async () => {

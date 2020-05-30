@@ -15,14 +15,20 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, StringUtil, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    BrowserActions,
+    StringUtil,
+    LocalStorageUtil,
+    UploadActions,
+    ApiService
+} from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
 describe('Search Radio Component', () => {
@@ -34,11 +40,9 @@ describe('Search Radio Component', () => {
     const searchResults = new SearchResultsPage();
 
     const acsUser = new AcsUserModel();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm
-    });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
 
     const filterType = {
         none: 'None',
@@ -57,16 +61,16 @@ describe('Search Radio Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
-        createdFolder = await alfrescoJsApi.nodes.addNode('-my-', {
+        createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        createdFile = await alfrescoJsApi.nodes.addNode('-my-', {
+        createdFile = await apiService.getInstance().nodes.addNode('-my-', {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });
@@ -79,7 +83,7 @@ describe('Search Radio Component', () => {
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);

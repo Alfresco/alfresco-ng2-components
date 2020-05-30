@@ -50,10 +50,10 @@ describe('People Groups Cloud Component', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         identityService = new IdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-        apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-        activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-        devopsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_DEVOPS]);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        apsUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        activitiUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        devopsUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_DEVOPS]);
         noRoleUser = await identityService.createIdentityUser();
 
         rolesService = new RolesService(apiService);

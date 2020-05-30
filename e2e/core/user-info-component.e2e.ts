@@ -29,7 +29,7 @@ describe('User Info component', () => {
     const userInfoPage = new UserInfoPage();
     let processUserModel, contentUserModel;
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService({ provider: 'ALL' }).apiService;
+    const apiService = new ApiService({ provider: 'ALL' });
 
     const acsAvatarFileModel = new FileModel({
         'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
@@ -41,9 +41,9 @@ describe('User Info component', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         processUserModel = await users.createTenantAndUser();
 
@@ -55,7 +55,7 @@ describe('User Info component', () => {
             'email': processUserModel.email
         });
 
-        await alfrescoJsApi.core.peopleApi.addPerson(contentUserModel);
+        await apiService.getInstance().core.peopleApi.addPerson(contentUserModel);
     });
 
     afterAll(async () => {
@@ -140,8 +140,8 @@ describe('User Info component', () => {
     });
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
-        const users = new UsersActions(alfrescoJsApi);
-        await alfrescoJsApi.login(contentUserModel.email, contentUserModel.password);
+        const users = new UsersActions(apiService);
+        await apiService.getInstance().login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(apsAvatarFileModel.getLocation());
 
         await loginPage.login(contentUserModel.id, contentUserModel.password);

@@ -34,12 +34,12 @@ import { UserRepresentation } from '@alfresco/js-api';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('Attach File - Content service', () => {
-    const alfrescoJsApi = new ApiService({ provider: 'ALL'}).apiService;
+    const apiService = new ApiService({ provider: 'ALL'});
 
-    const alfrescoJsApiExternal = new ApiService({
+    const apiServiceExternal = new ApiService({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.adf_external_acs.host
-    }).apiService;
+    });
 
     const loginPage = new LoginSSOPage();
     const widget = new Widget();
@@ -68,29 +68,29 @@ describe('Attach File - Content service', () => {
     beforeAll(async () => {
         browser.params.testConfig.appConfig.provider = 'ALL';
 
-        const integrationService = new IntegrationService(alfrescoJsApi);
-        const applicationService = new ApplicationsUtil(alfrescoJsApi);
-        const uploadActions = new UploadActions(alfrescoJsApi);
-        const users = new UsersActions(alfrescoJsApi);
+        const integrationService = new IntegrationService(apiService);
+        const applicationService = new ApplicationsUtil(apiService);
+        const uploadActions = new UploadActions(apiService);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(email, password);
+        await apiService.getInstance().login(email, password);
         user = await users.createTenantAndUser();
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
-        await alfrescoJsApi.core.peopleApi.addPerson(new AcsUserModel(acsUser));
-        await alfrescoJsApiExternal.login(email, password);
-        await alfrescoJsApiExternal.core.peopleApi.addPerson(new AcsUserModel(acsUser));
+        await apiService.getInstance().core.peopleApi.addPerson(new AcsUserModel(acsUser));
+        await apiServiceExternal.login(email, password);
+        await apiServiceExternal.getInstance().core.peopleApi.addPerson(new AcsUserModel(acsUser));
 
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.hostEcm });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
 
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(email, password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().login(email, password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach( async () => {

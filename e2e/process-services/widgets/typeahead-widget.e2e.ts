@@ -29,25 +29,25 @@ describe('Typeahead widget', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    const alfrescoJsApi = new ApiService().apiService;
-    const usersActions = new UsersActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
     let user: UserRepresentation;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createTenantAndUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {

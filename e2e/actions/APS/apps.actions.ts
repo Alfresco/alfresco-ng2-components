@@ -23,8 +23,8 @@ import { browser } from 'protractor';
 
 export class AppsActions {
 
-    async getProcessTaskId(alfrescoJsApi, processId) {
-        const taskList = await alfrescoJsApi.activiti.taskApi.listTasks({});
+    async getProcessTaskId(apiService, processId) {
+        const taskList = await apiService.getInstance().activiti.taskApi.listTasks({});
         let taskId = -1;
 
         taskList.data.forEach((task) => {
@@ -36,8 +36,8 @@ export class AppsActions {
         return taskId;
     }
 
-    async getAppDefinitionId(alfrescoJsApi, appModelId) {
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+    async getAppDefinitionId(apiService, appModelId) {
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         let appDefinitionId = -1;
 
         appDefinitions.data.forEach((appDefinition) => {
@@ -49,27 +49,27 @@ export class AppsActions {
         return appDefinitionId;
     }
 
-    async publishDeployApp(alfrescoJsApi, appId) {
+    async publishDeployApp(apiService, appId) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appId, new AppPublish());
+        const publishApp = await apiService.getInstance().activiti.appsApi.publishAppDefinition(appId, new AppPublish());
 
-        await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await apiService.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return publishApp;
     }
 
-    async importNewVersionAppDefinitionPublishDeployApp(alfrescoJsApi, appFileLocation, modelId) {
+    async importNewVersionAppDefinitionPublishDeployApp(apiService, appFileLocation, modelId) {
         browser.setFileDetector(new remote.FileDetector());
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
-        const appCreated = await alfrescoJsApi.activiti.appsApi.importNewAppDefinition(modelId, file);
+        const appCreated = await apiService.getInstance().activiti.appsApi.importNewAppDefinition(modelId, file);
 
-        const publishApp = await alfrescoJsApi.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+        const publishApp = await apiService.getInstance().activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
-        await alfrescoJsApi.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await apiService.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return appCreated;
     }

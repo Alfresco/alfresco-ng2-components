@@ -15,12 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, LocalStorageUtil, UploadActions, DataTableComponentPage } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    LocalStorageUtil,
+    UploadActions,
+    DataTableComponentPage,
+    ApiService
+} from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
@@ -44,18 +49,16 @@ describe('Search Slider Filter', () => {
     });
 
     let file2Bytes;
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm
-    });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         await browser.sleep(15000);
@@ -69,7 +72,7 @@ describe('Search Slider Filter', () => {
 
     afterAll(async () => {
         try {
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         } catch (error) {
         }

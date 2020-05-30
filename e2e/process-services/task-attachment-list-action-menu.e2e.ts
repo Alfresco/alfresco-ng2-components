@@ -47,17 +47,17 @@ describe('Attachment list action menu for tasks', () => {
         taskApp: 'Task App Name',
         emptyList: 'Empty List'
     };
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         const user = await users.createTenantAndUser();
         tenantId = user.tenantId;
 
-        await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         const { id } = await applicationsService.importPublishDeployApp(app.file_path);
         appId = id;
 
@@ -65,9 +65,9 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
@@ -157,12 +157,12 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
-        const newTask = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
+        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
         const newTaskId = newTask.id;
         const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
-        relatedContent = await alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
+        relatedContent = await apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
         relatedContentId = relatedContent.id;
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -172,7 +172,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        await alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
+        await apiService.getInstance().activiti.contentApi.deleteContent(relatedContentId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 

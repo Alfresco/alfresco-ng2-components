@@ -36,8 +36,8 @@ export class IdentityService {
         ACTIVITI_IDENTITY: 'ACTIVITI_IDENTITY'
     };
 
-    async createIdentityUserWithRole(apiService: ApiService, roles: string[]): Promise<any> {
-        const rolesService = new RolesService(apiService);
+    async createIdentityUserWithRole(roles: string[]): Promise<any> {
+        const rolesService = new RolesService(this.api);
         const user = await this.createIdentityUser();
         for (let i = 0; i < roles.length; i++) {
             const roleId = await rolesService.getRoleIdByRoleName(roles[i]);

@@ -34,7 +34,7 @@ import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.pag
 
 describe('Share file', () => {
 
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
     const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -44,7 +44,7 @@ describe('Share file', () => {
     const viewerPage = new ViewerPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
@@ -62,17 +62,17 @@ describe('Share file', () => {
         };
 
         const apiCall = async () => {
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
-            return alfrescoJsApi.core.sharedlinksApi.findSharedLinks();
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            return apiService.getInstance().core.sharedlinksApi.findSharedLinks();
         };
 
         return ApiUtil.waitForApi(apiCall, predicate, 10, 2000);
     };
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -80,7 +80,7 @@ describe('Share file', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(nodeId);
     });
 

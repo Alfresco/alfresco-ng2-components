@@ -60,7 +60,7 @@ describe('Start Task - Custom App', () => {
     const afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const itemsPerPage = {
         five: '5',
@@ -76,45 +76,45 @@ describe('Start Task - Custom App', () => {
 
     beforeAll(async () => {
         const appsRuntime = new AppsRuntimeActions();
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        const applicationsService = new ApplicationsUtil(apiService);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(newTenant.id);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        appRuntime = await appsRuntime.getRuntimeAppByName(alfrescoJsApi, app.title);
+        appRuntime = await appsRuntime.getRuntimeAppByName(apiService, app.title);
 
         await applicationsService.importPublishDeployApp(secondApp.file_path);
 
-        secondAppRuntime = await appsRuntime.getRuntimeAppByName(alfrescoJsApi, secondApp.title);
+        secondAppRuntime = await appsRuntime.getRuntimeAppByName(apiService, secondApp.title);
 
-        const processUtil = new ProcessUtil(alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
 
         for (let i = 1; i < paginationTasksName.length; i++) {
-            await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': paginationTasksName[i] }));
+            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': paginationTasksName[i] }));
         }
 
         for (let i = 0; i < 3; i++) {
-            completedTasks[i] = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({
+            completedTasks[i] = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({
                 'name': completedTasksName[i],
                 'dueDate': DateUtil.formatDate('YYYY-MM-DDTHH:mm:ss.SSSZ', new Date(), i + 2)
             }));
-            await alfrescoJsApi.activiti.taskActionsApi.completeTask(completedTasks[i].id);
+            await apiService.getInstance().activiti.taskActionsApi.completeTask(completedTasks[i].id);
         }
 
-        taskWithDueDate = await alfrescoJsApi.activiti.taskApi.createNewTask(new TaskRepresentation({
+        taskWithDueDate = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({
             'name': paginationTasksName[0],
             'dueDate': currentDateStandardFormat
         }));

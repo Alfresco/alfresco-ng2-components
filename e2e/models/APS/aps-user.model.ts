@@ -34,7 +34,6 @@ export class ApsUserModel {
     company = null;
     id = 0;
 
-
     constructor(details: any = {}) {
         this.email = details.email ? details.email : StringUtil.generateRandomEmail('@activiti.test.com');
         this.firstName = details.firstName ? details.firstName : StringUtil.generateRandomString();

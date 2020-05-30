@@ -35,8 +35,8 @@ describe('Task Assignee', () => {
     const taskPage = new TasksPage();
 
     const app = browser.params.resources.Files.TEST_ASSIGNEE;
-    const alfrescoJsApi = new ApiService().apiService;
-    const users = new UsersActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const users = new UsersActions(apiService);
 
     describe('Candidate User Assignee', () => {
         const processListPage = new ProcessListPage();
@@ -48,14 +48,14 @@ describe('Task Assignee', () => {
         let user: UserRepresentation;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await users.createTenantAndUser();
             try {// creates user and group if not available
                 await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
             } catch (e) {
             }
             try {// creates group if not available
-                await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({
+                await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
                     'name': app.candidateGroup,
                     'tenantId': user.tenantId,
                     'type': 1
@@ -63,8 +63,8 @@ describe('Task Assignee', () => {
             } catch (e) {
             }
 
-            await alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await apiService.getInstance().login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(apiService);
             try {
                 await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
             } catch (e) {
@@ -74,8 +74,8 @@ describe('Task Assignee', () => {
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
         beforeEach(async () => {
@@ -120,37 +120,37 @@ describe('Task Assignee', () => {
         let candidate2: UserRepresentation;
 
         beforeAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await users.createTenantAndUser();
             candidate1 = await users.createApsUser(user.tenantId);
             candidate2 = await users.createApsUser(user.tenantId);
-            const adminGroup = await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
+            const adminGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );
-            await alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
-            await alfrescoJsApi.activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
+            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
+            await apiService.getInstance().activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
-            const candidateGroup = await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
+            const candidateGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 }
             );
-            await alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
-            await alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
-            await alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
+            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
+            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
+            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
             try {
                 await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
             } catch (e) {
             }
 
-            await alfrescoJsApi.login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await apiService.getInstance().login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(apiService);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-            await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processNames[1]);
+            await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processNames[1]);
         });
 
         afterAll(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
         it('[C216430] Start Task - Claim and Requeue a task', async () => {

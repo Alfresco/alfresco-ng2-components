@@ -41,20 +41,20 @@ describe('Favorite directive', () => {
     const trashcanPage = new TrashcanPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     let testFolder1, testFolder2, testFolder3, testFolder4, testFile;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         testFolder1 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         testFolder2 = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -68,7 +68,7 @@ describe('Favorite directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(testFolder1.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder2.entry.id);
         await uploadActions.deleteFileOrFolder(testFolder3.entry.id);

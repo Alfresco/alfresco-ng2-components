@@ -32,25 +32,25 @@ describe('Task Details - No form', () => {
     const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
     let importedApp;
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const { id } = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const { id } = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
         processUserModel = await users.createApsUser(id);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-        await new ProcessUtil(alfrescoJsApi).startProcessOfApp(importedApp.name);
+        await new ProcessUtil(apiService).startProcessOfApp(importedApp.name);
         await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     afterAll( async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {

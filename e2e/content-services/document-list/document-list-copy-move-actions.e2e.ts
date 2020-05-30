@@ -36,9 +36,9 @@ describe('Document List Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
         duplicateFolderName;
@@ -60,18 +60,18 @@ describe('Document List Component', () => {
         anotherAcsUser = new AcsUserModel();
         folderName = StringUtil.generateRandomString(5);
         sameNameFolder = StringUtil.generateRandomString(5);
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
-        site = await alfrescoJsApi.core.sitesApi.createSite({
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(anotherAcsUser);
+        site = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
-        await alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
             id: anotherAcsUser.getId(),
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         destinationFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         sourceFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -83,7 +83,7 @@ describe('Document List Component', () => {
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, sourceFolder.entry.id);
         uploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
-        await alfrescoJsApi.core.nodesApi.updateNode(sourceFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(sourceFolder.entry.id,
             {
                 permissions: {
                     locallySet: [{
@@ -100,12 +100,12 @@ describe('Document List Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);
         await uploadActions.deleteFileOrFolder(destinationFolder.entry.id);
-        await alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
     describe('Document List Component - Actions Move and Copy', () => {

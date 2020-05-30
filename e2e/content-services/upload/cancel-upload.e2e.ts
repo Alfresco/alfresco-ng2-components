@@ -25,13 +25,13 @@ import { FileModel } from '../../models/ACS/file.model';
 
 describe('Upload component', async () => {
 
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
     const loginPage = new LoginSSOPage();
     const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -49,9 +49,9 @@ describe('Upload component', async () => {
     });
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         await loginPage.login(acsUser.id, acsUser.password);
         await contentServicesPage.goToDocumentList();

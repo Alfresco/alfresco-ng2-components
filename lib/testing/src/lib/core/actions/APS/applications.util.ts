@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { Logger } from '../../utils/logger';
 import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
 import * as fs from 'fs';
+import { ApiService } from '../api.service';
 
 export class AppPublish {
     comment: string = '';
@@ -28,17 +28,17 @@ export class AppPublish {
 
 export class ApplicationsUtil {
 
-    api: AlfrescoApi;
+    api: ApiService;
 
-    constructor(api: AlfrescoApi) {
+    constructor(api: ApiService) {
         this.api = api;
     }
 
     async importPublishDeployApp(appFileLocation, option = {}) {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
-            const publishApp = await this.api.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
-            await this.api.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+            const publishApp = await this.api.apiService.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+            await this.api.apiService.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
             return appCreated;
         } catch (error) {
             Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
@@ -49,7 +49,7 @@ export class ApplicationsUtil {
         try {
             browser.setFileDetector(new remote.FileDetector());
             const file = fs.createReadStream(appFileLocation);
-            return await this.api.activiti.appsDefinitionApi.importAppDefinition(file, options);
+            return await this.api.apiService.activiti.appsDefinitionApi.importAppDefinition(file, options);
         } catch (error) {
             Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
@@ -57,7 +57,7 @@ export class ApplicationsUtil {
 
     async getAppDefinitionByName(appName): Promise<any> {
         try {
-            const appDefinitionsList = await this.api.activiti.appsApi.getAppDefinitions();
+            const appDefinitionsList = await this.api.apiService.activiti.appsApi.getAppDefinitions();
             const appDefinition = appDefinitionsList.data.filter((currentApp) => {
                 return currentApp.name === appName;
             });

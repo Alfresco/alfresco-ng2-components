@@ -25,10 +25,10 @@ import { UsersActions } from '../actions/users.actions';
 import { UserRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const users = new UsersActions(alfrescoJsApi);
-    const applicationService = new ApplicationsUtil(alfrescoJsApi);
+    const users = new UsersActions(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
 
     const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
@@ -46,16 +46,16 @@ describe('Start Task - Task App', () => {
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await users.createTenantAndUser();
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {

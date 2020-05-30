@@ -29,8 +29,8 @@ describe('Document List Component - Properties', () => {
     const navigationBar = new NavigationBarPage();
 
     let subFolder, parentFolder;
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
     let acsUser = null;
 
     const pngFile = new FileModel({
@@ -42,11 +42,11 @@ describe('Document List Component - Properties', () => {
         beforeEach(async () => {
             acsUser = new AcsUserModel();
 
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
 
             parentFolder = await uploadActions.createFolder('parentFolder', '-my-');
 
@@ -56,7 +56,7 @@ describe('Document List Component - Properties', () => {
         });
 
         afterEach(async () => {
-            await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
         });

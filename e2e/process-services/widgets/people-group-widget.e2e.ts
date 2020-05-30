@@ -29,21 +29,21 @@ describe('People and Group widget', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    const alfrescoJsApi = new ApiService().apiService;
-    const usersActions = new UsersActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const app = browser.params.resources.Files.MORE_WIDGETS;
     let user: UserRepresentation;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await usersActions.createTenantAndUser();
         await createGroupAndUsers(user.tenantId);
-        await alfrescoJsApi.login(user.email, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
         try {
-            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            const applicationsService = new ApplicationsUtil(apiService);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         } catch (e) { console.error('failed to deploy the application'); }
 
@@ -117,7 +117,7 @@ describe('People and Group widget', () => {
     });
 
     async function createGroupAndUsers(tenantId) {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         try {
             const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
@@ -125,12 +125,12 @@ describe('People and Group widget', () => {
             const subgroupUser = await usersActions.createApsUser(
                  tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
 
-            const group = await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ name: app.group.name, tenantId, type: 1 });
-            await  Promise.all(happyUsers.map(happyUser => alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
+            const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({ name: app.group.name, tenantId, type: 1 });
+            await  Promise.all(happyUsers.map(happyUser => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
 
             const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
-                alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ name, tenantId , type: 1, parentGroupId: group.id })));
-            await Promise.all(subgroups.map((subgroup) => alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
+                apiService.getInstance().activiti.adminGroupsApi.createNewGroup({ name, tenantId , type: 1, parentGroupId: group.id })));
+            await Promise.all(subgroups.map((subgroup) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
 
         } catch (e) {}
     }

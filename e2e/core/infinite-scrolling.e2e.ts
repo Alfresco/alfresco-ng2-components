@@ -29,7 +29,7 @@ describe('Enable infinite scrolling', () => {
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
     const navigationBarPage = new NavigationBarPage();
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     const acsUser = new AcsUserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
@@ -48,18 +48,18 @@ describe('Enable infinite scrolling', () => {
     };
 
     beforeAll(async () => {
-        const uploadActions = new UploadActions(alfrescoJsApi);
+        const uploadActions = new UploadActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
         await loginPage.login(acsUser.id, acsUser.password);
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
         deleteFileNames = StringUtil.generateFilesNames(1, nrOfDeletedFiles, files.base, files.extension);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
         emptyFolderModel = await uploadActions.createFolder('emptyFolder', '-my-');

@@ -40,17 +40,17 @@ describe('Login component - Redirect', () => {
     });
     let uploadedFolder;
 
-    const alfrescoJsApi = new ApiService().apiService;
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
     const logoutPage = new LogoutPage();
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(user);
-        await alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);
+        await apiService.getInstance().core.peopleApi.addPerson(user);
+        await apiService.getInstance().core.peopleApi.addPerson(userFolderOwner);
 
-        await alfrescoJsApi.login(user.id, user.password);
+        await apiService.getInstance().login(user.id, user.password);
 
         uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
    });

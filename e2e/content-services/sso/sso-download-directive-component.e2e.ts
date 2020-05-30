@@ -30,7 +30,6 @@ import {
     ViewerPage
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -55,7 +54,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
     let pdfUploadedFile, pngUploadedFile, folder;
 
-    const alfrescoJsApi = new AlfrescoApi({
+    const apiService = new ApiService({
         provider: 'ECM',
         hostEcm: browser.params.testConfig.appConfig.hostEcm,
         authType: 'OAUTH',
@@ -70,21 +69,20 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             redirectUriLogout: '/logout'
         }
     });
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     const folderName = StringUtil.generateRandomString(5);
     const acsUser = new UserModel();
     let identityService: IdentityService;
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
         beforeAll(async () => {
-            const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.appConfig.hostEcm, browser.params.testConfig.appConfig.oauth2.host, 'ECM');
             await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             identityService = new IdentityService(apiService);
 
             await identityService.createIdentityUserAndSyncECMBPM(acsUser);
 
-            await alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.id, acsUser.password);
 
             folder = await uploadActions.createFolder(folderName, '-my-');
 
@@ -109,12 +107,12 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
         afterAll(async () => {
             try {
-                await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+                await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
                 await identityService.deleteIdentityUser(acsUser.id);
             } catch (error) {
             }
-            await alfrescoJsApi.logout();
+            await apiService.getInstance().logout();
             await browser.executeScript('window.sessionStorage.clear();');
             await browser.executeScript('window.localStorage.clear();');
         });

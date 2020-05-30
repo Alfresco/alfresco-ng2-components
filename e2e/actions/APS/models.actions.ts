@@ -17,13 +17,13 @@
 
 export class ModelsActions {
 
-    async deleteVersionModel(alfrescoJsApi, modelId) {
+    async deleteVersionModel(apiService, modelId) {
 
-       return alfrescoJsApi.activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+       return apiService.getInstance().activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
     }
 
-    async deleteEntireModel(alfrescoJsApi, modelId) {
-        return alfrescoJsApi.activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+    async deleteEntireModel(apiService, modelId) {
+        return apiService.getInstance().activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
     }
 
 }

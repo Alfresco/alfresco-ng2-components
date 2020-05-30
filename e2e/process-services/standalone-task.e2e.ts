@@ -36,23 +36,23 @@ describe('Start Task - Task App', () => {
     const taskPage = new TasksPage();
     const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     const noFormMessage = 'No forms attached';
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(alfrescoJsApi);
+        const users = new UsersActions(apiService);
 
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
         processUserModel = await users.createApsUser(newTenant.id);
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        await alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
         await loginPage.login(processUserModel.email, processUserModel.password);
    });
@@ -122,8 +122,8 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
 
-        const listOfTasks = await alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        await alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
+        const listOfTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        await apiService.getInstance().activiti.taskApi.removeForm(listOfTasks.data[0].id);
 
         await browser.refresh();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

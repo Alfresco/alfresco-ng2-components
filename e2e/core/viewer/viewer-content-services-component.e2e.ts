@@ -67,16 +67,16 @@ describe('Content Services Viewer', () => {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
         'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
-    const alfrescoJsApi = new ApiService().apiService;
+    const apiService = new ApiService();
 
-    const uploadActions = new UploadActions(alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
-        await alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const pdfFileUploaded = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
