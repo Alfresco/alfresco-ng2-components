@@ -18,7 +18,6 @@
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { SearchFiltersPage } from '../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import {
@@ -28,24 +27,29 @@ import {
     LoginSSOPage,
     LocalStorageUtil,
     UploadActions,
-    BrowserActions, ApiService
+    BrowserActions,
+    ApiService,
+    UserModel
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Search Filters', () => {
 
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const apiService = new ApiService();
-    const uploadActions = new UploadActions(apiService);
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
 
     const filename = StringUtil.generateRandomString(16);
     const fileNamePrefix = StringUtil.generateRandomString(5);
@@ -86,7 +90,7 @@ describe('Search Filters', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 

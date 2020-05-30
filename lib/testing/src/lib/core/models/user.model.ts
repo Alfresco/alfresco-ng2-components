@@ -33,7 +33,7 @@ export class UserModel {
     tenantId = 1;
     company = null;
 
-    constructor(details?: any) {
+    constructor(details: any = {}) {
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
         this.password = details.password ? details.password : this.password;

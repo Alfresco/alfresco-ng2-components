@@ -20,16 +20,17 @@ import {
     LocalStorageUtil,
     UploadActions,
     DataTableComponentPage,
-    ApiService
+    ApiService,
+    UserModel
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Slider Filter', () => {
 
@@ -41,7 +42,7 @@ describe('Search Slider Filter', () => {
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
 
     const file2BytesModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
@@ -52,11 +53,12 @@ describe('Search Slider Filter', () => {
     const apiService = new ApiService();
 
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 

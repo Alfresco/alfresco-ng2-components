@@ -17,15 +17,15 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Search component - Search Page', () => {
     const search = {
@@ -47,15 +47,17 @@ describe('Search component - Search Page', () => {
     const searchResultPage = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
     const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
     let firstFileModel;
     const newFolderModel = new FolderModel({ 'name': 'newFolder' });
     let fileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;
-    const apiService = new ApiService();
-    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, search.active.base, search.active.extension);
@@ -71,7 +73,7 @@ describe('Search component - Search Page', () => {
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         await uploadActions.createFolder(emptyFolderModel.name, '-my-');

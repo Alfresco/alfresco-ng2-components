@@ -17,16 +17,16 @@
 
 import { browser } from 'protractor';
 
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
 
-import { LoginSSOPage, LocalStorageUtil, BrowserActions, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil, BrowserActions, ApiService, UserModel } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 import { SearchConfiguration } from '../search.config';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Search component - Text widget', () => {
 
@@ -37,14 +37,16 @@ describe('Search component - Text widget', () => {
     const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
     const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
 
     beforeAll(async () => {
-        const apiService = new ApiService();
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 

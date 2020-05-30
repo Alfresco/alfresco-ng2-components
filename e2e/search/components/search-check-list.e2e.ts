@@ -21,15 +21,16 @@ import {
     UploadActions,
     StringUtil,
     LocalStorageUtil,
-    ApiService
+    ApiService,
+    UserModel
 } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Checklist Component', () => {
 
@@ -39,10 +40,11 @@ describe('Search Checklist Component', () => {
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const apiService = new ApiService();
 
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const filterType = {
         folder: 'Folder',
@@ -61,7 +63,7 @@ describe('Search Checklist Component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 

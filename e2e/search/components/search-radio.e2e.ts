@@ -21,15 +21,16 @@ import {
     StringUtil,
     LocalStorageUtil,
     UploadActions,
-    ApiService
+    ApiService,
+    UserModel
 } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Radio Component', () => {
 
@@ -39,10 +40,11 @@ describe('Search Radio Component', () => {
     const searchDialog = new SearchDialogPage();
     const searchResults = new SearchResultsPage();
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const apiService = new ApiService();
 
     const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const filterType = {
         none: 'None',
@@ -63,7 +65,7 @@ describe('Search Radio Component', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         createdFolder = await apiService.getInstance().nodes.addNode('-my-', {

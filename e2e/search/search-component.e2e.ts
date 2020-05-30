@@ -24,16 +24,17 @@ import {
     LocalStorageUtil,
     BrowserActions,
     ViewerPage,
-    ApiService
+    ApiService,
+    UserModel
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Search component - Search Bar', () => {
 
@@ -54,8 +55,9 @@ describe('Search component - Search Bar', () => {
     const searchResultPage = new SearchResultsPage();
     const viewerPage = new ViewerPage();
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
 
@@ -85,7 +87,7 @@ describe('Search component - Search Bar', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
         await apiService.getInstance().login(acsUser.id, acsUser.password);
 
         const firstFileUploaded = await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');

@@ -15,30 +15,32 @@
  * limitations under the License.
  */
 
-import { StringUtil, UploadActions, LoginSSOPage, ApiService } from '@alfresco/adf-testing';
+import { StringUtil, UploadActions, LoginSSOPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../pages/adf/search-filters.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchResultsPage = new SearchResultsPage();
-    const apiService = new ApiService();
-    const uploadActions = new UploadActions(apiService);
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
+
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     let site, userOption;
 
     describe('', () => {
         let jpgFile, jpgFileSite, txtFile, txtFileSite;
-        const acsUser = new AcsUserModel();
+        const acsUser = new UserModel();
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
@@ -53,7 +55,7 @@ describe('Search Component - Multi-Select Facet', () => {
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            await usersActions.createUser(acsUser);
 
             await apiService.getInstance().login(acsUser.id, acsUser.password);
 
@@ -125,8 +127,8 @@ describe('Search Component - Multi-Select Facet', () => {
 
     describe('', () => {
         let jpgFile, txtFile;
-        const userUploadingTxt = new AcsUserModel();
-        const userUploadingImg = new AcsUserModel();
+        const userUploadingTxt = new UserModel();
+        const userUploadingImg = new UserModel();
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
@@ -141,8 +143,8 @@ describe('Search Component - Multi-Select Facet', () => {
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await apiService.getInstance().core.peopleApi.addPerson(userUploadingTxt);
-            await apiService.getInstance().core.peopleApi.addPerson(userUploadingImg);
+            await usersActions.createUser(userUploadingTxt);
+            await usersActions.createUser(userUploadingImg);
 
             await apiService.getInstance().login(userUploadingTxt.id, userUploadingTxt.password);
 
@@ -188,7 +190,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
     describe('', () => {
         let txtFile;
-        const acsUser = new AcsUserModel();
+        const acsUser = new UserModel();
 
         const randomName = StringUtil.generateRandomString();
         const txtFileInfo = new FileModel({
@@ -199,7 +201,7 @@ describe('Search Component - Multi-Select Facet', () => {
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await apiService.getInstance().core.peopleApi.addPerson(acsUser);
+            await usersActions.createUser(acsUser);
 
             await apiService.getInstance().login(acsUser.id, acsUser.password);
 
