@@ -34,7 +34,15 @@ export class ApsUserModel {
     company = null;
     id = 0;
 
-    constructor(details?: any) {
-        Object.assign(this, details);
+
+    constructor(details: any = {}) {
+        this.email = details.email ? details.email : StringUtil.generateRandomEmail('@activiti.test.com');
+        this.firstName = details.firstName ? details.firstName : StringUtil.generateRandomString();
+        this.lastName = details.lastName ? details.lastName : StringUtil.generateRandomString();
+        this.password = details.password ? details.password : StringUtil.generateRandomString();
+        this.type = details.type ? details.type : 'enterprise';
+        this.tenantId = details.tenantId ? details.tenantId : 1;
+        this.company = details.company ? details.company : null;
+        this.id = details.id ? details.id : 0;
     }
 }
