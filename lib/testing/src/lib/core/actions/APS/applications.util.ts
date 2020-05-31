@@ -20,6 +20,7 @@ import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
 import * as fs from 'fs';
 import { ApiService } from '../api.service';
+import { AppDefinitionRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/appDefinitionRepresentation';
 
 export class AppPublish {
     comment: string = '';
@@ -34,36 +35,46 @@ export class ApplicationsUtil {
         this.api = api;
     }
 
-    async importPublishDeployApp(appFileLocation, option = {}) {
+    async importPublishDeployApp(appFileLocation, option = {}): Promise<AppDefinitionRepresentation> {
+        let appCreated: AppDefinitionRepresentation = {};
         try {
-            const appCreated = await this.importApplication(appFileLocation, option);
-            const publishApp = await this.api.apiService.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
-            await this.api.apiService.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
-            return appCreated;
+            appCreated = await this.importApplication(appFileLocation, option);
+            if (appCreated.id) {
+                const publishApp = await this.api.apiService.activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+                await this.api.apiService.activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+            }
         } catch (error) {
             Logger.error('Import Publish Deploy Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
+
+        return appCreated;
     }
 
-    async importApplication(appFileLocation, options = {}): Promise<any> {
+    async importApplication(appFileLocation, options = {}): Promise<AppDefinitionRepresentation> {
+        let appDefinition = {};
         try {
             browser.setFileDetector(new remote.FileDetector());
             const file = fs.createReadStream(appFileLocation);
-            return await this.api.apiService.activiti.appsDefinitionApi.importAppDefinition(file, options);
+            appDefinition = await this.api.apiService.activiti.appsDefinitionApi.importAppDefinition(file, options);
         } catch (error) {
             Logger.error('Import Application - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
+        return appDefinition;
     }
 
-    async getAppDefinitionByName(appName): Promise<any> {
+    async getAppDefinitionByName(appName): Promise<AppDefinitionRepresentation[]> {
+        let appDefinition = [];
+
         try {
             const appDefinitionsList = await this.api.apiService.activiti.appsApi.getAppDefinitions();
-            const appDefinition = appDefinitionsList.data.filter((currentApp) => {
+            appDefinition = appDefinitionsList.data.filter((currentApp) => {
                 return currentApp.name === appName;
             });
-            return appDefinition;
         } catch (error) {
             Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
+
+        return appDefinition;
+
     }
 }

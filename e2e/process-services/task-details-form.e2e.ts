@@ -41,7 +41,7 @@ describe('Task Details - Form', () => {
     const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
             'description': '',
@@ -62,7 +62,7 @@ describe('Task Details - Form', () => {
         };
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
 
         attachedForm = await apiService.getInstance().activiti.modelsApi.createModel(attachedFormModel);

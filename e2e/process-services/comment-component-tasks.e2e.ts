@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -31,7 +31,9 @@ describe('Comment component for Processes', () => {
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const commentsPage = new CommentsPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let user, tenantId, appId, secondUser, newTaskId;
@@ -42,15 +44,10 @@ describe('Comment component for Processes', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await users.createTenantAndUser();
-
-        tenantId = user.tenantId;
-
-        secondUser = await users.createApsUser(tenantId);
+        user = await usersActions.createUser();
+        secondUser = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
         await apiService.getInstance().login(user.email, user.password);
 
@@ -58,12 +55,12 @@ describe('Comment component for Processes', () => {
         appId = importedApp.id;
 
         await loginPage.login(user.email, user.password);
-   });
+    });
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     it('[C260237] Should not be able to add a comment on a completed task', async () => {

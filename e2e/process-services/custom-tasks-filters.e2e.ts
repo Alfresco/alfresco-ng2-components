@@ -39,6 +39,7 @@ describe('Start Task - Custom App', () => {
     const navigationBarPage = new NavigationBarPage();
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();
+
     let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
@@ -60,7 +61,12 @@ describe('Start Task - Custom App', () => {
     const afterDate = moment().add(1, 'days').format('MM/DD/YYYY');
     let taskWithDueDate;
     let processDefinitionId;
+
     const apiService = new ApiService();
+    const appsRuntime = new AppsRuntimeActions();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+    const processUtil = new ProcessUtil(apiService);
 
     const itemsPerPage = {
         five: '5',
@@ -75,16 +81,11 @@ describe('Start Task - Custom App', () => {
     };
 
     beforeAll(async () => {
-        const appsRuntime = new AppsRuntimeActions();
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
-        const applicationsService = new ApplicationsUtil(apiService);
 
         const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
-        processUserModel = await users.createApsUser(newTenant.id);
+        processUserModel = await usersActions.createApsUser(newTenant.id);
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
@@ -96,7 +97,6 @@ describe('Start Task - Custom App', () => {
 
         secondAppRuntime = await appsRuntime.getRuntimeAppByName(apiService, secondApp.title);
 
-        const processUtil = new ProcessUtil(apiService);
         processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);

@@ -26,26 +26,26 @@ import { ModelsActions } from '../actions/APS/models.actions';
 
 describe('Modify applications', () => {
 
-    const loginPage = new LoginSSOPage();
-    const navigationBarPage = new NavigationBarPage();
-    const processServicesPage = new ProcessServicesPage();
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
     const appToBeDeleted = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const replacingApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+
+    const loginPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
+
     const apps = new AppsActions();
     const modelActions = new ModelsActions();
-    let firstApp, appVersionToBeDeleted;
-    let applicationService;
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
+
+    let firstApp, appVersionToBeDeleted;
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-
-        applicationService = new ApplicationsUtil(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const user = await users.createTenantAndUser();
+        const user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
 

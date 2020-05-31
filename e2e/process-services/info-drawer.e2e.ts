@@ -73,13 +73,13 @@ describe('Info Drawer', () => {
     let newTenant: LightTenantRepresentation;
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-        const assigneeUserModel = await users.createApsUser(newTenant.id);
+        const assigneeUserModel = await usersActions.createApsUser(newTenant.id);
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
-        const processUserModel = await users.createApsUser(newTenant.id);
+        const processUserModel = await usersActions.createApsUser(newTenant.id);
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);

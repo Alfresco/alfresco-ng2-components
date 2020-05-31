@@ -21,26 +21,28 @@ import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserModel } from '@alfresco/js-api';
 
 describe('Typeahead widget', () => {
+
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-    let user: UserRepresentation;
+    let user: UserModel;
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createTenantAndUser();
 
         await apiService.getInstance().login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
         await loginPage.login(user.email, user.password);
     });

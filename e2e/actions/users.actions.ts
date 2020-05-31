@@ -20,9 +20,8 @@ import path = require('path');
 import fs = require('fs');
 import remote = require('selenium-webdriver/remote');
 import { browser } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { ApsUserModel } from '../models/APS/aps-user.model';
-import { PersonEntry, ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
+import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
 
 export class UsersActions {
@@ -48,7 +47,13 @@ export class UsersActions {
 
         if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
             Logger.log('Create user ECM');
-            await this.createAcsUser(user.email, user.firstName, user.lastName, user.password);
+            await this.api.apiService.core.peopleApi.addPerson({
+                id: user.email,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                password: user.password
+            });
         }
 
         if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
@@ -68,11 +73,6 @@ export class UsersActions {
         }
 
         return user;
-    }
-
-    async createAcsUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<PersonEntry> {
-        const acsUser = new AcsUserModel({ email, firstName, lastName, password });
-        return this.api.apiService.core.peopleApi.addPerson(acsUser);
     }
 
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {

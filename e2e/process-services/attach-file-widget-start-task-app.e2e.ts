@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ViewerPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
-import { UserRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
+    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+
     const apiService = new ApiService();
 
-    const users = new UsersActions(apiService);
+    const usersActions = new UsersActions(apiService);
     const applicationService = new ApplicationsUtil(apiService);
 
     const loginPage = new LoginSSOPage();
@@ -36,8 +37,7 @@ describe('Start Task - Task App', () => {
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let user: UserRepresentation;
-    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    let user: UserModel;
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const wordFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -47,7 +47,7 @@ describe('Start Task - Task App', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);

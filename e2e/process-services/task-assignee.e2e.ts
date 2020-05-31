@@ -26,7 +26,7 @@ import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserModel } from '@alfresco/js-api';
 
 describe('Task Assignee', () => {
     const loginPage = new LoginSSOPage();
@@ -36,7 +36,7 @@ describe('Task Assignee', () => {
 
     const app = browser.params.resources.Files.TEST_ASSIGNEE;
     const apiService = new ApiService();
-    const users = new UsersActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     describe('Candidate User Assignee', () => {
         const processListPage = new ProcessListPage();
@@ -45,11 +45,11 @@ describe('Task Assignee', () => {
         const processServiceTabBarPage = new ProcessServiceTabBarPage();
         const processDetailsPage = new ProcessDetailsPage();
 
-        let user: UserRepresentation;
+        let user: UserModel;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser();
+            user = await usersActions.createUser();
             try {// creates user and group if not available
                 await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
             } catch (e) {
@@ -115,15 +115,15 @@ describe('Task Assignee', () => {
     });
 
     describe('Candidate Group Assignee', () => {
-        let user: UserRepresentation;
-        let candidate1: UserRepresentation;
-        let candidate2: UserRepresentation;
+        let user: UserModel;
+        let candidate1: UserModel;
+        let candidate2: UserModel;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser();
-            candidate1 = await users.createApsUser(user.tenantId);
-            candidate2 = await users.createApsUser(user.tenantId);
+            user = await usersActions.createUser();
+            candidate1 = await usersActions.createApsUser(user.tenantId);
+            candidate2 = await usersActions.createApsUser(user.tenantId);
             const adminGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );

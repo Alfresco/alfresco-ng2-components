@@ -38,7 +38,7 @@ import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { UsersActions } from '../actions/users.actions';
 import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { UploadDialogPage } from '../pages/adf/dialog/upload-dialog.page';
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserModel } from '@alfresco/js-api';
 import { ApsUserModel } from '../models/APS/aps-user.model';
 
 describe('Start Process Component', () => {
@@ -61,8 +61,8 @@ describe('Start Process Component', () => {
     const dateFormApp = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const startProcessAttachFileApp = browser.params.resources.Files.START_PROCESS_ATTACH_FILE;
 
-    let procUserModel: UserRepresentation;
-    let secondProcUserModel: UserRepresentation;
+    let procUserModel: UserModel;
+    let secondProcUserModel: UserModel;
     let appId, tenantId, simpleAppCreated, dateFormAppCreated;
 
     const processName255Characters = StringUtil.generateRandomString(255);
@@ -483,7 +483,7 @@ describe('Start Process Component', () => {
         });
 
         beforeAll(async () => {
-            const users = new UsersActions(apiService);
+            const usersActions = new UsersActions(apiService);
 
             const apiServiceAll = new ApiService({
                 provider: 'ALL',
@@ -493,7 +493,7 @@ describe('Start Process Component', () => {
 
             await apiServiceAll.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            processUserModel = await users.createTenantAndUser();
+            processUserModel = await usersActions.createTenantAndUser();
 
             contentUserModel = new AcsUserModel({
                 'id': processUserModel.email,

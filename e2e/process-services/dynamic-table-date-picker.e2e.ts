@@ -38,13 +38,13 @@ describe('Dynamic Table', () => {
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
     const apiService = new ApiService();
-    const users = new UsersActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     let user, tenantId, appId;
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
         tenantId = user.tenantId;
    });
 

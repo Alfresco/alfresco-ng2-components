@@ -55,15 +55,15 @@ describe('Start Task - Task App', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
 
-        assigneeUserModel = await users.createApsUser(newTenant.id);
+        assigneeUserModel = await usersActions.createApsUser(newTenant.id);
 
-        processUserModel = await users.createApsUser(newTenant.id);
+        processUserModel = await usersActions.createApsUser(newTenant.id);
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);

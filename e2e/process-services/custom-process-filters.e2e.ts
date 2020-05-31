@@ -48,11 +48,11 @@ describe('New Process Filters', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
 
         tenantId = user.tenantId;
 

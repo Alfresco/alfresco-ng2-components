@@ -24,7 +24,7 @@ import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
-import { UserProcessInstanceFilterRepresentation, UserRepresentation } from '@alfresco/js-api';
+import { UserProcessInstanceFilterRepresentation, UserModel } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
@@ -40,14 +40,14 @@ describe('Task', () => {
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
         const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
-        let appId: number, user: UserRepresentation;
+        let appId: number, user: UserModel;
         const apiService = new ApiService();
 
         beforeEach(async () => {
-            const users = new UsersActions(apiService);
+            const usersActions = new UsersActions(apiService);
 
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser();
+            user = await usersActions.createUser();
 
             await apiService.getInstance().login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
@@ -183,9 +183,9 @@ describe('Task', () => {
         const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async () => {
-            const users = new UsersActions(apiService);
+            const usersActions = new UsersActions(apiService);
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await users.createTenantAndUser();
+            user = await usersActions.createUser();
 
             await apiService.getInstance().login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(apiService);

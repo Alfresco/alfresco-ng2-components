@@ -21,19 +21,22 @@ import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserModel } from '@alfresco/js-api';
 
 describe('People and Group widget', () => {
+
+    const app = browser.params.resources.Files.MORE_WIDGETS;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
-    const app = browser.params.resources.Files.MORE_WIDGETS;
-    let user: UserRepresentation;
+    let user: UserModel;
+    const applicationsService = new ApplicationsUtil(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -42,10 +45,7 @@ describe('People and Group widget', () => {
         await createGroupAndUsers(user.tenantId);
         await apiService.getInstance().login(user.email, user.password);
 
-        try {
-            const applicationsService = new ApplicationsUtil(apiService);
-            await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-        } catch (e) { console.error('failed to deploy the application'); }
+        await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
 
         await loginPage.login(user.email, user.password);
     });
@@ -58,7 +58,7 @@ describe('People and Group widget', () => {
     it('[C275715] Add group widget - Visibility and group restriction', async () => {
         const name = 'group visibility task';
         const groupVisibilityForm = app.ADD_GROUP_VISIBILITY;
-        await taskPage.createTask({name, formName: groupVisibilityForm.formName});
+        await taskPage.createTask({ name, formName: groupVisibilityForm.formName });
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(groupVisibilityForm.FIELD.widget_id);
@@ -68,7 +68,7 @@ describe('People and Group widget', () => {
         await widget.groupWidget().insertGroup(groupVisibilityForm.FIELD.widget_id, groupVisibilityForm.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.groupWidget().getDropDownList();
-        await expect(suggestions.sort()).toEqual([ 'Heros', 'Users' ]);
+        await expect(suggestions.sort()).toEqual(['Heros', 'Users']);
         await widget.groupWidget().selectGroupFromDropDown('Users');
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -76,7 +76,7 @@ describe('People and Group widget', () => {
     it('[C275716] Add group widget - sub group restrictions', async () => {
         const name = 'group widget - subgroup restriction';
         const subgroupFrom = app.ADD_GROUP_AND_SUBGROUP_RESTRICTION;
-        await taskPage.createTask({name, formName: subgroupFrom.formName});
+        await taskPage.createTask({ name, formName: subgroupFrom.formName });
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(subgroupFrom.FIELD.widget_id);
@@ -101,7 +101,7 @@ describe('People and Group widget', () => {
     it('[C275714] Add people widget - group restrictions', async () => {
         const name = 'people widget - group restrictions';
         const peopleWidget = app.ADD_PEOPLE_AND_GROUP_RESTRICTION;
-        await taskPage.createTask({name, formName: peopleWidget.formName});
+        await taskPage.createTask({ name, formName: peopleWidget.formName });
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(peopleWidget.FIELD.widget_id);
@@ -123,16 +123,26 @@ describe('People and Group widget', () => {
             const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
                 usersActions.createApsUser(tenantId, StringUtil.generateRandomString(), happyUser.firstName, happyUser.lastName)));
             const subgroupUser = await usersActions.createApsUser(
-                 tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
+                tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
 
-            const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({ name: app.group.name, tenantId, type: 1 });
-            await  Promise.all(happyUsers.map(happyUser => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
+            const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+                name: app.group.name,
+                tenantId,
+                type: 1
+            });
+            await Promise.all(happyUsers.map(happyUser => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
 
             const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
-                apiService.getInstance().activiti.adminGroupsApi.createNewGroup({ name, tenantId , type: 1, parentGroupId: group.id })));
+                apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+                    name,
+                    tenantId,
+                    type: 1,
+                    parentGroupId: group.id
+                })));
             await Promise.all(subgroups.map((subgroup) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
 
-        } catch (e) {}
+        } catch (e) {
+        }
     }
 
     function getSubGroupsName() {

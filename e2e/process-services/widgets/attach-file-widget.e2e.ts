@@ -27,6 +27,9 @@ import { TasksListPage } from '../../pages/adf/process-services/tasks-list.page'
 import { FiltersPage } from '../../pages/adf/process-services/filters.page';
 
 describe('Attach widget - File', () => {
+
+    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+
     const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
     const widget = new Widget();
@@ -35,21 +38,21 @@ describe('Attach widget - File', () => {
     const taskDetailsPage = new TaskDetailsPage();
     const tasksListPage = new TasksListPage();
     const filtersPage = new FiltersPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let processUserModel;
-    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const pdfFile = new FileModel({'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name});
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        processUserModel = await users.createTenantAndUser();
+
+        processUserModel = await usersActions.createUser();
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(processUserModel.email, processUserModel.password);
     });

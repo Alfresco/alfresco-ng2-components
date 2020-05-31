@@ -23,24 +23,27 @@ import { browser } from 'protractor';
 
 describe('Header widget', async () => {
 
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.HEADER;
+
     const loginPage = new LoginSSOPage();
-    let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
+
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.HEADER;
     let deployedApp, process;
+    let processUserModel;
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await users.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
         const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();

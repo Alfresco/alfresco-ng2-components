@@ -41,13 +41,13 @@ describe('Empty Process List Test', () => {
     let user;
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         const applicationsService = new ApplicationsUtil(apiService);
 
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
 

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { browser } from 'protractor';
-import { Tenant } from '../models/APS/tenant';
-import { ApsUserModel } from '../models/APS/aps-user.model';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Analytics Smoke Test', () => {
 
@@ -31,26 +30,24 @@ describe('Analytics Smoke Test', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const analyticsPage = new AnalyticsPage();
     const processServicesPage = new ProcessServicesPage();
-    let tenantId;
+
     const reportTitle = 'New Title';
+    let procUserModel: UserModel;
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        tenantId = newTenant.id;
-        const procUserModel = new ApsUserModel({ tenantId: tenantId });
-
-        await apiService.getInstance().activiti.adminUsersApi.createNewUser(procUserModel);
+        procUserModel = await usersActions.createUser();
 
         await loginPage.login(procUserModel.email, procUserModel.password);
-   });
+    });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
-   });
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+    });
 
     it('[C260346] Should be able to change title of a report', async () => {
         await navigationBarPage.navigateToProcessServicesPage();

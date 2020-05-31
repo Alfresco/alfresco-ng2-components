@@ -26,6 +26,7 @@ import CONSTANTS = require('../util/constants');
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attach Form Component', () => {
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -33,11 +34,13 @@ describe('Attach Form Component', () => {
     const attachFormPage = new AttachFormPage();
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
+
     const formTextField = app.form_fields.form_fieldId;
-    let user, tenantId, appId;
+    let user, tenantId, appModel;
 
     const testNames = {
         taskName: 'Test Task',
@@ -48,21 +51,15 @@ describe('Attach Form Component', () => {
     };
 
     beforeAll(async () => {
-        const applicationService = new ApplicationsUtil(apiService);
-
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
 
         tenantId = user.tenantId;
 
         await apiService.getInstance().login(user.email, user.password);
 
-        const appModel = await applicationService.importPublishDeployApp(app.file_path);
-
-        appId = appModel.id;
+        appModel = await applicationService.importPublishDeployApp(app.file_path);
 
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: testNames.taskName }));
 
@@ -70,7 +67,7 @@ describe('Attach Form Component', () => {
    });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
    });

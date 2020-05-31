@@ -46,11 +46,11 @@ describe('Task List Pagination - Sorting', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await users.createTenantAndUser();
+        processUserModel = await usersActions.createTenantAndUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 

@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     IntegrationService,
-    LoginSSOPage,
+    LoginSSOPage, UserModel,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -28,8 +28,6 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('Attach Folder', () => {
     const apiService = new ApiService({ provider: 'ALL' });
@@ -37,7 +35,7 @@ describe('Attach Folder', () => {
     const integrationService = new IntegrationService(apiService);
     const applicationService = new ApplicationsUtil(apiService);
 
-    const users = new UsersActions(apiService);
+    const usersActions = new UsersActions(apiService);
     const loginPage = new LoginSSOPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
@@ -46,18 +44,18 @@ describe('Attach Folder', () => {
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
     const meetingNotes = 'Meeting Notes';
-    let user: UserRepresentation;
+    let user: UserModel;
 
     beforeAll(async () => {
         browser.params.testConfig.appConfig.provider = 'ALL';
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
 
         const acsUser = { ...user, id: user.email };
         delete acsUser.type;
         delete acsUser.tenantId;
-        await apiService.getInstance().core.peopleApi.addPerson(new AcsUserModel(acsUser));
+        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
 
         await integrationService.addCSIntegration({
             tenantId: user.tenantId,

@@ -24,26 +24,28 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Dynamic Table widget ', () => {
 
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
+
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
     const navigationBarPage = new NavigationBarPage();
+
     const apiService = new ApiService();
-    const users = new UsersActions(apiService);
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let processUserModel;
     let appModel;
     let deployedApp, process;
 
     describe('with Date Time Widget App', () => {
-        const app = browser.params.resources.Files.WIDGET_CHECK_APP.DYNAMIC_TABLE;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            processUserModel = await users.createTenantAndUser();
+            processUserModel = await usersActions.createUser();
 
             await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationsUtil(apiService);
             appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
@@ -90,7 +92,7 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            processUserModel = await users.createTenantAndUser();
+            processUserModel = await usersActions.createUser();
 
             await apiService.getInstance().login(processUserModel.email, processUserModel.password);
             const applicationsService = new ApplicationsUtil(apiService);
@@ -146,7 +148,7 @@ describe('Dynamic Table widget ', () => {
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            processUserModel = await users.createTenantAndUser();
+            processUserModel = await usersActions.createUser();
 
             await apiService.getInstance().login(processUserModel.email, processUserModel.password);
             const applicationsService = new ApplicationsUtil(apiService);

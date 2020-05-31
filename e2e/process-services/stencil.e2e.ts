@@ -26,7 +26,7 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import CONSTANTS = require('../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserModel } from '@alfresco/js-api';
 
 describe('Stencil', () => {
 
@@ -43,7 +43,7 @@ describe('Stencil', () => {
     const usersActions = new UsersActions(apiService);
 
     const app = browser.params.resources.Files.STENCIL_PROCESS;
-    let user: UserRepresentation;
+    let user: UserModel;
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);

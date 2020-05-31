@@ -57,11 +57,11 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const user = await users.createTenantAndUser();
+        const user = await usersActions.createUser();
 
         tenantId = user.tenantId;
 

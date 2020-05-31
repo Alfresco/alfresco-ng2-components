@@ -21,7 +21,7 @@ import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserModel } from '@alfresco/js-api';
 
 describe('Task List Pagination', () => {
 
@@ -31,7 +31,7 @@ describe('Task List Pagination', () => {
     const paginationPage = new PaginationPage();
     const apiService = new ApiService();
 
-    let processUserModel: UserRepresentation;
+    let processUserModel: UserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 20;
@@ -50,10 +50,10 @@ describe('Task List Pagination', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        processUserModel = await users.createTenantAndUser();
+        processUserModel = await usersActions.createTenantAndUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);

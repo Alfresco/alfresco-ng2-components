@@ -21,7 +21,6 @@ import { ProcessServicesPage } from '../pages/adf/process-services/process-servi
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
@@ -30,14 +29,18 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Checklist component', () => {
 
-    const loginPage = new LoginSSOPage();
-    let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
     const checklistDialog = new ChecklistDialog();
     const navigationBarPage = new NavigationBarPage();
+
+    let processUserModel;
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
     const checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];
@@ -45,13 +48,9 @@ describe('Checklist component', () => {
     const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        processUserModel = await users.createApsUser(newTenant.id);
+        processUserModel = await usersActions.createUser();
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);

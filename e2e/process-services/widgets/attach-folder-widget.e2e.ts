@@ -22,31 +22,34 @@ import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Attach Folder widget', () => {
+
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.ATTACH_FOLDER;
+
     const loginPage = new LoginSSOPage();
-    let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
+
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.ATTACH_FOLDER;
     let deployedApp, process;
+    let processUserModel;
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const processUtil = new ProcessUtil(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await users.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
         const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        const processUtil = new ProcessUtil(apiService);
         process = await processUtil.startProcessByDefinitionName(appModel.name, app.processName);
         await loginPage.login(processUserModel.email, processUserModel.password);
    });

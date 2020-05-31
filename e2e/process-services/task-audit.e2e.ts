@@ -38,11 +38,11 @@ describe('Task Audit', () => {
     const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         const { id } = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-        processUserModel = await users.createApsUser(id);
+        processUserModel = await usersActions.createApsUser(id);
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));

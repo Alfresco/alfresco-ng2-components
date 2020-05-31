@@ -22,7 +22,7 @@ import {
     ExternalNodeSelectorDialogPage,
     IntegrationService,
     LoginSSOPage,
-    UploadActions,
+    UploadActions, UserModel,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -30,10 +30,10 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
-import { UserRepresentation } from '@alfresco/js-api';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('Attach File - Content service', () => {
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+
     const apiService = new ApiService({ provider: 'ALL'});
 
     const apiServiceExternal = new ApiService({
@@ -48,7 +48,6 @@ describe('Attach File - Content service', () => {
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const externalNodeSelector = new ExternalNodeSelectorDialogPage();
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
     const { email, password } = browser.params.testConfig.admin;
 
     const pdfFileOne = {
@@ -63,7 +62,7 @@ describe('Attach File - Content service', () => {
 
     const externalFile = 'Project Overview.ppt';
     const csIntegrations = ['adf dev', 'adf master'];
-    let user: UserRepresentation;
+    let user: UserModel;
 
     beforeAll(async () => {
         browser.params.testConfig.appConfig.provider = 'ALL';
@@ -71,14 +70,14 @@ describe('Attach File - Content service', () => {
         const integrationService = new IntegrationService(apiService);
         const applicationService = new ApplicationsUtil(apiService);
         const uploadActions = new UploadActions(apiService);
-        const users = new UsersActions(apiService);
+        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(email, password);
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
         const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
-        await apiService.getInstance().core.peopleApi.addPerson(new AcsUserModel(acsUser));
+
         await apiServiceExternal.login(email, password);
-        await apiServiceExternal.getInstance().core.peopleApi.addPerson(new AcsUserModel(acsUser));
+        await apiServiceExternal.getInstance().core.peopleApi.addPerson(user);
 
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.hostEcm });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });

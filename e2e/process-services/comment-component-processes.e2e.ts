@@ -24,23 +24,25 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Comment component for Processes', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const commentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let user, tenantId, appId, processInstanceId, addedComment;
     const processName = 'Comment APS';
-    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-        const applicationsService = new ApplicationsUtil(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await users.createTenantAndUser();
+        user = await usersActions.createUser();
 
         tenantId = user.tenantId;
 
