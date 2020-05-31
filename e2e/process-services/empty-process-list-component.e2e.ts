@@ -26,6 +26,9 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
 
+    const appWithProcess = browser.params.resources.Files.APP_WITH_PROCESSES;
+    const simpleAppWithUserForm = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
@@ -34,9 +37,6 @@ describe('Empty Process List Test', () => {
     const processListPage = new ProcessListPage();
     const startProcessPage = new StartProcessPage();
     const apiService = new ApiService();
-
-    const appA = browser.params.resources.Files.APP_WITH_PROCESSES;
-    const appB = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     let user;
 
@@ -51,8 +51,8 @@ describe('Empty Process List Test', () => {
 
         await apiService.getInstance().login(user.email, user.password);
 
-        await applicationsService.importPublishDeployApp(appA.file_path);
-        await applicationsService.importPublishDeployApp(appB.file_path);
+        await applicationsService.importPublishDeployApp(appWithProcess.file_path);
+        await applicationsService.importPublishDeployApp(simpleAppWithUserForm.file_path);
 
         await loginPage.login(user.email, user.password);
    });
@@ -60,26 +60,26 @@ describe('Empty Process List Test', () => {
     it('[C260494] Should add process to list when a process is created', async () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await (await processServicesPage.goToApp(appA.title)).clickProcessButton();
+        await (await processServicesPage.goToApp(appWithProcess.title)).clickProcessButton();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
-        await startProcessPage.selectFromProcessDropdown(appA.process_wse_name);
+        await startProcessPage.selectFromProcessDropdown(appWithProcess.process_wse_name);
         await startProcessPage.clickStartProcessButton();
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         await processDetailsPage.checkProcessDetailsCard();
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await (await processServicesPage.goToApp(appB.title)).clickProcessButton();
+        await (await processServicesPage.goToApp(simpleAppWithUserForm.title)).clickProcessButton();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
-        await startProcessPage.selectFromProcessDropdown(appB.processName);
+        await startProcessPage.selectFromProcessDropdown(simpleAppWithUserForm.processName);
         await startProcessPage.clickStartProcessButton();
 
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);

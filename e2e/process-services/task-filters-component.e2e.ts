@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -24,13 +24,16 @@ import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
-import { UserProcessInstanceFilterRepresentation, UserModel } from '@alfresco/js-api';
+import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
 describe('Task', () => {
 
     describe('Filters', () => {
+
+        const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
+
         const loginPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
@@ -39,13 +42,12 @@ describe('Task', () => {
         const taskDetailsPage = new TaskDetailsPage();
         const taskFiltersDemoPage = new TaskFiltersDemoPage();
 
-        const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
-        let appId: number, user: UserModel;
         const apiService = new ApiService();
+        const usersActions = new UsersActions(apiService);
+
+        let appId: number, user: UserModel;
 
         beforeEach(async () => {
-            const usersActions = new UsersActions(apiService);
-
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await usersActions.createUser();
 

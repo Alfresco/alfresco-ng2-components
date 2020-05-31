@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
-import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
@@ -28,14 +27,18 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let processUserModel, assigneeUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
@@ -49,19 +52,12 @@ describe('Start Task - Custom App', () => {
     });
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        assigneeUserModel = await usersActions.createApsUser(newTenant.id);
-
-        processUserModel = await usersActions.createApsUser(newTenant.id);
+        assigneeUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(apiService);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 

@@ -19,27 +19,27 @@ import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfres
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - No form', () => {
 
+    const app = browser.params.resources.Files.NO_FORM_APP;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
+    const apiService = new ApiService();
+
     let processUserModel;
-    const app = browser.params.resources.Files.NO_FORM_APP;
     const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
     let importedApp;
-    const apiService = new ApiService();
 
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const { id } = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-        processUserModel = await usersActions.createApsUser(id);
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);

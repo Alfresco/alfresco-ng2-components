@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
@@ -29,27 +28,27 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('People component', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    let processUserModel, assigneeUserModel, secondAssigneeUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
-    const peopleTitle = 'People this task is shared with ';
     const processServices = new ProcessServicesPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let processUserModel, assigneeUserModel, secondAssigneeUserModel;
+    const peopleTitle = 'People this task is shared with ';
 
     const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        assigneeUserModel = await usersActions.createApsUser(newTenant.id);
-        secondAssigneeUserModel = await usersActions.createApsUser(newTenant.id);
-        processUserModel = await usersActions.createApsUser(newTenant.id);
+        assigneeUserModel = await usersActions.createUser();
+        secondAssigneeUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
@@ -63,7 +62,7 @@ describe('People component', () => {
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[2] }));
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[3] }));
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[4] }));
-   });
+    });
 
     beforeEach(async () => {
         await loginPage.login(processUserModel.email, processUserModel.password);
@@ -71,7 +70,7 @@ describe('People component', () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-   });
+    });
 
     it('[C279989] Should no people be involved when no user is typed', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);

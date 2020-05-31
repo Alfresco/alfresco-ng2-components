@@ -31,6 +31,8 @@ import CONSTANTS = require('../util/constants');
 
 describe('Process Filters Test', () => {
 
+    const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
+
     const loginPage = new LoginSSOPage();
     const processListPage = new ProcessListPage();
     const navigationBarPage = new NavigationBarPage();
@@ -40,10 +42,12 @@ describe('Process Filters Test', () => {
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
-    let appModel, user;
-    const apiService = new ApiService();
 
-    const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
+    let appModel, user;
 
     const processTitle = {
         running: 'Test_running',
@@ -59,12 +63,10 @@ describe('Process Filters Test', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(user.email, user.password);
     });

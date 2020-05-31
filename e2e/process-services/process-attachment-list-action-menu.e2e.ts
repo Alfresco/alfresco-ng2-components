@@ -33,18 +33,23 @@ import { browser } from 'protractor';
 
 describe('Attachment list action menu for processes', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
-    const apiService = new ApiService();
 
     const downloadedPngFile = pngFile.name;
     let tenantId, appId;
@@ -57,7 +62,6 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
@@ -66,8 +70,6 @@ describe('Attachment list action menu for processes', () => {
         tenantId = user.tenantId;
 
         await apiService.getInstance().login(user.email, user.password);
-
-        const applicationsService = new ApplicationsUtil(apiService);
 
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;

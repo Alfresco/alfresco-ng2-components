@@ -25,12 +25,16 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task List Pagination - Sorting', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
-    const apiService = new ApiService();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     const nrOfTasks = 20;
     let processUserModel;
     const taskNameBase = 'Task';
@@ -46,15 +50,11 @@ describe('Task List Pagination - Sorting', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await usersActions.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(apiService);
 
         await applicationsService.importPublishDeployApp(app.file_path);
 

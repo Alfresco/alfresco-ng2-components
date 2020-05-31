@@ -70,7 +70,7 @@ describe('Start Task', () => {
         await identityService.addUserToGroup(apsUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
     });
 
     afterAll(async () => {

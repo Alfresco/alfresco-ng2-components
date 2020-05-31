@@ -47,7 +47,7 @@ describe('Start Process', () => {
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
 
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();

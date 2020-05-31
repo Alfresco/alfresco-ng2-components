@@ -49,11 +49,11 @@ describe('Viewer', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: acsUser.id,
+            id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
@@ -69,7 +69,7 @@ describe('Viewer', () => {
 
             uploadedExcels = await uploadActions.uploadFolder(excelFolderInfo.location, excelFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

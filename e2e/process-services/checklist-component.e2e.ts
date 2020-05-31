@@ -37,10 +37,10 @@ describe('Checklist component', () => {
     const checklistDialog = new ChecklistDialog();
     const navigationBarPage = new NavigationBarPage();
 
-    let processUserModel;
-
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+
+    let processUserModel;
 
     const tasks = ['no checklist created task', 'checklist number task', 'remove running checklist', 'remove completed checklist', 'hierarchy'];
     const checklists = ['cancelCheckList', 'dialogChecklist', 'addFirstChecklist', 'addSecondChecklist'];

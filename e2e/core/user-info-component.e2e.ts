@@ -64,7 +64,7 @@ describe('User Info component', () => {
     });
 
     it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
-        await loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.login(contentUserModel.email, contentUserModel.password);
 
         await userInfoPage.clickUserProfile();
         await userInfoPage.dialogIsDisplayed();
@@ -92,7 +92,7 @@ describe('User Info component', () => {
     });
 
     it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', async () => {
-        await loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.login(contentUserModel.email, contentUserModel.password);
 
         await userInfoPage.clickUserProfile();
         await userInfoPage.dialogIsDisplayed();
@@ -110,7 +110,7 @@ describe('User Info component', () => {
     });
 
     it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', async () => {
-        await loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.login(contentUserModel.email, contentUserModel.password);
 
         await userInfoPage.clickUserProfile();
 
@@ -131,7 +131,7 @@ describe('User Info component', () => {
         await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', async () => {
         });
 
-        await loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.login(contentUserModel.email, contentUserModel.password);
 
         await userInfoPage.clickUserProfile();
 
@@ -145,7 +145,7 @@ describe('User Info component', () => {
         await apiService.getInstance().login(contentUserModel.email, contentUserModel.password);
         await users.changeProfilePictureAps(apsAvatarFileModel.getLocation());
 
-        await loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.login(contentUserModel.email, contentUserModel.password);
 
         await userInfoPage.clickUserProfile();
 
@@ -158,7 +158,7 @@ describe('User Info component', () => {
     it('[C260120] Should not display profile image in UserInfo when deleted in ACS', async () => {
         await PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
 
-        await loginPage.login(contentUserModel.id, contentUserModel.password);
+        await loginPage.login(contentUserModel.email, contentUserModel.password);
 
         await userInfoPage.clickUserProfile();
 

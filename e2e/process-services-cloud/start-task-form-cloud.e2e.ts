@@ -43,7 +43,6 @@ import { StartProcessCloudConfiguration } from './config/start-process-cloud.con
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { FileModel } from '../models/ACS/file.model';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 
 describe('Start Task Form', () => {
@@ -71,7 +70,7 @@ describe('Start Task Form', () => {
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const startEventFormProcess = StringUtil.generateRandomString(5);
-    let testUser, acsUser, groupInfo;
+    let testUser, groupInfo;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
@@ -139,16 +138,7 @@ describe('Start Task Form', () => {
             'businessKey': StringUtil.generateRandomString()
         });
 
-        acsUser = await new AcsUserModel({
-            email: testUser.email,
-            password: testUser.password,
-            id: testUser.username,
-            firstName: testUser.firstName,
-            lastName: testUser.lastName
-        });
-        await apiService.getInstance().login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await apiService.getInstance().core.peopleApi.addPerson(acsUser);
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(testUser.email, testUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
@@ -162,7 +152,7 @@ describe('Start Task Form', () => {
             false);
         await loginSSOPage.clickOnSSOButton();
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
     });
 

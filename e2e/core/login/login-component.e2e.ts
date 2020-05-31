@@ -60,19 +60,19 @@ describe('Login component', () => {
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
         browser.params.testConfig.appConfig.provider = 'ECM';
-        await loginPage.login(userA.id, userA.password);
+        await loginPage.login(userA.email, userA.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
 
-        await loginPage.login(userB.id, userB.password);
+        await loginPage.login(userB.email, userB.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userB.email);
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
-        await loginPage.login(userA.id, userA.password);
+        await loginPage.login(userA.email, userA.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await expect(await errorPage.getErrorCode()).toBe('403');
         await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
@@ -116,7 +116,7 @@ describe('Login component', () => {
 
     it('[C260045] Should enable login button after entering a valid username and a password', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.enterUsername(adminUserModel.id);
+        await loginPage.enterUsername(adminUserModel.email);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
@@ -165,7 +165,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -187,7 +187,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -198,7 +198,7 @@ describe('Login component', () => {
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         await loginPage.waitForElements();
@@ -208,13 +208,13 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
         await processServicesPage.checkApsContainer();
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         await loginPage.waitForElements();
@@ -222,7 +222,7 @@ describe('Login component', () => {
 
     it('[C279930] Should a user still be logged-in when open a new tab', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
 
         await browser.executeScript("window.open('about: blank', '_blank');");
 
@@ -251,6 +251,6 @@ describe('Login component', () => {
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
         await loginPage.clickSignInButton();
         await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
     });
 });

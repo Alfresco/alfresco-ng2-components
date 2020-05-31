@@ -24,6 +24,18 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 
 describe('Process List - Pagination', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
+    const paginationPage = new PaginationPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     const itemsPerPage = {
         five: '5',
         fiveValue: 5,
@@ -38,29 +50,18 @@ describe('Process List - Pagination', () => {
 
     const processFilterRunning = 'Running';
 
-    const loginPage = new LoginSSOPage();
-    const navigationBarPage = new NavigationBarPage();
-    const paginationPage = new PaginationPage();
-    const processFiltersPage = new ProcessFiltersPage();
-    const processDetailsPage = new ProcessDetailsPage();
     let deployedTestApp;
     let processUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfProcesses = 20;
     let page;
     let totalPages;
-    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await usersActions.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(apiService);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 

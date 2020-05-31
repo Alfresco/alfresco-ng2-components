@@ -26,7 +26,9 @@ describe('Form Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const formPage = new FormPage();
     const widget = new Widget();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let tenantId, user;
 
@@ -47,8 +49,6 @@ describe('Form Component', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await usersActions.createUser();

@@ -57,7 +57,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await usersActions.createUser(acsUser);
 
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -74,7 +74,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await browser.sleep(15000);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -99,7 +99,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -146,7 +146,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await usersActions.createUser(userUploadingTxt);
             await usersActions.createUser(userUploadingImg);
 
-            await apiService.getInstance().login(userUploadingTxt.id, userUploadingTxt.password);
+            await apiService.getInstance().login(userUploadingTxt.email, userUploadingTxt.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -154,19 +154,19 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-                id: userUploadingImg.id,
+                id: userUploadingImg.email,
                 role: CONSTANTS.CS_USER_ROLES.MANAGER
             });
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await apiService.getInstance().login(userUploadingImg.id, userUploadingImg.password);
+            await apiService.getInstance().login(userUploadingImg.email, userUploadingImg.password);
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
             await browser.sleep(15000);
 
-            await loginPage.login(userUploadingImg.id, userUploadingImg.password);
+            await loginPage.login(userUploadingImg.email, userUploadingImg.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -203,7 +203,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await usersActions.createUser(acsUser);
 
-            await apiService.getInstance().login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -213,7 +213,7 @@ describe('Search Component - Multi-Select Facet', () => {
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
             await browser.sleep(15000);
 
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();
@@ -228,7 +228,7 @@ describe('Search Component - Multi-Select Facet', () => {
         });
 
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await searchDialog.checkSearchIconIsVisible();
             await searchDialog.clickOnSearchIcon();

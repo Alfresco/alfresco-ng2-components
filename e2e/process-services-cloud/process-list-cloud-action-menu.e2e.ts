@@ -71,7 +71,7 @@ describe('Process list cloud', () => {
                 'businessKey': StringUtil.generateRandomString()
             });
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         });
 
         afterAll(async () => {

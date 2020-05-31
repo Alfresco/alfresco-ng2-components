@@ -85,7 +85,7 @@ describe('Process Header cloud component', () => {
 
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 

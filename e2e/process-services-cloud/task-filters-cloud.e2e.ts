@@ -59,7 +59,7 @@ describe('Task filters cloud', () => {
 
             await apiService.login(testUser.email, testUser.password);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
     });
 
         afterAll(async () => {

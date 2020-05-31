@@ -34,9 +34,9 @@ describe('Modify applications', () => {
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
 
-    const apps = new AppsActions();
-    const modelActions = new ModelsActions();
     const apiService = new ApiService();
+    const modelActions = new ModelsActions(apiService);
+    const apps = new AppsActions(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationService = new ApplicationsUtil(apiService);
 
@@ -74,7 +74,7 @@ describe('Modify applications', () => {
         await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(apiService, replacingApp.file_location, firstApp.id);
+        await apps.importNewVersionAppDefinitionPublishDeployApp(replacingApp.file_location, firstApp.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -93,7 +93,7 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkAppIsDisplayed(app.title);
 
-        await modelActions.deleteEntireModel(apiService, firstApp.id);
+        await modelActions.deleteEntireModel(firstApp.id);
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
 
@@ -109,7 +109,7 @@ describe('Modify applications', () => {
         await processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(apiService, replacingApp.file_location, appVersionToBeDeleted.id);
+        await apps.importNewVersionAppDefinitionPublishDeployApp(replacingApp.file_location, appVersionToBeDeleted.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -118,9 +118,9 @@ describe('Modify applications', () => {
 
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
 
-        await modelActions.deleteVersionModel(apiService, appVersionToBeDeleted.id);
-        await modelActions.deleteVersionModel(apiService, appVersionToBeDeleted.id);
-        await apps.publishDeployApp(apiService, appVersionToBeDeleted.id);
+        await modelActions.deleteVersionModel(appVersionToBeDeleted.id);
+        await modelActions.deleteVersionModel(appVersionToBeDeleted.id);
+        await apps.publishDeployApp(appVersionToBeDeleted.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();

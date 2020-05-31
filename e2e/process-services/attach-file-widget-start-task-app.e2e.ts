@@ -26,16 +26,15 @@ import { UsersActions } from '../actions/users.actions';
 describe('Start Task - Task App', () => {
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
 
-    const apiService = new ApiService();
-
-    const usersActions = new UsersActions(apiService);
-    const applicationService = new ApplicationsUtil(apiService);
-
     const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
 
     let user: UserModel;
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });

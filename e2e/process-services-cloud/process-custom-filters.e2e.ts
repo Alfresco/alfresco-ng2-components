@@ -94,7 +94,7 @@ describe('Process list cloud', () => {
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
         await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
         });

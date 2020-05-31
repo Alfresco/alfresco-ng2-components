@@ -32,7 +32,9 @@ describe('New Process Filters', () => {
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const appSettingsToggles = new AppSettingsTogglesPage();
     const navigationBarPage = new NavigationBarPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let tenantId, user, filterId, customProcessFilter;
 
@@ -48,8 +50,6 @@ describe('New Process Filters', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await usersActions.createUser();

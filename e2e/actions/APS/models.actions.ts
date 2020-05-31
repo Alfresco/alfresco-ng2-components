@@ -15,15 +15,28 @@
  * limitations under the License.
  */
 
+import { ApiService } from '@alfresco/adf-testing';
+
 export class ModelsActions {
 
-    async deleteVersionModel(apiService, modelId) {
+    api: ApiService;
 
-       return apiService.getInstance().activiti.modelsApi.deleteModel(modelId, { cascade: false, deleteRuntimeApp : true });
+    constructor(alfrescoApi: ApiService) {
+        this.api = alfrescoApi;
     }
 
-    async deleteEntireModel(apiService, modelId) {
-        return apiService.getInstance().activiti.modelsApi.deleteModel(modelId, { cascade: true, deleteRuntimeApp : true });
+    async deleteVersionModel(modelId: number): Promise<any> {
+        return this.api.getInstance().activiti.modelsApi.deleteModel(modelId, {
+            cascade: false,
+            deleteRuntimeApp: true
+        });
+    }
+
+    async deleteEntireModel(modelId: number): Promise<any> {
+        return this.api.getInstance().activiti.modelsApi.deleteModel(modelId, {
+            cascade: true,
+            deleteRuntimeApp: true
+        });
     }
 
 }

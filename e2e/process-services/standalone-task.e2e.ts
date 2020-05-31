@@ -21,7 +21,6 @@ import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
@@ -29,23 +28,24 @@ import path = require('path');
 
 describe('Start Task - Task App', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-    let processUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const taskPage = new TasksPage();
+
+    let processUserModel;
     const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     const noFormMessage = 'No forms attached';
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        processUserModel = await usersActions.createApsUser(newTenant.id);
+        processUserModel = await usersActions.createUser();
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);

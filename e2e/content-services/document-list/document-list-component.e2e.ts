@@ -167,13 +167,13 @@ describe('Document List Component', () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             const user = await usersActions.createUser();
-            await apiService.getInstance().login(user.id, user.password);
+            await apiService.getInstance().login(user.email, user.password);
 
             fileANode = await uploadActions.uploadFile(fakeFileA.location, fakeFileA.name, '-my-');
             fileBNode = await uploadActions.uploadFile(fakeFileB.location, fakeFileB.name, '-my-');
             fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
 
-            await loginPage.login(user.id, user.password);
+            await loginPage.login(user.email, user.password);
             await contentServicesPage.goToDocumentList();
         });
 

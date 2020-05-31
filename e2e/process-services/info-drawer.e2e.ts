@@ -22,15 +22,11 @@ import {
     LoginSSOPage,
     StringUtil,
     ApplicationsUtil,
-    ApiService
+    ApiService, UserModel
 } from '@alfresco/adf-testing';
-import {
-    AppDefinitionRepresentation,
-    LightTenantRepresentation
-} from '@alfresco/js-api';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
@@ -41,14 +37,17 @@ import { infoDrawerConfiguration } from './config/task.config';
 
 describe('Info Drawer', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processFiltersPage = new ProcessFiltersPage();
-    const apiService = new ApiService();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
+    const applicationsService = new ApplicationsUtil(apiService);
+
     const firstComment = 'comm1';
 
     const date = {
@@ -70,19 +69,19 @@ describe('Info Drawer', () => {
     let processUserModelFullName: string;
     let assigneeUserModelFullName: string;
     let appCreated: AppDefinitionRepresentation;
-    let newTenant: LightTenantRepresentation;
 
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-        const assigneeUserModel = await usersActions.createApsUser(newTenant.id);
+
+        const assigneeUserModel = await usersActions.createUser();
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
-        const processUserModel = await usersActions.createApsUser(newTenant.id);
+
+        const processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
+
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(apiService);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
         await loginPage.login(processUserModel.email, processUserModel.password);
@@ -91,7 +90,7 @@ describe('Info Drawer', () => {
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(newTenant.id);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
@@ -189,7 +188,7 @@ describe('Info Drawer', () => {
 
     it('[C260329] Task with no form', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> { ...taskDetails, formName: '', name });
+        await taskPage.createTask(<any>{ ...taskDetails, formName: '', name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -207,7 +206,7 @@ describe('Info Drawer', () => {
 
     it('[C260320] Assign user to the task', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any> { ...taskDetails, formName: app.formName, name });
+        await taskPage.createTask(<any>{ ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);

@@ -179,7 +179,7 @@ describe('Task claim/release', () => {
    });
 
     async function navigateToApp(user) {
-        await loginSSOPage.loginSSOIdentityService(user.email, user.password);
+        await loginSSOPage.login(user.email, user.password);
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();

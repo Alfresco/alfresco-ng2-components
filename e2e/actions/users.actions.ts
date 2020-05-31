@@ -20,7 +20,6 @@ import path = require('path');
 import fs = require('fs');
 import remote = require('selenium-webdriver/remote');
 import { browser } from 'protractor';
-import { ApsUserModel } from '../models/APS/aps-user.model';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
 
@@ -78,13 +77,13 @@ export class UsersActions {
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        const user = new ApsUserModel({ tenantId: newTenant.id, email, firstName, lastName, password });
+        const user = new UserModel({ tenantId: newTenant.id, email, firstName, lastName, password });
 
         return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
     }
 
     async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
-        const user = new ApsUserModel({ tenantId, email, firstName, lastName, password });
+        const user = new UserModel({ tenantId, email, firstName, lastName, password });
 
         return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
     }

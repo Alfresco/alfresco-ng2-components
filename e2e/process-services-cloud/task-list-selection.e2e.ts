@@ -56,7 +56,7 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
         });
 
         afterAll(async() => {

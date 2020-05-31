@@ -85,7 +85,7 @@ describe('Start Task - Group Cloud Component', () => {
    });
 
     beforeEach(async () => {
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);

@@ -49,7 +49,7 @@ describe('Viewer - properties', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         let pngFileUploaded = await uploadActions.uploadFile(pngFile.location, pngFile.name, '-my-');
         Object.assign(pngFile, pngFileUploaded.entry);
@@ -57,7 +57,7 @@ describe('Viewer - properties', () => {
         pngFileUploaded = await uploadActions.uploadFile(fileForOverlay.location, fileForOverlay.name, '-my-');
         Object.assign(fileForOverlay, pngFileUploaded.entry);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
 

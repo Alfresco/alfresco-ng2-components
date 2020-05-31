@@ -35,32 +35,29 @@ describe('Comment component for Processes', () => {
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
 
-    let user, tenantId, appId, processInstanceId, addedComment;
+    let user, appId, processInstanceId, addedComment;
     const processName = 'Comment APS';
 
     beforeAll(async () => {
+       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+       user = await usersActions.createUser();
 
-        user = await usersActions.createUser();
+       await apiService.getInstance().login(user.email, user.password);
 
-        tenantId = user.tenantId;
+       const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
+       appId = importedApp.id;
 
-        await apiService.getInstance().login(user.email, user.password);
+       const processWithComment = await new ProcessUtil(apiService).startProcessOfApp(importedApp.name, processName);
+       processInstanceId = processWithComment.id;
 
-        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-        appId = importedApp.id;
-
-        const processWithComment = await new ProcessUtil(apiService).startProcessOfApp(importedApp.name, processName);
-        processInstanceId = processWithComment.id;
-
-        await loginPage.login(user.email, user.password);
+       await loginPage.login(user.email, user.password);
    });
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {

@@ -16,12 +16,11 @@
  */
 
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import { UserModel } from '@alfresco/js-api';
 
 describe('People and Group widget', () => {
 
@@ -34,14 +33,14 @@ describe('People and Group widget', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let user: UserModel;
-    const applicationsService = new ApplicationsUtil(apiService);
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await usersActions.createTenantAndUser();
+        user = await usersActions.createUser();
         await createGroupAndUsers(user.tenantId);
         await apiService.getInstance().login(user.email, user.password);
 
@@ -119,30 +118,36 @@ describe('People and Group widget', () => {
     async function createGroupAndUsers(tenantId) {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        try {
-            const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
-                usersActions.createApsUser(tenantId, StringUtil.generateRandomString(), happyUser.firstName, happyUser.lastName)));
-            const subgroupUser = await usersActions.createApsUser(
-                tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
+        const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
+            usersActions.createUser(new UserModel({
+                tenantId: tenantId,
+                firstName: happyUser.firstName,
+                lastName: happyUser.lastName
+            }))
+        ));
 
-            const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-                name: app.group.name,
+        const subgroupUser = await usersActions.createUser(new UserModel({
+            tenantId: tenantId, firstName: app.subGroupUser.firstName, lastName: app.subGroupUser.lastName
+        }));
+
+        const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+            name: app.group.name,
+            tenantId,
+            type: 1
+        });
+        await Promise.all(happyUsers.map(happyUser => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
+
+        const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
+            apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+                name,
                 tenantId,
-                type: 1
-            });
-            await Promise.all(happyUsers.map(happyUser => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
+                type: 1,
+                parentGroupId: group.id
+            })
+        ));
 
-            const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
-                apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-                    name,
-                    tenantId,
-                    type: 1,
-                    parentGroupId: group.id
-                })));
-            await Promise.all(subgroups.map((subgroup) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
+        await Promise.all(subgroups.map((subgroup) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
 
-        } catch (e) {
-        }
     }
 
     function getSubGroupsName() {

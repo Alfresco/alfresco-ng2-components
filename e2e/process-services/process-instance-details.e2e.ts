@@ -27,28 +27,29 @@ import moment = require('moment');
 
 describe('Process Instance Details', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let appModel, process, user;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
 
-        const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         const processModel = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
 

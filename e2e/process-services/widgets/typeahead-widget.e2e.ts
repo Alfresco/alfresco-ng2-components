@@ -16,12 +16,11 @@
  */
 
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, Widget, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
-import { UserModel } from '@alfresco/js-api';
 
 describe('Typeahead widget', () => {
 
@@ -40,7 +39,7 @@ describe('Typeahead widget', () => {
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createTenantAndUser();
+        user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });

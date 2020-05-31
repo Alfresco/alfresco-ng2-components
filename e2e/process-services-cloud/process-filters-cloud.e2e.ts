@@ -85,7 +85,7 @@ describe('Process filters cloud', () => {
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
             await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
 
         }, 5 * 60 * 1000);
 

@@ -59,7 +59,7 @@ describe('Edit task filters cloud', () => {
             await tasksService.claimTask(assignedTask.entry.id, simpleApp);
             await tasksService.createAndCompleteTask(completedTaskName, simpleApp);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
         });
 
         afterAll(async () => {

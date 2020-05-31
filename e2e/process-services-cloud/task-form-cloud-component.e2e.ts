@@ -103,7 +103,7 @@ describe('Task form cloud component', () => {
         assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, simpleApp);
         assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
 
     }, 5 * 60 * 1000);
 

@@ -92,7 +92,7 @@ describe('Search Filters', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -100,7 +100,7 @@ describe('Search Filters', () => {
         fileTypeJpg = await uploadActions.uploadFile(jpgFileModel.location, jpgFileModel.name, '-my-');
         fileTypeTxt2 = await uploadActions.uploadFile(txtFileModel2.location, txtFileModel2.name, '-my-');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
@@ -108,7 +108,7 @@ describe('Search Filters', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypePng.entry.id);

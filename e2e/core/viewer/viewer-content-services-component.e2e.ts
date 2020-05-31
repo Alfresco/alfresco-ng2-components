@@ -77,7 +77,7 @@ describe('Content Services Viewer', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const pdfFileUploaded = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
@@ -100,7 +100,7 @@ describe('Content Services Viewer', () => {
         const unsupportedFileUploaded = await uploadActions.uploadFile(unsupportedFile.location, unsupportedFile.name, '-my-');
         Object.assign(unsupportedFile, unsupportedFileUploaded.entry);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
    });

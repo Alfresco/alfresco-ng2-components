@@ -49,7 +49,7 @@ describe('Header Component', () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await usersActions.createUser(acsUser);
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     beforeEach(async () => {

@@ -16,7 +16,7 @@
  */
 
 import { UsersActions } from '../actions/users.actions';
-import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -26,9 +26,10 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import CONSTANTS = require('../util/constants');
-import { UserModel } from '@alfresco/js-api';
 
 describe('Stencil', () => {
+
+    const app = browser.params.resources.Files.STENCIL_PROCESS;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -39,15 +40,15 @@ describe('Stencil', () => {
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
     const processFiltersPage = new ProcessFiltersPage();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
-    const app = browser.params.resources.Files.STENCIL_PROCESS;
     let user: UserModel;
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createTenantAndUser();
+        user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
         const applicationsService = new ApplicationsUtil(apiService);

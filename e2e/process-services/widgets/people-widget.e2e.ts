@@ -38,20 +38,19 @@ describe('People widget', () => {
     let processUserModel;
 
     beforeAll(async () => {
+       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+       processUserModel = await usersActions.createUser();
 
-        processUserModel = await usersActions.createUser();
+       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
-
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
+       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+       deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(apiService).startProcessOfApp(appModel.name, app.processName);
-        await loginPage.login(processUserModel.email, processUserModel.password);
+       process = await new ProcessUtil(apiService).startProcessOfApp(appModel.name, app.processName);
+       await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {

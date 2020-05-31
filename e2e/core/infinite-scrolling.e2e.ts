@@ -56,12 +56,12 @@ describe('Enable infinite scrolling', () => {
 
         await usersActions.createUser(acsUser);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
         deleteFileNames = StringUtil.generateFilesNames(1, nrOfDeletedFiles, files.base, files.extension);
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
         emptyFolderModel = await uploadActions.createFolder('emptyFolder', '-my-');

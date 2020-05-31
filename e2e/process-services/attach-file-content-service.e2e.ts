@@ -32,14 +32,8 @@ import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach File - Content service', () => {
+
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-
-    const apiService = new ApiService({ provider: 'ALL'});
-
-    const apiServiceExternal = new ApiService({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_external_acs.host
-    });
 
     const loginPage = new LoginSSOPage();
     const widget = new Widget();
@@ -47,6 +41,18 @@ describe('Attach File - Content service', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const externalNodeSelector = new ExternalNodeSelectorDialogPage();
+
+    const apiServiceExternal = new ApiService({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_external_acs.host
+    });
+    const usersActionsExternal = new UsersActions(apiServiceExternal);
+
+    const apiService = new ApiService({ provider: 'ALL'});
+    const integrationService = new IntegrationService(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const { email, password } = browser.params.testConfig.admin;
 
@@ -67,17 +73,11 @@ describe('Attach File - Content service', () => {
     beforeAll(async () => {
         browser.params.testConfig.appConfig.provider = 'ALL';
 
-        const integrationService = new IntegrationService(apiService);
-        const applicationService = new ApplicationsUtil(apiService);
-        const uploadActions = new UploadActions(apiService);
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(email, password);
         user = await usersActions.createUser();
-        const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
 
         await apiServiceExternal.login(email, password);
-        await apiServiceExternal.getInstance().core.peopleApi.addPerson(user);
+        await usersActionsExternal.createUser(user);
 
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.hostEcm });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });

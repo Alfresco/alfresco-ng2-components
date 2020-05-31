@@ -20,33 +20,31 @@ import { browser } from 'protractor';
 
 export class UserModel {
 
-    EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
-    USER_IDENTIFY = StringUtil.generateRandomString();
-
-    firstName: string = StringUtil.generateRandomString();
-    lastName: string = StringUtil.generateRandomString();
-    password: string = StringUtil.generateRandomString();
-    email: string = `${this.USER_IDENTIFY}@${this.EMAIL_DOMAIN}.com`;
-    username: string = this.USER_IDENTIFY.toLowerCase();
-    idIdentityService: string;
+    firstName?: string = StringUtil.generateRandomString();
+    lastName?: string = StringUtil.generateRandomString();
+    password?: string = StringUtil.generateRandomString();
+    email?: string;
+    username?: string;
+    idIdentityService?: string;
     type = 'enterprise';
     tenantId = 1;
     company = null;
+    id: number;
 
     constructor(details: any = {}) {
+        const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
+        const USER_IDENTIFY = StringUtil.generateRandomString();
+
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
         this.password = details.password ? details.password : this.password;
-        this.email = details.email ? details.email : this.email;
-        this.username = details.username ? details.username : this.username;
+        this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}.com`;
+        this.username = details.username ? details.username : USER_IDENTIFY.toLowerCase();
         this.idIdentityService = details.idIdentityService ? details.idIdentityService : this.idIdentityService;
         this.type = details.type ? details.type : this.type;
         this.tenantId = details.tenantId ? details.tenantId : this.tenantId;
         this.company = details.company ? details.company : this.company;
-    }
-
-    get id() {
-        return this.email;
+        this.id = details.id ? details.id : this.id;
     }
 
 }

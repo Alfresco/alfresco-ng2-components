@@ -28,6 +28,8 @@ import { browser } from 'protractor';
 
 describe('Task Filters Sorting', () => {
 
+    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
@@ -35,12 +37,12 @@ describe('Task Filters Sorting', () => {
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
     const taskFiltersDemoPage = new TaskFiltersDemoPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let user;
     let appId;
-
-    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
 
     const tasks = [
         { name: 'Task 1 Completed', dueDate: '01/01/2019' },
@@ -51,8 +53,6 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 6', dueDate: '03/01/2019' }];
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createUser();
 

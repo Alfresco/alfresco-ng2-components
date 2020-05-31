@@ -20,12 +20,20 @@ import fs = require('fs');
 import AppPublish = require('../../models/APS/AppPublish');
 import remote = require('selenium-webdriver/remote');
 import { browser } from 'protractor';
+import { ApiService } from '@alfresco/adf-testing';
+import { AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
 
 export class AppsActions {
 
-    async getProcessTaskId(apiService, processId) {
-        const taskList = await apiService.getInstance().activiti.taskApi.listTasks({});
-        let taskId = -1;
+    api: ApiService;
+
+    constructor(alfrescoApi: ApiService) {
+        this.api = alfrescoApi;
+    }
+
+    async getProcessTaskId(processId: string): Promise<string> {
+        const taskList = await this.api.getInstance().activiti.taskApi.listTasks({});
+        let taskId = '-1';
 
         taskList.data.forEach((task) => {
             if (task.processInstanceId === processId) {
@@ -36,8 +44,8 @@ export class AppsActions {
         return taskId;
     }
 
-    async getAppDefinitionId(apiService, appModelId) {
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+    async getAppDefinitionId(appModelId: number): Promise<number> {
+        const appDefinitions = await this.api.getInstance().activiti.appsApi.getAppDefinitions();
         let appDefinitionId = -1;
 
         appDefinitions.data.forEach((appDefinition) => {
@@ -49,27 +57,27 @@ export class AppsActions {
         return appDefinitionId;
     }
 
-    async publishDeployApp(apiService, appId) {
+    async publishDeployApp(appId: number): Promise<AppDefinitionUpdateResultRepresentation> {
         browser.setFileDetector(new remote.FileDetector());
 
-        const publishApp = await apiService.getInstance().activiti.appsApi.publishAppDefinition(appId, new AppPublish());
+        const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appId, new AppPublish());
 
-        await apiService.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return publishApp;
     }
 
-    async importNewVersionAppDefinitionPublishDeployApp(apiService, appFileLocation, modelId) {
+    async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number) {
         browser.setFileDetector(new remote.FileDetector());
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
-        const appCreated = await apiService.getInstance().activiti.appsApi.importNewAppDefinition(modelId, file);
+        const appCreated = await this.api.getInstance().activiti.appsApi.importNewAppDefinition(modelId, file);
 
-        const publishApp = await apiService.getInstance().activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+        const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
 
-        await apiService.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+        await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
 
         return appCreated;
     }

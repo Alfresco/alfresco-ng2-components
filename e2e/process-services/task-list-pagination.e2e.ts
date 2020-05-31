@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { UserModel } from '@alfresco/js-api';
 
 describe('Task List Pagination', () => {
 
@@ -53,7 +52,7 @@ describe('Task List Pagination', () => {
         const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        processUserModel = await usersActions.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);

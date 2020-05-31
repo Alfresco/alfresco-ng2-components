@@ -82,7 +82,7 @@ describe('Visibility conditions - cloud', () => {
     };
 
     beforeAll(async () => {
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         await navigationBarPage.navigateToFormCloudPage();
         await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
     });

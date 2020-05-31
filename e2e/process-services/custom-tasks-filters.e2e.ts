@@ -27,7 +27,6 @@ import {
 import { browser } from 'protractor';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
 import { UsersActions } from '../actions/users.actions';
-import { Tenant } from '../models/APS/tenant';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import moment = require('moment');
@@ -35,15 +34,22 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Custom App', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const secondApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();
 
+    const apiService = new ApiService();
+    const appsRuntime = new AppsRuntimeActions(apiService);
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+    const processUtil = new ProcessUtil(apiService);
+
     let processUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let appRuntime, secondAppRuntime;
-    const secondApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     let appModel;
     const completedTasks = [];
     const paginationTasksName = ['t01', 't02', 't03', 't04', 't05', 't06', 't07', 't08', 't09', 't10', 't11', 't12', 't13', 'taskOne', 'taskTwo', 'taskOne'];
@@ -62,12 +68,6 @@ describe('Start Task - Custom App', () => {
     let taskWithDueDate;
     let processDefinitionId;
 
-    const apiService = new ApiService();
-    const appsRuntime = new AppsRuntimeActions();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-    const processUtil = new ProcessUtil(apiService);
-
     const itemsPerPage = {
         five: '5',
         fiveValue: 5,
@@ -83,19 +83,17 @@ describe('Start Task - Custom App', () => {
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        processUserModel = await usersActions.createApsUser(newTenant.id);
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        appRuntime = await appsRuntime.getRuntimeAppByName(apiService, app.title);
+        appRuntime = await appsRuntime.getRuntimeAppByName(app.title);
 
         await applicationsService.importPublishDeployApp(secondApp.file_path);
 
-        secondAppRuntime = await appsRuntime.getRuntimeAppByName(apiService, secondApp.title);
+        secondAppRuntime = await appsRuntime.getRuntimeAppByName(secondApp.title);
 
         processDefinitionId = await processUtil.startProcessOfApp(appModel.name);
         await processUtil.startProcessOfApp(appModel.name);

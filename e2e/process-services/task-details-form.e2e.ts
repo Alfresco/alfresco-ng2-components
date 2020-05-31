@@ -36,12 +36,15 @@ describe('Task Details - Form', () => {
     const taskPage = new TasksPage();
     const filtersPage = new FiltersPage();
     const widget = new Widget();
+
+    const apiService = new ApiService();
+    const formActions = new FormModelActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
     let newTask;
-    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
             'description': '',
@@ -165,7 +168,6 @@ describe('Task Details - Form', () => {
             tabFieldVar: 'tabBasicFieldVar'
         };
 
-        const formActions = new FormModelActions();
         let app;
 
         beforeAll(async () => {
@@ -176,7 +178,7 @@ describe('Task Details - Form', () => {
 
         beforeEach(async () => {
             newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
-            const form = await formActions.getFormByName(apiService, app.visibilityProcess.formName);
+            const form = await formActions.getFormByName(app.visibilityProcess.formName);
             await apiService.getInstance().activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();

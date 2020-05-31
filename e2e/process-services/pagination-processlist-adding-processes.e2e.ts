@@ -24,30 +24,32 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 
 describe('Process List - Pagination when adding processes', () => {
 
-    const itemsPerPage = {
-        fifteen: '15',
-        fifteenValue: 15
-    };
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const paginationPage = new PaginationPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const processUtil = new ProcessUtil(apiService);
+
+    const itemsPerPage = {
+        fifteen: '15',
+        fifteenValue: 15
+    };
 
     let processUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfProcesses = 25;
     let page, totalPages;
     let i;
     let resultApp;
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await usersActions.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
@@ -55,7 +57,6 @@ describe('Process List - Pagination when adding processes', () => {
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        const processUtil = new ProcessUtil(apiService);
         for (i = 0; i < (nrOfProcesses - 5); i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }

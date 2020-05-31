@@ -62,12 +62,12 @@ export class ApplicationsUtil {
         return appDefinition;
     }
 
-    async getAppDefinitionByName(appName): Promise<AppDefinitionRepresentation[]> {
-        let appDefinition = [];
+    async getAppDefinitionByName(appName): Promise<AppDefinitionRepresentation> {
+        let appDefinition = {};
 
         try {
             const appDefinitionsList = await this.api.apiService.activiti.appsApi.getAppDefinitions();
-            appDefinition = appDefinitionsList.data.filter((currentApp) => {
+            appDefinition = appDefinitionsList.data.find((currentApp) => {
                 return currentApp.name === appName;
             });
         } catch (error) {

@@ -66,13 +66,13 @@ describe('Search Number Range Filter', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         file0Bytes = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
@@ -80,7 +80,7 @@ describe('Search Number Range Filter', () => {
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
 

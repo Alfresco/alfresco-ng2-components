@@ -19,30 +19,31 @@ import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiSer
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {
 
-    const loginPage = new LoginSSOPage();
-    let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let processUserModel;
+
     const taskTaskApp = 'Audit task task app';
     const taskCustomApp = 'Audit task custom app';
     const taskCompleteCustomApp = 'Audit completed task custom app';
     const auditLogFile = 'Audit.pdf';
-    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const { id } = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-        processUserModel = await usersActions.createApsUser(id);
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));

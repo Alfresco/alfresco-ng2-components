@@ -26,7 +26,7 @@ describe('Amount Widget', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.AMOUNT;
 
     const loginPage = new LoginSSOPage();
-        const taskPage = new TasksPage();
+    const taskPage = new TasksPage();
     const widget = new Widget();
 
     let appModel;

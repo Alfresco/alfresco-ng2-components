@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ProcessUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    ApplicationsUtil,
+    ProcessUtil,
+    StartProcessPage,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -26,50 +33,49 @@ import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { UserModel } from '@alfresco/js-api';
 
 describe('Task Assignee', () => {
+
+    const app = browser.params.resources.Files.TEST_ASSIGNEE;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
+    const processListPage = new ProcessListPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const startProcessPage = new StartProcessPage();
+    const processServiceTabBarPage = new ProcessServiceTabBarPage();
+    const processDetailsPage = new ProcessDetailsPage();
     const taskPage = new TasksPage();
 
-    const app = browser.params.resources.Files.TEST_ASSIGNEE;
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     describe('Candidate User Assignee', () => {
-        const processListPage = new ProcessListPage();
-        const processFiltersPage = new ProcessFiltersPage();
-        const startProcessPage = new StartProcessPage();
-        const processServiceTabBarPage = new ProcessServiceTabBarPage();
-        const processDetailsPage = new ProcessDetailsPage();
 
         let user: UserModel;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await usersActions.createUser();
-            try {// creates user and group if not available
-                await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
-            } catch (e) {
-            }
-            try {// creates group if not available
-                await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-                    'name': app.candidateGroup,
-                    'tenantId': user.tenantId,
-                    'type': 1
-                });
-            } catch (e) {
-            }
+
+            await usersActions.createUser(new UserModel({
+                tenantId: user.tenantId,
+                email: app.candidate.email,
+                firstName: app.candidate.firstName,
+                lastName: app.candidate.lastName
+            }));
+
+            await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+                'name': app.candidateGroup,
+                'tenantId': user.tenantId,
+                'type': 1
+            });
 
             await apiService.getInstance().login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(apiService);
-            try {
-                await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-            } catch (e) {
-                console.error(`failed to publish the application`);
-            }
+            await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
+
             await loginPage.login(user.email, user.password);
         });
 
@@ -122,8 +128,8 @@ describe('Task Assignee', () => {
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             user = await usersActions.createUser();
-            candidate1 = await usersActions.createApsUser(user.tenantId);
-            candidate2 = await usersActions.createApsUser(user.tenantId);
+            candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
+            candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
             const adminGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );
@@ -137,10 +143,12 @@ describe('Task Assignee', () => {
             await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
             await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
-            try {
-                await users.createApsUser(user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
-            } catch (e) {
-            }
+            await usersActions.createUser(new UserModel({
+                tenantId: user.tenantId,
+                email: app.candidate.email,
+                firstName: app.candidate.firstName,
+                lastName: app.candidate.lastName
+            }));
 
             await apiService.getInstance().login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(apiService);

@@ -57,7 +57,7 @@ describe('People Groups Cloud Component', () => {
 
             users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
 
-            await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
+            await loginSSOPage.login(apsUser.email, apsUser.password);
         });
 
         afterAll(async () => {

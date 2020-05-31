@@ -27,6 +27,8 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Comment component for Processes', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
@@ -35,8 +37,7 @@ describe('Comment component for Processes', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let user, tenantId, appId, secondUser, newTaskId;
+    let user, appId, secondUser, newTaskId;
 
     const taskName = {
         completed_task: 'Test Completed',

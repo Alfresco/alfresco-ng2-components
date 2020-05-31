@@ -24,13 +24,17 @@ import CONSTANTS = require('../util/constants');
 
 describe('Items per page set to 15 and adding of tasks', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let processUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 25;
     const totalPages = 2;
@@ -43,15 +47,11 @@ describe('Items per page set to 15 and adding of tasks', () => {
     };
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await usersActions.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(apiService);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 

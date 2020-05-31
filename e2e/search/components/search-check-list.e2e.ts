@@ -65,7 +65,7 @@ describe('Search Checklist Component', () => {
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
             name: nodeNames.folder,
@@ -78,7 +78,7 @@ describe('Search Checklist Component', () => {
 
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     beforeEach(async () => {
@@ -293,7 +293,7 @@ describe('Search Checklist Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.id, acsUser.password);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         it('[C277018] Should be able to change the operator', async () => {

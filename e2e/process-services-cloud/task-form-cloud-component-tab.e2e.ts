@@ -135,7 +135,7 @@ describe('Task form cloud component', () => {
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
 
     }, 5 * 60 * 1000);
 

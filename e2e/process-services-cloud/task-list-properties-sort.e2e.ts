@@ -74,7 +74,7 @@ describe('Edit task filters and task list properties', () => {
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
             'filterProperties': [

@@ -23,12 +23,16 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Process List Test', () => {
 
-    const loginPage = new LoginSSOPage();
-    const processListDemoPage = new ProcessListDemoPage();
-    const apiService = new ApiService();
-
     const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
+
+    const loginPage = new LoginSSOPage();
+    const processListDemoPage = new ProcessListDemoPage();
+
+    const apiService = new ApiService();
+    const appsActions = new AppsActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
     let appDateModel, appUserWidgetModel, user;
 
     const processList = ['Process With Date', 'Process With Date 2', 'Process With User Widget', 'Process With User Widget 2'];
@@ -49,9 +53,6 @@ describe('Process List Test', () => {
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
     beforeAll(async () => {
-        const apps = new AppsActions();
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         user = await usersActions.createUser();
@@ -71,10 +72,10 @@ describe('Process List Test', () => {
         await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
         completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
-        appWithDateFieldId = await apps.getAppDefinitionId(apiService, appDateModel.id);
+        appWithDateFieldId = await appsActions.getAppDefinitionId(appDateModel.id);
 
-        const procWithDateTaskId = await apps.getProcessTaskId(apiService, completedProcWithDate.id);
-        const procWithUserWidgetTaskId = await apps.getProcessTaskId(apiService, completedProcWithUserWidget.id);
+        const procWithDateTaskId = await appsActions.getProcessTaskId(completedProcWithDate.id);
+        const procWithUserWidgetTaskId = await appsActions.getProcessTaskId(completedProcWithUserWidget.id);
 
         await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
         await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });

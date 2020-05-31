@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UserModel } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
-import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
@@ -32,14 +31,17 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     let processUserModel, assigneeUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
@@ -55,15 +57,10 @@ describe('Start Task - Task App', () => {
     });
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const newTenant = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-
-        assigneeUserModel = await usersActions.createApsUser(newTenant.id);
-
-        processUserModel = await usersActions.createApsUser(newTenant.id);
+        assigneeUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
@@ -75,12 +72,12 @@ describe('Start Task - Task App', () => {
         await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
 
         await loginPage.login(processUserModel.email, processUserModel.password);
-   });
+    });
 
     beforeEach(async () => {
         await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-   });
+    });
 
     it('[C260383] Should be possible to modify a task', async () => {
         const task = await taskPage.createNewTask();
@@ -193,5 +190,5 @@ describe('Start Task - Task App', () => {
         await startDialog.blur(startDialog.name);
         await startDialog.checkValidationErrorIsDisplayed(lengthValidationError);
         await startDialog.checkStartButtonIsDisabled();
-   });
+    });
 });

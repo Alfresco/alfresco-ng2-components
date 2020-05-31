@@ -52,7 +52,7 @@ describe('Login component - Redirect', () => {
         await usersActions.createUser(user);
         await usersActions.createUser(userFolderOwner);
 
-        await apiService.getInstance().login(user.id, user.password);
+        await apiService.getInstance().login(user.email, user.password);
 
         uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
    });
@@ -61,7 +61,7 @@ describe('Login component - Redirect', () => {
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
@@ -79,7 +79,7 @@ describe('Login component - Redirect', () => {
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
 
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -95,7 +95,7 @@ describe('Login component - Redirect', () => {
 
         await settingsPage.setProviderEcmBpm();
 
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(adminUserModel.email, adminUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -108,7 +108,7 @@ describe('Login component - Redirect', () => {
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -125,7 +125,7 @@ describe('Login component - Redirect', () => {
 
         await loginPage.waitForElements();
 
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         actualUrl = await browser.getCurrentUrl();
         await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -135,7 +135,7 @@ describe('Login component - Redirect', () => {
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 

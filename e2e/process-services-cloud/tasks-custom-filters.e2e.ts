@@ -94,7 +94,7 @@ describe('Task filters cloud', () => {
             await processInstancesService.deleteProcessInstance(secondProcessInstance.entry.id, simpleApp);
             await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
 
         }, 5 * 60 * 1000);
 

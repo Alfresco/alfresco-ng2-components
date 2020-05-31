@@ -123,7 +123,7 @@ describe('Task Header cloud component', () => {
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
         await browser.sleep(3000);
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
     });
 
     afterAll(async () => {

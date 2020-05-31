@@ -16,7 +16,6 @@
  */
 
 import { UsersActions } from '../actions/users.actions';
-import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');
 import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');
@@ -37,9 +36,15 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Details component', () => {
 
-    const processServices = new ProcessServicesPage();
-    let processUserModel, appModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const processServices = new ProcessServicesPage();
+    const loginPage = new LoginSSOPage();
+    const taskPage = new TasksPage();
+
+    const apiService = new ApiService();
+
+    let processUserModel, appModel;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const TASK_DATE_FORMAT = 'll';
     let formModel;
@@ -51,16 +56,11 @@ describe('Task Details component', () => {
         'stencilSet': 0
     };
 
-    const loginPage = new LoginSSOPage();
-    const taskPage = new TasksPage();
-    const apiService = new ApiService();
-
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const { id } = await apiService.getInstance().activiti.adminTenantsApi.createTenant(new Tenant());
-        processUserModel = await usersActions.createApsUser(id);
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);

@@ -29,12 +29,17 @@ import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attachment list action menu for tasks', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const attachmentListPage = new AttachmentListPage();
     const viewerPage = new ViewerPage();
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
@@ -47,10 +52,8 @@ describe('Attachment list action menu for tasks', () => {
         taskApp: 'Task App Name',
         emptyList: 'Empty List'
     };
-    const apiService = new ApiService();
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         const user = await usersActions.createUser();

@@ -26,24 +26,26 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 
 describe('Form widgets - People ', () => {
 
-    const loginPage = new LoginSSOPage();
-    let processUserModel;
     const app = browser.params.resources.Files.APP_WITH_USER_WIDGET;
+
+    const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
-    let appModel;
-    const widget = new Widget();
     const startProcess = new StartProcessPage();
     const processDetailsPage = new ProcessDetailsPage();
     const taskDetails = new TaskDetailsPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
+    const widget = new Widget();
+
     const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let processUserModel;
+    let appModel;
 
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await usersActions.createTenantAndUser();
+        processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 

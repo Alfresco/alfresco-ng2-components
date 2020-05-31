@@ -25,13 +25,16 @@ import { UsersActions } from '../actions/users.actions';
 
 describe('Sorting for process filters', () => {
 
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processFiltersPage = new ProcessFiltersPage();
     const filtersPage = new FiltersPage();
-    const apiService = new ApiService();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
     let tenantId, appId, user, processesQuery;
     let importedApp;
 
@@ -47,8 +50,6 @@ describe('Sorting for process filters', () => {
     };
 
     beforeEach(async () => {
-        const usersActions = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         const applicationsService = new ApplicationsUtil(apiService);

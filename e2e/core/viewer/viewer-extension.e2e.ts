@@ -56,20 +56,20 @@ describe('Viewer', () => {
         });
 
         await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: acsUser.id,
+            id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         jsFileUploaded = await uploadActions.uploadFile(jsFileInfo.location, jsFileInfo.name, '-my-');
 
-        await loginPage.login(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
-        await apiService.getInstance().login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         await uploadActions.deleteFileOrFolder(jsFileUploaded.entry.id);
     });
 
