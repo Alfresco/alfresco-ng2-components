@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
+import { GenericApi } from './generic-api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
 import { QueriesApi as QueriesJsApi, AlfrescoApi, SitePaging, NodePaging } from '@alfresco/js-api';
 
-export class QueriesApi extends Api {
+export class QueriesApi extends GenericApi {
   queriesApi: QueriesJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
@@ -35,7 +35,7 @@ export class QueriesApi extends Api {
     };
 
     try {
-      await this.apiLogin();
+      await this.login();
       return this.queriesApi.findSites(searchTerm, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.findSites.name}`, error);
@@ -50,7 +50,7 @@ export class QueriesApi extends Api {
     };
 
     try {
-      await this.apiLogin();
+      await this.login();
       return this.queriesApi.findNodes(searchTerm, data);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.findNodes.name}`, error);

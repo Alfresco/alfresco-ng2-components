@@ -18,25 +18,34 @@
 import { AlfrescoApi } from '@alfresco/js-api';
 import { Logger } from '../../../core/utils/logger';
 
-export abstract class Api {
+export class GenericApi {
     constructor(
         private username: string,
         private password: string,
         private alfrescoJsApi: AlfrescoApi
     ) {}
 
-    async apiLogin(): Promise<any> {
-        return this.alfrescoJsApi.login(this.username, this.password);
-    }
-
-    async apiLogout(): Promise<any> {
-        await this.apiLogin();
-        return this.alfrescoJsApi.logout();
-    }
-
     getUsername(): string {
         return this.username;
     }
+
+    async login(): Promise<any> {
+        try {
+            return await this.alfrescoJsApi.login(this.username, this.password);
+        } catch (error) {
+            this.handleError(`${this.constructor.name} ${this.login.name}`, error);
+            throw error;
+        }
+    }
+
+    async logout(): Promise<any> {
+        try {
+          return await this.alfrescoJsApi.logout();
+        } catch (error) {
+          this.handleError(`${this.constructor.name} ${this.logout.name}`, error);
+          throw error;
+        }
+      }
 
     protected handleError(message: string, response: any): void {
       Logger.error(`\n--- ${message} error :`);

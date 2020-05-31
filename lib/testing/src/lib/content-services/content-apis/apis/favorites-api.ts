@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
+import { GenericApi } from './generic-api';
 import { Logger } from '../../../core/utils/logger';
 import { ContentApi } from '../content-api';
 import { FavoritesApi as FavoritesJsApi, SitesApi as SitesJsApi, FavoriteEntry, FavoritePaging, AlfrescoApi } from '@alfresco/js-api';
 import { ApiUtil } from '../../../core/structure/api.util';
 
-export class FavoritesApi extends Api {
+export class FavoritesApi extends GenericApi {
   favoritesApi: FavoritesJsApi;
   sitesApi: SitesJsApi;
 
@@ -51,7 +51,7 @@ export class FavoritesApi extends Api {
   async addFavoriteById(nodeType: 'file' | 'folder' | 'site', id: string): Promise<FavoriteEntry> {
     let guid;
     try {
-      await this.apiLogin();
+      await this.login();
       if ( nodeType === 'site' ) {
         guid = (await this.sitesApi.getSite(id)).entry.guid;
       } else {
@@ -84,7 +84,7 @@ export class FavoritesApi extends Api {
 
   async getFavorites(): Promise<FavoritePaging> {
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.favoritesApi.listFavorites(this.getUsername());
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getFavorites.name}`, error);
@@ -94,7 +94,7 @@ export class FavoritesApi extends Api {
 
   async getFavoriteById(nodeId: string): Promise<FavoriteEntry> {
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.favoritesApi.getFavorite('-me-', nodeId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getFavoriteById.name}`, error);
@@ -131,7 +131,7 @@ export class FavoritesApi extends Api {
 
   async removeFavoriteById(nodeId: string): Promise<any> {
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.favoritesApi.deleteFavorite('-me-', nodeId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.removeFavoriteById.name}`, error);

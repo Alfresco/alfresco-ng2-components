@@ -16,7 +16,7 @@
  */
 
 export * from './content-api';
-export * from './apis/authentication-api';
+export * from './apis/generic-api';
 export * from './apis/comments-api';
 export * from './apis/favorites-api';
 export * from './apis/node-body-create';

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
+import { GenericApi } from './generic-api';
 import { CommentsApi as CommentsJsApi, CommentPaging, CommentEntry, AlfrescoApi } from '@alfresco/js-api';
 
-export class CommentsApi extends Api {
+export class CommentsApi extends GenericApi {
   commentsApi: CommentsJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
@@ -28,7 +28,7 @@ export class CommentsApi extends Api {
 
   async getNodeComments(nodeId: string): Promise<CommentPaging> {
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.commentsApi.listComments(nodeId);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getNodeComments.name}`, error);
@@ -38,7 +38,7 @@ export class CommentsApi extends Api {
 
   async addComment(nodeId: string, comment: string): Promise<CommentEntry> {
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.commentsApi.createComment(nodeId, { 'content': comment });
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.addComment.name}`, error);

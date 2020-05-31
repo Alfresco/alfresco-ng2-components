@@ -27,7 +27,7 @@ import { SharedLinksApi } from './apis/shared-links-api';
 import { TrashcanApi } from './apis/trashcan-api';
 import { SearchApi } from './apis/search-api';
 import { UploadApi } from './apis/upload-api';
-import { AuthenticationApi } from './apis/authentication-api';
+import { GenericApi } from './apis/generic-api';
 
 export class ContentApi {
     alfrescoJsApi = new AlfrescoApi();
@@ -42,16 +42,16 @@ export class ContentApi {
         });
     }
 
-    get authentication() {
-        return new AuthenticationApi(this.username, this.password, this.alfrescoJsApi);
-    }
-
     get comments() {
         return new CommentsApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get favorites() {
         return new FavoritesApi(this.username, this.password, this.alfrescoJsApi);
+    }
+
+    get genericApi() {
+        return new GenericApi(this.username, this.password, this.alfrescoJsApi);
     }
 
     get nodes() {

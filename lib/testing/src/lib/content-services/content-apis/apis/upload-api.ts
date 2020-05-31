@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
+import { GenericApi } from './generic-api';
 import { UploadApi as UploadJsApi, AlfrescoApi } from '@alfresco/js-api';
 
 import * as fs from 'fs';
 
-export class UploadApi extends Api {
+export class UploadApi extends GenericApi {
   uploadApi: UploadJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
@@ -37,7 +37,7 @@ export class UploadApi extends Api {
     };
 
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.uploadApi.uploadFile(file, '', parentId, null, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.uploadFile.name}`, error);
@@ -60,7 +60,7 @@ export class UploadApi extends Api {
     };
 
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.uploadApi.uploadFile(file, '', parentId, nodeProps, opts);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.uploadFileWithRename.name}`, error);

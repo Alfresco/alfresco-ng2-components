@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
+import { GenericApi } from './generic-api';
 import { Logger } from '../../../core/utils/logger';
 import { ApiUtil } from '../../../core/structure/api.util';
 import { SharedlinksApi as SharedLinksJsApi, SharedLinkEntry, SharedLinkPaging, AlfrescoApi } from '@alfresco/js-api';
 
-export class SharedLinksApi extends Api {
+export class SharedLinksApi extends GenericApi {
     sharedlinksApi: SharedLinksJsApi;
 
     constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
@@ -30,7 +30,7 @@ export class SharedLinksApi extends Api {
 
     async shareFileById(id: string, expireDate?: Date): Promise<SharedLinkEntry> {
       try {
-        await this.apiLogin();
+        await this.login();
         const data = {
           nodeId: id,
           expiresAt: expireDate
@@ -76,7 +76,7 @@ export class SharedLinksApi extends Api {
 
     async getSharedLinks(): Promise<SharedLinkPaging> {
       try {
-        await this.apiLogin();
+        await this.login();
         return await this.sharedlinksApi.listSharedLinks();
       } catch (error) {
         this.handleError(`${this.constructor.name} ${this.getSharedLinks.name}`, error);

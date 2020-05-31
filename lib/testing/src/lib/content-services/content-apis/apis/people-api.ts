@@ -16,10 +16,10 @@
  */
 
 import { PersonModel, Person } from './people-api-models';
-import { Api } from './api';
+import { GenericApi } from './generic-api';
 import { PeopleApi as PeopleJsApi, AlfrescoApi, PersonEntry } from '@alfresco/js-api';
 
-export class PeopleApi extends Api {
+export class PeopleApi extends GenericApi {
   peopleApi: PeopleJsApi;
 
   constructor(username: string, password: string, alfrescoJsApi: AlfrescoApi) {
@@ -30,7 +30,7 @@ export class PeopleApi extends Api {
   async createUser(user: PersonModel): Promise<PersonEntry> {
     try {
       const person = new Person(user);
-      await this.apiLogin();
+      await this.login();
       return await this.peopleApi.createPerson(person);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.createUser.name}`, error);
@@ -40,7 +40,7 @@ export class PeopleApi extends Api {
 
   async getUser(username: string): Promise<PersonEntry> {
     try {
-      await this.apiLogin();
+      await this.login();
       return await this.peopleApi.getPerson(username);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.getUser.name}`, error);
@@ -50,7 +50,7 @@ export class PeopleApi extends Api {
 
   async updateUser(username: string, userDetails?: PersonModel): Promise<PersonEntry> {
     try {
-      await this.apiLogin();
+      await this.login();
       return this.peopleApi.updatePerson(username, userDetails);
     } catch (error) {
       this.handleError(`${this.constructor.name} ${this.updateUser.name}`, error);
