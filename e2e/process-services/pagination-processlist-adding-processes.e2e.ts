@@ -84,7 +84,6 @@ describe('Process List - Pagination when adding processes', () => {
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        const processUtil = new ProcessUtil(apiService);
         for (i; i < nrOfProcesses; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }

@@ -58,10 +58,7 @@ describe('Start Process Component', () => {
     const widget = new Widget();
 
     const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
     const apiServiceUserTwo = new ApiService();
-    const applicationsService = new ApplicationsUtil(apiServiceUserTwo);
 
     let procUserModel: UserModel;
     let secondProcUserModel: UserModel;
@@ -83,11 +80,13 @@ describe('Start Process Component', () => {
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
+            const usersActions = new UsersActions(apiService);
             procUserModel = await usersActions.createUser();
             secondProcUserModel = await usersActions.createUser(new UserModel({ tenantId: procUserModel.tenantId }));
 
             await apiServiceUserTwo.getInstance().login(secondProcUserModel.email, secondProcUserModel.password);
 
+            const applicationsService = new ApplicationsUtil(apiServiceUserTwo);
             appCreated = await applicationsService.importPublishDeployApp(app.file_path);
             simpleAppCreated = await applicationsService.importPublishDeployApp(simpleApp.file_path);
             dateFormAppCreated = await applicationsService.importPublishDeployApp(dateFormApp.file_path);
@@ -459,7 +458,7 @@ describe('Start Process Component', () => {
 
     describe('Provider: ALL', () => {
         const uploadDialog = new UploadDialogPage();
-        let processUserModel
+        let processUserModel;
         const imageUploaded = new FileModel({
             'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
             'location': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_location

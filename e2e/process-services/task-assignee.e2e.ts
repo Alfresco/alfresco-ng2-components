@@ -151,7 +151,6 @@ describe('Task Assignee', () => {
             }));
 
             await apiService.getInstance().login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(apiService);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
             await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processNames[1]);
         });

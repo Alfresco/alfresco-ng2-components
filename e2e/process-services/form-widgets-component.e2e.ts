@@ -27,8 +27,6 @@ const formInstance = new FormDefinitionModel();
 
 describe('Form widgets', () => {
 
-    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
-
     const taskPage = new TasksPage();
     const loginPage = new LoginSSOPage();
     const widget = new Widget();
@@ -37,12 +35,14 @@ describe('Form widgets', () => {
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
 
-    const appFields = app.form_fields;
     const newTask = 'First task';
     let processUserModel;
     let appModel;
 
     describe('Form widgets', () => {
+
+        const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+        const appFields = app.form_fields;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -190,13 +190,11 @@ describe('Form widgets', () => {
         const appFields = app.form_fields;
 
         beforeAll(async () => {
-            const usersActions = new UsersActions(apiService);
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             processUserModel = await usersActions.createUser();
 
             await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-            const applicationsService = new ApplicationsUtil(apiService);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();

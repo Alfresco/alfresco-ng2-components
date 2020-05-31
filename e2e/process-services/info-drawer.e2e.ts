@@ -69,6 +69,7 @@ describe('Info Drawer', () => {
     let processUserModelFullName: string;
     let assigneeUserModelFullName: string;
     let appCreated: AppDefinitionRepresentation;
+    let processUserModel;
 
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
@@ -78,7 +79,7 @@ describe('Info Drawer', () => {
         const assigneeUserModel = await usersActions.createUser();
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
 
-        const processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
@@ -188,7 +189,7 @@ describe('Info Drawer', () => {
 
     it('[C260329] Task with no form', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any>{ ...taskDetails, formName: '', name });
+        await taskPage.createTask(<any> { ...taskDetails, formName: '', name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -206,7 +207,7 @@ describe('Info Drawer', () => {
 
     it('[C260320] Assign user to the task', async () => {
         const name = StringUtil.generateRandomString(5);
-        await taskPage.createTask(<any>{ ...taskDetails, formName: app.formName, name });
+        await taskPage.createTask(<any> { ...taskDetails, formName: app.formName, name });
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
