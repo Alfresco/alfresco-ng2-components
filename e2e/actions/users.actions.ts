@@ -61,7 +61,8 @@ export class UsersActions {
             if (tenantId) {
                 await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
             } else {
-                await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
+                const apsUserTenant = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
+                user.tenantId = apsUserTenant.tenantId;
             }
         }
 
@@ -77,15 +78,23 @@ export class UsersActions {
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        const user = new UserModel({ tenantId: newTenant.id, email, firstName, lastName, password });
-
-        return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(new UserRepresentation({
+            tenantId: newTenant.id,
+            email,
+            firstName,
+            lastName,
+            password
+        }));
     }
 
     async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
-        const user = new UserModel({ tenantId, email, firstName, lastName, password });
-
-        return this.api.apiService.activiti.adminUsersApi.createNewUser(user);
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(new UserRepresentation({
+            tenantId,
+            email,
+            firstName,
+            lastName,
+            password
+        }));
     }
 
     async changeProfilePictureAps(fileLocation): Promise<ImageUploadRepresentation> {

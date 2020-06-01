@@ -25,7 +25,7 @@ describe('About Process Services', () => {
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
 
-    let user, tenantId;
+    let user;
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -33,7 +33,6 @@ describe('About Process Services', () => {
     beforeAll(async() => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createUser();
-        tenantId = user.tenantId;
         await apiService.getInstance().login(user.email, user.password);
         await loginPage.login(user.email, user.password);
         await navigationBarPage.clickAboutButton();
@@ -42,7 +41,7 @@ describe('About Process Services', () => {
     afterAll(async() => {
         await navigationBarPage.clickLogoutButton();
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     it('[C280002] Should be able to view about process services info', async () => {
