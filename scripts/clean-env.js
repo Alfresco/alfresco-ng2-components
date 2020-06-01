@@ -10,25 +10,25 @@ async function main() {
         .option('-u, --username [type]', 'username RANCHER')
         .parse(process.argv);
 
-    this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+    const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
         provider: 'ECM',
         hostEcm: program.host
     });
 
     try {
-        await this.alfrescoJsApi.login(program.username, program.password);
+        await alfrescoJsApi.login(program.username, program.password);
     } catch (error) {
         console.log(JSON.stringify(error));
     }
 
     console.log('====== Clean Root ======');
-    await cleanRoot(this.alfrescoJsApi);
+    await cleanRoot(alfrescoJsApi);
 
     console.log('====== Clean Sites ======');
-    await deleteSite(this.alfrescoJsApi);
+    await deleteSite(alfrescoJsApi);
 
     console.log('====== Empty Trash ======');
-    await emptyTrashCan(this.alfrescoJsApi);
+    await emptyTrashCan(alfrescoJsApi);
 }
 
 async function cleanRoot(alfrescoJsApi) {
@@ -75,7 +75,7 @@ async function emptyTrashCan(alfrescoJsApi) {
 }
 
 async function deleteSite(alfrescoJsApi) {
-    let listSites = await this.alfrescoJsApi.core.sitesApi.getSites();
+    let listSites = alfrescoJsApi.core.sitesApi.getSites();
 
     if (listSites.list.pagination.totalItems > 1) {
         for (let i = 0; i < listSites.list.entries.length; i++) {

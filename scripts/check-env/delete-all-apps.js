@@ -35,18 +35,21 @@ async function main() {
 
     host = program.host;
 
+    let alfrescoJsApi;
+
     try {
-        this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility(config);
-        await this.alfrescoJsApi.login(program.username, program.password);
+        alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility(config);
+        await alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         console.log('Login error' + e);
+        return;
     }
 
     for (const key of Object.keys(RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS)) {
         await deleteApp(alfrescoJsApi, RESOURCES_CLOUD.ACTIVITI_CLOUD_APPS[key].name);
     }
 
-    let notRunning = await getNotRunningApps(this.alfrescoJsApi);
+    let notRunning = await getNotRunningApps(alfrescoJsApi);
 
     if (notRunning && notRunning.length > 0) {
         console.log(JSON.stringify(notRunning));
