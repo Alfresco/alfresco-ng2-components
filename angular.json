@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "lib",
   "projects": {
-    "dev": {
+    "demoshell": {
       "root": "demo-shell",
       "sourceRoot": "demo-shell/src",
       "projectType": "application",
@@ -305,7 +305,7 @@
         }
       }
     },
-    "lib-e2e-test": {
+    "demoshell-e2e": {
       "root": "demo-shell",
       "sourceRoot": "./demo-shell",
       "projectType": "application",

@@ -8,35 +8,43 @@
     "nx.json": "*"
   },
   "projects": {
-    "dev": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    },
-    "content-services": {
-      "tags": []
-    },
-    "process-services": {
-      "tags": []
-    },
-    "process-services-cloud": {
-      "tags": []
-    },
-    "insights": {
-      "tags": []
-    },
-    "lib-e2e-test": {
-      "tags": []
+    "demoshell": {
+      "implicitDependencies": ["process-services", "content-services", "process-services-cloud", "core", "insights", "extensions"],
+      "tags": ["scope:demoshell", "type:app"]
     },
     "extensions": {
-      "tags": []
+      "tags": ["scope:extensions", "type:lib"]
+    },
+    "core": {
+      "implicitDependencies": ["extensions"],
+      "tags": ["scope:core", "type:lib"]
+    },
+    "content-services": {
+      "implicitDependencies": ["core"],
+      "tags": ["scope:content-services", "type:lib"]
+    },
+    "process-services": {
+      "implicitDependencies": ["content-services"],
+      "tags": ["scope:process-services", "type:lib"]
+    },
+    "process-services-cloud": {
+      "implicitDependencies": ["content-services"],
+      "tags": ["scope:process-services-cloud", "type:lib"]
+    },
+    "insights": {
+      "implicitDependencies": ["core"],
+      "tags": ["scope:insights", "type:lib"]
+    },
+    "demoshell-e2e": {
+      "implicitDependencies": ["testing"],
+      "tags": ["scope:demoshell-e2e", "type:e2e"]
     },
     "testing": {
-      "tags": []
+      "implicitDependencies": [],
+      "tags": ["scope:testing", "type:lib"]
     },
     "cli": {
-      "tags": []
+      "tags": ["scope:cli", "type:lib"]
     }
   }
 }
