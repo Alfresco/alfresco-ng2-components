@@ -16,8 +16,7 @@
  */
 
 import { ApiService } from '@alfresco/adf-testing';
-import { AppDefinitionRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/appDefinitionRepresentation';
-import { ResultListDataRepresentationAppDefinitionRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/resultListDataRepresentationAppDefinitionRepresentation';
+import { AppDefinitionRepresentation, ResultListDataRepresentationAppDefinitionRepresentation } from '@alfresco/js-api';
 
 export class AppsRuntimeActions {
 

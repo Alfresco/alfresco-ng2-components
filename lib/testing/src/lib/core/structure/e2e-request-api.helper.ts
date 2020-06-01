@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Oauth2Auth } from '@alfresco/js-api/src/authentication/oauth2Auth';
+import { Oauth2Auth } from '@alfresco/js-api';
 
 export interface E2eRequestApiHelperOptions {
   pathParams?: { [key: string]: any };
