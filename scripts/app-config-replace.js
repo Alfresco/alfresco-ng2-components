@@ -4,7 +4,7 @@
 require('dotenv').config({path: process.env.ENV_FILE});
 const fs = require('fs');
 
-const configPath = './demo-shell/dist/app.config.json';
+const configPath = './dist/demo-shell/app.config.json';
 
 fs.readFile(configPath, (err, appConfigString) => {
     if (err) throw err;

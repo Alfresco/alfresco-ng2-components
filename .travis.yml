@@ -7,6 +7,7 @@ dist: bionic
 node_js:
   - '12.16.3'
 
+before_install: . ./scripts/ci/job_hooks/before_install.sh
 install:
     echo "no install"
 
@@ -57,6 +58,7 @@ jobs:
           name:  Build
           script:
             - ./scripts/travis/build/build.sh
+          after_success: ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
         - stage: Lint & Build Dist
           name: Lint
           script:
@@ -92,18 +94,23 @@ jobs:
 
         - stage: e2e Test
           name: core
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
           script: ./scripts/travis/e2e/core-e2e.sh
         - stage: e2e Test
           name:  content
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
           script: ./scripts/travis/e2e/content-services-e2e.sh
         - stage: e2e Test
           name:  search
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
           script: ./scripts/travis/e2e/search-e2e.sh
         - stage: e2e Test
           name: process
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
           script: ./scripts/travis/e2e/process-services-e2e.sh
         - stage: e2e Test
           name: process Cloud
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
 
 
@@ -141,6 +148,5 @@ notifications:
 cache:
   directories:
   - node_modules
-  - demo-shell/dist
   - lib/dist
   - tmp

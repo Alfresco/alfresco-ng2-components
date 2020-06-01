@@ -58,7 +58,7 @@ cp -R $DIR/../lib/dist/extensions/* $DIR/../node_modules/@alfresco/adf-extension
 echo "====== Build dist demo shell ===== "
 
 npm run server-versions
-ng build dist --base-href=$NAME/ --output-path demo-shell/dist/$NAME || exit 1
+ng build dist --base-href=$NAME/ --output-path dist/demo-shell/$NAME || exit 1
 
 echo "====== e2e test ===== "
 

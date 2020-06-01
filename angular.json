@@ -12,7 +12,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "demo-shell/dist",
+            "outputPath": "dist/demo-shell",
             "index": "demo-shell/src/index.html",
             "main": "demo-shell/src/main.ts",
             "tsConfig": "tsconfig.dev.json",

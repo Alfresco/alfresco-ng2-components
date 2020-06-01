@@ -207,7 +207,7 @@ else
     if [[  $LITESERVER == "true" ]]; then
         echo "====== Run dist in lite-server ====="
 
-        ls demo-shell/dist/ || exit 1
+        ls dist/demo-shell/ || exit 1
 
         npm run postbuild:ci
 

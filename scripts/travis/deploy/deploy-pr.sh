@@ -11,13 +11,13 @@ echo "Running the docker with tag" $TAG_VERSION
 # Publish Image to docker
 
 sed s%href=\".\"%href=\".\"%g \
--i ./demo-shell/dist/index.html
+-i ./dist/demo-shell/index.html
 
 mkdir  "./demo-shell/tmp/"
-mv ./demo-shell/dist/* ./demo-shell/tmp
+mv ./dist/demo-shell/* ./demo-shell/tmp
 
-mkdir  -p "./demo-shell/dist/${TRAVIS_BUILD_NUMBER}"
-mv ./demo-shell/tmp/* ./demo-shell/dist/${TRAVIS_BUILD_NUMBER}
+mkdir  -p "./dist/demo-shell/${TRAVIS_BUILD_NUMBER}"
+mv ./demo-shell/tmp/* ./dist/demo-shell/${TRAVIS_BUILD_NUMBER}
 
 ./node_modules/@alfresco/adf-cli/bin/adf-cli docker-publish --loginCheck --loginUsername "$DOCKER_REPOSITORY_USER" --loginPassword "$DOCKER_REPOSITORY_PASSWORD" --loginRepo "$DOCKER_REPOSITORY_DOMAIN" --dockerRepo "$DOCKER_REPOSITORY" --dockerTags "$TAG_VERSION" --pathProject "$(pwd)"
 
@@ -27,5 +27,5 @@ echo "Update rancher with docker tag" $TAG_VERSION  --url $REPO_RANCHER --enviro
 (node --no-deprecation ./scripts/travis/deploy/rancher-pr-deploy.js -n $TRAVIS_BUILD_NUMBER -u $RANCHER_TOKEN -p $RANCHER_SECRET -s $REPO_RANCHER --image "alfresco/demo-shell:develop-$TRAVIS_BUILD_NUMBER" --env $ENVIRONMENT_NAME -r $ENVIRONMENT_URL || exit 1);
 
 # Restore the app in the main run the unit test
-mv ./demo-shell/dist/${TRAVIS_BUILD_NUMBER} "./demo-shell/tmp/"
-mv "./demo-shell/tmp/" "./demo-shell/dist/"
+mv ./dist/demo-shell/${TRAVIS_BUILD_NUMBER} "./demo-shell/tmp/"
+mv "./dist/demo-shell/" "./dist/demo-shell/"
