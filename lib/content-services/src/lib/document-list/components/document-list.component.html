@@ -23,6 +23,10 @@
     (row-unselect)="onNodeUnselect($event.detail)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
+    <ng-template let-col>
+        <div>{{col.type}}</div>
+    </ng-template>
+
     <adf-no-content-template>
         <ng-template>
             <adf-empty-list *ngIf="!customNoContentTemplate">

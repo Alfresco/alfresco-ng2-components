@@ -45,6 +45,7 @@ import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
 import { DataColumnModule } from '../data-column/data-column.module';
+import { DataTableHeaderComponent } from './components/datatable-header/datatable-header.component';
 
 @NgModule({
     imports: [
@@ -64,6 +65,7 @@ import { DataColumnModule } from '../data-column/data-column.module';
         EmptyListHeaderDirective,
         EmptyListBodyDirective,
         EmptyListFooterDirective,
+        DataTableHeaderComponent,
         DataTableCellComponent,
         DataTableRowComponent,
         DateCellComponent,

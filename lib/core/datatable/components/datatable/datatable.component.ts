@@ -58,6 +58,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
+    @ContentChild(TemplateRef)
+    filterTemplateRef: TemplateRef<any>;
+
     /** Data source for the table */
     @Input()
     data: DataTableAdapter;
@@ -261,13 +264,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
     }
 
-    isColumnSortActive(column: DataColumn): boolean {
-        if (!column || !this.data.getSorting()) {
-            return false;
-        }
-        return column.key === this.data.getSorting().key;
-    }
-
     ngDoCheck() {
         const changes = this.differ.diff(this.rows);
         if (changes) {
@@ -421,7 +417,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         }
 
         if (row) {
-            const rowIndex = this.data.getRows().indexOf(row) + (this.isHeaderListVisible() ? 1 : 0);
+            const rowIndex = this.data.getRows().indexOf(row);
             this.keyManager.setActiveItem(rowIndex);
 
             const dataRowEvent = new DataRowEvent(row, mouseEvent, this);
@@ -433,10 +429,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         if (row) {
             this.handleRowSelection(row, e);
         }
-    }
-
-    private isHeaderListVisible(): boolean {
-        return this.isHeaderVisible() && this.display === DisplayMode.List;
     }
 
     private handleRowSelection(row: DataRow, e: KeyboardEvent | MouseEvent) {
@@ -522,20 +514,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                 bubbles: true
             })
         );
-    }
-
-    onColumnHeaderClick(column: DataColumn) {
-        if (column && column.sortable) {
-            const current = this.data.getSorting();
-            let newDirection = 'asc';
-            if (current && column.key === current.key) {
-                newDirection = current.direction === 'asc' ? 'desc' : 'asc';
-            }
-            this.data.setSorting(new DataSorting(column.key, newDirection));
-            this.emitSortingChangedEvent(column.key, newDirection);
-        }
-
-        this.keyManager.updateActiveItemIndex(0);
     }
 
     onSelectAllClick(matCheckboxChange: MatCheckboxChange) {
@@ -684,14 +662,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return `${row.cssClass} ${this.rowStyleClass}`;
     }
 
-    getSortingKey(): string | null {
-        if (this.data.getSorting()) {
-            return this.data.getSorting().key;
-        }
-
-        return null;
-    }
-
     selectRow(row: DataRow, value: boolean) {
         if (row) {
             row.isSelected = value;
@@ -718,12 +688,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         return null;
     }
 
-    getSortableColumns() {
-        return this.data.getColumns().filter((column) => {
-            return column.sortable === true;
-        });
-    }
-
     isEmpty() {
         return this.data.getRows().length === 0;
     }
@@ -741,17 +705,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             detail: {
                 row: row,
                 selection: this.selection
-            },
-            bubbles: true
-        });
-        this.elementRef.nativeElement.dispatchEvent(domEvent);
-    }
-
-    private emitSortingChangedEvent(key: string, direction: string) {
-        const domEvent = new CustomEvent('sorting-changed', {
-            detail: {
-                key,
-                direction
             },
             bubbles: true
         });
@@ -791,25 +744,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     getAutomationValue(row: DataRow): any {
         const name = this.getNameColumnValue();
         return name ? row.getValue(name.key) : '';
-    }
-
-    getAriaSort(column: DataColumn): string {
-        if (!this.isColumnSortActive(column)) {
-            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_NONE';
-        }
-
-        return this.isColumnSorted(column, 'asc') ?
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING' :
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING';
-    }
-
-    getSortLiveAnnouncement(column: DataColumn): string {
-        if (!this.isColumnSortActive(column)) {
-            return 'ADF-DATATABLE.ACCESSIBILITY.SORT_DEFAULT' ;
-        }
-        return this.isColumnSorted(column, 'asc') ?
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_ASCENDING_BY' :
-            'ADF-DATATABLE.ACCESSIBILITY.SORT_DESCENDING_BY';
     }
 }
 

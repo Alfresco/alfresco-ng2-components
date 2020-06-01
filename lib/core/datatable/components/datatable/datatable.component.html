@@ -5,54 +5,26 @@
     [class.adf-datatable-list]="display === 'list'"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
     [class.adf-datatable--empty]="!isHeaderVisible()">
-    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !showHeader }">
-        <adf-datatable-row
-            data-automation-id="datatable-row-header"
-            [disabled]="!showHeader"
-            class="adf-datatable-row"
-            *ngIf="display === 'list'"
-            role="row">
-            <!-- Actions (left) -->
-            <div *ngIf="actions && actionsPosition === 'left'" class="adf-actions-column adf-datatable-cell-header">
-                <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
-            </div>
-            <!-- Columns -->
-            <div *ngIf="multiselect" class="adf-datatable-cell-header adf-datatable-checkbox">
-                <mat-checkbox [indeterminate]="isSelectAllIndeterminate" [checked]="isSelectAllChecked" (change)="onSelectAllClick($event)" class="adf-checkbox-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.SELECT_ALL' | translate }}</mat-checkbox>
-            </div>
-            <div class="adf-datatable-cell--{{col.type || 'text'}} {{col.cssClass}} adf-datatable-cell-header"
-                 *ngFor="let col of data.getColumns()"
-                 [class.adf-sortable]="col.sortable"
-                 [attr.data-automation-id]="'auto_id_' + col.key"
-                 [class.adf-datatable__header--sorted-asc]="isColumnSorted(col, 'asc')"
-                 [class.adf-datatable__header--sorted-desc]="isColumnSorted(col, 'desc')"
-                 (click)="onColumnHeaderClick(col)"
-                 (keyup.enter)="onColumnHeaderClick(col)"
-                 role="columnheader"
-                 [attr.tabindex]="showHeader ? 0 : null"
-                 [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
-                 adf-drop-zone dropTarget="header" [dropColumn]="col">
-                <span *ngIf="col.title" class="adf-datatable-cell-value">{{ col.title | translate}}</span>
-                <span *ngIf="col.title && col.sortable" class="adf-sr-only" aria-live="polite">{{ getSortLiveAnnouncement(col) | translate: { string: col.title | translate } }}</span>
-            </div>
-            <!-- Actions (right) -->
-            <div *ngIf="actions && actionsPosition === 'right'" class="adf-actions-column adf-datatable-cell-header adf-datatable__actions-cell">
-                <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
-            </div>
-        </adf-datatable-row>
-        <mat-form-field *ngIf="display === 'gallery' && showHeader">
-            <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
-                <mat-option *ngFor="let col of getSortableColumns()"
-                            [value]="col.key"
-                            [attr.data-automation-id]="'grid-view-sorting-'+col.title"
-                            (click)="onColumnHeaderClick(col)"
-                            (keyup.enter)="onColumnHeaderClick(col)">
-                    {{ col.title | translate}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
+    <adf-datatable-header
+        [showHeader]="showHeader"
+        [display]="display"
+        [data]="data"
+        [actions]="actions"
+        [actionsPosition]="actionsPosition"
+        [multiselect]="multiselect"
+        [loading]="loading"
+        [noPermission]="noPermission"
+        [isSelectAllIndeterminate]="isSelectAllIndeterminate"
+        [isSelectAllChecked]="isSelectAllChecked"
+        (selectAll)="onSelectAllClick($event)">
+        <ng-template let-col>
+            <ng-template
+                let-col
+                [ngTemplateOutlet]="filterTemplateRef"
+                [ngTemplateOutletContext]="{$implicit: col}">
+            </ng-template>
+        </ng-template>
+    </adf-datatable-header>
     <div class="adf-datatable-body" role="rowgroup">
         <ng-container *ngIf="!loading && !noPermission">
             <adf-datatable-row *ngFor="let row of data.getRows(); let idx = index"
