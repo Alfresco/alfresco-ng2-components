@@ -22,8 +22,7 @@ branches:
 
 stages:
   - name: Lint & Build Dist
-    if: type = pull_request OR type = api
-  - name: Lint & Build Dist & Release
+  - name: Npm Release
     if: (type = push OR type = cron) AND tag IS blank
   - name: Update Rancher
     if: (type = push AND tag IS blank)  OR type = api
@@ -58,7 +57,9 @@ jobs:
           name:  Build
           script:
             - ./scripts/travis/build/build.sh
-          after_success: ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
+          after_success:
+            - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
+            - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
         - stage: Lint & Build Dist
           name: Lint
           script:
@@ -66,13 +67,12 @@ jobs:
 
 
         # Run Only on develop and master
-        - stage: Lint & Build Dist & Release
-          name:  Lint & Build Dist & Release
-          script:
-            - ./scripts/travis/build/build.sh || exit 1;
-            - ./scripts/lint.sh || exit 1;
-            - ./scripts/travis/release/release-npm.sh
+        - stage:
 
+          name: Npm Release
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
+          script:
+            - ./scripts/travis/release/release-npm.sh
 
         - stage: Unit test
           name: Unit test content
@@ -148,5 +148,4 @@ notifications:
 cache:
   directories:
   - node_modules
-  - lib/dist
   - tmp
