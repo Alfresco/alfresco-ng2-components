@@ -25,7 +25,6 @@ describe('User Info - SSO', () => {
     const loginSSOPage = new LoginSSOPage();
     const userInfoPage = new UserInfoPage();
 
-
     const apiService = new ApiService({ authType: 'OAUTH' });
     const identityService = new IdentityService(apiService);
     const usersActions = new UsersActions(apiService);

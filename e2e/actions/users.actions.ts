@@ -68,7 +68,7 @@ export class UsersActions {
                     const apsUserTenant = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
                     user.tenantId = apsUserTenant.tenantId;
                 }
-            }catch(e){}
+            } catch (e) {}
         }
 
         if (this.api.apiService.isOauthConfiguration()) {

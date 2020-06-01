@@ -19,24 +19,24 @@ import { AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 
 export abstract class Api {
-  public api: AlfrescoApi;
+    public api: AlfrescoApi;
 
-  constructor(root: string) {
-    this.api  = this.configureApi(root);
-  }
+    constructor(root: string) {
+        this.api = this.configureApi(root);
+    }
 
-  private configureApi(root: string): AlfrescoApi {
-      const config = browser.params.adminapp.apiConfig;
+    private configureApi(root: string): AlfrescoApi {
+        const config = browser.params.adminapp.apiConfig;
 
-    return new AlfrescoApi({
-      provider: 'BPM',
-      authType: config.authType,
-      oauth2: config.oauth2,
-      hostBpm: config.bpmHost  + '/' + root
-    });
-  }
+        return new AlfrescoApi({
+            provider: 'BPM',
+            authType: config.authType,
+            oauth2: config.oauth2,
+            hostBpm: config.bpmHost + '/' + root
+        });
+    }
 
-  abstract setUp(): Promise<Api>;
+    abstract setUp(): Promise<Api>;
 
-  abstract tearDown();
+    abstract tearDown();
 }

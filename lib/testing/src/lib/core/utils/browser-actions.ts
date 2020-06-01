@@ -38,12 +38,12 @@ export class BrowserActions {
     }
 
     static async waitUntilActionMenuIsVisible(): Promise<void> {
-        const actionMenu = element(by.css('div[role="menu"]'));
+        const actionMenu = element.all(by.css('div[role="menu"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(actionMenu);
     }
 
     static async waitUntilActionMenuIsNotVisible(): Promise<void> {
-        const actionMenu = element(by.css('div[role="menu"]'));
+        const actionMenu = element.all(by.css('div[role="menu"]')).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
     }
 
