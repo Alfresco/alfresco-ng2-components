@@ -17,31 +17,34 @@
 
 import { ApiService, IdentityService, LoginSSOPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('User Info - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const userInfoPage = new UserInfoPage();
-    let silentLogin, identityUser;
-    let identityService: IdentityService;
+
+
+    const apiService = new ApiService({ authType: 'OAUTH' });
+    const identityService = new IdentityService(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    let identityUser;
 
     beforeAll(async () => {
-        const apiService = new ApiService(browser.params.testConfig.appConfig.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.appConfig.oauth2.host, 'ECM');
         await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        identityService = new IdentityService(apiService);
-        identityUser = await identityService.createIdentityUser();
+        identityUser = await usersActions.createUser();
 
-        silentLogin = false;
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost, silentLogin, true, browser.params.testConfig.appConfig.oauth2.clientId);
+            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
         await loginSSOPage.clickOnSSOButton();
 
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
-   });
+    });
 
     afterAll(async () => {
         if (identityService) {

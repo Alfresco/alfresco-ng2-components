@@ -9,11 +9,11 @@ const HOST = process.env.URL_HOST_ADF;
 
 const LOG = process.env.LOG;
 
-const ECM_HOST = process.env.PROXY_HOST_ADF || HOST || 'ecm';
-const BPM_HOST = process.env.PROXY_HOST_ADF || HOST || 'bpm';
+const HOST_ECM = process.env.PROXY_HOST_ADF || HOST || 'ecm';
+const HOST_BPM = process.env.PROXY_HOST_ADF || HOST || 'bpm';
 
-const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'BASIC';
-const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'OAUTH';
+const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'ALL';
+const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'BASIC';
 
 const OAUTH_HOST = process.env.HOST_SSO || process.env.PROXY_HOST_ADF || HOST || 'oauth';
 const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || 'alfresco';
@@ -34,8 +34,8 @@ const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERN
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 
 const appConfig = {
-    "hostEcm": ECM_HOST,
-    "hostBpm": BPM_HOST,
+    "hostEcm": HOST_ECM,
+    "hostBpm": HOST_BPM,
     "identityHost": `${OAUTH_HOST}/auth/admin/realms/alfresco`,
     "provider": PROVIDER,
     "authType": AUTH_TYPE,
@@ -53,8 +53,8 @@ const appConfig = {
 
 if (LOG) {
     console.log('======= test.config.js hostBPM ====== ');
-    console.log('hostBPM : ' + ECM_HOST);
-    console.log('hostECM : ' + BPM_HOST);
+    console.log('hostBPM : ' + HOST_ECM);
+    console.log('hostECM : ' + HOST_BPM);
     console.log('HOST : ' + HOST);
     console.log('USERNAME_ADF : ' + USERNAME_ADF + ' PASSWORD_ADF : ' + PASSWORD_ADF);
     console.log('IDENTITY_ADMIN_EMAIL : ' + IDENTITY_ADMIN_EMAIL + ' IDENTITY_ADMIN_PASSWORD : ' + IDENTITY_ADMIN_PASSWORD);

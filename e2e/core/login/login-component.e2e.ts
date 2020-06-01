@@ -193,11 +193,15 @@ describe('Login component', () => {
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
+        browser.params.testConfig.appConfig.provider = 'ECM';
+
         await loginPage.goToLoginPage();
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         await loginPage.waitForElements();
+
+        browser.params.testConfig.appConfig.provider = 'ALL';
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', async () => {
@@ -238,8 +242,7 @@ describe('Login component', () => {
     });
 
     it('[C291854] Should be possible login in valid credentials', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
-        await loginPage.waitForElements();
+        await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterUsername(invalidUsername);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);

@@ -124,7 +124,6 @@ export class LoginPage {
     }
 
     async getSignInButtonIsEnabled(): Promise<boolean> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.signInButton);
         return this.signInButton.isEnabled();
     }
 

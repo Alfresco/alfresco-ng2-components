@@ -26,7 +26,7 @@ export abstract class Api {
   }
 
   private configureApi(root: string): AlfrescoApi {
-    const config = browser.params.testConfig.appConfig;
+      const config = browser.params.adminapp.apiConfig;
 
     return new AlfrescoApi({
       provider: 'BPM',

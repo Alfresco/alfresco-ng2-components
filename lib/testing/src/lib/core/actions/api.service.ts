@@ -44,6 +44,7 @@ export class ApiService {
             this.config.provider = provider;
         }
 
+        this.config.oauth2.implicitFlow = false;
         this.apiService = new AlfrescoApi(this.config);
     }
 

@@ -20,8 +20,8 @@ import { browser } from 'protractor';
 
 export class UserModel {
 
-    firstName?: string = StringUtil.generateRandomString();
-    lastName?: string = StringUtil.generateRandomString();
+    firstName?: string = StringUtil.generateRandomLowercaseString();
+    lastName?: string = StringUtil.generateRandomLowercaseString();
     password?: string = StringUtil.generateRandomString();
     email?: string;
     username?: string;
@@ -33,13 +33,14 @@ export class UserModel {
 
     constructor(details: any = {}) {
         const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
-        const USER_IDENTIFY = StringUtil.generateRandomString();
-
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
+
+        const USER_IDENTIFY = `${this.firstName}.${this.lastName}`;
+
         this.password = details.password ? details.password : this.password;
         this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}.com`;
-        this.username = details.username ? details.username : USER_IDENTIFY.toLowerCase();
+        this.username = details.username ? details.username : USER_IDENTIFY;
         this.idIdentityService = details.idIdentityService ? details.idIdentityService : this.idIdentityService;
         this.type = details.type ? details.type : this.type;
         this.tenantId = details.tenantId ? details.tenantId : this.tenantId;

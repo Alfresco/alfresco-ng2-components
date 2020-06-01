@@ -38,6 +38,7 @@ export class UsersActions {
     }
 
     async createUser(emailOrUserModel?: string | UserModel, firstName?: string, lastName?: string, tenantId?: number, password?: string): Promise<UserModel> {
+
         let user;
 
         if (typeof emailOrUserModel !== 'string') {
@@ -60,18 +61,21 @@ export class UsersActions {
         if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
             Logger.log('Create user BPM');
 
-            if (tenantId) {
-                await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
-            } else {
-                const apsUserTenant = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
-                user.tenantId = apsUserTenant.tenantId;
-            }
+            try {
+                if (tenantId) {
+                    await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
+                } else {
+                    const apsUserTenant = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
+                    user.tenantId = apsUserTenant.tenantId;
+                }
+            }catch(e){}
         }
 
         if (this.api.apiService.isOauthConfiguration()) {
             Logger.log('Create user identity');
 
-            await this.identityService.createIdentityUser(user);
+            const identityUser = await this.identityService.createIdentityUser(user);
+            user.idIdentityService = identityUser.idIdentityService;
         }
 
         return user;
