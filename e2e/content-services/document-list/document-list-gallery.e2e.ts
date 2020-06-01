@@ -42,8 +42,6 @@ describe('Document List Component', () => {
             CREATED: 'Created'
         };
 
-        let funnyUser;
-
         const pdfFile = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
@@ -63,7 +61,7 @@ describe('Document List Component', () => {
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            funnyUser = acsUser = await usersActions.createUser();
+            acsUser = await usersActions.createUser();
             await apiService.getInstance().login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
@@ -124,27 +122,27 @@ describe('Document List Component', () => {
             await contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED);
 
             await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
-            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`105.02 KB`);
-            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`11.81 KB`);
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY))
-                .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+                .toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY))
-                .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+                .toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });
