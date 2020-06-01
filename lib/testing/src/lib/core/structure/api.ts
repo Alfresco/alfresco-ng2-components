@@ -20,14 +20,14 @@ import { browser } from 'protractor';
 
 export abstract class Api {
   public api: AlfrescoApi;
-  testConfig = browser.params;
 
   constructor(root: string) {
     this.api  = this.configureApi(root);
   }
 
   private configureApi(root: string): AlfrescoApi {
-    const config = browser.params.adminapp.apiConfig;
+    const config = browser.params.testConfig.appConfig;
+
     return new AlfrescoApi({
       provider: 'BPM',
       authType: config.authType,
