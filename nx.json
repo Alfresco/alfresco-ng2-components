@@ -5,7 +5,11 @@
     "package.json": "*",
     "tsconfig.json": "*",
     "tslint.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    ".travis.yml": "*",
+    "e2e/protractor.excludes.json": [
+      "demoshell-e2e"
+    ]
   },
   "projects": {
     "demoshell": {
