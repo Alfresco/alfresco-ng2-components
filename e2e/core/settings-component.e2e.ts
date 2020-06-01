@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, SettingsPage, UserModel } from '@alfresco/adf-testing';
+import { BrowserActions, SettingsPage } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -31,11 +31,6 @@ describe('Settings component', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginError = 'Request has been terminated ' +
         'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
-
-    const adminUserModel = new UserModel({
-        'id': browser.params.testConfig.admin.email,
-        'password': browser.params.testConfig.admin.password
-    });
 
     describe('Should be able to change Urls in the Settings', () => {
         beforeEach(async () => {
@@ -79,8 +74,8 @@ describe('Settings component', () => {
             await settingsPage.setContentServicesURL('http://localhost:7070');
             await settingsPage.clickApply();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(adminUserModel.id);
-            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.enterUsername(browser.params.testConfig.admin.email);
+            await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
             await expect(await loginPage.getLoginError()).toMatch(loginError);
         });
@@ -90,8 +85,8 @@ describe('Settings component', () => {
             await settingsPage.setProcessServicesURL('http://localhost:7070');
             await settingsPage.clickApply();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(adminUserModel.id);
-            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.enterUsername(browser.params.testConfig.admin.email);
+            await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
             await expect(await loginPage.getLoginError()).toMatch(loginError);
         });
@@ -131,8 +126,8 @@ describe('Settings component', () => {
             await settingsPage.checkProviderDropdownIsDisplayed();
             await settingsPage.setProviderBpm();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(adminUserModel.id);
-            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.enterUsername(browser.params.testConfig.admin.email);
+            await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
@@ -161,8 +156,8 @@ describe('Settings component', () => {
             await settingsPage.checkProviderDropdownIsDisplayed();
             await settingsPage.setProviderEcm();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(adminUserModel.id);
-            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.enterUsername(browser.params.testConfig.admin.email);
+            await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();
@@ -188,8 +183,8 @@ describe('Settings component', () => {
             await settingsPage.checkProviderDropdownIsDisplayed();
             await settingsPage.setProviderEcmBpm();
             await loginPage.waitForElements();
-            await loginPage.enterUsername(adminUserModel.id);
-            await loginPage.enterPassword(adminUserModel.password);
+            await loginPage.enterUsername(browser.params.testConfig.admin.email);
+            await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();

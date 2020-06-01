@@ -62,7 +62,7 @@ if (LOG) {
 
 module.exports = {
 
-    projectName: 'ADF',
+    projectName: 'adf',
 
     appConfig: appConfig,
 

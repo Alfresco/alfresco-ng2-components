@@ -31,10 +31,6 @@ describe('Login component', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
-    const adminUserModel = new UserModel({
-        'id': browser.params.testConfig.admin.email,
-        'password': browser.params.testConfig.admin.password
-    });
 
     const userA = new UserModel();
     const userB = new UserModel();
@@ -116,7 +112,7 @@ describe('Login component', () => {
 
     it('[C260045] Should enable login button after entering a valid username and a password', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.enterUsername(adminUserModel.email);
+        await loginPage.enterUsername(browser.params.testConfig.admin.email);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
@@ -165,7 +161,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -187,7 +183,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -198,7 +194,7 @@ describe('Login component', () => {
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         await loginPage.waitForElements();
@@ -208,13 +204,13 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await processServicesPage.checkApsContainer();
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         await loginPage.waitForElements();
@@ -222,7 +218,7 @@ describe('Login component', () => {
 
     it('[C279930] Should a user still be logged-in when open a new tab', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await browser.executeScript("window.open('about: blank', '_blank');");
 
@@ -251,6 +247,6 @@ describe('Login component', () => {
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
         await loginPage.clickSignInButton();
         await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
     });
 });

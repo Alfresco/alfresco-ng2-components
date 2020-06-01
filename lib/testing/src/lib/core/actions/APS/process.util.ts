@@ -38,7 +38,7 @@ export class ProcessUtil {
 
             return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
-            Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
@@ -49,7 +49,7 @@ export class ProcessUtil {
             const startProcessOptions: any = { processDefinitionId: processDefinitionList.data[0].id, name: processName ? processName : StringUtil.generateRandomString(5).toLowerCase() };
             return this.api.apiService.activiti.processApi.startNewProcessInstance(startProcessOptions);
         } catch (error) {
-            Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Start Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
@@ -57,7 +57,7 @@ export class ProcessUtil {
         try {
             return this.api.apiService.activiti.processApi.deleteProcessInstance(processInstance);
         } catch (error) {
-            Logger.error('Cancel Process - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Cancel Process - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 
@@ -69,7 +69,7 @@ export class ProcessUtil {
             });
             return chosenProcess;
         } catch (error) {
-            Logger.error('Get ProcessDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            Logger.error('Get ProcessDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 

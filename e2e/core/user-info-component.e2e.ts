@@ -15,22 +15,26 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UserInfoPage, UserModel } from '@alfresco/adf-testing';
+import { PeopleApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import PeopleAPI = require('../restAPI/ACS/PeopleAPI');
+import path = require('path');
+import fs = require('fs');
 
 describe('User Info component', () => {
 
     const loginPage = new LoginSSOPage();
     const userInfoPage = new UserInfoPage();
-    let processUserModel, contentUserModel;
     const navigationBarPage = new NavigationBarPage();
 
     const apiService = new ApiService({ provider: 'ALL' });
     const usersActions = new UsersActions(apiService);
+    const peopleApi: PeopleApi = new PeopleApi(apiService.getInstance());
+
+    let user;
 
     const acsAvatarFileModel = new FileModel({
         'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
@@ -42,21 +46,9 @@ describe('User Info component', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions(apiService);
-
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        processUserModel = await users.createTenantAndUser();
-
-        contentUserModel = new UserModel({
-            'id': processUserModel.email,
-            'password': processUserModel.password,
-            'firstName': processUserModel.firstName,
-            'lastName': processUserModel.lastName,
-            'email': processUserModel.email
-        });
-
-        await usersActions.createUser(contentUserModel);
+        user = await usersActions.createUser();
     });
 
     afterAll(async () => {
@@ -64,15 +56,15 @@ describe('User Info component', () => {
     });
 
     it('[C260111] Should display UserInfo when Process Services and Content Services are enabled', async () => {
-        await loginPage.login(contentUserModel.email, contentUserModel.password);
+        await loginPage.login(user.email, user.password);
 
         await userInfoPage.clickUserProfile();
         await userInfoPage.dialogIsDisplayed();
         await userInfoPage.checkContentServicesTabIsSelected();
 
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getContentTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getContentEmail()).toEqual(user.email);
         await expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         await userInfoPage.checkInitialImage();
@@ -84,22 +76,22 @@ describe('User Info component', () => {
 
         await browser.sleep(1000);
 
-        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        await expect(await userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        await expect(await userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
+        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getProcessTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getProcessEmail()).toEqual(user.email);
 
         await userInfoPage.closeUserProfile();
     });
 
     it('[C260113] Should display UserInfo when Content Services is enabled and Process Services is disabled', async () => {
-        await loginPage.login(contentUserModel.email, contentUserModel.password);
+        await loginPage.login(user.email, user.password);
 
         await userInfoPage.clickUserProfile();
         await userInfoPage.dialogIsDisplayed();
 
-        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getContentTitle()).toEqual(contentUserModel.firstName + ' ' + contentUserModel.lastName);
-        await expect(await userInfoPage.getContentEmail()).toEqual(contentUserModel.email);
+        await expect(await userInfoPage.getContentHeaderTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getContentTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getContentEmail()).toEqual(user.email);
         await expect(await userInfoPage.getContentJobTitle()).toEqual('N/A');
 
         await userInfoPage.checkInitialImage();
@@ -110,15 +102,17 @@ describe('User Info component', () => {
     });
 
     it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', async () => {
-        await loginPage.login(contentUserModel.email, contentUserModel.password);
+        browser.params.testConfig.appConfig.provider = 'BPM';
+
+        await loginPage.login(user.email, user.password);
 
         await userInfoPage.clickUserProfile();
 
         await userInfoPage.dialogIsDisplayed();
 
-        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        await expect(await userInfoPage.getProcessTitle()).toEqual(processUserModel.firstName + ' ' + processUserModel.lastName);
-        await expect(await userInfoPage.getProcessEmail()).toEqual(processUserModel.email);
+        await expect(await userInfoPage.getProcessHeaderTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getProcessTitle()).toEqual(user.firstName + ' ' + user.lastName);
+        await expect(await userInfoPage.getProcessEmail()).toEqual(user.email);
 
         await userInfoPage.checkInitialImage();
         await userInfoPage.APSProfileImageNotDisplayed();
@@ -127,11 +121,11 @@ describe('User Info component', () => {
     });
 
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
-        await PeopleAPI.updateAvatarViaAPI(contentUserModel, acsAvatarFileModel, '-me-');
-        await PeopleAPI.getAvatarViaAPI(4, contentUserModel, '-me-', async () => {
-        });
+        browser.params.testConfig.appConfig.provider = 'ECM';
 
-        await loginPage.login(contentUserModel.email, contentUserModel.password);
+        await updateAvatarACS();
+
+        await loginPage.login(user.email, user.password);
 
         await userInfoPage.clickUserProfile();
 
@@ -141,11 +135,13 @@ describe('User Info component', () => {
     });
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
+        browser.params.testConfig.appConfig.provider = 'BPM';
+
         const users = new UsersActions(apiService);
-        await apiService.getInstance().login(contentUserModel.email, contentUserModel.password);
+        await apiService.getInstance().login(user.email, user.password);
         await users.changeProfilePictureAps(apsAvatarFileModel.getLocation());
 
-        await loginPage.login(contentUserModel.email, contentUserModel.password);
+        await loginPage.login(user.email, user.password);
 
         await userInfoPage.clickUserProfile();
 
@@ -156,15 +152,23 @@ describe('User Info component', () => {
     });
 
     it('[C260120] Should not display profile image in UserInfo when deleted in ACS', async () => {
-        await PeopleAPI.deleteAvatarViaAPI(contentUserModel, '-me-');
+        browser.params.testConfig.appConfig.provider = 'ECM';
 
-        await loginPage.login(contentUserModel.email, contentUserModel.password);
+        await peopleApi.deleteAvatarImage(user.email);
+
+        await loginPage.login(user.email, user.password);
 
         await userInfoPage.clickUserProfile();
 
         await userInfoPage.checkInitialImage();
-        await userInfoPage.APSProfileImageNotDisplayed();
         await userInfoPage.ACSProfileImageNotDisplayed();
         await userInfoPage.closeUserProfile();
     });
+
+    const updateAvatarACS = async function () {
+        await apiService.getInstance().login(user.email, user.password);
+        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, acsAvatarFileModel.getLocation()));
+        const file: any = fs.readFileSync(absolutePath);
+        await peopleApi.updateAvatarImage('-me-', file);
+    };
 });

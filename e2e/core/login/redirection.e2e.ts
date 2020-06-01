@@ -36,10 +36,6 @@ describe('Login component - Redirect', () => {
 
     const user = new UserModel();
     const userFolderOwner = new UserModel();
-    const adminUserModel = new UserModel({
-        'id': browser.params.testConfig.admin.email,
-        'password': browser.params.testConfig.admin.password
-    });
     let uploadedFolder;
 
     const apiService = new ApiService();
@@ -79,7 +75,7 @@ describe('Login component - Redirect', () => {
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
 
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -95,7 +91,7 @@ describe('Login component - Redirect', () => {
 
         await settingsPage.setProviderEcmBpm();
 
-        await loginPage.login(adminUserModel.email, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();

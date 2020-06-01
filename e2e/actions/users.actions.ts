@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Tenant } from '../models/APS/tenant';
 import path = require('path');
 import fs = require('fs');
 import remote = require('selenium-webdriver/remote');
+
 import { browser } from 'protractor';
+
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
+import { Tenant } from '../models/APS/tenant';
 
 export class UsersActions {
 
@@ -97,7 +99,7 @@ export class UsersActions {
         }));
     }
 
-    async changeProfilePictureAps(fileLocation): Promise<ImageUploadRepresentation> {
+    async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
         browser.setFileDetector(new remote.FileDetector());
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
@@ -105,5 +107,4 @@ export class UsersActions {
 
         return this.api.apiService.activiti.profileApi.uploadProfilePicture(file);
     }
-
 }
