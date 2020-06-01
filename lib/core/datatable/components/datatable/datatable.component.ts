@@ -173,6 +173,9 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
 
+    @ContentChild(TemplateRef)
+    filterTemplateRef: TemplateRef<any>;
+
     isSelectAllIndeterminate: boolean = false;
     isSelectAllChecked: boolean = false;
     selection = new Array<DataRow>();
