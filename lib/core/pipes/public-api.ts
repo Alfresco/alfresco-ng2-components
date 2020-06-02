@@ -27,5 +27,6 @@ export * from './node-name-tooltip.pipe';
 export * from './text-highlight.pipe';
 export * from './time-ago.pipe';
 export * from './user-initial.pipe';
+export * from './process-name.pipe';
 
 export * from './pipe.module';

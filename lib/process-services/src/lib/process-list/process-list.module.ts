@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CoreModule } from '@alfresco/adf-core';
+import { CoreModule, ProcessNamePipe } from '@alfresco/adf-core';
 import { MaterialModule } from '../material.module';
 import { ProcessCommentsModule } from '../process-comments/process-comments.module';
 import { TaskListModule } from '../task-list/task-list.module';
@@ -66,6 +66,9 @@ import { FormModule } from '../form/form.module';
         ProcessInstanceHeaderComponent,
         ProcessInstanceTasksComponent,
         StartProcessInstanceComponent
+    ],
+    providers: [
+        ProcessNamePipe
     ]
 })
 export class ProcessListModule {

@@ -30,6 +30,7 @@ import { FileTypePipe } from './file-type.pipe';
 import { MultiValuePipe } from './multi-value.pipe';
 import { LocalizedDatePipe } from './localized-date.pipe';
 import { DecimalNumberPipe } from './decimal-number.pipe';
+import { ProcessNamePipe } from './process-name.pipe';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import { DecimalNumberPipe } from './decimal-number.pipe';
         FileTypePipe,
         MultiValuePipe,
         LocalizedDatePipe,
-        DecimalNumberPipe
+        DecimalNumberPipe,
+        ProcessNamePipe
     ],
     providers: [
         FileSizePipe,
@@ -74,7 +76,8 @@ import { DecimalNumberPipe } from './decimal-number.pipe';
         FileTypePipe,
         MultiValuePipe,
         LocalizedDatePipe,
-        DecimalNumberPipe
+        DecimalNumberPipe,
+        ProcessNamePipe
     ]
 })
 export class PipeModule {

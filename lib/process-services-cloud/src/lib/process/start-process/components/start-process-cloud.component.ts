@@ -23,7 +23,7 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel, ProcessNamePipe } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -107,12 +107,13 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processDefinitionLoaded = false;
 
     constructor(private startProcessCloudService: StartProcessCloudService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private processNamePipe: ProcessNamePipe) {
     }
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
+            processInstanceName: new FormControl('', [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
             processDefinition: new FormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
         });
 
@@ -373,7 +374,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     }
 
     processDefinitionSelectionChanged(processDefinition) {
-        this.processDefinitionSelection.emit(processDefinition);
+        if (processDefinition) {
+            const defaultProcessName = this.processNamePipe.transform(this.name, processDefinition.name);
+            this.processInstanceName.setValue(defaultProcessName);
+            this.processDefinitionSelection.emit(processDefinition);
+        }
     }
 
     ngOnDestroy() {
