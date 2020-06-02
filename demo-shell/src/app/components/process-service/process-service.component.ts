@@ -36,7 +36,7 @@ import {
 import {
     FORM_FIELD_VALIDATORS, FormRenderingService, FormService,
     DynamicTableRow, ValidateDynamicTableRowEvent, AppConfigService, PaginationComponent, UserPreferenceValues,
-    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent
+    AlfrescoApiService, UserPreferencesService, LogService, DataCellEvent, NotificationService
 } from '@alfresco/adf-core';
 
 import { AnalyticsReportListComponent } from '@alfresco/adf-insights';
@@ -174,6 +174,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
                 formRenderingService: FormRenderingService,
                 formService: FormService,
                 private location: Location,
+                private notificationService: NotificationService,
                 private preferenceService: UserPreferencesService) {
 
         this.defaultProcessName = this.appConfig.get<string>('adf-start-process.name');
@@ -401,6 +402,10 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     onCancelProcessInstance() {
         this.currentProcessInstanceId = null;
         this.reloadProcessFilters();
+    }
+
+    onStartProcessError(event: any) {
+        this.notificationService.openSnackMessage(event.response.body.message);
     }
 
     isStartProcessMode(): boolean {

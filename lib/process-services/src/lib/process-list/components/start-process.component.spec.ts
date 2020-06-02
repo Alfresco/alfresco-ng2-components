@@ -18,7 +18,7 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
@@ -306,20 +306,6 @@ describe('StartFormComponent', () => {
             });
         });
 
-        it('should indicate an error to the user if process defs cannot be loaded', async(() => {
-            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(throwError({}));
-            component.appId = 123;
-            const change = new SimpleChange(null, 123, true);
-            component.ngOnChanges({ 'appId': change });
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                const errorEl = fixture.nativeElement.querySelector('#error-message');
-                expect(errorEl).not.toBeNull('Expected error message to be present');
-                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
-            });
-        }));
-
         it('should show no process available message when no process definition is loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([]));
             component.appId = 123;
@@ -328,7 +314,7 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
-                const noProcessElement = fixture.nativeElement.querySelector('#no-process-message');
+                const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
                 expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
                 expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
             });
@@ -498,30 +484,6 @@ describe('StartFormComponent', () => {
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(emitSpy).toHaveBeenCalledWith(newProcess);
-            });
-        }));
-
-        it('should throw error event when process cannot be started', async(() => {
-            const errorSpy = spyOn(component.error, 'error');
-            const error = { message: 'My error' };
-            startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
-            component.selectedProcessDef = testProcessDef;
-            component.startProcess();
-            fixture.whenStable().then(() => {
-                expect(errorSpy).toHaveBeenCalledWith(error);
-            });
-        }));
-
-        it('should indicate an error to the user if process cannot be started', async(() => {
-            fixture.detectChanges();
-            startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
-            component.selectedProcessDef = testProcessDef;
-            component.startProcess();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const errorEl = fixture.nativeElement.querySelector('#error-message');
-                expect(errorEl).not.toBeNull();
-                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.START');
             });
         }));
 

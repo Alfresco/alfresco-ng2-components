@@ -87,29 +87,17 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Input()
     processFilterSelector: boolean = true;
 
-    /** (optional) Define the application dropdown placeholder. */
-    @Input()
-    applicationDropdownPlaceholder: string;
-
-    /** (optional) Define the empty template title. */
-    @Input()
-    emptyTemplateTitle: string;
-
-    /** (optional) Define the empty template icon. */
-    @Input()
-    emptyTemplateIcon: string;
-
     /** Emitted when the process starts. */
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
     /** Emitted when the process is canceled. */
     @Output()
-    cancel: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+    cancel: EventEmitter<any> = new EventEmitter<any>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     /** Emitted when process definition selection changes. */
     @Output()
@@ -127,7 +115,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
     selectedProcessDef: ProcessDefinitionRepresentation;
-    errorMessageId: string = '';
     processNameInput: FormControl;
     processDefinitionInput: FormControl;
     filteredProcessesDefinitions$: Observable<ProcessDefinitionRepresentation[]>;
@@ -234,7 +221,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     loadProcessDefinitions(appId: any): void {
         this.isProcessDefinitionsLoading = true;
         this.resetSelectedProcessDefinition();
-        this.resetErrorMessage();
 
         this.activitiProcess.getProcessDefinitions(appId).pipe(
             map((processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
@@ -263,9 +249,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 this.processDefinitionSelection.emit(this.selectedProcessDef);
                 this.isProcessDefinitionsLoading = false;
             },
-            () => {
-                this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+            (error) => {
                 this.isProcessDefinitionsLoading = false;
+                this.error.emit(error);
             });
     }
 
@@ -310,26 +296,30 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     this.applicationSelection.emit(this.selectedApplication);
                     this.toggleProcessNameAndDefinitionsDropdown();
                     this.isAppsLoading = false;
-                    if (this.selectedApplication && this.selectedApplication.id) {
-                        this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
-                    } else {
-                        this.isProcessDefinitionsLoading = false;
-                        this.resetSelectedProcessDefinition();
-                    }
+                    this.loadProcessDefinitionsBasedOnSelectedApp();
                 },
-                err => {
-                    this.error.emit(err);
+                (err) => {
                     this.isAppsLoading = false;
+                    this.error.emit(err);
                 }
             );
 
+    }
+
+    loadProcessDefinitionsBasedOnSelectedApp() {
+        if (this.selectedApplication && this.selectedApplication.id) {
+            this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
+        } else {
+            this.isProcessDefinitionsLoading = false;
+            this.resetSelectedProcessDefinition();
+        }
     }
 
     onAppSelectionChange(selectedApplication: any) {
         this.selectedApplication = selectedApplication.value;
         this.applicationSelection.emit(this.selectedApplication);
         this.toggleProcessNameAndDefinitionsDropdown();
-        this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
+        this.loadProcessDefinitionsBasedOnSelectedApp();
     }
 
     private isAppSelected(): boolean {
@@ -338,7 +328,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
         return apps.filter((app) => app.id);
-
     }
 
     hasApplications(): boolean {
@@ -357,7 +346,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         return this.processDefinitions.length === 0;
     }
 
-    disableDropdownButton() {
+    disableDropdownButton(): boolean {
         return this.showSelectApplicationDropdown && !this.isAppSelected();
     }
 
@@ -384,7 +373,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     startProcess(outcome?: string) {
         if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
-            this.resetErrorMessage();
             const formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
@@ -392,8 +380,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     this.start.emit(res);
                 },
                 (err) => {
-                    this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.START';
-                    this.error.error(err);
+                    this.error.emit(err);
                 }
             );
         }
@@ -405,11 +392,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     hasStartForm(): boolean {
         return this.selectedProcessDef && this.selectedProcessDef.hasStartForm;
-    }
-
-    isProcessDefinitionEmpty(): boolean {
-        const hasErrorMessage = this.errorMessageId ? true : false;
-        return this.processDefinitions ? (this.processDefinitions.length > 0 || hasErrorMessage) : hasErrorMessage;
     }
 
     isStartFormMissingOrValid(): boolean {
@@ -431,14 +413,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    private resetErrorMessage(): void {
-        this.errorMessageId = '';
-    }
-
-    hasErrorMessage(): boolean {
-        return this.processDefinitions.length === 0 && !this.errorMessageId;
-    }
-
     public onOutcomeClick(outcome: string) {
         this.startProcess(outcome);
     }
@@ -449,7 +423,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         if (this.startForm) {
             this.startForm.data = {};
         }
-        this.resetErrorMessage();
     }
 
     displayFn(process: any): string {
@@ -496,7 +469,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.processDefinitionSelection.emit(this.selectedProcessDef);
     }
 
-    isLoading() {
+    isLoading(): boolean {
         return this.showSelectApplicationDropdown ? this.isAppsLoading : false;
     }
 }
