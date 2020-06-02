@@ -169,6 +169,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     resolverFn: (row: DataRow, col: DataColumn) => any = null;
 
+    /**
+     * Flag that indicate if the datatable allow the use facet widget search for filtering.
+     */
+    @Input()
+    allowFiltering: boolean = false;
+
+    @ContentChild(TemplateRef)
+    filterTemplateRef: TemplateRef<any>;
+
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;

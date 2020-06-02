@@ -14,6 +14,7 @@
     [showHeader]="!isEmpty() && showHeader"
     [rowMenuCacheEnabled]="false"
     [stickyHeader]="stickyHeader"
+    [allowFiltering]="allowFiltering"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
@@ -22,6 +23,10 @@
     (row-select)="onNodeSelect($event.detail)"
     (row-unselect)="onNodeUnselect($event.detail)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
+
+    <ng-template let-col>
+        <!-- [ACA-3206] TODO : Implement search/filter widget HERE -->
+    </ng-template>
 
     <adf-no-content-template>
         <ng-template>

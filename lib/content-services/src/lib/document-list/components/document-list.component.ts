@@ -308,6 +308,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     noPermission: boolean = false;
     selection = new Array<NodeEntry>();
     $folderNode: Subject<Node> = new Subject<Node>();
+    allowFiltering: boolean = true;
 
     // @deprecated 3.0.0
     folderNode: Node;
