@@ -25,7 +25,6 @@ import { ProcessCommentsModule } from '../process-comments/process-comments.modu
 import { TaskListModule } from '../task-list/task-list.module';
 import { PeopleModule } from '../people/people.module';
 import { ContentWidgetModule } from '../content-widget/content-widget.module';
-
 import { ProcessAuditDirective } from './components/process-audit.directive';
 import { ProcessFiltersComponent } from './components/process-filters.component';
 import { ProcessInstanceDetailsComponent } from './components/process-instance-details.component';
