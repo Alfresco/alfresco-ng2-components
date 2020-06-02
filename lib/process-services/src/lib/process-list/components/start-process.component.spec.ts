@@ -207,6 +207,12 @@ describe('StartFormComponent', () => {
                     expect(cancelSpy).toHaveBeenCalled();
                 });
             }));
+
+            it('should return true if startFrom defined',async () => {
+                component.name = 'my:process1';
+                await fixture.whenStable();
+                expect(component.hasStartForm()).toBe(true);
+            });
         });
 
         describe('CS content connection', () => {
@@ -568,16 +574,6 @@ describe('StartFormComponent', () => {
 
             component.startProcess();
         });
-
-        it('should return true if startFrom defined', async(() => {
-            component.selectedProcessDef = testProcessDef;
-            component.name = 'my:process1';
-            component.selectedProcessDef.hasStartForm = true;
-            component.hasStartForm();
-            fixture.whenStable().then(() => {
-                expect(component.hasStartForm()).toBe(true);
-            });
-        }));
    });
 
     describe('Select applications', () => {
