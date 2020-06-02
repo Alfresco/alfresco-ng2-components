@@ -160,8 +160,8 @@ describe('Start Process Component', () => {
 
                 await startProcessPage.checkStartProcessButtonIsDisabled();
                 await startProcessPage.clickProcessDropdownArrow();
-                await startProcessPage.checkOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
-                await startProcessPage.checkOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
             });
 
             it('[C260443] Should be possible to start a process without start event', async () => {
@@ -218,9 +218,9 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
-                await startProcessPage.checkOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.checkOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
-                await startProcessPage.selectOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
@@ -230,9 +230,9 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.checkOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.checkOptionIsNotDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
-                await startProcessPage.selectOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.checkProcessOptionIsDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.checkProcessOptionIsNotDisplayed(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
@@ -252,7 +252,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.enterProcessName('Type');
                 await startProcessPage.typeProcessDefinition(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
-                await startProcessPage.selectOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.checkStartProcessButtonIsEnabled();
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.clickStartProcessButton();
@@ -277,7 +277,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
-                await startProcessPage.selectOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.clickProcessDropdownArrow();
 
