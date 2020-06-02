@@ -38,7 +38,6 @@ export class UsersActions {
     }
 
     async createUser(emailOrUserModel?: string | UserModel, firstName?: string, lastName?: string, tenantId?: number, password?: string): Promise<UserModel> {
-
         let user;
 
         if (typeof emailOrUserModel !== 'string') {
@@ -62,13 +61,22 @@ export class UsersActions {
             Logger.log('Create user BPM');
 
             try {
-                if (tenantId) {
-                    await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
+                if (tenantId || (emailOrUserModel && typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId)) {
+                    let tenantIdUser = 1;
+
+                    if (typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId) {
+                        tenantIdUser = emailOrUserModel.tenantId;
+                    } else if (tenantIdUser) {
+                        tenantIdUser = tenantId;
+                    }
+
+                    await this.createApsUser(tenantIdUser, user.email, user.firstName, user.lastName, user.password);
                 } else {
                     const apsUserTenant = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
                     user.tenantId = apsUserTenant.tenantId;
                 }
-            } catch (e) {}
+            } catch (e) {
+            }
         }
 
         if (this.api.apiService.isOauthConfiguration()) {

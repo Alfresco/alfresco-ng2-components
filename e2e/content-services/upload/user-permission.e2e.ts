@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { StringUtil, LoginSSOPage, NotificationHistoryPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { StringUtil, LoginSSOPage, NotificationHistoryPage, ApiService } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -49,57 +49,58 @@ describe('Upload - User permission', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    const acsUser = new UserModel();
-    const acsUserTwo = new UserModel();
+    let acsUser, acsUserTwo, consumerSite, managerSite;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await usersActions.createUser(acsUser);
-        await usersActions.createUser(acsUserTwo);
+        acsUser = await usersActions.createUser(acsUser);
+        acsUserTwo = await usersActions.createUser(acsUserTwo);
+    });
 
+    beforeEach(async () => {
         await loginPage.login(acsUser.email, acsUser.password);
 
-        this.consumerSite = await apiService.getInstance().core.sitesApi.createSite({
+        consumerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        this.managerSite = await apiService.getInstance().core.sitesApi.createSite({
+        managerSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(consumerSite.entry.id, {
             id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(this.managerSite.entry.id, {
+        await apiService.getInstance().core.sitesApi.addSiteMember(managerSite.entry.id, {
             id: acsUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
 
     afterEach(async () => {
-        await apiService.getInstance().core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
-        await apiService.getInstance().core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(managerSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(consumerSite.entry.id, { permanent: true });
     });
 
     describe('Consumer permissions', () => {
+
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
         });
 
         it('[C291921] Should display tooltip for uploading files without permissions', async () => {
-            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(consumerSite.entry.guid);
 
             await contentServicesPage.checkDragAndDropDIsDisplayed();
 
             await contentServicesPage.dragAndDropFile(emptyFile.location);
 
             await uploadDialog.fileIsError(emptyFile.name);
-
             await uploadDialog.displayTooltip();
 
             await expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
@@ -114,7 +115,7 @@ describe('Upload - User permission', () => {
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
 
-            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(consumerSite.entry.guid);
 
             await browser.sleep(3000);
 
@@ -126,7 +127,7 @@ describe('Upload - User permission', () => {
 
     describe('full permissions', () => {
         beforeEach(async () => {
-            await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(managerSite.entry.guid);
 
             await contentServicesPage.goToDocumentList();
         });

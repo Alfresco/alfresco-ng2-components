@@ -52,7 +52,7 @@ async function uploadScreenshot(retryCount) {
             let safeFileName = fileName.match(/\[(.*?)\]/);
 
             if (safeFileName) {
-                const safeFileNameMatch = safeFileName[1];
+                const safeFileNameMatch = `${safeFileName[1]}.png`;
                 try {
                     await alfrescoJsApi.upload.uploadFile(
                         file,

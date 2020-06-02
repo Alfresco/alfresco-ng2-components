@@ -121,6 +121,7 @@ describe('Search Filters', () => {
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
+
         await searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();

@@ -41,7 +41,7 @@ describe('Search component - Text widget', () => {
     const usersActions = new UsersActions(apiService);
 
     const acsUser = new UserModel();
-    const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
+    const newFolderModel = new FolderModel({ 'description': 'newDescription' });
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -62,7 +62,7 @@ describe('Search component - Text widget', () => {
         await browser.sleep(15000);
 
         await loginPage.login(acsUser.email, acsUser.password);
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();

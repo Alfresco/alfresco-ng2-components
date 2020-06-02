@@ -41,22 +41,25 @@ describe('Unshare file', () => {
     const errorPage = new ErrorPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const navigationBarPage = new NavigationBarPage();
-
     const shareDialog = new ShareDialogPage();
-    const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
-    let acsUser: UserModel;
+
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
-    let nodeBody;
-    let nodeId;
-    let testSite;
+    const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
+    let acsUser: UserModel;
+
+    let nodeBody, nodeId, testSite;
+
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
+
         const site = {
             title: siteName,
             visibility: 'PRIVATE',
@@ -76,8 +79,6 @@ describe('Unshare file', () => {
             }
         };
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
         testSite = await apiService.getInstance().core.sitesApi.createSite(site);
 
         const docLibId = (await apiService.getInstance().core.sitesApi.getSiteContainers(siteName)).list.entries[0].entry.id;

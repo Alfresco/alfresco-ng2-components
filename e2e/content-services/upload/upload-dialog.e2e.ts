@@ -231,7 +231,7 @@ describe('Upload component', () => {
                     document.querySelector("#adf-upload-dialog-cancel-all").click();
                     document.querySelector("#adf-upload-dialog-cancel").click();
                 }
-              }, 2000)`);
+              }, 500)`);
         await contentServicesPage.uploadFolder(adfBigFolder.location);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');

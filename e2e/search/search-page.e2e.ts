@@ -54,7 +54,7 @@ describe('Search component - Search Page', () => {
     const acsUser = new UserModel();
     const emptyFolderModel = new FolderModel({ 'name': 'search' + StringUtil.generateRandomString() });
     let firstFileModel;
-    const newFolderModel = new FolderModel({ 'name': 'newFolder' });
+    const newFolderModel = new FolderModel();
     let fileNames = [];
     const nrOfFiles = 15;
     const adminNrOfFiles = 5;

@@ -60,6 +60,7 @@ describe('Start Task - Task App', () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         assigneeUserModel = await usersActions.createUser();
+
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);

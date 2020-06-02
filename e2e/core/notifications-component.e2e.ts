@@ -41,18 +41,19 @@ describe('Notifications Component', () => {
         await loginPage.login(acsUser.email, acsUser.password);
 
         await notificationPage.goToNotificationsPage();
-
-        await notificationPage.enterDurationField(3000);
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
+    beforeEach(async () => {
+        await notificationPage.enterDurationField(3000);
+    });
+
     afterEach(async () => {
         await notificationPage.waitForSnackBarToClose();
         await browser.executeScript(`document.querySelector('button[data-automation-id="notification-custom-dismiss-button"]').click();`);
-        await notificationPage.enterDurationField(3000);
     });
 
     it('[C279979] Should not show notification when the message is empty and button is clicked', async () => {

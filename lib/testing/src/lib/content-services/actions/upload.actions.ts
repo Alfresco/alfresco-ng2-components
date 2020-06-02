@@ -18,7 +18,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { NodeEntry } from '@alfresco/js-api';
-import { ApiUtil } from '../../core/structure/api.util';
+import { ApiUtil } from '../../core/actions/api.util';
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
 
