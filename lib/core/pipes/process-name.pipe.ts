@@ -18,8 +18,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import moment from 'moment-es6';
 import { LocalizedDatePipe } from './localized-date.pipe';
-import { ProcessDefinitionRepresentation } from '../../process-services/src/lib/process-list';
-import { ProcessDefinitionCloud } from '../../process-services-cloud';
 
 @Pipe({ name: 'processName' })
 export class ProcessNamePipe implements PipeTransform {
@@ -29,7 +27,7 @@ export class ProcessNamePipe implements PipeTransform {
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
-    transform(processNameFormat: string, selectedProcessDefinition?: ProcessDefinitionRepresentation | ProcessDefinitionCloud): string {
+    transform(processNameFormat: string, selectedProcessDefinition?: any): string {
         let processName = processNameFormat;
         if (processName.match(ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
