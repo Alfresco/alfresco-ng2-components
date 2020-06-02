@@ -22,7 +22,7 @@ npm run ng -- lint process-services && \
 npm run ng -- lint process-services-cloud && \
 npm run ng -- lint insights && \
 npm run ng -- lint testing && \
-npm run ng -- lint dev && \
+npm run ng -- lint demoshell && \
 npm run lint-e2e && \
 npm run stylelint && \
 npm run spellcheck && \
