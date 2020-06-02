@@ -6,7 +6,7 @@ cd $DIR/../../../
 
 export CONTEXT_ENV="process-services"
 export PROVIDER='BPM'
-export AUTH_TYPE='basic'
+export AUTH_TYPE='BASIC'
 
 ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
 

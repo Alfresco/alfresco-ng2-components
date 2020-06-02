@@ -6,7 +6,7 @@ cd $DIR/../../../
 
 export CONTEXT_ENV="core"
 export PROVIDER='ECM'
-export AUTH_TYPE='basic'
+export AUTH_TYPE='BASIC'
 
 ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
 

@@ -87,11 +87,11 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 5);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '5');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 123);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '123');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
     });
@@ -116,15 +116,15 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 5);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '5');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 123);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '123');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 4);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '4');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
         await taskFormCloudComponent.clickCompleteButton();
     });

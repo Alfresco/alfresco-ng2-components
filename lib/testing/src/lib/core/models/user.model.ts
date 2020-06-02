@@ -29,14 +29,14 @@ export class UserModel {
     type = 'enterprise';
     tenantId = 1;
     company = null;
-    id: number;
+    id: number = null;
 
     constructor(details: any = {}) {
         const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
 
-        const USER_IDENTIFY = `${this.firstName}.${this.lastName}`;
+        const USER_IDENTIFY = `${this.firstName}${this.lastName}.${StringUtil.generateRandomString(5)}`;
 
         this.password = details.password ? details.password : this.password;
         this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}.com`;

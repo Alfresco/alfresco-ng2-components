@@ -115,14 +115,14 @@ describe('People and Group widget', () => {
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
-    async function createGroupAndUsers(tenantId) {
+    async function createGroupAndUsers(tenantId: number) {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
+        const userCreated = await Promise.all(app.groupUser.map(usersToCreate =>
             usersActions.createUser(new UserModel({
                 tenantId: tenantId,
-                firstName: happyUser.firstName,
-                lastName: happyUser.lastName
+                firstName: usersToCreate.firstName,
+                lastName: usersToCreate.lastName
             }))
         ));
 
@@ -135,7 +135,8 @@ describe('People and Group widget', () => {
             tenantId,
             type: 1
         });
-        await Promise.all(happyUsers.map(happyUser => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
+
+        await Promise.all(userCreated.map((userToAddGroup: UserModel) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, userToAddGroup.id)));
 
         const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
             apiService.getInstance().activiti.adminGroupsApi.createNewGroup({

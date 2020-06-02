@@ -29,7 +29,7 @@ export class FiltersPage {
 
     async goToFilter(filterName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickExecuteScript(`button[data-automation-id="${filterName}_filter"]`);
+        await BrowserActions.clickExecuteScript(`[data-automation-id="${filterName}_filter"]`);
     }
 
     async sortByName(sortOrder: string): Promise<void> {
@@ -41,7 +41,7 @@ export class FiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter: ElementFinder = element(by.css(`.adf-active button[data-automation-id='${filterName}_filter']`));
+        const highlightedFilter: ElementFinder = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }

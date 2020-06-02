@@ -70,10 +70,13 @@ export class UsersActions {
                         tenantIdUser = tenantId;
                     }
 
-                    await this.createApsUser(tenantIdUser, user.email, user.firstName, user.lastName, user.password);
+                    const apsUser = await this.createApsUser(tenantIdUser, user.email, user.firstName, user.lastName, user.password);
+                    user.id = apsUser.id;
+
                 } else {
-                    const apsUserTenant = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
-                    user.tenantId = apsUserTenant.tenantId;
+                    const apsUser = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
+                    user.tenantId = apsUser.tenantId;
+                    user.id = apsUser.id;
                 }
             } catch (e) {
             }
