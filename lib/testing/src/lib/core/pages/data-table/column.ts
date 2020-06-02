@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class Column {
+export abstract class Column {
     columnName: string;
     columnType: string;
 
