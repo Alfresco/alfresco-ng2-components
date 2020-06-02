@@ -87,6 +87,18 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     @Input()
     processFilterSelector: boolean = true;
 
+    /** (optional) Define the application dropdown placeholder. */
+    @Input()
+    applicationDropdownPlaceholder: string;
+
+    /** (optional) Define the empty template title. */
+    @Input()
+    emptyTemplateTitle: string;
+
+    /** (optional) Define the empty template icon. */
+    @Input()
+    emptyTemplateIcon: string;
+
     /** Emitted when the process starts. */
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
@@ -123,7 +135,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     alfrescoRepositoryName: string;
     applications: AppDefinitionRepresentationModel[] = [];
     selectedApplication: AppDefinitionRepresentationModel;
+
     isProcessDefinitionsLoading = true;
+    isAppsLoading = true;
+
     private onDestroy$ = new Subject<boolean>();
     constructor(private activitiProcess: ProcessService,
                 private activitiContentService: ActivitiContentService,
@@ -269,6 +284,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     loadApps() {
+        this.isAppsLoading = true;
         this.appsProcessService
             .getDeployedApplications()
             .pipe(map((response: AppDefinitionRepresentationModel[]) => {
@@ -293,10 +309,17 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     this.selectedApplication = filteredApps.currentApplication;
                     this.applicationSelection.emit(this.selectedApplication);
                     this.toggleProcessNameAndDefinitionsDropdown();
-                    this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
+                    this.isAppsLoading = false;
+                    if (this.selectedApplication && this.selectedApplication.id) {
+                        this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
+                    } else {
+                        this.isProcessDefinitionsLoading = false;
+                        this.resetSelectedProcessDefinition();
+                    }
                 },
                 err => {
                     this.error.emit(err);
+                    this.isAppsLoading = false;
                 }
             );
 
@@ -306,7 +329,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         this.selectedApplication = selectedApplication.value;
         this.applicationSelection.emit(this.selectedApplication);
         this.toggleProcessNameAndDefinitionsDropdown();
-        this.loadProcessDefinitions(this.selectedApplication.id);
+        this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
     }
 
     private isAppSelected(): boolean {
@@ -318,8 +341,24 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     }
 
+    hasApplications(): boolean {
+        return this.applications && this.applications.length > 0;
+    }
+
+    hasProcessDefinitions(): boolean {
+        return this.processDefinitions && this.processDefinitions.length > 0;
+    }
+
+    isProcessDefinitionSelected(): boolean {
+        return !!(this.selectedProcessDef && this.selectedProcessDef.id);
+    }
+
     isProcessDefinitionsEmpty(): boolean {
         return this.processDefinitions.length === 0;
+    }
+
+    disableDropdownButton() {
+        return this.showSelectApplicationDropdown && !this.isAppSelected();
     }
 
     getAlfrescoRepositoryName(): string {
@@ -386,7 +425,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private resetSelectedProcessDefinition() {
-        this.selectedProcessDef = new ProcessDefinitionRepresentation();
+        this.selectedProcessDef = undefined;
+        if (this.processDefinitionInput) {
+            this.processDefinitionInput.setValue('');
+        }
     }
 
     private resetErrorMessage(): void {
@@ -452,5 +494,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     processDefinitionSelectionChanged(processDefinition) {
         this.selectedProcessDef = processDefinition;
         this.processDefinitionSelection.emit(this.selectedProcessDef);
+    }
+
+    isLoading() {
+        return this.showSelectApplicationDropdown ? this.isAppsLoading : false;
     }
 }

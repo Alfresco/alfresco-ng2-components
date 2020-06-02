@@ -273,6 +273,8 @@
     "START_PROCESS": {
       "BUTTON": "Start Process",
       "NO_PROCESS_DEFINITIONS": "You can't start a process as there are no process definitions available",
+      "NO_START_FORM": "No Start Form",
+      "NO_PROCESS_DEF_SELECTED": "No Process definition selected",
       "FORM": {
         "TITLE": "Start Process",
         "LABEL": {

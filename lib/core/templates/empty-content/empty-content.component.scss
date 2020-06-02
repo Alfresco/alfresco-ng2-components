@@ -12,9 +12,11 @@
         align-items: center;
 
         &__icon {
-            font-size: mat-font-size($config, display-3);
-            height: mat-font-size($config, display-3) !important;
-            width: mat-font-size($config, display-3) !important;
+            .mat-icon {
+                font-size: mat-font-size($config, display-3);
+                height: mat-font-size($config, display-3) !important;
+                width: mat-font-size($config, display-3) !important;
+            }
         }
 
         &__title {
@@ -34,5 +36,9 @@
             white-space: normal;
             text-align: center;
         }
+    }
+
+    .adf-icon {
+        opacity: 0.6;
     }
 }

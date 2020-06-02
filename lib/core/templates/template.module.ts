@@ -21,12 +21,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material.module';
 import { ErrorContentComponent } from './error-content/error-content.component';
 import { EmptyContentComponent } from './empty-content/empty-content.component';
+import { IconModule } from '../icon/icon.module';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule,
+        IconModule
     ],
     declarations: [
         ErrorContentComponent,

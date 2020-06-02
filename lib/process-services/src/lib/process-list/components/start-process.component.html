@@ -1,116 +1,149 @@
-<div class="adf-start-process">
-    <div class="adf-title" *ngIf="title">{{ title | translate}}</div>
-    <div class="content" *ngIf="isProcessDefinitionEmpty()">
-        <div class="subtitle" id="error-message" *ngIf="errorMessageId">
-            {{errorMessageId|translate}}
-        </div>
-        <div class="adf-start-process-definition-container">
-            <mat-form-field *ngIf="showSelectApplicationDropdown" [floatLabel]="'always'" class="adf-start-process-app-list">
-                <mat-select
-                    placeholder="{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION' | translate}}"
-                    (selectionChange)="onAppSelectionChange($event)"
-                    [(ngModel)]="selectedApplication"
-                    data-automation-id="adf-start-process-apps-drop-down">
-                    <mat-option 
-                        *ngFor="let application of applications"
-                        [value]="application"
-                        [attr.data-automation-id]="'adf-start-process-apps-option-' + application.name">
-                        {{ application.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
-                <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate}}</mat-label>
-                <input
-                    type="text"
-                    matInput
-                    [formControl]="processDefinitionInput"
-                    [matAutocomplete]="auto"
-                    id="processDefinitionName"
-                    #inputAutocomplete>
-                <div class="adf-process-input-autocomplete">
-                    <mat-autocomplete
-                        #auto="matAutocomplete"
-                        id="processDefinitionOptions"
-                        [displayWith]="displayFn">
-                        <mat-option *ngFor="let processDef of filteredProcessesDefinitions$ | async" [value]="processDef.name"
-                        (click)="processDefinitionSelectionChanged(processDef)">
-                            {{ processDef.name }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <ng-container *ngIf="!isProcessDefinitionsLoading ; else showProcessDefLoadingTemplate">
-                        <button
-                            id="adf-select-process-dropdown"
-                            *ngIf="showSelectProcessDropdown"
-                            mat-icon-button
-                            (click)="displayDropdown($event)">
-                            <mat-icon>arrow_drop_down</mat-icon>
-                        </button>
-                    </ng-container>
-                    <ng-template #showProcessDefLoadingTemplate>
-                        <mat-spinner id="adf-select-process-spinner" [diameter]="20"></mat-spinner>
-                    </ng-template>
-                </div>
-            </mat-form-field>
-        </div>
-        <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
-            <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}</mat-label>
-            <input
-                matInput
-                [formControl]="processNameInput"
-                id="processName"
-                required/>
-            <mat-error *ngIf="nameController.hasError('maxlength')">
-                {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxProcessNameLength } }}
-            </mat-error>
-            <mat-error *ngIf="nameController.hasError('required')">
-                {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
-            </mat-error>
-            <mat-error *ngIf="nameController.hasError('pattern')">
-                {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
-            </mat-error>
-        </mat-form-field>
 
-        <adf-start-form
-            #startForm
-            *ngIf="hasStartForm()"
-            [data]="values"
-            [disableStartProcessButton]="processNameInput.invalid"
-            [processDefinitionId]="selectedProcessDef.id"
-            (outcomeClick)="onOutcomeClick($event)"
-            [showRefreshButton]="false">
-            <button
-                adf-form-custom-button
-                mat-button
-                (click)="cancelStartProcess()"
-                id="cancel_process">
-                {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
-            </button>
-        </adf-start-form>
-    </div>
-    <div class="content" *ngIf="hasErrorMessage()">
-        <div class="subtitle" class="error-message" id="no-process-message">
-            {{'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate | uppercase}}
+<ng-container *ngIf="isLoading(); then showLoadingTemplate; else showStartProcessTemplate"></ng-container>
+    <ng-template #showLoadingTemplate>
+        <mat-spinner class="adf-start-process-loading-margin"></mat-spinner>
+    </ng-template>
+<ng-template #showStartProcessTemplate>
+    <ng-container *ngIf="hasApplications() || hasProcessDefinitions() ; else showEmptyTemplate">
+        <div class="adf-start-process">
+            <div class="adf-title" *ngIf="title">{{ title | translate}}</div>
+            <div class="content">
+                <div class="subtitle" id="error-message" *ngIf="errorMessageId">
+                    {{errorMessageId|translate}}
+                </div>
+                <div class="adf-start-process-definition-container">
+                    <mat-form-field *ngIf="showSelectApplicationDropdown" [floatLabel]="'always'" class="adf-start-process-app-list">
+                        <mat-select
+                            placeholder="{{
+                                applicationDropdownPlaceholder ? 
+                                applicationDropdownPlaceholder : 
+                                'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.SELECT_APPLICATION' | translate}}"
+                            (selectionChange)="onAppSelectionChange($event)"
+                            [(ngModel)]="selectedApplication"
+                            data-automation-id="adf-start-process-apps-drop-down">
+                            <mat-option 
+                                *ngFor="let application of applications"
+                                [value]="application"
+                                [attr.data-automation-id]="'adf-start-process-apps-option-' + application.name">
+                                {{ application.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+                        <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.TYPE' | translate}}</mat-label>
+                        <input
+                            type="text"
+                            matInput
+                            [formControl]="processDefinitionInput"
+                            [matAutocomplete]="auto"
+                            id="processDefinitionName"
+                            #inputAutocomplete>
+                        <div class="adf-process-input-autocomplete">
+                            <mat-autocomplete
+                                #auto="matAutocomplete"
+                                id="processDefinitionOptions"
+                                [displayWith]="displayFn">
+                                <mat-option *ngFor="let processDef of filteredProcessesDefinitions$ | async" [value]="processDef.name"
+                                (click)="processDefinitionSelectionChanged(processDef)">
+                                    {{ processDef.name }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <ng-container *ngIf="!isProcessDefinitionsLoading ; else showProcessDefLoadingTemplate">
+                                <button
+                                    id="adf-select-process-dropdown"
+                                    *ngIf="showSelectProcessDropdown"
+                                    mat-icon-button
+                                    (click)="displayDropdown($event)"
+                                    [disabled]="disableDropdownButton()">
+                                    <mat-icon>arrow_drop_down</mat-icon>
+                                </button>
+                            </ng-container>
+                            <ng-template #showProcessDefLoadingTemplate>
+                                <mat-spinner id="adf-select-process-spinner" [diameter]="20"></mat-spinner>
+                            </ng-template>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <mat-form-field class="adf-process-input-container" [floatLabel]="'always'">
+                    <mat-label>{{'ADF_PROCESS_LIST.START_PROCESS.FORM.LABEL.NAME' | translate}}</mat-label>
+                    <input
+                        matInput
+                        [formControl]="processNameInput"
+                        id="processName"
+                        required/>
+                    <mat-error *ngIf="nameController.hasError('maxlength')">
+                        {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.MAXIMUM_LENGTH' | translate : { characters : maxProcessNameLength } }}
+                    </mat-error>
+                    <mat-error *ngIf="nameController.hasError('required')">
+                        {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.PROCESS_NAME_REQUIRED' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="nameController.hasError('pattern')">
+                        {{ 'ADF_PROCESS_LIST.START_PROCESS.ERROR.SPACE_VALIDATOR' | translate }}
+                    </mat-error>
+                </mat-form-field>
+        
+                <ng-container *ngIf="isProcessDefinitionSelected() ; else emptyProcessDefTemplate">
+                    <ng-container  *ngIf="hasStartForm(); else noStartFormTemplate">
+                        <adf-start-form
+                            #startForm
+                            [data]="values"
+                            [disableStartProcessButton]="processNameInput.invalid"
+                            [processDefinitionId]="selectedProcessDef.id"
+                            (outcomeClick)="onOutcomeClick($event)"
+                            [showRefreshButton]="false">
+                            <button
+                                adf-form-custom-button
+                                mat-button
+                                (click)="cancelStartProcess()"
+                                id="cancel_process">
+                                {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
+                            </button>
+                        </adf-start-form>
+                    </ng-container>
+                    <ng-template #noStartFormTemplate>
+                        <adf-empty-content 
+                            class="adf-start-process-empty-template"
+                            [icon]="emptyTemplateIcon ? emptyTemplateIcon : 'assessment'"
+                            [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_START_FORM'  | translate">
+                        </adf-empty-content>
+                    </ng-template>
+                </ng-container>
+                <ng-template #emptyProcessDefTemplate>
+                    <adf-empty-content class="adf-start-process-empty-template"
+                        [icon]="emptyTemplateIcon ? emptyTemplateIcon : 'assessment'"
+                        [title]="'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEF_SELECTED'  | translate">
+                    </adf-empty-content>
+                </ng-template>
+        
+            </div>
+            <div class="mat-content-actions" *ngIf="!hasStartForm()">
+                <button
+                    mat-button
+                    *ngIf="!hasStartForm()"
+                    (click)="cancelStartProcess()"
+                    id="cancel_process">
+                    {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
+                </button>
+                <button
+                    color="primary"
+                    mat-button
+                    *ngIf="!hasStartForm()"
+                    [disabled]="!validateForm()"
+                    (click)="startProcess()"
+                    data-automation-id="btn-start"
+                    id="button-start"
+                    class="btn-start">
+                    {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="mat-content-actions" *ngIf="!hasStartForm()">
-        <button
-            mat-button
-            *ngIf="!hasStartForm()"
-            (click)="cancelStartProcess()"
-            id="cancel_process">
-            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.CANCEL'| translate | uppercase}}
-        </button>
-        <button
-            color="primary"
-            mat-button
-            *ngIf="!hasStartForm()"
-            [disabled]="!validateForm()"
-            (click)="startProcess()"
-            data-automation-id="btn-start"
-            id="button-start"
-            class="btn-start">
-            {{'ADF_PROCESS_LIST.START_PROCESS.FORM.ACTION.START' | translate | uppercase}}
-        </button>
-    </div>
-</div>
+    </ng-container>
+        <ng-template #showEmptyTemplate>
+            <adf-empty-content class="adf-start-process-empty-template"
+                [icon]="emptyTemplateIcon ? emptyTemplateIcon : 'assessment'"
+                [title]="
+                     emptyTemplateTitle ? emptyTemplateTitle : 
+                    'ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS' | translate">
+            </adf-empty-content>
+        </ng-template>    
+</ng-template>
