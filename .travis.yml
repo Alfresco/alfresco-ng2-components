@@ -65,10 +65,8 @@ jobs:
           script:
             - ./scripts/lint.sh
 
-
         # Run Only on develop and master
-        - stage:
-
+        - stage: Npm Release
           name: Npm Release
           before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
           script:
