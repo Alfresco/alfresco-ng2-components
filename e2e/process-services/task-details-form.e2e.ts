@@ -40,9 +40,9 @@ describe('Task Details - Form', () => {
     const apiService = new ApiService();
     const formActions = new FormModelActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
-    let newTask;
 
     beforeAll(async () => {
         const attachedFormModel = {
@@ -78,9 +78,9 @@ describe('Task Details - Form', () => {
         otherTask = await apiService.getInstance().activiti.taskApi.getTask(otherEmptyTask.id);
 
         await loginPage.login(user.email, user.password);
-   });
+    });
 
-    afterAll( async () => {
+    afterAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
@@ -89,7 +89,6 @@ describe('Task Details - Form', () => {
         const emptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
         await apiService.getInstance().activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
         task = await apiService.getInstance().activiti.taskApi.getTask(emptyTask.id);
-
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
         await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -168,11 +167,10 @@ describe('Task Details - Form', () => {
             tabFieldVar: 'tabBasicFieldVar'
         };
 
-        let app;
+        let app, newTask;
 
         beforeAll(async () => {
             app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-            const applicationsService = new ApplicationsUtil(apiService);
             await applicationsService.importPublishDeployApp(app.file_path);
         });
 
@@ -189,6 +187,7 @@ describe('Task Details - Form', () => {
 
         it('[C315190] Should be able to complete a standalone task with visible tab with empty value for field', async () => {
             await tasksListPage.selectRow(newTask.name);
+
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
 

@@ -28,27 +28,27 @@ export class TasksListPage {
         return this.dataTable;
     }
 
-    getRowsDisplayedWithSameName(taskName): Promise<string> {
+    getRowsDisplayedWithSameName(taskName: string): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
     }
 
-    checkContentIsDisplayed(taskName): Promise<void> {
-        return this.dataTable.checkContentIsDisplayed('Name', taskName);
+    async checkContentIsDisplayed(taskName: string): Promise<void> {
+        await this.dataTable.checkContentIsDisplayed('Name', taskName);
     }
 
-    checkContentIsNotDisplayed(taskName): Promise<void> {
-        return this.dataTable.checkContentIsNotDisplayed('Name', taskName);
+    async checkContentIsNotDisplayed(taskName: string): Promise<void> {
+        await this.dataTable.checkContentIsNotDisplayed('Name', taskName);
     }
 
-    checkRowIsSelected(taskName): Promise<void> {
-        return this.dataTable.checkRowIsSelected('Name', taskName);
+    async checkRowIsSelected(taskName: string): Promise<void> {
+        await this.dataTable.checkRowIsSelected('Name', taskName);
     }
 
-    selectRow(taskName): Promise<void> {
-        return this.dataTable.selectRow('Name', taskName);
+    async selectRow(taskName: string): Promise<void> {
+        await this.dataTable.selectRow('Name', taskName);
     }
 
-    getAllRowsNameColumn(): Promise<any> {
+    getAllRowsNameColumn(): Promise<string[]> {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 

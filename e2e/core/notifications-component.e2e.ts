@@ -84,15 +84,6 @@ describe('Notifications Component', () => {
         await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
     });
 
-    it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
-        await notificationPage.enterMessageField('test');
-        await notificationPage.enterDurationField(1000);
-        await notificationPage.clickNotificationButton();
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
-        await browser.sleep(2000);
-        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
-    });
-
     it('[C280000] Should show notification with action when the message is not empty and custom button is clicked', async () => {
         await notificationPage.enterMessageField('test');
         await notificationPage.clickActionToggle();
@@ -104,6 +95,15 @@ describe('Notifications Component', () => {
         await notificationPage.clickActionButton();
         await notificationPage.checkActionEvent();
         await notificationPage.clickActionToggle();
+    });
+
+    it('[C279987] Should show custom notification during a limited time when a duration is added', async () => {
+        await notificationPage.enterMessageField('test');
+        await notificationPage.enterDurationField(1000);
+        await notificationPage.clickNotificationButton();
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(true);
+        await browser.sleep(2000);
+        await expect(await notificationPage.isNotificationSnackBarDisplayed()).toEqual(false);
     });
 
     it('[C280001] Should meet configuration when a custom notification is set', async () => {

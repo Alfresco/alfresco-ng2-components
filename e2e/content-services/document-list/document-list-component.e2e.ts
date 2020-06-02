@@ -174,6 +174,7 @@ describe('Document List Component', () => {
             fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
 
             await loginPage.login(user.email, user.password);
+
             await contentServicesPage.goToDocumentList();
         });
 
@@ -248,8 +249,8 @@ describe('Document List Component', () => {
 
     it('[C261997] Should be able to clean Recent Files history', async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await loginPage.login(acsUser.email, acsUser.password);
+        const cleanUser = await usersActions.createUser();
+        await loginPage.login(cleanUser.email, cleanUser.password);
         await contentServicesPage.clickOnContentServices();
         await contentServicesPage.checkRecentFileToBeShowed();
         const icon = await contentServicesPage.getRecentFileIcon();

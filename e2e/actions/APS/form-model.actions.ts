@@ -27,7 +27,9 @@ export class FormModelActions {
     }
 
     async getFormByName(name: string): Promise<FormRepresentation> {
-        const forms: any = await this.api.getInstance().activiti.editorApi.getForms({});
+
+        // @ts-ignore
+        const forms: any = await this.api.getInstance().activiti.editorApi.getForms();
 
         const form = forms.data.find((currentForm) => {
             return currentForm.name === name;

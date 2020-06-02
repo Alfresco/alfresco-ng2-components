@@ -30,7 +30,7 @@ describe('User Info component', () => {
     const userInfoPage = new UserInfoPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService({ provider: 'ALL' });
+    const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const peopleApi: PeopleApi = new PeopleApi(apiService.getInstance());
 
