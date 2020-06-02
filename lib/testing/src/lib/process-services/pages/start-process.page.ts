@@ -25,6 +25,7 @@ export class StartProcessPage {
 
     defaultProcessName: ElementFinder = element(by.css('input[id="processName"]'));
     processNameInput: ElementFinder = element(by.id('processName'));
+    disabledSelectProcessDropdown: ElementFinder = element(by.css('input[id="processDefinitionName"][disabled]'));
     selectProcessDropdownArrow: ElementFinder = element(by.css('button[id="adf-select-process-dropdown"]'));
     cancelProcessButton: ElementFinder = element(by.id('cancel_process'));
     formStartProcessButton: ElementFinder = element(by.css('button[data-automation-id="adf-form-start process"]'));
@@ -33,7 +34,8 @@ export class StartProcessPage {
     processDefinition: ElementFinder = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel: ElementFinder = element(by.css('div[class*="mat-autocomplete-panel"]'));
 
-    dropdownPage = new DropdownPage();
+    processDefinitionDropdown = new DropdownPage(element(by.id('adf-select-process-dropdown')));
+    applicationDropdown = new DropdownPage(element(by.css('[data-automation-id*="start-process-app"] div[class="mat-select-arrow"]')));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);
@@ -64,23 +66,28 @@ export class StartProcessPage {
 
     async selectFromProcessDropdown(name): Promise<void> {
         await this.clickProcessDropdownArrow();
-        await this.selectOption(name);
+        await this.selectProcessOption(name);
+    }
+
+    async selectFromApplicationDropdown(name): Promise<void> {
+        await this.applicationDropdown.clickDropdown();
+        await this.applicationDropdown.selectOption(name);
     }
 
     async clickProcessDropdownArrow(): Promise<void> {
         await BrowserActions.click(this.selectProcessDropdownArrow);
     }
 
-    async checkOptionIsDisplayed(name): Promise<void> {
-        await this.dropdownPage.checkOptionIsDisplayed(name);
+    async checkProcessOptionIsDisplayed(name): Promise<void> {
+        await this.processDefinitionDropdown.checkOptionIsDisplayed(name);
     }
 
-    async checkOptionIsNotDisplayed(name): Promise<void> {
-        await this.dropdownPage.checkOptionIsNotDisplayed(name);
+    async checkProcessOptionIsNotDisplayed(name): Promise<void> {
+        await this.processDefinitionDropdown.checkOptionIsNotDisplayed(name);
     }
 
-    async selectOption(name): Promise<void> {
-        await this.dropdownPage.selectOption(name);
+    async selectProcessOption(name): Promise<void> {
+        await this.processDefinitionDropdown.selectOption(name);
     }
 
     async typeProcessDefinition(name): Promise<void> {
@@ -145,8 +152,20 @@ export class StartProcessPage {
         return new FormFields();
     }
 
-    async startProcess({name, processName }) {
+    async checkProcessDefinitionDropdownIsEnabled(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.disabledSelectProcessDropdown);
+    }
+
+    async startProcess(name: string, processName: string) {
         await this.enterProcessName(name);
+        await this.selectFromProcessDropdown(processName);
+        await this.clickStartProcessButton();
+    }
+
+    async startProcessWithApplication(name: string, applicationName: string, processName: string) {
+        await this.enterProcessName(name);
+        await this.selectFromApplicationDropdown(applicationName);
+        await this.checkProcessDefinitionDropdownIsEnabled();
         await this.selectFromProcessDropdown(processName);
         await this.clickStartProcessButton();
     }
