@@ -617,6 +617,21 @@ describe('FormCloudComponent', () => {
         expect(formComponent.handleError).toHaveBeenCalledWith(error);
     });
 
+    it('should be able to accept form data after the form has been already loaded once', (done) => {
+        spyOn(formCloudService, 'getForm').and.returnValue(of(fakeCloudForm));
+        formComponent.getFormById('test-app', '123');
+
+        formComponent.formLoaded.subscribe((form) => {
+            expect(form).not.toBe(null);
+            done();
+        });
+
+        const formValues: any[] = [];
+        const change = new SimpleChange(null, formValues, false);
+        formComponent.data = formValues;
+        formComponent.ngOnChanges({ 'data': change });
+    });
+
     it('should save task form and raise corresponding event', () => {
         spyOn(formCloudService, 'saveTaskForm').and.callFake(() => {
             return new Observable((observer) => {
