@@ -7,16 +7,16 @@ Last reviewed: 2020-06-02
 
 # [Process name pipe](../../../lib/core/pipes/process-name.pipe.ts "Defined in process-name.pipe.ts")
 
-When an identifier is specified, the input will be transformed replacing the identifiers with the selected values.
-
+When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided
+ [`ProcessDefinitionRepresentation`](../../../lib/process-services/src/lib/process-list/models/process-definition.model.ts) | [`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-definition-cloud.model.ts).
 ## Basic Usage
-
+processNamePipe.transform('Example - %{processDefinition} - %{datetime}', );
 ### Properties
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | processNameFormat | string | undefined | The process name format including the preferred identifiers to be used |
-| selectedProcessDefinitionName | string | "" | (optional) The name of the selected process definition |
+| selectedProcessDefinition | ProcessDefinitionRepresentation or ProcessDefinitionCloud | undefined | (optional) The selected process definition |
 
 ## Details
 The pipe offers a convenient way to format a process name using a process name format template.
@@ -40,6 +40,6 @@ and handled as a plain string).
 #### Result
 
 ```ts
-processNamePipe.transform('Example - %{processDefinition} - %{datetime}', 'upload passport');
+processNamePipe.transform('Example - %{processDefinition} - %{datetime}', new ProcessDefinitionRepresentation({ name: 'upload-passport'}));
 //Returns 'Example - upload passport - June 02, 2020, 12:00:00 AM'
 ```

@@ -466,9 +466,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    processDefinitionSelectionChanged(processDefinition) {
+    processDefinitionSelectionChanged(processDefinition: ProcessDefinitionRepresentation) {
         if (processDefinition) {
-            const processName = this.processNamePipe.transform(this.name, processDefinition.name);
+            const processName = this.processNamePipe.transform(this.name, processDefinition);
             this.processNameInput.setValue(processName);
             this.selectedProcessDef = processDefinition;
             this.processDefinitionSelection.emit(this.selectedProcessDef);

@@ -18,20 +18,20 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import moment from 'moment-es6';
 import { LocalizedDatePipe } from './localized-date.pipe';
+import { ProcessDefinitionRepresentation } from '../../process-services/src/lib/process-list';
+import { ProcessDefinitionCloud } from '../../process-services-cloud';
 
 @Pipe({ name: 'processName' })
 export class ProcessNamePipe implements PipeTransform {
-    static DATE_TIME_IDENTIFIER = '%{datetime}';
-    static PROCESS_DEFINITION_IDENTIFIER = '%{processdefinition}';
-    static DATE_TIME_IDENTIFIER_REG_EXP = new RegExp(ProcessNamePipe.DATE_TIME_IDENTIFIER, 'i');
-    static PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp(ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER, 'i');
+    static DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
+    static PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
 
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
-    transform(processNameFormat: string, selectedProcessDefinitionName?: string): string {
+    transform(processNameFormat: string, selectedProcessDefinition?: ProcessDefinitionRepresentation | ProcessDefinitionCloud): string {
         let processName = processNameFormat;
-        if (processName.toLowerCase().includes(ProcessNamePipe.DATE_TIME_IDENTIFIER)) {
+        if (processName.match(ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
             processName = processName.replace(
                 ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP,
@@ -39,8 +39,8 @@ export class ProcessNamePipe implements PipeTransform {
             );
         }
 
-        if (processName.toLowerCase().includes(ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER)) {
-            selectedProcessDefinitionName = selectedProcessDefinitionName ? selectedProcessDefinitionName : '';
+        if (processName.match(ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+            const selectedProcessDefinitionName = selectedProcessDefinition ? selectedProcessDefinition.name : '';
             processName = processName.replace(
                 ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
                 selectedProcessDefinitionName
