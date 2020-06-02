@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ProcessUtil, ApiService, ApplicationsUtil } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Process List Test', () => {
@@ -30,7 +29,7 @@ describe('Process List Test', () => {
     const processListDemoPage = new ProcessListDemoPage();
 
     const apiService = new ApiService();
-    const appsActions = new AppsActions(apiService);
+    const applicationsUtil = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
 
     let appDateModel, appUserWidgetModel, user;
@@ -59,23 +58,21 @@ describe('Process List Test', () => {
 
         await apiService.getInstance().login(user.email, user.password);
 
-        const applicationsService = new ApplicationsUtil(apiService);
-
-        appDateModel = await applicationsService.importPublishDeployApp(appWithDateField.file_path);
+        appDateModel = await applicationsUtil.importPublishDeployApp(appWithDateField.file_path);
 
         const processUtil = new ProcessUtil(apiService);
         procWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.procWithDate);
         completedProcWithDate = await processUtil.startProcessOfApp(appDateModel.name, processName.completedProcWithDate);
 
-        appUserWidgetModel = await applicationsService.importPublishDeployApp(appWithUserWidget.file_path);
+        appUserWidgetModel = await applicationsUtil.importPublishDeployApp(appWithUserWidget.file_path);
 
         await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.procWithUserWidget);
         completedProcWithUserWidget = await processUtil.startProcessOfApp(appUserWidgetModel.name, processName.completedProcWithUserWidget);
 
-        appWithDateFieldId = await appsActions.getAppDefinitionId(appDateModel.id);
+        appWithDateFieldId = await applicationsUtil.getAppDefinitionId(appDateModel.id);
 
-        const procWithDateTaskId = await appsActions.getProcessTaskId(completedProcWithDate.id);
-        const procWithUserWidgetTaskId = await appsActions.getProcessTaskId(completedProcWithUserWidget.id);
+        const procWithDateTaskId = await processUtil.getProcessTaskId(completedProcWithDate.id);
+        const procWithUserWidgetTaskId = await processUtil.getProcessTaskId(completedProcWithUserWidget.id);
 
         await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
         await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });

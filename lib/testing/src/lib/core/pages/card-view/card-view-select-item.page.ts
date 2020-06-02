@@ -17,7 +17,7 @@
 
 import { element, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../utils/public-api';
-import { DropdownPage } from '../../../material/pages/dropdown.page';
+import { DropdownPage } from '../material/dropdown.page';
 
 export class CardSelectItemPage {
 

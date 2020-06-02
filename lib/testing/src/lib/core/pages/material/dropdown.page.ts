@@ -16,8 +16,8 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserVisibility } from '../../core/utils/browser-visibility';
-import { BrowserActions } from '../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../utils/browser-visibility';
+import { BrowserActions } from '../../utils/browser-actions';
 
 export class DropdownPage {
 

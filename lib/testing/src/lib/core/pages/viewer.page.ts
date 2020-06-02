@@ -16,8 +16,8 @@
  */
 
 import { BrowserActions } from '../utils/browser-actions';
-import { TabsPage } from '../../../lib/material/pages/tabs.page';
-import { TogglePage } from '../../material/pages/toggle.page';
+import { TabsPage } from './material/tabs.page';
+import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, ElementFinder, browser, protractor } from 'protractor';
 

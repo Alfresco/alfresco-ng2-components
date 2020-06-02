@@ -16,9 +16,9 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { DateUtil } from '../../core/utils/date-util';
-import { BrowserVisibility } from '../../core/utils/browser-visibility';
-import { BrowserActions } from '../../core/utils/browser-actions';
+import { DateUtil } from '../../utils/date-util';
+import { BrowserVisibility } from '../../utils/browser-visibility';
+import { BrowserActions } from '../../utils/browser-actions';
 
 export class DatePickerCalendarPage {
 

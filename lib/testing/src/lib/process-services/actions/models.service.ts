@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Logger } from '../../utils/logger';
-import { ApiService } from '../api.service';
+import { Logger } from '../../core/utils/logger';
+import { ApiService } from '../../core/actions/api.service';
 
 export class ModelsActions {
 

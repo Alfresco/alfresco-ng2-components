@@ -18,7 +18,7 @@ import { browser, by, element, protractor, ElementFinder } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class EditProcessFilterCloudComponentPage {
 

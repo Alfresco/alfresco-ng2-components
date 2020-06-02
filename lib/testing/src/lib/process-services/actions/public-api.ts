@@ -15,4 +15,7 @@
  * limitations under the License.
  */
 
-export * from './form-cloud.service';
+export * from './applications.util';
+export * from './integration.service';
+export * from './models.service';
+export * from './process.util';

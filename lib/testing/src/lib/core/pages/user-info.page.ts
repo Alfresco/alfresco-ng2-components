@@ -17,7 +17,7 @@
 
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { TabsPage } from '../../material/pages/tabs.page';
+import { TabsPage } from '../../core/pages/material/tabs.page';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class UserInfoPage {

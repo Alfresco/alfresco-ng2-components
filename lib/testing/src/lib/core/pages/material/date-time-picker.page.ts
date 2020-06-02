@@ -16,7 +16,7 @@
  */
 
 import { element, by, ElementFinder } from 'protractor';
-import { BrowserActions } from '../../core/utils/browser-actions';
+import { BrowserActions } from '../../utils/browser-actions';
 import { DateTimePickerCalendarPage } from './date-time-picker-calendar.page';
 
 export class DateTimePickerPage {

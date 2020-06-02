@@ -18,7 +18,7 @@
 import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class StartProcessPage {

@@ -17,7 +17,7 @@
 
 import { by, element, Locator, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
-import { DropdownPage } from '../../../material/pages/dropdown.page';
+import { DropdownPage } from '../material/dropdown.page';
 
 export class FormFields {
 

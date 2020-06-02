@@ -16,8 +16,8 @@
  */
 
 import { ElementFinder } from 'protractor';
-import { BrowserActions } from '../../core/utils/browser-actions';
-import { BrowserVisibility } from '../../core/utils/browser-visibility';
+import { BrowserActions } from '../../utils/browser-actions';
+import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class CheckboxPage {
 

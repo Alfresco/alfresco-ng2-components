@@ -25,6 +25,7 @@ export * from './pagination.page';
 export * from './error.page';
 export * from './notification-history.page';
 export * from './form/public-api';
+export * from './material/public-api';
 export * from './card-view/public-api';
 export * from './viewer.page';
 export * from './config-editor-page';

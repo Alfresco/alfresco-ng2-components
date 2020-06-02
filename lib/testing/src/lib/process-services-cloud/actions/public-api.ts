@@ -20,3 +20,4 @@ export * from './testing-app-config.service';
 export * from './process-definitions.service';
 export * from './process-instances.service';
 export * from './message-events.service';
+export * from './form-cloud.service';

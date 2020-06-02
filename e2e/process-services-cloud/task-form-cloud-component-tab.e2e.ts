@@ -26,11 +26,10 @@ import {
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    IdentityService, GroupIdentityService, ProcessCloudWidgetPage
+    IdentityService, GroupIdentityService, ProcessCloudWidgetPage, FormCloudService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
-import { FormCloudService } from '../../lib/testing/src/lib/form-cloud/actions/form-cloud.service';
 
 describe('Task form cloud component', () => {
 

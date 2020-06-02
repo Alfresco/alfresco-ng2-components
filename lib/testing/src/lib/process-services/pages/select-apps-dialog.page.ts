@@ -18,7 +18,7 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class SelectAppsDialog {
 

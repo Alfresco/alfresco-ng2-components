@@ -15,4 +15,19 @@
  * limitations under the License.
  */
 
-export * from './pages/public-api';
+import { element, by } from 'protractor';
+import { BrowserActions } from '../../utils/browser-actions';
+
+export class TabsPage {
+
+    async clickTabByTitle(tabTitle): Promise<void> {
+        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        await BrowserActions.click(tab);
+    }
+
+    async checkTabIsSelectedByTitle(tabTitle): Promise<void> {
+        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
+        const result = await tab.getAttribute('aria-selected');
+        await expect(result).toBe('true');
+    }
+}

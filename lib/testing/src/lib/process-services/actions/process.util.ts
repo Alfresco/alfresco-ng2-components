@@ -16,9 +16,9 @@
  */
 
 import { ApplicationsUtil } from './applications.util';
-import { Logger } from '../../utils/logger';
-import { StringUtil } from '../../utils/string.util';
-import { ApiService } from '../api.service';
+import { Logger } from '../../core/utils/logger';
+import { StringUtil } from '../../core/utils/string.util';
+import { ApiService } from '../../core/actions/api.service';
 
 export class ProcessUtil {
 
@@ -84,4 +84,5 @@ export class ProcessUtil {
         });
         return wantedtask ? wantedtask : 'null';
     }
+
 }

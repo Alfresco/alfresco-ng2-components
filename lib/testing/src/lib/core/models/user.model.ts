@@ -36,7 +36,7 @@ export class UserModel {
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;
 
-        const USER_IDENTIFY = `${this.firstName}${this.lastName}.${StringUtil.generateRandomString(5)}`;
+        const USER_IDENTIFY = `${this.firstName}${this.lastName}.${StringUtil.generateRandomLowercaseString(5)}`;
 
         this.password = details.password ? details.password : this.password;
         this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}.com`;

@@ -18,7 +18,7 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class SettingsPage {
 

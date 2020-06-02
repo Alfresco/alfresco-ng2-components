@@ -16,8 +16,8 @@
  */
 
 import { element, by, ElementFinder, Locator } from 'protractor';
-import { DateTimePickerPage } from '../../../material/pages/date-time-picker.page';
-import { DatePickerPage } from '../../../material/pages/date-picker.page';
+import { DateTimePickerPage } from '../material/date-time-picker.page';
+import { DatePickerPage } from '../material/date-picker.page';
 
 export class CardDateItemPage {
 

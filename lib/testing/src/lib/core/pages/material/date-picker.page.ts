@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
-import { BrowserActions } from '../../core/utils/browser-actions';
+import { element, by, ElementFinder } from 'protractor';
+import { BrowserActions } from '../../utils/browser-actions';
+import { DatePickerCalendarPage } from './date-picker-calendar.page';
 
-export class TabsPage {
+export class DatePickerPage {
 
-    async clickTabByTitle(tabTitle): Promise<void> {
-        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        await BrowserActions.click(tab);
-    }
+    datePicker: ElementFinder = element.all(by.css('.mat-datepicker-toggle')).first();
+    dateTime = new DatePickerCalendarPage();
 
-    async checkTabIsSelectedByTitle(tabTitle): Promise<void> {
-        const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
-        const result = await tab.getAttribute('aria-selected');
-        await expect(result).toBe('true');
+    async setTodayDateValue(): Promise<void> {
+        await BrowserActions.click(this.datePicker);
+        await this.dateTime.selectTodayDate();
     }
 }

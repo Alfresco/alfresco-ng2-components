@@ -34,6 +34,7 @@ describe('Process List - Pagination when adding processes', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const processUtil = new ProcessUtil(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
 
     const itemsPerPage = {
         fifteen: '15',
@@ -42,8 +43,6 @@ describe('Process List - Pagination when adding processes', () => {
 
     let processUserModel;
     const nrOfProcesses = 25;
-    let page, totalPages;
-    let i;
     let resultApp;
 
     beforeAll(async () => {
@@ -53,24 +52,22 @@ describe('Process List - Pagination when adding processes', () => {
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        const applicationsService = new ApplicationsUtil(apiService);
-
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        for (i = 0; i < (nrOfProcesses - 5); i++) {
+        for (let i = 0; i < (nrOfProcesses - 5); i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
         await loginPage.login(processUserModel.email, processUserModel.password);
 
         await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-   });
+    });
 
     it('[C261046] Should keep Items per page after adding processes', async () => {
         await processDetailsPage.checkProcessTitleIsDisplayed();
         await processFiltersPage.waitForTableBody();
-        totalPages = 2;
-        page = 1;
+        const totalPages = 2;
+        let page = 1;
 
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -84,7 +81,7 @@ describe('Process List - Pagination when adding processes', () => {
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        for (i; i < nrOfProcesses; i++) {
+        for (let i = 0; i < nrOfProcesses; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 

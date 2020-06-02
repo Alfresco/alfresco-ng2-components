@@ -21,7 +21,6 @@ import { ProcessServicesPage } from '../pages/adf/process-services/process-servi
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 import { UsersActions } from '../actions/users.actions';
-import { AppsActions } from '../actions/APS/apps.actions';
 import { ModelsActions } from '../actions/APS/models.actions';
 
 describe('Modify applications', () => {
@@ -36,7 +35,7 @@ describe('Modify applications', () => {
 
     const apiService = new ApiService();
     const modelActions = new ModelsActions(apiService);
-    const apps = new AppsActions(apiService);
+    const apps = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationService = new ApplicationsUtil(apiService);
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService } from '../api.service';
+import { ApiService } from '../../core/actions/api.service';
 
 export class IntegrationService {
     api: ApiService;

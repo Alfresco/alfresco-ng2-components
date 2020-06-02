@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Logger } from '../../utils/logger';
+import { Logger } from '../../core/utils/logger';
 import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
-import * as fs from 'fs';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../core/actions/api.service';
+import { AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
+import path = require('path');
+import fs = require('fs');
 
 export class AppPublish {
     comment: string = '';
@@ -34,10 +36,34 @@ export class ApplicationsUtil {
         this.api = api;
     }
 
-    async importPublishDeployApp(appFileLocation, option = {}) {
+    async getAppDefinitionId(appModelId: number): Promise<number> {
+        const appDefinitions = await this.api.getInstance().activiti.appsApi.getAppDefinitions();
+        let appDefinitionId = -1;
+
+        appDefinitions.data.forEach((appDefinition) => {
+            if (appDefinition.modelId === appModelId) {
+                appDefinitionId = appDefinition.id;
+            }
+        });
+
+        return appDefinitionId;
+    }
+
+    async publishDeployApp(appId: number): Promise<AppDefinitionUpdateResultRepresentation> {
+        browser.setFileDetector(new remote.FileDetector());
+
+        const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appId, new AppPublish());
+
+        await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+
+        return publishApp;
+    }
+
+    async importPublishDeployApp(appFileLocation: string, option = {}) {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
-            const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+            const publishApp = await this.publishDeployApp(appCreated.id);
+
             await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
             return appCreated;
         } catch (error) {
@@ -45,7 +71,22 @@ export class ApplicationsUtil {
         }
     }
 
-    async importApplication(appFileLocation, options = {}): Promise<any> {
+    async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number) {
+        browser.setFileDetector(new remote.FileDetector());
+
+        const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
+        const file = fs.createReadStream(pathFile);
+
+        const appCreated = await this.api.getInstance().activiti.appsApi.importNewAppDefinition(modelId, file);
+
+        const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appCreated.id, new AppPublish());
+
+        await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
+
+        return appCreated;
+    }
+
+    async importApplication(appFileLocation: string, options = {}): Promise<any> {
         try {
             browser.setFileDetector(new remote.FileDetector());
             const file = fs.createReadStream(appFileLocation);
@@ -55,7 +96,7 @@ export class ApplicationsUtil {
         }
     }
 
-    async getAppDefinitionByName(appName): Promise<any> {
+    async getAppDefinitionByName(appName: string): Promise<any> {
         try {
             const appDefinitionsList = await this.api.getInstance().activiti.appsApi.getAppDefinitions();
             const appDefinition = appDefinitionsList.data.filter((currentApp) => {
@@ -66,4 +107,5 @@ export class ApplicationsUtil {
             Logger.error('Get AppDefinitions - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
         }
     }
+
 }
