@@ -5,12 +5,8 @@
     "entryFile": "src/public-api.ts",
     "flatModuleFile": "adf-insights",
     "umdModuleIds": {
-      "minimatch": "minimatch",
-      "@angular/material": "@angular/material",
-      "@angular/flex-layout": "@angular/flex-layout",
       "@alfresco/adf-core": "@alfresco/adf-core",
       "ng2-charts": "ng2-charts",
-      "@angular/material/core": "@angular/material/core",
       "raphael": "raphael",
       "moment": "moment",
       "moment-es6": "moment-es6",
