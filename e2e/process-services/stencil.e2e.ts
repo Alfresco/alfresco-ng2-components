@@ -76,7 +76,7 @@ describe('Stencil', () => {
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 
-        await startProcessPage.startProcess({ name, processName: app.processName });
+        await startProcessPage.startProcess(name, app.processName);
         await processListDemoPage.checkProcessIsDisplayed(name);
         await processFiltersPage.selectFromProcessList(name);
 

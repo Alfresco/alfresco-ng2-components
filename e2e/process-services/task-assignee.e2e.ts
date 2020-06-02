@@ -88,7 +88,7 @@ describe('Task Assignee', () => {
             await processListPage.checkProcessListIsDisplayed();
             await processFiltersPage.clickCreateProcessButton();
             await processFiltersPage.clickNewProcessDropdown();
-            await startProcessPage.startProcess({ name , processName: app.processNames[0] });
+            await startProcessPage.startProcess(name, app.processNames[0]);
             await processFiltersPage.selectFromProcessList(name);
             await processDetailsPage.clickOnActiveTask();
 

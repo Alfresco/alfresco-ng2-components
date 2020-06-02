@@ -182,8 +182,8 @@ describe('Start Process Component', () => {
 
                 await startProcessPage.checkStartProcessButtonIsDisabled();
                 await startProcessPage.clickProcessDropdownArrow();
-                await startProcessPage.checkOptionIsDisplayed(processModelWithSe);
-                await startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
+                await startProcessPage.checkProcessOptionIsDisplayed(processModelWithSe);
+                await startProcessPage.checkProcessOptionIsDisplayed(processModelWithoutSe);
             });
 
             it('[C260443] Should be possible to start a process without start event', async () => {
@@ -241,9 +241,9 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
-                await startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
-                await startProcessPage.checkOptionIsDisplayed(processModelWithSe);
-                await startProcessPage.selectOption(processModelWithoutSe);
+                await startProcessPage.checkProcessOptionIsDisplayed(processModelWithoutSe);
+                await startProcessPage.checkProcessOptionIsDisplayed(processModelWithSe);
+                await startProcessPage.selectProcessOption(processModelWithoutSe);
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
@@ -253,9 +253,9 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition(processModelWithoutSe);
-                await startProcessPage.checkOptionIsDisplayed(processModelWithoutSe);
-                await startProcessPage.checkOptionIsNotDisplayed(processModelWithSe);
-                await startProcessPage.selectOption(processModelWithoutSe);
+                await startProcessPage.checkProcessOptionIsDisplayed(processModelWithoutSe);
+                await startProcessPage.checkProcessOptionIsNotDisplayed(processModelWithSe);
+                await startProcessPage.selectProcessOption(processModelWithoutSe);
                 await startProcessPage.checkStartProcessButtonIsEnabled();
             });
 
@@ -275,7 +275,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.enterProcessName('Type');
                 await startProcessPage.typeProcessDefinition(processModelWithoutSe);
-                await startProcessPage.selectOption(processModelWithoutSe);
+                await startProcessPage.selectProcessOption(processModelWithoutSe);
                 await startProcessPage.checkStartProcessButtonIsEnabled();
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
                 await startProcessPage.clickStartProcessButton();
@@ -300,7 +300,7 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
                 await startProcessPage.typeProcessDefinition('process');
-                await startProcessPage.selectOption(processModelWithoutSe);
+                await startProcessPage.selectProcessOption(processModelWithoutSe);
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(processModelWithoutSe);
                 await startProcessPage.clickProcessDropdownArrow();
 
