@@ -20,8 +20,8 @@ import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
 import { ApiService } from '../../core/actions/api.service';
 import { AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
-import path = require('path');
-import fs = require('fs');
+import * as path from 'path';
+import * as fs from 'fs';
 
 export class AppPublish {
     comment: string = '';
