@@ -19,7 +19,7 @@ RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || $TRAVIS_PULL_REQUEST == "false"  ]];
 then
-    $RUN_E2E --folder $CONTEXT_ENV
+    $RUN_E2E --folder $CONTEXT_ENV || exit 1
 else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
     then
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
@@ -27,7 +27,7 @@ else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
         if [[ $LIST_SPECS != "" ]];
         then
             echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
-            $RUN_E2E --specs "$LIST_SPECS"
+            $RUN_E2E --specs "$LIST_SPECS" || exit 1
         fi
     fi
 fi;
