@@ -21,7 +21,7 @@ import remote = require('selenium-webdriver/remote');
 
 import { browser } from 'protractor';
 
-import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
+import { ImageUploadRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
 import { Tenant } from '../models/APS/tenant';
 
@@ -92,26 +92,35 @@ export class UsersActions {
         return user;
     }
 
-    async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
+    async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserModel> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        return this.api.apiService.activiti.adminUsersApi.createNewUser(new UserRepresentation({
+        const user = new UserModel({
             tenantId: newTenant.id,
             email,
             firstName,
             lastName,
             password
-        }));
+        });
+
+        await this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
+
+        return user;
     }
 
-    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
-        return this.api.apiService.activiti.adminUsersApi.createNewUser(new UserRepresentation({
+    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserModel> {
+
+        const user = new UserModel({
             tenantId,
             email,
             firstName,
             lastName,
             password
-        }));
+        });
+
+        await this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
+
+        return user;
     }
 
     async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {

@@ -17,6 +17,7 @@
 
 import { StringUtil } from '../utils/string.util';
 import { browser } from 'protractor';
+import { UserRepresentation } from '@alfresco/js-api';
 
 export class UserModel {
 
@@ -46,6 +47,19 @@ export class UserModel {
         this.tenantId = details.tenantId ? details.tenantId : this.tenantId;
         this.company = details.company ? details.company : this.company;
         this.id = details.id ? details.id : this.id;
+    }
+
+    getAPSModel() {
+        return new UserRepresentation({
+            firstName: this.firstName,
+            lastName: this.lastName,
+            password: this.password,
+            email: this.email,
+            type: this.type,
+            tenantId: this.tenantId,
+            company: this.company,
+            id: this.id
+        });
     }
 
 }

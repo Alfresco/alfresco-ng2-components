@@ -63,7 +63,6 @@ export class ApplicationsUtil {
         try {
             const appCreated = await this.importApplication(appFileLocation, option);
             const publishApp = await this.publishDeployApp(appCreated.id);
-
             await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
             return appCreated;
         } catch (error) {
