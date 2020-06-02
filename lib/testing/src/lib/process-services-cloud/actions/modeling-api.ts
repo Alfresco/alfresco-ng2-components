@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Api } from './api';
+import { Api } from '../../core/actions/api';
 import { Project } from './project';
-import { Logger } from '../utils/logger';
+import { Logger } from '../../core/utils/logger';
 import { browser } from 'protractor';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
 

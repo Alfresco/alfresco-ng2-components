@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { E2eRequestApiHelper } from './e2e-request-api.helper';
-import { Api } from './api';
-import { Logger } from '../utils/logger';
+import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
+import { Api } from '../../core/actions/api';
+import { Logger } from '../../core/utils/logger';
 import { ResultSetPaging } from '@alfresco/js-api';
 
 export class Application {

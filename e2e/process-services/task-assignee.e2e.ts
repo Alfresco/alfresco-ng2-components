@@ -58,20 +58,20 @@ describe('Task Assignee', () => {
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await usersActions.createUser();
 
-            await usersActions.createUser(new UserModel({
-                tenantId: user.tenantId,
-                email: app.candidate.email,
+            user = await usersActions.createUser(new UserModel({
                 firstName: app.candidate.firstName,
                 lastName: app.candidate.lastName
             }));
 
-            await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-                'name': app.candidateGroup,
-                'tenantId': user.tenantId,
-                'type': 1
-            });
+            try {// creates group if not available
+                await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
+                    'name': app.candidateGroup,
+                    'tenantId': user.tenantId,
+                    'type': 1
+                });
+            } catch (e) {
+            }
 
             await apiService.getInstance().login(user.email, user.password);
             await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
@@ -130,28 +130,35 @@ describe('Task Assignee', () => {
             user = await usersActions.createUser();
             candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
             candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
+
             const adminGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );
+
             await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
+
             await apiService.getInstance().activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
             const candidateGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 }
             );
+
             await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
             await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
             await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
-            await usersActions.createUser(new UserModel({
-                tenantId: user.tenantId,
-                email: app.candidate.email,
-                firstName: app.candidate.firstName,
-                lastName: app.candidate.lastName
-            }));
+            try {// for creates user if not available
+                await usersActions.createUser(new UserModel({
+                    tenantId: user.tenantId,
+                    firstName: app.candidate.firstName,
+                    lastName: app.candidate.lastName
+                }));
+            } catch (e) {
+            }
 
             await apiService.getInstance().login(user.email, user.password);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
+
             await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processNames[1]);
         });
 

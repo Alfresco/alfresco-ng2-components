@@ -20,8 +20,4 @@ export * from './api.service';
 export * from './drop.actions';
 export * from './api';
 export * from './api.util';
-export * from './deployment-api';
-export * from './modeling-api';
-export * from './application';
 export * from './e2e-request-api.helper';
-export * from './project';

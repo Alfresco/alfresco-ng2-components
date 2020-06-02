@@ -24,6 +24,7 @@ import { browser } from 'protractor';
 import { ImageUploadRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
 import { Tenant } from '../models/APS/tenant';
+import { UserRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation';
 
 export class UsersActions {
 
@@ -92,7 +93,7 @@ export class UsersActions {
         return user;
     }
 
-    async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserModel> {
+    async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
         const user = new UserModel({
@@ -103,12 +104,10 @@ export class UsersActions {
             password
         });
 
-        await this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
-
-        return user;
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
     }
 
-    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserModel> {
+    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
 
         const user = new UserModel({
             tenantId,
@@ -118,9 +117,7 @@ export class UsersActions {
             password
         });
 
-        await this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
-
-        return user;
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
     }
 
     async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {

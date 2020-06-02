@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ApiService } from '../api.service';
-import { Logger } from '../../utils/logger';
+import { ApiService } from '../../core/actions/api.service';
+import { Logger } from '../../core/utils/logger';
 
 export class ApplicationsService {
 

@@ -152,7 +152,7 @@ describe('Login component - Redirect', () => {
         await browser.refresh();
         await loginPage.waitForElements();
 
-        await loginPage.enterUsername(user.id);
+        await loginPage.enterUsername(user.email);
         await loginPage.enterPassword(user.password);
         await loginPage.clickSignInButton();
 

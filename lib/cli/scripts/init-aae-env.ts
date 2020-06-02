@@ -69,7 +69,7 @@ async function healthCheck(nameService: string) {
 }
 
 function getApplicationByStatus(status: string) {
-    const url = `${args.host}/v1/applications/`;
+    const url = `${args.host}/deployment-service/v1/applications/`;
 
     const pathParams = {}, queryParams = { status: status },
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -85,7 +85,7 @@ function getApplicationByStatus(status: string) {
 }
 
 function getDescriptors() {
-    const url = `${args.host}/v1/descriptors`;
+    const url = `${args.host}/deployment-service/v1/descriptors`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -101,7 +101,7 @@ function getDescriptors() {
 }
 
 function getProjects() {
-    const url = `${args.host}/v1/projects/'`;
+    const url = `${args.host}/deployment-service/v1/projects/'`;
 
     const pathParams = {}, queryParams = { maxItems: 1000 },
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -117,7 +117,7 @@ function getProjects() {
 }
 
 function getProjectRelease(projectId: string) {
-    const url = `${args.host}/v1/projects/${projectId}/releases`;
+    const url = `${args.host}/deployment-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -133,7 +133,7 @@ function getProjectRelease(projectId: string) {
 }
 
 function releaseProject(projectId: string) {
-    const url = `${args.host}/v1/projects/${projectId}/releases`;
+    const url = `${args.host}/deployment-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
@@ -394,9 +394,10 @@ async function main(configArgs: ConfigArgs) {
 
     if (isValid) {
         logger.error('The environment is up and running');
+        await alfrescoJsApi.login(args.devopsUsername, args.devopsPassword);
         await deployMissingApps();
     } else {
-        logger.error('The environment is not up');
+        logger.info('The environment is not up');
         process.exit(1);
     }
 

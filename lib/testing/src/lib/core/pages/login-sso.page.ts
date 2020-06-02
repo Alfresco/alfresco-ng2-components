@@ -41,8 +41,8 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (currentUrl !== `${browser.baseUrl}/login`) {
-            await  BrowserActions.getUrl(browser.baseUrl + '/login');
+        if (!currentUrl || currentUrl.indexOf(`${browser.baseUrl}/login`) === -1) {
+            await BrowserActions.getUrl(browser.baseUrl + '/login');
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsernameBasicAuth);
@@ -57,7 +57,7 @@ export class LoginSSOPage {
         }
     }
 
-    async loginSSOIdentityService(username, password) {
+    async loginSSOIdentityService(username: string, password: string) {
         browser.ignoreSynchronization = true;
 
         let currentUrl;
@@ -82,7 +82,7 @@ export class LoginSSOPage {
         await browser.waitForAngular();
     }
 
-    async loginBasicAuth(username, password): Promise<void> {
+    async loginBasicAuth(username: string, password: string): Promise<void> {
         await this.goToLoginPage();
 
         await LocalStorageUtil.clearStorage();
@@ -111,11 +111,11 @@ export class LoginSSOPage {
         await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
-    async enterUsername(username) {
+    async enterUsername(username: string) {
         await BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
-    async enterPassword(password) {
+    async enterPassword(password: string) {
         await BrowserActions.clearSendKeys(this.passwordField, password);
     }
 

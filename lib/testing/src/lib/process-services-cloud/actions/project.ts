@@ -18,11 +18,11 @@
 import { browser } from 'protractor';
 import { ModelingAPI } from './modeling-api';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
-import { ApiUtil } from './api.util';
-import { E2eRequestApiHelper, E2eRequestApiHelperOptions } from './e2e-request-api.helper';
+import { ApiUtil } from '../../core/actions/api.util';
+import { E2eRequestApiHelper, E2eRequestApiHelperOptions } from '../../core/actions/e2e-request-api.helper';
 import * as fs from 'fs';
-import { StringUtil } from '../utils/string.util';
-import { Logger } from '../utils/logger';
+import { StringUtil } from '../../core/utils/string.util';
+import { Logger } from '../../core/utils/logger';
 
 export class Project {
   requestApiHelper: E2eRequestApiHelper;
