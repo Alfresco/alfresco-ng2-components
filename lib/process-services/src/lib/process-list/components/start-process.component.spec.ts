@@ -438,7 +438,7 @@ describe('StartFormComponent', () => {
         });
 
         it('should call service to start process if required fields provided', async(() => {
-            component.selectedProcessDef = testProcessDef;
+            component.processDefinitionSelectionChanged(testProcessDef);
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).toHaveBeenCalled();
@@ -454,7 +454,7 @@ describe('StartFormComponent', () => {
         }));
 
         it('should call service to start process with the correct parameters', async(() => {
-            component.selectedProcessDef = testProcessDef;
+            component.processDefinitionSelectionChanged(testProcessDef);
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, undefined);
@@ -471,7 +471,7 @@ describe('StartFormComponent', () => {
             inputProcessVariable.push(variable);
 
             component.variables = inputProcessVariable;
-            component.selectedProcessDef = testProcessDef;
+            component.processDefinitionSelectionChanged(testProcessDef);
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined, inputProcessVariable);
@@ -480,10 +480,34 @@ describe('StartFormComponent', () => {
 
         it('should output start event when process started successfully', async(() => {
             const emitSpy = spyOn(component.start, 'emit');
-            component.selectedProcessDef = testProcessDef;
+            component.processDefinitionSelectionChanged(testProcessDef);
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(emitSpy).toHaveBeenCalledWith(newProcess);
+            });
+        }));
+
+        it('should throw error event when process cannot be started', async(() => {
+            const errorSpy = spyOn(component.error, 'error');
+            const error = { message: 'My error' };
+            startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
+            component.processDefinitionSelectionChanged(testProcessDef);
+            component.startProcess();
+            fixture.whenStable().then(() => {
+                expect(errorSpy).toHaveBeenCalledWith(error);
+            });
+        }));
+
+        it('should indicate an error to the user if process cannot be started', async(() => {
+            fixture.detectChanges();
+            startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
+            component.processDefinitionSelectionChanged(testProcessDef);
+            component.startProcess();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const errorEl = fixture.nativeElement.querySelector('#error-message');
+                expect(errorEl).not.toBeNull();
+                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.START');
             });
         }));
 
@@ -493,7 +517,7 @@ describe('StartFormComponent', () => {
                 done();
             });
 
-            component.selectedProcessDef = testProcessDef;
+            component.processDefinitionSelectionChanged(testProcessDef);
             component.name = 'my:Process';
             component.startProcess();
             fixture.detectChanges();
@@ -535,7 +559,7 @@ describe('StartFormComponent', () => {
 
         it('should able to start the process when the required fields are filled up', (done) => {
             component.name = 'my:process1';
-            component.selectedProcessDef = testProcessDef;
+            component.processDefinitionSelectionChanged(testProcessDef);
 
             const disposableStart = component.start.subscribe(() => {
                 disposableStart.unsubscribe();
