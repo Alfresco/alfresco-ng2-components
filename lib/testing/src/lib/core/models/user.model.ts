@@ -23,7 +23,7 @@ export class UserModel {
 
     firstName?: string = StringUtil.generateRandomLowercaseString();
     lastName?: string = StringUtil.generateRandomLowercaseString();
-    password?: string = StringUtil.generateRandomString();
+    password?: string = StringUtil.generateRandomLowercaseString(4) + StringUtil.generateRandomString(4).toUpperCase();
     email?: string;
     username?: string;
     idIdentityService?: string;
@@ -50,7 +50,7 @@ export class UserModel {
     }
 
     getAPSModel() {
-       return new UserRepresentation({
+        return new UserRepresentation({
             firstName: this.firstName,
             lastName: this.lastName,
             password: this.password,
