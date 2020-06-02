@@ -28,9 +28,9 @@ export class UserModel {
     username?: string;
     idIdentityService?: string;
     type = 'enterprise';
-    tenantId = 1;
-    company = null;
-    id: number = null;
+    tenantId;
+    company;
+    id: number;
 
     constructor(details: any = {}) {
         const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
@@ -50,7 +50,7 @@ export class UserModel {
     }
 
     getAPSModel() {
-        return new UserRepresentation({
+       return new UserRepresentation({
             firstName: this.firstName,
             lastName: this.lastName,
             password: this.password,

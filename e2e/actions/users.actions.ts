@@ -58,7 +58,6 @@ export class UsersActions {
         }
 
         if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
-            Logger.log('Create user BPM');
 
             try {
                 if (tenantId || (emailOrUserModel && typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId)) {
@@ -79,6 +78,7 @@ export class UsersActions {
                     user.id = apsUser.id;
                 }
             } catch (e) {
+                Logger.error('Error create user' + JSON.stringify(e));
             }
         }
 
