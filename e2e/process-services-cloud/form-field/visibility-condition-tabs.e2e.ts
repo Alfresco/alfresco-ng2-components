@@ -26,7 +26,6 @@ import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisi
 describe('Visibility conditions on tabs - cloud', () => {
 
     const loginSSOPage = new LoginSSOPage();
-
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();

@@ -32,27 +32,27 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 describe('Task filters cloud', () => {
 
     describe('Task Filters', () => {
+
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        let tasksService: TasksService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let queryService: QueryService;
-        let testUser, groupInfo;
         const apiService = new ApiService();
+        const queryService = new QueryService(apiService);
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const tasksService = new TasksService(apiService);
+
+        let testUser, groupInfo;
 
         const newTask = StringUtil.generateRandomString(5), completedTask = StringUtil.generateRandomString(5);
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         beforeAll(async () => {
-            queryService = new QueryService(apiService);
-
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
+
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -74,8 +74,6 @@ describe('Task filters cloud', () => {
         });
 
         it('[C290009] Should display default filters and created task', async () => {
-            tasksService = new TasksService(apiService);
-
             const task = await tasksService.createStandaloneTask(newTask, simpleApp);
             await tasksService.claimTask(task.entry.id, simpleApp);
 
@@ -90,8 +88,6 @@ describe('Task filters cloud', () => {
         });
 
         it('[C289955] Should display task in Complete Tasks List when task is completed', async () => {
-            tasksService = new TasksService(apiService);
-
             const toBeCompletedTask = await tasksService.createStandaloneTask(completedTask, simpleApp);
             await tasksService.claimTask(toBeCompletedTask.entry.id, simpleApp);
             await tasksService.completeTask(toBeCompletedTask.entry.id, simpleApp);

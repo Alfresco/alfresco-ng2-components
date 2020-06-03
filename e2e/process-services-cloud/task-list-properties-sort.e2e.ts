@@ -29,14 +29,13 @@ describe('Edit task filters and task list properties', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-    let tasksService: TasksService;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
     const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const tasksService = new TasksService(apiService);
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
@@ -46,9 +45,6 @@ describe('Edit task filters and task list properties', () => {
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        tasksService = new TasksService(apiService);
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 

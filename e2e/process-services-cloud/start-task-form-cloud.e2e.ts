@@ -62,8 +62,11 @@ describe('Start Task Form', () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const processHeaderCloud = new ProcessHeaderCloudPage();
+
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
 
     const startProcessCloudConfiguration = new StartProcessCloudConfiguration();
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
@@ -86,16 +89,12 @@ describe('Start Task Form', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
     const folderName = StringUtil.generateRandomString(5);
     let uploadedFolder;
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);

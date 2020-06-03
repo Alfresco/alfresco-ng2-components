@@ -23,14 +23,16 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
+
         const apiService = new ApiService();
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
 
         let apsUser, testUser;
         let noRoleUser;
@@ -42,8 +44,6 @@ describe('People Groups Cloud Component', () => {
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
             testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
 

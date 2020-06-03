@@ -39,13 +39,22 @@ import { ProcessListCloudConfiguration } from './config/process-list-cloud.confi
 import moment = require('moment');
 
 describe('Process filters cloud', () => {
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const processListPage = new ProcessListPage();
+
     const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const processDefinitionService = new ProcessDefinitionsService(apiService);
+    const processInstancesService = new ProcessInstancesService(apiService);
+    const queryService = new QueryService(apiService);
+    const tasksService = new TasksService(apiService);
+
     const beforeDate = moment().add(-1, 'days').format('DD/MM/YYYY');
     const currentDate = DateUtil.formatDate('DD/MM/YYYY');
     const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
@@ -53,13 +62,6 @@ describe('Process filters cloud', () => {
     const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
     const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
     const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
-
-    let tasksService: TasksService;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
-    let processDefinitionService: ProcessDefinitionsService;
-    let processInstancesService: ProcessInstancesService;
-    let queryService: QueryService;
 
     let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo,
         anotherProcessInstance, processDefinition, anotherProcessDefinition,
@@ -69,8 +71,6 @@ describe('Process filters cloud', () => {
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         anotherUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
@@ -80,11 +80,9 @@ describe('Process filters cloud', () => {
         await identityService.addUserToGroup(anotherUser.idIdentityService, groupInfo.id);
 
         await apiService.login(anotherUser.email, anotherUser.password);
-        processDefinitionService = new ProcessDefinitionsService(apiService);
         simpleAppProcessDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-        processInstancesService = new ProcessInstancesService(apiService);
         differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
             'name': StringUtil.generateRandomString(),
             'businessKey': StringUtil.generateRandomString()
@@ -117,10 +115,8 @@ describe('Process filters cloud', () => {
             'name': StringUtil.generateRandomString(),
             'businessKey': StringUtil.generateRandomString()
         });
-        queryService = new QueryService(apiService);
 
         const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
-        tasksService = new TasksService(apiService);
         const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
         await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 

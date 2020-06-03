@@ -30,21 +30,21 @@ import { taskFilterConfiguration } from './config/task-filter.config';
 
 describe('Edit task filters and task list properties', () => {
 
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-    let tasksService: TasksService;
-    let processDefinitionService: ProcessDefinitionsService;
-    let processInstancesService: ProcessInstancesService;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
     const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const tasksService = new TasksService(apiService);
+    const processDefinitionService = new ProcessDefinitionsService(apiService);
+    const processInstancesService = new ProcessInstancesService(apiService);
 
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const noTasksFoundMessage = 'No Tasks Found';
     let createdTask, notAssigned, notDisplayedTask, processDefinition, processInstance, priorityTask, subTask,
         otherOwnerTask, testUser, groupInfo;
@@ -56,11 +56,8 @@ describe('Edit task filters and task list properties', () => {
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        tasksService = new TasksService(apiService);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -80,11 +77,9 @@ describe('Edit task filters and task list properties', () => {
         notDisplayedTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
-        processDefinitionService = new ProcessDefinitionsService(apiService);
         processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
-        processInstancesService = new ProcessInstancesService(apiService);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
         subTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp, { 'parentTaskId': createdTask.entry.id });
@@ -220,7 +215,7 @@ describe('Edit task filters and task list properties', () => {
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async() => {
+        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
@@ -268,5 +263,5 @@ describe('Edit task filters and task list properties', () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
-   });
+    });
 });

@@ -27,7 +27,6 @@ import { dropdownVisibilityFormFieldJson, dropdownVisibilityFormVariableJson } f
 describe('Visibility conditions - cloud', () => {
 
     const loginSSOPage = new LoginSSOPage();
-
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();

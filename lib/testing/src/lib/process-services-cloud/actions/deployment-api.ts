@@ -63,7 +63,7 @@ export class DeploymentAPI extends Api {
     }
 
     async getApplicationByStatus(status: string): Promise<ResultSetPaging> {
-        const applications =  this.application.getApplicationsByStatus(status);
+        const applications = this.application.getApplicationsByStatus(status);
         return applications;
     }
 }

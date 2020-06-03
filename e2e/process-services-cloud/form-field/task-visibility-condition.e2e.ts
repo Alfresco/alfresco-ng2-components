@@ -34,6 +34,8 @@ import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-service
 
 describe('Task cloud visibility', async () => {
 
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -43,18 +45,18 @@ describe('Task cloud visibility', async () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const loginSSOPage = new LoginSSOPage();
 
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const processName = StringUtil.generateRandomString(5);
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
+
     let testUser, groupInfo;
-    const apiService = new ApiService();
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
+
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);

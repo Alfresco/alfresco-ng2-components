@@ -18,7 +18,6 @@
 import { element, by, browser, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { LocalStorageUtil } from '../utils/local-storage.util';
 
 export class LoginSSOPage {
 
@@ -67,7 +66,7 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
+        if (!currentUrl || currentUrl.indexOf(`login`) === -1) {
             const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
             await browser.get(loginURL);
         }
@@ -84,10 +83,6 @@ export class LoginSSOPage {
 
     async loginBasicAuth(username: string, password: string): Promise<void> {
         await this.goToLoginPage();
-
-        await LocalStorageUtil.clearStorage();
-        await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
-        await LocalStorageUtil.apiReset();
 
         await this.enterUsernameBasicAuth(username);
         await this.enterPasswordBasicAuth(password);

@@ -34,16 +34,20 @@ import { ProcessInstanceCloud } from '@alfresco/adf-process-services-cloud';
 import { taskFilterConfiguration } from './config/task-filter.config';
 
 describe('Task claim/release', () => {
+
+    const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
+
     const apiService = new ApiService();
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
-    const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
+
     let processInstance: ProcessInstanceCloud;
 
     describe('candidate user', () => {

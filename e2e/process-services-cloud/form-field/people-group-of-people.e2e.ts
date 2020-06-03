@@ -35,13 +35,15 @@ import {
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('People and Group of people Widgets', () => {
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudComponentPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();
+    const formPage = new FormPage();
+
     const peopleCloudWidget = widget.peopleCloudWidget();
     const groupCloudWidget = widget.groupCloudWidget();
-    const formPage = new FormPage();
 
     const widgets = {
         peopleCloudWidgetSingleModeId: 'PeopleSingleMode',

@@ -33,35 +33,34 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('Process list cloud', () => {
 
     describe('Process List - Custom Action Menu', () => {
+
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let testUser, groupInfo, editProcess, deleteProcess;
-
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
+
+        let testUser, groupInfo, editProcess, deleteProcess;
 
         beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
+
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
         await apiService.login(testUser.email, testUser.password);
-        processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-        processInstancesService = new ProcessInstancesService(apiService);
         editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()

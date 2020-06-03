@@ -33,28 +33,27 @@ import {
 
 describe('Start Task - Group Cloud Component', () => {
 
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
-    const apiService = new ApiService();
     const groupCloud = new GroupCloudComponentPage();
+
+    const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
 
     const bothGroupsTaskName = StringUtil.generateRandomString(5);
     const oneGroupTaskName = StringUtil.generateRandomString(5);
     let apsUser, testUser, hrGroup, testGroup;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
         testUser = await identityService.createIdentityUser();
         apsUser = await identityService.createIdentityUser();
 

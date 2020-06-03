@@ -15,98 +15,107 @@
  * limitations under the License.
  */
 
-import { Oauth2Auth } from '@alfresco/js-api';
+import { Api } from './api';
+import { ApiService } from './api.service';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 export interface E2eRequestApiHelperOptions {
-  pathParams?: { [key: string]: any };
-  queryParams?: { [key: string]: any };
-  headerParams?: { [key: string]: any };
-  formParams?: { [key: string]: any };
-  bodyParam?: { [key: string]: any };
-  contentTypes?: string[];
-  accepts?: string[];
-  returnType?: any;
-  contextRoot?: string;
-  responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text';
+    pathParams?: { [key: string]: any };
+    queryParams?: { [key: string]: any };
+    headerParams?: { [key: string]: any };
+    formParams?: { [key: string]: any };
+    bodyParam?: { [key: string]: any };
+    contentTypes?: string[];
+    accepts?: string[];
+    returnType?: any;
+    contextRoot?: string;
+    responseType?: 'arraybuffer' | 'blob' | 'document' | 'json' | 'text';
 }
 
 function getDefaultOptions(): E2eRequestApiHelperOptions {
-  return {
-    pathParams: {},
-    queryParams: {},
-    headerParams: {},
-    formParams: {},
-    bodyParam: {},
-    contentTypes: ['application/json'],
-    accepts: ['application/json'],
-    returnType: undefined
-  };
+    return {
+        pathParams: {},
+        queryParams: {},
+        headerParams: {},
+        formParams: {},
+        bodyParam: {},
+        contentTypes: ['application/json'],
+        accepts: ['application/json'],
+        returnType: undefined
+    };
 }
 
 export class E2eRequestApiHelper {
 
-  api: Oauth2Auth;
+    api: AlfrescoApi;
 
-  constructor(private backend) {
-    this.api = backend.api.oauth2Auth;
-  }
+    // @ts-ignore
+    constructor(private backend: Api | ApiService) {
+        if (backend.constructor === Api) {
+            // @ts-ignore
+            this.api = backend.api;
+        } else {
+            // @ts-ignore
+            this.api = backend.apiService;
+        }
+    }
 
-  private buildUrl(endPoint: string): string {
-    const trimSlash = (str: string) => str.replace(/^\/|\/$/g, '');
-    const host = this.backend.api.config.hostBpm;
-    const path = '/' + trimSlash(endPoint);
+    private buildUrl(endPoint: string): string {
+        const trimSlash = (str: string) => str.replace(/^\/|\/$/g, '');
+        const host = this.api.config.hostBpm;
+        const path = '/' + trimSlash(endPoint);
 
-    return `${host}${path}`;
-  }
+        return `${host}${path}`;
+    }
 
-  public get<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
-    return this.request<T>('GET', endPoint, overriddenOptions);
-  }
+    public get<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
+        return this.request<T>('GET', endPoint, overriddenOptions);
+    }
 
-  public post<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
-    return this.request<T>('POST', endPoint, overriddenOptions);
-  }
+    public post<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
+        return this.request<T>('POST', endPoint, overriddenOptions);
+    }
 
-  public put<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
-    return this.request<T>('PUT', endPoint, overriddenOptions);
-  }
+    public put<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
+        return this.request<T>('PUT', endPoint, overriddenOptions);
+    }
 
-  public delete<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
-    return this.request<T>('DELETE', endPoint, overriddenOptions);
-  }
+    public delete<T>(endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
+        return this.request<T>('DELETE', endPoint, overriddenOptions);
+    }
 
-  private request<T>(httpMethod: string, endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
-    const options = {
-      ...getDefaultOptions(),
-      ...overriddenOptions
-    };
+    private request<T>(httpMethod: string, endPoint: string, overriddenOptions?: E2eRequestApiHelperOptions): PromiseLike<T> {
+        const options = {
+            ...getDefaultOptions(),
+            ...overriddenOptions
+        };
 
-    const {
-      pathParams,
-      queryParams,
-      headerParams,
-      formParams,
-      bodyParam,
-      contentTypes,
-      accepts,
-      returnType,
-      contextRoot,
-      responseType
-    } = options;
+        const {
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts,
+            returnType,
+            contextRoot,
+            responseType
+        } = options;
 
-    return this.api.callCustomApi(
-      this.buildUrl(endPoint),
-      httpMethod,
-      pathParams,
-      queryParams,
-      headerParams,
-      formParams,
-      bodyParam,
-      contentTypes,
-      accepts,
-      returnType,
-      contextRoot,
-      responseType
-    );
-  }
+        return this.api.oauth2Auth.callCustomApi(
+            this.buildUrl(endPoint),
+            httpMethod,
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            bodyParam,
+            contentTypes,
+            accepts,
+            returnType,
+            contextRoot,
+            responseType
+        );
+    }
 }

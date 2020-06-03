@@ -30,19 +30,23 @@ export class ApiService {
             this.config = { ...browser.params.testConfig.appConfig };
         }
 
-        if (typeof clientIdOrAppConfig !== 'string') {
+        if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
             this.config = { ...browser.params.testConfig.appConfig, ...clientIdOrAppConfig };
-        } else {
+            this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
+            this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
+        } else if (clientIdOrAppConfig && typeof clientIdOrAppConfig === 'string') {
             this.config.oauth2.clientId = clientIdOrAppConfig;
         }
 
         if (hostSso) {
             this.config.oauth2.host = hostSso;
         }
+
         if (host) {
             this.config.hostBpm = host;
             this.config.hostEcm = host;
         }
+
         if (provider) {
             this.config.provider = provider;
         }

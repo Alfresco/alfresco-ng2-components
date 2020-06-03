@@ -26,6 +26,7 @@ import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Form Field Component - Dropdown Widget', () => {
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -34,42 +35,38 @@ describe('Form Field Component - Dropdown Widget', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const widget = new ProcessCloudWidgetPage();
-    const dropdown = widget.dropdown();
-    const apiService = new ApiService();
 
-    let tasksService: TasksService;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
-    let processDefinitionService: ProcessDefinitionsService;
-    let processInstancesService: ProcessInstancesService;
-    let queryService: QueryService;
+    const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const processDefinitionService = new ProcessDefinitionsService(apiService);
+    const processInstancesService = new ProcessInstancesService(apiService);
+    const queryService = new QueryService(apiService);
+    const tasksService = new TasksService(apiService);
+
+    const dropdown = widget.dropdown();
 
     let runningProcessInstance, testUser, groupInfo, tasklist, task;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
+
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
-        processInstancesService = new ProcessInstancesService(apiService);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-        queryService = new QueryService(apiService);
 
         tasklist = await queryService.getProcessInstanceTasks(runningProcessInstance.entry.id, simpleApp);
         task = await tasklist.list.entries[0];
-        tasksService = new TasksService(apiService);
         await tasksService.claimTask(task.entry.id, simpleApp);
 
         await loginSSOPage.login(testUser.email, testUser.password);

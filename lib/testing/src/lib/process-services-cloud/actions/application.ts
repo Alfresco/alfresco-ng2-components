@@ -19,40 +19,41 @@ import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
 import { Api } from '../../core/actions/api';
 import { Logger } from '../../core/utils/logger';
 import { ResultSetPaging } from '@alfresco/js-api';
+import { ApiService } from '../../core/actions/api.service';
 
 export class Application {
 
-  requestApiHelper: E2eRequestApiHelper;
-  endPoint = `/v1/applications/`;
+    requestApiHelper: E2eRequestApiHelper;
+    endPoint = `/deployment-service/v1/applications/`;
 
-  constructor(api: Api) {
-    this.requestApiHelper = new E2eRequestApiHelper(api);
-  }
+    constructor(api: Api | ApiService) {
+        this.requestApiHelper = new E2eRequestApiHelper(api);
+    }
 
-  async deploy(model: any): Promise<any> {
-      await this.requestApiHelper.post(`${this.endPoint}`, { bodyParam: model});
-      Logger.info(`[Application] Application '${model.name}' was deployed successfully.`);
-  }
+    async deploy(model: any): Promise<any> {
+        await this.requestApiHelper.post(`${this.endPoint}`, { bodyParam: model });
+        Logger.info(`[Application] Application '${model.name}' was deployed successfully.`);
+    }
 
-  async delete(applicationId: string): Promise<void> {
-    await this.requestApiHelper.delete(`${this.endPoint}${applicationId}`);
-    Logger.info(`[Application] Application: '${applicationId}' was deleted successfully.`);
-  }
+    async delete(applicationId: string): Promise<void> {
+        await this.requestApiHelper.delete(`${this.endPoint}${applicationId}`);
+        Logger.info(`[Application] Application: '${applicationId}' was deleted successfully.`);
+    }
 
-  async deleteDescriptor(name: string): Promise<void> {
-    await this.requestApiHelper.delete(`v1/descriptors/${name}`);
-    Logger.info(`[Descriptor] Descriptor: '${name}' was deleted successfully.`);
-  }
+    async deleteDescriptor(name: string): Promise<void> {
+        await this.requestApiHelper.delete(`v1/descriptors/${name}`);
+        Logger.info(`[Descriptor] Descriptor: '${name}' was deleted successfully.`);
+    }
 
-  async getDescriptors(): Promise<ResultSetPaging> {
-    Logger.info(`[Descriptor] Return descriptors`);
-    return this.requestApiHelper.get<ResultSetPaging>(`v1/descriptors`, {});
-  }
+    async getDescriptors(): Promise<ResultSetPaging> {
+        Logger.info(`[Descriptor] Return descriptors`);
+        return this.requestApiHelper.get<ResultSetPaging>(`v1/descriptors`, {});
+    }
 
-  async getApplicationsByStatus(status: string): Promise<ResultSetPaging> {
-    Logger.info(`[Application] Return application by status: ${status}`);
-    return this.requestApiHelper.get<ResultSetPaging>(this.endPoint, {
-      queryParams: { status: status }
-    });
-  }
+    async getApplicationsByStatus(status: string): Promise<ResultSetPaging> {
+        Logger.info(`[Application] Return application by status: ${status}`);
+        return this.requestApiHelper.get<ResultSetPaging>(this.endPoint, {
+            queryParams: { status: status, sort: 'name' }
+        });
+    }
 }

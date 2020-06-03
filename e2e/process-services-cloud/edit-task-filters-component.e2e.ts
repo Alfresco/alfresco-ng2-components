@@ -31,26 +31,28 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 describe('Edit task filters cloud', () => {
 
     describe('Edit Task Filters', () => {
+
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        let tasksService: TasksService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let testUser, groupInfo;
-        const apiService = new ApiService();
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const tasksService = new TasksService(apiService);
+
+        let testUser, groupInfo;
+
         const completedTaskName = StringUtil.generateRandomString(),
             assignedTaskName = StringUtil.generateRandomString();
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            tasksService = new TasksService(apiService);
-            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+
+            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -284,5 +286,5 @@ describe('Edit task filters cloud', () => {
             await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().getFilterName()).toEqual('My Tasks');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
         });
-   });
+    });
 });

@@ -15,32 +15,33 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsService, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Applications list', () => {
 
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudPage = new AppListCloudPage();
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-    let identityService: IdentityService;
-    let applicationsService: ApplicationsService;
+    const apiService = new ApiService();
+    const applicationsService = new Application(apiService);
+    const identityService = new IdentityService(apiService);
+
     let testUser;
     const appNames = [];
     let applications;
-    const apiService = new ApiService();
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
 
         await loginSSOPage.login(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
-        applicationsService = new ApplicationsService(apiService);
+
         applications = await applicationsService.getApplicationsByStatus('RUNNING');
 
         applications.list.entries.forEach(app => {
@@ -48,6 +49,7 @@ describe('Applications list', () => {
         });
 
         await LocalStorageUtil.setConfigField('alfresco-deployed-apps', '[]');
+        await LocalStorageUtil.apiReset();
    });
 
     afterAll(async () => {
@@ -60,6 +62,7 @@ describe('Applications list', () => {
         await appListCloudPage.checkApsContainer();
 
         const list = await appListCloudPage.getNameOfTheApplications();
+
         await expect(JSON.stringify(list)).toEqual(JSON.stringify(appNames));
     });
 

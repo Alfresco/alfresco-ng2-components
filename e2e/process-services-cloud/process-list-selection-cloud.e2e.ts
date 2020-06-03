@@ -26,6 +26,9 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 describe('Process list cloud', () => {
 
     describe('Process List - selection', () => {
+
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -33,14 +36,14 @@ describe('Process list cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
 
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
+        const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
+
         let testUser, groupInfo;
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-        const apiService = new ApiService();
         const noOfProcesses = 3;
         const processInstances = [];
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
@@ -48,18 +51,15 @@ describe('Process list cloud', () => {
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
+
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
-            processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
                 const response = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
                 processInstances.push(response.entry.id);

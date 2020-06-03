@@ -40,21 +40,20 @@ describe('Process Header cloud component', () => {
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
-        const apiService = new ApiService();
 
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let queryService: QueryService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
+        const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
+        const queryService = new QueryService(apiService);
+
         let testUser, groupInfo;
 
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -62,12 +61,10 @@ describe('Process Header cloud component', () => {
 
             await apiService.login(testUser.email, testUser.password);
 
-            processDefinitionService = new ProcessDefinitionsService(apiService);
             const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
             const processparent = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.processes.processparent, subProcessApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(dropdownRestProcess.entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
 
@@ -75,8 +72,6 @@ describe('Process Header cloud component', () => {
 
             parentCompleteProcess = await processInstancesService.createProcessInstance(processparent.entry.key,
                 subProcessApp);
-
-            queryService = new QueryService(apiService);
 
             const parentProcessInstance = await queryService.getProcessInstanceSubProcesses(parentCompleteProcess.entry.id,
                 subProcessApp);
