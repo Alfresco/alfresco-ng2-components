@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="isLoading(); then showLoadingTemplate; else showStartProcessTemplate"></ng-container>
     <ng-template #showLoadingTemplate>
-        <mat-spinner class="adf-start-process-loading-margin"></mat-spinner>
+        <mat-spinner class="adf-start-process-loading"></mat-spinner>
     </ng-template>
 <ng-template #showStartProcessTemplate>
     <ng-container *ngIf="hasApplications() || hasProcessDefinitions() ; else showEmptyTemplate">
@@ -111,7 +111,7 @@
                     </ng-template>
                 </ng-container>
                 <ng-template #showStartFormLoadingTemplate>
-                    <mat-spinner class="adf-start-process-loading-margin"></mat-spinner>
+                    <mat-spinner class="adf-start-process-loading"></mat-spinner>
                 </ng-template>
             </div>
             <div class="mat-content-actions" *ngIf="!hasStartForm()">

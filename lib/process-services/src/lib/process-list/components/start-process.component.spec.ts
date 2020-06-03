@@ -18,7 +18,7 @@
 import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
@@ -709,4 +709,104 @@ describe('StartFormComponent', () => {
             expect(processNameInput.disabled).toEqual(false);
         });
    });
+
+    describe('Empty Template', () => {
+
+        beforeEach(() => {
+            fixture.detectChanges();
+            getDefinitionsSpy.and.returnValue(of([]));
+            getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of([]));
+        });
+
+        it('should show no process definition available template when application/process definitions are empty', () => {
+            component.showSelectApplicationDropdown = true;
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            component.applications = [];
+            component.processDefinitions = [];
+            fixture.detectChanges();
+            const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+            expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
+            expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
+        });
+
+        it('should show no process definition available template if processDefinitions are empty', () => {
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            component.processDefinitions = [];
+            fixture.detectChanges();
+            const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+            expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
+            expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
+        });
+
+        it('should show no process definition selected template if there is no process definition selected', () => {
+            component.showSelectApplicationDropdown = true;
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+            expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
+            expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEF_SELECTED');
+        });
+
+        it('should show no start form template if selected process definition does not have start form', () => {
+            component.showSelectApplicationDropdown = true;
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            component.selectedProcessDef = testMultipleProcessDefs[0];
+            fixture.detectChanges();
+            const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+            expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
+            expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_START_FORM');
+        });
+    });
+
+    describe('Error event', () => {
+
+        const processDefError = { message: 'Failed to load Process definitions' };
+        const applicationsError = { message: 'Failed to load applications' };
+        const startProcessError = { message: 'Failed to start process' };
+
+        beforeEach(() => {
+            fixture.detectChanges();
+        });
+
+        it('should emit error event in case loading process definitions failed', async(() => {
+            getDefinitionsSpy.and.returnValue(throwError(processDefError));
+            const errorSpy = spyOn(component.error, 'emit');
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(errorSpy).toHaveBeenCalledWith(processDefError);
+            });
+        }));
+
+        it('should emit error event in case loading applications failed', async(() => {
+            getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(throwError(applicationsError));
+            const errorSpy = spyOn(component.error, 'emit');
+            component.showSelectApplicationDropdown = true;
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(errorSpy).toHaveBeenCalledWith(applicationsError);
+            });
+        }));
+
+        it('should emit error event in case start process failed', async(() => {
+            startProcessSpy.and.returnValue(throwError(startProcessError));
+            const errorSpy = spyOn(component.error, 'emit');
+            const change = new SimpleChange(null, 3, true);
+            component.ngOnChanges({ 'appId': change });
+            component.selectedProcessDef = testProcessDef;
+            component.name = 'mock name';
+            component.startProcess();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(errorSpy).toHaveBeenCalledWith(startProcessError);
+            });
+        }));
+    });
 });

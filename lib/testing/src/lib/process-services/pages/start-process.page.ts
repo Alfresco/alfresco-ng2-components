@@ -30,7 +30,7 @@ export class StartProcessPage {
     cancelProcessButton: ElementFinder = element(by.id('cancel_process'));
     formStartProcessButton: ElementFinder = element(by.css('button[data-automation-id="adf-form-start process"]'));
     startProcessButton: ElementFinder = element(by.css('button[data-automation-id="btn-start"]'));
-    noProcess: ElementFinder = element(by.id('no-process-message'));
+    noProcess: ElementFinder = element(by.css('.adf-empty-content__title'));
     processDefinition: ElementFinder = element(by.css('input[id="processDefinitionName"]'));
     processDefinitionOptionsPanel: ElementFinder = element(by.css('div[class*="mat-autocomplete-panel"]'));
 
