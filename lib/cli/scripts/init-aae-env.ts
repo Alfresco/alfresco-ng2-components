@@ -201,7 +201,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
         hostBpm: `${configArgs.host}`,
         authType: 'OAUTH',
         oauth2: {
-            host: `${configArgs.oauth}`,
+            host: `${configArgs.oauth}/auth/realms/alfresco`,
             clientId: `${configArgs.clientId}`,
             scope: 'openid',
             secret: '',
