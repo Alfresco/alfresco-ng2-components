@@ -4,6 +4,7 @@
 
     $config: mat-typography-config();
     $foreground: map-get($theme, foreground);
+    $adf-empty-content-icon-opacity: 0.6;
 
     .adf-empty-content {
         color: mat-color($foreground, text, 0.54);
@@ -39,6 +40,6 @@
     }
 
     .adf-icon {
-        opacity: 0.6;
+        opacity: $adf-empty-content-icon-opacity;
     }
 }
