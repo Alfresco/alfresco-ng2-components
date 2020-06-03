@@ -27,7 +27,7 @@ export class FilterMenuComponent {
     @Input()
     col: DataColumn;
 
-    stopEventPropagation(event: Event) {
+    onMenuButtonClick(event: Event) {
         event.stopPropagation();
     }
 }
