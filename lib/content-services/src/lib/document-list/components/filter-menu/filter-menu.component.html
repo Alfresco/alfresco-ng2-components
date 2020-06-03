@@ -1,0 +1,16 @@
+<button mat-icon-button [matMenuTriggerFor]="filter"
+    (click)="stopEventPropagation($event)"
+    class="adf-filter-button"
+    matTooltip="{{'ADF-DOCUMENT-LIST.FILTER_MENU.FILTER_BY' | translate}}">
+    <mat-icon>filter_list</mat-icon>
+</button>
+
+<mat-menu #filter="matMenu">
+    <div>{{col.title}}</div>
+    <mat-dialog-actions>
+        <button mat-button>{{ 'ADF-DOCUMENT-LIST.FILTER_MENU.CLEAR' | translate | uppercase }}
+        </button>
+        <button mat-button>{{ 'ADF-DOCUMENT-LIST.FILTER_MENU.APPLY' | translate | uppercase }}
+        </button>
+    </mat-dialog-actions>
+</mat-menu>

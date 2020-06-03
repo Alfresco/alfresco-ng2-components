@@ -54,6 +54,11 @@
       "VIEW": "View",
       "REMOVE": "Remove",
       "DOWNLOAD": "Download"
+    },
+    "FILTER_MENU" : {
+      "FILTER_BY": "Filter by...",
+      "CLEAR": "Clear",
+      "APPLY": "Apply"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
