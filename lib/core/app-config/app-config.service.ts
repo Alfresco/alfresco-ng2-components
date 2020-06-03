@@ -103,10 +103,18 @@ export class AppConfigService {
             keywords.set('protocol', this.getLocationProtocol());
             result = this.formatString(result, keywords);
         }
+
+        if (typeof result === 'object') {
+            result = JSON.parse(JSON.stringify(result).replace('{hostname}', this.getLocationHostname()));
+            result = JSON.parse(JSON.stringify(result).replace('{:port}', this.getLocationPort(':')));
+            result = JSON.parse(JSON.stringify(result).replace('{protocol}', this.getLocationProtocol()));
+        }
+
         if (result === undefined) {
             return defaultValue;
         }
-        return <T> result;
+
+        return <T>result;
     }
 
     /**
