@@ -213,7 +213,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsDisabled();
             });
 
-           it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
+            it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
