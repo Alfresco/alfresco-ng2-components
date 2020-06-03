@@ -202,10 +202,11 @@ export class ExtensionService {
         if (typeof value === 'string' ) {
             return this.evaluateExpression(value, context);
         } else {
-            Object.keys(value).forEach( (key) => {
-                value[key] = this.evaluateExpression(value[key], context);
+            const duplicate = Object.assign({}, value);
+            Object.keys(duplicate).forEach( (key) => {
+                duplicate[key] = this.evaluateExpression(duplicate[key], context);
             });
-            return value;
+            return duplicate;
         }
     }
 
