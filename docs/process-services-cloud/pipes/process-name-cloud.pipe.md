@@ -9,7 +9,7 @@ Last reviewed: 2020-06-02
 
 When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided.
 ## Basic Usage
-processNameCloudPipe.transform('Example - %{processDefinition} - %{datetime}', );
+processNameCloudPipe.transform('Example - %{processDefinition} - %{datetime}', new ProcessDefinitionCloud({ name: 'upload-passport'}));
 ### Properties
 
 | Name | Type | Default value | Description |

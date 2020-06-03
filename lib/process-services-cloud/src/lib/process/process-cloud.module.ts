@@ -31,7 +31,7 @@ import { ProcessNameCloudPipe } from '../pipes/process-name-cloud.pipe';
         ProcessListCloudModule,
         StartProcessCloudModule,
         ProcessHeaderCloudModule,
-        ProcessDirectiveModule,
+        ProcessDirectiveModule
     ],
     exports: [
         ProcessFiltersCloudModule,
