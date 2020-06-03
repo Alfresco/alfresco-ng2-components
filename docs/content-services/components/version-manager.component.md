@@ -33,6 +33,7 @@ Displays the version history of a node with the ability to upload a new version.
 | newFileVersion | `File` |  | New file for updating current version. |
 | node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Target node to manage version history. |
 | showComments | `boolean` | true | Toggles showing/hiding of comments. |
+| showVersionComparison | `boolean` | false | Toggles showing/hiding of comments. |
 
 ### Events
 
