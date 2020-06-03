@@ -32,8 +32,6 @@ export class ApiService {
 
         if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
             this.config = { ...browser.params.testConfig.appConfig, ...clientIdOrAppConfig };
-            this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
-            this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
         } else if (clientIdOrAppConfig && typeof clientIdOrAppConfig === 'string') {
             this.config.oauth2.clientId = clientIdOrAppConfig;
         }
@@ -41,6 +39,9 @@ export class ApiService {
         if (hostSso) {
             this.config.oauth2.host = hostSso;
         }
+
+        this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
+        this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
 
         if (host) {
             this.config.hostBpm = host;

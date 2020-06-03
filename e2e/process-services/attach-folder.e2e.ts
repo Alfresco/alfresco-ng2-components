@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
-    IntegrationService,
+    IntegrationService, LocalStorageUtil,
     LoginSSOPage, UserModel,
     Widget
 } from '@alfresco/adf-testing';
@@ -43,11 +43,10 @@ describe('Attach Folder', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
 
-    const meetingNotes = 'Meeting Notes';
     let user: UserModel;
 
     beforeAll(async () => {
-        browser.params.testConfig.appConfig.provider = 'ALL';
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         user = await usersActions.createUser();
@@ -55,7 +54,7 @@ describe('Attach Folder', () => {
         await integrationService.addCSIntegration({
             tenantId: user.tenantId,
             name: 'adf dev',
-            host: browser.params.testConfig.appConfig.hostEcm
+            host: browser.params.testConfig.appConfig.ecmHost
         });
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
@@ -79,7 +78,7 @@ describe('Attach Folder', () => {
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
-        await contentNodeSelector.searchAndSelectResult(meetingNotes, meetingNotes);
+        await contentNodeSelector.searchAndSelectResult('Meeting Notes', 'Meeting Notes');
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
 

@@ -16,7 +16,7 @@
  */
 
 import { PeopleApi } from '@alfresco/js-api';
-import { ApiService, LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
+import { ApiService, LocalStorageUtil, LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
@@ -102,7 +102,7 @@ describe('User Info component', () => {
     });
 
     it('[C260115] Should display UserInfo when Process Services is enabled and Content Services is disabled', async () => {
-        browser.params.testConfig.appConfig.provider = 'BPM';
+        await LocalStorageUtil.setStorageItem('providers', 'BPM');
 
         await loginPage.login(user.email, user.password);
 
@@ -121,7 +121,7 @@ describe('User Info component', () => {
     });
 
     it('[C260117] Should display UserInfo with profile image uploaded in ACS', async () => {
-        browser.params.testConfig.appConfig.provider = 'ECM';
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await updateAvatarACS();
 
@@ -135,7 +135,7 @@ describe('User Info component', () => {
     });
 
     it('[C260118] Should display UserInfo with profile image uploaded in APS', async () => {
-        browser.params.testConfig.appConfig.provider = 'BPM';
+        await LocalStorageUtil.setStorageItem('providers', 'BPM');
 
         const users = new UsersActions(apiService);
         await apiService.getInstance().login(user.email, user.password);
@@ -152,7 +152,7 @@ describe('User Info component', () => {
     });
 
     it('[C260120] Should not display profile image in UserInfo when deleted in ACS', async () => {
-        browser.params.testConfig.appConfig.provider = 'ECM';
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await peopleApi.deleteAvatarImage(user.email);
 

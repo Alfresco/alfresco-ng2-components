@@ -47,21 +47,22 @@ export class UsersActions {
             user = new UserModel({ emailOrUserModel, firstName, lastName, tenantId, password });
         }
 
-        if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
-            Logger.log('Create user ECM');
-            await this.api.apiService.core.peopleApi.addPerson({
-                id: user.email,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                password: user.password
-            });
-        }
+        try {
 
-        if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
-            Logger.log('Create user BPM');
+            if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+                Logger.log('Create user ECM');
+                await this.api.apiService.core.peopleApi.addPerson({
+                    id: user.email,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    password: user.password
+                });
+            }
 
-            try {
+            if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+                Logger.log('Create user BPM');
+
                 if (tenantId || (emailOrUserModel && typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId)) {
                     let tenantIdUser = 1;
 
@@ -79,16 +80,18 @@ export class UsersActions {
                     user.tenantId = apsUser.tenantId;
                     user.id = apsUser.id;
                 }
-            } catch (e) {
-                Logger.error('Error create user' + JSON.stringify(e));
+
             }
-        }
 
-        if (this.api.apiService.isOauthConfiguration()) {
-            Logger.log('Create user identity');
+            if (this.api.apiService.isOauthConfiguration()) {
+                Logger.log('Create user identity');
 
-            const identityUser = await this.identityService.createIdentityUser(user);
-            user.idIdentityService = identityUser.idIdentityService;
+                const identityUser = await this.identityService.createIdentityUser(user);
+                user.idIdentityService = identityUser.idIdentityService;
+            }
+
+        } catch (e) {
+            Logger.error('Error create user' + JSON.stringify(e));
         }
 
         return user;

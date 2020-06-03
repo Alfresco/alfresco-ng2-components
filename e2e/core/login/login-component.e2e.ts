@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService, BrowserActions, ErrorPage, UserInfoPage, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    BrowserActions,
+    ErrorPage,
+    LocalStorageUtil,
+    UserInfoPage,
+    UserModel
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -55,7 +62,8 @@ describe('Login component', () => {
    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
-        browser.params.testConfig.appConfig.provider = 'ECM';
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
+
         await loginPage.login(userA.email, userA.password);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
@@ -157,7 +165,7 @@ describe('Login component', () => {
     });
 
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {
-        browser.params.testConfig.appConfig.provider = 'BPM';
+        await LocalStorageUtil.setStorageItem('providers', 'BPM');
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -169,7 +177,7 @@ describe('Login component', () => {
     });
 
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
-        browser.params.testConfig.appConfig.provider = 'ECM';
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -179,7 +187,7 @@ describe('Login component', () => {
     });
 
     it('[C260051] Should be able to login to both Content Services and Process Services', async () => {
-        browser.params.testConfig.appConfig.provider = 'ALL';
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -193,7 +201,7 @@ describe('Login component', () => {
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
-        browser.params.testConfig.appConfig.provider = 'ECM';
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await loginPage.goToLoginPage();
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -201,7 +209,7 @@ describe('Login component', () => {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         await loginPage.waitForElements();
 
-        browser.params.testConfig.appConfig.provider = 'ALL';
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', async () => {

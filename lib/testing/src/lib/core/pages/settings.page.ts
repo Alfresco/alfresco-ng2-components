@@ -42,7 +42,11 @@ export class SettingsPage {
     providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));
 
     async goToSettingsPage(): Promise<void> {
-        await browser.get(this.settingsURL);
+        const currentUrl = await browser.getCurrentUrl();
+
+        if (!currentUrl || currentUrl.indexOf(this.settingsURL) === -1) {
+            await browser.get(this.settingsURL);
+        }
         await this.providerDropdown.checkDropdownIsVisible();
     }
 

@@ -66,7 +66,7 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (!currentUrl || currentUrl.indexOf(`login`) === -1) {
+        if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
             const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
             await browser.get(loginURL);
         }
@@ -103,7 +103,7 @@ export class LoginSSOPage {
     }
 
     async clickOnSSOButton() {
-        await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
+        await BrowserActions.click(this.ssoButton);
     }
 
     async enterUsername(username: string) {

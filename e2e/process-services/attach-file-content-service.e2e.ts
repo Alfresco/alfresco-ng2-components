@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     ExternalNodeSelectorDialogPage,
-    IntegrationService,
+    IntegrationService, LocalStorageUtil,
     LoginSSOPage,
     UploadActions, UserModel,
     Widget
@@ -71,7 +71,7 @@ describe('Attach File - Content service', () => {
     let user: UserModel;
 
     beforeAll(async () => {
-        browser.params.testConfig.appConfig.provider = 'ALL';
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
         await apiService.getInstance().login(email, password);
         user = await usersActions.createUser();
@@ -79,7 +79,7 @@ describe('Attach File - Content service', () => {
         await apiServiceExternal.login(email, password);
         await usersActionsExternal.createUser(user);
 
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.hostEcm });
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.ecmHost });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
 
         await apiService.getInstance().login(user.email, user.password);

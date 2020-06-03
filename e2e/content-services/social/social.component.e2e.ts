@@ -32,9 +32,9 @@ describe('Social component', () => {
     const componentOwner = new UserModel();
     const componentVisitor = new UserModel();
     const secondComponentVisitor = new UserModel();
+
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
     const uploadActions = new UploadActions(apiService);
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');

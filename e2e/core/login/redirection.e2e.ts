@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { SettingsPage, UploadActions, StringUtil, ApiService } from '@alfresco/adf-testing';
+import { SettingsPage, UploadActions, StringUtil, ApiService, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -51,7 +51,7 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', async () => {
-        browser.params.testConfig.appConfig.provider = 'ECM';
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
@@ -67,7 +67,7 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', async () => {
-        browser.params.testConfig.appConfig.provider = 'BPM';
+        await LocalStorageUtil.setStorageItem('providers', 'BPM');
 
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
@@ -87,7 +87,7 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', async () => {
-        browser.params.testConfig.appConfig.provider = 'ALL';
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();

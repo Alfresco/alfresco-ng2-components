@@ -196,8 +196,8 @@ exports.config = {
         await browser.get(`${HOST}/settings`);
         await LocalStorageUtil.clearStorage();
 
-        await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.hostEcm);
-        await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.hostBpm);
+        await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
+        await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
         await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
 
         if (browser.params.testConfig.appConfig.authType === 'OAUTH') {

@@ -34,8 +34,8 @@ const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERN
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 
 const appConfig = {
-    "hostEcm": HOST_ECM,
-    "hostBpm": HOST_BPM,
+    "ecmHost": HOST_ECM,
+    "bpmHost": HOST_BPM,
     "identityHost": `${OAUTH_HOST}/auth/admin/realms/alfresco`,
     "provider": PROVIDER,
     "authType": AUTH_TYPE,

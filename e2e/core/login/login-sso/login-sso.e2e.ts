@@ -27,9 +27,6 @@ describe('Login component - SSO', () => {
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const silentLogin = false;
-    let implicitFlow;
-
     describe('Login component - SSO implicit Flow', () => {
         afterEach(async () => {
             await navigationBarPage.clickLogoutButton();
@@ -39,7 +36,7 @@ describe('Login component - SSO', () => {
         });
 
         it('[C261050] Should be possible login with SSO', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
             await loginSSOPage.clickOnSSOButton();
@@ -47,7 +44,7 @@ describe('Login component - SSO', () => {
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
                 browser.params.testConfig.appConfig.identityHost, true, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
@@ -58,10 +55,9 @@ describe('Login component - SSO', () => {
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
-            implicitFlow = false;
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, silentLogin, implicitFlow, browser.params.testConfig.appConfig.oauth2.clientId);
+                browser.params.testConfig.appConfig.identityHost, false, false, browser.params.testConfig.appConfig.oauth2.clientId);
 
             await loginPage.waitForElements();
 

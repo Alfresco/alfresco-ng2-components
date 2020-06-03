@@ -143,8 +143,8 @@ describe('Start Task Form', () => {
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
 
         await settingsPage.setProviderEcmBpmSso(
-            browser.params.testConfig.appConfig.hostBpm,
-            browser.params.testConfig.appConfig.hostBpm,
+            browser.params.testConfig.appConfig.bpmHost,
+            browser.params.testConfig.appConfig.bpmHost,
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost,
             browser.params.testConfig.appConfig.oauth2.clientId,

@@ -23,7 +23,7 @@ import {
     StringUtil,
     Widget,
     ApplicationsUtil,
-    StartProcessPage, ApiService, UserModel
+    StartProcessPage, ApiService, UserModel, LocalStorageUtil
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
@@ -468,8 +468,8 @@ describe('Start Process Component', () => {
         beforeAll(async () => {
             const apiServiceAll = new ApiService({
                 provider: 'ALL',
-                hostEcm: browser.params.testConfig.appConfig.hostEcm,
-                hostBpm: browser.params.testConfig.appConfig.hostBpm
+                hostEcm: browser.params.testConfig.appConfig.ecmHost,
+                hostBpm: browser.params.testConfig.appConfig.bpmHost
             });
 
             const usersActions = new UsersActions(apiServiceAll);
@@ -478,7 +478,7 @@ describe('Start Process Component', () => {
 
             processUserModel = await usersActions.createUser();
 
-            const alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.hostBpm });
+            const alfrescoJsBPMAdminUser = new ApiService({ hostBpm: browser.params.testConfig.appConfig.bpmHost });
 
             await alfrescoJsBPMAdminUser.login(processUserModel.email, processUserModel.password);
 
@@ -492,7 +492,7 @@ describe('Start Process Component', () => {
         });
 
         it('[C260490] Should be able to start a Process within ACS', async () => {
-            browser.params.testConfig.appConfig.provider = 'ALL';
+            await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
             await loginPage.login(processUserModel.email, processUserModel.password);
 

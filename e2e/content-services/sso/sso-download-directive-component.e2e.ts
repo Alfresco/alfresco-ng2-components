@@ -25,11 +25,11 @@ import {
     IdentityService,
     SettingsPage,
     StringUtil,
-    UserModel,
     FileBrowserUtil,
     ViewerPage
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 
@@ -39,8 +39,11 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     const contentListPage = contentServicesPage.getDocumentList();
     const loginSsoPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
-    let silentLogin;
-    let implicitFlow;
+
+    const apiService = new ApiService({ authType: 'OAUTH' });
+    const uploadActions = new UploadActions(apiService);
+    const identityService = new IdentityService(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const firstPdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -52,35 +55,14 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    let pdfUploadedFile, pngUploadedFile, folder;
-
-    const apiService = new ApiService({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.appConfig.hostEcm,
-        authType: 'OAUTH',
-        oauth2: {
-            host: browser.params.testConfig.appConfig.oauth2.host,
-            clientId: browser.params.testConfig.appConfig.oauth2.clientId,
-            scope: 'openid',
-            secret: '',
-            implicitFlow: false,
-            silentLogin: false,
-            redirectUri: '/',
-            redirectUriLogout: '/logout'
-        }
-    });
-    const uploadActions = new UploadActions(apiService);
+    let pdfUploadedFile, pngUploadedFile, folder, acsUser;
     const folderName = StringUtil.generateRandomString(5);
-    const acsUser = new UserModel();
-    let identityService: IdentityService;
 
     describe('SSO in ADF using ACS and AIS, implicit flow set', () => {
         beforeAll(async () => {
             await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            identityService = new IdentityService(apiService);
-
-            await identityService.createIdentityUserAndSyncECMBPM(acsUser);
+            acsUser = await usersActions.createUser();
 
             await apiService.getInstance().login(acsUser.email, acsUser.password);
 
@@ -89,12 +71,9 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
             pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, folder.entry.id);
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, folder.entry.id);
 
-            silentLogin = false;
-            implicitFlow = true;
-
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.hostEcm,
+            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, silentLogin, implicitFlow, browser.params.testConfig.appConfig.oauth2.clientId);
+                browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
             await loginSsoPage.clickOnSSOButton();
             await loginSsoPage.loginSSOIdentityService(acsUser.email, acsUser.password);

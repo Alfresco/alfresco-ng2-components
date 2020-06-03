@@ -158,7 +158,7 @@ describe('Unshare file', () => {
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.hostEcm, browser.params.testConfig.adf.host));
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, browser.params.testConfig.adf.host));
             await errorPage.checkErrorCode();
         });
     });
