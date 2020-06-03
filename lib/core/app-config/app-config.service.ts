@@ -114,7 +114,7 @@ export class AppConfigService {
             return defaultValue;
         }
 
-        return <T>result;
+        return <T> result;
     }
 
     /**
