@@ -210,7 +210,7 @@ When an error occurs, the component will emit an error event that can be used to
 
 ```ts
     onError(error) {
-        this.notificationService.openSnackMessage(event.response.body.message);
+        this.notificationService.showError(event.response.body.message);
     }
 ```
 

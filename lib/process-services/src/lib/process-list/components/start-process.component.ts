@@ -311,11 +311,12 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
         } else {
             this.isProcessDefinitionsLoading = false;
-            this.resetSelectedProcessDefinition();
+            this.resetProcessDefinitions();
         }
     }
 
     onAppSelectionChange(selectedApplication: any) {
+        this.resetProcessDefinitions();
         this.selectedApplication = selectedApplication.value;
         this.applicationSelection.emit(this.selectedApplication);
         this.toggleProcessNameAndDefinitionsDropdown();
@@ -411,6 +412,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         if (this.processDefinitionInput) {
             this.processDefinitionInput.setValue('');
         }
+    }
+
+    private resetProcessDefinitions() {
+        this.processDefinitions = [];
+        this.resetSelectedProcessDefinition();
     }
 
     public onOutcomeClick(outcome: string) {
