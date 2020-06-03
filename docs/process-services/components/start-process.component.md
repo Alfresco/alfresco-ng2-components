@@ -195,6 +195,25 @@ You can use the `showSelectApplicationDropdown` property to Hide or show applica
 ![Start process with selected application](../../docassets/images/start-process-with-selected-application.png)
 
 
+### Error handling
+
+When an error occurs, the component will emit an error event that can be used to handle errors. Example:
+
+```html
+ <adf-start-process 
+      [appId]="YOUR_APP_ID"
+      [title]="'ADF_PROCESS_LIST.START_PROCESS.FORM.TITLE'"
+      [name]="PROCESS_NAME"
+      (error)="onError($event)">
+ </adf-start-process>		 
+```
+
+```ts
+    onError(error) {
+        this.notificationService.openSnackMessage(event.response.body.message);
+    }
+```
+
 ## See also
 
 -   [Select Apps Dialog component](select-apps-dialog.component.md)
