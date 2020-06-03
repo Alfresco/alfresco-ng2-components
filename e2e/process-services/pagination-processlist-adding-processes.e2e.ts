@@ -42,7 +42,6 @@ describe('Process List - Pagination when adding processes', () => {
     };
 
     let processUserModel;
-    const nrOfProcesses = 25;
     let resultApp;
 
     beforeAll(async () => {
@@ -54,7 +53,7 @@ describe('Process List - Pagination when adding processes', () => {
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        for (let i = 0; i < (nrOfProcesses - 5); i++) {
+        for (let i = 0; i < 20; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
@@ -76,12 +75,12 @@ describe('Process List - Pagination when adding processes', () => {
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of 20' );
         await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        for (let i = 0; i < nrOfProcesses; i++) {
+        for (let i = 0; i < 5; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
@@ -92,8 +91,8 @@ describe('Process List - Pagination when adding processes', () => {
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
-        await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-25 of 25' );
+        await expect(await processFiltersPage.numberOfProcessRows()).toBe(10);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsEnabled();
     });

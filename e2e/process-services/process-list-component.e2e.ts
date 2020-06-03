@@ -72,10 +72,11 @@ describe('Process List Test', () => {
         appWithDateFieldId = await applicationsUtil.getAppDefinitionId(appDateModel.id);
 
         const procWithDateTaskId = await processUtil.getProcessTaskId(completedProcWithDate.id);
+
         const procWithUserWidgetTaskId = await processUtil.getProcessTaskId(completedProcWithUserWidget.id);
 
-        await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.toString(), { values: { label: null } });
-        await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.toString(), { values: { label: null } });
+        await apiService.getInstance().activiti.taskApi.completeTaskForm(procWithDateTaskId.id, { values: { label: null } });
+        await apiService.getInstance().activiti.taskFormsApi.completeTaskForm(procWithUserWidgetTaskId.id, { values: { label: null } });
 
         await loginPage.login(user.email, user.password);
    });

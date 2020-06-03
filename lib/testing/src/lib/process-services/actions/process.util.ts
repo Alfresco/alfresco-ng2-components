@@ -19,6 +19,7 @@ import { ApplicationsUtil } from './applications.util';
 import { Logger } from '../../core/utils/logger';
 import { StringUtil } from '../../core/utils/string.util';
 import { ApiService } from '../../core/actions/api.service';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 export class ProcessUtil {
 
@@ -73,7 +74,7 @@ export class ProcessUtil {
         }
     }
 
-    async getProcessTaskId(processId: string): Promise<string> {
+    async getProcessTaskId(processId: string): Promise<TaskRepresentation> {
         const taskList = await this.api.apiService.activiti.taskApi.listTasks({});
         let wantedtask;
 
