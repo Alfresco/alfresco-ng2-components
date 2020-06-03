@@ -204,6 +204,7 @@ describe('Start Process Component', () => {
             });
 
             it('[C286503] Should NOT display any process definition when typing a non-existent one', async () => {
+                await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
@@ -212,7 +213,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsDisabled();
             });
 
-            it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
+           it('[C286504] Should display proper options when typing a part of existent process definitions', async () => {
                 await processServicesPage.goToApp(app.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
