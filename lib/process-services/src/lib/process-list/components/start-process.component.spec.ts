@@ -208,7 +208,7 @@ describe('StartFormComponent', () => {
                 });
             }));
 
-            it('should return true if startFrom defined',async () => {
+            it('should return true if startFrom defined', async () => {
                 component.name = 'my:process1';
                 await fixture.whenStable();
                 expect(component.hasStartForm()).toBe(true);
