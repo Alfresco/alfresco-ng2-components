@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-export * from './decimal-number.pipe';
-export * from './file-size.pipe';
-export * from './file-type.pipe';
-export * from './format-space.pipe';
-export * from './full-name.pipe';
-export * from './localized-date.pipe';
-export * from './mime-type-icon.pipe';
-export * from './multi-value.pipe';
-export * from './node-name-tooltip.pipe';
-export * from './text-highlight.pipe';
-export * from './time-ago.pipe';
-export * from './user-initial.pipe';
+import { NgModule } from '@angular/core';
+import { ProcessNameCloudPipe } from './process-name-cloud.pipe';
 
-export * from './pipe.module';
+@NgModule({
+    declarations: [
+        ProcessNameCloudPipe
+    ],
+    exports: [
+        ProcessNameCloudPipe
+    ]
+})
+export class ProcessServicesCloudPipeModule {
+}

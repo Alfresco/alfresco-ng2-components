@@ -17,30 +17,31 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import moment from 'moment-es6';
-import { LocalizedDatePipe } from './localized-date.pipe';
+import { LocalizedDatePipe } from '@alfresco/adf-core';
+import { ProcessDefinitionCloud } from '../process/start-process/models/process-definition-cloud.model';
 
-@Pipe({ name: 'processName' })
-export class ProcessNamePipe implements PipeTransform {
+@Pipe({ name: 'processNameCloud' })
+export class ProcessNameCloudPipe implements PipeTransform {
     static DATE_TIME_IDENTIFIER_REG_EXP = new RegExp('%{datetime}', 'i');
     static PROCESS_DEFINITION_IDENTIFIER_REG_EXP = new RegExp('%{processdefinition}', 'i');
 
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
-    transform(processNameFormat: string, selectedProcessDefinition?: any): string {
+    transform(processNameFormat: string, selectedProcessDefinition?: ProcessDefinitionCloud): string {
         let processName = processNameFormat;
-        if (processName.match(ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
+        if (processName.match(ProcessNameCloudPipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
             processName = processName.replace(
-                ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP,
+                ProcessNameCloudPipe.DATE_TIME_IDENTIFIER_REG_EXP,
                 this.localizedDatePipe.transform(presentDateTime, 'medium')
             );
         }
 
-        if (processName.match(ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
+        if (processName.match(ProcessNameCloudPipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
             const selectedProcessDefinitionName = selectedProcessDefinition ? selectedProcessDefinition.name : '';
             processName = processName.replace(
-                ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
+                ProcessNameCloudPipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
                 selectedProcessDefinitionName
             );
         }

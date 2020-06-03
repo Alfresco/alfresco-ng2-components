@@ -23,13 +23,14 @@ import {
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { StartProcessCloudService } from '../services/start-process-cloud.service';
 import { FormControl, Validators, FormGroup, AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
-import { FormModel, ContentLinkModel, ProcessNamePipe } from '@alfresco/adf-core';
+import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
+import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -108,7 +109,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     constructor(private startProcessCloudService: StartProcessCloudService,
                 private formBuilder: FormBuilder,
-                private processNamePipe: ProcessNamePipe) {
+                private processNameCloudPipe: ProcessNameCloudPipe) {
     }
 
     ngOnInit() {
@@ -375,7 +376,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     processDefinitionSelectionChanged(processDefinition: ProcessDefinitionCloud) {
         if (processDefinition) {
-            const defaultProcessName = this.processNamePipe.transform(this.name, processDefinition);
+            const defaultProcessName = this.processNameCloudPipe.transform(this.name, processDefinition);
             this.processInstanceName.setValue(defaultProcessName);
             this.processDefinitionSelection.emit(processDefinition);
         }

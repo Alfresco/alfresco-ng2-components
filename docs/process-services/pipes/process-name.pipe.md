@@ -5,7 +5,7 @@ Status: Active
 Last reviewed: 2020-06-02
 ---
 
-# [Process name pipe](../../../lib/core/pipes/process-name.pipe.ts "Defined in process-name.pipe.ts")
+# [Process name pipe](../../../lib/process-services/src/lib/pipes/process-name.pipe.ts "Defined in process-name.pipe.ts")
 
 When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided.
 ## Basic Usage
@@ -15,7 +15,7 @@ processNamePipe.transform('Example - %{processDefinition} - %{datetime}', );
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | processNameFormat | string | undefined | The process name format including the preferred identifiers to be used |
-| selectedProcessDefinition | any | undefined | (optional) The selected process definition |
+| selectedProcessDefinition | ProcessDefinitionRepresentation | undefined | (optional) The selected process definition |
 
 ## Details
 The pipe offers a convenient way to format a process name using a process name format template.

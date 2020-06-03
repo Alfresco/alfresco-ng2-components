@@ -24,8 +24,7 @@ import {
     AppConfigService,
     AppConfigValues,
     AppsProcessService,
-    FormValues,
-    ProcessNamePipe
+    FormValues
 } from '@alfresco/adf-core';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -38,6 +37,7 @@ import { MatAutocompleteTrigger } from '@angular/material';
 import { StartFormComponent } from '../../form';
 import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
+import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 
 @Component({
     selector: 'adf-start-process',
