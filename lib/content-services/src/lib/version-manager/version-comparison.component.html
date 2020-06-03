@@ -1,0 +1,21 @@
+<div class="adf-version-comparison-content">
+    <div class="adf-version-current">
+        <p>{{'ADF_VERSION_COMPARISON.CURRENT_VERSION'|translate }}</p>
+        <img [attr.aria-label]="'ADF_VERSION_COMPARISON.ACCESSIBILITY.ICON_TEXT' | translate:
+        { type: (node.content.mimeType | fileType | uppercase) | translate  }"
+             [attr.alt]="'ADF_VERSION_COMPARISON.ACCESSIBILITY.ICON_TEXT' | translate:
+             { type: (node.content.mimeType | fileType | uppercase) | translate }"
+             src="{{thumbnailService.getMimeTypeIcon(node.content.mimeType)}}"/>
+        <p class="adf-version-comparison-node-name" title="{{node.name}}">{{node.name}}</p>
+    </div>
+    <span class="material-icons adf-version-arrow-icon">keyboard_arrow_right</span>
+    <div class="adf-version-new">
+        <p>{{'ADF_VERSION_COMPARISON.NEW_VERSION'|translate }}</p>
+        <img [attr.aria-label]="'ADF_VERSION_COMPARISON.ACCESSIBILITY.ICON_TEXT' | translate:
+        { type: (newFileVersion.type | fileType | uppercase) | translate  }"
+             [attr.alt]="'ADF_VERSION_COMPARISON.ACCESSIBILITY.ICON_TEXT' | translate:
+             { type: (newFileVersion.type | fileType | uppercase) | translate }"
+            src="{{thumbnailService.getMimeTypeIcon(newFileVersion.type)}}"/>
+        <p class="adf-version-comparison-file-name" title="{{newFileVersion.name}}">{{newFileVersion.name}}</p>
+    </div>
+</div>

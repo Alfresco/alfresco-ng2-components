@@ -18,8 +18,14 @@
     </mat-slide-toggle>
 </section>
 
+<section *ngIf="newFileVersion">
+    <mat-slide-toggle id="adf-version-manager-switch-comparison" color="primary" [(ngModel)]="showVersionComparison">
+        {{'APP.ADF_VERSION_MANAGER.VERSION_COMPARISON' | translate}}
+    </mat-slide-toggle>
+</section>
+
 <section mat-dialog-content *ngIf="!readOnly">
-    <adf-version-manager [node]="contentEntry" [newFileVersion]="newFileVersion" [allowDownload]="allowDownload" [showComments]="showComments" (uploadError)="uploadError($event)"></adf-version-manager>
+    <adf-version-manager [node]="contentEntry" [showVersionComparison]="showVersionComparison" [newFileVersion]="newFileVersion" [allowDownload]="allowDownload" [showComments]="showComments" (uploadError)="uploadError($event)"></adf-version-manager>
 </section>
 <section mat-dialog-content *ngIf="readOnly">
     <adf-version-list [node]="contentEntry" [showActions]="false" ></adf-version-list>

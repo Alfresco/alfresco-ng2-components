@@ -55,6 +55,10 @@ export class VersionManagerComponent implements OnInit {
     @Input()
     showComments = true;
 
+    /** Toggles showing/hiding of comments. */
+    @Input()
+    showVersionComparison = false;
+
     /** Enable/disable downloading a version of the current node. */
     @Input()
     allowDownload = true;
@@ -103,6 +107,7 @@ export class VersionManagerComponent implements OnInit {
 
     onUploadCancel() {
         this.uploadState = 'close';
+        this.newFileVersion = null;
     }
 
     toggleNewVersion() {
