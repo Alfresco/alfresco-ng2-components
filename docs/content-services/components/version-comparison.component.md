@@ -1,6 +1,6 @@
 ---
 Title: Version Comparison Component
-Added: v3.8.0
+Added: v3.9.0
 Status: Active
 Last reviewed: 2020-06-04
 ---
