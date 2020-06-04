@@ -16,6 +16,10 @@
     (formError)='onFormError($event)'
     (error)='onError($event)'
     (executeOutcome)='onFormExecuteOutcome($event)'>
+    <adf-form-custom-outcomes>
+        <ng-template [ngTemplateOutlet]="taskFormButtons">
+        </ng-template>
+    </adf-form-custom-outcomes>
   </adf-form>
   <ng-template #withoutForm>
     <adf-task-standalone *ngIf="isStandaloneTask(); else emptyFormMessage"
@@ -62,9 +66,27 @@
                 <button mat-button *ngIf="!isCompletedTask()" color="primary" (click)="onCompleteTask()" id="adf-no-form-complete-button">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                 </button>
+                <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
             </mat-card-actions>
         </mat-card>
       </ng-template>
+  </ng-template>
+
+  <ng-template #taskFormButtons>
+        <button mat-button 
+            *ngIf="isTaskClaimable()" 
+            adf-claim-task
+            [taskId]="taskId"
+            (success)="onClaimTask($event)">
+            {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
+        </button>
+        <button mat-button 
+            *ngIf="isTaskClaimedByCandidateMember()"
+            adf-unclaim-task
+            [taskId]="taskId"
+            (success)="onUnclaimTask($event)">
+            {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
+        </button>
   </ng-template>
 </ng-container>
 <ng-template #loadingTemplate>

@@ -117,6 +117,14 @@ export class TaskFormComponent implements OnInit {
   @Output()
   cancel = new EventEmitter<void>();
 
+  /** Emitted when the task is claimed. */
+  @Output()
+  claim: EventEmitter<any> = new EventEmitter<any>();
+
+  /** Emitted when the task is unclaimed (ie, requeued). */
+  @Output()
+  unclaim: EventEmitter<any> = new EventEmitter<any>();
+
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
   loading: boolean = false;
@@ -277,5 +285,27 @@ export class TaskFormComponent implements OnInit {
 
   getCompletedTaskTranslatedMessage(): Observable<string> {
     return this.translationService.get('ADF_TASK_FORM.COMPLETED_TASK.TITLE', { taskName: this.taskDetails.name });
+  }
+
+  isCandidateMember(): boolean {
+      return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
+  }
+
+  public isTaskClaimable(): boolean {
+      return this.isCandidateMember() && !this.isAssigned();
+  }
+
+  public isTaskClaimedByCandidateMember(): boolean {
+    return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
+  }
+
+  onClaimTask(taskId: string) {
+    this.loadTask(taskId);
+    this.claim.emit(this.taskDetails);
+  }
+
+  onUnclaimTask(taskId: string) {
+    this.loadTask(taskId);
+    this.unclaim.emit(this.taskDetails);
   }
 }

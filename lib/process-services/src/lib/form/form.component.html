@@ -40,6 +40,7 @@
                 (click)="onOutcomeClicked(outcome)">
                 {{outcome.name | translate | uppercase }}
             </button>
+            <ng-content select="adf-form-custom-outcomes"></ng-content>
         </mat-card-actions>
     </mat-card>
 </div>
