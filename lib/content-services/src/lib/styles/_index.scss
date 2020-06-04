@@ -24,6 +24,7 @@
 @import '../permission-manager/components/add-permission/add-permission-dialog.component';
 @import '../permission-manager/components/add-permission/add-permission-panel.component';
 @import '../tree-view/components/tree-view.component';
+@import '../version-manager/version-comparison.component';
 
 @mixin adf-content-services-theme($theme) {
     @include adf-breadcrumb-theme($theme);
@@ -48,4 +49,5 @@
     @include adf-tree-view-theme($theme);
     @include adf-search-filter-theme($theme);
     @include adf-search-chip-list-theme($theme);
+    @include adf-version-comparison-theme($theme);
 }

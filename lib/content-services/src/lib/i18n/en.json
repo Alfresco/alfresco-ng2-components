@@ -21,6 +21,14 @@
       "NO_LABEL": "No"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Current",
+    "NEW_VERSION": "New",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Item type {{ type }}",
+      "ARROW_ICON": "Arrow right icon"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Loading..."
   },

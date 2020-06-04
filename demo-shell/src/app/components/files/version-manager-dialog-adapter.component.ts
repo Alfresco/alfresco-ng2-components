@@ -32,6 +32,7 @@ export class VersionManagerDialogAdapterComponent {
     showComments = true;
     allowDownload = true;
     readOnly = false;
+    showVersionComparison = false;
 
     constructor(@Inject(MAT_DIALOG_DATA) data: any,
                 private snackBar: MatSnackBar,
@@ -43,10 +44,17 @@ export class VersionManagerDialogAdapterComponent {
     }
 
     uploadError(errorMessage: string) {
-        this.snackBar.open(errorMessage, '', { duration: 4000 });
+        this.snackBar.open(errorMessage, '', {duration: 4000});
     }
 
     close() {
         this.containingDialog.close();
+    }
+
+    hideVersionComparison(isCancelled: boolean | Node) {
+        if (isCancelled) {
+            this.showVersionComparison = false;
+            this.newFileVersion = null;
+        }
     }
 }
