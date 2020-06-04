@@ -43,13 +43,13 @@ describe('VersionComparisonComponent', () => {
         }
     });
 
-    const file: File = {
+    const file = {
         name: 'Fake New file',
         type: 'image/png',
         lastModified: 13,
         size: 1351,
         slice: null
-    };
+    } as File;
 
     setupTestBed({
         imports: [
