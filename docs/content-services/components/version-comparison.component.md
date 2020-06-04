@@ -1,6 +1,6 @@
 ---
 Title: Version Comparison Component
-Added: v3.8.0
+Added: v3.9.0
 Status: Active
 Last reviewed: 2020-06-04
 ---
@@ -26,5 +26,5 @@ Displays the side by side comparison between the current target node (type, name
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Target node. |
 | newFileVersion | `File` |  | New file for updating current version. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Target node. |
