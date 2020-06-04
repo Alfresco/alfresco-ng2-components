@@ -42,7 +42,12 @@ export class SettingsPage {
     providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));
 
     async goToSettingsPage(): Promise<void> {
-        const currentUrl = await browser.getCurrentUrl();
+        let currentUrl;
+
+        try {
+            currentUrl = await browser.getCurrentUrl();
+        } catch (e) {
+        }
 
         if (!currentUrl || currentUrl.indexOf(this.settingsURL) === -1) {
             await browser.get(this.settingsURL);
@@ -97,6 +102,7 @@ export class SettingsPage {
     }
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
+
         await this.goToSettingsPage();
         await this.setProvider('ECM');
         await this.clickSsoRadioButton();

@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 
-import { ApiService, IdentityService, LoginSSOPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LoginSSOPage,
+    SettingsPage,
+    UserInfoPage
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
@@ -25,8 +30,7 @@ describe('User Info - SSO', () => {
     const loginSSOPage = new LoginSSOPage();
     const userInfoPage = new UserInfoPage();
 
-    const apiService = new ApiService({ authType: 'OAUTH' });
-    const identityService = new IdentityService(apiService);
+    const apiService = new ApiService({ authType: 'OAUTH', provider: 'ECM' });
     const usersActions = new UsersActions(apiService);
 
     let identityUser;
@@ -43,12 +47,6 @@ describe('User Info - SSO', () => {
         await loginSSOPage.clickOnSSOButton();
 
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
-    });
-
-    afterAll(async () => {
-        if (identityService) {
-            await identityService.deleteIdentityUser(identityUser.idIdentityService);
-        }
     });
 
     it('[C290066] Should display UserInfo when login using SSO', async () => {
