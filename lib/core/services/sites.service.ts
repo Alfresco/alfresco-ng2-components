@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SitePaging, SiteEntry, MinimalNode, SitesApi, SiteMembershipRequestWithPersonPaging } from '@alfresco/js-api';
+import { SitePaging, SiteEntry, MinimalNode, SitesApi, SiteMembershipRequestWithPersonPaging, SiteMembershipBodyCreate, SiteMemberEntry, SiteMembershipBodyUpdate } from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -128,6 +128,76 @@ export class SitesService {
      */
     getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
         return from(this.sitesApi.getSiteMembershipRequests(opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Creates a site membership for person **personId** on site **siteId**.
+     * @param siteId The identifier of a site
+     * @param siteMembershipBodyCreate The person to add and their role
+     * @param opts Optional parameters
+     * @return Site member entry
+     */
+    createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry | {}> {
+        return from(this.sitesApi.createSiteMembership(siteId, siteMembershipBodyCreate, opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Update a site membership
+     * @param siteId The identifier of a site.
+     * @param personId The identifier of a person.
+     * @param siteMembershipBodyUpdate The persons new role
+     * @param opts Optional parameters
+     * @return Site member entry>
+     */
+    updateSiteMembership(siteId: string, personId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: any): Observable<SiteMemberEntry | {}> {
+        return from(this.sitesApi.updateSiteMembership(siteId, personId, siteMembershipBodyUpdate, opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Delete a site membership
+     * @param siteId The identifier of a site.
+     * @param personId The identifier of a person.
+     * @return  Null response notifying when the operation is complete
+     */
+    deleteSiteMembership(siteId: string, personId: string): Observable<any> {
+        return from(this.sitesApi.deleteSiteMembership(siteId, personId))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Accept site membership requests.
+     * @param siteId The identifier of a site.
+     * @param inviteeId The invitee user name.
+     * @param opts Options supported by JS-API
+     * @returns  Null response notifying when the operation is complete
+     */
+    approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+        return from(this.sitesApi.approveSiteMembershipRequest(siteId, inviteeId, opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Reject site membership requests.
+     * @param siteId The identifier of a site.
+     * @param inviteeId The invitee user name.
+     * @param opts Options supported by JS-API
+     * @returns  Null response notifying when the operation is complete
+     */
+    rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+        return from(this.sitesApi.rejectSiteMembershipRequest(siteId, inviteeId, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
