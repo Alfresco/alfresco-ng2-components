@@ -44,10 +44,17 @@ export class VersionManagerDialogAdapterComponent {
     }
 
     uploadError(errorMessage: string) {
-        this.snackBar.open(errorMessage, '', { duration: 4000 });
+        this.snackBar.open(errorMessage, '', {duration: 4000});
     }
 
     close() {
         this.containingDialog.close();
+    }
+
+    hideVersionComparison(isCancelled: boolean | Node) {
+        if (isCancelled) {
+            this.showVersionComparison = false;
+            this.newFileVersion = null;
+        }
     }
 }

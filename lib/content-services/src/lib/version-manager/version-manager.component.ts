@@ -71,6 +71,10 @@ export class VersionManagerComponent implements OnInit {
     @Output()
     uploadError: EventEmitter<Node> = new EventEmitter<Node>();
 
+    /** Emitted when an cancelling during upload. */
+    @Output()
+    uploadCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
 
@@ -94,6 +98,7 @@ export class VersionManagerComponent implements OnInit {
     }
 
     onUploadSuccess(event: any) {
+        this.showVersionComparison = false;
         this.newFileVersion = null;
         this.alfrescoApiService.nodeUpdated.next(event.value.entry);
         this.versionListComponent.loadVersionHistory();
@@ -107,7 +112,9 @@ export class VersionManagerComponent implements OnInit {
 
     onUploadCancel() {
         this.uploadState = 'close';
+        this.showVersionComparison = false;
         this.newFileVersion = null;
+        this.uploadCancel.emit(true);
     }
 
     toggleNewVersion() {
