@@ -28,6 +28,8 @@ export class ApiService {
 
         if (browser.params.testConfig && browser.params.testConfig.appConfig) {
             this.config = { ...browser.params.testConfig.appConfig };
+            this.config.hostEcm =  browser.params.testConfig.appConfig.ecmHost;
+            this.config.hostBpm =  browser.params.testConfig.appConfig.bpmHost;
         }
 
         if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
