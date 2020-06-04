@@ -55,7 +55,7 @@ export class VersionManagerComponent implements OnInit {
     @Input()
     showComments = true;
 
-    /** Toggles showing/hiding of comments. */
+    /** Toggles showing/hiding the version comparison component. */
     @Input()
     showVersionComparison = false;
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Node } from '@alfresco/js-api';
 import { ThumbnailService } from '@alfresco/adf-core';
 
@@ -24,7 +24,7 @@ import { ThumbnailService } from '@alfresco/adf-core';
     templateUrl: './version-comparison.component.html',
     styleUrls: ['./version-comparison.component.scss']
 })
-export class VersionComparisonComponent implements OnInit {
+export class VersionComparisonComponent {
 
     /** Target node. */
     @Input()
@@ -35,9 +35,6 @@ export class VersionComparisonComponent implements OnInit {
     newFileVersion: File;
 
     constructor(public thumbnailService: ThumbnailService) {
-    }
-
-    ngOnInit() {
     }
 
 }
