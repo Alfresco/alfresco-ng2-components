@@ -165,7 +165,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     onFilterChange() {
         this.editTaskFilterForm.valueChanges
             .pipe(
-                debounceTime(500),
+                debounceTime(200),
                 filter(() => this.isFormValid()),
                 takeUntil(this.onDestroy$)
             )

@@ -25,7 +25,6 @@ import {
     StartTasksCloudPage,
     ApiService,
     IdentityService,
-    SettingsPage,
     GroupIdentityService,
     TaskFormCloudComponent,
     LocalStorageUtil,
@@ -56,7 +55,6 @@ describe('Start Task Form', () => {
     const contentNodeSelectorDialogPage = new ContentNodeSelectorDialogPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
-    const settingsPage = new SettingsPage();
     const widget = new ProcessCloudWidgetPage();
     const startProcessPage = new StartProcessCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
@@ -141,15 +139,6 @@ describe('Start Task Form', () => {
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
-
-        await settingsPage.setProviderEcmBpmSso(
-            browser.params.testConfig.appConfig.bpmHost,
-            browser.params.testConfig.appConfig.bpmHost,
-            browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost,
-            browser.params.testConfig.appConfig.oauth2.clientId,
-            false);
-        await loginSSOPage.clickOnSSOButton();
 
         await loginSSOPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
