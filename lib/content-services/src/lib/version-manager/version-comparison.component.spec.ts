@@ -84,7 +84,7 @@ describe('VersionComparisonComponent', () => {
             lastModified: 13,
             size: 1351,
             slice: null
-        };
+        } as File;
         fixture.detectChanges();
         const newImageNode = document.querySelector('.adf-version-new img');
         expect(newImageNode.getAttribute('src')).toBe('./assets/images/ft_ic_pdf.svg');
