@@ -46,6 +46,10 @@ export class CoreAutomationService {
             this.storageService.setItem(key, data);
         };
 
+        adfProxy.removeStorageItem = (key: string) => {
+            this.storageService.removeItem(key);
+        };
+
         adfProxy.setUserPreference = (key: string, data: any) => {
             this.userPreferencesService.set(key, data);
         };

@@ -15,23 +15,33 @@
  * limitations under the License.
  */
 
-import { LoginPage, PaginationPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import {
+    ArrayUtil,
+    StringUtil,
+    LoginSSOPage,
+    PaginationPage,
+    UploadActions,
+    ViewerPage,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { Util } from '../util/util';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
-    const viewerPage = new ViewerPage();
 
-    const acsUser = new AcsUserModel();
+    const viewerPage = new ViewerPage();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
     const parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
 
@@ -59,19 +69,15 @@ describe('Pagination - returns to previous page when current is empty', () => {
     });
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        const uploadActions = new UploadActions(apiService);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
-        fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
+        fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const folderUploadedModel = await uploadActions.createFolder(folderModel.name, '-my-');
 
@@ -87,7 +93,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, lastFolderResponse.entry.id);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });
@@ -102,7 +108,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
         let list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
+        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
 
         await paginationPage.clickOnNextPage();
 
@@ -111,7 +117,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(Util.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
+        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
 
         await contentServicesPage.deleteContent(lastFile);
         await contentServicesPage.checkContentIsNotDisplayed(lastFile);
@@ -120,7 +126,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
 
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
+        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
     });
 
     it('[C297494] Should display content when navigating to a non-empty folder not in the first page', async () => {

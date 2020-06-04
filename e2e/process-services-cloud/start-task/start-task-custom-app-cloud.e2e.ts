@@ -33,6 +33,8 @@ import {
 
 describe('Start Task', () => {
 
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
     const loginSSOPage = new LoginSSOPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const navigationBarPage = new NavigationBarPage();
@@ -40,10 +42,10 @@ describe('Start Task', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const peopleCloudComponent = new PeopleCloudComponentPage();
-    const apiService = new ApiService(
-        browser.params.config.oauth2.clientId,
-        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-    );
+
+    const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const reassignTaskName = StringUtil.generateRandomString(5);
@@ -54,18 +56,12 @@ describe('Start Task', () => {
     const requiredError = 'Field required';
     const dateValidationError = 'Date format DD/MM/YYYY';
     let apsUser, testUser, activitiUser, groupInfo;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-        apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+        apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_USER]);
 
         activitiUser = await identityService.createIdentityUser();
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -73,7 +69,7 @@ describe('Start Task', () => {
         await identityService.addUserToGroup(apsUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
     });
 
     afterAll(async () => {
@@ -92,7 +88,7 @@ describe('Start Task', () => {
         await identityService.deleteIdentityUser(activitiUser.idIdentityService);
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
-   });
+    });
 
     beforeEach(async () => {
         await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -143,7 +139,7 @@ describe('Start Task', () => {
         await startTask.checkValidationErrorIsDisplayed(requiredError);
         await startTask.addName(standaloneTaskName);
         await startTask.addDescription('descriptions');
-        await startTask .addDueDate('12/12/2018');
+        await startTask.addDueDate('12/12/2018');
         await startTask.checkStartButtonIsEnabled();
         await startTask.clickCancelButton();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(standaloneTaskName);

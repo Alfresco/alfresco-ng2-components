@@ -16,6 +16,7 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { browser } from 'protractor';
 
 export class ApiService {
 
@@ -23,26 +24,42 @@ export class ApiService {
 
     config: AlfrescoApiConfig;
 
-    constructor(clientId: string, host: string, hostSso: string, provider: string) {
-        this.config = {
-            provider,
-            hostBpm: host,
-            hostEcm: host,
-            authType: 'OAUTH',
-            oauth2: {
-                host: hostSso,
-                clientId,
-                scope: 'openid',
-                secret: '',
-                implicitFlow: false,
-                silentLogin: false,
-                redirectUri: '/',
-                redirectUriLogout: '/logout'
-            }
+    constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
 
-        };
+        if (browser.params.testConfig && browser.params.testConfig.appConfig) {
+            this.config = { ...browser.params.testConfig.appConfig };
+            this.config.hostEcm =  browser.params.testConfig.appConfig.ecmHost;
+            this.config.hostBpm =  browser.params.testConfig.appConfig.bpmHost;
+        }
 
+        if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
+            this.config = { ...browser.params.testConfig.appConfig, ...clientIdOrAppConfig };
+
+            this.config.hostEcm = clientIdOrAppConfig.hostEcm ? clientIdOrAppConfig.hostEcm : browser.params.testConfig.appConfig.ecmHost;
+            this.config.hostBpm = clientIdOrAppConfig.hostBpm ? clientIdOrAppConfig.hostBpm : browser.params.testConfig.appConfig.bpmHost;
+        } else if (clientIdOrAppConfig && typeof clientIdOrAppConfig === 'string') {
+            this.config.oauth2.clientId = clientIdOrAppConfig;
+        }
+
+        if (hostSso) {
+            this.config.oauth2.host = hostSso;
+        }
+
+        if (host) {
+            this.config.hostBpm = host;
+            this.config.hostEcm = host;
+        }
+
+        if (provider) {
+            this.config.provider = provider;
+        }
+
+        this.config.oauth2.implicitFlow = false;
         this.apiService = new AlfrescoApi(this.config);
+    }
+
+    getInstance(): AlfrescoApi {
+        return this.apiService;
     }
 
     async login(username: string, password: string): Promise<void> {

@@ -33,16 +33,17 @@ import {
     groupReadOnlyFormMock
 } from '../../resources/forms/people-group-formwidget-mocks';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('People and Group of people Widgets', () => {
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudComponentPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();
+    const formPage = new FormPage();
+
     const peopleCloudWidget = widget.peopleCloudWidget();
     const groupCloudWidget = widget.groupCloudWidget();
-    const formPage = new FormPage();
 
     const widgets = {
         peopleCloudWidgetSingleModeId: 'PeopleSingleMode',
@@ -70,13 +71,7 @@ describe('People and Group of people Widgets', () => {
     };
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         await navigationBarPage.navigateToFormCloudPage();
     });
 

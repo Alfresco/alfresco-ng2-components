@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -26,7 +25,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Date Range Filter', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
@@ -36,13 +35,7 @@ describe('Search Date Range Filter', () => {
     const dataTable = new DataTableComponentPage();
 
     beforeAll(async () => {
-
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-
-        await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
@@ -130,12 +123,11 @@ describe('Search Date Range Filter', () => {
 
         const results: any = dataTable.geCellElementDetail('Created');
         for (const currentResult of results) {
+        const currentDate = currentResult.getAttribute('title');
+        const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
-            const currentDate = currentResult.getAttribute('title');
-            const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
-
-            await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
-            await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+        await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
+        await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
         }
     });
 
@@ -176,7 +168,6 @@ describe('Search Date Range Filter', () => {
     });
 
     describe('configuration change', () => {
-
         let jsonFile;
 
         beforeAll(async () => {

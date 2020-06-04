@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage } from '@alfresco/adf-testing';
+import { DropActions, BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage, DropdownPage } from '@alfresco/adf-testing';
 import { $$, browser, by, element, ElementFinder, ElementArrayFinder, protractor } from 'protractor';
-import { DropActions } from '../../actions/drop.actions';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 
 import path = require('path');
-import { DropdownPage } from '../../../lib/testing/src/lib/material/pages/dropdown.page';
 
 export class ContentServicesPage {
 

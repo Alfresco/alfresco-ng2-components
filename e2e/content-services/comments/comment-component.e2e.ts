@@ -15,36 +15,34 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, StringUtil, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CommentsPage } from '../../pages/adf/comments.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Comment Component', () => {
 
-    const loginPage: LoginPage = new LoginPage();
+    const loginPage: LoginSSOPage = new LoginSSOPage();
     const contentServicesPage: ContentServicesPage = new ContentServicesPage();
     const viewerPage: ViewerPage = new ViewerPage();
     const commentsPage: CommentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
-    const acsUser: AcsUserModel = new AcsUserModel();
+    const apiService = new ApiService();
 
     let userFullName, nodeId;
+    let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     const comments = {
         first: 'This is a comment',
@@ -59,8 +57,8 @@ describe('Comment Component', () => {
     };
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
     });
 
     afterAll(async () => {
@@ -68,7 +66,7 @@ describe('Comment Component', () => {
     });
 
     beforeEach(async () => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -76,19 +74,19 @@ describe('Comment Component', () => {
 
         userFullName = pngUploadedFile.entry.createdByUser.displayName;
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
     });
 
     afterEach(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(nodeId);
     });
 
     it('[C276947] Should be able to add a comment on ACS and view on ADF', async () => {
-        await this.alfrescoJsApi.core.commentsApi.addComment(nodeId, { content: comments.test });
+        await apiService.getInstance().core.commentsApi.addComment(nodeId, { content: comments.test });
 
         await viewerPage.viewFile(pngFileModel.name);
         await viewerPage.checkImgViewerIsDisplayed();
@@ -164,28 +162,28 @@ describe('Comment Component', () => {
         let site, pngUploadedFile;
 
         beforeAll(async () => {
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            site = await this.alfrescoJsApi.core.sitesApi.createSite({
+            site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
                 visibility: 'PUBLIC'
             });
 
-            await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
-                id: acsUser.id,
+            await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
+                id: acsUser.email,
                 role: CONSTANTS.CS_USER_ROLES.CONSUMER
             });
 
             pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, site.entry.guid);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
 
             await navigationBarPage.clickContentServicesButton();
         });
 
         afterAll(async () => {
             await uploadActions.deleteFileOrFolder(pngUploadedFile.entry.id);
-            await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+            await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
         });
 
         it('[C290147] Should NOT be able to add comments to a site file with Consumer permissions', async () => {

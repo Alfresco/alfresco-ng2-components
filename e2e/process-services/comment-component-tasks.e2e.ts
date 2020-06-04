@@ -17,23 +17,27 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Comment component for Processes', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const commentsPage = new CommentsPage();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    let user, tenantId, appId, secondUser, newTaskId;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let user, appId, secondUser, newTaskId;
 
     const taskName = {
         completed_task: 'Test Completed',
@@ -41,42 +45,31 @@ describe('Comment component for Processes', () => {
     };
 
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        user = await usersActions.createUser();
+        secondUser = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
-        const users = new UsersActions();
+        await apiService.getInstance().login(user.email, user.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        secondUser = await users.createApsUser(this.alfrescoJsApi, tenantId);
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        const importedApp = await new ApplicationsUtil(this.alfrescoJsApi).importPublishDeployApp(app.file_path);
+        const importedApp = await new ApplicationsUtil(apiService).importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-   });
+        await loginPage.login(user.email, user.password);
+    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     it('[C260237] Should not be able to add a comment on a completed task', async () => {
-        const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskName.completed_task });
+        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName.completed_task }));
 
         const taskId = newTask.id;
 
-        await this.alfrescoJsApi.activiti.taskActionsApi.completeTask(taskId);
+        await apiService.getInstance().activiti.taskActionsApi.completeTask(taskId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -87,17 +80,17 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C212864] Should be able to add multiple comments on a single task using different users', async () => {
-        const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskName.multiple_users });
+        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName.multiple_users }));
 
         newTaskId = newTask.id;
 
-        await this.alfrescoJsApi.activiti.taskApi.involveUser(newTaskId, { email: secondUser.email });
+        await apiService.getInstance().activiti.taskApi.involveUser(newTaskId, { email: secondUser.email });
 
         const taskComment = { message: 'Task Comment' };
         const secondTaskComment = { message: 'Second Task Comment' };
 
-        await this.alfrescoJsApi.activiti.taskApi.addTaskComment(taskComment, newTaskId);
-        await this.alfrescoJsApi.activiti.taskApi.addTaskComment(secondTaskComment, newTaskId);
+        await apiService.getInstance().activiti.taskApi.addTaskComment(taskComment, newTaskId);
+        await apiService.getInstance().activiti.taskApi.addTaskComment(secondTaskComment, newTaskId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -105,7 +98,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalCommentsLatest = await this.alfrescoJsApi.activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
+        const totalCommentsLatest = await apiService.getInstance().activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
 
         const thirdTaskComment = { message: 'Third Task Comment' };
 
@@ -123,9 +116,9 @@ describe('Comment component for Processes', () => {
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
-        await loginPage.loginToProcessServicesUsingUserModel(secondUser);
+        await loginPage.login(secondUser.email, secondUser.password);
 
-        await this.alfrescoJsApi.activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
+        await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 
@@ -133,7 +126,7 @@ describe('Comment component for Processes', () => {
         await taskPage.tasksListPage().selectRow(taskName.multiple_users);
         await taskPage.taskDetails().selectActivityTab();
 
-        const totalComments = await this.alfrescoJsApi.activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
+        const totalComments = await apiService.getInstance().activiti.taskApi.getTaskComments(newTaskId, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
         await commentsPage.checkUserIconIsDisplayed();

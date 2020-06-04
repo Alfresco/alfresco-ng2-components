@@ -18,38 +18,38 @@
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { SearchFiltersPage } from '../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import {
     StringUtil,
     DocumentListPage,
     PaginationPage,
-    LoginPage,
+    LoginSSOPage,
     LocalStorageUtil,
     UploadActions,
-    BrowserActions
+    BrowserActions,
+    ApiService,
+    UserModel
 } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Search Filters', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFiltersPage = new SearchFiltersPage();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
 
     const filename = StringUtil.generateRandomString(16);
     const fileNamePrefix = StringUtil.generateRandomString(5);
@@ -88,11 +88,11 @@ describe('Search Filters', () => {
     let jsonFile;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         fileUploaded = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
         fileTypePng = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -100,7 +100,7 @@ describe('Search Filters', () => {
         fileTypeJpg = await uploadActions.uploadFile(jpgFileModel.location, jpgFileModel.name, '-my-');
         fileTypeTxt2 = await uploadActions.uploadFile(txtFileModel2.location, txtFileModel2.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await browser.sleep(15000); // wait search index previous file/folder uploaded
 
@@ -108,7 +108,7 @@ describe('Search Filters', () => {
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         await uploadActions.deleteFileOrFolder(fileUploaded.entry.id);
         await uploadActions.deleteFileOrFolder(fileTypePng.entry.id);
@@ -121,6 +121,7 @@ describe('Search Filters', () => {
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
+
         await searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();

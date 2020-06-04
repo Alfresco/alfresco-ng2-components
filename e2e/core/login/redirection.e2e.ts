@@ -17,13 +17,13 @@
 
 import { browser } from 'protractor';
 
-import { LoginPage, SettingsPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { SettingsPage, UploadActions, StringUtil, ApiService, LocalStorageUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
+import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Login component - Redirect', () => {
 
@@ -32,39 +32,31 @@ describe('Login component - Redirect', () => {
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
-    const user = new AcsUserModel();
-    const userFolderOwner = new AcsUserModel();
-    const adminUserModel = new AcsUserModel({
-        'id': browser.params.testConfig.adf.adminUser,
-        'password': browser.params.testConfig.adf.adminPassword
-    });
-    let uploadedFolder;
-
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host,
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const logoutPage = new LogoutPage();
 
+    let user;
+    let uploadedFolder;
+
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        await this.alfrescoJsApi.core.peopleApi.addPerson(user);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(userFolderOwner);
-
-        await this.alfrescoJsApi.login(user.id, user.password);
+        user = await usersActions.createUser();
+        await apiService.getInstance().login(user.email, user.password);
 
         uploadedFolder = await uploadActions.createFolder('protecteFolder' + StringUtil.generateRandomString(), '-my-');
-   });
+    });
 
     it('[C213838] Should after login in CS be redirect to Login page when try to access to PS', async () => {
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
+
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
@@ -75,6 +67,8 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C260085] Should after login in PS be redirect to Login page when try to access to CS', async () => {
+        await LocalStorageUtil.setStorageItem('providers', 'BPM');
+
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderBpm();
@@ -82,7 +76,7 @@ describe('Login component - Redirect', () => {
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
 
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -93,12 +87,14 @@ describe('Login component - Redirect', () => {
     });
 
     it('[C260081] Should after login in BOTH not be redirect to Login page when try to access to CS or PS', async () => {
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
+
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
 
         await settingsPage.setProviderEcmBpm();
 
-        await loginPage.login(adminUserModel.id, adminUserModel.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -111,7 +107,7 @@ describe('Login component - Redirect', () => {
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -128,7 +124,7 @@ describe('Login component - Redirect', () => {
 
         await loginPage.waitForElements();
 
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         actualUrl = await browser.getCurrentUrl();
         await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
@@ -138,7 +134,7 @@ describe('Login component - Redirect', () => {
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcm();
-        await loginPage.login(user.id, user.password);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
@@ -156,7 +152,7 @@ describe('Login component - Redirect', () => {
         await browser.refresh();
         await loginPage.waitForElements();
 
-        await loginPage.enterUsername(user.id);
+        await loginPage.enterUsername(user.email);
         await loginPage.enterPassword(user.password);
         await loginPage.clickSignInButton();
 

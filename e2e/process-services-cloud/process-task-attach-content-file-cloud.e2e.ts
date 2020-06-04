@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import {
     ApiService,
@@ -44,6 +43,12 @@ describe('Process Task - Attach content file', () => {
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const processCloudWidget = new ProcessCloudWidgetPage();
     const contentNodeSelectorDialog = new ContentNodeSelectorDialogPage();
+
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const processDefinitionService = new ProcessDefinitionsService(apiService);
+    const processInstancesService = new ProcessInstancesService(apiService);
+
     const viewerPage = new ViewerPage();
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const processDefinitionName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
@@ -51,8 +56,6 @@ describe('Process Task - Attach content file', () => {
     const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
     const folderName = StringUtil.generateRandomString(5);
 
-    let processDefinitionService: ProcessDefinitionsService;
-    let processInstancesService: ProcessInstancesService;
     let uploadedFolder: any;
     let processInstance: any;
 
@@ -66,17 +69,11 @@ describe('Process Task - Attach content file', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
-    this.alfrescoJsApi = new AlfrescoApi({ provider: 'ECM', hostEcm: browser.params.config.bpmHost });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
-
     beforeAll(async () => {
         await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-        processDefinitionService = new ProcessDefinitionsService(apiService);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
-        processInstancesService = new ProcessInstancesService(apiService);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
-        await this.alfrescoJsApi.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
@@ -87,7 +84,7 @@ describe('Process Task - Attach content file', () => {
     });
 
     beforeEach(async () => {
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
     });

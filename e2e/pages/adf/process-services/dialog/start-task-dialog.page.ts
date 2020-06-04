@@ -31,29 +31,29 @@ export class StartTaskDialogPage {
     selectFormDropdown = new DropdownPage(element(by.css('mat-select[id="form_id"]')));
     selectAssigneeDropdown = new DropdownPage();
 
-    async addName(userName): Promise<void> {
+    async addName(userName: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.name);
         await this.name.clear();
         await this.name.sendKeys(userName);
     }
 
-    async addDescription(userDescription): Promise<void> {
+    async addDescription(userDescription: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.description);
         await this.description.sendKeys(userDescription);
     }
 
-    async addDueDate(date): Promise<void> {
+    async addDueDate(date: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dueDate);
         await this.dueDate.sendKeys(date);
     }
 
-    async addAssignee(name): Promise<void> {
+    async addAssignee(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.assignee);
         await this.assignee.sendKeys(name);
         await this.selectAssigneeFromList(name);
     }
 
-    async selectAssigneeFromList(name): Promise<void> {
+    async selectAssigneeFromList(name: string): Promise<void> {
         await this.selectAssigneeDropdown.selectOption(name);
     }
 
@@ -82,12 +82,12 @@ export class StartTaskDialogPage {
         await BrowserActions.click(this.cancelButton);
     }
 
-    async blur(locator): Promise<void> {
+    async blur(locator: ElementFinder): Promise<void> {
         await BrowserActions.click(locator);
         await locator.sendKeys(Key.TAB);
     }
 
-    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
+    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
         const errorElement: ElementFinder = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }

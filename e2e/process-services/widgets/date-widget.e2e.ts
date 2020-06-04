@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, FormPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    BrowserActions,
+    Widget,
+    FormPage,
+    ApplicationsUtil,
+    ProcessUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
@@ -26,48 +33,44 @@ import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 
 describe('Date widget', () => {
 
-    const loginPage = new LoginPage();
-    let processUserModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DATE;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
+
     const dateWidget = widget.dateWidget();
-    let alfrescoJsApi;
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DATE;
+    let processUserModel;
     let deployedApp, process;
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     beforeAll(async () => {
-        const users = new UsersActions();
+       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+       processUserModel = await usersActions.createUser();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
-        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
-
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
+       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+       deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+       await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     describe('Simple App', () => {
-
         beforeEach(async () => {
             const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
@@ -95,7 +98,6 @@ describe('Date widget', () => {
     });
 
     describe('Form Demo Page', () => {
-
         const formDemoPage = new FormDemoPage();
         const formJson = JSON.parse(customDateFormAPS1);
         const formPage = new FormPage();

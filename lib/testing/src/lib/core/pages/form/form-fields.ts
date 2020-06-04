@@ -17,7 +17,7 @@
 
 import { by, element, Locator, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
-import { DropdownPage } from '../../../material/pages/dropdown.page';
+import { DropdownPage } from '../material/dropdown.page';
 
 export class FormFields {
 
@@ -36,27 +36,27 @@ export class FormFields {
 
     selectFormDropdown = new DropdownPage(element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first());
 
-    async setFieldValue(locator, field, value): Promise<void> {
+    async setFieldValue(locator, field, value: string): Promise<void> {
         const fieldElement = element(locator(field));
         await BrowserActions.clearSendKeys(fieldElement, value);
     }
 
-    async clickField(locator, field, fieldtext?): Promise<void> {
+    async clickField(locator, field: string, fieldtext?: string): Promise<void> {
         const fieldElement = fieldtext ? element(locator(field, fieldtext)) : element(locator(field));
         await BrowserActions.click(fieldElement);
     }
 
-    async checkWidgetIsVisible(fieldId): Promise<void> {
+    async checkWidgetIsVisible(fieldId: string): Promise<void> {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
     }
 
-    async checkWidgetIsClickable(fieldId): Promise<void> {
+    async checkWidgetIsClickable(fieldId: string): Promise<void> {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         await BrowserVisibility.waitUntilElementIsClickable(fieldElement);
     }
 
-    async checkWidgetIsHidden(fieldId): Promise<void> {
+    async checkWidgetIsHidden(fieldId: string): Promise<void> {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
@@ -65,30 +65,30 @@ export class FormFields {
         return element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
     }
 
-    async getFieldValue(fieldId, valueLocatorParam?: any): Promise<string> {
+    async getFieldValue(fieldId: string, valueLocatorParam?: any): Promise<string> {
         const valueWidget: ElementFinder = await (await this.getWidget(fieldId)).element(valueLocatorParam || this.valueLocator);
         await BrowserVisibility.waitUntilElementIsVisible(valueWidget);
 
         return valueWidget.getAttribute('value');
     }
 
-    async getFieldLabel(fieldId, labelLocatorParam?: any) {
+    async getFieldLabel(fieldId: string, labelLocatorParam?: any) {
         const label = await (await this.getWidget(fieldId)).all(labelLocatorParam || this.labelLocator).first();
         return BrowserActions.getText(label);
     }
 
-    async getFieldErrorMessage(fieldId): Promise<string> {
+    async getFieldErrorMessage(fieldId: string): Promise<string> {
         const error = await this.getWidget(fieldId);
         error.element(this.errorMessage);
         return BrowserActions.getText(error);
     }
 
-    async getFieldText(fieldId, labelLocatorParam?: any) {
+    async getFieldText(fieldId: string, labelLocatorParam?: any) {
         const label = await (await this.getWidget(fieldId)).element(labelLocatorParam || this.labelLocator);
         return BrowserActions.getText(label);
     }
 
-    async getFieldPlaceHolder(fieldId, locator = 'input'): Promise<string> {
+    async getFieldPlaceHolder(fieldId: string, locator = 'input'): Promise<string> {
         const placeHolderLocator: ElementFinder = element(by.css(`${locator}#${fieldId}`));
         await BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator.getAttribute('placeholder');
@@ -137,11 +137,11 @@ export class FormFields {
         await BrowserActions.click(this.attachFormButton);
     }
 
-    async selectForm(formName): Promise<void> {
+    async selectForm(formName: string): Promise<void> {
         await this.selectFormDropdown.selectDropdownOption(formName);
     }
 
-    async selectFormFromDropDown(formName): Promise<void> {
+    async selectFormFromDropDown(formName: string): Promise<void> {
         const formNameElement = element(by.cssContainingText('span', formName));
         await BrowserActions.click(formNameElement);
     }
@@ -157,7 +157,7 @@ export class FormFields {
         await BrowserActions.click(this.completeButton);
     }
 
-    async setValueInInputById(fieldId, value): Promise<void> {
+    async setValueInInputById(fieldId: string, value: string): Promise<void> {
         const input = element(by.id(fieldId));
         await BrowserActions.clearSendKeys(input, value);
     }

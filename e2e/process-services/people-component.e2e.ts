@@ -15,69 +15,62 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import fs = require('fs');
 import path = require('path');
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('People component', () => {
 
-    const loginPage = new LoginPage();
-    const navigationBarPage = new NavigationBarPage();
-    let processUserModel, assigneeUserModel, secondAssigneeUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
-    const peopleTitle = 'People this task is shared with ';
     const processServices = new ProcessServicesPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let processUserModel, assigneeUserModel, secondAssigneeUserModel;
+    const peopleTitle = 'People this task is shared with ';
 
     const tasks = ['no people involved task', 'remove people task', 'can not complete task', 'multiple users', 'completed filter'];
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-
-        assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        secondAssigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        assigneeUserModel = await usersActions.createUser();
+        secondAssigneeUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[0] });
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[1] });
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[2] });
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[3] });
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: tasks[4] });
-   });
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[0] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[1] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[2] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[3] }));
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: tasks[4] }));
+    });
 
     beforeEach(async () => {
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-   });
+    });
 
     it('[C279989] Should no people be involved when no user is typed', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
@@ -162,7 +155,7 @@ describe('People component', () => {
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
+        await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[1]);
@@ -220,7 +213,7 @@ describe('People component', () => {
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
-        await loginPage.loginToProcessServicesUsingUserModel(assigneeUserModel);
+        await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

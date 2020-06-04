@@ -17,7 +17,7 @@
 
 import { ApiService } from '../api.service';
 import { StringUtil } from '../../utils/string.util';
-import { ApiUtil } from '../../structure/api.util';
+import { ApiUtil } from '../../actions/api.util';
 import { Logger } from '../../utils/logger';
 import { browser } from 'protractor';
 

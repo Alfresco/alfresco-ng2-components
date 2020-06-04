@@ -38,12 +38,12 @@ export class BrowserActions {
     }
 
     static async waitUntilActionMenuIsVisible(): Promise<void> {
-        const actionMenu = element(by.css('div[role="menu"]'));
+        const actionMenu = element.all(by.css('div[role="menu"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(actionMenu);
     }
 
     static async waitUntilActionMenuIsNotVisible(): Promise<void> {
-        const actionMenu = element(by.css('div[role="menu"]'));
+        const actionMenu = element.all(by.css('div[role="menu"]')).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
     }
 
@@ -87,6 +87,8 @@ export class BrowserActions {
     static async clearWithBackSpace(elementFinder: ElementFinder, sleepTime: number = 0) {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await elementFinder.click();
+        await elementFinder.sendKeys(protractor.Key.END);
+
         const value = await elementFinder.getAttribute('value');
         for (let i = value.length; i >= 0; i--) {
             await elementFinder.sendKeys(protractor.Key.BACK_SPACE);

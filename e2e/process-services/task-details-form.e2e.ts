@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FormModelActions } from '../actions/APS/form-model.actions';
 import { UsersActions } from '../actions/users.actions';
-import { StandaloneTask } from '../models/APS/standalone-task';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { FiltersPage } from '../pages/adf/process-services/filters.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
@@ -28,27 +26,31 @@ import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
 import CONSTANTS = require('../util/constants');
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Details - Form', () => {
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();
     const taskPage = new TasksPage();
     const filtersPage = new FiltersPage();
     const widget = new Widget();
+
+    const apiService = new ApiService();
+    const formActions = new FormModelActions(apiService);
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
-    let newTask;
 
     beforeAll(async () => {
-        const users = new UsersActions();
         const attachedFormModel = {
             'name': StringUtil.generateRandomString(),
             'description': '',
             'modelType': 2,
             'stencilSet': 0
         };
-        const otherTaskModel = new StandaloneTask();
         const otherAttachedFormModel = {
             'name': StringUtil.generateRandomString(),
             'description': '',
@@ -62,37 +64,31 @@ describe('Task Details - Form', () => {
             'stencilSet': 0
         };
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        user = await usersActions.createUser();
+        await apiService.getInstance().login(user.email, user.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-        await this.alfrescoJsApi.login(user.email, user.password);
+        attachedForm = await apiService.getInstance().activiti.modelsApi.createModel(attachedFormModel);
+        newForm = await apiService.getInstance().activiti.modelsApi.createModel(newFormModel);
 
-        attachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(attachedFormModel);
-        newForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(newFormModel);
+        const otherEmptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+        otherAttachedForm = await apiService.getInstance().activiti.modelsApi.createModel(otherAttachedFormModel);
 
-        const otherEmptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(otherTaskModel);
-        otherAttachedForm = await this.alfrescoJsApi.activiti.modelsApi.createModel(otherAttachedFormModel);
+        await apiService.getInstance().activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
+        otherTask = await apiService.getInstance().activiti.taskApi.getTask(otherEmptyTask.id);
 
-        await this.alfrescoJsApi.activiti.taskApi.attachForm(otherEmptyTask.id, { 'formId': otherAttachedForm.id });
-        otherTask = await this.alfrescoJsApi.activiti.taskApi.getTask(otherEmptyTask.id);
+        await loginPage.login(user.email, user.password);
+    });
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-   });
-
-    afterAll( async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+    afterAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {
-        const emptyTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask(new StandaloneTask());
-        await this.alfrescoJsApi.activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
-        task = await this.alfrescoJsApi.activiti.taskApi.getTask(emptyTask.id);
-
+        const emptyTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+        await apiService.getInstance().activiti.taskApi.attachForm(emptyTask.id, { 'formId': attachedForm.id });
+        task = await apiService.getInstance().activiti.taskApi.getTask(emptyTask.id);
         await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
         await tasksListPage.checkTaskListIsLoaded();
         await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -151,7 +147,6 @@ describe('Task Details - Form', () => {
     });
 
     describe('Task Details - Complete form with visibility conditions on tabs', () => {
-
         const widgets = {
             textOneId: 'textone',
             textTwoId: 'texttwo',
@@ -172,19 +167,17 @@ describe('Task Details - Form', () => {
             tabFieldVar: 'tabBasicFieldVar'
         };
 
-        const formActions = new FormModelActions();
-        let app;
+        let app, newTask;
 
         beforeAll(async () => {
             app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             await applicationsService.importPublishDeployApp(app.file_path);
         });
 
         beforeEach(async () => {
-            newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: StringUtil.generateRandomString() });
-            const form = await formActions.getFormByName(this.alfrescoJsApi, app.visibilityProcess.formName);
-            await this.alfrescoJsApi.activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
+            newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: StringUtil.generateRandomString() }));
+            const form = await formActions.getFormByName(app.visibilityProcess.formName);
+            await apiService.getInstance().activiti.taskApi.attachForm(newTask.id, { 'formId': form.id });
 
             await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp();
             await tasksListPage.checkTaskListIsLoaded();
@@ -194,6 +187,7 @@ describe('Task Details - Form', () => {
 
         it('[C315190] Should be able to complete a standalone task with visible tab with empty value for field', async () => {
             await tasksListPage.selectRow(newTask.name);
+
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabFieldValue);
 
@@ -346,7 +340,7 @@ describe('Task Details - Form', () => {
         });
 
         it('[C315197] Should be able to complete a process task with visible tab with empty value for field', async () => {
-            await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(app.name, app.visibilityProcess.name);
+            await new ProcessUtil(apiService).startProcessByDefinitionName(app.name, app.visibilityProcess.name);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();
@@ -380,7 +374,7 @@ describe('Task Details - Form', () => {
         });
 
         it('[C212922] Should a User task form be refreshed, saved or completed.', async () => {
-            await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(app.name, app.processName);
+            await new ProcessUtil(apiService).startProcessByDefinitionName(app.name, app.processName);
 
             await filtersPage.goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await tasksListPage.checkTaskListIsLoaded();

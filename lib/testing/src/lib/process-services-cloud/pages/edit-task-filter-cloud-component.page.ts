@@ -19,7 +19,7 @@ import { browser, by, element, protractor, ElementFinder } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class EditTaskFilterCloudComponentPage {
 
@@ -183,7 +183,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async clearAssignee(): Promise<void> {
-        await BrowserActions.clearWithBackSpace(this.assignee, 200);
+        await BrowserActions.clearWithBackSpace(this.assignee, 250);
         await browser.driver.sleep(1000);
     }
 

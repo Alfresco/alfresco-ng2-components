@@ -16,75 +16,70 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
 
-    const loginPage = new LoginPage();
+    const appWithProcess = browser.params.resources.Files.APP_WITH_PROCESSES;
+    const simpleAppWithUserForm = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
     const processListPage = new ProcessListPage();
     const startProcessPage = new StartProcessPage();
-
-    const appA = browser.params.resources.Files.APP_WITH_PROCESSES;
-    const appB = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
 
     let user;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        const usersActions = new UsersActions(apiService);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const applicationsService = new ApplicationsUtil(apiService);
 
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        user = await usersActions.createUser();
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
 
-        await this.alfrescoJsApi.login(user.email, user.password);
+        await applicationsService.importPublishDeployApp(appWithProcess.file_path);
+        await applicationsService.importPublishDeployApp(simpleAppWithUserForm.file_path);
 
-        await applicationsService.importPublishDeployApp(appA.file_path);
-        await applicationsService.importPublishDeployApp(appB.file_path);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
    });
 
     it('[C260494] Should add process to list when a process is created', async () => {
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await (await processServicesPage.goToApp(appA.title)).clickProcessButton();
+        await (await processServicesPage.goToApp(appWithProcess.title)).clickProcessButton();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
-        await startProcessPage.selectFromProcessDropdown(appA.process_wse_name);
+        await startProcessPage.selectFromProcessDropdown(appWithProcess.process_wse_name);
         await startProcessPage.clickStartProcessButton();
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         await processDetailsPage.checkProcessDetailsCard();
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
-        await (await processServicesPage.goToApp(appB.title)).clickProcessButton();
+        await (await processServicesPage.goToApp(simpleAppWithUserForm.title)).clickProcessButton();
         await expect(await processListPage.getDisplayedProcessListTitle()).toEqual('No Processes Found');
         await expect(await processDetailsPage.checkProcessDetailsMessage()).toEqual('No process details found');
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
-        await startProcessPage.selectFromProcessDropdown(appB.processName);
+        await startProcessPage.selectFromProcessDropdown(simpleAppWithUserForm.processName);
         await startProcessPage.clickStartProcessButton();
 
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);

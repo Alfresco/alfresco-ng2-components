@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { LoginPage, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
-import { User } from '../models/APS/user';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
@@ -31,7 +29,9 @@ import CONSTANTS = require('../util/constants');
 
 describe('Stencil', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.STENCIL_PROCESS;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
@@ -40,28 +40,25 @@ describe('Stencil', () => {
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
     const processFiltersPage = new ProcessFiltersPage();
-    const usersActions = new UsersActions();
-    const alfrescoJsApi = new AlfrescoApi({
-        provider: 'BPM',
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
 
-    const app = browser.params.resources.Files.STENCIL_PROCESS;
-    let user: User;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let user: UserModel;
 
     beforeAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        user = await usersActions.createTenantAndUser(alfrescoJsApi);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        user = await usersActions.createUser();
 
-        await alfrescoJsApi.login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {

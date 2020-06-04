@@ -18,7 +18,7 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class SettingsPage {
 
@@ -42,7 +42,16 @@ export class SettingsPage {
     providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));
 
     async goToSettingsPage(): Promise<void> {
-        await browser.get(this.settingsURL);
+        let currentUrl;
+
+        try {
+            currentUrl = await browser.getCurrentUrl();
+        } catch (e) {
+        }
+
+        if (!currentUrl || currentUrl.indexOf(this.settingsURL) === -1) {
+            await browser.get(this.settingsURL);
+        }
         await this.providerDropdown.checkDropdownIsVisible();
     }
 
@@ -93,6 +102,7 @@ export class SettingsPage {
     }
 
     async setProviderEcmSso(contentServiceURL, authHost, identityHost, silentLogin = true, implicitFlow = true, clientId?: string, logoutUrl: string = '/logout') {
+
         await this.goToSettingsPage();
         await this.setProvider('ECM');
         await this.clickSsoRadioButton();
@@ -149,7 +159,7 @@ export class SettingsPage {
         await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
-    async setClientId(clientId: string = browser.params.config.oauth2.clientId) {
+    async setClientId(clientId: string = browser.params.testConfig.appConfig.oauth2.clientId) {
         await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 

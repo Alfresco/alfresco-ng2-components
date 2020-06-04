@@ -15,20 +15,27 @@
  * limitations under the License.
  */
 
-import { LoginPage, LocalStorageUtil, UploadActions, DataTableComponentPage, DateUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    LocalStorageUtil,
+    UploadActions,
+    DataTableComponentPage,
+    DateUtil,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Number Range Filter', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeRangeFilter = searchFilters.sizeRangeFilterPage();
@@ -36,7 +43,7 @@ describe('Search Number Range Filter', () => {
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
 
     const file2BytesModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
@@ -49,25 +56,23 @@ describe('Search Number Range Filter', () => {
     });
 
     let file2Bytes, file0Bytes;
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await usersActions.createUser(acsUser);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         file0Bytes = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
@@ -75,7 +80,7 @@ describe('Search Number Range Filter', () => {
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         await uploadActions.deleteFileOrFolder(file0Bytes.entry.id);
 
@@ -418,8 +423,7 @@ describe('Search Number Range Filter', () => {
                 await expect(currentDateFormatted.getFullYear() <= toYear).toBe(true);
                 await expect(currentDateFormatted.getFullYear() >= fromYear).toBe(true);
             }
-
-        });
+    });
 
         it('[C277139] Should be able to set To field to be exclusive', async () => {
             await navigationBarPage.clickContentServicesButton();

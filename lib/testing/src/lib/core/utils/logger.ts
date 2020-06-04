@@ -22,22 +22,40 @@ const infoColor = '\x1b[36m%s\x1b[0m',
     warnColor = '\x1b[33m%s\x1b[0m',
     errorColor = '\x1b[31m%s\x1b[0m';
 
+export class LogLevelsEnum extends Number {
+    static TRACE: number = 5;
+    static DEBUG: number = 4;
+    static INFO: number = 3;
+    static WARN: number = 2;
+    static ERROR: number = 1;
+    static SILENT: number = 0;
+}
+
+export let logLevels: any[] = [
+    {level: LogLevelsEnum.TRACE, name: 'TRACE'},
+    {level: LogLevelsEnum.DEBUG, name: 'DEBUG'},
+    {level: LogLevelsEnum.INFO, name: 'INFO'},
+    {level: LogLevelsEnum.WARN, name: 'WARN'},
+    {level: LogLevelsEnum.ERROR, name: 'ERROR'},
+    {level: LogLevelsEnum.SILENT, name: 'SILENT'}
+];
+
 /* tslint:disable:no-console */
 export class Logger {
     static info(...messages: string[]): void {
-        if (browser.params.config && browser.params.config.log) {
+        if (browser.params.config && browser.params.testConfig.appConfig.log >= LogLevelsEnum.INFO) {
             console.log(infoColor, messages.join(''));
         }
     }
 
     static log(...messages: string[]): void {
-        if (browser.params.config && browser.params.config.log) {
+        if (browser.params.config && browser.params.testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
             console.log(logColor, messages.join(''));
         }
     }
 
     static warn(...messages: string[]): void {
-        if (browser.params.config && browser.params.config.log) {
+        if (browser.params.config && browser.params.testConfig.appConfig.log >= LogLevelsEnum.WARN) {
             console.log(warnColor, messages.join(''));
         }
     }

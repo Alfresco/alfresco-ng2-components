@@ -17,21 +17,20 @@
 
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { Logger } from '../utils/logger';
 
 export class SnackbarPage {
 
-    notificationSnackBar: ElementFinder = element(by.css('simple-snack-bar span'));
+    notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar span')).first();
     snackBarContainerCss = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {
-        return BrowserVisibility.waitUntilElementIsVisible(element(this.snackBarContainerCss), 20000,
+        return BrowserVisibility.waitUntilElementIsVisible(element.all(this.snackBarContainerCss).first(), 5000,
             'snackbar did not appear'
         );
     }
 
     async waitForSnackBarToClose() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(element(this.snackBarContainerCss), 20000);
+        return BrowserVisibility.waitUntilElementIsNotVisible(element.all(this.snackBarContainerCss).first(), 5000);
     }
 
     async getSnackBarMessage(): Promise<string> {
@@ -41,10 +40,9 @@ export class SnackbarPage {
 
     async isNotificationSnackBarDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar);
+            await BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar, 2000);
             return true;
         } catch {
-            Logger.error(`Snackbar is not displayed `);
             return false;
         }
     }

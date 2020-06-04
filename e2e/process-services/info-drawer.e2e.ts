@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, LocalStorageUtil, LoginPage, StringUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import {
-    AlfrescoApiCompatibility as AlfrescoApi,
-    AppDefinitionRepresentation,
-    LightTenantRepresentation
-} from '@alfresco/js-api';
+    BrowserActions,
+    BrowserVisibility,
+    LocalStorageUtil,
+    LoginSSOPage,
+    StringUtil,
+    ApplicationsUtil,
+    ApiService, UserModel
+} from '@alfresco/adf-testing';
+import { AppDefinitionRepresentation } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
@@ -34,13 +37,17 @@ import { infoDrawerConfiguration } from './config/task.config';
 
 describe('Info Drawer', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processFiltersPage = new ProcessFiltersPage();
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const apiService = new ApiService();
+    const applicationsService = new ApplicationsUtil(apiService);
+
     const firstComment = 'comm1';
 
     const date = {
@@ -62,32 +69,29 @@ describe('Info Drawer', () => {
     let processUserModelFullName: string;
     let assigneeUserModelFullName: string;
     let appCreated: AppDefinitionRepresentation;
-    let newTenant: LightTenantRepresentation;
+    let processUserModel;
 
     beforeAll(async () => {
-        const users = new UsersActions();
-        this.alfrescoApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        const usersActions = new UsersActions(apiService);
 
-        await this.alfrescoApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        newTenant = await this.alfrescoApi.activiti.adminTenantsApi.createTenant(new Tenant());
-        const assigneeUserModel = await users.createApsUser(this.alfrescoApi, newTenant.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+
+        const assigneeUserModel = await usersActions.createUser();
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
-        const processUserModel = await users.createApsUser(this.alfrescoApi, newTenant.id);
+
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
         processUserModelFullName = processUserModel.firstName + ' ' + processUserModel.lastName;
-        await this.alfrescoApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(this.alfrescoApi);
+
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         appCreated = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll(async () => {
-        await this.alfrescoApi.activiti.modelsApi.deleteModel(appCreated.id);
-        await this.alfrescoApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoApi.activiti.adminTenantsApi.deleteTenant(newTenant.id);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

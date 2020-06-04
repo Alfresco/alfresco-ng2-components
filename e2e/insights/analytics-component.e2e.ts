@@ -15,48 +15,39 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { browser } from 'protractor';
-import { Tenant } from '../models/APS/tenant';
-import { User } from '../models/APS/user';
-
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Analytics Smoke Test', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const analyticsPage = new AnalyticsPage();
     const processServicesPage = new ProcessServicesPage();
-    let tenantId;
+
     const reportTitle = 'New Title';
+    let procUserModel: UserModel;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        procUserModel = await usersActions.createUser();
 
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-
-        tenantId = newTenant.id;
-        const procUserModel = new User({ tenantId: tenantId });
-
-        await this.alfrescoJsApi.activiti.adminUsersApi.createNewUser(procUserModel);
-
-        await loginPage.loginToProcessServicesUsingUserModel(procUserModel);
-   });
+        await loginPage.login(procUserModel.email, procUserModel.password);
+    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-   });
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(procUserModel.tenantId);
+    });
 
     it('[C260346] Should be able to change title of a report', async () => {
         await navigationBarPage.navigateToProcessServicesPage();

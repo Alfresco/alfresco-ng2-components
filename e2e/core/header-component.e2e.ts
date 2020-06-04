@@ -14,20 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { HeaderPage, LoginPage, SettingsPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, HeaderPage, LoginSSOPage, SettingsPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Header Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();
 
-    let user, tenantId;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
 
     const names = {
         app_title_default: 'ADF Demo Application',
@@ -43,34 +45,16 @@ describe('Header Component', () => {
         logo_tooltip: 'test_tooltip'
     };
 
-    beforeAll(async() => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+    beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        const users = new UsersActions();
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        tenantId = user.tenantId;
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        await loginPage.loginToProcessServicesUsingUserModel(user);
-   });
-
-    beforeEach(async() => {
-        await navigationBarPage.clickHeaderDataButton();
+        await usersActions.createUser(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
-    afterAll(async() => {
-        await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
-   });
+    beforeEach(async () => {
+        await navigationBarPage.clickHeaderDataButton();
+    });
 
     it('[C280002] Should be able to view Header component', async () => {
         await headerPage.checkShowMenuCheckBoxIsDisplayed();
