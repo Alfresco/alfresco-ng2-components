@@ -78,14 +78,14 @@
             adf-claim-task
             [taskId]="taskId"
             (success)="onClaimTask($event)">
-            {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate}}
+            {{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
         </button>
         <button mat-button 
             *ngIf="isTaskClaimedByCandidateMember()"
             adf-unclaim-task
             [taskId]="taskId"
             (success)="onUnclaimTask($event)">
-            {{'ADF_CLOUD_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate}}
+            {{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
         </button>
   </ng-template>
 </ng-container>

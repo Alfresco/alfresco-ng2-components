@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
@@ -26,10 +26,16 @@ describe('ClaimTaskDirective', () => {
 
     @Component({
         selector:  'adf-claim-test-component',
-        template: '<button adf-claim-task [taskId]="taskId"></button>'
+        template: '<button adf-claim-task [taskId]="taskId" (success)="onClaim($event)">Claim</button>'
     })
     class TestComponent {
         taskId = 'test1234';
+        @Output()
+        claim: EventEmitter<any> = new EventEmitter<any>();
+
+        onClaim(event) {
+            this.claim.emit(event);
+        }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -56,6 +62,16 @@ describe('ClaimTaskDirective', () => {
         button.click();
         expect(claimTaskSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
     });
+
+    it('Should be able to catch success event on click of claim button', async() => {
+        spyOn(taskListService, 'claimTask').and.returnValue(of({}));
+        const unclaimSpy = spyOn(fixture.componentInstance.claim, 'emit');
+        const button = fixture.nativeElement.querySelector('button');
+        button.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(unclaimSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
+    });
 });
 
 describe('Claim Task Directive validation errors', () => {
@@ -64,21 +80,13 @@ describe('Claim Task Directive validation errors', () => {
         selector:  'adf-claim-no-fields-validation-component',
         template: '<button adf-claim-task></button>'
     })
-    class ClaimTestMissingInputDirectiveComponent {
-
-        appName = 'simple-app';
-        appNameUndefined = undefined;
-        appNameNull = null;
-    }
+    class ClaimTestMissingInputDirectiveComponent { }
 
     @Component({
         selector:  'adf-claim-no-taskid-validation-component',
         template: '<button adf-claim-task [taskId]=""></button>'
     })
-    class ClaimTestMissingTaskIdDirectiveComponent {
-
-        appName = 'simple-app';
-    }
+    class ClaimTestMissingTaskIdDirectiveComponent { }
 
     let fixture: ComponentFixture<any>;
 

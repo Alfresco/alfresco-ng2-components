@@ -299,13 +299,15 @@ export class TaskFormComponent implements OnInit {
     return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
   }
 
-  onClaimTask(taskId: string) {
+  reloadTask(taskId: string) {
     this.loadTask(taskId);
-    this.claim.emit(this.taskDetails);
+  }
+
+  onClaimTask(taskId: string) {
+    this.claim.emit(taskId);
   }
 
   onUnclaimTask(taskId: string) {
-    this.loadTask(taskId);
-    this.unclaim.emit(this.taskDetails);
+    this.unclaim.emit(taskId);
   }
 }

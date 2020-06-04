@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { of } from 'rxjs';
-// import { UnclaimTaskDirective } from './unclaim-task.directive';
 import { TaskListService } from '../../services/tasklist.service';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 
@@ -27,10 +26,16 @@ describe('UnclaimTaskDirective', () => {
 
     @Component({
         selector:  'adf-unclaim-test-component',
-        template: '<button adf-unclaim-task [taskId]="taskId"></button>'
+        template: '<button adf-unclaim-task [taskId]="taskId" (success)="onUnclaim($event)">Unclaim</button>'
     })
     class TestComponent {
         taskId = 'test1234';
+        @Output()
+        unclaim: EventEmitter<any> = new EventEmitter<any>();
+
+        onUnclaim(event) {
+            this.unclaim.emit(event);
+        }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -57,6 +62,16 @@ describe('UnclaimTaskDirective', () => {
         button.click();
         expect(claimTaskSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
     });
+
+    it('Should be able to catch success event on click of unclaim button', async() => {
+        spyOn(taskListService, 'unclaimTask').and.returnValue(of({}));
+        const unclaimSpy = spyOn(fixture.componentInstance.unclaim, 'emit');
+        const button = fixture.nativeElement.querySelector('button');
+        button.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(unclaimSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
+    });
 });
 
 describe('Claim Task Directive validation errors', () => {
@@ -67,8 +82,6 @@ describe('Claim Task Directive validation errors', () => {
     })
     class ClaimTestMissingInputDirectiveComponent {
 
-        // @ContentChildren(ClaimTaskDirective)
-        // claimTaskValidationDirective: ClaimTaskDirective;
     }
 
     @Component({
@@ -77,8 +90,6 @@ describe('Claim Task Directive validation errors', () => {
     })
     class ClaimTestMissingTaskIdDirectiveComponent {
 
-        // @ContentChildren(ClaimTaskDirective)
-        // claimTaskValidationDirective: ClaimTaskDirective;
     }
 
     let fixture: ComponentFixture<any>;

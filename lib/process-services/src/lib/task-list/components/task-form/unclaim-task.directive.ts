@@ -33,11 +33,11 @@ export class UnclaimTaskDirective {
     @Input()
     taskId: string;
 
-    /** Emitted when the task is completed. */
+    /** Emitted when the task is released. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the task cannot be completed. */
+    /** Emitted when the task cannot be released. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 

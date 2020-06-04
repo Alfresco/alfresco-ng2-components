@@ -80,7 +80,9 @@ import { UnclaimTaskDirective } from './components/task-form/unclaim-task.direct
         TaskHeaderComponent,
         StartTaskComponent,
         TaskStandaloneComponent,
-        AttachFormComponent
+        AttachFormComponent,
+        ClaimTaskDirective,
+        UnclaimTaskDirective
     ]
 })
 export class TaskListModule {
