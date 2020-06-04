@@ -25,7 +25,7 @@
     "build-lib": "./scripts/build/build-all-lib.sh",
     "bundlesize-check": "bundlesize",
     "affected:libs": "nx affected:libs",
-    "webpack-bundle-analyzer": "webpack-bundle-analyzer dist/demo-shell/stats.json",
+    "inspect.bundle": "ng build demoshell --prod --stats-json && npx webpack-bundle-analyzer dist/demo-shell/stats-es2015.json",
     "coverage": "./lib/config/create-coverage-index.sh && lite-server -c ./lib/config/proxy-coverage.json",
     "03": "echo -------------------------------------------- Lint  -----------------------------------------------",
     "03s": "",
@@ -194,7 +194,6 @@
     "typescript": "3.8.3",
     "unist-util-select": "^2.0.0",
     "url-join": "^4.0.0",
-    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.0"
   },
   "license": "Apache-2.0",
