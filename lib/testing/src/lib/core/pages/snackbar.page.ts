@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../utils/browser-visibility';
 export class SnackbarPage {
 
     notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar span')).first();
+    snackBarAction: ElementFinder = element(by.css('simple-snack-bar button span'));
     snackBarContainerCss = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {
@@ -36,6 +37,16 @@ export class SnackbarPage {
     async getSnackBarMessage(): Promise<string> {
         await this.waitForSnackBarToAppear();
         return this.notificationSnackBar.getText();
+    }
+
+    async getSnackBarActionMessage(): Promise<string> {
+        await this.waitForSnackBarToAppear();
+        return this.snackBarAction.getText();
+    }
+
+    async clickSnackBarAction(): Promise<void> {
+        await this.waitForSnackBarToAppear();
+        BrowserActions.click(this.snackBarAction);
     }
 
     async isNotificationSnackBarDisplayed(): Promise<boolean> {
