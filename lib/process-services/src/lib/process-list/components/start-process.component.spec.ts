@@ -715,50 +715,58 @@ describe('StartFormComponent', () => {
         it('should show no process definition available template when application/process definitions are empty', async() => {
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of([]));
             getDefinitionsSpy.and.returnValue(of([]));
+
             component.showSelectApplicationDropdown = true;
             component.appId = 3;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
             const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+
             expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
         });
 
         it('should show no process definition available template if processDefinitions are empty', async() => {
             getDefinitionsSpy.and.returnValue(of([]));
+
             component.appId = 3;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
             const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+
             expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
         });
 
         it('should show no process definition selected template if there is no process definition selected', async() => {
-            component.showSelectApplicationDropdown = true;
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
+
+            component.showSelectApplicationDropdown = true;
             component.appId = 1234;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
             const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+
             expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEF_SELECTED');
         });
 
         it('should show no start form template if selected process definition does not have start form', async() => {
-            component.showSelectApplicationDropdown = true;
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
+
+            component.showSelectApplicationDropdown = true;
             component.processDefinitionName = 'My Process 1';
             component.appId = 3;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
             const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+
             expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_START_FORM');
         });
@@ -777,21 +785,25 @@ describe('StartFormComponent', () => {
         it('should emit error event in case loading process definitions failed', async() => {
             const errorSpy = spyOn(component.error, 'emit');
             getDefinitionsSpy.and.returnValue(throwError(processDefError));
+
             component.appId = 3;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
+
             expect(errorSpy).toHaveBeenCalledWith(processDefError);
         });
 
         it('should emit error event in case loading applications failed', async() => {
             const errorSpy = spyOn(component.error, 'emit');
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(throwError(applicationsError));
+
             component.showSelectApplicationDropdown = true;
             component.appId = 3;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
+
             expect(errorSpy).toHaveBeenCalledWith(applicationsError);
         });
 
@@ -800,6 +812,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
             startProcessSpy.and.returnValue(throwError(startProcessError));
+
             component.showSelectApplicationDropdown = true;
             component.processDefinitionName = 'My Process 1';
             component.name = 'mock name';
@@ -809,6 +822,7 @@ describe('StartFormComponent', () => {
             await fixture.whenStable();
             component.startProcess();
             fixture.detectChanges();
+
             expect(errorSpy).toHaveBeenCalledWith(startProcessError);
         });
     });

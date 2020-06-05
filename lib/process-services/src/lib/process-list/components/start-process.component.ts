@@ -93,7 +93,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when the process is canceled. */
     @Output()
-    cancel: EventEmitter<any> = new EventEmitter<any>();
+    cancel: EventEmitter<void> = new EventEmitter<void>();
 
     /** Emitted when an error occurs. */
     @Output()
