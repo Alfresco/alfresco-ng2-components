@@ -38,6 +38,10 @@ export class CoreAutomationService {
     setup() {
         const adfProxy = window['adf'] || {};
 
+        adfProxy.getConfigField = (field: string): any => {
+            return this.appConfigService.get(field);
+        };
+
         adfProxy.setConfigField = (field: string, value: string) => {
             this.appConfigService.config[field] = JSON.parse(value);
         };
@@ -48,6 +52,10 @@ export class CoreAutomationService {
 
         adfProxy.removeStorageItem = (key: string) => {
             this.storageService.removeItem(key);
+        };
+
+        adfProxy.getStorageItem = (key: string): string => {
+            return this.storageService.getItem(key);
         };
 
         adfProxy.setUserPreference = (key: string, data: any) => {

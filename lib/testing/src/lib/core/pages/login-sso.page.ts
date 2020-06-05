@@ -18,6 +18,7 @@
 import { element, by, browser, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { LocalStorageUtil } from '../utils/local-storage.util';
 
 export class LoginSSOPage {
 
@@ -49,7 +50,10 @@ export class LoginSSOPage {
     }
 
     async login(username: string, password: string) {
-        if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
+
+        const authType = await LocalStorageUtil.getStorageItem('authType');
+
+        if (authType === 'OAUTH') {
             await this.loginSSOIdentityService(username, password);
         } else {
             await this.loginBasicAuth(username, password);
@@ -60,9 +64,12 @@ export class LoginSSOPage {
         browser.ignoreSynchronization = true;
 
         const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
+
         await browser.get(loginURL);
 
-        if (browser.params.testConfig.appConfig.oauth2.implicitFlow === false) {
+        const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
+
+        if (oauth2.silentLogin === false) {
             await this.clickOnSSOButton();
         }
 

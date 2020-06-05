@@ -22,14 +22,25 @@ export class ApiService {
 
     apiService: AlfrescoApi;
 
-    config: AlfrescoApiConfig;
+    config: AlfrescoApiConfig = new AlfrescoApiConfig({
+        authType: 'OAUTH',
+        oauth2: {
+            scope: 'openid',
+            secret: '',
+            implicitFlow: false,
+            silentLogin: false,
+            redirectUri: '/',
+            redirectUriLogout: '/logout'
+        }
+
+    });
 
     constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
 
         if (browser.params.testConfig && browser.params.testConfig.appConfig) {
             this.config = { ...browser.params.testConfig.appConfig };
-            this.config.hostEcm =  browser.params.testConfig.appConfig.ecmHost;
-            this.config.hostBpm =  browser.params.testConfig.appConfig.bpmHost;
+            this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
+            this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
         }
 
         if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
