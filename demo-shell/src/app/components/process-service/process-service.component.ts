@@ -405,7 +405,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     }
 
     onStartProcessError(event: any) {
-        this.notificationService.showError(event.response.body.message);
+        this.notificationService.showError(event.message);
     }
 
     isStartProcessMode(): boolean {
