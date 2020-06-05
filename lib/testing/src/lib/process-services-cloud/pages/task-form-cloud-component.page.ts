@@ -29,7 +29,7 @@ export class TaskFormCloudComponent {
     claimButton: ElementFinder = element(by.css('button[adf-cloud-claim-task]'));
     form: ElementFinder = element(by.css('adf-cloud-form'));
     formTitle: ElementFinder = element(by.css(`span.adf-form-title`));
-    emptyContentIcon: ElementFinder = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
+    emptyContentIcon: ElementFinder = element(by.css(`div.adf-empty-content adf-icon.adf-empty-content__icon`));
     emptyContentTitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
     emptyContentSubtitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
     readOnlyForm = element(by.css('div[class="adf-readonly-form"]'));
