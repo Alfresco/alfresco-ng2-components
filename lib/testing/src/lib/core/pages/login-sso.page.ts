@@ -59,9 +59,11 @@ export class LoginSSOPage {
     async loginSSOIdentityService(username: string, password: string) {
         browser.ignoreSynchronization = true;
 
+        const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
+        await browser.get(loginURL);
+
         if (browser.params.testConfig.appConfig.oauth2.implicitFlow === false) {
-            const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
-            await browser.get(loginURL);
+            await this.clickOnSSOButton();
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);

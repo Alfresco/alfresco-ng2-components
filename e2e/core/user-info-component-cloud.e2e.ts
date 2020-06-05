@@ -44,8 +44,6 @@ describe('User Info - SSO', () => {
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
-        await loginSSOPage.clickOnSSOButton();
-
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
     });
 
