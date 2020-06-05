@@ -19,7 +19,7 @@ export abstract class Column {
     columnName: string;
     columnType: string;
 
-    constructor(columnName: string, columnType: string) {
+    constructor(columnName: string, columnType: string ) {
         this.columnName = columnName;
         this.columnType = columnType;
     }
