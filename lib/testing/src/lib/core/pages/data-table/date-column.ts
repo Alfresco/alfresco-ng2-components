@@ -18,10 +18,10 @@
 import { Column } from './column';
 
 export class DateColumn extends Column {
-    columnType: string = 'date';
+    columnType: string;
     columnName: string;
 
     constructor(columnName: string) {
-        super(columnName);
+        super(columnName, 'date');
     }
 }

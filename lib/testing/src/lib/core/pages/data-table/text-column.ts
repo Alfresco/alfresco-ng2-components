@@ -18,10 +18,10 @@
 import { Column } from './column';
 
 export class TextColumn extends Column {
-    columnType: string = 'text';
+    columnType: string;
     columnName: string;
 
     constructor(columnName: string) {
-        super(columnName);
+        super(columnName, 'text');
     }
 }
