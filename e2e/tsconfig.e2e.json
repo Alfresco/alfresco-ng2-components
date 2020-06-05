@@ -12,7 +12,8 @@
       "node"
     ],
     "paths": {
-      "@alfresco/adf-testing": ["../lib/testing"]
+      "@alfresco/adf-testing": ["../lib/testing"],
+      "@alfresco/adf-core": ["../lib/dist/core"]
     }
   },
   "include": [
