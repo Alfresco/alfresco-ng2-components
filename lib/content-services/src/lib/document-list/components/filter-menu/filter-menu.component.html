@@ -1,8 +1,8 @@
 <button mat-icon-button [matMenuTriggerFor]="filter"
     (click)="onMenuButtonClick($event)"
     class="adf-filter-button"
-    matTooltip="{{'ADF-DOCUMENT-LIST.FILTER_MENU.FILTER_BY' | translate}}">
-    <mat-icon>filter_list</mat-icon>
+    matTooltip="{{ 'ADF-DOCUMENT-LIST.FILTER_MENU.FILTER_BY' | translate:{category: col.title} }}">
+    <adf-icon value="adf:filter" color="primary"></adf-icon>
 </button>
 
 <mat-menu #filter="matMenu">
