@@ -12,8 +12,11 @@
       "node"
     ],
     "paths": {
+      "@alfresco/adf-extensions": ["../lib/extensions"],
       "@alfresco/adf-testing": ["../lib/testing"],
-      "@alfresco/adf-core": ["../lib/dist/core"]
+      "@alfresco/adf-process-services-cloud": ["../lib/process-services-cloud"],
+      "@alfresco/adf-content-services": ["../lib/content-services"],
+      "@alfresco/adf-core": ["../lib/core"]
     }
   },
   "include": [
