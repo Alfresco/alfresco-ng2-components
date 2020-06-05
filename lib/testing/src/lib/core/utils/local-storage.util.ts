@@ -21,7 +21,7 @@ export class LocalStorageUtil {
 
     static async getConfigField(field: string): Promise<any> {
         return browser.executeScript(
-            'return window.adf.getConfigField(`' + field + '`);'
+            'return window.adf ? window.adf.getConfigField(`' + field + '`) : null;'
         );
     }
 
@@ -45,7 +45,7 @@ export class LocalStorageUtil {
 
     static async getStorageItem(field: string): Promise<any> {
         return browser.executeScript(
-            'return window.adf.getStorageItem(`' + field + '`);'
+            'return window.adf ? window.adf.getStorageItem(`' + field + '`) : null;'
         );
     }
 

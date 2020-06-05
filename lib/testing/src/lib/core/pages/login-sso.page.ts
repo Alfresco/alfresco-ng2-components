@@ -51,7 +51,7 @@ export class LoginSSOPage {
 
     async login(username: string, password: string) {
 
-        const authType = await LocalStorageUtil.getStorageItem('authType');
+        const authType = await LocalStorageUtil.getConfigField('authType');
 
         if (authType === 'OAUTH') {
             await this.loginSSOIdentityService(username, password);
@@ -69,7 +69,7 @@ export class LoginSSOPage {
 
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
 
-        if (oauth2.silentLogin === false) {
+        if (oauth2 && oauth2.silentLogin === false) {
             await this.clickOnSSOButton();
         }
 
