@@ -164,7 +164,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dev:build",
+            "browserTarget": "demoshell:build",
             "host": "0.0.0.0",
             "port": 3000,
             "proxyConfig": "demo-shell/proxy.conf.js",
@@ -172,17 +172,11 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "dev:build:production"
+              "browserTarget": "demoshell:build:production"
             },
             "e2e": {
-              "browserTarget": "dev:build:e2e"
+              "browserTarget": "demoshell:build:e2e"
             }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "dev:build"
           }
         },
         "test": {
