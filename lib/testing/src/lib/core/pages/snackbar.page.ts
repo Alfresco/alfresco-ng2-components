@@ -17,6 +17,7 @@
 
 import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class SnackbarPage {
 
@@ -46,7 +47,7 @@ export class SnackbarPage {
 
     async clickSnackBarAction(): Promise<void> {
         await this.waitForSnackBarToAppear();
-        BrowserActions.click(this.snackBarAction);
+        await BrowserActions.click(this.snackBarAction);
     }
 
     async isNotificationSnackBarDisplayed(): Promise<boolean> {
