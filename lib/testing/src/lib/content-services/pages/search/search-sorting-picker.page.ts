@@ -22,7 +22,7 @@ import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 
 export class SearchSortingPickerPage {
 
-    sortingDropdown = new DropdownPage(element(by.css('adf-sorting-picker div[class="mat-select-arrow"]')));
+    sortingDropdown = new DropdownPage(element(by.css('.adf-sorting-picker .mat-select-arrow')));
     orderArrow: ElementFinder = element(by.css('adf-sorting-picker button mat-icon'));
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
