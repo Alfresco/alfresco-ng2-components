@@ -33,7 +33,7 @@ export class DataTablePage {
     };
 
     dataTable: DataTableComponentPage;
-    multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
+    multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > .mat-checkbox-inner-container`));
     reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
     allSelectedRows = element.all(by.css(`adf-datatable-row[class*='is-selected']`));
     selectedRowNumber = element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));

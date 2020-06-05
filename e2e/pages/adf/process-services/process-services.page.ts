@@ -19,11 +19,10 @@ import { ProcessServiceTabBarPage } from './process-service-tab-bar.page';
 
 import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
-import { __await } from 'tslib';
 
 export class ProcessServicesPage {
 
-    apsAppsContainer = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));
+    apsAppsContainer = element(by.css('.adf-app-listgrid'));
     taskApp = element(by.css('mat-card[title="Task App"]'));
     iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
     descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
@@ -72,5 +71,4 @@ export class ProcessServicesPage {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(app);
     }
-
 }

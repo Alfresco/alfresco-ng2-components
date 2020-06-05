@@ -1573,7 +1573,7 @@ describe('DocumentListComponent rendering', () => {
 
         component.customDocumentList.dataTable.data = data;
         fixture.detectChanges();
-        const rows = fixture.nativeElement.querySelectorAll('div[class="adf-datatable-body"] adf-datatable-row');
+        const rows = fixture.nativeElement.querySelectorAll('.adf-datatable-body adf-datatable-row');
         expect(rows).toBeDefined();
         expect(rows.length).toBe(3);
         const cell1 = fixture.nativeElement.querySelector('div[title="Name"][data-automation-id="Name 1"]');

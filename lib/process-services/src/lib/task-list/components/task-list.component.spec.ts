@@ -584,7 +584,7 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] div[class="mat-checkbox-inner-container"]');
+        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] .mat-checkbox-inner-container');
         selectAllCheckbox.click();
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -607,8 +607,8 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] div[class="mat-checkbox-inner-container"]');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] div[class="mat-checkbox-inner-container"]');
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();
@@ -641,8 +641,8 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] div[class="mat-checkbox-inner-container"]');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] div[class="mat-checkbox-inner-container"]');
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();
@@ -683,8 +683,8 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] div[class="mat-checkbox-inner-container"]');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] div[class="mat-checkbox-inner-container"]');
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();

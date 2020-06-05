@@ -25,13 +25,12 @@ import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
-
     createButton = element(by.css('button[data-automation-id="create-button"'));
     newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
     addChecklistButton = element(by.css('button[class*="adf-add-to-checklist-button"]'));
     rowByRowName = by.xpath('ancestor::mat-chip');
     checklistContainer = by.css('div[class*="checklist-menu"]');
-    taskTitle = 'h2[class="adf-activiti-task-details__header"] span';
+    taskTitle = '.adf-activiti-task-details__header span';
     rows = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[class*="adf-datatable-cell"]');
     completeButtonNoForm = element(by.id('adf-no-form-complete-button'));
     checklistDialog = element(by.id('checklist-dialog'));
@@ -89,24 +88,23 @@ export class TasksPage {
         return new ChecklistDialog();
     }
 
-    getRowsName(name) {
-        const row = element(this.checklistContainer).element(by.cssContainingText('span', name));
-        return row;
+    getRowsName(name: string) {
+        return element(this.checklistContainer).element(by.cssContainingText('span', name));
     }
 
-    getChecklistByName(checklist) {
-        const elem = this.getRowsName(checklist);
+    getChecklistByName(name: string) {
+        const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
         return row;
     }
 
-    async checkChecklistIsDisplayed(checklist): Promise<void> {
-        const checklistEle = this.getChecklistByName(checklist);
+    async checkChecklistIsDisplayed(name: string): Promise<void> {
+        const checklistEle = this.getChecklistByName(name);
         await BrowserVisibility.waitUntilElementIsVisible(checklistEle);
     }
 
-    async checkChecklistIsNotDisplayed(checklist: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
+    async checkChecklistIsNotDisplayed(name: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsNotVisible(element(this.checklistContainer).element(by.cssContainingText('span', name)));
     }
 
     async checkTaskTitle(taskName: string): Promise<void> {
@@ -139,14 +137,14 @@ export class TasksPage {
         return BrowserActions.getText(this.numberOfChecklists);
     }
 
-    async removeChecklists(checklist): Promise<void> {
-        const elem = this.getRowsName(checklist);
+    async removeChecklists(name: string): Promise<void> {
+        const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
         await BrowserActions.click(row.element(by.css('mat-icon')));
     }
 
-    async checkChecklistsRemoveButtonIsNotDisplayed(checklist): Promise<void> {
-        const elem = this.getRowsName(checklist);
+    async checkChecklistsRemoveButtonIsNotDisplayed(name: string): Promise<void> {
+        const elem = this.getRowsName(name);
         const row = elem.element(this.rowByRowName);
         await BrowserVisibility.waitUntilElementIsNotVisible(row.element(by.css('mat-icon')));
     }

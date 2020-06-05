@@ -16,24 +16,23 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, Locator } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserActions } from '../../../utils/public-api';
 
 export class HyperlinkWidgetPage {
 
-    formFields: FormFields = new FormFields();
+    formFields = new FormFields();
+    fieldLocator = by.css('.adf-hyperlink-widget a');
 
-    fieldLocator: Locator = by.css('div[class="adf-hyperlink-widget "] a');
-
-    async getFieldText(fieldId): Promise<string> {
+    async getFieldText(fieldId: string): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.fieldLocator);
     }
 
-    async getFieldHref(fieldId): Promise<string> {
+    async getFieldHref(fieldId: string): Promise<string> {
         return this.formFields.getWidget(fieldId).element(this.fieldLocator).getAttribute('href');
     }
 
-    async getFieldLabel(fieldId): Promise<string> {
+    async getFieldLabel(fieldId: string): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }

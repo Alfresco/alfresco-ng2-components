@@ -31,8 +31,8 @@ export class UploadDialogPage {
     title = element(by.css('span[class*="upload-dialog__title"]'));
     minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
     maximizeButton = element(by.css('mat-icon[title="Maximize"]'));
-    canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title"]'));
-    canUploadConfirmationDescription = element(by.css('p[class="upload-dialog__confirmation--text"]'));
+    canUploadConfirmationTitle = element(by.css('.upload-dialog__confirmation--title'));
+    canUploadConfirmationDescription = element(by.css('.upload-dialog__confirmation--text'));
     confirmationDialogNoButton = element(by.partialButtonText('No'));
     confirmationDialogYesButton = element(by.partialButtonText('Yes'));
     cancelUploadsElement = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
@@ -162,5 +162,4 @@ export class UploadDialogPage {
     async getTooltip(): Promise<string> {
         return BrowserActions.getText(this.errorTooltip);
     }
-
 }

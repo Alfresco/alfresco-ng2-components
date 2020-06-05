@@ -30,7 +30,7 @@ export class DocumentListPage {
     constructor(rootElement = element.all(by.css('adf-document-list')).first()) {
         this.rootElement = rootElement;
         this.dataTable = new DataTableComponentPage(this.rootElement);
-        this.tableBody = rootElement.all(by.css('div[class="adf-datatable-body"]')).first();
+        this.tableBody = rootElement.all(by.css('.adf-datatable-body')).first();
     }
 
     async checkLockedIcon(content: string): Promise<void> {

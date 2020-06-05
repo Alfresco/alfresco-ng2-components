@@ -20,7 +20,7 @@ import { element, by } from 'protractor';
 
 export class ProcessListPage {
 
-    processListTitle = element(by.css('div[class="adf-empty-content__title"]'));
+    processListTitle = element(by.css('.adf-empty-content__title'));
     processInstanceList = element(by.css('adf-process-instance-list'));
 
     getDisplayedProcessListTitle(): Promise<string> {

@@ -26,12 +26,12 @@ export class ProcessFiltersPage {
     allFilter = element(by.css('button[data-automation-id="All_filter"]'));
     createProcessButton = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
     newProcessButton = element(by.css('div > button[data-automation-id="btn-start-process"]'));
-    processesPage = element(by.css('div[class="app-grid"] > div[class="app-grid-item app-processes-menu"]'));
+    processesPage = element(by.css('.app-grid > .app-grid-item app-processes-menu'));
     accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    noContentMessage = element.all(by.css('div[class="adf-empty-content__title"]')).first();
-    rows = by.css('adf-process-instance-list div[class="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
+    noContentMessage = element.all(by.css('.adf-empty-content__title')).first();
+    rows = by.css('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
+    tableBody = element.all(by.css('adf-datatable .adf-datatable-body')).first();
     nameColumn = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
     processIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 

@@ -29,18 +29,18 @@ export class DynamicTableWidgetPage {
     editButton = element(by.cssContainingText('button span', 'edit'));
     columnDateTime = element(by.id('columnDateTime'));
     columnDate = element(by.id('columnDate'));
-    calendarHeader = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
-    calendarContent = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
+    calendarHeader = element(by.css('.mat-datetimepicker-calendar-header-date-time'));
+    calendarContent = element(by.css('.mat-datetimepicker-calendar-content'));
     saveButton = element(by.cssContainingText('button span', 'Save'));
-    errorMessage = element(by.css('div[class="adf-error-text"]'));
+    errorMessage = element(by.css('.adf-error-text'));
     dateWidget = element.all(by.css('mat-datepicker-toggle button')).first();
     tableRow = element.all(by.css('tbody tr'));
 
-    getFieldLabel(fieldId): Promise<string> {
+    getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getColumnName(fieldId): Promise<string> {
+    getColumnName(fieldId: string): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.columnNameLocator);
     }
 
@@ -85,7 +85,7 @@ export class DynamicTableWidgetPage {
         await BrowserActions.closeMenuAndDialogs();
     }
 
-    async addRandomStringOnDateTime(randomText): Promise<string> {
+    async addRandomStringOnDateTime(randomText: string): Promise<string> {
         await BrowserActions.click(this.columnDateTime);
         await BrowserActions.closeMenuAndDialogs();
         await this.columnDateTime.sendKeys(randomText);
@@ -93,7 +93,7 @@ export class DynamicTableWidgetPage {
         return this.columnDateTime.getAttribute('value');
     }
 
-    async addRandomStringOnDate(randomText): Promise<void> {
+    async addRandomStringOnDate(randomText: string): Promise<void> {
         await BrowserActions.click(this.columnDate);
         await this.columnDate.sendKeys(randomText);
     }

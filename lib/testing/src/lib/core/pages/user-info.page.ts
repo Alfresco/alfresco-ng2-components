@@ -31,7 +31,7 @@ export class UserInfoPage {
     userInfoProcessHeaderTitle = element(by.css('div[id="bpm-username"]'));
     userInfoProcessTitle = element(by.css('mat-card-content span[id="bpm-full-name"]'));
     processEmail = element(by.css('span[id="bpm-email"]'));
-    processTenant = element(by.css('span[class="detail-profile"]'));
+    processTenant = element(by.css('.detail-profile'));
     apsImage = element(by.css('img[id="bpm-user-detail-image"]'));
     acsImage = element(by.css('img[id="ecm-user-detail-image"]'));
     initialImage = element.all(by.css('div[id="user-initials-image"]')).first();
@@ -39,11 +39,7 @@ export class UserInfoPage {
     userInfoSsoTitle = element(by.css('.adf-userinfo__detail-title'));
     ssoEmail = element(by.id('identity-email'));
     userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
-    tabsPage: TabsPage;
-
-    constructor() {
-        this.tabsPage = new TabsPage();
-    }
+    tabsPage = new TabsPage();
 
     async dialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);

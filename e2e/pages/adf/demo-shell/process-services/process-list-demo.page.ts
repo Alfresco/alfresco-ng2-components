@@ -22,7 +22,7 @@ export class ProcessListDemoPage {
 
     appIdInput = element(by.css('input[data-automation-id="app-id"]'));
     resetButton = element(by.cssContainingText('button span', 'Reset'));
-    emptyProcessContent = element(by.css('div[class="adf-empty-content"]'));
+    emptyProcessContent = element(by.css('.adf-empty-content'));
     processDefinitionInput = element(by.css('input[data-automation-id="process-definition-id"]'));
     processInstanceInput = element(by.css('input[data-automation-id="process-instance-id"]'));
 
@@ -43,7 +43,7 @@ export class ProcessListDemoPage {
         await this.stateDropdown.selectDropdownOption(stateOption);
     }
 
-    async addAppId(appId): Promise<void> {
+    async addAppId(appId: string): Promise<void> {
         await BrowserActions.click(this.appIdInput);
         await this.appIdInput.sendKeys(protractor.Key.ENTER);
         await this.appIdInput.clear();
@@ -54,7 +54,7 @@ export class ProcessListDemoPage {
         await BrowserActions.click(this.resetButton);
     }
 
-    async checkErrorMessageIsDisplayed(error): Promise<void> {
+    async checkErrorMessageIsDisplayed(error: string): Promise<void> {
         const errorMessage = element(by.cssContainingText('mat-error', error));
         await BrowserVisibility.waitUntilElementIsVisible(errorMessage);
     }
@@ -87,11 +87,11 @@ export class ProcessListDemoPage {
         await this.sortDropdown.checkDropdownIsVisible();
     }
 
-    async addProcessDefinitionId(procDefinitionId): Promise<void> {
+    async addProcessDefinitionId(procDefinitionId: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.processDefinitionInput, procDefinitionId);
     }
 
-    async addProcessInstanceId(procInstanceId): Promise<void> {
+    async addProcessInstanceId(procInstanceId: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.processInstanceInput, procInstanceId);
     }
 }

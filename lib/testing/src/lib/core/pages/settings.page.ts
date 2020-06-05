@@ -22,22 +22,22 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class SettingsPage {
 
-    settingsURL = browser.baseUrl + '/settings';
-    ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
-    bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
-    clientIdText = element(by.css('input[id="clientId"]'));
-    authHostText = element(by.css('input[id="oauthHost"]'));
-    logoutUrlText = element(by.css('input[id="logout-url"]'));
-    basicAuthRadioButton = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
-    identityHostText = element(by.css('input[id="identityHost"]'));
-    ssoRadioButton = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
-    silentLoginToggleLabel = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
-    silentLoginToggleElement = element(by.css('mat-slide-toggle[name="silentLogin"]'));
-    implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
-    implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
-    applyButton = element(by.css('button[data-automation-id*="host-button"]'));
-    backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
-    validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
+    settingsURL: string = browser.baseUrl + '/settings';
+    ecmText: ElementFinder = element(by.css('input[data-automation-id*="ecmHost"]'));
+    bpmText: ElementFinder = element(by.css('input[data-automation-id*="bpmHost"]'));
+    clientIdText: ElementFinder = element(by.css('input[id="clientId"]'));
+    authHostText: ElementFinder = element(by.css('input[id="oauthHost"]'));
+    logoutUrlText: ElementFinder = element(by.css('input[id="logout-url"]'));
+    basicAuthRadioButton: ElementFinder = element(by.cssContainingText('mat-radio-button[id*="mat-radio"]', 'Basic Authentication'));
+    identityHostText: ElementFinder = element(by.css('input[id="identityHost"]'));
+    ssoRadioButton: ElementFinder = element(by.cssContainingText('[id*="mat-radio"]', 'SSO'));
+    silentLoginToggleLabel: ElementFinder = element(by.css('mat-slide-toggle[name="silentLogin"] label'));
+    silentLoginToggleElement: ElementFinder = element(by.css('mat-slide-toggle[name="silentLogin"]'));
+    implicitFlowLabel: ElementFinder = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
+    implicitFlowElement: ElementFinder = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
+    applyButton: ElementFinder = element(by.css('button[data-automation-id*="host-button"]'));
+    backButton: ElementFinder = element(by.cssContainingText('button .mat-button-wrapper', 'Back'));
+    validationMessage: ElementFinder = element(by.cssContainingText('mat-error', 'This field is required'));
 
     providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));
 

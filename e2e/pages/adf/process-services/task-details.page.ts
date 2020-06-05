@@ -50,11 +50,11 @@ export class TaskDetailsPage {
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
     completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
     completeFormTask = element(by.css('button[id="adf-form-complete"]'));
-    taskDetailsTitle = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
+    taskDetailsTitle = element(by.css('.adf-activiti-task-details__header span'));
     auditLogButton = element(by.css('button[adf-task-audit]'));
     noPeopleInvolved = element(by.id('no-people-label'));
     cancelInvolvePeopleButton = element(by.id('close-people-search'));
-    involvePeopleHeader = element(by.css('div[class="adf-search-text-header"]'));
+    involvePeopleHeader = element(by.css('.adf-search-text-header'));
     removeInvolvedPeople = element(by.css('button[data-automation-id="Remove"]'));
     peopleTitle = element(by.id('people-title'));
     noFormMessage = element(by.css('span[id*="no-form-message"]'));
@@ -62,7 +62,7 @@ export class TaskDetailsPage {
     attachFormButton = element(by.id('adf-no-form-attach-form-button'));
     disabledAttachFormButton = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
     removeAttachForm = element(by.id('adf-attach-form-remove-button'));
-    attachFormName = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
+    attachFormName = element(by.css('.adf-form-title'));
     emptyTaskDetails = element(by.css('adf-task-details > div > div'));
     priority = element(by.css('[data-automation-id*="card-textitem-value-priority"]'));
     editableAssignee = element(by.css('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
@@ -70,7 +70,7 @@ export class TaskDetailsPage {
     releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
     saveFormButton = element(by.css('button[id="adf-form-save"]'));
 
-    attachFormDropdown = new DropdownPage(element(by.css('div[class="adf-attach-form-row"]')));
+    attachFormDropdown = new DropdownPage(element(by.css('.adf-attach-form-row')));
 
     async checkEditableAssigneeIsNotDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.editableAssignee);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { DropdownPage } from '../../../core/pages/material/dropdown.page';
@@ -23,11 +23,11 @@ import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 export class SearchSortingPickerPage {
 
     sortingDropdown = new DropdownPage(element(by.css('.adf-sorting-picker .mat-select-arrow')));
-    orderArrow: ElementFinder = element(by.css('adf-sorting-picker button mat-icon'));
+    orderArrow = element(by.css('adf-sorting-picker button mat-icon'));
 
     async sortBy(sortOrder: string, sortType: string | RegExp): Promise<void> {
         await this.sortingDropdown.clickDropdown();
-        const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', sortType));
+        const selectedSortingOption = element(by.cssContainingText('.mat-option-text', sortType));
         await BrowserActions.click(selectedSortingOption);
         await this.sortByOrder(sortOrder);
     }
@@ -53,7 +53,7 @@ export class SearchSortingPickerPage {
     }
 
     async clickSortingOption(option: string): Promise<void> {
-        const selectedSortingOption = element(by.cssContainingText('span[class="mat-option-text"]', option));
+        const selectedSortingOption = element(by.cssContainingText('.mat-option-text', option));
         await BrowserActions.click(selectedSortingOption);
     }
 

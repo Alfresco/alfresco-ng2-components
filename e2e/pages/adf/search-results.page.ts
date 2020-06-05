@@ -21,7 +21,7 @@ import { ContentServicesPage } from './content-services.page';
 
 export class SearchResultsPage {
 
-    noResultsMessage = element(by.css('div[class="app-no-result-message"]'));
+    noResultsMessage = element(by.css('.app-no-result-message'));
     dataTable = new DataTableComponentPage();
     searchSortingPicker = new SearchSortingPickerPage();
     contentServices = new ContentServicesPage();
