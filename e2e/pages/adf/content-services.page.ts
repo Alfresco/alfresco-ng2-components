@@ -685,7 +685,7 @@ export class ContentServicesPage {
     async selectItemWithCheckbox(itemName: string): Promise<void> {
         const item: ElementFinder = element(by.css(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`));
         await BrowserVisibility.waitUntilElementIsVisible(item);
-        await BrowserActions.click(item);
+        await BrowserActions.clickScript(item);
     }
 
     async unSelectItemWithCheckbox(itemName: string): Promise<void> {
