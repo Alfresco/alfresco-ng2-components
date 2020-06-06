@@ -53,7 +53,7 @@ export class LoginSSOPage {
 
         const authType = await LocalStorageUtil.getConfigField('authType');
 
-        if (authType === 'OAUTH') {
+        if (!authType || authType === 'OAUTH') {
             await this.loginSSOIdentityService(username, password);
         } else {
             await this.loginBasicAuth(username, password);
@@ -66,7 +66,6 @@ export class LoginSSOPage {
         const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
 
         await browser.get(loginURL);
-
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
 
         if (oauth2 && oauth2.silentLogin === false) {
