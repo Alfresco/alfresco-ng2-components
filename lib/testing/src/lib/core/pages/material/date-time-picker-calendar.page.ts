@@ -40,14 +40,14 @@ export class DateTimePickerCalendarPage {
     }
 
     async setTime(): Promise<void> {
-        await BrowserActions.click(this.hourTime);
-        await BrowserActions.click(this.minutesTime);
+        await BrowserActions.clickScript(this.hourTime);
+        await BrowserActions.clickScript(this.minutesTime);
     }
 
     async setDate(date?: string): Promise<boolean> {
         try {
             if (date) {
-                await BrowserActions.click(element(by.cssContainingText(`.mat-datetimepicker-calendar-body-cell-content`, date)));
+                await BrowserActions.clickScript(element.all(by.cssContainingText(`.mat-datetimepicker-calendar-body-cell-content`, date)).first());
             } else {
                 await this.setToday();
             }
@@ -63,12 +63,10 @@ export class DateTimePickerCalendarPage {
     }
 
     async setDefaultEnabledHour(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.hoursPicker);
         await BrowserActions.click(this.hoursPicker.all(this.firstEnabledHourSelector).first());
     }
 
     async setDefaultEnabledMinutes() {
-        await BrowserVisibility.waitUntilElementIsVisible(this.minutePicker);
         await BrowserActions.click(this.minutePicker.all(this.firstEnabledMinutesSelector).first());
     }
 }

@@ -29,7 +29,6 @@ describe('Logout component - SSO', () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '/login');
-        await loginSSOPage.clickOnSSOButton();
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await navigationBarPage.clickLogoutButton();
 

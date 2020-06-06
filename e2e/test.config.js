@@ -27,6 +27,9 @@ const HR_USER_PASSWORD = process.env.HR_USER_PASSWORD || "defaulthruserpassword"
 const USERNAME_ADF = process.env.USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
 
+const REDIRECT_URI = process.env.REDIRECT_URI || "/";
+const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "/logout";
+
 const SCREENSHOT_URL = process.env.SCREENSHOT_URL || HOST;
 const SCREENSHOT_PASSWORD = process.env.SCREENSHOT_PASSWORD || process.env.PASSWORD_ADF;
 const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERNAME_ADF;
@@ -46,8 +49,12 @@ const appConfig = {
         "secret": "",
         "implicitFlow": true,
         "silentLogin": true,
-        "redirectUri": "/",
-        "redirectUriLogout": "/logout"
+        "redirectUri": REDIRECT_URI,
+        "redirectUriLogout": REDIRECT_URI_LOGOUT,
+        "publicUrls": [
+            "**/preview/s/*",
+            "**/settings"
+        ]
     }
 };
 

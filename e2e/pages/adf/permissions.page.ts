@@ -67,7 +67,7 @@ export class PermissionsPage {
 
     async clickUserOrGroup(name): Promise<void> {
         const userOrGroupName: ElementFinder = element(by.cssContainingText('mat-list-option .mat-list-text', name));
-        await BrowserActions.click(userOrGroupName);
+        await BrowserActions.clickScript(userOrGroupName);
         await BrowserActions.click(this.addButton);
     }
 

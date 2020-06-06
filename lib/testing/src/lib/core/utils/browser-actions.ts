@@ -27,14 +27,14 @@ export class BrowserActions {
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
-            try {
-                await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
-                await browser.executeScript(`arguments[0].click();`, elementFinder);
-            } catch (jsErr) {
-                Logger.error(`click error element ${elementFinder.locator()}`);
-                throw jsErr;
-            }
+            Logger.error(`click error element ${elementFinder.locator().toString()} consider to use directly clickScript`);
+            await this.clickScript(elementFinder);
         }
+    }
+
+    static async clickScript(elementFinder: ElementFinder): Promise<void> {
+        await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
+        await browser.executeScript(`arguments[0].click();`, elementFinder);
     }
 
     static async waitUntilActionMenuIsVisible(): Promise<void> {

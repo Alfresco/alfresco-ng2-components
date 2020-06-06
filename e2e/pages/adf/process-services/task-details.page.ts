@@ -408,7 +408,7 @@ export class TaskDetailsPage {
     }
 
     async clickCompleteFormTask(): Promise<void> {
-        await BrowserActions.click(this.completeFormTask);
+        await BrowserActions.clickScript(this.completeFormTask);
     }
 
     async getEmptyTaskDetailsMessage(): Promise<string> {

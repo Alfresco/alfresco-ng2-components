@@ -56,7 +56,7 @@ export class PaginationPage {
     }
 
     async clickItemsPerPageDropdown(): Promise<void> {
-        await BrowserActions.click(this.itemsPerPageOpenDropdown);
+        await BrowserActions.clickScript(this.itemsPerPageOpenDropdown);
     }
 
     async checkPaginationIsNotDisplayed() {

@@ -19,6 +19,12 @@ import { browser } from 'protractor';
 
 export class LocalStorageUtil {
 
+    static async getConfigField(field: string): Promise<any> {
+        return browser.executeScript(
+            'return window.adf ? window.adf.getConfigField(`' + field + '`) : null;'
+        );
+    }
+
     static async setConfigField(field: string, value: string): Promise<void> {
         await browser.executeScript(
             'window.adf.setConfigField(`' + field + '`, `' + value + '`);'
@@ -34,6 +40,12 @@ export class LocalStorageUtil {
     static async removeStorageItem(field: string): Promise<void> {
         await browser.executeScript(
             'window.adf.removeStorageItem(`' + field + '`);'
+        );
+    }
+
+    static async getStorageItem(field: string): Promise<any> {
+        return browser.executeScript(
+            'return window.adf ? window.adf.getStorageItem(`' + field + '`) : null;'
         );
     }
 

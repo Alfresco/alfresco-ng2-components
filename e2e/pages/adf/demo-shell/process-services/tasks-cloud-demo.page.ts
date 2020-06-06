@@ -162,9 +162,7 @@ export class TasksCloudDemoPage {
     }
 
     async clickStartNewTaskButton() {
-        await BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         await BrowserActions.click(this.createButton);
-        await BrowserVisibility.waitUntilElementIsClickable(this.newTaskButton);
         await BrowserActions.click(this.newTaskButton);
     }
 

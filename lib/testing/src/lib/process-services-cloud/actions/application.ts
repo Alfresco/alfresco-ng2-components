@@ -40,6 +40,11 @@ export class Application {
         Logger.info(`[Application] Application: '${applicationId}' was deleted successfully.`);
     }
 
+    async undeploy(applicationName: string): Promise<any> {
+        await this.requestApiHelper.delete(`${this.endPoint}${applicationName}`);
+        Logger.info(`[Application] Application ${applicationName} was undeployed successfully.`);
+    }
+
     async deleteDescriptor(name: string): Promise<void> {
         await this.requestApiHelper.delete(`v1/descriptors/${name}`);
         Logger.info(`[Descriptor] Descriptor: '${name}' was deleted successfully.`);
