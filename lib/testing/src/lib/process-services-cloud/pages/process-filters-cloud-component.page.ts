@@ -50,25 +50,21 @@ export class ProcessFiltersCloudComponentPage {
 
     async clickProcessFilter(filterName: string): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName(filterName);
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async clickAllProcessesFilter(): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName('all-processes');
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async clickCompletedProcessesFilter(): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName('completed-processes');
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async clickRunningProcessesFilter(): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName('running-processes');
-        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 

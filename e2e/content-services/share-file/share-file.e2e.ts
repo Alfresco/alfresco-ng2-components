@@ -172,7 +172,6 @@ describe('Share file', () => {
             await shareDialog.clickShareLinkButton();
             const sharedLink = await shareDialog.getShareLink();
             await BrowserActions.closeMenuAndDialogs();
-            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });
@@ -184,13 +183,11 @@ describe('Share file', () => {
             await shareDialog.clickShareLinkButton();
             const sharedLink = await shareDialog.getShareLink();
             await shareDialog.clickCloseButton();
-            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickShareLinkButton();
             const secondSharedLink = await shareDialog.getShareLink();
             await BrowserActions.closeMenuAndDialogs();
-            await notificationHistoryPage.checkNotifyContains('Link copied to the clipboard');
             await expect(sharedLink).toEqual(secondSharedLink);
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);

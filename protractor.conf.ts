@@ -199,6 +199,7 @@ exports.config = {
         await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
         await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
         await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
+        await LocalStorageUtil.setStorageItem('baseShareUrl', HOST);
 
         if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
             await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);

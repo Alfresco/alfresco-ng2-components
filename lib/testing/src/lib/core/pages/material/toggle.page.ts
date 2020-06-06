@@ -26,7 +26,7 @@ export class TogglePage {
         const check = await toggle.getAttribute('class');
         if (check.indexOf('mat-checked') < 0) {
             const elem = toggle.all(by.css('input')).first();
-            await BrowserActions.click(elem);
+            await BrowserActions.clickScript(elem);
         }
     }
 
@@ -35,7 +35,7 @@ export class TogglePage {
         const check = await toggle.getAttribute('class');
         if (check.indexOf('mat-checked') >= 0) {
             const elem = toggle.all(by.css('input')).first();
-            await BrowserActions.click(elem);
+            await BrowserActions.clickScript(elem);
         }
     }
 }
