@@ -16,26 +16,25 @@
  */
 
 import { browser } from 'protractor';
-import { ModelingAPI } from './modeling-api';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
 import { ApiUtil } from '../../core/actions/api.util';
 import { E2eRequestApiHelper, E2eRequestApiHelperOptions } from '../../core/actions/e2e-request-api.helper';
 import * as fs from 'fs';
 import { StringUtil } from '../../core/utils/string.util';
 import { Logger } from '../../core/utils/logger';
+import { ApiService } from '../../core/actions/api.service';
 
 export class Project {
   requestApiHelper: E2eRequestApiHelper;
-  endPoint = '/v1/projects/';
+  endPoint = 'modeling-service/v1/projects/';
   namePrefix: string = browser.params.namePrefix;
 
-  constructor(api: ModelingAPI) {
+  constructor(api: ApiService) {
     this.requestApiHelper = new E2eRequestApiHelper(api);
   }
 
   async create(modelName: string = this.getRandomName()): Promise<NodeEntry> {
-    const project = await this.requestApiHelper
-        .post<NodeEntry>(this.endPoint, {bodyParam: { name: modelName }});
+    const project = await this.requestApiHelper.post<NodeEntry>(this.endPoint, {bodyParam: { name: modelName }});
 
     Logger.info(
       `[Project] Project created with name: ${project.entry.name} and id: ${
@@ -57,11 +56,11 @@ export class Project {
   }
 
   async get(projectId: string): Promise<NodeEntry> {
-    return this.requestApiHelper.get<NodeEntry>(`/v1/projects/${projectId}`);
+    return this.requestApiHelper.get<NodeEntry>(`${this.endPoint}${projectId}`);
   }
 
   async delete(projectId: string): Promise<void> {
-    await this.requestApiHelper.delete(`/v1/projects/${projectId}`);
+    await this.requestApiHelper.delete(`${this.endPoint}${projectId}`);
     Logger.info(
       `[Project] Project '${projectId}' was deleted successfully.`
     );
@@ -70,7 +69,7 @@ export class Project {
   async release(projectId: string): Promise<any> {
     try {
       const release = await this.requestApiHelper
-          .post(`/v1/projects/${projectId}/releases`);
+          .post(`${this.endPoint}${projectId}/releases`);
       Logger.info(`[Project] Project '${projectId}' was released.`);
       return release;
     } catch (error) {
@@ -82,7 +81,7 @@ export class Project {
   async getProjectRelease(projectId: string): Promise<any> {
     try {
       return await this.requestApiHelper
-          .get<ResultSetPaging>(`/v1/projects/${projectId}/releases`);
+          .get<ResultSetPaging>(`${this.endPoint}${projectId}/releases`);
     } catch (error) {
       Logger.error(`[Project] Not able to fetch project release!`);
       throw error;
@@ -97,7 +96,7 @@ export class Project {
     };
     try {
       const project = await this.requestApiHelper
-          .post<NodeEntry>(`/v1/projects/import`, requestOptions);
+          .post<NodeEntry>(`${this.endPoint}import`, requestOptions);
       Logger.info(`[Project] Project imported with name '${project.entry.name}' and id '${project.entry.id}'.`);
       return project;
     } catch (error) {

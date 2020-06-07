@@ -19,6 +19,9 @@ import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } f
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { Logger } from './logger';
 
+import * as path from 'path';
+import * as fs from 'fs';
+
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
@@ -124,4 +127,16 @@ export class BrowserActions {
         // if the opened menu has only disabled items, pressing escape to close it won't work
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
+
+    static async takeScreenshot(screenshotFilePath: string, fileName: string) {
+        const pngData = await browser.takeScreenshot();
+        const filenameWithExt = `${fileName}.png`;
+        Logger.info('Taking screenshot: ', filenameWithExt);
+
+        const fileWithPath = path.join(screenshotFilePath, filenameWithExt);
+        const stream = fs.createWriteStream(fileWithPath);
+        stream.write(new Buffer(pngData, 'base64'));
+        stream.end();
+    }
+
 }

@@ -15,24 +15,25 @@
  * limitations under the License.
  */
 
-import { AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { ApiService } from './api.service';
 
 export abstract class Api {
-    public api: AlfrescoApi;
 
-    constructor(root: string) {
-        this.api = this.configureApi(root);
+    public api: ApiService;
+
+    constructor() {
+        this.api = this.configureApi();
     }
 
-    private configureApi(root: string): AlfrescoApi {
+    private configureApi(): ApiService {
         const config = browser.params.adminapp.apiConfig;
 
-        return new AlfrescoApi({
+        return new ApiService({
             provider: 'BPM',
             authType: config.authType,
             oauth2: config.oauth2,
-            hostBpm: config.bpmHost + '/' + root
+            hostBpm: config.bpmHost
         });
     }
 

@@ -16,7 +16,6 @@
  */
 
 import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
-import { Api } from '../../core/actions/api';
 import { Logger } from '../../core/utils/logger';
 import { ResultSetPaging } from '@alfresco/js-api';
 import { ApiService } from '../../core/actions/api.service';
@@ -26,7 +25,7 @@ export class Application {
     requestApiHelper: E2eRequestApiHelper;
     endPoint = `/deployment-service/v1/applications/`;
 
-    constructor(api: Api | ApiService) {
+    constructor(api: ApiService) {
         this.requestApiHelper = new E2eRequestApiHelper(api);
     }
 
