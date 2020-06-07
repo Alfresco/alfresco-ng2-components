@@ -17,56 +17,57 @@
 
 import { NodeEntry } from '@alfresco/js-api';
 import { E2eRequestApiHelper } from '../../core/actions/e2e-request-api.helper';
-import { Api } from '../../core/actions/api';
 import { ApplicationRepresentation } from '../../core/models/application-model';
 import { Logger } from '../../core/utils/logger';
 import { ApiUtil } from '../../core/actions/api.util';
+import { ApiService } from '../../core/actions/api.service';
 
 export class Descriptor {
-  requestApiHelper: E2eRequestApiHelper;
-  endPoint = `/v1/descriptors/`;
 
-  constructor(api: Api) {
-    this.requestApiHelper = new E2eRequestApiHelper(api);
-  }
+    requestApiHelper: E2eRequestApiHelper;
+    endPoint = `deployment-service/v1/descriptors/`;
 
-  async create(model: ApplicationRepresentation): Promise<void> {
-    try {
-      await this.requestApiHelper.post<NodeEntry>(this.endPoint, {
-        bodyParam: model
-      });
-      Logger.info(`[Descriptor] Descriptor has been created with name: ${model.name}.`);
-    } catch (error) {
-      Logger.error(`[Descriptor] Create descriptor ${model.name} failed with message: ${error.message}`);
-      throw error;
+    constructor(api: ApiService) {
+        this.requestApiHelper = new E2eRequestApiHelper(api);
     }
-  }
 
-  async delete(name: string): Promise<void> {
-    try {
-      await this.retryUntilDescriptorIsInStatus(name, `DescriptorCreated`);
-      await this.requestApiHelper.delete(`${this.endPoint}${name}`);
-      Logger.info(`[Descriptor] Descriptor '${name}' was deleted successfully.`);
-    } catch (error) {
-      Logger.error(`[Descriptor] Delete descriptor ${name} failed with message: ${error.message}`);
+    async create(model: ApplicationRepresentation): Promise<void> {
+        try {
+            await this.requestApiHelper.post<NodeEntry>(this.endPoint, {
+                bodyParam: model
+            });
+            Logger.info(`[Descriptor] Descriptor has been created with name: ${model.name}.`);
+        } catch (error) {
+            Logger.error(`[Descriptor] Create descriptor ${model.name} failed with message: ${error.message}`);
+            throw error;
+        }
     }
-  }
 
-  async get(name: string): Promise<any> {
-    Logger.info(`[Descriptor] Get descriptor ${name} details.`);
-    try {
-      return this.requestApiHelper.get<any>(`${this.endPoint}${name}`);
-    } catch (error) {
-      Logger.error(`[Descriptor] Get descriptor ${name} details failed with message: ${error.message}`);
+    async delete(name: string): Promise<void> {
+        try {
+            await this.retryUntilDescriptorIsInStatus(name, `DescriptorCreated`);
+            await this.requestApiHelper.delete(`${this.endPoint}${name}`);
+            Logger.info(`[Descriptor] Descriptor '${name}' was deleted successfully.`);
+        } catch (error) {
+            Logger.error(`[Descriptor] Delete descriptor ${name} failed with message: ${error.message}`);
+        }
     }
-  }
 
-  async retryUntilDescriptorIsInStatus(name: string, expectedStatus: string): Promise<any> {
-    const predicate = (result: { status: string }) => {
-      return result.status === expectedStatus;
-    };
-    const apiCall = async () => this.get(name);
+    async get(name: string): Promise<any> {
+        Logger.info(`[Descriptor] Get descriptor ${name} details.`);
+        try {
+            return this.requestApiHelper.get<any>(`${this.endPoint}${name}`);
+        } catch (error) {
+            Logger.error(`[Descriptor] Get descriptor ${name} details failed with message: ${error.message}`);
+        }
+    }
 
-    return ApiUtil.waitForApi(apiCall, predicate);
-  }
+    async retryUntilDescriptorIsInStatus(name: string, expectedStatus: string): Promise<any> {
+        const predicate = (result: { status: string }) => {
+            return result.status === expectedStatus;
+        };
+        const apiCall = async () => this.get(name);
+
+        return ApiUtil.waitForApi(apiCall, predicate);
+    }
 }

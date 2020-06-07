@@ -24,18 +24,18 @@ import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
 export class ModelingAPI extends Api {
     public project: Project;
 
-    constructor(ROOT: string = 'modeling-service') {
-        super(ROOT);
+    constructor() {
+        super();
     }
 
     async setUp(): Promise<ModelingAPI> {
         await this.login();
-        this.project = new Project(this);
+        this.project = new Project(this.api);
         return this;
     }
 
     async tearDown(): Promise<void> {
-        await this.api.logout();
+        await this.api.apiService.logout();
     }
 
     private async login(): Promise<void> {
@@ -74,5 +74,4 @@ export class ModelingAPI extends Api {
         const projects = await this.project.searchProjects();
         return projects;
     }
-
 }
