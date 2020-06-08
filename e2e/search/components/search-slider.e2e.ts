@@ -126,12 +126,10 @@ describe('Search Slider Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) <= 5000).toBe(true);
             }
         }
 
@@ -143,12 +141,10 @@ describe('Search Slider Filter', () => {
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) >= 5000).toBe(true);
             }
         }
     });
