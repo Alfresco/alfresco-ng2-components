@@ -48,8 +48,6 @@ describe('Login component', () => {
         password: 'Enter your password to sign in',
         required: 'Required'
     };
-    const invalidUsername = 'invaliduser';
-    const invalidPassword = 'invalidpassword';
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -124,18 +122,6 @@ describe('Login component', () => {
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
-        await loginPage.clearUsername();
-        await loginPage.clearPassword();
-    });
-
-    it('[C260046] Should NOT be possible to login with an invalid username/password', async () => {
-        await loginPage.goToLoginPage();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterUsername('impossible-user');
-        await loginPage.enterPassword('impossible-password');
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
-        await loginPage.clickSignInButton();
-        await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
         await loginPage.clearUsername();
         await loginPage.clearPassword();
     });
@@ -247,17 +233,5 @@ describe('Login component', () => {
         await loginPage.enableLogoSwitch();
         await loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
         await loginPage.checkLoginImgURL();
-    });
-
-    it('[C291854] Should be possible login in valid credentials', async () => {
-        await loginPage.goToLoginPage();
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterUsername(invalidUsername);
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.enterPassword(invalidPassword);
-        await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
-        await loginPage.clickSignInButton();
-        await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
     });
 });
