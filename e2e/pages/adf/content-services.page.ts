@@ -83,11 +83,10 @@ export class ContentServicesPage {
     favoriteButton = element(by.css('button[data-automation-id="favorite"]'));
     markedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
     notMarkedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
-    multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+    multiSelectToggle = element(by.css('[data-automation-id="multiSelectToggle"]'));
     selectAllCheckbox = element.all(by.css('.adf-checkbox-sr-only')).first();
     selectionModeDropdown = element(by.css('.mat-select[aria-label="Selection Mode"]'));
-    selectedNodesList = element.all(by.css('.app-content-service-settings li'));
-
+    selectedNodesList: ElementArrayFinder = element.all(by.css('.app-content-service-settings li'));
     siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
 
