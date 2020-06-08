@@ -27,13 +27,11 @@ export abstract class Api {
     }
 
     private configureApi(): ApiService {
-        const config = browser.params.adminapp.apiConfig;
-
         return new ApiService({
             provider: 'BPM',
-            authType: config.authType,
-            oauth2: config.oauth2,
-            hostBpm: config.bpmHost
+            authType: browser.params.testConfig.appConfig.authType,
+            oauth2: browser.params.testConfig.appConfig.oauth2,
+            hostBpm: browser.params.testConfig.appConfig.bpmHost
         });
     }
 
