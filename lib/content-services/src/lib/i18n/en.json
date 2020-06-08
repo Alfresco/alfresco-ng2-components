@@ -62,11 +62,6 @@
       "VIEW": "View",
       "REMOVE": "Remove",
       "DOWNLOAD": "Download"
-    },
-    "FILTER_MENU" : {
-      "FILTER_BY": "Filter by {{ category }}",
-      "CLEAR": "Clear",
-      "APPLY": "Apply"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -289,6 +284,11 @@
           "PROCESS_ACTION": "Start Process"
         }
       }
+    },
+    "SEARCH_HEADER" : {
+      "FILTER_BY": "Filter by {{ category }}",
+      "CLEAR": "Clear",
+      "APPLY": "Apply"
     }
   },
   "PERMISSION": {

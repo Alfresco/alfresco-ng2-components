@@ -35,6 +35,7 @@ import { SearchNumberRangeComponent } from './components/search-number-range/sea
 import { SearchCheckListComponent } from './components/search-check-list/search-check-list.component';
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
+import { SearchHeaderComponent } from './components/search-header/search-header.component';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { SearchSortingPickerComponent } from './components/search-sorting-picker
         SearchNumberRangeComponent,
         SearchCheckListComponent,
         SearchDateRangeComponent,
-        SearchSortingPickerComponent
+        SearchSortingPickerComponent,
+        SearchHeaderComponent
     ],
     exports: [
         SearchComponent,
@@ -72,7 +74,8 @@ import { SearchSortingPickerComponent } from './components/search-sorting-picker
         SearchNumberRangeComponent,
         SearchCheckListComponent,
         SearchDateRangeComponent,
-        SearchSortingPickerComponent
+        SearchSortingPickerComponent,
+        SearchHeaderComponent
     ],
     entryComponents: [
         SearchWidgetContainerComponent,
