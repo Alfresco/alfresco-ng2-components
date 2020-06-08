@@ -77,7 +77,7 @@ const JS_BIND_INPUT_FOLDER = function(target) {
 
 export class DropActions {
 
-    async dropFile(dropArea, filePath) {
+    static async dropFile(dropArea, filePath) {
         browser.setFileDetector(new remote.FileDetector());
 
         const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, filePath));
@@ -88,7 +88,7 @@ export class DropActions {
         return input.sendKeys(absolutePath);
     }
 
-    async dropFolder(dropArea, folderPath) {
+    static async dropFolder(dropArea, folderPath) {
         browser.setFileDetector(new remote.FileDetector());
 
         const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, folderPath));
@@ -99,13 +99,13 @@ export class DropActions {
         return input.sendKeys(absolutePath);
     }
 
-    protected async dragAndDrop(elementToDrag: ElementFinder, locationToDragTo: ElementFinder, locationOffset = { x: 230, y: 280 }) {
+    static async dragAndDrop(elementToDrag: ElementFinder, locationToDragTo: ElementFinder, locationOffset = { x: 230, y: 280 }) {
         await BrowserActions.click(elementToDrag);
         await browser.actions().mouseDown(elementToDrag).mouseMove(locationToDragTo, locationOffset).mouseUp().perform();
         await browser.actions().doubleClick(locationToDragTo).perform();
     }
 
-    async dragAndDropNotClickableElement(elementToDrag: ElementFinder, locationToDragTo: ElementFinder) {
+    static async dragAndDropNotClickableElement(elementToDrag: ElementFinder, locationToDragTo: ElementFinder) {
         await browser.actions().mouseMove(elementToDrag).perform();
         await browser.actions().mouseDown(elementToDrag).perform();
         await browser.actions().mouseMove({ x: 10, y: 100 }).perform();
@@ -113,7 +113,7 @@ export class DropActions {
         return browser.actions().mouseUp().perform();
     }
 
-    async dropElement(locationToDragTo: ElementFinder) {
+    static async dropElement(locationToDragTo: ElementFinder) {
         await browser.actions().mouseDown(locationToDragTo).perform();
     }
 }
