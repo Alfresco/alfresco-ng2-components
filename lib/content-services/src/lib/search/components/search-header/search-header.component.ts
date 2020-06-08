@@ -19,10 +19,10 @@ import { Component, Input } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'adf-filter-menu',
-    templateUrl: './filter-menu.component.html'
+    selector: 'adf-search-header',
+    templateUrl: './search-header.component.html'
 })
-export class FilterMenuComponent {
+export class SearchHeaderComponent {
 
     @Input()
     col: DataColumn;

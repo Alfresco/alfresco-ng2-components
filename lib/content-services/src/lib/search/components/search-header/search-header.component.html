@@ -1,16 +1,16 @@
 <button mat-icon-button [matMenuTriggerFor]="filter"
     (click)="onMenuButtonClick($event)"
     class="adf-filter-button"
-    matTooltip="{{ 'ADF-DOCUMENT-LIST.FILTER_MENU.FILTER_BY' | translate:{category: col.title} }}">
+    matTooltip="{{ 'SEARCH.SEARCH_HEADER.FILTER_BY' | translate:{category: col.title} }}">
     <adf-icon value="adf:filter" color="primary"></adf-icon>
 </button>
 
 <mat-menu #filter="matMenu">
     <div>{{col.title}}</div>
     <mat-dialog-actions>
-        <button mat-button>{{ 'ADF-DOCUMENT-LIST.FILTER_MENU.CLEAR' | translate | uppercase }}
+        <button mat-button>{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
         </button>
-        <button mat-button>{{ 'ADF-DOCUMENT-LIST.FILTER_MENU.APPLY' | translate | uppercase }}
+        <button mat-button>{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
         </button>
     </mat-dialog-actions>
 </mat-menu>
