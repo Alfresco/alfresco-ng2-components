@@ -25,7 +25,10 @@
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
     <ng-template let-col>
-        <adf-search-header [col]="col"></adf-search-header>
+        <ng-template
+            [ngTemplateOutlet]="filterTemplateRef"
+            [ngTemplateOutletContext]="{$implicit: col}">
+        </ng-template>
     </ng-template>
 
     <adf-no-content-template>

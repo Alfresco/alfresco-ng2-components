@@ -19,7 +19,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
+    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, TemplateRef
 } from '@angular/core';
 
 import {
@@ -301,6 +301,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ViewChild('dataTable')
     dataTable: DataTableComponent;
+
+    @ContentChild(TemplateRef)
+    filterTemplateRef: TemplateRef<any>;
 
     actions: ContentActionModel[] = [];
     contextActionHandler: Subject<any> = new Subject();
@@ -855,4 +858,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.error.emit(err);
     }
 
+    onFilterUpdate(newNodePaging: NodePaging) {
+        this.node = newNodePaging;
+        this.reload();
+    }
 }
