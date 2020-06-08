@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { browser } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from 'selenium-webdriver/remote';
+import { BrowserActions } from '../utils/browser-actions';
 
 const JS_BIND_INPUT = function(target) {
     const input = document.createElement('input');
@@ -96,5 +97,23 @@ export class DropActions {
         const elem = await dropArea.getWebElement();
         const input: any = await browser.executeScript(JS_BIND_INPUT_FOLDER, elem);
         return input.sendKeys(absolutePath);
+    }
+
+    protected async dragAndDrop(elementToDrag: ElementFinder, locationToDragTo: ElementFinder, locationOffset = { x: 230, y: 280 }) {
+        await BrowserActions.click(elementToDrag);
+        await browser.actions().mouseDown(elementToDrag).mouseMove(locationToDragTo, locationOffset).mouseUp().perform();
+        await browser.actions().doubleClick(locationToDragTo).perform();
+    }
+
+    async dragAndDropNotClickableElement(elementToDrag: ElementFinder, locationToDragTo: ElementFinder) {
+        await browser.actions().mouseMove(elementToDrag).perform();
+        await browser.actions().mouseDown(elementToDrag).perform();
+        await browser.actions().mouseMove({ x: 10, y: 100 }).perform();
+        await browser.actions().mouseMove(locationToDragTo).perform();
+        return browser.actions().mouseUp().perform();
+    }
+
+    async dropElement(locationToDragTo: ElementFinder) {
+        await browser.actions().mouseDown(locationToDragTo).perform();
     }
 }
