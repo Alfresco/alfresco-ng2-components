@@ -22,7 +22,6 @@ import { CoreModule, EditJsonDialogModule } from '@alfresco/adf-core';
 
 import { MaterialModule } from '../material.module';
 import { UploadModule } from '../upload/upload.module';
-import { SearchModule } from '../search/search.module';
 
 import { ContentActionListComponent } from './components/content-action/content-action-list.component';
 import { ContentActionComponent } from './components/content-action/content-action.component';
@@ -41,8 +40,7 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         FlexLayoutModule,
         MaterialModule,
         UploadModule,
-        EditJsonDialogModule,
-        SearchModule
+        EditJsonDialogModule
     ],
     declarations: [
         DocumentListComponent,
