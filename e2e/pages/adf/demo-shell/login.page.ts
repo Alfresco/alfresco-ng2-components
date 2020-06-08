@@ -31,7 +31,7 @@ export class LoginPage {
     logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
     usernameError = element(by.css('span[data-automation-id="username-error"]'));
     passwordError = element(by.css('span[data-automation-id="password-required"]'));
-    loginError = element(by.css('.adf-login-error-message"]'));
+    loginError = element(by.css('.adf-login-error-message'));
     usernameInactive = element(by.css('input[id="username"][aria-invalid="false"]'));
     passwordInactive = element(by.css('input[id="password"][aria-invalid="false"]'));
     adfLogo = element(by.css('.adf-img-logo'));
