@@ -43,19 +43,19 @@ export let logLevels: any[] = [
 /* tslint:disable:no-console */
 export class Logger {
     static info(...messages: string[]): void {
-        if (browser.params.config && browser.params.testConfig.appConfig.log >= LogLevelsEnum.INFO) {
+        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.INFO) {
             console.log(infoColor, messages.join(''));
         }
     }
 
     static log(...messages: string[]): void {
-        if (browser.params.config && browser.params.testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
+        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
             console.log(logColor, messages.join(''));
         }
     }
 
     static warn(...messages: string[]): void {
-        if (browser.params.config && browser.params.testConfig.appConfig.log >= LogLevelsEnum.WARN) {
+        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.WARN) {
             console.log(warnColor, messages.join(''));
         }
     }
