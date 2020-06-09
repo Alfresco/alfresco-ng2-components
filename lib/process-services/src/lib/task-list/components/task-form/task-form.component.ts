@@ -291,11 +291,11 @@ export class TaskFormComponent implements OnInit {
       return this.taskDetails.managerOfCandidateGroup || this.taskDetails.memberOfCandidateGroup || this.taskDetails.memberOfCandidateUsers;
   }
 
-  public isTaskClaimable(): boolean {
+  isTaskClaimable(): boolean {
       return this.isCandidateMember() && !this.isAssigned();
   }
 
-  public isTaskClaimedByCandidateMember(): boolean {
+  isTaskClaimedByCandidateMember(): boolean {
     return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
   }
 

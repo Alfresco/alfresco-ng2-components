@@ -569,20 +569,6 @@ describe('TaskFormComponent', () => {
             expect(unclaimButton).toBeNull();
         });
 
-        it('should display the claim button if the task is claimable by candidates members', async() => {
-            getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
-
-            component.taskId = 'mock-task-id';
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-
-            expect(component.isTaskClaimable()).toBe(true);
-            expect(component.isTaskClaimedByCandidateMember()).toBe(false);
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
-        });
-
         it('should not display the release button if the task is completed', async() => {
             getTaskDetailsSpy.and.returnValue(of(completedTaskDetailsMock));
 
