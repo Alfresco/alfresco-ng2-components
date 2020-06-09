@@ -224,7 +224,8 @@
                         [name]="defaultProcessName"
                         (formContentClicked)="onContentClick($event)"
                         (start)="onStartProcessInstance($event)"
-                        (cancel)="onCancelProcessInstance()">
+                        (cancel)="onCancelProcessInstance()"
+                        (error)="onStartProcessError($event)">
                     </adf-start-process>
                 </div>
             </div>

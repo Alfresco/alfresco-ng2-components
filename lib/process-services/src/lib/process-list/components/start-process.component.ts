@@ -93,11 +93,11 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     /** Emitted when the process is canceled. */
     @Output()
-    cancel: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+    cancel: EventEmitter<void> = new EventEmitter<void>();
 
     /** Emitted when an error occurs. */
     @Output()
-    error: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
+    error: EventEmitter<any> = new EventEmitter<any>();
 
     /** Emitted when process definition selection changes. */
     @Output()
@@ -115,7 +115,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
     selectedProcessDef: ProcessDefinitionRepresentation;
-    errorMessageId: string = '';
     processNameInput: FormControl;
     processDefinitionInput: FormControl;
     filteredProcessesDefinitions$: Observable<ProcessDefinitionRepresentation[]>;
@@ -123,7 +122,10 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     alfrescoRepositoryName: string;
     applications: AppDefinitionRepresentationModel[] = [];
     selectedApplication: AppDefinitionRepresentationModel;
+
     isProcessDefinitionsLoading = true;
+    isAppsLoading = true;
+
     private onDestroy$ = new Subject<boolean>();
     constructor(private activitiProcess: ProcessService,
                 private activitiContentService: ActivitiContentService,
@@ -219,7 +221,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     loadProcessDefinitions(appId: any): void {
         this.isProcessDefinitionsLoading = true;
         this.resetSelectedProcessDefinition();
-        this.resetErrorMessage();
 
         this.activitiProcess.getProcessDefinitions(appId).pipe(
             map((processDefinitionRepresentations: ProcessDefinitionRepresentation[]) => {
@@ -248,9 +249,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                 this.processDefinitionSelection.emit(this.selectedProcessDef);
                 this.isProcessDefinitionsLoading = false;
             },
-            () => {
-                this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
+            (error) => {
                 this.isProcessDefinitionsLoading = false;
+                this.error.emit(error);
             });
     }
 
@@ -269,6 +270,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     loadApps() {
+        this.isAppsLoading = true;
         this.appsProcessService
             .getDeployedApplications()
             .pipe(map((response: AppDefinitionRepresentationModel[]) => {
@@ -293,20 +295,32 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     this.selectedApplication = filteredApps.currentApplication;
                     this.applicationSelection.emit(this.selectedApplication);
                     this.toggleProcessNameAndDefinitionsDropdown();
-                    this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
+                    this.isAppsLoading = false;
+                    this.loadProcessDefinitionsBasedOnSelectedApp();
                 },
-                err => {
+                (err) => {
+                    this.isAppsLoading = false;
                     this.error.emit(err);
                 }
             );
 
     }
 
+    loadProcessDefinitionsBasedOnSelectedApp() {
+        if (this.selectedApplication && this.selectedApplication.id) {
+            this.loadProcessDefinitions(this.selectedApplication ? this.selectedApplication.id : null);
+        } else {
+            this.isProcessDefinitionsLoading = false;
+            this.resetProcessDefinitions();
+        }
+    }
+
     onAppSelectionChange(selectedApplication: any) {
+        this.resetProcessDefinitions();
         this.selectedApplication = selectedApplication.value;
         this.applicationSelection.emit(this.selectedApplication);
         this.toggleProcessNameAndDefinitionsDropdown();
-        this.loadProcessDefinitions(this.selectedApplication.id);
+        this.loadProcessDefinitionsBasedOnSelectedApp();
     }
 
     private isAppSelected(): boolean {
@@ -315,11 +329,26 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     private removeDefaultApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
         return apps.filter((app) => app.id);
+    }
 
+    hasApplications(): boolean {
+        return this.applications && this.applications.length > 0;
+    }
+
+    hasProcessDefinitions(): boolean {
+        return this.processDefinitions && this.processDefinitions.length > 0;
+    }
+
+    isProcessDefinitionSelected(): boolean {
+        return !!(this.selectedProcessDef && this.selectedProcessDef.id);
     }
 
     isProcessDefinitionsEmpty(): boolean {
         return this.processDefinitions.length === 0;
+    }
+
+    disableDropdownButton(): boolean {
+        return this.showSelectApplicationDropdown && !this.isAppSelected();
     }
 
     getAlfrescoRepositoryName(): string {
@@ -345,7 +374,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     startProcess(outcome?: string) {
         if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
-            this.resetErrorMessage();
             const formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
                 (res) => {
@@ -353,8 +381,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
                     this.start.emit(res);
                 },
                 (err) => {
-                    this.errorMessageId = 'ADF_PROCESS_LIST.START_PROCESS.ERROR.START';
-                    this.error.error(err);
+                    this.error.emit(err);
                 }
             );
         }
@@ -366,11 +393,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
 
     hasStartForm(): boolean {
         return this.selectedProcessDef && this.selectedProcessDef.hasStartForm;
-    }
-
-    isProcessDefinitionEmpty(): boolean {
-        const hasErrorMessage = this.errorMessageId ? true : false;
-        return this.processDefinitions ? (this.processDefinitions.length > 0 || hasErrorMessage) : hasErrorMessage;
     }
 
     isStartFormMissingOrValid(): boolean {
@@ -386,15 +408,15 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     private resetSelectedProcessDefinition() {
-        this.selectedProcessDef = new ProcessDefinitionRepresentation();
+        this.selectedProcessDef = undefined;
+        if (this.processDefinitionInput) {
+            this.processDefinitionInput.setValue('');
+        }
     }
 
-    private resetErrorMessage(): void {
-        this.errorMessageId = '';
-    }
-
-    hasErrorMessage(): boolean {
-        return this.processDefinitions.length === 0 && !this.errorMessageId;
+    private resetProcessDefinitions() {
+        this.processDefinitions = [];
+        this.resetSelectedProcessDefinition();
     }
 
     public onOutcomeClick(outcome: string) {
@@ -407,7 +429,6 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         if (this.startForm) {
             this.startForm.data = {};
         }
-        this.resetErrorMessage();
     }
 
     displayFn(process: any): string {
@@ -452,5 +473,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     processDefinitionSelectionChanged(processDefinition) {
         this.selectedProcessDef = processDefinition;
         this.processDefinitionSelection.emit(this.selectedProcessDef);
+    }
+
+    isLoading(): boolean {
+        return this.showSelectApplicationDropdown ? this.isAppsLoading : false;
     }
 }
