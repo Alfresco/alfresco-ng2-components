@@ -26,7 +26,6 @@
 
     <adf-header-filter-template>
         <ng-template let-col>
-            <adf-search-header *ngIf="!customHeaderFilterTemplate" [col]="col"></adf-search-header>
             <ng-template [ngTemplateOutlet]="customHeaderFilterTemplate?.template"
                 [ngTemplateOutletContext]="{$implicit: col}">
             </ng-template>
