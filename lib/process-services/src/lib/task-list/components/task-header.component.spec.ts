@@ -136,6 +136,30 @@ describe('TaskHeaderComponent', () => {
 
     describe('Claiming', () => {
 
+        it('should be able display the claim/release button if showClaimRelease set to true', async(() => {
+            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.showClaimRelease = true;
+            component.refreshData();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            });
+        }));
+
+        it('should not be able display the claim/release button if showClaimRelease set to false', async(() => {
+            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.showClaimRelease = false;
+            component.refreshData();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                expect(claimButton).toBeNull();
+            });
+        }));
+
         it('should display the claim button if no assignee', async(() => {
             component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
 

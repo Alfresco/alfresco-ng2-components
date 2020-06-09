@@ -46,6 +46,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     @Input()
     taskDetails: TaskDetailsModel;
 
+    /** Toggles display of the claim/release button. */
+    @Input()
+    showClaimRelease = true;
+
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
