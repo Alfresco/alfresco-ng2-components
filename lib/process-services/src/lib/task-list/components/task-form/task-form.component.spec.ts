@@ -523,8 +523,8 @@ describe('TaskFormComponent', () => {
             const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
             const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
 
-            expect(component.isTaskClaimable()).toBeFalsy();
-            expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
+            expect(component.isTaskClaimable()).toBe(false);
+            expect(component.isTaskClaimedByCandidateMember()).toBe(false);
             expect(unclaimButton).toBeNull();
             expect(claimButton).toBeNull();
         });
@@ -538,7 +538,7 @@ describe('TaskFormComponent', () => {
 
             const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
 
-            expect(component.isTaskClaimable()).toBeTruthy();
+            expect(component.isTaskClaimable()).toBe(true);
             expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
 
@@ -552,7 +552,7 @@ describe('TaskFormComponent', () => {
 
             const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
 
-            expect(component.isTaskClaimedByCandidateMember()).toBeTruthy();
+            expect(component.isTaskClaimedByCandidateMember()).toBe(true);
             expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
         });
 
@@ -565,7 +565,7 @@ describe('TaskFormComponent', () => {
 
             const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
 
-            expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
+            expect(component.isTaskClaimedByCandidateMember()).toBe(false);
             expect(unclaimButton).toBeNull();
         });
 
@@ -578,8 +578,8 @@ describe('TaskFormComponent', () => {
 
             const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
 
-            expect(component.isTaskClaimable()).toBeTruthy();
-            expect(component.isTaskClaimedByCandidateMember()).toBeFalsy();
+            expect(component.isTaskClaimable()).toBe(true);
+            expect(component.isTaskClaimedByCandidateMember()).toBe(false);
             expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
         });
 

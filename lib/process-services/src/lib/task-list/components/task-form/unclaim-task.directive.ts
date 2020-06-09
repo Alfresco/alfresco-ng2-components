@@ -23,6 +23,7 @@ import {
     EventEmitter
 } from '@angular/core';
 import { TaskListService } from '../../services/tasklist.service';
+import { LogService } from '@alfresco/adf-core';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
@@ -43,7 +44,9 @@ export class UnclaimTaskDirective {
 
     invalidParams: string[] = [];
 
-    constructor(private taskListService: TaskListService) {}
+    constructor(
+        private taskListService: TaskListService,
+        private logService: LogService) {}
 
     ngOnInit() {
         this.validateInputs();
@@ -76,6 +79,7 @@ export class UnclaimTaskDirective {
     private async unclaimTask() {
         await this.taskListService.unclaimTask(this.taskId).subscribe(
             () => {
+                this.logService.info('Task unclaimed');
                 this.success.emit(this.taskId);
             },
             error => this.error.emit(error)

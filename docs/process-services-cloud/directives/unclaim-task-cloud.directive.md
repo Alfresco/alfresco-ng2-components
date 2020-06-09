@@ -1,8 +1,8 @@
 ---
 Title: Unclaim Task Cloud Directive
-Added: v3.1.0
+Added: v3.9.0
 Status: Experimental
-Last reviewed: 2019-03-25
+Last reviewed: 2020-06-09
 ---
 
 # [Unclaim Task Cloud directive](../../../lib/process-services-cloud/src/lib/task/directives/unclaim-task-cloud.directive.ts "Defined in unclaim-task-cloud.directive.ts")

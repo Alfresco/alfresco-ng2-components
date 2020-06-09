@@ -251,38 +251,37 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should call the service unclaim method on un-claiming', async(() => {
-        spyOn(service, 'unclaimTask').and.returnValue(of(true));
-        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.refreshData();
+    it('should emit claim event when task is claimed', (done) => {
+        spyOn(service, 'claimTask').and.returnValue(of({}));
+        component.taskDetails = claimableTaskDetailsMock;
+
+        component.claim.subscribe((taskId) => {
+            expect(taskId).toEqual(component.taskDetails.id);
+            done();
+        });
+
+        component.ngOnInit();
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            unclaimButton.triggerEventHandler('click', {});
+        const claimBtn = fixture.debugElement.query(By.css('[adf-claim-task]'));
+        claimBtn.nativeElement.click();
+    });
 
-            expect(service.unclaimTask).toHaveBeenCalledWith('91');
+    it('should emit unclaim event when task is unclaimed', (done) => {
+        spyOn(service, 'unclaimTask').and.returnValue(of({}));
+        component.taskDetails = claimedTaskDetailsMock;
+
+        component.unclaim.subscribe((taskId: string) => {
+            expect(taskId).toEqual(component.taskDetails.id);
+            done();
         });
-    }));
 
-    it('should trigger the unclaim event on successful un-claiming', async(() => {
-        let unclaimed: boolean = false;
-        spyOn(service, 'unclaimTask').and.returnValue(of(true));
-        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.refreshData();
+        component.ngOnInit();
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            component.unclaim.subscribe(() => {
-                unclaimed = true;
-            });
-
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            unclaimButton.triggerEventHandler('click', {});
-
-            expect(unclaimed).toBeTruthy();
-        });
-    }));
+        const unclaimBtn = fixture.debugElement.query(By.css('[adf-unclaim-task]'));
+        unclaimBtn.nativeElement.click();
+    });
 
     it('should display due date', async(() => {
         component.taskDetails.dueDate = new Date('2016-11-03');

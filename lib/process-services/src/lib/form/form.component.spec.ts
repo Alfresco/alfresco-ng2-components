@@ -1079,10 +1079,12 @@ describe('FormWithCustomOutComesComponent', () => {
         const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
         const buttonOneBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
         const buttonTwoBtn = debugElement.query(By.css('#adf-custom-outcome-2'));
+
         expect(buttonOneBtn).not.toBeNull();
         expect(buttonTwoBtn).not.toBeNull();
 
         buttonOneBtn.nativeElement.click();
+
         expect(onCustomButtonOneSpy).toHaveBeenCalled();
         expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
         expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
