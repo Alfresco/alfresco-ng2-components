@@ -246,7 +246,7 @@
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)">
                 <adf-custom-header-filter-template *ngIf="enableCustomHeaderFilter">
                     <ng-template let-col>
-                        <div>My custom filter for {{col.title}}</div>
+                        <adf-search-header [col]="col"></adf-search-header>
                     </ng-template>
                 </adf-custom-header-filter-template>
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
