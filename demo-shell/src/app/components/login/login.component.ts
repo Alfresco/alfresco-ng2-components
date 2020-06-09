@@ -34,7 +34,6 @@ export class LoginComponent {
     showRememberMe = true;
     customSuccessRoute = false;
     customLogoImage = false;
-    customMinLength = 2;
 
     constructor(private router: Router,
                 private logService: LogService) {
