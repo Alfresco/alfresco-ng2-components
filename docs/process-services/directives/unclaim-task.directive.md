@@ -1,18 +1,18 @@
 ---
 Title: Unclaim Task Directive
-Added: v3.1.0
+Added: v3.9.0
 Status: Experimental
-Last reviewed: 2019-03-25
+Last reviewed: 2020-06-09
 ---
 
-# [Unclaim task directive](../../../lib/process-services-cloud/src/lib/task/directives/unclaim-task.directive.ts "Defined in unclaim-task.directive.ts")
+# [Unclaim Task directive](../../../lib/process-services/src/lib/task-list/components/task-form/unclaim-task.directive.ts "Defined in unclaim-task.directive.ts")
 
 Unclaims a task
 
 ## Basic Usage
 
 ```html
-<button adf-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onTaskUnclaimed()">Complete</button>
+<button adf-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onTaskUnclaimed()">Unclaim</button>
 ```
 
 ## Class members
@@ -21,7 +21,6 @@ Unclaims a task
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| appName | `string` | "" | (Required) The name of the application. |
 | taskId | `string` |  | (Required) The id of the task. |
 
 ### Events

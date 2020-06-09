@@ -19,12 +19,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 import { of } from 'rxjs';
-import { ClaimCloudTaskDirective } from './claim-task.directive';
+import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('ClaimCloudTaskDirective', () => {
+describe('ClaimTaskCloudDirective', () => {
 
     @Component({
         selector:  'adf-cloud-claim-test-component',
@@ -35,8 +35,8 @@ describe('ClaimCloudTaskDirective', () => {
         taskMock = 'test1234';
         appNameMock = 'simple-app';
 
-        @ViewChild(ClaimCloudTaskDirective)
-        claimTaskDirective: ClaimCloudTaskDirective;
+        @ViewChild(ClaimTaskCloudDirective)
+        claimTaskDirective: ClaimTaskCloudDirective;
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -78,8 +78,8 @@ describe('Claim Task Directive validation errors', () => {
         appNameUndefined = undefined;
         appNameNull = null;
 
-        @ContentChildren(ClaimCloudTaskDirective)
-        claimTaskValidationDirective: ClaimCloudTaskDirective;
+        @ContentChildren(ClaimTaskCloudDirective)
+        claimTaskValidationDirective: ClaimTaskCloudDirective;
     }
 
     @Component({
@@ -90,8 +90,8 @@ describe('Claim Task Directive validation errors', () => {
 
         appName = 'simple-app';
 
-        @ContentChildren(ClaimCloudTaskDirective)
-        claimTaskValidationDirective: ClaimCloudTaskDirective;
+        @ContentChildren(ClaimTaskCloudDirective)
+        claimTaskValidationDirective: ClaimTaskCloudDirective;
     }
 
     @Component({
@@ -103,8 +103,8 @@ describe('Claim Task Directive validation errors', () => {
         appNameUndefined = undefined;
         taskMock = 'test1234';
 
-        @ContentChildren(ClaimCloudTaskDirective)
-        claimTaskValidationDirective: ClaimCloudTaskDirective;
+        @ContentChildren(ClaimTaskCloudDirective)
+        claimTaskValidationDirective: ClaimTaskCloudDirective;
     }
 
     @Component({
@@ -116,8 +116,8 @@ describe('Claim Task Directive validation errors', () => {
         appNameNull = null;
         taskMock = 'test1234';
 
-        @ViewChild(ClaimCloudTaskDirective)
-        claimTaskValidationDirective: ClaimCloudTaskDirective;
+        @ViewChild(ClaimTaskCloudDirective)
+        claimTaskValidationDirective: ClaimTaskCloudDirective;
     }
 
     let fixture: ComponentFixture<any>;

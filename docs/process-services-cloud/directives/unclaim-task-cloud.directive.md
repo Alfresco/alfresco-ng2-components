@@ -1,18 +1,18 @@
 ---
-Title: Claim Task Directive
+Title: Unclaim Task Cloud Directive
 Added: v3.1.0
 Status: Experimental
 Last reviewed: 2019-03-25
 ---
 
-# [Claim task directive](../../../lib/process-services-cloud/src/lib/task/directives/claim-task.directive.ts "Defined in claim-task.directive.ts")
+# [Unclaim Task Cloud directive](../../../lib/process-services-cloud/src/lib/task/directives/unclaim-task-cloud.directive.ts "Defined in unclaim-task-cloud.directive.ts")
 
-Claims a task
+Unclaims a task
 
 ## Basic Usage
 
 ```html
-<button adf-claim-task [appName]="appName" [taskId]="taskId" (success)="onTaskClaimed()">Complete</button>
+<button adf-cloud-unclaim-task [appName]="appName" [taskId]="taskId" (success)="onTaskUnclaimed()">Unclaim</button>
 ```
 
 ## Class members
