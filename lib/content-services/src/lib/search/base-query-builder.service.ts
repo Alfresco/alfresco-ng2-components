@@ -191,6 +191,7 @@ export abstract class BaseQueryBuilderService {
     update(): void {
         const query = this.buildQuery();
         this.updated.next(query);
+        // console.log(query);
     }
 
     /**

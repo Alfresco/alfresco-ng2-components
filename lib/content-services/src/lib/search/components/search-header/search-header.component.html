@@ -7,16 +7,18 @@
     </button>
 
     <mat-menu #filter="matMenu">
-        <adf-search-widget-container
-            [id]="category.id"
-            [selector]="category.component.selector"
-            [settings]="category.component.settings">
-        </adf-search-widget-container>
-        <mat-dialog-actions>
-            <button mat-button>{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
-            </button>
-            <button mat-button>{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
-            </button>
-        </mat-dialog-actions>
+        <div (click)="onMenuButtonClick($event)">
+            <adf-search-widget-container
+                [id]="category.id"
+                [selector]="category.component.selector"
+                [settings]="category.component.settings">
+            </adf-search-widget-container>
+            <mat-dialog-actions>
+                <button mat-button>{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
+                </button>
+                <button mat-button (click)="onApplyButtonClick()">{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
+                </button>
+            </mat-dialog-actions>
+        </div>
     </mat-menu>
 </div>
