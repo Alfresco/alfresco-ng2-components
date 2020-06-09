@@ -17,7 +17,7 @@ then
         then
             NEXT_VERSION=-nextbeta
         fi
-        ./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
+        #./scripts/update-version.sh -gnu $NEXT_VERSION || exit 1;
     fi
 
     node ./scripts/pre-publish.js
@@ -27,7 +27,7 @@ then
     ./scripts/npm-build-all.sh || exit 1;
 else
     npm install;
-    npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
+    # npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
 
     ./scripts/smart-build.sh -gnu || exit 1;
 fi;
