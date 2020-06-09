@@ -15,17 +15,34 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
+import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({
     selector: 'adf-search-header',
-    templateUrl: './search-header.component.html'
+    templateUrl: './search-header.component.html',
+    providers: [
+        {
+            provide: SearchQueryBuilderService,
+            useClass: SearchHeaderQueryBuilderService
+        }
+    ]
 })
-export class SearchHeaderComponent {
+export class SearchHeaderComponent implements OnInit {
 
     @Input()
     col: DataColumn;
+
+    category: any = {};
+
+    constructor(private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) {
+    }
+
+    ngOnInit() {
+       this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
+    }
 
     onMenuButtonClick(event: Event) {
         event.stopPropagation();

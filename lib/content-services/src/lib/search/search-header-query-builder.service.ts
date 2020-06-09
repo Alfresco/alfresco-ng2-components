@@ -16,21 +16,33 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { Subject } from 'rxjs';
+import { QueryBody, ResultSetPaging } from '@alfresco/js-api';
+import { AlfrescoApiService, AppConfigService } from "@alfresco/adf-core";
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SearchQueryBuilderService extends BaseQueryBuilderService{
+export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
+    updated = new Subject<QueryBody>();
+    executed = new Subject<ResultSetPaging>();
 
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
         super(appConfig, alfrescoApiService);
     }
 
-    public loadConfiguration(): SearchConfiguration {
-        return this.appConfig.get<SearchConfiguration>('search');
+    loadConfiguration(): SearchConfiguration {
+        return this.appConfig.get<SearchConfiguration>('search-headers');
+    }
+
+    getCategoryForColumn(columnName: string) {
+        let foundCategory = null;
+        if (this.categories !== null) {
+            foundCategory = this.categories.find((category) => category.columnKey === columnName);
+        }
+        return foundCategory;
     }
 
 }

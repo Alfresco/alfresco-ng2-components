@@ -1,16 +1,22 @@
-<button mat-icon-button [matMenuTriggerFor]="filter"
-    (click)="onMenuButtonClick($event)"
-    class="adf-filter-button"
-    matTooltip="{{ 'SEARCH.SEARCH_HEADER.FILTER_BY' | translate:{category: col.title} }}">
-    <adf-icon value="adf:filter" color="primary"></adf-icon>
-</button>
+<div *ngIf="!!category">
+    <button mat-icon-button [matMenuTriggerFor]="filter"
+        (click)="onMenuButtonClick($event)"
+        class="adf-filter-button"
+        matTooltip="{{ 'SEARCH.SEARCH_HEADER.FILTER_BY' | translate:{category: col.title} }}">
+        <adf-icon value="adf:filter" color="primary"></adf-icon>
+    </button>
 
-<mat-menu #filter="matMenu">
-    <div>{{col.title}}</div>
-    <mat-dialog-actions>
-        <button mat-button>{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
-        </button>
-        <button mat-button>{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
-        </button>
-    </mat-dialog-actions>
-</mat-menu>
+    <mat-menu #filter="matMenu">
+        <adf-search-widget-container
+            [id]="category.id"
+            [selector]="category.component.selector"
+            [settings]="category.component.settings">
+        </adf-search-widget-container>
+        <mat-dialog-actions>
+            <button mat-button>{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
+            </button>
+            <button mat-button>{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
+            </button>
+        </mat-dialog-actions>
+    </mat-menu>
+</div>
