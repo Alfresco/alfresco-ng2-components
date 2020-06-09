@@ -157,8 +157,8 @@ export class StartProcessPage {
     }
 
     async startProcess(name: string, processName: string) {
-        await this.enterProcessName(name);
         await this.selectFromProcessDropdown(processName);
+        await this.enterProcessName(name);
         await this.clickStartProcessButton();
     }
 

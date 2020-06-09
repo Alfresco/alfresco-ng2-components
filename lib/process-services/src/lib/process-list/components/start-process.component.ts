@@ -37,6 +37,7 @@ import { MatAutocompleteTrigger } from '@angular/material';
 import { StartFormComponent } from '../../form';
 import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
+import { ProcessNamePipe } from '../../pipes/process-name.pipe';
 
 @Component({
     selector: 'adf-start-process',
@@ -130,18 +131,15 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     constructor(private activitiProcess: ProcessService,
                 private activitiContentService: ActivitiContentService,
                 private appsProcessService: AppsProcessService,
-                private appConfig: AppConfigService) {
+                private appConfig: AppConfigService,
+                private processNamePipe: ProcessNamePipe) {
         }
 
     ngOnInit() {
-        this.processNameInput = new FormControl(this.name, [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
+        this.processNameInput = new FormControl('', [Validators.required, Validators.maxLength(this.maxProcessNameLength), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]);
         this.processDefinitionInput = new FormControl();
 
         this.load();
-
-        this.processNameInput.valueChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(name => this.name = name);
 
         this.filteredProcessesDefinitions$ = this.processDefinitionInput.valueChanges
             .pipe(
@@ -244,9 +242,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         ).subscribe(
             (filteredProcessDefinitions) => {
                 this.processDefinitions = filteredProcessDefinitions.processDefinitionRepresentations;
-                this.selectedProcessDef = filteredProcessDefinitions.currentProcessDef;
+                this.processDefinitionSelectionChanged(filteredProcessDefinitions.currentProcessDef);
                 this.processDefinitionInput.setValue(this.selectedProcessDef ? this.selectedProcessDef.name : '');
-                this.processDefinitionSelection.emit(this.selectedProcessDef);
                 this.isProcessDefinitionsLoading = false;
             },
             (error) => {
@@ -262,9 +259,8 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
             });
 
             if (filteredProcessDef) {
-                this.selectedProcessDef = filteredProcessDef;
+                this.processDefinitionSelectionChanged(filteredProcessDef);
                 this.processDefinitionInput.setValue(this.selectedProcessDef ? this.selectedProcessDef.name : '');
-                this.processDefinitionSelection.emit(this.selectedProcessDef);
             }
         }
     }
@@ -373,9 +369,9 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
     }
 
     startProcess(outcome?: string) {
-        if (this.selectedProcessDef && this.selectedProcessDef.id && this.name) {
+        if (this.selectedProcessDef && this.selectedProcessDef.id && this.nameController.value) {
             const formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.selectedProcessDef.id, this.name, outcome, formValues, this.variables).subscribe(
+            this.activitiProcess.startProcess(this.selectedProcessDef.id, this.nameController.value, outcome, formValues, this.variables).subscribe(
                 (res) => {
                     this.name = '';
                     this.start.emit(res);
@@ -470,9 +466,18 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    processDefinitionSelectionChanged(processDefinition) {
-        this.selectedProcessDef = processDefinition;
-        this.processDefinitionSelection.emit(this.selectedProcessDef);
+    processDefinitionSelectionChanged(processDefinition: ProcessDefinitionRepresentation) {
+        if (processDefinition) {
+            const processInstanceDetails = new ProcessInstance({ processDefinitionName: processDefinition.name });
+            const processName = this.processNamePipe.transform(this.name, processInstanceDetails);
+            this.processNameInput.setValue(processName);
+            this.processNameInput.markAsDirty();
+            this.processNameInput.markAsTouched();
+            this.selectedProcessDef = processDefinition;
+            this.processDefinitionSelection.emit(this.selectedProcessDef);
+        } else {
+            this.nameController.reset();
+        }
     }
 
     isLoading(): boolean {

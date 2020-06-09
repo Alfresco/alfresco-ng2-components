@@ -84,8 +84,8 @@ describe('Process Filters Test', () => {
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 
-        await startProcessPage.enterProcessName(processTitle.completed);
         await startProcessPage.selectFromProcessDropdown(app.process_title);
+        await startProcessPage.enterProcessName(processTitle.completed);
         await startProcessPage.clickFormStartProcessButton();
 
         await processDetailsPage.clickCancelProcessButton();
@@ -97,8 +97,8 @@ describe('Process Filters Test', () => {
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 
-        await startProcessPage.enterProcessName(processTitle.running);
         await startProcessPage.selectFromProcessDropdown(app.process_title);
+        await startProcessPage.enterProcessName(processTitle.running);
         await startProcessPage.clickFormStartProcessButton();
 
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);

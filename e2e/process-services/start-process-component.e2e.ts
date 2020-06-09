@@ -125,11 +125,12 @@ describe('Start Process Component', () => {
                 await processServicesPage.checkApsContainer();
             });
 
-            it('[C260441] Should display start process form and default name when creating a new process', async () => {
+            it('[C260441] Should display start process form and default name when creating a new process after selecting the process definition', async () => {
                 await processServicesPage.goToApp('Task App');
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
+                await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await expect(await startProcessPage.getDefaultName()).toEqual('My Default Name');
             });
 
@@ -251,9 +252,9 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('Type');
                 await startProcessPage.typeProcessDefinition(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.selectProcessOption(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
+                await startProcessPage.enterProcessName('Type');
                 await startProcessPage.checkStartProcessButtonIsEnabled();
                 await expect(await startProcessPage.getProcessDefinitionValue()).toBe(browser.params.resources.Files.APP_WITH_PROCESSES.process_wse_name);
                 await startProcessPage.clickStartProcessButton();
@@ -290,8 +291,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('Comment Process');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Comment Process');
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Comment Process');
@@ -304,8 +305,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('Audit Log');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Audit Log');
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Audit Log');
@@ -322,8 +323,8 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
 
-                await startProcessPage.enterProcessName('Attach File');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Attach File');
                 await startProcessPage.clickFormStartProcessButton();
 
                 await processFiltersPage.clickRunningFilterButton();
@@ -341,8 +342,8 @@ describe('Start Process Component', () => {
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
 
-                await startProcessPage.enterProcessName('Show Diagram');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Show Diagram');
                 await startProcessPage.clickFormStartProcessButton();
 
                 await processFiltersPage.clickRunningFilterButton();
@@ -356,8 +357,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('Active Task');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Active Task');
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Active Task');
@@ -373,8 +374,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('Cancel Process');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Cancel Process');
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Cancel Process');
@@ -389,8 +390,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('Comment Process 2');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('Comment Process 2');
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('Comment Process 2');
@@ -406,8 +407,8 @@ describe('Start Process Component', () => {
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
                 await processFiltersPage.clickNewProcessDropdown();
-                await startProcessPage.enterProcessName('File');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
+                await startProcessPage.enterProcessName('File');
                 await startProcessPage.clickFormStartProcessButton();
                 await processFiltersPage.clickRunningFilterButton();
                 await processFiltersPage.selectFromProcessList('File');

@@ -34,7 +34,7 @@ export class CommunityStartProcessCloudDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.processName = this.appConfig.get<string>('adf-start-process.name');
+        this.processName = this.appConfig.get<string>('adf-start-process-cloud.name');
     }
 
     onStartProcessSuccess() {
