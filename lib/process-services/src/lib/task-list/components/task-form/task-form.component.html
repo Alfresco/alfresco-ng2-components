@@ -60,13 +60,13 @@
                 </ng-template>
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
+                <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
                 <button id="adf-no-form-cancel-button" mat-button *ngIf="showCancelButton" (click)="onCancel()">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
                 </button>
                 <button mat-button *ngIf="!isCompletedTask()" color="primary" (click)="onCompleteTask()" id="adf-no-form-complete-button">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                 </button>
-                <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
             </mat-card-actions>
         </mat-card>
       </ng-template>
