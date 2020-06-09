@@ -51,6 +51,7 @@ const appConfig = {
         "silentLogin": true,
         "redirectUri": REDIRECT_URI,
         "redirectUriLogout": REDIRECT_URI_LOGOUT,
+        "redirectSilentIframeUri": `${HOST}/assets/silent-refresh.html`,
         "publicUrls": [
             "**/preview/s/*",
             "**/settings"
