@@ -261,10 +261,9 @@ describe('Upload component', () => {
         await browser.sleep(1000);
         await uploadToggles.addExtension('.docx');
 
-        const dragAndDrop = new DropActions();
         const dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
-        await dragAndDrop.dropFile(dragAndDropArea, docxFileModel.location);
+        await DropActions.dropFile(dragAndDropArea, docxFileModel.location);
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         await uploadDialog.removeUploadedFile(docxFileModel.name);
@@ -272,7 +271,7 @@ describe('Upload component', () => {
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
 
-        await dragAndDrop.dropFile(dragAndDropArea, pngFileModel.location);
+        await DropActions.dropFile(dragAndDropArea, pngFileModel.location);
         await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
         await uploadDialog.dialogIsNotDisplayed();
         await uploadToggles.disableExtensionFilter();

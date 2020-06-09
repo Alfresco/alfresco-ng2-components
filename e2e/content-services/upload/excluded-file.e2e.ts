@@ -92,9 +92,7 @@ describe('Upload component - Excluded Files', () => {
 
         const dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
-        const dragAndDrop = new DropActions();
-
-        await dragAndDrop.dropFile(dragAndDropArea, iniExcludedFile.location);
+        await DropActions.dropFile(dragAndDropArea, iniExcludedFile.location);
 
         await browser.sleep(5000);
 

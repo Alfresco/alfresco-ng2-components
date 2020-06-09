@@ -37,7 +37,6 @@ export class ContentServicesPage {
     togglePage: TogglePage = new TogglePage();
     createFolderDialog: FolderDialogPage = new FolderDialogPage();
     createLibraryDialog: CreateLibraryDialogPage = new CreateLibraryDialogPage();
-    dragAndDropAction: DropActions = new DropActions();
 
     multipleFileUploadToggle: ElementFinder = element(by.id('adf-document-list-enable-drop-files'));
     uploadBorder: ElementFinder = element(by.id('document-list-container'));
@@ -529,12 +528,12 @@ export class ContentServicesPage {
 
     async dragAndDropFile(file: string): Promise<void> {
         await this.checkDragAndDropDIsDisplayed();
-        await this.dragAndDropAction.dropFile(this.dragAndDrop, file);
+        await DropActions.dropFile(this.dragAndDrop, file);
     }
 
     async dragAndDropFolder(folderName: string): Promise<void> {
         await this.checkDragAndDropDIsDisplayed();
-        await this.dragAndDropAction.dropFolder(this.dragAndDrop, folderName);
+        await DropActions.dropFolder(this.dragAndDrop, folderName);
     }
 
     async checkLockIsDisplayedForElement(name): Promise<void> {

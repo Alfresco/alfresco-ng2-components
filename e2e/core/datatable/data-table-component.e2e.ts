@@ -38,7 +38,6 @@ describe('Datatable component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-    const dragAndDrop = new DropActions();
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -144,11 +143,11 @@ describe('Datatable component', () => {
 
         it('[C307984] Should trigger the event handling header-drop and cell-drop', async () => {
             const dragAndDropHeader = dragAndDropDataTablePage.getDropTargetIdColumnHeader();
-            await dragAndDrop.dropFile(dragAndDropHeader, pngFile.location);
+            await DropActions.dropFile(dragAndDropHeader, pngFile.location);
             await notificationHistoryPage.checkNotifyContains('Dropped data on [ id ] header');
 
             const dragAndDropCell = dragAndDropDataTablePage.getDropTargetIdColumnCell(1);
-            await dragAndDrop.dropFile(dragAndDropCell, pngFile.location);
+            await DropActions.dropFile(dragAndDropCell, pngFile.location);
             await notificationHistoryPage.checkNotifyContains('Dropped data on [ id ] cell');
         });
     });
