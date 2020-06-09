@@ -31,6 +31,7 @@ const FOLDER = process.env.FOLDER || '';
 const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
 const DIRECT_CONNECCT = !SELENIUM_SERVER;
 const MAXINSTANCES = process.env.MAXINSTANCES || 1;
+const MAX_RETRIES = process.env.MAX_RETRIES || 4;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 const SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT === 'true');
 const LIST_SPECS = process.env.LIST_SPECS || [];
@@ -260,7 +261,7 @@ exports.config = {
             }
         }
 
-        return retry.afterLaunch(4);
+        return retry.afterLaunch(MAX_RETRIES);
     }
 
 };
