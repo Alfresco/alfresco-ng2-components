@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogService } from '@alfresco/adf-core';
 
@@ -25,12 +24,8 @@ import { LogService } from '@alfresco/adf-core';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-    @ViewChild('alfrescoLogin', { static: true })
-    alfrescoLogin: any;
-
-    customValidation: any;
     customSuccessRouteURI = '';
     customLogoImageURL = './assets/images/alfresco-logo.svg';
 
@@ -43,24 +38,14 @@ export class LoginComponent implements OnInit {
 
     constructor(private router: Router,
                 private logService: LogService) {
-        this.customValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLength)])],
-            password: ['', Validators.required]
-        };
-    }
-
-    ngOnInit() {
-        this.alfrescoLogin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
-        this.alfrescoLogin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', { minLength: this.customMinLength });
-        this.alfrescoLogin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
     }
 
     onLogin() {
         this.router.navigate(['/home']);
     }
 
-    onError($event) {
-        this.logService.error($event);
+    onError(err: any) {
+        this.logService.error(err);
     }
 
     toggleCSRF() {
@@ -87,10 +72,5 @@ export class LoginComponent implements OnInit {
         if (!this.customLogoImage) {
             this.customLogoImageURL = null;
         }
-    }
-
-    checkForm(event: any) {
-        const values = event.values;
-        this.logService.log(values);
     }
 }
