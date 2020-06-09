@@ -21,7 +21,7 @@ Unclaims a task
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| taskId | `string` |  | (Required) The id of the task. |
+| taskId | `string` | " " | (Required) The id of the task. |
 
 ### Events
 
