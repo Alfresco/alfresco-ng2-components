@@ -21,7 +21,7 @@ import { TaskCloudService } from '../services/task-cloud.service';
     // tslint:disable-next-line: directive-selector
     selector: '[adf-cloud-unclaim-task]'
 })
-export class UnClaimTaskDirective implements OnInit {
+export class UnClaimCloudTaskDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()

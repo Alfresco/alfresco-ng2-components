@@ -18,8 +18,9 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
-import { FormComponent, FormCustomOutcomesComponent } from './form.component';
+import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
+import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
 
 @NgModule({
     imports: [

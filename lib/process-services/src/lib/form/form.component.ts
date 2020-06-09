@@ -24,12 +24,6 @@ import { Observable, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'adf-form-custom-outcomes',
-    template: '<ng-content></ng-content>'
-})
-export class FormCustomOutcomesComponent {}
-
-@Component({
     selector: 'adf-form',
     templateUrl: './form.component.html',
     encapsulation: ViewEncapsulation.None

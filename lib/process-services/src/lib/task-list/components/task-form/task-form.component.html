@@ -73,14 +73,14 @@
   </ng-template>
 
   <ng-template #taskFormButtons>
-        <button mat-button 
+        <button mat-button data-automation-id="adf-task-form-claim-button"
             *ngIf="isTaskClaimable()" 
             adf-claim-task
             [taskId]="taskId"
             (success)="onClaimTask($event)">
             {{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
         </button>
-        <button mat-button 
+        <button mat-button data-automation-id="adf-task-form-unclaim-button"
             *ngIf="isTaskClaimedByCandidateMember()"
             adf-unclaim-task
             [taskId]="taskId"

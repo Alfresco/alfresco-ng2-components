@@ -22,7 +22,7 @@ import { TaskCloudService } from '../services/task-cloud.service';
     // tslint:disable-next-line: directive-selector
     selector: '[adf-cloud-claim-task]'
 })
-export class ClaimTaskDirective implements OnInit {
+export class ClaimCloudTaskDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component } from '@angular/core';
+import { SimpleChange, ComponentFactoryResolver, Injector, NgModule, Component, ViewChild, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { FormFieldModel, FormFieldTypes, FormModel, FormOutcomeEvent, FormOutcomeModel,
@@ -1011,5 +1012,79 @@ describe('FormComponent', () => {
         formFields = formComponent.form.getFormFields();
         radioFieldById = formFields.find((field) => field.id === 'radio');
         expect(radioFieldById.value).toBe('option_3');
+    });
+});
+
+@Component({
+    selector: 'adf-form-with-custom-outcomes',
+    template: `
+    <adf-form #adfForm>
+        <adf-form-custom-outcomes>
+            <button mat-button id="adf-custom-outcome-1" (click)="onCustomButtonOneClick()">
+            CUSTOM-BUTTON-1
+            </button>
+            <button mat-button id="adf-custom-outcome-2" (click)="onCustomButtonTwoClick()">
+                CUSTOM-BUTTON-2
+            </button>
+        </adf-form-custom-outcomes>
+    </adf-form>`
+})
+
+class FormWithCustomOutComesComponent {
+
+    @ViewChild('adfForm')
+    adfForm: FormComponent;
+
+    onCustomButtonOneClick() { }
+    onCustomButtonTwoClick() { }
+}
+
+describe('FormWithCustomOutComesComponent', () => {
+
+    let fixture: ComponentFixture<FormWithCustomOutComesComponent>;
+    let customComponent: FormWithCustomOutComesComponent;
+    let debugElement: DebugElement;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessTestingModule
+        ],
+        declarations: [FormWithCustomOutComesComponent]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(FormWithCustomOutComesComponent);
+        customComponent = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+        const formRepresentation = {
+            fields: [
+                { id: 'container1' }
+            ],
+            outcomes: [
+                { id: 'outcome-1', name: 'outcome 1' }
+            ]
+        };
+
+        const form = new FormModel(formRepresentation);
+        customComponent.adfForm.form = form;
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        fixture.destroy();
+    });
+
+    it('should be able to inject custom outcomes and click on custom outcomes', () => {
+        const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
+        const buttonOneBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
+        const buttonTwoBtn = debugElement.query(By.css('#adf-custom-outcome-2'));
+        expect(buttonOneBtn).not.toBeNull();
+        expect(buttonTwoBtn).not.toBeNull();
+
+        buttonOneBtn.nativeElement.click();
+        expect(onCustomButtonOneSpy).toHaveBeenCalled();
+        expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
+        expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
     });
 });

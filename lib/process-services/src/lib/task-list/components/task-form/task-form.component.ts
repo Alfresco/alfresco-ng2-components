@@ -119,11 +119,11 @@ export class TaskFormComponent implements OnInit {
 
   /** Emitted when the task is claimed. */
   @Output()
-  claim: EventEmitter<any> = new EventEmitter<any>();
+  taskClaimed = new EventEmitter<string>();
 
-  /** Emitted when the task is unclaimed (ie, requeued). */
+  /** Emitted when the task is unclaimed (ie, requeued).. */
   @Output()
-  unclaim: EventEmitter<any> = new EventEmitter<any>();
+  taskUnclaimed = new EventEmitter<string>();
 
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
@@ -299,15 +299,15 @@ export class TaskFormComponent implements OnInit {
     return this.isCandidateMember() && this.isAssignedToMe() && !this.isCompletedTask();
   }
 
-  reloadTask(taskId: string) {
-    this.loadTask(taskId);
+  reloadTask() {
+    this.loadTask(this.taskId);
   }
 
   onClaimTask(taskId: string) {
-    this.claim.emit(taskId);
+    this.taskClaimed.emit(taskId);
   }
 
   onUnclaimTask(taskId: string) {
-    this.unclaim.emit(taskId);
+    this.taskUnclaimed.emit(taskId);
   }
 }

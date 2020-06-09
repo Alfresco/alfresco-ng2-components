@@ -58,18 +58,22 @@ describe('ClaimTaskDirective', () => {
 
     it('Should be able to call claim task service', () => {
         const claimTaskSpy = spyOn(taskListService, 'claimTask').and.returnValue(of({}));
+
         const button = fixture.nativeElement.querySelector('button');
         button.click();
+
         expect(claimTaskSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
     });
 
     it('Should be able to catch success event on click of claim button', async() => {
         spyOn(taskListService, 'claimTask').and.returnValue(of({}));
         const unclaimSpy = spyOn(fixture.componentInstance.claim, 'emit');
+
         const button = fixture.nativeElement.querySelector('button');
         button.click();
         fixture.detectChanges();
         await fixture.whenStable();
+
         expect(unclaimSpy).toHaveBeenCalledWith(fixture.componentInstance.taskId);
     });
 });
@@ -106,11 +110,13 @@ describe('Claim Task Directive validation errors', () => {
 
     it('should throw error when missing input', () => {
         fixture = TestBed.createComponent(ClaimTestMissingInputDirectiveComponent);
+
         expect(() => fixture.detectChanges()).toThrowError();
     });
 
     it('should throw error when taskId is not set', () => {
         fixture = TestBed.createComponent(ClaimTestMissingTaskIdDirectiveComponent);
+
         expect( () => fixture.detectChanges()).toThrowError('Attribute taskId is required');
     });
 });
