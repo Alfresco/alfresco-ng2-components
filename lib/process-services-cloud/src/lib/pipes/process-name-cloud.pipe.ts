@@ -18,7 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import moment from 'moment-es6';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
-import { ProcessDefinitionCloud } from '../process/start-process/models/process-definition-cloud.model';
+import { ProcessInstanceCloud } from '../process/start-process/models/process-instance-cloud.model';
 
 @Pipe({ name: 'processNameCloud' })
 export class ProcessNameCloudPipe implements PipeTransform {
@@ -28,7 +28,7 @@ export class ProcessNameCloudPipe implements PipeTransform {
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
-    transform(processNameFormat: string, selectedProcessDefinition?: ProcessDefinitionCloud): string {
+    transform(processNameFormat: string, processInstance?: ProcessInstanceCloud): string {
         let processName = processNameFormat;
         if (processName.match(ProcessNameCloudPipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
@@ -39,7 +39,7 @@ export class ProcessNameCloudPipe implements PipeTransform {
         }
 
         if (processName.match(ProcessNameCloudPipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
-            const selectedProcessDefinitionName = selectedProcessDefinition ? selectedProcessDefinition.name : '';
+            const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
             processName = processName.replace(
                 ProcessNameCloudPipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
                 selectedProcessDefinitionName

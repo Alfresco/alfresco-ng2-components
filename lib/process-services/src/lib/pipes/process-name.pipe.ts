@@ -18,7 +18,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import moment from 'moment-es6';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
-import { ProcessDefinitionRepresentation } from '../process-list';
+import { ProcessInstance } from '../process-list';
 
 @Pipe({ name: 'processName' })
 export class ProcessNamePipe implements PipeTransform {
@@ -28,7 +28,7 @@ export class ProcessNamePipe implements PipeTransform {
     constructor(private localizedDatePipe: LocalizedDatePipe) {
     }
 
-    transform(processNameFormat: string, selectedProcessDefinition?: ProcessDefinitionRepresentation): string {
+    transform(processNameFormat: string, processInstance?: ProcessInstance): string {
         let processName = processNameFormat;
         if (processName.match(ProcessNamePipe.DATE_TIME_IDENTIFIER_REG_EXP)) {
             const presentDateTime = moment.now();
@@ -39,7 +39,7 @@ export class ProcessNamePipe implements PipeTransform {
         }
 
         if (processName.match(ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP)) {
-            const selectedProcessDefinitionName = selectedProcessDefinition ? selectedProcessDefinition.name : '';
+            const selectedProcessDefinitionName = processInstance ? processInstance.processDefinitionName : '';
             processName = processName.replace(
                 ProcessNamePipe.PROCESS_DEFINITION_IDENTIFIER_REG_EXP,
                 selectedProcessDefinitionName

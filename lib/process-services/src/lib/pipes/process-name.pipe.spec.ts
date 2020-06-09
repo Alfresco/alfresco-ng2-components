@@ -22,7 +22,7 @@ import { CoreTestingModule } from 'core/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment-es6';
 import { LocalizedDatePipe } from '@alfresco/adf-core';
-import { testProcessDef } from '../mock';
+import { ProcessInstance } from '../process-list';
 
 describe('ProcessNamePipe', () => {
 
@@ -35,6 +35,7 @@ describe('ProcessNamePipe', () => {
     const nameWithProcessDefinitionIdentifier = `${defaultName} - ${processDefinitionIdentifier}`;
     const nameWithDatetimeIdentifier = `${defaultName} - ${datetimeIdentifier}`;
     const nameWithAllIdentifiers = `${defaultName} ${processDefinitionIdentifier} - ${datetimeIdentifier}`;
+    const fakeProcessInstanceDetails = new ProcessInstance({ processDefinitionName: 'fake-process-def-name'});
 
     setupTestBed({
         imports: [
@@ -54,8 +55,8 @@ describe('ProcessNamePipe', () => {
     });
 
     it('should add the selected process definition name to the process name', () => {
-        const transformResult = processNamePipe.transform(nameWithProcessDefinitionIdentifier, testProcessDef);
-        expect(transformResult).toEqual(`${defaultName} - ${testProcessDef.name}`);
+        const transformResult = processNamePipe.transform(nameWithProcessDefinitionIdentifier, fakeProcessInstanceDetails);
+        expect(transformResult).toEqual(`${defaultName} - ${fakeProcessInstanceDetails.processDefinitionName}`);
     });
 
     it('should add the current datetime to the process name', () => {
@@ -66,8 +67,8 @@ describe('ProcessNamePipe', () => {
 
     it('should add the current datetime and the selected process definition name when both identifiers are present', () => {
         spyOn(moment, 'now').and.returnValue(mockCurrentDate);
-        const transformResult = processNamePipe.transform(nameWithAllIdentifiers, testProcessDef);
-        expect(transformResult).toEqual(`${defaultName} ${testProcessDef.name} - ${mockLocalizedCurrentDate}`);
+        const transformResult = processNamePipe.transform(nameWithAllIdentifiers, fakeProcessInstanceDetails);
+        expect(transformResult).toEqual(`${defaultName} ${fakeProcessInstanceDetails.processDefinitionName} - ${mockLocalizedCurrentDate}`);
     });
 
     it('should not modify the process name when processDefinition identifier is present but no process definition is selected', () => {

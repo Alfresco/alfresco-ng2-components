@@ -493,30 +493,6 @@ describe('StartFormComponent', () => {
             });
         }));
 
-        it('should throw error event when process cannot be started', async(() => {
-            const errorSpy = spyOn(component.error, 'error');
-            const error = { message: 'My error' };
-            startProcessSpy = startProcessSpy.and.returnValue(throwError(error));
-            component.processDefinitionSelectionChanged(testProcessDef);
-            component.startProcess();
-            fixture.whenStable().then(() => {
-                expect(errorSpy).toHaveBeenCalledWith(error);
-            });
-        }));
-
-        it('should indicate an error to the user if process cannot be started', async(() => {
-            fixture.detectChanges();
-            startProcessSpy = startProcessSpy.and.returnValue(throwError({}));
-            component.processDefinitionSelectionChanged(testProcessDef);
-            component.startProcess();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const errorEl = fixture.nativeElement.querySelector('#error-message');
-                expect(errorEl).not.toBeNull();
-                expect(errorEl.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.ERROR.START');
-            });
-        }));
-
         it('should emit start event when start select a process and add a name', (done) => {
             const disposableStart = component.start.subscribe(() => {
                 disposableStart.unsubscribe();

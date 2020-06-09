@@ -376,8 +376,11 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
     processDefinitionSelectionChanged(processDefinition: ProcessDefinitionCloud) {
         if (processDefinition) {
-            const defaultProcessName = this.processNameCloudPipe.transform(this.name, processDefinition);
+            const processInstanceDetails = new ProcessInstanceCloud({ processDefinitionName: processDefinition.name });
+            const defaultProcessName = this.processNameCloudPipe.transform(this.name, processInstanceDetails);
             this.processInstanceName.setValue(defaultProcessName);
+            this.processInstanceName.markAsDirty();
+            this.processInstanceName.markAsTouched();
             this.processDefinitionSelection.emit(processDefinition);
         }
     }
