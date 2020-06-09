@@ -17,7 +17,7 @@ fs.readFile(configPath, (err, appConfigString) => {
     appConfig.notificationDefaultDuration = process.env.NOTIFICATION_LAST || 8000;
     appConfig.authType = process.env.AUTH_TYPE || 'BASIC';
 
-    let appConfigReplacedJson = JSON.stringify(appConfig);
+    let appConfigReplacedJson = JSON.stringify(appConfig,null,4);
 
 
     fs.writeFileSync(configPath, appConfigReplacedJson);

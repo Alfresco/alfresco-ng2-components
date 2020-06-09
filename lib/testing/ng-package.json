@@ -6,8 +6,6 @@
     "flatModuleFile": "adf-testing",
     "umdModuleIds": {
       "@alfresco/js-api": "@alfresco/js-api",
-      "@alfresco/adf-core": "@alfresco/adf-core",
-      "@alfresco/adf-extensions": "@alfresco/adf-extensions",
       "moment-es6": "moment-es6",
       "protractor": "protractor",
       "selenium-webdriver/remote": "selenium-webdriver/remote",

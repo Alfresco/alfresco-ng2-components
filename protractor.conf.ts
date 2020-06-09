@@ -1,5 +1,4 @@
-// tslint:disable: no-var-requires
-// tslint:disable: no-console
+const { LocalStorageUtil, ACTIVITI_CLOUD_APPS } = require('@alfresco/adf-testing');
 
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
@@ -9,7 +8,6 @@ const testConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
-const ACTIVITI_CLOUD_APPS = require('./lib/testing/src/lib/process-services-cloud/resources/resources.json');
 
 const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
 const argv = require('yargs').argv;
@@ -29,7 +27,6 @@ const HOST = process.env.URL_HOST_ADF;
 const BROWSER_RUN = !!process.env.BROWSER_RUN;
 const FOLDER = process.env.FOLDER || '';
 const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
-const DIRECT_CONNECCT = !SELENIUM_SERVER;
 const MAXINSTANCES = process.env.MAXINSTANCES || 1;
 const MAX_RETRIES = process.env.MAX_RETRIES || 4;
 const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
@@ -50,20 +47,6 @@ if (LOG) {
 }
 
 const downloadFolder = path.join(__dirname, 'e2e/downloads');
-
-async function setStorageItem(field, value) {
-    // @ts-ignore
-    await browser.executeScript(
-        'window.adf.setStorageItem(`' + field + '`, `' + value + '`);'
-    );
-}
-
-async function apiReset() {
-    // @ts-ignore
-    await browser.executeScript(
-        `window.adf.apiReset();`
-    );
-}
 
 const specs = () => {
     const specsToRun = FOLDER ? './**/e2e/' + FOLDER + '/**/*.e2e.ts' : './**/e2e/**/*.e2e.ts';
@@ -131,9 +114,8 @@ exports.config = {
     baseUrl: HOST,
 
     params: {
-        testConfig,
+        testConfig: testConfig,
         loginRoute: '/login',
-        config: testConfig.appConfig,
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: testConfig.identityAdmin,
         identityUser: testConfig.identityUser,
@@ -208,22 +190,31 @@ exports.config = {
             })
         );
 
+        // @ts-ignore
         await browser.driver.executeScript(disableCSSAnimation);
+
+        // @ts-ignore
         await browser.get(`${HOST}/settings`);
-        await browser.executeScript('window.adf.clearStorage();');
+        await LocalStorageUtil.clearStorage();
+        // @ts-ignore
+        await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
+        // @ts-ignore
+        await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
+        // @ts-ignore
+        await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
+        await LocalStorageUtil.setStorageItem('baseShareUrl', HOST);
 
-        // await setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
-        // await setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
-        // await setStorageItem('providers', browser.params.testConfig.appConfig.provider);
-        // await setStorageItem('baseShareUrl', HOST);
+        // @ts-ignore
+        if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
+            // @ts-ignore
+            await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+            // @ts-ignore
+            await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
+            // @ts-ignore
+            await LocalStorageUtil.setStorageItem('oauth2', JSON.stringify(browser.params.testConfig.appConfig.oauth2));
+        }
 
-        // if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
-        //     await setStorageItem('authType', browser.params.testConfig.appConfig.authType);
-        //     await setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
-        //     await setStorageItem('oauth2', JSON.stringify(browser.params.testConfig.appConfig.oauth2));
-        // }
-
-        await apiReset();
+        await LocalStorageUtil.apiReset();
 
         function disableCSSAnimation() {
             const css = '* {' +
@@ -241,6 +232,7 @@ exports.config = {
         }
 
     },
+
 
     beforeLaunch: function () {
         if (SAVE_SCREENSHOT) {
