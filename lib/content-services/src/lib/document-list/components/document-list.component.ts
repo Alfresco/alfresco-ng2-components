@@ -19,7 +19,7 @@
 
 import {
     AfterContentInit, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, NgZone,
-    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation, TemplateRef
+    OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 
 import {
@@ -306,16 +306,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @ViewChild('dataTable')
     dataTable: DataTableComponent;
 
-    @ContentChild(TemplateRef)
-    filterTemplateRef: TemplateRef<any>;
-
     actions: ContentActionModel[] = [];
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
     noPermission: boolean = false;
     selection = new Array<NodeEntry>();
     $folderNode: Subject<Node> = new Subject<Node>();
-    allowFiltering: boolean = false;
+    allowFiltering: boolean = true;
 
     // @deprecated 3.0.0
     folderNode: Node;
