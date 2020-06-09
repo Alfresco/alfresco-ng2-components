@@ -27,7 +27,30 @@ export class SearchHeaderComponent {
     @Input()
     col: DataColumn;
 
+    @Output()
+    update: EventEmitter<NodePaging> = new EventEmitter();
+
+    category: any = {};
+
+    constructor(private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
+
+    ngOnInit() {
+       this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
+
+       this.searchHeaderQueryBuilder.executed.subscribe((newNodePaging: NodePaging) => {
+            this.update.emit(newNodePaging);
+        });
+
+    //    this.searchHeaderQueryBuilder.updated.subscribe((query) => {
+    //         console.log(query);
+    //     });
+    }
+
     onMenuButtonClick(event: Event) {
         event.stopPropagation();
+    }
+
+    onApplyButtonClick() {
+        this.searchHeaderQueryBuilder.execute();
     }
 }
