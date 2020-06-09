@@ -195,6 +195,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     stickyHeader: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
+    enableCustomHeaderFilter = false;
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;

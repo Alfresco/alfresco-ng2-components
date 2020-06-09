@@ -40,6 +40,7 @@ import {
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
+    CustomHeaderFilterTemplateDirective,
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
@@ -90,6 +91,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     customNoContentTemplate: CustomEmptyContentTemplateDirective;
+
+    @ContentChild(CustomHeaderFilterTemplateDirective)
+    customHeaderFilterTemplate: CustomHeaderFilterTemplateDirective;
 
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()

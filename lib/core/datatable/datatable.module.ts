@@ -38,9 +38,11 @@ import { LocationCellComponent } from './components/location-cell/location-cell.
 import { LoadingContentTemplateDirective } from './directives/loading-template.directive';
 import { NoContentTemplateDirective } from './directives/no-content-template.directive';
 import { NoPermissionTemplateDirective } from './directives/no-permission-template.directive';
+import { HeaderFilterTemplateDirective } from './directives/header-filter-template.directive';
 import { CustomEmptyContentTemplateDirective } from './directives/custom-empty-content-template.directive';
 import { CustomLoadingContentTemplateDirective } from './directives/custom-loading-template.directive';
 import { CustomNoPermissionTemplateDirective } from './directives/custom-no-permission-template.directive';
+import { CustomHeaderFilterTemplateDirective } from './directives/custom-header-filter-template.directive';
 import { JsonCellComponent } from './components/json-cell/json-cell.component';
 import { ClipboardModule } from '../clipboard/clipboard.module';
 import { DropZoneDirective } from './directives/drop-zone.directive';
@@ -73,9 +75,11 @@ import { DataColumnModule } from '../data-column/data-column.module';
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
+        HeaderFilterTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
+        CustomHeaderFilterTemplateDirective,
         DropZoneDirective
     ],
     exports: [
@@ -93,9 +97,11 @@ import { DataColumnModule } from '../data-column/data-column.module';
         NoContentTemplateDirective,
         NoPermissionTemplateDirective,
         LoadingContentTemplateDirective,
+        HeaderFilterTemplateDirective,
         CustomEmptyContentTemplateDirective,
         CustomLoadingContentTemplateDirective,
         CustomNoPermissionTemplateDirective,
+        CustomHeaderFilterTemplateDirective,
         DropZoneDirective
     ]
 
