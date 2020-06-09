@@ -210,12 +210,12 @@ exports.config = {
 
         await browser.driver.executeScript(disableCSSAnimation);
         await browser.get(`${HOST}/settings`);
-        await browser.executeScript('window.adf.clearStorage();');
+        // await browser.executeScript('window.adf.clearStorage();');
 
-        await setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
-        await setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
-        await setStorageItem('providers', browser.params.testConfig.appConfig.provider);
-        await setStorageItem('baseShareUrl', HOST);
+        // await setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
+        // await setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
+        // await setStorageItem('providers', browser.params.testConfig.appConfig.provider);
+        // await setStorageItem('baseShareUrl', HOST);
 
         if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
             await setStorageItem('authType', browser.params.testConfig.appConfig.authType);
