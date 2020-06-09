@@ -244,9 +244,11 @@
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)"
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)">
-                <ng-template let-col>
-                    <adf-search-header [col]="col"></adf-search-header>
-                </ng-template>
+                <adf-custom-header-filter-template *ngIf="enableCustomHeaderFilter">
+                    <ng-template let-col>
+                        <div>My custom filter for {{col.title}}</div>
+                    </ng-template>
+                </adf-custom-header-filter-template>
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
                     <h1>You don't have permissions</h1>
                 </adf-custom-no-permission-template>
