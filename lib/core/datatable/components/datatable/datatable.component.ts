@@ -175,9 +175,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     allowFiltering: boolean = false;
 
-    @ContentChild(TemplateRef)
-    filterTemplateRef: TemplateRef<any>;
-
+    headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;

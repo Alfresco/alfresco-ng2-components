@@ -24,12 +24,14 @@
     (row-unselect)="onNodeUnselect($event.detail)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
-    <ng-template let-col>
-        <ng-template
-            [ngTemplateOutlet]="filterTemplateRef"
-            [ngTemplateOutletContext]="{$implicit: col}">
+    <adf-header-filter-template>
+        <ng-template let-col>
+            <adf-search-header *ngIf="!customHeaderFilterTemplate" [col]="col"></adf-search-header>
+            <ng-template [ngTemplateOutlet]="customHeaderFilterTemplate?.template"
+                [ngTemplateOutletContext]="{$implicit: col}">
+            </ng-template>
         </ng-template>
-    </ng-template>
+    </adf-header-filter-template>
 
     <adf-no-content-template>
         <ng-template>
