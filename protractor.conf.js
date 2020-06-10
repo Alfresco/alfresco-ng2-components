@@ -1,5 +1,4 @@
-const { LocalStorageUtil, ACTIVITI_CLOUD_APPS } = require('@alfresco/adf-testing');
-
+const { LocalStorageUtil, ACTIVITI_CLOUD_APPS } = require('./lib/dist/testing');
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
