@@ -164,6 +164,7 @@ export class FormFields {
 
     async isCompleteFormButtonEnabled(): Promise<boolean> {
         try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
             await this.completeButton.isEnabled();
             return true;
         } catch (error) {
