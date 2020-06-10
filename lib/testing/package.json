@@ -11,8 +11,6 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "peerDependencies": {
-    "@angular/common": "^9.1.9",
-    "@angular/core": "^9.1.9",
     "@alfresco/js-api": ">=3.8.0"
   },
   "keywords": [

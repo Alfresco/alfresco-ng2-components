@@ -437,9 +437,9 @@
           },
           "configurations": {
             "production": {
-              "project": "lib/process-services/ng-package.json"
-            ,              "tsConfig": "lib/process-services/tsconfig.lib.prod.json"
-}
+              "project": "lib/process-services/ng-package.json",
+              "tsConfig": "lib/process-services/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -480,9 +480,9 @@
           },
           "configurations": {
             "production": {
-              "project": "lib/process-services-cloud/ng-package.json"
-            ,              "tsConfig": "lib/process-services-cloud/tsconfig.lib.prod.json"
-}
+              "project": "lib/process-services-cloud/ng-package.json",
+              "tsConfig": "lib/process-services-cloud/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -605,19 +605,11 @@
           "options": {
             "tsConfig": "lib/testing/tsconfig.lib.json",
             "project": "lib/testing/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "lib/testing/tsconfig.lib.prod.json"
             }
-          }
-},
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "lib/testing/src/test.ts",
-            "tsConfig": "lib/testing/tsconfig.spec.json",
-            "karmaConfig": "lib/testing/karma.conf.js"
           }
         },
         "lint": {
@@ -644,13 +636,13 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "lib/cli/tsconfig.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "lib/cli/tsconfig.lib.prod.json"
             }
           }
-}
+        }
       }
     }
   },
