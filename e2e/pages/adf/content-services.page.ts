@@ -21,7 +21,7 @@ import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
 
-import path = require('path');
+import * as path from 'path';
 
 export class ContentServicesPage {
 

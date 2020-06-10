@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import path = require('path');
+import * as path from 'path';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 
