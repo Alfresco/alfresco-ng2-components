@@ -320,7 +320,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.ts",
+            "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "lib-e2e-test:serve"
           }
         },

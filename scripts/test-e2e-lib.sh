@@ -211,8 +211,8 @@ else
 
         npm run postbuild:ci
 
-        npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+        npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
      else
-        $DEBUG_OPTION  ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+        $DEBUG_OPTION  ./node_modules/protractor/bin/protractor protractor.conf.js || exit 1
     fi
 fi
