@@ -99,7 +99,7 @@ export class BrowserActions {
         }
     }
 
-    static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
+    static async clearSendKeys(elementFinder: ElementFinder, text: string = ''): Promise<void> {
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
