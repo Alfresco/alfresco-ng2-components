@@ -22,8 +22,8 @@ import { ProcessServicesPage } from '../pages/adf/process-services/process-servi
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
-import fs = require('fs');
-import path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('People component', () => {

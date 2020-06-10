@@ -25,8 +25,8 @@ import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-che
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import fs = require('fs');
-import path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {

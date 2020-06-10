@@ -16,9 +16,8 @@
  */
 
 import { element, by, protractor, browser, ElementFinder } from 'protractor';
-
-import path = require('path');
-import remote = require('selenium-webdriver/remote');
+import * as path from 'path';
+import * as remote from 'selenium-webdriver/remote';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {

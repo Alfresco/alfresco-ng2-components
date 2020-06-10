@@ -15,16 +15,13 @@
  * limitations under the License.
  */
 
-import path = require('path');
-import fs = require('fs');
-import remote = require('selenium-webdriver/remote');
-
+import * as path from 'path';
+import * as fs from 'fs';
+import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
-
-import { ImageUploadRepresentation } from '@alfresco/js-api';
+import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
 import { Tenant } from '../models/APS/tenant';
-import { UserRepresentation } from '@alfresco/js-api/src/api/activiti-rest-api/model/userRepresentation';
 
 export class UsersActions {
 
