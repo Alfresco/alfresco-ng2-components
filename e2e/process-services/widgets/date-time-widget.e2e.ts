@@ -68,13 +68,13 @@ describe('Date and time widget', () => {
 
     it('[C268818] Should be able to set general settings for Date Time widget', async () => {
         await expect(await widget.dateTimeWidget().getDateTimeLabel(app.FIELD.date_time_input)).toContain('Date');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await widget.dateTimeWidget().openDatepicker(app.FIELD.date_time_input);
         await widget.dateTimeWidget().selectDay('10');
         await widget.dateTimeWidget().selectHour('8');
         await widget.dateTimeWidget().selectMinute('30');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
         await expect(await widget.dateTimeWidget().getPlaceholder(app.FIELD.date_time_between_input)).toBe('Choose anything...');
     });
