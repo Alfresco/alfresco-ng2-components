@@ -15,28 +15,28 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder, Locator } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialogPage {
 
-    closeButton: ElementFinder = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
-    dialog: ElementFinder = element(by.css('div[id="upload-dialog"]'));
-    minimizedDialog: ElementFinder = element(by.css('div[class*="upload-dialog--minimized"]'));
-    uploadedStatusIcon: Locator = by.css('mat-icon[class*="status--done"]');
-    cancelledStatusIcon: Locator = by.css('div[class*="status--cancelled"]');
+    closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
+    dialog = element(by.css('div[id="upload-dialog"]'));
+    minimizedDialog = element(by.css('div[class*="upload-dialog--minimized"]'));
+    uploadedStatusIcon = by.css('mat-icon[class*="status--done"]');
+    cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
     errorStatusIcon = by.css('div[class*="status--error"] mat-icon');
-    errorTooltip: ElementFinder = element(by.css('div.mat-tooltip'));
+    errorTooltip = element(by.css('div.mat-tooltip'));
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
-    title: ElementFinder = element(by.css('span[class*="upload-dialog__title"]'));
-    minimizeButton: ElementFinder = element(by.css('mat-icon[title="Minimize"]'));
-    maximizeButton: ElementFinder = element(by.css('mat-icon[title="Maximize"]'));
-    canUploadConfirmationTitle: ElementFinder = element(by.css('p[class="upload-dialog__confirmation--title"]'));
-    canUploadConfirmationDescription: ElementFinder = element(by.css('p[class="upload-dialog__confirmation--text"]'));
-    confirmationDialogNoButton: ElementFinder = element(by.partialButtonText('No'));
-    confirmationDialogYesButton: ElementFinder = element(by.partialButtonText('Yes'));
-    cancelUploadsElement: ElementFinder = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
-    cancelUploadInProgressButton: ElementFinder = element(by.css('div[data-automation-id="cancel-upload-progress"]'));
+    title = element(by.css('span[class*="upload-dialog__title"]'));
+    minimizeButton = element(by.css('mat-icon[title="Minimize"]'));
+    maximizeButton = element(by.css('mat-icon[title="Maximize"]'));
+    canUploadConfirmationTitle = element(by.css('p[class="upload-dialog__confirmation--title"]'));
+    canUploadConfirmationDescription = element(by.css('p[class="upload-dialog__confirmation--text"]'));
+    confirmationDialogNoButton = element(by.partialButtonText('No'));
+    confirmationDialogYesButton = element(by.partialButtonText('Yes'));
+    cancelUploadsElement = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-cancel-all"]')));
+    cancelUploadInProgressButton = element(by.css('div[data-automation-id="cancel-upload-progress"]'));
 
     async clickOnCloseButton(): Promise<void> {
         await this.checkCloseButtonIsDisplayed();
@@ -59,32 +59,32 @@ export class UploadDialogPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.dialog);
     }
 
-    getRowsByName(content): ElementFinder {
+    getRowsByName(content: string): ElementFinder {
         return element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
     }
 
-    getRowByRowName(content) {
+    getRowByRowName(content: string) {
         const rows = this.getRowsByName(content);
         return rows.element(this.rowByRowName);
     }
 
-    async fileIsUploaded(content): Promise<void> {
+    async fileIsUploaded(content: string): Promise<void> {
         const row = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
     }
 
-    async fileIsError(content) {
+    async fileIsError(content: string) {
         const row = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.errorStatusIcon));
     }
 
-    async filesAreUploaded(content): Promise<void> {
+    async filesAreUploaded(content: string[]): Promise<void> {
         for (let i = 0; i < content.length; i++) {
             await this.fileIsUploaded(content[i]);
         }
     }
 
-    async fileIsNotDisplayedInDialog(content): Promise<void> {
+    async fileIsNotDisplayedInDialog(content: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.css(`div[class*='uploading-row'] span[title="${content}"]`)));
     }
 
@@ -100,12 +100,12 @@ export class UploadDialogPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.cancelUploadInProgressButton);
     }
 
-    async fileIsCancelled(content): Promise<void> {
+    async fileIsCancelled(content: string): Promise<void> {
         const row = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon), 10000);
     }
 
-    async removeUploadedFile(content): Promise<void> {
+    async removeUploadedFile(content: string): Promise<void> {
         const row = await this.getRowByRowName(content);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
         const elementRow = await this.getRowByRowName(content);

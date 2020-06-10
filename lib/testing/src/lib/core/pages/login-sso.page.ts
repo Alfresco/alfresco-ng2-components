@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor, ElementFinder } from 'protractor';
+import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
@@ -29,9 +29,9 @@ export class LoginSSOPage {
     header = element(by.tagName('adf-layout-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
-    txtUsernameBasicAuth: ElementFinder = element(by.css('input[id="username"]'));
-    txtPasswordBasicAuth: ElementFinder = element(by.css('input[id="password"]'));
-    signInButtonBasicAuth: ElementFinder = element(by.id('login-button'));
+    txtUsernameBasicAuth = element(by.css('input[id="username"]'));
+    txtPasswordBasicAuth = element(by.css('input[id="password"]'));
+    signInButtonBasicAuth = element(by.id('login-button'));
 
     async goToLoginPage(): Promise<void> {
         let currentUrl;
@@ -95,11 +95,11 @@ export class LoginSSOPage {
         await BrowserActions.click(this.signInButtonBasicAuth);
     }
 
-    async enterUsernameBasicAuth(username): Promise<void> {
+    async enterUsernameBasicAuth(username: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.txtUsernameBasicAuth, username);
     }
 
-    async enterPasswordBasicAuth(password): Promise<void> {
+    async enterPasswordBasicAuth(password: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.txtPasswordBasicAuth, password);
     }
 

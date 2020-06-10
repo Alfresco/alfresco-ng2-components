@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { browser, by, element, Locator, ElementFinder } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class EditTaskFilterDialogPage {
 
-    componentElement: ElementFinder = element(by.css('adf-cloud-task-filter-dialog'));
-    title: ElementFinder = element(by.id('adf-task-filter-dialog-title'));
-    filterNameInput: ElementFinder = element(by.id('adf-filter-name-id'));
-    saveButtonLocator: Locator = by.id('adf-save-button-id');
-    cancelButtonLocator: Locator = by.id('adf-cancel-button-id');
+    componentElement = element(by.css('adf-cloud-task-filter-dialog'));
+    title = element(by.id('adf-task-filter-dialog-title'));
+    filterNameInput = element(by.id('adf-filter-name-id'));
+    saveButtonLocator = by.id('adf-save-button-id');
+    cancelButtonLocator = by.id('adf-cancel-button-id');
 
     async clickOnSaveButton(): Promise<void> {
         const saveButton = this.componentElement.element(this.saveButtonLocator);

@@ -16,11 +16,11 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 
 export class FiltersPage {
 
-    activeFilter: ElementFinder = element(by.css('.adf-active'));
+    activeFilter = element(by.css('.adf-active'));
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     async getActiveFilter(): Promise<string> {
@@ -41,7 +41,7 @@ export class FiltersPage {
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter: ElementFinder = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
+        const highlightedFilter = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }

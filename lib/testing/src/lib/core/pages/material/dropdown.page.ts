@@ -23,7 +23,7 @@ export class DropdownPage {
 
     dropDownElement: ElementFinder;
 
-    constructor(dropDownElement: ElementFinder = element.all(by.css('div[class="mat-select-arrow-wrapper"]')).first()) {
+    constructor(dropDownElement = element.all(by.css('div[class="mat-select-arrow-wrapper"]')).first()) {
         this.dropDownElement = dropDownElement;
     }
 
@@ -58,8 +58,8 @@ export class DropdownPage {
         await BrowserVisibility.waitUntilElementIsVisible(selectedOption);
     }
 
-    async selectOptionFromIndex(index): Promise<void> {
-        const value: ElementFinder = element.all(by.className('mat-option')).get(index);
+    async selectOptionFromIndex(index: number): Promise<void> {
+        const value = element.all(by.className('mat-option')).get(index);
         await BrowserActions.click(value);
     }
 

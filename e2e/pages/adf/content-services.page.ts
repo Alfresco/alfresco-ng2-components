@@ -16,7 +16,7 @@
  */
 
 import { DropActions, BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage, DropdownPage } from '@alfresco/adf-testing';
-import { $$, browser, by, element, ElementFinder, ElementArrayFinder, protractor } from 'protractor';
+import { $$, browser, by, element, ElementFinder, protractor } from 'protractor';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
@@ -33,60 +33,60 @@ export class ContentServicesPage {
         created: 'Created'
     };
 
-    contentList: DocumentListPage = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
-    togglePage: TogglePage = new TogglePage();
-    createFolderDialog: FolderDialogPage = new FolderDialogPage();
-    createLibraryDialog: CreateLibraryDialogPage = new CreateLibraryDialogPage();
+    contentList = new DocumentListPage(element.all(by.css('adf-upload-drag-area adf-document-list')).first());
+    togglePage = new TogglePage();
+    createFolderDialog = new FolderDialogPage();
+    createLibraryDialog = new CreateLibraryDialogPage();
 
-    multipleFileUploadToggle: ElementFinder = element(by.id('adf-document-list-enable-drop-files'));
-    uploadBorder: ElementFinder = element(by.id('document-list-container'));
-    contentServices: ElementFinder = element(by.css('.app-sidenav-link[data-automation-id="Content Services"]'));
-    currentFolder: ElementFinder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
-    createFolderButton: ElementFinder = element(by.css('button[data-automation-id="create-new-folder"]'));
-    editFolderButton: ElementFinder = element(by.css('button[data-automation-id="edit-folder"]'));
-    deleteNodesButton: ElementFinder = element(by.css('button[data-automation-id="delete-toolbar-button"]'));
-    createLibraryButton: ElementFinder = element(by.css('button[data-automation-id="create-new-library"]'));
-    activeBreadcrumb: ElementFinder = element(by.css('div[class*="active"]'));
+    multipleFileUploadToggle = element(by.id('adf-document-list-enable-drop-files'));
+    uploadBorder = element(by.id('document-list-container'));
+    contentServices = element(by.css('.app-sidenav-link[data-automation-id="Content Services"]'));
+    currentFolder = element(by.css('div[class*="adf-breadcrumb-item adf-active"] div'));
+    createFolderButton = element(by.css('button[data-automation-id="create-new-folder"]'));
+    editFolderButton = element(by.css('button[data-automation-id="edit-folder"]'));
+    deleteNodesButton = element(by.css('button[data-automation-id="delete-toolbar-button"]'));
+    createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
+    activeBreadcrumb = element(by.css('div[class*="active"]'));
     tooltip = by.css('div[class*="--text adf-full-width"] span');
-    uploadFileButton: ElementFinder = element(by.css('.adf-upload-button-file-container button'));
-    uploadFileButtonInput: ElementFinder = element(by.css('input[data-automation-id="upload-single-file"]'));
-    uploadMultipleFileButton: ElementFinder = element(by.css('input[data-automation-id="upload-multiple-files"]'));
-    uploadFolderButton: ElementFinder = element(by.css('input[data-automation-id="uploadFolder"]'));
-    errorSnackBar: ElementFinder = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
-    emptyPagination: ElementFinder = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
-    dragAndDrop: ElementFinder = element.all(by.css('adf-upload-drag-area div')).first();
-    nameHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_name"] > span')).first();
-    sizeHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span')).first();
-    createdByHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span')).first();
-    createdHeader: ElementFinder = element.all(by.css('div[data-automation-id="auto_id_createdAt"] > span')).first();
-    recentFiles: ElementFinder = element(by.css('.app-container-recent'));
-    recentFilesExpanded: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header.mat-expanded'));
-    recentFilesClosed: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header'));
-    recentFileIcon: ElementFinder = element(by.css('.app-container-recent mat-expansion-panel-header mat-icon'));
-    emptyFolder: ElementFinder = element(by.css('.adf-empty-folder-this-space-is-empty'));
-    emptyFolderImage: ElementFinder = element(by.css('.adf-empty-folder-image'));
-    emptyRecent: ElementFinder = element(by.css('.app-container-recent .app-empty-list__title'));
-    gridViewButton: ElementFinder = element(by.css('button[data-automation-id="document-list-grid-view"]'));
-    cardViewContainer: ElementFinder = element(by.css('div.app-document-list-container div.adf-datatable-card'));
-    shareNodeButton: ElementFinder = element(by.cssContainingText('mat-icon', ' share '));
+    uploadFileButton = element(by.css('.adf-upload-button-file-container button'));
+    uploadFileButtonInput = element(by.css('input[data-automation-id="upload-single-file"]'));
+    uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));
+    uploadFolderButton = element(by.css('input[data-automation-id="uploadFolder"]'));
+    errorSnackBar = element(by.css('simple-snack-bar[class*="mat-simple-snackbar"]'));
+    emptyPagination = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
+    dragAndDrop = element.all(by.css('adf-upload-drag-area div')).first();
+    nameHeader = element.all(by.css('div[data-automation-id="auto_id_name"] > span')).first();
+    sizeHeader = element.all(by.css('div[data-automation-id="auto_id_content.sizeInBytes"] > span')).first();
+    createdByHeader = element.all(by.css('div[data-automation-id="auto_id_createdByUser.displayName"] > span')).first();
+    createdHeader = element.all(by.css('div[data-automation-id="auto_id_createdAt"] > span')).first();
+    recentFiles = element(by.css('.app-container-recent'));
+    recentFilesExpanded = element(by.css('.app-container-recent mat-expansion-panel-header.mat-expanded'));
+    recentFilesClosed = element(by.css('.app-container-recent mat-expansion-panel-header'));
+    recentFileIcon = element(by.css('.app-container-recent mat-expansion-panel-header mat-icon'));
+    emptyFolder = element(by.css('.adf-empty-folder-this-space-is-empty'));
+    emptyFolderImage = element(by.css('.adf-empty-folder-image'));
+    emptyRecent = element(by.css('.app-container-recent .app-empty-list__title'));
+    gridViewButton = element(by.css('button[data-automation-id="document-list-grid-view"]'));
+    cardViewContainer = element(by.css('div.app-document-list-container div.adf-datatable-card'));
+    shareNodeButton = element(by.cssContainingText('mat-icon', ' share '));
     nameColumnHeader = 'name';
     createdByColumnHeader = 'createdByUser.displayName';
     createdColumnHeader = 'createdAt';
-    deleteContentElement: ElementFinder = element(by.css('button[data-automation-id*="DELETE"]'));
-    metadataAction: ElementFinder = element(by.css('button[data-automation-id*="METADATA"]'));
-    versionManagerAction: ElementFinder = element(by.css('button[data-automation-id*="VERSIONS"]'));
-    moveContentElement: ElementFinder = element(by.css('button[data-automation-id*="MOVE"]'));
-    copyContentElement: ElementFinder = element(by.css('button[data-automation-id*="COPY"]'));
-    lockContentElement: ElementFinder = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
-    downloadContent: ElementFinder = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
-    downloadButton: ElementFinder = element(by.css('button[title="Download"]'));
-    favoriteButton: ElementFinder = element(by.css('button[data-automation-id="favorite"]'));
-    markedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
-    notMarkedFavorite: ElementFinder = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
-    multiSelectToggle: ElementFinder = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
-    selectAllCheckbox: ElementFinder = element.all(by.css('.adf-checkbox-sr-only')).first();
-    selectionModeDropdown: ElementFinder = element(by.css('.mat-select[aria-label="Selection Mode"]'));
-    selectedNodesList: ElementArrayFinder = element.all(by.css('.app-content-service-settings li'));
+    deleteContentElement = element(by.css('button[data-automation-id*="DELETE"]'));
+    metadataAction = element(by.css('button[data-automation-id*="METADATA"]'));
+    versionManagerAction = element(by.css('button[data-automation-id*="VERSIONS"]'));
+    moveContentElement = element(by.css('button[data-automation-id*="MOVE"]'));
+    copyContentElement = element(by.css('button[data-automation-id*="COPY"]'));
+    lockContentElement = element(by.css('button[data-automation-id="DOCUMENT_LIST.ACTIONS.LOCK"]'));
+    downloadContent = element(by.css('button[data-automation-id*="DOWNLOAD"]'));
+    downloadButton = element(by.css('button[title="Download"]'));
+    favoriteButton = element(by.css('button[data-automation-id="favorite"]'));
+    markedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star'));
+    notMarkedFavorite = element(by.cssContainingText('button[data-automation-id="favorite"] mat-icon', 'star_border'));
+    multiSelectToggle = element(by.cssContainingText('span.mat-slide-toggle-content', ' Multiselect (with checkboxes) '));
+    selectAllCheckbox = element.all(by.css('.adf-checkbox-sr-only')).first();
+    selectionModeDropdown = element(by.css('.mat-select[aria-label="Selection Mode"]'));
+    selectedNodesList = element.all(by.css('.app-content-service-settings li'));
 
     siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
@@ -96,12 +96,12 @@ export class ContentServicesPage {
     }
 
     async checkContextActionIsVisible(actionName) {
-        const actionButton: ElementFinder = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
     }
 
     async isContextActionEnabled(actionName): Promise<boolean> {
-        const actionButton: ElementFinder = element(by.css(`button[data-automation-id="context-${actionName}"`));
+        const actionButton = element(by.css(`button[data-automation-id="context-${actionName}"`));
         await BrowserVisibility.waitUntilElementIsVisible(actionButton);
         return actionButton.isEnabled();
     }
@@ -125,7 +125,7 @@ export class ContentServicesPage {
     async checkDeleteIsDisabled(content): Promise<void> {
         await this.contentList.clickOnActionMenu(content);
         await this.waitForContentOptions();
-        const disabledDelete: ElementFinder = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
+        const disabledDelete = element(by.css(`button[data-automation-id*='DELETE'][disabled='true']`));
         await BrowserVisibility.waitUntilElementIsVisible(disabledDelete);
     }
 
@@ -188,7 +188,7 @@ export class ContentServicesPage {
     }
 
     async clickHyperlinkNavigationToggle(): Promise<void> {
-        const hyperlinkToggle: ElementFinder = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
+        const hyperlinkToggle = element(by.cssContainingText('.mat-slide-toggle-content', 'Hyperlink navigation'));
         await BrowserActions.click(hyperlinkToggle);
     }
 
@@ -477,22 +477,22 @@ export class ContentServicesPage {
     }
 
     async enableInfiniteScrolling(): Promise<void> {
-        const infiniteScrollButton: ElementFinder = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
+        const infiniteScrollButton = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable Infinite Scrolling'));
         await BrowserActions.click(infiniteScrollButton);
     }
 
     async enableCustomPermissionMessage(): Promise<void> {
-        const customPermissionMessage: ElementFinder = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
+        const customPermissionMessage = element(by.cssContainingText('.mat-slide-toggle-content', 'Enable custom permission message'));
         await BrowserActions.click(customPermissionMessage);
     }
 
     async enableMediumTimeFormat(): Promise<void> {
-        const mediumTimeFormat: ElementFinder = element(by.css('#enableMediumTimeFormat'));
+        const mediumTimeFormat = element(by.css('#enableMediumTimeFormat'));
         await BrowserActions.click(mediumTimeFormat);
     }
 
     async enableThumbnails(): Promise<void> {
-        const thumbnailSlide: ElementFinder = element(by.id('adf-thumbnails-upload-switch'));
+        const thumbnailSlide = element(by.id('adf-thumbnails-upload-switch'));
         await BrowserActions.click(thumbnailSlide);
     }
 
@@ -501,7 +501,7 @@ export class ContentServicesPage {
     }
 
     async getDocumentListRowNumber(): Promise<number> {
-        const documentList: ElementFinder = element(by.css('adf-upload-drag-area adf-document-list'));
+        const documentList = element(by.css('adf-upload-drag-area adf-document-list'));
         await BrowserVisibility.waitUntilElementIsVisible(documentList);
         return $$('adf-upload-drag-area adf-document-list .adf-datatable-row').count();
     }
@@ -537,7 +537,7 @@ export class ContentServicesPage {
     }
 
     async checkLockIsDisplayedForElement(name): Promise<void> {
-        const lockButton: ElementFinder = element(by.css(`div.adf-datatable-cell[data-automation-id="${name}"] button`));
+        const lockButton = element(by.css(`div.adf-datatable-cell[data-automation-id="${name}"] button`));
         await BrowserVisibility.waitUntilElementIsVisible(lockButton);
     }
 
@@ -546,7 +546,7 @@ export class ContentServicesPage {
     }
 
     async getStyleValueForRowText(rowName, styleName): Promise<string> {
-        const row: ElementFinder = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
+        const row = element(by.css(`div.adf-datatable-cell[data-automation-id="${rowName}"] span.adf-datatable-cell-value[title="${rowName}"]`));
         await BrowserVisibility.waitUntilElementIsVisible(row);
         return row.getCssValue(styleName);
     }
@@ -566,7 +566,7 @@ export class ContentServicesPage {
     }
 
     async getRowIconImageUrl(fileName): Promise<string> {
-        const iconRow: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
+        const iconRow = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${fileName}"] img`));
         await BrowserVisibility.waitUntilElementIsVisible(iconRow);
         return iconRow.getAttribute('src');
     }
@@ -590,12 +590,12 @@ export class ContentServicesPage {
     }
 
     async getDocumentCardIconForElement(elementName): Promise<string> {
-        const elementIcon: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
+        const elementIcon = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"] img`));
         return elementIcon.getAttribute('src');
     }
 
     async checkDocumentCardPropertyIsShowed(elementName, propertyName): Promise<void> {
-        const elementProperty: ElementFinder = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
+        const elementProperty = element(by.css(`.app-document-list-container div.adf-datatable-cell[data-automation-id="${elementName}"][title="${propertyName}"]`));
         await BrowserVisibility.waitUntilElementIsVisible(elementProperty);
     }
 
@@ -605,15 +605,15 @@ export class ContentServicesPage {
     }
 
     async checkMenuIsShowedForElementIndex(elementIndex): Promise<void> {
-        const elementMenu: ElementFinder = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
+        const elementMenu = element(by.css(`button[data-automation-id="action_menu_${elementIndex}"]`));
         await BrowserVisibility.waitUntilElementIsVisible(elementMenu);
     }
 
     async navigateToCardFolder(folderName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const folderCard: ElementFinder = element(by.css(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
+        const folderCard = element(by.css(`.app-document-list-container div.adf-image-table-cell.adf-datatable-cell[data-automation-id="${folderName}"]`));
         await BrowserActions.click(folderCard);
-        const folderSelected: ElementFinder = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
+        const folderSelected = element(by.css(`.adf-datatable-row.adf-is-selected div[data-automation-id="${folderName}"].adf-datatable-cell--image`));
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
@@ -656,12 +656,12 @@ export class ContentServicesPage {
         await BrowserActions.click(this.selectAllCheckbox);
     }
 
-    getRowByName(rowName): ElementFinder {
+    getRowByName(rowName: string): ElementFinder {
         return this.contentList.dataTable.getRow(this.columns.name, rowName);
     }
 
     async selectFolder(folderName: string): Promise<void> {
-        const folderSelected: ElementFinder = element(by.css(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`));
+        const folderSelected = element(by.css(`div[data-automation-id="${folderName}"] .adf-datatable-center-img-ie`));
         await BrowserVisibility.waitUntilElementIsVisible(folderSelected);
         await BrowserActions.click(folderSelected);
     }
@@ -682,13 +682,13 @@ export class ContentServicesPage {
     }
 
     async selectItemWithCheckbox(itemName: string): Promise<void> {
-        const item: ElementFinder = element(by.css(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`));
+        const item = element(by.css(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`));
         await BrowserVisibility.waitUntilElementIsVisible(item);
         await BrowserActions.clickScript(item);
     }
 
     async unSelectItemWithCheckbox(itemName: string): Promise<void> {
-        const item: ElementFinder = element(by.css(`adf-datatable-row[aria-label="${itemName} selected"] mat-checkbox .mat-checkbox-input`));
+        const item = element(by.css(`adf-datatable-row[aria-label="${itemName} selected"] mat-checkbox .mat-checkbox-input`));
         await BrowserVisibility.waitUntilElementIsVisible(item);
         await BrowserActions.click(item);
     }

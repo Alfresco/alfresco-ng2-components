@@ -16,26 +16,26 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, PaginationPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { TasksListPage } from '../../process-services/tasks-list.page';
 
 export class TaskListDemoPage {
 
     taskListPage: TasksListPage = new TasksListPage();
-    appId: ElementFinder = element(by.css("input[data-automation-id='appId input']"));
-    itemsPerPage: ElementFinder = element(by.css("input[data-automation-id='items per page']"));
-    itemsPerPageForm: ElementFinder = element(by.css("mat-form-field[data-automation-id='items per page']"));
-    processDefinitionId: ElementFinder = element(by.css("input[data-automation-id='process definition id']"));
-    processInstanceId: ElementFinder = element(by.css("input[data-automation-id='process instance id']"));
-    page: ElementFinder = element(by.css("input[data-automation-id='page']"));
-    pageForm: ElementFinder = element(by.css("mat-form-field[data-automation-id='page']"));
-    taskName: ElementFinder = element(by.css("input[data-automation-id='task name']"));
-    resetButton: ElementFinder = element(by.css("div[class='app-reset-button'] button"));
-    dueBefore: ElementFinder = element(by.css("input[data-automation-id='due before']"));
-    dueAfter: ElementFinder = element(by.css("input[data-automation-id='due after']"));
-    taskId: ElementFinder = element(by.css("input[data-automation-id='task id']"));
+    appId = element(by.css("input[data-automation-id='appId input']"));
+    itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
+    itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
+    processDefinitionId = element(by.css("input[data-automation-id='process definition id']"));
+    processInstanceId = element(by.css("input[data-automation-id='process instance id']"));
+    page = element(by.css("input[data-automation-id='page']"));
+    pageForm = element(by.css("mat-form-field[data-automation-id='page']"));
+    taskName = element(by.css("input[data-automation-id='task name']"));
+    resetButton = element(by.css("div[class='app-reset-button'] button"));
+    dueBefore = element(by.css("input[data-automation-id='due before']"));
+    dueAfter = element(by.css("input[data-automation-id='due after']"));
+    taskId = element(by.css("input[data-automation-id='task id']"));
 
-    stateDropDownArrow: ElementFinder = element(by.css("mat-form-field[data-automation-id='state']"));
+    stateDropDownArrow = element(by.css("mat-form-field[data-automation-id='state']"));
     stateDropdown = new DropdownPage(this.stateDropDownArrow);
 
     taskList(): TasksListPage {
@@ -46,7 +46,7 @@ export class TaskListDemoPage {
         return new PaginationPage();
     }
 
-    async typeAppId(input): Promise<void> {
+    async typeAppId(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.appId, input);
     }
 
@@ -59,7 +59,7 @@ export class TaskListDemoPage {
         return this.appId.getAttribute('value');
     }
 
-    async typeTaskId(input): Promise<void> {
+    async typeTaskId(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.taskId, input);
     }
 
@@ -68,7 +68,7 @@ export class TaskListDemoPage {
         return this.taskId.getAttribute('value');
     }
 
-    async typeTaskName(input): Promise<void> {
+    async typeTaskName(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.taskName, input);
     }
 
@@ -77,11 +77,11 @@ export class TaskListDemoPage {
         return this.taskName.getAttribute('value');
     }
 
-    async typeItemsPerPage(input): Promise<void> {
-        await BrowserActions.clearSendKeys(this.itemsPerPage, input);
+    async typeItemsPerPage(input: number): Promise<void> {
+        await BrowserActions.clearSendKeys(this.itemsPerPage, input.toString());
     }
 
-    async typeProcessDefinitionId(input): Promise<void> {
+    async typeProcessDefinitionId(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.processDefinitionId, input);
     }
 
@@ -90,7 +90,7 @@ export class TaskListDemoPage {
         return this.processInstanceId.getAttribute('value');
     }
 
-    async typeProcessInstanceId(input): Promise<void> {
+    async typeProcessInstanceId(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.processInstanceId, input);
     }
 
@@ -105,8 +105,8 @@ export class TaskListDemoPage {
         return BrowserActions.getText(errorMessage);
     }
 
-    async typePage(input): Promise<void> {
-        await BrowserActions.clearSendKeys(this.page, input);
+    async typePage(input: number): Promise<void> {
+        await BrowserActions.clearSendKeys(this.page, input.toString());
     }
 
     async getPage(): Promise<string> {
@@ -120,11 +120,11 @@ export class TaskListDemoPage {
         return BrowserActions.getText(errorMessage);
     }
 
-    async typeDueAfter(input): Promise<void> {
+    async typeDueAfter(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.dueAfter, input);
     }
 
-    async typeDueBefore(input): Promise<void> {
+    async typeDueBefore(input: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.dueBefore, input);
     }
 
@@ -138,7 +138,7 @@ export class TaskListDemoPage {
         await BrowserActions.click(this.resetButton);
     }
 
-    async selectState(state): Promise<void> {
+    async selectState(state: string): Promise<void> {
         await this.stateDropdown.selectDropdownOption(state);
     }
 

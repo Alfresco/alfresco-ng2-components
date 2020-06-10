@@ -22,7 +22,7 @@ import { DateTimePickerCalendarPage } from './date-time-picker-calendar.page';
 export class DateTimePickerPage {
 
     rootElement: ElementFinder;
-    dateTimePicker: ElementFinder = element(by.css('.mat-datetimepicker-toggle'));
+    dateTimePicker = element(by.css('.mat-datetimepicker-toggle'));
     dateTime = new DateTimePickerCalendarPage();
 
     constructor(rootElement?: ElementFinder) {

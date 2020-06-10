@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { DateTimePickerPage } from '../material/date-time-picker.page';
 import { DatePickerPage } from '../material/date-picker.page';
 
@@ -25,10 +25,10 @@ export class CardDateItemPage {
     dateTimePickerPage: DateTimePickerPage;
     datePickerPage = new DatePickerPage();
 
-    labelLocator: Locator = by.css('div[data-automation-id*="card-date-label"]');
-    valueLocator: Locator = by.css('span[data-automation-id*="card-date"]');
-    dateTimePicker: ElementFinder = element.all(by.css('.mat-datetimepicker-toggle')).first();
-    saveButton: Locator = by.css('button[data-automation-id*="card-dateitem-update"]');
+    labelLocator = by.css('div[data-automation-id*="card-date-label"]');
+    valueLocator = by.css('span[data-automation-id*="card-date"]');
+    dateTimePicker = element.all(by.css('.mat-datetimepicker-toggle')).first();
+    saveButton = by.css('button[data-automation-id*="card-dateitem-update"]');
 
     constructor(label: string = 'minDate') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-dateitem`));

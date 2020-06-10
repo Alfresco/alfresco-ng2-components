@@ -16,15 +16,15 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 
 export class TasksListPage {
 
-    taskList: ElementFinder = element(by.css('adf-tasklist'));
-    noTasksFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    dataTable: DataTableComponentPage = new DataTableComponentPage(this.taskList);
+    taskList = element(by.css('adf-tasklist'));
+    noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    dataTable = new DataTableComponentPage(this.taskList);
 
-    getDataTable() {
+    getDataTable(): DataTableComponentPage {
         return this.dataTable;
     }
 

@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { DateUtil } from '../../utils/date-util';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class DatePickerCalendarPage {
 
-    datePicker: ElementFinder = element(by.css('mat-calendar'));
-    nextMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-next-button"]'));
-    previousMonthButton: ElementFinder = element(by.css('button[class*="mat-calendar-previous-button"]'));
-    todayDate: ElementFinder = element(by.css('.mat-calendar-body-today'));
+    datePicker = element(by.css('mat-calendar'));
+    nextMonthButton = element(by.css('button[class*="mat-calendar-next-button"]'));
+    previousMonthButton = element(by.css('button[class*="mat-calendar-previous-button"]'));
+    todayDate = element(by.css('.mat-calendar-body-today'));
 
     async getSelectedDate(): Promise<string> {
         return element(by.css('td[class*="mat-calendar-body-active"]')).getAttribute('aria-label');

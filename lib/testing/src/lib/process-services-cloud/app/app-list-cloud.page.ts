@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { element, by, ElementArrayFinder, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class AppListCloudPage {
 
-    apsAppsContainer: ElementFinder = element(by.css('adf-cloud-app-list'));
-    allApps: ElementArrayFinder = element.all(by.css('adf-cloud-app-details'));
-    nameOfAllApps: ElementArrayFinder = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1'));
-    firstApp: ElementFinder = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1')).first();
+    apsAppsContainer = element(by.css('adf-cloud-app-list'));
+    allApps = element.all(by.css('adf-cloud-app-details'));
+    nameOfAllApps = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1'));
+    firstApp = element.all(by.css('adf-cloud-app-details div[class*="item-card-title"] h1')).first();
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
         await BrowserVisibility.waitUntilElementIsVisible(this.firstApp);
     }
 
-    async goToApp(applicationName): Promise<void> {
+    async goToApp(applicationName: string): Promise<void> {
         await BrowserActions.clickExecuteScript('mat-card[title="' + applicationName + '"]');
     }
 
@@ -43,12 +43,12 @@ export class AppListCloudPage {
         return BrowserActions.getArrayText(this.nameOfAllApps);
     }
 
-    async checkAppIsNotDisplayed(applicationName): Promise<void> {
+    async checkAppIsNotDisplayed(applicationName: string): Promise<void> {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(app);
     }
 
-    async checkAppIsDisplayed(applicationName): Promise<void> {
+    async checkAppIsDisplayed(applicationName: string): Promise<void> {
         const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(app);
     }

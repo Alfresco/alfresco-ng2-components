@@ -24,10 +24,10 @@ export class ProcessFiltersCloudComponentPage {
     filter: ElementFinder;
     filterIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
-    processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
+    processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
-    activeFilter: ElementFinder = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
-    processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
+    activeFilter = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
+    processFiltersList = element(by.css('adf-cloud-process-filters'));
 
     async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName(filterName);

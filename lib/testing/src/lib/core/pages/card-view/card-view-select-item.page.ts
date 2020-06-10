@@ -31,7 +31,7 @@ export class CardSelectItemPage {
     }
 
     async checkLabelIsPresent(): Promise<void> {
-        const labelElement: ElementFinder = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.element(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 

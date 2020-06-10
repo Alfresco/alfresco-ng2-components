@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class LockFilePage {
 
-    cancelButton: ElementFinder = element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
-    saveButton: ElementFinder = element(by.cssContainingText('button span', 'Save'));
-    lockFileCheckboxText: ElementFinder = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
-    lockFileCheckbox: ElementFinder = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
-    allowOwnerCheckbox: ElementFinder = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
+    cancelButton = element(by.css('button[data-automation-id="lock-dialog-btn-cancel"]'));
+    saveButton = element(by.cssContainingText('button span', 'Save'));
+    lockFileCheckboxText = element(by.cssContainingText('mat-checkbox label span', ' Lock file '));
+    lockFileCheckbox = element(by.css('mat-checkbox[data-automation-id="adf-lock-node-checkbox"]'));
+    allowOwnerCheckbox = element(by.cssContainingText('mat-checkbox[class*="adf-lock-file-name"] span', ' Allow the owner to modify this file '));
 
     async checkLockFileCheckboxIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.lockFileCheckboxText);

@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 const column = {
@@ -36,8 +36,8 @@ export class TaskListCloudComponentPage {
 
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    actionMenu: ElementFinder = element(by.css('*[role="menu"]'));
-    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
+    actionMenu = element(by.css('*[role="menu"]'));
+    optionButton = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable = new DataTableComponentPage(this.taskList);
 
@@ -89,7 +89,7 @@ export class TaskListCloudComponentPage {
         return this.dataTable.selectRow(column.id, taskId);
     }
 
-    getRow(taskName): ElementFinder {
+    getRow(taskName: string): ElementFinder {
         return this.dataTable.getCellElementByValue(column.name, taskName);
     }
 
@@ -164,7 +164,7 @@ export class TaskListCloudComponentPage {
 
     async clickOptionsButton(content: string) {
         await BrowserActions.closeMenuAndDialogs();
-        const row: ElementFinder = this.dataTable.getRow('Id', content);
+        const row = this.dataTable.getRow('Id', content);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);
     }

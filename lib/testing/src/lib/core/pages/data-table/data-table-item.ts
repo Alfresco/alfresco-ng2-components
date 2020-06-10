@@ -25,7 +25,7 @@ export class DataTableItem {
     rootElement: ElementFinder;
     rows: Locator = by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
 
-    constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
+    constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
     }
 
