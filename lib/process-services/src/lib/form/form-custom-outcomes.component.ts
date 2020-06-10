@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CompleteTaskDirective } from './complete-task.directive';
-import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
-import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
+import { Component } from '@angular/core';
 
-@NgModule({
-    declarations: [
-        CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
-    ],
-    exports: [
-        CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
-    ]
+@Component({
+    selector: 'adf-form-custom-outcomes',
+    template: '<ng-content></ng-content>'
 })
-export class TaskDirectiveModule { }
+export class FormCustomOutcomesComponent {}

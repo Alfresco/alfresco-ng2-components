@@ -27,6 +27,7 @@ Shows all the information related to a task.
 | ---- | ---- | ------------- | ----------- |
 | formName | `string` | null | The name of the form. |
 | taskDetails | [`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts) |  | (required) Details related to the task. |
+| showClaimRelease | `boolean` | true | Toggles display of the claim/release button. |
 
 ### Events
 

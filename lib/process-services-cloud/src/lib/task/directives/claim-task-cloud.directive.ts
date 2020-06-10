@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
+import { IdentityUserService } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
-    selector: '[adf-cloud-unclaim-task]'
+    selector: '[adf-cloud-claim-task]'
 })
-export class UnClaimTaskDirective implements OnInit {
+export class ClaimTaskCloudDirective implements OnInit {
 
     /** (Required) The id of the task. */
     @Input()
@@ -42,7 +43,8 @@ export class UnClaimTaskDirective implements OnInit {
     invalidParams: string[] = [];
 
     constructor(
-        private taskListService: TaskCloudService) { }
+        private taskListService: TaskCloudService,
+        private identityUserService: IdentityUserService) { }
 
     ngOnInit() {
         this.validateInputs();
@@ -72,16 +74,22 @@ export class UnClaimTaskDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
-            this.unclaimTask();
+            this.claimTask();
         } catch (error) {
             this.error.emit(error);
         }
+
     }
 
-    private async unclaimTask() {
-        await this.taskListService.unclaimTask(this.appName, this.taskId).subscribe(
-            () => {
-                this.success.emit(this.taskId);
-            });
+    private async claimTask() {
+        const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
+        try {
+            const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
+            if (result) {
+                this.success.emit(result);
+            }
+        } catch (error) {
+            this.error.emit(error);
+        }
     }
 }

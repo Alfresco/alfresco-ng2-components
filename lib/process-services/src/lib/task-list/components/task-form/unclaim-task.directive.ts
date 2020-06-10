@@ -14,52 +14,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Directive, Input, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
-import { IdentityUserService } from '@alfresco/adf-core';
-import { TaskCloudService } from '../services/task-cloud.service';
+
+import {
+    Directive,
+    HostListener,
+    Input,
+    Output,
+    EventEmitter
+} from '@angular/core';
+import { TaskListService } from '../../services/tasklist.service';
+import { LogService } from '@alfresco/adf-core';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
-    selector: '[adf-cloud-claim-task]'
+    selector: '[adf-unclaim-task]'
 })
-export class ClaimTaskDirective implements OnInit {
-
+export class UnclaimTaskDirective {
     /** (Required) The id of the task. */
     @Input()
     taskId: string;
 
-    /** (Required) The name of the application. */
-    @Input()
-    appName: string = '';
-
-    /** Emitted when the task is completed. */
+    /** Emitted when the task is released. */
     @Output()
     success: EventEmitter<any> = new EventEmitter<any>();
 
-    /** Emitted when the task cannot be completed. */
+    /** Emitted when the task cannot be released. */
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
     invalidParams: string[] = [];
 
     constructor(
-        private taskListService: TaskCloudService,
-        private identityUserService: IdentityUserService) { }
+        private taskListService: TaskListService,
+        private logService: LogService) {}
 
     ngOnInit() {
         this.validateInputs();
     }
 
     validateInputs() {
-
         if (!this.isTaskValid()) {
             this.invalidParams.push('taskId');
         }
-        if (!this.isAppValid()) {
-            this.invalidParams.push('appName');
-        }
         if (this.invalidParams.length) {
-            throw new Error(`Attribute ${this.invalidParams.join(', ')} is required`);
+            throw new Error(
+                `Attribute ${this.invalidParams.join(', ')} is required`
+            );
         }
     }
 
@@ -67,29 +67,22 @@ export class ClaimTaskDirective implements OnInit {
         return this.taskId && this.taskId.length > 0;
     }
 
-    isAppValid(): boolean {
-        return !!this.appName || this.appName === '';
-    }
-
     @HostListener('click')
     async onClick() {
         try {
-            this.claimTask();
+            this.unclaimTask();
         } catch (error) {
             this.error.emit(error);
         }
-
     }
 
-    private async claimTask() {
-        const currentUser: string = this.identityUserService.getCurrentUserInfo().username;
-        try {
-            const result = await this.taskListService.claimTask(this.appName, this.taskId, currentUser).toPromise();
-            if (result) {
-                this.success.emit(result);
-            }
-        } catch (error) {
-            this.error.emit(error);
-        }
+    private async unclaimTask() {
+        await this.taskListService.unclaimTask(this.taskId).subscribe(
+            () => {
+                this.logService.info('Task unclaimed');
+                this.success.emit(this.taskId);
+            },
+            error => this.error.emit(error)
+        );
     }
 }

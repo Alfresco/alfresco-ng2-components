@@ -19,24 +19,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../services/task-cloud.service';
 import { of } from 'rxjs';
-import { ClaimTaskDirective } from './claim-task.directive';
+import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
 import { taskClaimCloudMock } from '../task-header/mocks/fake-claim-task.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('ClaimTaskDirective', () => {
+describe('UnClaimTaskCloudDirective', () => {
 
     @Component({
-        selector:  'adf-cloud-claim-test-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameMock"></button>'
+        selector:  'adf-cloud-test-component',
+        template: '<button adf-cloud-unclaim-task [taskId]="taskIdMock" [appName]="appName"></button>'
     })
     class TestComponent {
 
-        taskMock = 'test1234';
-        appNameMock = 'simple-app';
+        appName = 'simple-app';
+        taskIdMock = '1234';
 
-        @ViewChild(ClaimTaskDirective)
-        claimTaskDirective: ClaimTaskDirective;
+        @ContentChildren(UnClaimTaskCloudDirective)
+        unclaimTaskDirective: UnClaimTaskCloudDirective;
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -58,19 +58,19 @@ describe('ClaimTaskDirective', () => {
         fixture.detectChanges();
     });
 
-    it('should directive claim task', () => {
-        spyOn(taskCloudService, 'claimTask').and.returnValue(of(taskClaimCloudMock));
+    it('should directive unclaim task', () => {
+        spyOn(taskCloudService, 'unclaimTask').and.returnValue(of(taskClaimCloudMock));
         const button = fixture.nativeElement.querySelector('button');
         button.click();
-        expect(taskCloudService.claimTask).toHaveBeenCalled();
+        expect(taskCloudService.unclaimTask).toHaveBeenCalled();
     });
 });
 
-describe('Claim Task Directive validation errors', () => {
+describe('UnClaim Task Directive validation errors', () => {
 
     @Component({
         selector:  'adf-cloud-claim-no-fields-validation-component',
-        template: '<button adf-cloud-claim-task></button>'
+        template: '<button adf-cloud-unclaim-task></button>'
     })
     class ClaimTestMissingInputDirectiveComponent {
 
@@ -78,46 +78,46 @@ describe('Claim Task Directive validation errors', () => {
         appNameUndefined = undefined;
         appNameNull = null;
 
-        @ContentChildren(ClaimTaskDirective)
-        claimTaskValidationDirective: ClaimTaskDirective;
+        @ContentChildren(UnClaimTaskCloudDirective)
+        claimTaskValidationDirective: UnClaimTaskCloudDirective;
     }
 
     @Component({
         selector:  'adf-cloud-claim-no-taskid-validation-component',
-        template: '<button adf-cloud-claim-task [appName]="appName"></button>'
+        template: '<button adf-cloud-unclaim-task [appName]="appName"></button>'
     })
     class ClaimTestMissingTaskIdDirectiveComponent {
 
         appName = 'simple-app';
 
-        @ContentChildren(ClaimTaskDirective)
-        claimTaskValidationDirective: ClaimTaskDirective;
+        @ContentChildren(UnClaimTaskCloudDirective)
+        claimTaskValidationDirective: UnClaimTaskCloudDirective;
     }
 
     @Component({
         selector:  'adf-cloud-claim-undefined-appname-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
+        template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameUndefined"></button>'
     })
     class ClaimTestInvalidAppNameUndefineddDirectiveComponent {
 
         appNameUndefined = undefined;
         taskMock = 'test1234';
 
-        @ContentChildren(ClaimTaskDirective)
-        claimTaskValidationDirective: ClaimTaskDirective;
+        @ContentChildren(UnClaimTaskCloudDirective)
+        claimTaskValidationDirective: UnClaimTaskCloudDirective;
     }
 
     @Component({
         selector:  'adf-cloud-claim-null-appname-component',
-        template: '<button adf-cloud-claim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
+        template: '<button adf-cloud-unclaim-task [taskId]="taskMock" [appName]="appNameNull"></button>'
     })
     class ClaimTestInvalidAppNameNulldDirectiveComponent {
 
         appNameNull = null;
         taskMock = 'test1234';
 
-        @ViewChild(ClaimTaskDirective)
-        claimTaskValidationDirective: ClaimTaskDirective;
+        @ViewChild(UnClaimTaskCloudDirective)
+        claimTaskValidationDirective: UnClaimTaskCloudDirective;
     }
 
     let fixture: ComponentFixture<any>;

@@ -1,18 +1,18 @@
 ---
-Title: Claim Task Directive
-Added: v3.1.0
+Title: Claim Task Cloud Directive
+Added: v3.9.0
 Status: Experimental
-Last reviewed: 2019-03-25
+Last reviewed: 2020-06-09
 ---
 
-# [Claim task directive](../../../lib/process-services-cloud/src/lib/task/directives/claim-task.directive.ts "Defined in claim-task.directive.ts")
+# [Claim task Cloud directive](../../../lib/process-services-cloud/src/lib/task/directives/claim-task-cloud.directive.ts "Defined in claim-task-cloud.directive.ts")
 
 Claims a task
 
 ## Basic Usage
 
 ```html
-<button adf-claim-task [appName]="appName" [taskId]="taskId" (success)="onTaskClaimed()">Complete</button>
+<button adf-cloud-claim-task [appName]="appName" [taskId]="taskId" (success)="onTaskClaimed()">Claim</button>
 ```
 
 ## Class members
@@ -22,7 +22,7 @@ Claims a task
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | (Required) The name of the application. |
-| taskId | `string` |  | (Required) The id of the task. |
+| taskId | `string` | "" | (Required) The id of the task. |
 
 ### Events
 
