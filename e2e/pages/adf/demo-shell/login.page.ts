@@ -15,41 +15,41 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { TogglePage, BrowserActions, BrowserVisibility, LoginSSOPage } from '@alfresco/adf-testing';
 
 export class LoginPage {
 
-    loginURL: string = browser.baseUrl + '/login';
+    loginURL = browser.baseUrl + '/login';
 
-    loginSSOPage: LoginSSOPage = new LoginSSOPage();
+    loginSSOPage = new LoginSSOPage();
 
-    togglePage: TogglePage = new TogglePage();
-    txtUsername: ElementFinder = element(by.css('input[id="username"]'));
-    txtPassword: ElementFinder = element(by.css('input[id="password"]'));
-    logoImg: ElementFinder = element(by.css('img[id="adf-login-img-logo"]'));
-    successRouteTxt: ElementFinder = element(by.css('input[data-automation-id="adf-success-route"]'));
-    logoTxt: ElementFinder = element(by.css('input[data-automation-id="adf-url-logo"]'));
-    usernameTooltip: ElementFinder = element(by.css('span[data-automation-id="username-error"]'));
-    passwordTooltip: ElementFinder = element(by.css('span[data-automation-id="password-required"]'));
-    loginTooltip: ElementFinder = element(by.css('span[class="adf-login-error-message"]'));
-    usernameInactive: ElementFinder = element(by.css('input[id="username"][aria-invalid="false"]'));
-    passwordInactive: ElementFinder = element(by.css('input[id="password"][aria-invalid="false"]'));
-    adfLogo: ElementFinder = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));
-    usernameHighlighted: ElementFinder = element(by.css('input[id="username"][aria-invalid="true"]'));
-    passwordHighlighted: ElementFinder = element(by.css('input[id="password"][aria-invalid="true"]'));
-    signInButton: ElementFinder = element(by.id('login-button'));
-    showPasswordElement: ElementFinder = element(by.css('button[data-automation-id="show_password"]'));
-    hidePasswordElement: ElementFinder = element(by.css('button[data-automation-id="hide_password"]'));
-    rememberMe: ElementFinder = element(by.css('mat-checkbox[id="adf-login-remember"]'));
-    needHelp: ElementFinder = element(by.css('div[id="adf-login-action-left"]'));
-    register: ElementFinder = element(by.css('div[id="adf-login-action-right"]'));
-    footerSwitch: ElementFinder = element(by.id('switch4'));
-    rememberMeSwitch: ElementFinder = element(by.id('adf-toggle-show-rememberme'));
-    successRouteSwitch: ElementFinder = element(by.id('adf-toggle-show-successRoute'));
-    logoSwitch: ElementFinder = element(by.id('adf-toggle-logo'));
-    header: ElementFinder = element(by.id('adf-header'));
-    settingsIcon: ElementFinder = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
+    togglePage = new TogglePage();
+    txtUsername = element(by.css('input[id="username"]'));
+    txtPassword = element(by.css('input[id="password"]'));
+    logoImg = element(by.css('img[id="adf-login-img-logo"]'));
+    successRouteTxt = element(by.css('input[data-automation-id="adf-success-route"]'));
+    logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
+    usernameTooltip = element(by.css('span[data-automation-id="username-error"]'));
+    passwordTooltip = element(by.css('span[data-automation-id="password-required"]'));
+    loginTooltip = element(by.css('span[class="adf-login-error-message"]'));
+    usernameInactive = element(by.css('input[id="username"][aria-invalid="false"]'));
+    passwordInactive = element(by.css('input[id="password"][aria-invalid="false"]'));
+    adfLogo = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));
+    usernameHighlighted = element(by.css('input[id="username"][aria-invalid="true"]'));
+    passwordHighlighted = element(by.css('input[id="password"][aria-invalid="true"]'));
+    signInButton = element(by.id('login-button'));
+    showPasswordElement = element(by.css('button[data-automation-id="show_password"]'));
+    hidePasswordElement = element(by.css('button[data-automation-id="hide_password"]'));
+    rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
+    needHelp = element(by.css('div[id="adf-login-action-left"]'));
+    register = element(by.css('div[id="adf-login-action-right"]'));
+    footerSwitch = element(by.id('switch4'));
+    rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
+    successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
+    logoSwitch = element(by.id('adf-toggle-logo'));
+    header = element(by.id('adf-header'));
+    settingsIcon = element(by.cssContainingText('a[data-automation-id="settings"] mat-icon', 'settings'));
     sidenavLayout = element(by.css(`[data-automation-id="sidenav-layout"]`));
 
     async goToLoginPage(): Promise<void> {
@@ -62,11 +62,11 @@ export class LoginPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.txtPassword);
     }
 
-    async enterUsername(username): Promise<void> {
+    async enterUsername(username: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.txtUsername, username);
     }
 
-    async enterPassword(password): Promise<void> {
+    async enterPassword(password: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.txtPassword, password);
     }
 
@@ -195,11 +195,11 @@ export class LoginPage {
         await this.togglePage.enableToggle(this.logoSwitch);
     }
 
-    async enterSuccessRoute(route): Promise<void> {
+    async enterSuccessRoute(route: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.successRouteTxt, route);
     }
 
-    async enterLogo(logo): Promise<void> {
+    async enterLogo(logo: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.logoTxt, logo);
     }
 

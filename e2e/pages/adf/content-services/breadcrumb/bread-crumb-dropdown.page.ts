@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserActions, DropdownPage } from '@alfresco/adf-testing';
 
 export class BreadCrumbDropdownPage {
 
-    breadCrumb: ElementFinder = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
+    breadCrumb = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
     parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
     currentFolder = this.breadCrumb.element(by.css(`div span[data-automation-id="current-folder"]`));
 
     breadCrumbDropdown = new DropdownPage(element.all(by.css(`div[class*='mat-select-panel']`)).first());
 
-    async choosePath(pathName): Promise<void> {
+    async choosePath(pathName: string): Promise<void> {
         await this.breadCrumbDropdown.selectOption(pathName);
     }
 

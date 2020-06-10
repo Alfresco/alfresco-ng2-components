@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder, Locator, protractor } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class PeopleCloudComponentPage {
 
-    peopleCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
-    assigneeField: ElementFinder = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
-    selectionReady: ElementFinder = element(by.css('div[data-automation-id="adf-people-cloud-row"]'));
-    formFields: FormFields = new FormFields();
-    labelLocator: Locator = by.css("label[class*='adf-label']");
-    inputLocator: Locator = by.css('input');
-    assigneeChipList: ElementFinder = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
+    peopleCloudSearch = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
+    selectionReady = element(by.css('div[data-automation-id="adf-people-cloud-row"]'));
+    formFields = new FormFields();
+    labelLocator = by.css("label[class*='adf-label']");
+    inputLocator = by.css('input');
+    assigneeChipList = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
 
     async clearAssignee(): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleCloudSearch, ' ');
@@ -100,11 +100,11 @@ export class PeopleCloudComponentPage {
         return this.assigneeField.getAttribute('value');
     }
 
-    getFieldLabel(fieldId): Promise<string> {
+    getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
     }
 
-    getFieldValue(fieldId): Promise<string> {
+    getFieldValue(fieldId: string): Promise<string> {
         return this.formFields.getFieldValue(fieldId, this.inputLocator);
     }
 
@@ -127,7 +127,7 @@ export class PeopleCloudComponentPage {
         }
     }
 
-    async clickPeopleInput(fieldId): Promise<void> {
+    async clickPeopleInput(fieldId: string): Promise<void> {
         const peopleInput = element.all(by.css(`div[id="field-${fieldId}-container"] `)).first();
         await BrowserActions.click(peopleInput);
     }
@@ -142,7 +142,7 @@ export class PeopleCloudComponentPage {
         }
     }
 
-    async checkPeopleActiveField(name): Promise<boolean> {
+    async checkPeopleActiveField(name: string): Promise<boolean> {
         const activePeopleField = element(by.css('people-cloud-widget .adf-readonly'));
         try {
             await BrowserActions.clearSendKeys(activePeopleField, name);

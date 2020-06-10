@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class MonacoExtensionPage {
 
-    monacoPlugin: ElementFinder = element(by.cssContainingText('mat-row > mat-cell', 'monaco plugin'));
+    monacoPlugin = element(by.cssContainingText('mat-row > mat-cell', 'monaco plugin'));
 
     async checkMonacoPluginIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.monacoPlugin);

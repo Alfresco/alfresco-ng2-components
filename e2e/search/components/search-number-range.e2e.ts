@@ -29,7 +29,7 @@ import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 import { SearchConfiguration } from '../search.config';
 import { UsersActions } from '../../actions/users.actions';
 
@@ -173,7 +173,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.tableIsLoaded();
         await searchResults.sortBySize('DESC');
 
-        const results: any = dataTable.geCellElementDetail('Size');
+        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -202,7 +202,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.sortBySize('DESC');
 
-        const results: any = dataTable.geCellElementDetail('Size');
+        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -218,7 +218,7 @@ describe('Search Number Range Filter', () => {
         await nameFilter.searchByName('z*');
         await searchResults.sortBySize('DESC');
 
-        const resultsSize: any = dataTable.geCellElementDetail('Size');
+        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -229,7 +229,7 @@ describe('Search Number Range Filter', () => {
             }
         }
 
-        const resultsDisplay: any = dataTable.geCellElementDetail('Display name');
+        const resultsDisplay = await dataTable.geCellElementDetail('Display name') as ElementFinder[];
         for (const currentResult of resultsDisplay) {
             try {
                 const name = await currentResult.getAttribute('title');
@@ -269,7 +269,7 @@ describe('Search Number Range Filter', () => {
         await searchResults.tableIsLoaded();
         await searchResults.sortBySize('DESC');
 
-        const results: any = dataTable.geCellElementDetail('Size');
+        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -311,7 +311,7 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.sortBySize('DESC');
 
-        const results: any = dataTable.geCellElementDetail('Size');
+        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -327,7 +327,7 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.getFromNumber()).toEqual('');
         await expect(await sizeRangeFilter.getToNumber()).toEqual('');
 
-        const resultsSize: any = dataTable.geCellElementDetail('Size');
+        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -415,7 +415,7 @@ describe('Search Number Range Filter', () => {
             await searchResults.tableIsLoaded();
             await searchResults.sortByCreated('DESC');
 
-            const results: any = dataTable.geCellElementDetail('Created');
+            const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
             for (const currentResult of results) {
                 const currentDate = await currentResult.getAttribute('title');
                 const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');

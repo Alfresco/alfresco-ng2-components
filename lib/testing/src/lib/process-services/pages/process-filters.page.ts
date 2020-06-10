@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { FiltersPage } from './filters.page';
 
 export class ProcessFiltersPage {
 
     filtersPage = new FiltersPage();
 
-    runningFilter: ElementFinder = element(by.css('button[data-automation-id="Running_filter"]'));
-    completedFilter: ElementFinder = element(by.css('button[data-automation-id="Completed_filter"]'));
-    allFilter: ElementFinder = element(by.css('button[data-automation-id="All_filter"]'));
-    accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
+    runningFilter = element(by.css('button[data-automation-id="Running_filter"]'));
+    completedFilter = element(by.css('button[data-automation-id="Completed_filter"]'));
+    allFilter = element(by.css('button[data-automation-id="All_filter"]'));
+    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
 
     async clickRunningFilterButton(): Promise<void> {
         await this.filtersPage.clickFilterButton(this.runningFilter);

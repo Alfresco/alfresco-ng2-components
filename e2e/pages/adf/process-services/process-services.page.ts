@@ -17,14 +17,14 @@
 
 import { ProcessServiceTabBarPage } from './process-service-tab-bar.page';
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { __await } from 'tslib';
 
 export class ProcessServicesPage {
 
-    apsAppsContainer: ElementFinder = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));
-    taskApp: ElementFinder = element(by.css('mat-card[title="Task App"]'));
+    apsAppsContainer = element(by.css('div[class="adf-app-listgrid ng-star-inserted"]'));
+    taskApp = element(by.css('mat-card[title="Task App"]'));
     iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
     descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
 
@@ -32,8 +32,8 @@ export class ProcessServicesPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);
     }
 
-    async goToApp(applicationName): Promise<ProcessServiceTabBarPage> {
-        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+    async goToApp(applicationName: string): Promise<ProcessServiceTabBarPage> {
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserActions.click(app);
         return new ProcessServiceTabBarPage();
     }
@@ -43,33 +43,33 @@ export class ProcessServicesPage {
         return new ProcessServiceTabBarPage();
     }
 
-    async getAppIconType(applicationName): Promise<string> {
-        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+    async getAppIconType(applicationName: string): Promise<string> {
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(app);
         const iconType = app.element(this.iconTypeLocator);
         return BrowserActions.getText(iconType);
     }
 
-    async getBackgroundColor(applicationName): Promise<string> {
-        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+    async getBackgroundColor(applicationName: string): Promise<string> {
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(app);
         return app.getCssValue('background-color');
     }
 
-    async getDescription(applicationName): Promise<string> {
-        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+    async getDescription(applicationName: string): Promise<string> {
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(app);
         const description = app.element(this.descriptionLocator);
         return BrowserActions.getText(description);
     }
 
-    async checkAppIsNotDisplayed(applicationName): Promise<void> {
-        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+    async checkAppIsNotDisplayed(applicationName: string): Promise<void> {
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(app);
     }
 
-    async checkAppIsDisplayed(applicationName): Promise<void> {
-        const app: ElementFinder = element(by.css('mat-card[title="' + applicationName + '"]'));
+    async checkAppIsDisplayed(applicationName: string): Promise<void> {
+        const app = element(by.css('mat-card[title="' + applicationName + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(app);
     }
 

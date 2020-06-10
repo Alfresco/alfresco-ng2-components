@@ -251,7 +251,7 @@ describe('Start Task - Custom App', () => {
         });
 
         it('[C286406] Invalid values for items per page', async () => {
-            await taskListSinglePage.typeItemsPerPage('0');
+            await taskListSinglePage.typeItemsPerPage(0);
             await taskListSinglePage.clickAppId();
             await expect(await taskListSinglePage.getItemsPerPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
         });
@@ -304,12 +304,12 @@ describe('Start Task - Custom App', () => {
         });
 
         it('[C286405] Type invalid values to page field', async () => {
-            await taskListSinglePage.typePage('0');
+            await taskListSinglePage.typePage(0);
             await taskListSinglePage.clickAppId();
             await expect(await taskListSinglePage.getPageFieldErrorMessage()).toEqual('Value must be greater than or equal to 1');
 
             await taskListSinglePage.clickResetButton();
-            await taskListSinglePage.typePage('2');
+            await taskListSinglePage.typePage(2);
             await taskListSinglePage.paginationPage().checkPaginationIsNotDisplayed();
         });
 

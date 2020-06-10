@@ -21,22 +21,22 @@ import { TaskDetailsPage } from './task-details.page';
 import { FiltersPage } from './filters.page';
 import { ChecklistDialog } from './dialog/create-checklist-dialog.page';
 import { TasksListPage } from './tasks-list.page';
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
 
-    createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
-    newTaskButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-task"]'));
-    addChecklistButton: ElementFinder = element(by.css('button[class*="adf-add-to-checklist-button"]'));
+    createButton = element(by.css('button[data-automation-id="create-button"'));
+    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
+    addChecklistButton = element(by.css('button[class*="adf-add-to-checklist-button"]'));
     rowByRowName = by.xpath('ancestor::mat-chip');
     checklistContainer = by.css('div[class*="checklist-menu"]');
     taskTitle = 'h2[class="adf-activiti-task-details__header"] span';
     rows = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[class*="adf-datatable-cell"]');
-    completeButtonNoForm: ElementFinder = element(by.id('adf-no-form-complete-button'));
-    checklistDialog: ElementFinder = element(by.id('checklist-dialog'));
-    checklistNoMessage: ElementFinder = element(by.id('checklist-none-message'));
-    numberOfChecklists: ElementFinder = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
+    completeButtonNoForm = element(by.id('adf-no-form-complete-button'));
+    checklistDialog = element(by.id('checklist-dialog'));
+    checklistNoMessage = element(by.id('checklist-none-message'));
+    numberOfChecklists = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
     sortByName = by.css('div[data-automation-id="auto_id_name"]');
 
     async createNewTask(): Promise<StartTaskDialogPage> {
@@ -90,7 +90,7 @@ export class TasksPage {
     }
 
     getRowsName(name) {
-        const row: ElementFinder = element(this.checklistContainer).element(by.cssContainingText('span', name));
+        const row = element(this.checklistContainer).element(by.cssContainingText('span', name));
         return row;
     }
 
@@ -105,13 +105,13 @@ export class TasksPage {
         await BrowserVisibility.waitUntilElementIsVisible(checklistEle);
     }
 
-    async checkChecklistIsNotDisplayed(checklist): Promise<void> {
+    async checkChecklistIsNotDisplayed(checklist: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(this.checklistContainer).element(by.cssContainingText('span', checklist)));
     }
 
-    async checkTaskTitle(taskName): Promise<void> {
+    async checkTaskTitle(taskName: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(this.taskTitle)));
-        const title: ElementFinder = element(by.cssContainingText(this.taskTitle, taskName));
+        const title = element(by.cssContainingText(this.taskTitle, taskName));
         await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 

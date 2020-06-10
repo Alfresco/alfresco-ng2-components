@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class SnackbarPage {
 
-    notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar span')).first();
-    snackBarAction: ElementFinder = element(by.css('simple-snack-bar button span'));
+    notificationSnackBar = element.all(by.css('simple-snack-bar span')).first();
+    snackBarAction = element(by.css('simple-snack-bar button span'));
     snackBarContainerCss = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { DatePickerCalendarPage } from './date-picker-calendar.page';
 
 export class DatePickerPage {
 
-    datePicker: ElementFinder = element.all(by.css('.mat-datepicker-toggle')).first();
+    datePicker = element.all(by.css('.mat-datepicker-toggle')).first();
     dateTime = new DatePickerCalendarPage();
 
     async setTodayDateValue(): Promise<void> {

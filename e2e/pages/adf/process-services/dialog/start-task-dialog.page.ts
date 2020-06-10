@@ -20,13 +20,13 @@ import { BrowserVisibility, BrowserActions, DropdownPage } from '@alfresco/adf-t
 
 export class StartTaskDialogPage {
 
-    name: ElementFinder = element(by.css('input[id="name_id"]'));
-    dueDate: ElementFinder = element(by.css('input[id="date_id"]'));
-    description: ElementFinder = element(by.css('textarea[id="description_id"]'));
-    assignee: ElementFinder = element(by.css('div#people-widget-content input'));
-    startButton: ElementFinder = element(by.css('button[id="button-start"]'));
-    startButtonEnabled: ElementFinder = element(by.css('button[id="button-start"]:not(disabled)'));
-    cancelButton: ElementFinder = element(by.css('button[id="button-cancel"]'));
+    name = element(by.css('input[id="name_id"]'));
+    dueDate = element(by.css('input[id="date_id"]'));
+    description = element(by.css('textarea[id="description_id"]'));
+    assignee = element(by.css('div#people-widget-content input'));
+    startButton = element(by.css('button[id="button-start"]'));
+    startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
+    cancelButton = element(by.css('button[id="button-cancel"]'));
 
     selectFormDropdown = new DropdownPage(element(by.css('mat-select[id="form_id"]')));
     selectAssigneeDropdown = new DropdownPage();
@@ -88,7 +88,7 @@ export class StartTaskDialogPage {
     }
 
     async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
-        const errorElement: ElementFinder = element(by.cssContainingText(elementRef, error));
+        const errorElement = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 }

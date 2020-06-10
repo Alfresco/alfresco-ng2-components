@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 
 export class DateTimePickerCalendarPage {
 
-    datePicker: ElementFinder = element(by.css(`.mat-datetimepicker-calendar`));
-    today: ElementFinder = element(by.css(`.mat-datetimepicker-calendar-body-today`));
-    timePicker: ElementFinder = element(by.css('.mat-datetimepicker-clock'));
-    hourTime: ElementFinder = element.all(by.css('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell')).first();
-    minutesTime: ElementFinder = element.all(by.css('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell')).first();
-    firstEnabledHourSelector: Locator = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
-    firstEnabledMinutesSelector: Locator = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
-    hoursPicker: ElementFinder = element(by.css('.mat-datetimepicker-clock-hours'));
-    minutePicker: ElementFinder = element(by.css('.mat-datetimepicker-clock-minutes'));
+    datePicker = element(by.css(`.mat-datetimepicker-calendar`));
+    today = element(by.css(`.mat-datetimepicker-calendar-body-today`));
+    timePicker = element(by.css('.mat-datetimepicker-clock'));
+    hourTime = element.all(by.css('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell')).first();
+    minutesTime = element.all(by.css('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell')).first();
+    firstEnabledHourSelector = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
+    firstEnabledMinutesSelector = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
+    hoursPicker = element(by.css('.mat-datetimepicker-clock-hours'));
+    minutePicker = element(by.css('.mat-datetimepicker-clock-minutes'));
 
     async waitTillDateDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.datePicker);
