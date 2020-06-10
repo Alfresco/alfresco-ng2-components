@@ -371,7 +371,7 @@
           "options": {
             "tsConfig": [
               "lib/core/tsconfig.lib.json",
-              "lib/core/tsconfig.lib.json"
+              "lib/core/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -24,6 +24,7 @@
     "@mat-datetimepicker/core": ">=4.1.0",
     "@mat-datetimepicker/moment": ">=4.1.0",
     "@alfresco/js-api": ">=3.8.0",
+    "@alfresco/adf-extensions": ">=3.8.0",
     "@ngx-translate/core": ">=12.1.2",
     "minimatch-browser": ">=1.0.0",
     "moment": ">=2.22.2",
