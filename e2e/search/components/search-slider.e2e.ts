@@ -28,7 +28,7 @@ import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 import { SearchConfiguration } from '../search.config';
 import { UsersActions } from '../../actions/users.actions';
 
@@ -124,7 +124,7 @@ describe('Search Slider Filter', () => {
         await searchResults.sortBySize('DESC');
         await searchResults.tableIsLoaded();
 
-        const results: any = dataTable.geCellElementDetail('Size');
+        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -141,7 +141,7 @@ describe('Search Slider Filter', () => {
         await searchResults.sortBySize('DESC');
         await searchResults.tableIsLoaded();
 
-        const resultsSize: any = dataTable.geCellElementDetail('Size');
+        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');

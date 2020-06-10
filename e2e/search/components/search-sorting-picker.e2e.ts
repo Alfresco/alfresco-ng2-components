@@ -180,13 +180,13 @@ describe('Search Sorting Picker', () => {
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', async () => {
         await searchResults.sortByCreated('ASC');
-        const results: any = searchResults.dataTable.geCellElementDetail('Created');
+        const results = await searchResults.dataTable.geCellElementDetail('Created');
         await expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', async () => {
         await searchResults.sortByCreated('DESC');
-        const results = searchResults.dataTable.geCellElementDetail('Created');
+        const results = await searchResults.dataTable.geCellElementDetail('Created');
         await expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
     });
 

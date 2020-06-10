@@ -16,7 +16,7 @@
  */
 
 import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
@@ -121,13 +121,13 @@ describe('Search Date Range Filter', () => {
 
         await searchResults.sortByCreated('ASC');
 
-        const results: any = dataTable.geCellElementDetail('Created');
+        const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
         for (const currentResult of results) {
-        const currentDate = currentResult.getAttribute('title');
-        const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
+            const currentDate = await currentResult.getAttribute('title');
+            const currentDateFormatted = DateUtil.parse(currentDate, 'MMM DD, YYYY, h:mm:ss a');
 
-        await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
-        await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
+            await expect(currentDateFormatted <= DateUtil.parse(toDate, 'DD-MM-YY')).toBe(true);
+            await expect(currentDateFormatted >= DateUtil.parse(fromDate, 'DD-MM-YY')).toBe(true);
         }
     });
 
