@@ -281,18 +281,6 @@ describe('LoginComponent', () => {
         expect(element.querySelector('#login-action-register')).toBe(null);
     });
 
-    it('should not render a validation min-length as default', () => {
-        usernameInput.value = '1';
-        usernameInput.dispatchEvent(new Event('input'));
-
-        fixture.detectChanges();
-
-        expect(component.formError).toBeDefined();
-        expect(component.formError.username).toBeDefined();
-        expect(component.formError.username).toBe('');
-        expect(element.querySelector('#username-error')).toBeNull();
-    });
-
     describe('Error', () => {
 
         it('should render validation min-length error when the username is just 1 character with a custom validation Validators.minLength(3)', () => {

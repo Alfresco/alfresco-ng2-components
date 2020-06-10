@@ -1031,7 +1031,7 @@ describe('FormComponent', () => {
 
 class FormWithCustomOutComesComponent {
 
-    @ViewChild('adfForm')
+    @ViewChild('adfForm', { static: true })
     adfForm: FormComponent;
 
     onCustomButtonOneClick() { }
