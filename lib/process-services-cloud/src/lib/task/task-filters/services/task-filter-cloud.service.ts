@@ -277,6 +277,16 @@ export class TaskFilterCloudService {
                 order: 'DESC'
             }),
             new TaskFilterCloudModel({
+                name: 'ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS',
+                key: 'queued-tasks',
+                icon: 'queue',
+                appName: appName,
+                status: 'CREATED',
+                assignee: '',
+                sort: 'createdDate',
+                order: 'DESC'
+            }),
+            new TaskFilterCloudModel({
                 name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',
                 key: 'completed-tasks',
                 icon: 'done',

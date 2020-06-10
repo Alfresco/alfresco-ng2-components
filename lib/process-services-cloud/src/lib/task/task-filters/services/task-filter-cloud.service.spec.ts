@@ -250,7 +250,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     it('should create default task filters if there are no task filter preferences', (done) => {
         const appName = 'fakeAppName';
         service.getTaskListFilters(appName).subscribe((res) => {
-            expect(res.length).toEqual(2);
+            expect(res.length).toEqual(3);
 
             expect(res[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
             expect(res[0].key).toEqual('my-tasks');
@@ -259,17 +259,24 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
             expect(res[0].status).toEqual('ASSIGNED');
             expect(res[0].assignee).toEqual(identityUserMock.username);
 
-            expect(res[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
-            expect(res[1].key).toEqual('completed-tasks');
+            expect(res[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
+            expect(res[1].key).toEqual('queued-tasks');
             expect(res[1].appName).toEqual(appName);
-            expect(res[1].icon).toEqual('done');
-            expect(res[1].status).toEqual('COMPLETED');
+            expect(res[1].icon).toEqual('queue');
+            expect(res[1].status).toEqual('CREATED');
+
+            expect(res[2].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
+            expect(res[2].key).toEqual('completed-tasks');
+            expect(res[2].appName).toEqual(appName);
+            expect(res[2].icon).toEqual('done');
+            expect(res[2].status).toEqual('COMPLETED');
+
             done();
         });
         expect(getPreferencesSpy).toHaveBeenCalled();
 
         const localData = JSON.parse(localStorage.getItem(`task-filters-${appName}-${identityUserMock.username}`));
-        expect(localData.length).toEqual(2);
+        expect(localData.length).toEqual(3);
 
         expect(localData[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');
         expect(localData[0].key).toEqual('my-tasks');
@@ -278,10 +285,16 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
         expect(localData[0].status).toEqual('ASSIGNED');
         expect(localData[0].assignee).toEqual(identityUserMock.username);
 
-        expect(localData[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
-        expect(localData[1].key).toEqual('completed-tasks');
+        expect(localData[1].name).toEqual('ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS');
+        expect(localData[1].key).toEqual('queued-tasks');
         expect(localData[1].appName).toEqual(appName);
-        expect(localData[1].icon).toEqual('done');
-        expect(localData[1].status).toEqual('COMPLETED');
+        expect(localData[1].icon).toEqual('queue');
+        expect(localData[1].status).toEqual('CREATED');
+
+        expect(localData[2].name).toEqual('ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS');
+        expect(localData[2].key).toEqual('completed-tasks');
+        expect(localData[2].appName).toEqual(appName);
+        expect(localData[2].icon).toEqual('done');
+        expect(localData[2].status).toEqual('COMPLETED');
     });
 });
