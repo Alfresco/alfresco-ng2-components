@@ -93,7 +93,7 @@ describe('Task Assignee', () => {
             const name = 'sample-process-one';
             await processServicesPage.goToApp(app.title);
             await processServiceTabBarPage.clickProcessButton();
-            await processListPage.checkProcessListIsDisplayed();
+            await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
             await processFiltersPage.clickCreateProcessButton();
             await processFiltersPage.clickNewProcessDropdown();
             await startProcessPage.startProcess(name, app.processNames[0]);

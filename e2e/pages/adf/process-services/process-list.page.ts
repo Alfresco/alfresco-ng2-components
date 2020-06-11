@@ -31,8 +31,13 @@ export class ProcessListPage {
         return BrowserVisibility.waitUntilElementIsNotPresent(this.processListTitle);
     }
 
-    async checkProcessListIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
+    async isProcessListDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
 }
