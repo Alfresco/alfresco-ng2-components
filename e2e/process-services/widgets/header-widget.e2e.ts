@@ -16,13 +16,13 @@
  */
 
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
-import { browser } from 'protractor';
 
 describe('Header widget', async () => {
     const resources = getTestResources();
+    const testConfig = getTestConfig();
     const app = resources.Files.WIDGET_CHECK_APP.HEADER;
 
     const loginPage = new LoginSSOPage();
@@ -54,7 +54,7 @@ describe('Header widget', async () => {
    });
 
     beforeEach(async () => {
-        const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+        const urlToNavigateTo = `${testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();

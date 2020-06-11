@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, StartProcessPage, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 
 describe('Form widgets - People ', () => {
-
-    const app = browser.params.resources.Files.APP_WITH_USER_WIDGET;
+    const resources = getTestResources();
+    const app = resources.Files.APP_WITH_USER_WIDGET;
 
     const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -43,7 +42,7 @@ describe('Form widgets - People ', () => {
     let appModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 
@@ -57,8 +56,7 @@ describe('Form widgets - People ', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

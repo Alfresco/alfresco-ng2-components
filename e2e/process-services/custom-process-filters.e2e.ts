@@ -15,14 +15,11 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
 import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-
 import { UsersActions } from '../actions/users.actions';
 
 describe('New Process Filters', () => {
@@ -50,7 +47,7 @@ describe('New Process Filters', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
@@ -62,7 +59,7 @@ describe('New Process Filters', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 

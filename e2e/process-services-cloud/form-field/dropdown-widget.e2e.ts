@@ -19,13 +19,14 @@ import {
     ApiService, AppListCloudPage, GroupIdentityService, IdentityService,
     LoginSSOPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
-    TasksService
+    TasksService,
+    getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Form Field Component - Dropdown Widget', () => {
+    const resources = getTestResources();
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -47,10 +48,10 @@ describe('Form Field Component - Dropdown Widget', () => {
     const dropdown = widget.dropdown();
 
     let runningProcessInstance, testUser, groupInfo, tasklist, task;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -59,7 +60,7 @@ describe('Form Field Component - Dropdown Widget', () => {
         await apiService.login(testUser.email, testUser.password);
 
         const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
@@ -73,7 +74,7 @@ describe('Form Field Component - Dropdown Widget', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
    });
 

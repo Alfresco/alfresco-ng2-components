@@ -16,7 +16,6 @@
  */
 
 import { ApiService, DataTableComponentPage, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { UsersActions } from '../../actions/users.actions';
@@ -33,12 +32,9 @@ describe('Datatable component - selection', () => {
     const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
-
         await loginPage.login(acsUser.email, acsUser.password);
-
         await navigationBarPage.navigateToDatatable();
    });
 

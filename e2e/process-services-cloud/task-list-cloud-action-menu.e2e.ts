@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, TasksService } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, QueryService, TasksService, getTestResources } from '@alfresco/adf-testing';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Process list cloud', () => {
+    const resources = getTestResources();
 
     describe('Process List - Custom Action Menu', () => {
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -42,29 +42,29 @@ describe('Process list cloud', () => {
         let testUser, groupInfo, editProcess, deleteProcess, editTask, deleteTask;
 
         beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
-        const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            await apiService.login(testUser.email, testUser.password);
+            const processDefinition = await processDefinitionService
+                    .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
-        editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-        deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
-        editTask = await queryService.getProcessInstanceTasks(editProcess.entry.id, simpleApp);
-        deleteTask = await queryService.getProcessInstanceTasks(deleteProcess.entry.id, simpleApp);
-        await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
-        await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
+            editTask = await queryService.getProcessInstanceTasks(editProcess.entry.id, simpleApp);
+            deleteTask = await queryService.getProcessInstanceTasks(deleteProcess.entry.id, simpleApp);
+            await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
+            await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
         });
 
         afterAll(async() => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

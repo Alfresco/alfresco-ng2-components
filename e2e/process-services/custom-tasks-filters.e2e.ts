@@ -22,9 +22,9 @@ import {
     PaginationPage,
     ApplicationsUtil,
     ProcessUtil,
-    ApiService
+    ApiService,
+    getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
 import { UsersActions } from '../actions/users.actions';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
@@ -33,9 +33,9 @@ import moment = require('moment');
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Custom App', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    const secondApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const secondApp = resources.Files.WIDGETS_SMOKE_TEST;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -81,7 +81,7 @@ describe('Start Task - Custom App', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 

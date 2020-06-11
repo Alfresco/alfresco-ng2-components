@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -28,6 +28,8 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Search component - Search Page', () => {
+    const resources = getTestResources();
+
     const search = {
         active: {
             firstFile: null,
@@ -68,10 +70,10 @@ describe('Search component - Search Page', () => {
 
         firstFileModel = new FileModel({
             'name': search.active.firstFile,
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+            'location': resources.Files.ADF_DOCUMENTS.TXT.file_path
         });
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
         await apiService.getInstance().login(acsUser.email, acsUser.password);
@@ -83,7 +85,7 @@ describe('Search component - Search Page', () => {
 
         await uploadActions.uploadFile(firstFileModel.location, firstFileModel.name, '-my-');
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await uploadActions.createEmptyFiles(adminFileNames, newFolderModelUploaded.entry.id);
 

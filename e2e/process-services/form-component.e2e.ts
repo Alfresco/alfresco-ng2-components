@@ -17,7 +17,6 @@
 
 import { LoginSSOPage, Widget, FormPage, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Form Component', () => {
@@ -49,7 +48,7 @@ describe('Form Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
@@ -63,7 +62,7 @@ describe('Form Component', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });

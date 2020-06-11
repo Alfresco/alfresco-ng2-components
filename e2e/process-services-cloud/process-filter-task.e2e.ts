@@ -24,7 +24,9 @@ import {
     ProcessInstancesService,
     QueryService,
     TaskFormCloudComponent,
-    TaskHeaderCloudPage
+    TaskHeaderCloudPage,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
@@ -40,6 +42,8 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 describe('Process filters cloud', () => {
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -62,18 +66,18 @@ describe('Process filters cloud', () => {
     let processInstance: ProcessInstanceCloud;
     let taskAssigned: StartTaskCloudResponseModel[];
     let taskName: string;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await apiService.loginWithProfile('hrUser');
 
         simpleProcessDefinition = (await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp)).entry;
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp)).entry;
         processInstance = (await processInstancesService.createProcessInstance(simpleProcessDefinition.key, simpleApp)).entry;
         taskAssigned = (await queryService.getProcessInstanceTasks(processInstance.id, simpleApp)).list.entries;
-        taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.processstring;
+        taskName = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.processstring;
 
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(testConfig.hrUser.email, testConfig.hrUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
     });

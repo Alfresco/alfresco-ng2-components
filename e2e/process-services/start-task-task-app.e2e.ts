@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, StringUtil, UserModel } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { ApiService, LoginSSOPage, StringUtil, UserModel, getTestResources, getTestConfig } from '@alfresco/adf-testing';
+import { by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -30,8 +30,9 @@ import * as path from 'path';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const attachmentListPage = new AttachmentListPage();
@@ -52,18 +53,18 @@ describe('Start Task - Task App', () => {
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const showHeaderTask = 'Show Header';
     const jpgFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_location,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
+        'location': resources.Files.ADF_DOCUMENTS.JPG.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         assigneeUserModel = await usersActions.createUser();
 
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
+        const pathFile = path.join(testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);

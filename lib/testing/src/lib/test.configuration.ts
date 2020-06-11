@@ -189,6 +189,9 @@ export interface TestResources {
 
         WIDGET_CHECK_APP: {
             file_path: string;
+            VISIBILITY: {
+                processName: string;
+            };
             UPLOAD_FILE_FORM_CS: {
                 formName: string;
                 FIELD: {
@@ -308,6 +311,54 @@ export interface TestResources {
                     dropdown_visible: string;
                     checkbox_id: string;
                 }
+            };
+            RADIO_BUTTONS: {
+                processName: string;
+                FIELD: {
+                    checkbox_id: string;
+                    radio_buttons_id: string;
+                }
+            };
+            ADD_PEOPLE: {
+                processName: string;
+                FIELD: {
+                    widget_id: string;
+                    checkbox_id: string;
+                }
+            };
+        };
+        MORE_WIDGETS: {
+            file_path: string;
+            groupUser: Array<{ firstName: string; lastName: string; }>;
+            subGroupUser: { firstName: string; lastName: string; };
+            group: {
+                name: string;
+                subgroup: Array<{ name: string; }>;
+                groupUser: Array<{ firstName: string; lastName: string; }>;
+            }
+            ADD_GROUP_VISIBILITY: {
+                formName: string;
+                searchTerm: string;
+                FIELD: {
+                    widget_id: string;
+                    checkbox_id: string;
+                };
+            };
+            ADD_GROUP_AND_SUBGROUP_RESTRICTION: {
+                formName: string;
+                searchTerm: string;
+                FIELD: {
+                    widget_id: string;
+                    checkbox_id: string;
+                };
+            };
+            ADD_PEOPLE_AND_GROUP_RESTRICTION: {
+                formName: string;
+                searchTerm: string;
+                FIELD: {
+                    widget_id: string;
+                    checkbox_id: string;
+                };
             }
         };
         FILE_FORM_ADF: TestResourceApp;
@@ -345,9 +396,11 @@ export interface TestResources {
                 anotherCandidateGroupProcess: string;
                 dropdownrestprocess: string;
                 uploadSingleMultipleFiles: string;
+                processstring: string;
             };
             tasks: {
                 uploadSingleMultipleFiles: string;
+                processstring: string;
             };
         };
         CANDIDATE_BASE_APP: {

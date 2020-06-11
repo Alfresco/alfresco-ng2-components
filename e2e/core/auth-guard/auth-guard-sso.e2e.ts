@@ -15,23 +15,27 @@
  * limitations under the License.
  */
 
-import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions } from '@alfresco/adf-testing';
+import { ErrorPage, LoginSSOPage, SettingsPage, BrowserActions, getTestConfig } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 describe('Auth Guard SSO', () => {
-
+    const testConfig = getTestConfig();
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const errorPage = new ErrorPage();
 
     it('[C307058] Should be redirected to 403 when user doesn\'t have permissions', async () => {
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
-            browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost,
-            false, true, browser.params.testConfig.appConfig.oauth2.clientId);
+        await settingsPage.setProviderEcmSso(
+            testConfig.adf.url,
+            testConfig.appConfig.oauth2.host,
+            testConfig.appConfig.identityHost,
+            false,
+            true,
+            testConfig.appConfig.oauth2.clientId
+        );
 
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
+        await loginSSOPage.loginSSOIdentityService(testConfig.admin.email, testConfig.admin.password);
+        await BrowserActions.getUrl(testConfig.adf.url + '/cloud/simple-app');
         await browser.sleep(1000);
         const error = await errorPage.getErrorCode();
         await expect(error).toBe('403');

@@ -19,13 +19,13 @@ import {
     ApiService,
     LoginSSOPage,
     SettingsPage,
-    UserInfoPage
+    UserInfoPage,
+    getTestConfig
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('User Info - SSO', () => {
-
+    const testConfig = getTestConfig();
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const userInfoPage = new UserInfoPage();
@@ -36,13 +36,18 @@ describe('User Info - SSO', () => {
     let identityUser;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         identityUser = await usersActions.createUser();
 
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
-            browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
+        await settingsPage.setProviderEcmSso(
+            testConfig.adf.url,
+            testConfig.appConfig.oauth2.host,
+            testConfig.appConfig.identityHost,
+            false,
+            true,
+            testConfig.appConfig.oauth2.clientId
+        );
 
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
     });

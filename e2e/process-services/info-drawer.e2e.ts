@@ -22,10 +22,10 @@ import {
     LoginSSOPage,
     StringUtil,
     ApplicationsUtil,
-    ApiService, UserModel
+    ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
-import { browser, by, element } from 'protractor';
+import { by, element } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -36,8 +36,8 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 import { infoDrawerConfiguration } from './config/task.config';
 
 describe('Info Drawer', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -74,7 +74,7 @@ describe('Info Drawer', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const assigneeUserModel = await usersActions.createUser();
         assigneeUserModelFullName = assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName;
@@ -90,7 +90,7 @@ describe('Info Drawer', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appCreated.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { AppListCloudPage, BrowserActions, BrowserVisibility, getTestConfig } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/people-group-cloud-component.page';
 import { ProcessServicesPage } from './process-services/process-services.page';
+
+const testConfig = getTestConfig();
 
 export class NavigationBarPage {
 
@@ -191,7 +193,7 @@ export class NavigationBarPage {
     }
 
     async openContentServicesFolder(folderId): Promise<void> {
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${folderId}`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/files/${folderId}`);
     }
 
     async openLanguageMenu(): Promise<void> {
@@ -234,11 +236,11 @@ export class NavigationBarPage {
     }
 
     async openViewer(nodeId: string): Promise<void> {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
+        await BrowserActions.getUrl(testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
     }
 
     async goToSite(site): Promise<void> {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
+        await BrowserActions.getUrl(testConfig.adf.url + `/files/${site.entry.guid}/display/list`);
     }
 
     async scrollTo(el: ElementFinder): Promise<void> {

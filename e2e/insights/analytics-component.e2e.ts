@@ -20,7 +20,6 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Analytics Smoke Test', () => {
@@ -38,7 +37,7 @@ describe('Analytics Smoke Test', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         procUserModel = await usersActions.createUser();
 

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage, getTestResources } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Applications list', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -36,7 +36,7 @@ describe('Applications list', () => {
     let applications;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
 
         await loginSSOPage.login(testUser.email, testUser.password);
@@ -53,7 +53,7 @@ describe('Applications list', () => {
    });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
    });
 
@@ -72,8 +72,8 @@ describe('Applications list', () => {
         await appListCloudPage.checkApsContainer();
 
         await appListCloudPage.checkAppIsDisplayed(simpleApp);
-        await appListCloudPage.checkAppIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name);
-        await appListCloudPage.checkAppIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name);
+        await appListCloudPage.checkAppIsDisplayed(resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name);
 
         await expect(await appListCloudPage.countAllApps()).toEqual(3);
     });

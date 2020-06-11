@@ -16,15 +16,14 @@
  */
 
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('People and Group widget', () => {
-
-    const app = browser.params.resources.Files.MORE_WIDGETS;
+    const resources = getTestResources();
+    const app = resources.Files.MORE_WIDGETS;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -38,7 +37,7 @@ describe('People and Group widget', () => {
     let user: UserModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
         await createGroupAndUsers(user.tenantId);
@@ -116,11 +115,11 @@ describe('People and Group widget', () => {
     });
 
     async function createGroupAndUsers(tenantId: number) {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const userCreated = await Promise.all(app.groupUser.map(usersToCreate =>
             usersActions.createUser(new UserModel({
-                tenantId: tenantId,
+                tenantId,
                 firstName: usersToCreate.firstName,
                 lastName: usersToCreate.lastName
             }))

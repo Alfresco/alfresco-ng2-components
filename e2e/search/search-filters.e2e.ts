@@ -29,13 +29,17 @@ import {
     UploadActions,
     BrowserActions,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Search Filters', () => {
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
@@ -62,22 +66,22 @@ describe('Search Filters', () => {
     });
 
     const pngFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const txtFileModel1 = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
         'name': `${uniqueFileName1}.txt`
     });
 
     const jpgFileModel = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+        'location': resources.Files.ADF_DOCUMENTS.JPG.file_path,
         'name': `${uniqueFileName2}.jpg`
     });
 
     const txtFileModel2 = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
         'name': `${uniqueFileName3}.txt`
     });
 
@@ -88,7 +92,7 @@ describe('Search Filters', () => {
     let jsonFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
@@ -134,7 +138,7 @@ describe('Search Filters', () => {
     });
 
     it('[C277146] Should Show more/less buttons be hidden when inactive', async () => {
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/search;q=*`);
 
         const searchCheckListPage = searchFiltersPage.creatorCheckListFiltersPage();
 
@@ -146,7 +150,7 @@ describe('Search Filters', () => {
     });
 
     it('[C286556] Search categories should preserve their collapsed/expanded state after the search', async () => {
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.clickFileTypeListFilter();
         await searchFiltersPage.checkFileTypeFilterIsCollapsed();
@@ -160,7 +164,7 @@ describe('Search Filters', () => {
     });
 
     it('[C287796] Should be able to display the correct bucket number after selecting a filter', async () => {
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.fileTypeCheckListFiltersPage().clickCheckListOption('PNG Image');
 
@@ -191,7 +195,7 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
@@ -214,7 +218,7 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=*`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/search;q=*`);
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();

@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
     LoginSSOPage, ApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
+    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, getTestResources
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 
 describe('Edit task filters and task list properties', () => {
-
+    const resources = getTestResources();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -37,14 +36,14 @@ describe('Edit task filters and task list properties', () => {
     const groupIdentityService = new GroupIdentityService(apiService);
     const tasksService = new TasksService(apiService);
 
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     let createdTask, notDisplayedTask, priorityTask, subTask,
         otherOwnerTask, testUser, groupInfo;
     const priority = 30;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -111,7 +110,7 @@ describe('Edit task filters and task list properties', () => {
     }, 5 * 60 * 1000);
 
     afterAll(async (done) => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });

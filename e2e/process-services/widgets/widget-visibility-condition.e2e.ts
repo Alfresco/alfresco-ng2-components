@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
@@ -44,8 +43,10 @@ const checkbox = {
 };
 
 describe('Process-Services - Visibility conditions', () => {
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
+    const app = resources.Files.WIDGET_CHECK_APP.VISIBILITY;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -60,12 +61,12 @@ describe('Process-Services - Visibility conditions', () => {
     let processUserModel;
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+       await apiService.loginWithProfile('admin');
 
        processUserModel = await usersActions.createUser();
 
        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+       appModel = await applicationsService.importPublishDeployApp(resources.Files.WIDGET_CHECK_APP.file_path);
 
        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
        deployedApp = appDefinitions.data.find((currentApp) => {
@@ -76,7 +77,7 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     beforeEach(async () => {
-        const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+        const urlToNavigateTo = `${testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
@@ -84,7 +85,7 @@ describe('Process-Services - Visibility conditions', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

@@ -22,7 +22,8 @@ import {
     DataTableComponentPage,
     DateUtil,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
@@ -34,6 +35,7 @@ import { SearchConfiguration } from '../search.config';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Number Range Filter', () => {
+    const resources = getTestResources();
 
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
@@ -46,13 +48,13 @@ describe('Search Number Range Filter', () => {
     const acsUser = new UserModel();
 
     const file2BytesModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path
+        'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path
     });
 
     const file0BytesModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     let file2Bytes, file0Bytes;
@@ -62,11 +64,10 @@ describe('Search Number Range Filter', () => {
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         file0Bytes = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
