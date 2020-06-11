@@ -86,7 +86,7 @@ export class ContentServicesPage {
     multiSelectToggle = element(by.css('[data-automation-id="multiSelectToggle"]'));
     selectAllCheckbox = element.all(by.css('.adf-checkbox-sr-only')).first();
     selectionModeDropdown = element(by.css('.mat-select[aria-label="Selection Mode"]'));
-    selectedNodesList: ElementArrayFinder = element.all(by.css('.app-content-service-settings li'));
+    selectedNodesList = element.all(by.css('.app-content-service-settings li'));
     siteListDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
     sortingDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="grid-view-sorting"]')));
 
