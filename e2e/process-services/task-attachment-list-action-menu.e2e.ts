@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ApiService, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
@@ -28,8 +28,9 @@ import { FileModel } from '../models/ACS/file.model';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attachment list action menu for tasks', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -41,8 +42,8 @@ describe('Attachment list action menu for tasks', () => {
     const usersActions = new UsersActions(apiService);
 
     const pngFile = new FileModel({
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
     const downloadedPngFile = pngFile.name;
     let tenantId, appId, relatedContent, relatedContentId;
@@ -54,8 +55,7 @@ describe('Attachment list action menu for tasks', () => {
     };
 
     beforeAll(async () => {
-
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         const user = await usersActions.createUser();
         tenantId = user.tenantId;
 
@@ -69,7 +69,7 @@ describe('Attachment list action menu for tasks', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
@@ -162,7 +162,7 @@ describe('Attachment list action menu for tasks', () => {
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
         const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
         const newTaskId = newTask.id;
-        const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
+        const filePath = path.join(testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
         relatedContent = await apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });

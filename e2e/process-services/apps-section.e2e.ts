@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
@@ -24,10 +23,10 @@ import { UsersActions } from '../actions/users.actions';
 import { ModelsActions } from '../actions/APS/models.actions';
 
 describe('Modify applications', () => {
-
-    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
-    const appToBeDeleted = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-    const replacingApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    const resources = getTestResources();
+    const app = resources.Files.APP_WITH_PROCESSES;
+    const appToBeDeleted = resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const replacingApp = resources.Files.WIDGETS_SMOKE_TEST;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -42,7 +41,7 @@ describe('Modify applications', () => {
     let firstApp, appVersionToBeDeleted;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const user = await usersActions.createUser();
 

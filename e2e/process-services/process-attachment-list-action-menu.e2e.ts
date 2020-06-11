@@ -21,7 +21,8 @@ import {
     ViewerPage,
     ApplicationsUtil,
     ProcessUtil,
-    ApiService
+    ApiService,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
@@ -32,8 +33,8 @@ import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 
 describe('Attachment list action menu for processes', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -47,8 +48,8 @@ describe('Attachment list action menu for processes', () => {
     const applicationsService = new ApplicationsUtil(apiService);
 
     const pngFile = new FileModel({
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     const downloadedPngFile = pngFile.name;
@@ -62,8 +63,7 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async () => {
-
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const user = await usersActions.createUser();
 
@@ -86,7 +86,7 @@ describe('Attachment list action menu for processes', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 

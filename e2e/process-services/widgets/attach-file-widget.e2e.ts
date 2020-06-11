@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { UsersActions } from '../../actions/users.actions';
 import { TaskDetailsPage } from '../../pages/adf/process-services/task-details.page';
@@ -27,8 +26,8 @@ import { TasksListPage } from '../../pages/adf/process-services/tasks-list.page'
 import { FiltersPage } from '../../pages/adf/process-services/filters.page';
 
 describe('Attach widget - File', () => {
-
-    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    const resources = getTestResources();
+    const app = resources.Files.WIDGETS_SMOKE_TEST;
 
     const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
@@ -44,11 +43,11 @@ describe('Attach widget - File', () => {
     const applicationsService = new ApplicationsUtil(apiService);
 
     let processUserModel;
-    const pdfFile = new FileModel({'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name});
+    const pdfFile = new FileModel({'name': resources.Files.ADF_DOCUMENTS.PDF.file_name});
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
@@ -72,7 +71,7 @@ describe('Attach widget - File', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

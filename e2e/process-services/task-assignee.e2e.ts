@@ -21,7 +21,8 @@ import {
     ProcessUtil,
     StartProcessPage,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -30,13 +31,12 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Assignee', () => {
-
-    const app = browser.params.resources.Files.TEST_ASSIGNEE;
+    const resources = getTestResources();
+    const app = resources.Files.TEST_ASSIGNEE;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -57,7 +57,7 @@ describe('Task Assignee', () => {
         let user: UserModel;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             user = await usersActions.createUser(new UserModel({
                 firstName: app.candidate.firstName,
@@ -80,7 +80,7 @@ describe('Task Assignee', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
@@ -126,7 +126,7 @@ describe('Task Assignee', () => {
         let candidate2: UserModel;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
             candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
             candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
@@ -163,7 +163,7 @@ describe('Task Assignee', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 

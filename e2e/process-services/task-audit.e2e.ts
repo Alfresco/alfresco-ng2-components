@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -42,7 +42,7 @@ describe('Task Audit', () => {
     const auditLogFile = 'Audit.pdf';
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
@@ -54,12 +54,12 @@ describe('Task Audit', () => {
     });
 
     afterAll( async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(testConfig.adf.url + '/activiti');
     });
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', async () => {

@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ProcessUtil, ApiService, ApplicationsUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ProcessUtil, ApiService, ApplicationsUtil, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Process List Test', () => {
-
-    const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
-    const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const appWithDateField = resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const appWithUserWidget = resources.Files.APP_WITH_USER_WIDGET;
 
     const loginPage = new LoginSSOPage();
     const processListDemoPage = new ProcessListDemoPage();
@@ -52,11 +52,11 @@ describe('Process List Test', () => {
     let procWithDate, completedProcWithDate, completedProcWithUserWidget;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         appDateModel = await applicationsUtil.importPublishDeployApp(appWithDateField.file_path);
 
@@ -85,13 +85,13 @@ describe('Process List Test', () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appDateModel.id);
         await apiService.getInstance().activiti.modelsApi.deleteModel(appUserWidgetModel.id);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
+        await BrowserActions.getUrl(testConfig.adf.url + '/process-list');
    });
 
     it('[C286638] Should display all process by default', async () => {

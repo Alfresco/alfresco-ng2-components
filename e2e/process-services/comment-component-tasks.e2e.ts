@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-
-import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -26,8 +24,8 @@ import { UsersActions } from '../actions/users.actions';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Comment component for Processes', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -45,12 +43,12 @@ describe('Comment component for Processes', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
         secondUser = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
 
         const importedApp = await new ApplicationsUtil(apiService).importPublishDeployApp(app.file_path);
         appId = importedApp.id;
@@ -60,7 +58,7 @@ describe('Comment component for Processes', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

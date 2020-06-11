@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
+import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage, getTestResources } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/people-group-cloud-component.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('People Groups Cloud Component', () => {
+    const resources = getTestResources();
 
     describe('People Groups Cloud Component', () => {
 
@@ -42,7 +43,7 @@ describe('People Groups Cloud Component', () => {
         let testGroup;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
             testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
@@ -61,7 +62,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             for (let i = 0; i < users.length; i++) {
                 await identityService.deleteIdentityUser(users[i]);
             }
@@ -82,7 +83,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the People Single Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
@@ -93,7 +94,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the People Multiple Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
-            await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterPeopleAppName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
@@ -111,7 +112,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the Groups Single Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickGroupCloudSingleSelection();
             await peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            await peopleGroupCloudComponentPage.enterGroupAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await groupCloudComponentPage.searchGroups(hrGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(hrGroup.name);
             await groupCloudComponentPage.selectGroupFromList(hrGroup.name);
@@ -121,7 +122,7 @@ describe('People Groups Cloud Component', () => {
         it('[C305041] Should filter the Groups Multiple Selection with the Application name filter', async () => {
             await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
             await peopleGroupCloudComponentPage.clickGroupFilerByApp();
-            await peopleGroupCloudComponentPage.enterGroupAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
+            await peopleGroupCloudComponentPage.enterGroupAppName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
             await groupCloudComponentPage.searchGroups(testGroup.name);
             await groupCloudComponentPage.checkGroupIsDisplayed(testGroup.name);
             await groupCloudComponentPage.selectGroupFromList(testGroup.name);

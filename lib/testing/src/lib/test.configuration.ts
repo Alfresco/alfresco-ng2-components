@@ -77,7 +77,9 @@ export interface TestResourceFolder {
 
 export interface TestResourceApp {
     title: string;
+    description: string;
     file_path: string;
+    file_location: string;
     process_wse_name: string;
     process_se_name: string;
     formName: string;
@@ -90,11 +92,18 @@ export interface TestResourceApp {
 export interface TestResources {
     Files: {
         ADF_DOCUMENTS: {
+            FOLDER_ONE: TestResourceFolder;
+            FOLDER_TWO: TestResourceFolder;
+            ADF_FOLDER: TestResourceFolder;
+            EXCEL_FOLDER: TestResourceFolder;
+            IMG_FOLDER: TestResourceFolder;
+            IMG_RENDITION_FOLDER: TestResourceFolder;
+            OTHER_FOLDER: TestResourceFolder;
+            ARCHIVE_FOLDER: TestResourceFolder;
+            PPT_FOLDER: TestResourceFolder;
+
             TXT: TestResourceFile;
             TXT_0B: TestResourceFile;
-            PDF: TestResourceDocumentFile;
-            PDF_PROTECTED: TestResourceDocumentFile;
-            PDF_B: TestResourceDocumentFile;
             PNG: TestResourceFile;
             PNG_B: TestResourceFile;
             PNG_C: TestResourceFile;
@@ -103,25 +112,22 @@ export interface TestResources {
             TEST: TestResourceFile;
             MP4: TestResourceFile;
             UNSUPPORTED: TestResourceFile;
-            DOCX: TestResourceDocumentFile;
-            PPT: TestResourceDocumentFile;
             LARGE_FILE: TestResourceFile;
             MEDIUM_FILE: TestResourceFile;
             TEXT_FOLDER: TestResourceFolder;
             FILE_ACCEPTED_INSIDE_TEXT_FOLDER: TestResourceFile;
             FILE_EXCLUDED_INSIDE_TEXT_FOLDER: TestResourceFile;
             INI: TestResourceFile;
-            FOLDER_ONE: TestResourceFolder;
-            FOLDER_TWO: TestResourceFolder;
             FILE_INSIDE_FOLDER_ONE: TestResourceFile;
             FILE_INSIDE_FOLDER_TWO: TestResourceFile;
-            ADF_FOLDER: TestResourceFolder;
             TXT_400B: TestResourceFile;
-            EXCEL_FOLDER: TestResourceFolder;
-            IMG_FOLDER: TestResourceFolder;
-            IMG_RENDITION_FOLDER: TestResourceFolder;
             JS: TestResourceFile;
-            OTHER_FOLDER: TestResourceFolder;
+
+            PDF: TestResourceDocumentFile;
+            PDF_PROTECTED: TestResourceDocumentFile;
+            PDF_B: TestResourceDocumentFile;
+            DOCX: TestResourceDocumentFile;
+            PPT: TestResourceDocumentFile;
         };
         PROFILE_IMAGES: {
             ECM: TestResourceFile;
@@ -134,6 +140,27 @@ export interface TestResources {
         SIMPLE_APP_WITH_USER_FORM: TestResourceApp;
         APP_DYNAMIC_TABLE_DROPDOWN: TestResourceApp;
         DYNAMIC_TABLE_APP: TestResourceApp;
+        APP_WITH_USER_WIDGET: TestResourceApp;
+        TEST_ASSIGNEE: {
+            title: string;
+            file_path: string;
+            processNames: string[];
+            adminCapabilities: string[];
+            candidate: {
+                firstName: string;
+                lastName: string;
+            };
+            candidateGroup: string;
+            adminGroup: string;
+            userTasks: {
+                simple: {
+                    one: string;
+                    two: string;
+                };
+                candidateTask: string;
+            };
+        };
+        DYNAMIC_TABLE: TestResourceApp;
 
         WIDGET_CHECK_APP: {
             file_path: string;
@@ -142,7 +169,53 @@ export interface TestResources {
                 FIELD: {
                     widget_id: string;
                 }
+            };
+            UPLOAD_FOLDER_FORM_CS: {
+                formName: string;
+                FIELD: {
+                    widget_id: string;
+                }
+            };
+            NUMBER: {
+                processName: string;
+                FIELD: {
+                    number_general: string;
+                    number_visible: string;
+                    checkbox_id: string;
+                }
+            },
+            DYNAMIC_TABLE: {
+                processName: string;
+                FIELD: {
+                    dynamic_table_id: string;
+                    dynamic_table_age_id: string;
+                    dateTime_input_id: string;
+                    checkbox_id: string;
+                }
+            },
+            DYNAMIC_TABLE_USERS: {
+                processName: string;
+                FIELD: {
+                    dynamic_table_age_id: string;
+                    checkbox_id: string;
+                    dateTime_input_id: string;
+                    dynamic_table_id: string;
+                }
+            },
+            CUSTOM_VALIDATOR: {
+                processName: string;
+                FIELD: {
+                    NAME: string;
+                    ID: string;
+                    NUM: string;
+                    ADDRESS: string;
+                }
             }
+        };
+    };
+    ACTIVITI_CLOUD_APPS: {
+        SIMPLE_APP: {
+            name: string;
         };
     };
 }

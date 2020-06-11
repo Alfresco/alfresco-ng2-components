@@ -21,16 +21,19 @@ import {
     ContentNodeSelectorDialogPage,
     IntegrationService, LocalStorageUtil,
     LoginSSOPage, UserModel,
-    Widget
+    Widget,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach Folder', () => {
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.WIDGET_CHECK_APP;
 
     const apiService = new ApiService({ provider: 'ALL' });
     const integrationService = new IntegrationService(apiService);
@@ -48,13 +51,13 @@ describe('Attach Folder', () => {
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
         await integrationService.addCSIntegration({
             tenantId: user.tenantId,
             name: 'adf dev',
-            host: browser.params.testConfig.appConfig.ecmHost
+            host: testConfig.appConfig.ecmHost
         });
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
@@ -62,7 +65,7 @@ describe('Attach Folder', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
