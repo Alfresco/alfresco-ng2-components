@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { NodePaging } from '@alfresco/js-api';
-import { query } from '@angular/core/src/render3';
 
 @Component({
     selector: 'adf-search-header',
     templateUrl: './search-header.component.html',
+    styleUrls: ['./search-header.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     providers: [
         {
             provide: SearchQueryBuilderService,
@@ -57,6 +58,10 @@ export class SearchHeaderComponent implements OnInit {
     }
 
     onMenuButtonClick(event: Event) {
+        event.stopPropagation();
+    }
+
+    onMenuClick(event: Event) {
         event.stopPropagation();
     }
 

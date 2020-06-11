@@ -334,13 +334,13 @@
             color: $data-table-header-color;
             padding-bottom: 8px;
             box-sizing: border-box;
+            padding-top: 12px !important;
 
             &.adf-sortable {
                 @include adf-no-select;
                 &:hover {
                     cursor: pointer;
                 }
-                padding-top: 12px;
                 display: flex;
                 align-items: center;
             }
