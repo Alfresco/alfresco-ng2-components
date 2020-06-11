@@ -165,8 +165,7 @@ export class FormFields {
     async isCompleteFormButtonEnabled(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-            await this.completeButton.isEnabled();
-            return true;
+            return await this.completeButton.isEnabled();
         } catch (error) {
             return false;
         }
@@ -174,9 +173,7 @@ export class FormFields {
 
     async isCancelButtonDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(
-                this.cancelButton
-            );
+            await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
             return true;
         } catch (error) {
             return false;
@@ -185,8 +182,8 @@ export class FormFields {
 
     async isCancelButtonEnabled(): Promise<boolean> {
         try {
-            await this.cancelButton.isEnabled();
-            return true;
+            await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
+            return await this.cancelButton.isEnabled();
         } catch (error) {
             return false;
         }
