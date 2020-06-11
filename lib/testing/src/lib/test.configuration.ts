@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
+import { browser } from 'protractor';
+
 export interface TestConfiguration {
 
-    appConfig: any;
+    appConfig: {
+        ecmHost: string,
+        bpmHost: string
+    };
 
     log: boolean;
 
@@ -48,4 +53,41 @@ export interface TestConfiguration {
         host: string;
     };
 
+}
+
+export interface TestResourceFile {
+    file_name: string;
+    file_path: string;
+}
+
+export interface TestResourceFolder {
+    folder_path: string;
+    folder_location: string;
+}
+
+export interface TestResources {
+    Files: {
+        ADF_DOCUMENTS: {
+            TXT: TestResourceFile;
+            TXT_0B: TestResourceFile;
+            PDF: TestResourceFile;
+            PDF_B: TestResourceFile;
+            PNG: TestResourceFile;
+            PNG_B: TestResourceFile;
+            TEXT_FOLDER: TestResourceFolder;
+        }
+    };
+}
+
+export interface BrowserParams {
+    resources: TestResources;
+    testConfig: TestConfiguration;
+}
+
+export function getTestParams(): BrowserParams {
+    return browser.params;
+}
+
+export function getTestResources(): TestResources {
+    return getTestParams().resources;
 }

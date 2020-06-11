@@ -24,7 +24,9 @@ import {
     PaginationPage,
     StringUtil,
     PermissionActions,
-    ApiService, UserModel
+    ApiService,
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -43,54 +45,55 @@ describe('Delete Directive', () => {
     const permissionActions = new PermissionActions(apiService);
     let baseFolderUploaded;
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const txtFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+        name: resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const file0BytesModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     const pdfFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const secondPdfFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     });
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const secondPngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG_B.file_path
     });
 
     const folderInfo = new FolderModel({
         name: 'myFolder',
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_path
+        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_path
     });
 
     const folderSecond = new FolderModel({
         name: 'myrSecondFolder',
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     const baseFolder = new FolderModel({
         name: 'BASE_FOLDER',
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        location: resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(secondAcsUser);
         await apiService.getInstance().login(acsUser.email, acsUser.password);

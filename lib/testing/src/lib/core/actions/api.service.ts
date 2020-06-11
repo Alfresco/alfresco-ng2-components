@@ -17,6 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { getTestParams } from '../../test.configuration';
 
 export class ApiService {
 
@@ -36,18 +37,23 @@ export class ApiService {
     });
 
     constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
+        const params = getTestParams();
 
-        if (browser.params.testConfig && browser.params.testConfig.appConfig) {
-            this.config = { ...browser.params.testConfig.appConfig };
-            this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
-            this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
+        if (params.testConfig && params.testConfig.appConfig) {
+            this.config = {
+                ...params.testConfig.appConfig,
+                hostEcm: params.testConfig.appConfig.ecmHost,
+                hostBpm: params.testConfig.appConfig.bpmHost
+            };
         }
 
         if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
-            this.config = { ...this.config, ...clientIdOrAppConfig };
-
-            this.config.hostEcm = clientIdOrAppConfig.hostEcm ? clientIdOrAppConfig.hostEcm : this.config.hostEcm;
-            this.config.hostBpm = clientIdOrAppConfig.hostBpm ? clientIdOrAppConfig.hostBpm : this.config.hostBpm;
+            this.config = {
+                ...this.config,
+                ...clientIdOrAppConfig,
+                hostEcm: clientIdOrAppConfig.hostEcm || this.config.hostEcm,
+                hostBpm: clientIdOrAppConfig.hostBpm || this.config.hostBpm
+            };
         } else if (clientIdOrAppConfig && typeof clientIdOrAppConfig === 'string') {
             this.config.oauth2.clientId = clientIdOrAppConfig;
         }
@@ -74,7 +80,16 @@ export class ApiService {
     }
 
     async login(username: string, password: string): Promise<void> {
-        await this.apiService.login(username, password);
+        return this.apiService.login(username, password);
+    }
+
+    /**
+     * Login with the existing profile in test configuration (`browser.params.testConfig.[<profile>]`).
+     * The profile should contain `email` and `password` properties.
+     */
+    async loginWithProfile(profileName: string): Promise<void> {
+        const { email, password } = browser.params.testConfig[profileName];
+        return this.login(email, password);
     }
 
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
@@ -96,7 +111,8 @@ export class ApiService {
 
     async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
         const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
-        const pathParams = {}, formParams = {};
+        const pathParams = {};
+        const formParams = {};
         const contentTypes = ['application/json'];
         const accepts = ['application/json'];
 
@@ -104,11 +120,17 @@ export class ApiService {
             Authorization: 'bearer ' + this.apiService.oauth2Auth.token
         };
 
-        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            contentTypes, accepts, Object)
-            .catch((error) => {
-                throw (error);
-            });
+        return this.apiService.processClient.callCustomApi(
+            uri,
+            method,
+            pathParams,
+            queryParams,
+            headerParams,
+            formParams,
+            postBody,
+            contentTypes,
+            accepts,
+            Object
+        );
     }
-
 }
