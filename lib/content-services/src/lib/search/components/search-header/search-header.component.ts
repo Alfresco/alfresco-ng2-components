@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, Inject, ViewEncapsulation } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -43,7 +43,7 @@ export class SearchHeaderComponent implements OnInit {
 
     category: any = {};
 
-    constructor(private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
+    constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
 
     ngOnInit() {
        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
