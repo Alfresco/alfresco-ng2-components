@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage, UserModel } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -31,16 +30,18 @@ describe('Datatable component', () => {
     const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const resources = getTestResources();
+
     const pngFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 

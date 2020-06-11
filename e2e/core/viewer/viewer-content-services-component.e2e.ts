@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, ViewerPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -28,44 +27,45 @@ describe('Content Services Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
+    const resources = getTestResources();
 
     let zoom;
 
     const pdfFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
-        'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
-        'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF.first_page_text,
+        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF.second_page_text,
+        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF.last_page_number
     });
     const protectedFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
-        'secondPageText': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
-        'lastPageNumber': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
-        'password': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.first_page_text,
+        'secondPageText': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.second_page_text,
+        'lastPageNumber': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.last_page_number,
+        'password': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.password,
+        'location': resources.Files.ADF_DOCUMENTS.PDF_PROTECTED.file_path
     });
     const docxFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.first_page_text
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_path,
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.DOCX.first_page_text
     });
     const jpgFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_name
+        'location': resources.Files.ADF_DOCUMENTS.JPG.file_path,
+        'name': resources.Files.ADF_DOCUMENTS.JPG.file_name
     });
     const mp4File = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.MP4.file_name
+        'location': resources.Files.ADF_DOCUMENTS.MP4.file_path,
+        'name': resources.Files.ADF_DOCUMENTS.MP4.file_name
     });
     const unsupportedFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
+        'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path,
+        'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name
     });
     const pptFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_path,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
-        'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
+        'location': resources.Files.ADF_DOCUMENTS.PPT.file_path,
+        'name': resources.Files.ADF_DOCUMENTS.PPT.file_name,
+        'firstPageText': resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
 
     const apiService = new ApiService();
@@ -73,11 +73,9 @@ describe('Content Services Viewer', () => {
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
-
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         const pdfFileUploaded = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);

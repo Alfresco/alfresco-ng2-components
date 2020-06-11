@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import {
     LoginSSOPage,
     UploadActions,
     BrowserVisibility,
     BrowserActions,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
@@ -40,42 +40,43 @@ describe('Version component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const fileModelVersionTwo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const fileModelVersionThree = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     const fileModelVersionFor = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_C.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG_C.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG_C.file_location
     });
 
     const fileModelVersionFive = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_location
     });
 
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);

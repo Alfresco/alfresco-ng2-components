@@ -21,7 +21,7 @@ import {
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    NotificationHistoryPage, BrowserActions, ApiService, UserModel
+    NotificationHistoryPage, BrowserActions, ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -38,8 +38,8 @@ describe('Document List Component', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
 
     let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
         duplicateFolderName;
@@ -48,19 +48,19 @@ describe('Document List Component', () => {
     let folderName, sameNameFolder, site;
 
     const pdfFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const testFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
     beforeAll(async () => {
         folderName = StringUtil.generateRandomString(5);
         sameNameFolder = StringUtil.generateRandomString(5);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
         site = await apiService.getInstance().core.sitesApi.createSite({
@@ -100,7 +100,7 @@ describe('Document List Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await uploadActions.deleteFileOrFolder(uploadedFile.entry.id);
         await uploadActions.deleteFileOrFolder(sourceFolder.entry.id);

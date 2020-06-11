@@ -21,7 +21,7 @@ import {
     BrowserActions,
     UploadActions,
     ViewerPage,
-    StringUtil, ApiService, UserModel
+    StringUtil, ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
@@ -51,14 +51,15 @@ describe('Metadata component', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const folderName = StringUtil.generateRandomString();
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const apiService = new ApiService();
@@ -66,7 +67,7 @@ describe('Metadata component', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
@@ -168,7 +169,7 @@ describe('Metadata component', () => {
 
             await metadataViewPage.enterPropertyText('name', 'exampleText');
             await metadataViewPage.clickResetMetadata();
-            await expect(await metadataViewPage.getPropertyText('name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await expect(await metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
 
             await metadataViewPage.enterPropertyText('name', 'exampleText.png');
             await metadataViewPage.enterPropertyText('properties.cm:title', 'example title');
@@ -193,8 +194,8 @@ describe('Metadata component', () => {
             await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('example description');
 
             await metadataViewPage.editIconClick();
-            await metadataViewPage.enterPropertyText('name', browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
-            await expect(await metadataViewPage.getPropertyText('name')).toEqual(browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await metadataViewPage.enterPropertyText('name', resources.Files.ADF_DOCUMENTS.PNG.file_name);
+            await expect(await metadataViewPage.getPropertyText('name')).toEqual(resources.Files.ADF_DOCUMENTS.PNG.file_name);
             await metadataViewPage.clickSaveMetadata();
         });
 

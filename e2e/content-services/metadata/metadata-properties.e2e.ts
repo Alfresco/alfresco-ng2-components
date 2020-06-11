@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, UserModel, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, UserModel, ViewerPage, getTestResources } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UsersActions } from '../../actions/users.actions';
@@ -43,19 +42,20 @@ describe('CardView Component - properties', () => {
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const contentServicesPage = new ContentServicesPage();
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
 

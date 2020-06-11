@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
+import { ApiService, DropActions, LoginSSOPage, UploadActions, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { UsersActions } from '../../actions/users.actions';
 
@@ -33,15 +32,16 @@ describe('Document List Component - Properties', () => {
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const pngFile = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     describe('Allow drop files property', () => {
         beforeEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             acsUser = await usersActions.createUser();
 
@@ -55,7 +55,7 @@ describe('Document List Component - Properties', () => {
         });
 
         afterEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
         });

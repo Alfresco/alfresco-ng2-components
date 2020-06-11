@@ -22,7 +22,7 @@ import {
     UploadActions,
     StringUtil,
     NotificationHistoryPage,
-    ViewerPage, ApiService, UserModel
+    ViewerPage, ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -50,27 +50,28 @@ describe('Permissions Component', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialogPage();
     const versionManagePage = new VersionManagePage();
+    const resources = getTestResources();
 
     let publicSite, privateSite, folderName;
 
     const fileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     const testFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const newVersionFile = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
 
     let siteFolder, privateSiteFile;
@@ -84,7 +85,7 @@ describe('Permissions Component', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(folderOwnerUser);
         await usersActions.createUser(siteConsumerUser);
         await usersActions.createUser(consumerUser);
@@ -152,8 +153,7 @@ describe('Permissions Component', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
         await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });

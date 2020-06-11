@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, BrowserActions, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, LoginSSOPage, UploadActions, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -36,58 +36,59 @@ describe('Upload component', () => {
 
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const firstPdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_location
     });
     const docxFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModelTwo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG_B.file_location
     });
     const pngFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
 
     const parentFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
+        name: resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
+        location: resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
     });
 
     const fileInsideParentFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_location
+        name: resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name,
+        location: resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_location
     });
     const subFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
+        name: resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
+        location: resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
     });
 
     const fileInsideSubFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_location
+        name: resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name,
+        location: resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_location
     });
 
     const adfBigFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_location
+        name: resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_name,
+        location: resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_location
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
@@ -102,8 +103,7 @@ describe('Upload component', () => {
         const nbResults = await contentServicesPage.numberOfResultsDisplayed();
         if (nbResults > 1) {
             const nodesPromise = await contentServicesPage.getElementsDisplayedId();
-            for (const node of nodesPromise) {
-                const nodeId = await node;
+            for (const nodeId of nodesPromise) {
                 await uploadActions.deleteFileOrFolder(nodeId);
             }
         }

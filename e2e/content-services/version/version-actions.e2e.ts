@@ -21,7 +21,7 @@ import {
     BrowserVisibility,
     FileBrowserUtil,
     LoginSSOPage,
-    UploadActions, UserModel
+    UploadActions, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
@@ -40,28 +40,29 @@ describe('Version component actions', () => {
     const uploadDialog = new UploadDialogPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     const fileModelVersionTwo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
+        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
     let uploadActions;
 
     const bigFileToCancel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
+        'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
 
     beforeAll(async () => {
         uploadActions = new UploadActions(apiService);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');

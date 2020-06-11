@@ -262,7 +262,7 @@ describe('Document List Component - Actions', () => {
         const contentServicesUser = new UserModel();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await usersActions.createUser(contentServicesUser);
             await apiService.getInstance().login(contentServicesUser.email, contentServicesUser.password);
             folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
@@ -284,7 +284,7 @@ describe('Document List Component - Actions', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             for (const folder of folders) {
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
             }

@@ -25,9 +25,8 @@ import {
     LoginSSOPage,
     UploadActions,
     ViewerPage,
-    ApiService, UserModel
+    ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -49,21 +48,23 @@ describe('Permissions Component', () => {
     const metadataViewPage = new MetadataViewPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialogPage();
+    const resources = getTestResources();
+
     let file;
     const fileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
-    const fileLocation = browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location;
+    const fileLocation = resources.Files.ADF_DOCUMENTS.TXT_0B.file_location;
 
     const testFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_location
     });
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const groupBody = {
@@ -85,7 +86,7 @@ describe('Permissions Component', () => {
     const duplicateUserPermissionMessage = 'One or more of the permissions you have set is already present : authority -> ' + filePermissionUser.email + ' / role -> Contributor';
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(fileOwnerUser);
         await usersActions.createUser(filePermissionUser);
         await apiService.getInstance().core.groupsApi.createGroup(groupBody);
@@ -166,8 +167,8 @@ describe('Permissions Component', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
+        await apiService.loginWithProfile('admin');
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         for (const folder of folders) {
             await uploadActions.deleteFileOrFolder(folder.entry.id);
         }

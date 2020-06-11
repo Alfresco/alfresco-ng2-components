@@ -23,7 +23,7 @@ import {
     PaginationPage,
     LocalStorageUtil,
     FileBrowserUtil,
-    ApiService, UserModel
+    ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -73,19 +73,19 @@ describe('Document List - Pagination', () => {
     const numberOfSubFolders = 6;
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
 
     const docxFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
 
     beforeAll(async () => {
         fileNames = StringUtil.generateFilesNames(10, nrOfFiles + 9, pagination.base, pagination.extension);
         secondSetOfFiles = StringUtil.generateFilesNames(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
 

@@ -16,7 +16,6 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { browser } from 'protractor';
 import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, getTestResources } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import moment from 'moment-es6';
@@ -219,7 +218,7 @@ describe('Document List Component', () => {
 
     it('[C279959] Should display empty folder state for new folders', async () => {
         const folderName = 'BANANA';
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();

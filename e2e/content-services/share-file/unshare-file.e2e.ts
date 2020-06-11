@@ -22,7 +22,7 @@ import {
     NotificationHistoryPage,
     LoginSSOPage,
     ErrorPage,
-    UploadActions, ApiService, UserModel
+    UploadActions, ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
@@ -42,9 +42,9 @@ describe('Unshare file', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const navigationBarPage = new NavigationBarPage();
     const shareDialog = new ShareDialogPage();
-
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     let acsUser: UserModel;
@@ -52,12 +52,12 @@ describe('Unshare file', () => {
     let nodeBody, nodeId, testSite;
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
 
         const site = {
@@ -165,7 +165,7 @@ describe('Unshare file', () => {
 
     describe('without permission', () => {
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().core.sitesApi.deleteSite(siteName, { permanent: true });
         });
 

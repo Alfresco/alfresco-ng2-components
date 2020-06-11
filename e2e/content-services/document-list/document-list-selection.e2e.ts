@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, PaginationPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, PaginationPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UsersActions } from '../../actions/users.actions';
@@ -30,11 +29,12 @@ describe('Document List - Selection', () => {
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
     const paginationPage = new PaginationPage();
+    const resources = getTestResources();
     let acsUser: UserModel;
     const folderModel = new FolderModel({ name: 'folder' });
     const docxFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const displayColumnName = 'Display name';
     const apiService = new ApiService();
@@ -42,7 +42,7 @@ describe('Document List - Selection', () => {
 
     beforeAll(async () => {
         try {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
             await apiService.getInstance().login(acsUser.email, acsUser.password);
 

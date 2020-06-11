@@ -16,8 +16,7 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, getTestResources } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { UsersActions } from '../../actions/users.actions';
@@ -28,10 +27,10 @@ describe('Document List Component', () => {
     const contentServicesPage = new ContentServicesPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     const navigationBarPage = new NavigationBarPage();
+    const resources = getTestResources();
 
     describe('Gallery View', () => {
         const cardProperties = {
@@ -43,24 +42,24 @@ describe('Document List Component', () => {
         };
 
         const pdfFile = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF.file_path
         });
 
         const testFile = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         const docxFile = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+            name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            location: resources.Files.ADF_DOCUMENTS.DOCX.file_path
         });
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
             await apiService.getInstance().login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
@@ -74,8 +73,8 @@ describe('Document List Component', () => {
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
+            await apiService.loginWithProfile('admin');
 
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }

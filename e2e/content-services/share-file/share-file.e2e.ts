@@ -21,13 +21,12 @@ import {
     LocalStorageUtil,
     NotificationHistoryPage,
     UploadActions,
-    ViewerPage, ApiUtil, ApiService, UserModel
+    ViewerPage, ApiUtil, ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
 import { SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
 import { UsersActions } from '../../actions/users.actions';
@@ -46,9 +45,11 @@ describe('Share file', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     let acsUser: UserModel;
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
+
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     let nodeId;
@@ -71,7 +72,7 @@ describe('Share file', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
 
@@ -81,7 +82,7 @@ describe('Share file', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(nodeId);
     });
 

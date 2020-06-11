@@ -61,7 +61,15 @@ export interface TestResourceFile {
     file_location: string;
 }
 
+export interface TestResourceDocumentFile extends TestResourceFile {
+    first_page_text: string;
+    second_page_text: string;
+    last_page_number: string;
+    password: string;
+}
+
 export interface TestResourceFolder {
+    folder_name: string;
     folder_path: string;
     folder_location: string;
 }
@@ -71,13 +79,29 @@ export interface TestResources {
         ADF_DOCUMENTS: {
             TXT: TestResourceFile;
             TXT_0B: TestResourceFile;
-            PDF: TestResourceFile;
-            PDF_B: TestResourceFile;
+            PDF: TestResourceDocumentFile;
+            PDF_PROTECTED: TestResourceDocumentFile;
+            PDF_B: TestResourceDocumentFile;
             PNG: TestResourceFile;
             PNG_B: TestResourceFile;
+            PNG_C: TestResourceFile;
+            PNG_D: TestResourceFile;
+            JPG: TestResourceFile;
             TEST: TestResourceFile;
-            DOCX: TestResourceFile;
+            MP4: TestResourceFile;
+            UNSUPPORTED: TestResourceFile;
+            DOCX: TestResourceDocumentFile;
+            PPT: TestResourceDocumentFile;
+            LARGE_FILE: TestResourceFile;
             TEXT_FOLDER: TestResourceFolder;
+            FILE_ACCEPTED_INSIDE_TEXT_FOLDER: TestResourceFile;
+            FILE_EXCLUDED_INSIDE_TEXT_FOLDER: TestResourceFile;
+            INI: TestResourceFile;
+            FOLDER_ONE: TestResourceFolder;
+            FOLDER_TWO: TestResourceFolder;
+            FILE_INSIDE_FOLDER_ONE: TestResourceFile;
+            FILE_INSIDE_FOLDER_TWO: TestResourceFile;
+            ADF_FOLDER: TestResourceFolder;
         }
     };
 }
@@ -87,10 +111,23 @@ export interface BrowserParams {
     testConfig: TestConfiguration;
 }
 
+/**
+ * Retrieves the global browser test params
+ */
 export function getTestParams(): BrowserParams {
     return browser.params;
 }
 
+/**
+ * Retrieves the test resources
+ */
 export function getTestResources(): TestResources {
     return getTestParams().resources;
+}
+
+/**
+ * Retrieves the test configuration
+ */
+export function getTestConfig(): TestConfiguration {
+    return getTestParams().testConfig;
 }

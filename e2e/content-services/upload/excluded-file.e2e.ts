@@ -16,7 +16,7 @@
  */
 
 import { element, by, browser } from 'protractor';
-import { DropActions, LoginSSOPage, LocalStorageUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, LocalStorageUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -34,46 +34,46 @@ describe('Upload component - Excluded Files', () => {
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const iniExcludedFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.INI.file_location
+        'name': resources.Files.ADF_DOCUMENTS.INI.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.INI.file_location
     });
 
     const txtFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     const pngFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const folderUpload = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
+        'name': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
     const acceptedFileInsideFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_ACCEPTED_INSIDE_TEXT_FOLDER.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_ACCEPTED_INSIDE_TEXT_FOLDER.file_location
+        name: resources.Files.ADF_DOCUMENTS.FILE_ACCEPTED_INSIDE_TEXT_FOLDER.file_name,
+        location: resources.Files.ADF_DOCUMENTS.FILE_ACCEPTED_INSIDE_TEXT_FOLDER.file_location
     });
 
     const excludedFileInsideFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_EXCLUDED_INSIDE_TEXT_FOLDER.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_EXCLUDED_INSIDE_TEXT_FOLDER.file_location
+        name: resources.Files.ADF_DOCUMENTS.FILE_EXCLUDED_INSIDE_TEXT_FOLDER.file_name,
+        location: resources.Files.ADF_DOCUMENTS.FILE_EXCLUDED_INSIDE_TEXT_FOLDER.file_location
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
-
+        await apiService.login(acsUser.email, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();

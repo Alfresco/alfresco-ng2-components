@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SocialPage } from '../../pages/adf/demo-shell/social.page';
-import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Social component', () => {
@@ -36,7 +35,7 @@ describe('Social component', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
-
+    const resources = getTestResources();
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
     const yellowRatedStarColor = ('rgba(255, 233, 68, 1)');
@@ -45,12 +44,12 @@ describe('Social component', () => {
     let emptyFile;
 
     const emptyFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(componentOwner);
 
