@@ -18,8 +18,6 @@
 import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { getTestParams, getTestConfig } from '../../test.configuration';
 
-const testConfig = getTestConfig();
-
 export class ApiService {
 
     apiService: AlfrescoApi;
@@ -94,6 +92,7 @@ export class ApiService {
      * The profile should contain `email` and `password` properties.
      */
     async loginWithProfile(profileName: string): Promise<void> {
+        const testConfig = getTestConfig();
         const { email, password } = testConfig[profileName];
         return this.login(email, password);
     }

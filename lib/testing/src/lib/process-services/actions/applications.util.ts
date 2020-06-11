@@ -29,8 +29,6 @@ export class AppPublish {
     force: boolean = true;
 }
 
-const testConfig = getTestConfig();
-
 export class ApplicationsUtil {
 
     api: ApiService;
@@ -76,6 +74,7 @@ export class ApplicationsUtil {
     async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number) {
         browser.setFileDetector(new remote.FileDetector());
 
+        const testConfig = getTestConfig();
         const pathFile = path.join(testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 

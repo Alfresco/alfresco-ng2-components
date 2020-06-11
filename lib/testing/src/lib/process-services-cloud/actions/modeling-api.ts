@@ -21,8 +21,6 @@ import { Logger } from '../../core/utils/logger';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
 import { getTestParams } from '../../test.configuration';
 
-const testParams = getTestParams();
-
 export class ModelingAPI extends Api {
     public project: Project;
 
@@ -42,6 +40,8 @@ export class ModelingAPI extends Api {
 
     private async login(): Promise<void> {
         try {
+            const testParams = getTestParams();
+
             await this.api.login(
                 testParams.adminapp.modeler,
                 testParams.adminapp.modeler_password

@@ -18,8 +18,6 @@
 import { ApiService } from './api.service';
 import { getTestConfig } from '../../test.configuration';
 
-const testConfig = getTestConfig();
-
 export abstract class Api {
 
     public api: ApiService;
@@ -29,6 +27,8 @@ export abstract class Api {
     }
 
     private configureApi(): ApiService {
+        const testConfig = getTestConfig();
+
         return new ApiService({
             provider: 'BPM',
             authType: testConfig.appConfig.authType,

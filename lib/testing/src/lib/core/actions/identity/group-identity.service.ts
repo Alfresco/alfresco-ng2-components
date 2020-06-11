@@ -21,8 +21,6 @@ import { ApiUtil } from '../../actions/api.util';
 import { Logger } from '../../utils/logger';
 import { getTestParams } from '../../../test.configuration';
 
-const testParams = getTestParams();
-
 export class GroupIdentityService {
 
     api: ApiService;
@@ -42,6 +40,7 @@ export class GroupIdentityService {
     }
 
     async createGroup(groupName: string): Promise<any> {
+        const testParams = getTestParams();
         const path = '/groups';
         const method = 'POST';
         const queryParams = {};

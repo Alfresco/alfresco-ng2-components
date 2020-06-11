@@ -19,8 +19,6 @@ import { StringUtil } from '../utils/string.util';
 import { UserRepresentation } from '@alfresco/js-api';
 import { getTestConfig } from '../../test.configuration';
 
-const testConfig = getTestConfig();
-
 export class UserModel {
 
     firstName?: string = StringUtil.generateRandomLowercaseString();
@@ -35,6 +33,7 @@ export class UserModel {
     id: number;
 
     constructor(details: any = {}) {
+        const testConfig = getTestConfig();
         const EMAIL_DOMAIN = testConfig ? testConfig.projectName : 'alfresco';
         this.firstName = details.firstName ? details.firstName : this.firstName;
         this.lastName = details.lastName ? details.lastName : this.lastName;

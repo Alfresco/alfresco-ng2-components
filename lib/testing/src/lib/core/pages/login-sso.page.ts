@@ -21,8 +21,6 @@ import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { getTestParams } from '../../test.configuration';
 
-const testParams = getTestParams();
-
 export class LoginSSOPage {
 
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
@@ -66,6 +64,7 @@ export class LoginSSOPage {
     async loginSSOIdentityService(username: string, password: string) {
         browser.ignoreSynchronization = true;
 
+        const testParams = getTestParams();
         const loginURL = browser.baseUrl + (testParams.loginRoute ? testParams.loginRoute : '');
 
         await browser.get(loginURL);

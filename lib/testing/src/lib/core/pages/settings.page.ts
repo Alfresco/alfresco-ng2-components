@@ -21,8 +21,6 @@ import { BrowserActions } from '../utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { getTestConfig } from '../../test.configuration';
 
-const testConfig = getTestConfig();
-
 export class SettingsPage {
 
     settingsURL = browser.baseUrl + '/settings';
@@ -162,7 +160,7 @@ export class SettingsPage {
         await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
-    async setClientId(clientId: string = testConfig.appConfig.oauth2.clientId) {
+    async setClientId(clientId: string = getTestConfig().appConfig.oauth2.clientId) {
         await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 

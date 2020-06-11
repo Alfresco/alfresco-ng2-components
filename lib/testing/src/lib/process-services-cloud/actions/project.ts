@@ -24,12 +24,10 @@ import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
 import { getTestParams } from '../../test.configuration';
 
-const testParams = getTestParams();
-
 export class Project {
   requestApiHelper: E2eRequestApiHelper;
   endPoint = 'modeling-service/v1/projects/';
-  namePrefix: string = testParams.namePrefix;
+  namePrefix = getTestParams().namePrefix;
 
   constructor(api: ApiService) {
     this.requestApiHelper = new E2eRequestApiHelper(api);

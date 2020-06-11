@@ -40,23 +40,27 @@ export let logLevels: any[] = [
     {level: LogLevelsEnum.SILENT, name: 'SILENT'}
 ];
 
-const testConfig = getTestConfig();
-
 /* tslint:disable:no-console */
 export class Logger {
     static info(...messages: string[]): void {
+        const testConfig = getTestConfig();
+
         if (testConfig && testConfig.appConfig.log >= LogLevelsEnum.INFO) {
             console.log(infoColor, messages.join(''));
         }
     }
 
     static log(...messages: string[]): void {
+        const testConfig = getTestConfig();
+
         if (testConfig && testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
             console.log(logColor, messages.join(''));
         }
     }
 
     static warn(...messages: string[]): void {
+        const testConfig = getTestConfig();
+
         if (testConfig && testConfig.appConfig.log >= LogLevelsEnum.WARN) {
             console.log(warnColor, messages.join(''));
         }

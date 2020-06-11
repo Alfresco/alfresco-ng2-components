@@ -76,13 +76,12 @@ const JS_BIND_INPUT_FOLDER = function(target) {
     return input;
 };
 
-const testConfig = getTestConfig();
-
 export class DropActions {
 
     static async dropFile(dropArea, filePath) {
         browser.setFileDetector(new remote.FileDetector());
 
+        const testConfig = getTestConfig();
         const absolutePath = path.resolve(path.join(testConfig.main.rootPath, filePath));
 
         fs.accessSync(absolutePath, fs.constants.F_OK);
@@ -94,6 +93,7 @@ export class DropActions {
     static async dropFolder(dropArea, folderPath) {
         browser.setFileDetector(new remote.FileDetector());
 
+        const testConfig = getTestConfig();
         const absolutePath = path.resolve(path.join(testConfig.main.rootPath, folderPath));
         fs.accessSync(absolutePath, fs.constants.F_OK);
 
