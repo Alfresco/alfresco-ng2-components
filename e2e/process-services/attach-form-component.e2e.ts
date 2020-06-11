@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { FormFields, LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { FormFields, LoginSSOPage, ApplicationsUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
+import { by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
@@ -26,7 +26,8 @@ import CONSTANTS = require('../util/constants');
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attach Form Component', () => {
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -51,7 +52,7 @@ describe('Attach Form Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         user = await usersActions.createUser();
 
@@ -68,7 +69,7 @@ describe('Attach Form Component', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 

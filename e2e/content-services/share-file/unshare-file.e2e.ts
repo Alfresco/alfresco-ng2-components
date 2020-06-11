@@ -22,7 +22,7 @@ import {
     NotificationHistoryPage,
     LoginSSOPage,
     ErrorPage,
-    UploadActions, ApiService, UserModel, getTestResources
+    UploadActions, ApiService, UserModel, getTestResources, getTestConfig
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
@@ -45,6 +45,7 @@ describe('Unshare file', () => {
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
     const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     const siteName = `PRIVATE-TEST-SITE-${StringUtil.generateRandomString(5)}`;
     let acsUser: UserModel;
@@ -158,7 +159,7 @@ describe('Unshare file', () => {
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, browser.params.testConfig.adf.host));
+            await BrowserActions.getUrl(sharedLink.replace(testConfig.appConfig.ecmHost, testConfig.adf.host));
             await errorPage.checkErrorCode();
         });
     });

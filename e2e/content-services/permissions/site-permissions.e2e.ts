@@ -22,7 +22,7 @@ import {
     UploadActions,
     StringUtil,
     NotificationHistoryPage,
-    ViewerPage, ApiService, UserModel, getTestResources
+    ViewerPage, ApiService, UserModel, getTestResources, getTestConfig
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -51,6 +51,7 @@ describe('Permissions Component', () => {
     const uploadDialog = new UploadDialogPage();
     const versionManagePage = new VersionManagePage();
     const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     let publicSite, privateSite, folderName;
 
@@ -162,7 +163,7 @@ describe('Permissions Component', () => {
         beforeAll(async () => {
             await loginPage.login(folderOwnerUser.email, folderOwnerUser.password);
 
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + publicSite.entry.guid);
+            await BrowserActions.getUrl(testConfig.adf.url + '/files/' + publicSite.entry.guid);
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {

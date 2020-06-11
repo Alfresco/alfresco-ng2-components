@@ -16,8 +16,10 @@
  */
 
 import * as path from 'path';
-import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
-import { browser, by, element } from 'protractor';
+import { BrowserActions, BrowserVisibility, TogglePage, getTestConfig } from '@alfresco/adf-testing';
+import { by, element } from 'protractor';
+
+const testConfig = getTestConfig();
 
 export class VersionManagePage {
 
@@ -45,7 +47,7 @@ export class VersionManagePage {
 
     async uploadNewVersionFile(fileLocation: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionInput);
-        await this.uploadNewVersionInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
+        await this.uploadNewVersionInput.sendKeys(path.resolve(path.join(testConfig.main.rootPath, fileLocation)));
         await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
     }
 

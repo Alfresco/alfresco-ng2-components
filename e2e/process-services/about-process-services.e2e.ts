@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 import { LoginSSOPage, AboutPage, ApiService } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
@@ -31,7 +30,7 @@ describe('About Process Services', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async() => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
         await loginPage.login(user.email, user.password);
@@ -40,7 +39,7 @@ describe('About Process Services', () => {
 
     afterAll(async() => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

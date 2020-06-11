@@ -21,7 +21,7 @@ import {
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    NotificationHistoryPage, BrowserActions, ApiService, UserModel, getTestResources
+    NotificationHistoryPage, BrowserActions, ApiService, UserModel, getTestResources, getTestConfig
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -40,6 +40,7 @@ describe('Document List Component', () => {
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
     const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     let uploadedFolder, uploadedFile, sourceFolder, destinationFolder, subFolder, subFolder2, copyFolder, subFile,
         duplicateFolderName;
@@ -205,7 +206,7 @@ describe('Document List Component', () => {
     describe('Document List actionns - Move, Copy on no permission folder', () => {
         beforeAll(async () => {
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
-            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
+            await BrowserActions.getUrl(`${testConfig.adf.url}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 
@@ -266,7 +267,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkDeleteIsDisabled(pdfFileModel.name);
 
             await loginPage.login(acsUser.email, acsUser.password);
-            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
+            await BrowserActions.getUrl(`${testConfig.adf.url}/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);

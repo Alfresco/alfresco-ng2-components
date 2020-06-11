@@ -16,7 +16,6 @@
  */
 
 import { StringUtil, LocalStorageUtil, LoginSSOPage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { InfinitePaginationPage } from '../pages/adf/core/infinite-pagination.page';
@@ -52,7 +51,7 @@ describe('Enable infinite scrolling', () => {
     beforeAll(async () => {
         const uploadActions = new UploadActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 

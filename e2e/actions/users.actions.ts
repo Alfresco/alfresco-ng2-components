@@ -20,8 +20,10 @@ import * as fs from 'fs';
 import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
-import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, UserModel, Logger, getTestConfig } from '@alfresco/adf-testing';
 import { Tenant } from '../models/APS/tenant';
+
+const testConfig = getTestConfig();
 
 export class UsersActions {
 
@@ -124,7 +126,7 @@ export class UsersActions {
     async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
         browser.setFileDetector(new remote.FileDetector());
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
+        const pathFile = path.join(testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 
         return this.api.apiService.activiti.profileApi.uploadProfilePicture(file);

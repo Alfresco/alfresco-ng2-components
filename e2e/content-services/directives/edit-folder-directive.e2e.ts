@@ -21,11 +21,11 @@ import {
     LoginSSOPage,
     NotificationHistoryPage,
     StringUtil,
-    UploadActions, UserModel, getTestResources
+    UploadActions, UserModel, getTestResources, getTestConfig
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
-import { browser, protractor } from 'protractor';
+import { protractor } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { UsersActions } from '../../actions/users.actions';
@@ -42,6 +42,7 @@ describe('Edit folder directive', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     const pdfFile = new FileModel({
         name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -229,7 +230,7 @@ describe('Edit folder directive', () => {
     describe('Edit Folder - no permission', () => {
         beforeEach(async () => {
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
+            await BrowserActions.getUrl(testConfig.adf.url + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 

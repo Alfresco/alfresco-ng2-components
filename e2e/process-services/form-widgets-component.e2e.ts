@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
@@ -34,6 +34,7 @@ describe('Form widgets', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const resources = getTestResources();
 
     const newTask = 'First task';
     let processUserModel;
@@ -41,11 +42,11 @@ describe('Form widgets', () => {
 
     describe('Form widgets', () => {
 
-        const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+        const app = resources.Files.WIDGETS_SMOKE_TEST;
         const appFields = app.form_fields;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             processUserModel = await usersActions.createUser();
 
@@ -76,7 +77,7 @@ describe('Form widgets', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
         });
@@ -185,16 +186,16 @@ describe('Form widgets', () => {
    });
 
     describe('with fields involving other people', () => {
-        const app = browser.params.resources.Files.FORM_ADF;
+        const app = resources.Files.FORM_ADF;
         let deployedApp, process;
         const appFields = app.form_fields;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             processUserModel = await usersActions.createUser();
 
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+            await apiService.login(processUserModel.email, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
             const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();

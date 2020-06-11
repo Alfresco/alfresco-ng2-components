@@ -16,7 +16,7 @@
  */
 
 import { PeopleApi } from '@alfresco/js-api';
-import { ApiService, LocalStorageUtil, LoginSSOPage, UserInfoPage, getTestResources } from '@alfresco/adf-testing';
+import { ApiService, LocalStorageUtil, LoginSSOPage, UserInfoPage, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
@@ -34,6 +34,7 @@ describe('User Info component', () => {
     const usersActions = new UsersActions(apiService);
     const peopleApi = new PeopleApi(apiService.getInstance());
     const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     let user;
 
@@ -167,7 +168,7 @@ describe('User Info component', () => {
 
     const updateAvatarACS = async function () {
         await apiService.getInstance().login(user.email, user.password);
-        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, acsAvatarFileModel.getLocation()));
+        const absolutePath = path.resolve(path.join(testConfig.main.rootPath, acsAvatarFileModel.getLocation()));
         const file: any = fs.readFileSync(absolutePath);
         await peopleApi.updateAvatarImage('-me-', file);
     };

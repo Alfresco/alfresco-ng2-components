@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Comment component for Processes', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
@@ -39,7 +38,7 @@ describe('Comment component for Processes', () => {
     const processName = 'Comment APS';
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+       await apiService.loginWithProfile('admin');
 
        user = await usersActions.createUser();
 
@@ -56,7 +55,7 @@ describe('Comment component for Processes', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

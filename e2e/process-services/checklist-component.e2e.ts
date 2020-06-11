@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Checklist component', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -39,6 +38,7 @@ describe('Checklist component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const testConfig = getTestConfig();
 
     let processUserModel;
 
@@ -48,11 +48,11 @@ describe('Checklist component', () => {
     const hierarchyChecklist = ['checklistOne', 'checklistTwo', 'checklistOneChild', 'checklistTwoChild'];
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
+        const pathFile = path.join(testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);

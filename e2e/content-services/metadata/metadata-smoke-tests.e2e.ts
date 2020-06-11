@@ -21,12 +21,11 @@ import {
     BrowserActions,
     UploadActions,
     ViewerPage,
-    StringUtil, ApiService, UserModel, getTestResources
+    StringUtil, ApiService, UserModel, getTestResources, getTestConfig
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
 import moment = require('moment');
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { UsersActions } from '../../actions/users.actions';
@@ -52,6 +51,7 @@ describe('Metadata component', () => {
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     let acsUser: UserModel;
 
@@ -261,9 +261,9 @@ describe('Metadata component', () => {
     });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
+        await BrowserActions.getUrl(testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
 
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();

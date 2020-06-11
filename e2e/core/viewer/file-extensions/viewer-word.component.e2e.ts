@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FolderModel } from '../../../models/ACS/folder.model';
@@ -35,14 +34,15 @@ describe('Viewer', () => {
     const uploadActions = new UploadActions(apiService);
     let site;
     const acsUser = new UserModel();
+    const resources = getTestResources();
 
     const wordFolderInfo = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_path
+        'name': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.WORD_FOLDER.folder_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({

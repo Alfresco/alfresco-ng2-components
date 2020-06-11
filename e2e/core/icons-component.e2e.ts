@@ -18,7 +18,6 @@
 import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { IconsPage } from '../pages/adf/icons.page';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Universal Icon component', () => {
@@ -32,7 +31,7 @@ describe('Universal Icon component', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);
    });

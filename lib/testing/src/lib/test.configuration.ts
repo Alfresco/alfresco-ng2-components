@@ -48,6 +48,7 @@ export interface TestConfiguration {
 
     adf: {
         url: string;
+        host: string;
     };
 
     adf_external_acs: {
@@ -85,7 +86,26 @@ export interface TestResourceApp {
     formName: string;
     processName: string;
     form_fields: {
+        form_fieldId: string;
         attachFile_id: string;
+        text_id: string;
+        multiline_id: string;
+        number_id: string;
+        amount_id: string;
+        attachFolder_id: string;
+        date_id: string;
+        dateTime_id: string;
+        people_id: string;
+        group_id: string;
+        displayText_id: string;
+        displayValue_id: string;
+        header_id: string;
+        typeAhead_id: string;
+        checkbox_id: string;
+        radioButtons_id: string;
+        hyperlink_id: string;
+        dropdown_id: string;
+        dynamicTable_id: string;
     };
 }
 
@@ -101,6 +121,7 @@ export interface TestResources {
             OTHER_FOLDER: TestResourceFolder;
             ARCHIVE_FOLDER: TestResourceFolder;
             PPT_FOLDER: TestResourceFolder;
+            WORD_FOLDER: TestResourceFolder;
 
             TXT: TestResourceFile;
             TXT_0B: TestResourceFile;
@@ -168,13 +189,13 @@ export interface TestResources {
                 formName: string;
                 FIELD: {
                     widget_id: string;
-                }
+                };
             };
             UPLOAD_FOLDER_FORM_CS: {
                 formName: string;
                 FIELD: {
                     widget_id: string;
-                }
+                };
             };
             NUMBER: {
                 processName: string;
@@ -182,8 +203,8 @@ export interface TestResources {
                     number_general: string;
                     number_visible: string;
                     checkbox_id: string;
-                }
-            },
+                };
+            };
             DYNAMIC_TABLE: {
                 processName: string;
                 FIELD: {
@@ -191,8 +212,8 @@ export interface TestResources {
                     dynamic_table_age_id: string;
                     dateTime_input_id: string;
                     checkbox_id: string;
-                }
-            },
+                };
+            };
             DYNAMIC_TABLE_USERS: {
                 processName: string;
                 FIELD: {
@@ -200,8 +221,8 @@ export interface TestResources {
                     checkbox_id: string;
                     dateTime_input_id: string;
                     dynamic_table_id: string;
-                }
-            },
+                };
+            };
             CUSTOM_VALIDATOR: {
                 processName: string;
                 FIELD: {
@@ -209,9 +230,61 @@ export interface TestResources {
                     ID: string;
                     NUM: string;
                     ADDRESS: string;
+                };
+            };
+            HYPERLINK: {
+                processName: string;
+                FIELD: {
+                    hyperlink_id: string;
+                    checkbox_id: string;
+                };
+            };
+            HEADER: {
+                processName: string;
+                FIELD: {
+                    header_id: string;
+                    checkbox_id: string;
+                };
+            };
+            MULTILINE_TEXT: {
+                processName: string;
+                FIELD: {
+                    multiSimple: string;
+                    multiMinMax: string;
+                    multiRegexp: string;
+                    multiVisible: string;
+                    showMultiHidden: string;
                 }
-            }
+            };
+            CHECKBOX: {
+                processName: string;
+                FIELD: {
+                    checkbox_label: string;
+                    checkbox_field_id: string;
+                    checkbox_input_id: string;
+                    number_input_id: string;
+                }
+            };
+            ATTACH_FOLDER: {
+                processName: string;
+                FIELD: {
+                    upload_button_id: string;
+                    checkbox_id: string;
+                };
+            };
+            DATETIME: {
+                processName: string;
+                FIELD: {
+                    checkbox_label: string;
+                    checkbox_input_id: string;
+                    checkbox_field_id: string;
+                    number_input_id: string;
+                    date_time_input: string;
+                    date_time_between_input: string;
+                };
+            };
         };
+        FORM_ADF: TestResourceApp;
     };
     ACTIVITI_CLOUD_APPS: {
         SIMPLE_APP: {
