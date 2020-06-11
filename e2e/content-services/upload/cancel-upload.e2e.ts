@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -32,29 +32,30 @@ describe('Upload component', async () => {
     const loginPage = new LoginSSOPage();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const pngFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
     const mediumFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_location
+        'name': resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.MEDIUM_FILE.file_location
     });
 
     const largeFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
+        'name': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.LARGE_FILE.file_location
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
+        await apiService.login(acsUser.email, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
     });

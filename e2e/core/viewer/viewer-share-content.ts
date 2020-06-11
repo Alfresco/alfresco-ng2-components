@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, BrowserActions, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, BrowserActions, ViewerPage, ApiService, UserModel, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer', () => {
@@ -35,6 +34,8 @@ describe('Viewer', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     let site;
     const acsUser = new UserModel();
@@ -42,19 +43,19 @@ describe('Viewer', () => {
     const contentList = contentServicesPage.getDocumentList();
 
     const pngFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const wordFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_path
     });
 
     let pngFileShared, wordFileUploaded;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({
@@ -89,11 +90,11 @@ describe('Viewer', () => {
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        await BrowserActions.getUrl(testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         await viewerPage.checkImgContainerIsDisplayed();
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(testConfig.adf.url);
         await navigationBarPage.clickLogoutButton();
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        await BrowserActions.getUrl(testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
         await viewerPage.checkImgContainerIsDisplayed();
     });
 
@@ -111,7 +112,7 @@ describe('Viewer', () => {
         await viewerPage.checkFileIsLoaded();
         await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(testConfig.adf.url);
         await navigationBarPage.clickLogoutButton();
         await BrowserActions.getUrl(sharedLink);
         await viewerPage.checkFileIsLoaded();

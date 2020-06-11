@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
 import { UsersActions } from '../../actions/users.actions';
 
@@ -48,9 +47,10 @@ describe('permissions', () => {
     const contributorUser = new UserModel();
     let site;
 
+    const resources = getTestResources();
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
@@ -58,8 +58,7 @@ describe('permissions', () => {
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(consumerUser);
         await usersActions.createUser(collaboratorUser);
         await usersActions.createUser(contributorUser);

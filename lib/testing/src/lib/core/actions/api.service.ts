@@ -23,7 +23,7 @@ export class ApiService {
 
     apiService: AlfrescoApi;
 
-    config: AlfrescoApiConfig = new AlfrescoApiConfig({
+    config = new AlfrescoApiConfig({
         authType: 'OAUTH',
         oauth2: {
             scope: 'openid',
@@ -40,6 +40,7 @@ export class ApiService {
         const params = getTestParams();
 
         if (params.testConfig && params.testConfig.appConfig) {
+            // TODO: remove `ecmHost` and use `hostEcm`
             this.config = {
                 ...params.testConfig.appConfig,
                 hostEcm: params.testConfig.appConfig.ecmHost,
@@ -81,6 +82,10 @@ export class ApiService {
 
     async login(username: string, password: string): Promise<void> {
         return this.apiService.login(username, password);
+    }
+
+    async logout(): Promise<void> {
+        return this.apiService.logout();
     }
 
     /**

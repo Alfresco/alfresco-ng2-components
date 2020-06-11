@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, getTestConfig } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
 
@@ -24,17 +24,24 @@ describe('Logout component - SSO', () => {
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
+    const testConfig = getTestConfig();
 
     it('[C280665] Should be possible change the logout redirect URL', async () => {
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
-            browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '/login');
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await settingsPage.setProviderEcmSso(
+            testConfig.adf.url,
+            testConfig.appConfig.oauth2.host,
+            testConfig.appConfig.identityHost,
+            false,
+            true,
+            testConfig.appConfig.oauth2.clientId,
+            '/login'
+        );
+        await loginSSOPage.loginSSOIdentityService(testConfig.admin.email, testConfig.admin.password);
         await navigationBarPage.clickLogoutButton();
 
         await browser.sleep(2000);
 
         const actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');
+        await expect(actualUrl).toEqual(testConfig.adf.url + '/login');
     });
 });

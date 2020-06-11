@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { SettingsPage, UploadActions, StringUtil, ApiService, LocalStorageUtil } from '@alfresco/adf-testing';
+import { SettingsPage, UploadActions, StringUtil, ApiService, LocalStorageUtil, getTestConfig } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -33,6 +33,7 @@ describe('Login component - Redirect', () => {
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const logoutPage = new LogoutPage();
+    const testConfig = getTestConfig();
 
     let user;
     let uploadedFolder;
@@ -42,8 +43,7 @@ describe('Login component - Redirect', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
 
@@ -76,7 +76,7 @@ describe('Login component - Redirect', () => {
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
 
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -94,7 +94,7 @@ describe('Login component - Redirect', () => {
 
         await settingsPage.setProviderEcmBpm();
 
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
@@ -112,7 +112,7 @@ describe('Login component - Redirect', () => {
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         let actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+        await expect(actualUrl).toEqual(testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
         await contentServicesPage.waitForTableBody();
 
@@ -127,7 +127,7 @@ describe('Login component - Redirect', () => {
         await loginPage.login(user.email, user.password);
 
         actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+        await expect(actualUrl).toEqual(testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
     });
 
     it('[C299161] Should redirect user to requested URL after reloading login page', async () => {
@@ -139,7 +139,7 @@ describe('Login component - Redirect', () => {
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         const currentUrl = await browser.getCurrentUrl();
-        await expect(currentUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+        await expect(currentUrl).toEqual(testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
 
         await contentServicesPage.waitForTableBody();
 
@@ -159,6 +159,6 @@ describe('Login component - Redirect', () => {
         await navigationBarPage.checkMenuButtonIsDisplayed();
 
         const actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
+        await expect(actualUrl).toEqual(testConfig.adf.url + '/files/' + uploadedFolder.entry.id);
     });
 });

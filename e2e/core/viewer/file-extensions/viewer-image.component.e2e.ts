@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FolderModel } from '../../../models/ACS/folder.model';
@@ -31,22 +30,23 @@ describe('Viewer', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let site;
     const acsUser = new UserModel();
 
     const imgFolderInfo = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_path
+        'name': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.IMG_FOLDER.folder_path
     });
 
     const imgRenditionFolderInfo = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_path
+        'name': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.IMG_RENDITION_FOLDER.folder_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({

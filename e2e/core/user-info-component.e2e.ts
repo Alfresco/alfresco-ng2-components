@@ -16,7 +16,7 @@
  */
 
 import { PeopleApi } from '@alfresco/js-api';
-import { ApiService, LocalStorageUtil, LoginSSOPage, UserInfoPage } from '@alfresco/adf-testing';
+import { ApiService, LocalStorageUtil, LoginSSOPage, UserInfoPage, getTestResources } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
@@ -32,22 +32,22 @@ describe('User Info component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-    const peopleApi: PeopleApi = new PeopleApi(apiService.getInstance());
+    const peopleApi = new PeopleApi(apiService.getInstance());
+    const resources = getTestResources();
 
     let user;
 
     const acsAvatarFileModel = new FileModel({
-        'name': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_name,
-        'location': browser.params.resources.Files.PROFILE_IMAGES.ECM.file_location
+        'name': resources.Files.PROFILE_IMAGES.ECM.file_name,
+        'location': resources.Files.PROFILE_IMAGES.ECM.file_location
     });
     const apsAvatarFileModel = new FileModel({
-        'name': browser.params.resources.Files.PROFILE_IMAGES.BPM.file_name,
-        'location': browser.params.resources.Files.PROFILE_IMAGES.BPM.file_location
+        'name': resources.Files.PROFILE_IMAGES.BPM.file_name,
+        'location': resources.Files.PROFILE_IMAGES.BPM.file_location
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
     });
 

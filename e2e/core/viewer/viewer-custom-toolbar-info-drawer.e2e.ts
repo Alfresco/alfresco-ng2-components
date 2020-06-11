@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, ViewerPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -32,17 +31,18 @@ describe('Viewer', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const acsUser = new UserModel();
     let txtFileUploaded;
 
     const txtFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+        'name': resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT.file_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.email, acsUser.password);

@@ -21,12 +21,12 @@ import {
     DatePickerCalendarPage,
     DateUtil,
     ApplicationsUtil,
-    ApiService
+    ApiService,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Dynamic Table', () => {
@@ -39,22 +39,23 @@ describe('Dynamic Table', () => {
     const widget = new Widget();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let user, tenantId, appId;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         tenantId = user.tenantId;
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     describe('Date Picker', () => {
-        const app = browser.params.resources.Files.DYNAMIC_TABLE_APP;
+        const app = resources.Files.DYNAMIC_TABLE_APP;
 
         const randomText = {
             date: '12/12/2012',
@@ -125,11 +126,11 @@ describe('Dynamic Table', () => {
     });
 
     describe('Required Dropdown', () => {
-        const app = browser.params.resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
+        const app = resources.Files.APP_DYNAMIC_TABLE_DROPDOWN;
         const dropdown = widget.dropdown();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
             const applicationsService = new ApplicationsUtil(apiService);
 
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
@@ -138,7 +139,7 @@ describe('Dynamic Table', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(user.email, user.password);
+            await apiService.login(user.email, user.password);
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
         });
 

@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -25,9 +24,10 @@ import { ProcessListPage } from '../pages/adf/process-services/process-list.page
 import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
+    const resources = getTestResources();
 
-    const appWithProcess = browser.params.resources.Files.APP_WITH_PROCESSES;
-    const simpleAppWithUserForm = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const appWithProcess = resources.Files.APP_WITH_PROCESSES;
+    const simpleAppWithUserForm = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -43,7 +43,7 @@ describe('Empty Process List Test', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         const applicationsService = new ApplicationsUtil(apiService);
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
+import { getTestConfig } from '../../test.configuration';
 
 const infoColor = '\x1b[36m%s\x1b[0m',
     logColor = '\x1b[35m%s\x1b[0m',
@@ -40,22 +40,24 @@ export let logLevels: any[] = [
     {level: LogLevelsEnum.SILENT, name: 'SILENT'}
 ];
 
+const testConfig = getTestConfig();
+
 /* tslint:disable:no-console */
 export class Logger {
     static info(...messages: string[]): void {
-        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.INFO) {
+        if (testConfig && testConfig.appConfig.log >= LogLevelsEnum.INFO) {
             console.log(infoColor, messages.join(''));
         }
     }
 
     static log(...messages: string[]): void {
-        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
+        if (testConfig && testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
             console.log(logColor, messages.join(''));
         }
     }
 
     static warn(...messages: string[]): void {
-        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.WARN) {
+        if (testConfig && testConfig.appConfig.log >= LogLevelsEnum.WARN) {
             console.log(warnColor, messages.join(''));
         }
     }

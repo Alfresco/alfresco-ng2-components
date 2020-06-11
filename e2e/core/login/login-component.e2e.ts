@@ -21,7 +21,8 @@ import {
     ErrorPage,
     LocalStorageUtil,
     UserInfoPage,
-    UserModel
+    UserModel,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
@@ -53,6 +54,7 @@ describe('Login component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const testConfig = getTestConfig();
 
     beforeAll(async () => {
         await apiService.loginWithProfile('admin');
@@ -120,7 +122,7 @@ describe('Login component', () => {
 
     it('[C260045] Should enable login button after entering a valid username and a password', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.enterUsername(browser.params.testConfig.admin.email);
+        await loginPage.enterUsername(testConfig.admin.email);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
@@ -169,7 +171,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -181,7 +183,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
     });
@@ -191,7 +193,7 @@ describe('Login component', () => {
 
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -204,9 +206,9 @@ describe('Login component', () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
         await loginPage.goToLoginPage();
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+        await BrowserActions.getUrl(testConfig.adf.url + '/files');
         await loginPage.waitForElements();
 
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
@@ -216,29 +218,29 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
         await processServicesPage.checkApsContainer();
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(testConfig.adf.url + '/activiti');
         await loginPage.waitForElements();
     });
 
     it('[C279930] Should a user still be logged-in when open a new tab', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
 
         await browser.executeScript("window.open('about: blank', '_blank');");
 
         const handles = await browser.getAllWindowHandles();
         await browser.switchTo().window(handles[1]);
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(testConfig.adf.url + '/activiti');
         await processServicesPage.checkApsContainer();
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+        await BrowserActions.getUrl(testConfig.adf.url + '/files');
         await contentServicesPage.checkAcsContainer();
     });
 
@@ -258,6 +260,6 @@ describe('Login component', () => {
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
         await loginPage.clickSignInButton();
         await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(testConfig.admin.email, testConfig.admin.password);
     });
 });

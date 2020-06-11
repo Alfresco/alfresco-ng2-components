@@ -17,7 +17,7 @@
 
 import { element, by, browser } from 'protractor';
 
-import { DropActions, LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -36,36 +36,37 @@ describe('Upload component', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
 
     let acsUser: UserModel;
 
     const firstPdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     });
     const docxFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_location
+        'name': resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.DOCX.file_location
     });
     const pdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
     const pngFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
     const fileWithSpecificSize = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
+        'name': resources.Files.ADF_DOCUMENTS.TXT_400B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_400B.file_location
     });
     const emptyFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
+        'name': resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_location
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);

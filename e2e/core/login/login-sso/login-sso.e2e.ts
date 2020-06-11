@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage, BrowserVisibility } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, BrowserVisibility, getTestConfig } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
 import { LoginPage } from '../../../pages/adf/demo-shell/login.page';
@@ -26,6 +26,7 @@ describe('Login component - SSO', () => {
     const loginSSOPage = new LoginSSOPage();
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
+    const testConfig = getTestConfig();
 
     describe('Login component - SSO implicit Flow', () => {
         afterEach(async () => {
@@ -36,32 +37,47 @@ describe('Login component - SSO', () => {
         });
 
         it('[C261050] Should be possible login with SSO', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
-                browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await settingsPage.setProviderEcmSso(
+                testConfig.appConfig.ecmHost,
+                testConfig.appConfig.oauth2.host,
+                testConfig.appConfig.identityHost,
+                false,
+                true,
+                testConfig.appConfig.oauth2.clientId
+            );
+            await loginSSOPage.loginSSOIdentityService(testConfig.admin.email, testConfig.admin.password);
         });
 
         it('[C280667] Should be redirect directly to keycloak without show the login page with silent login', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
-                browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, true, true, browser.params.testConfig.appConfig.oauth2.clientId);
+            await settingsPage.setProviderEcmSso(
+                testConfig.appConfig.ecmHost,
+                testConfig.appConfig.oauth2.host,
+                testConfig.appConfig.identityHost,
+                true,
+                true,
+                testConfig.appConfig.oauth2.clientId
+            );
 
             await browser.refresh();
-            await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await loginSSOPage.loginSSOIdentityService(testConfig.admin.email, testConfig.admin.password);
         });
    });
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
-            await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
-                browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, false, false, browser.params.testConfig.appConfig.oauth2.clientId);
+            await settingsPage.setProviderEcmSso(
+                testConfig.appConfig.ecmHost,
+                testConfig.appConfig.oauth2.host,
+                testConfig.appConfig.identityHost,
+                false,
+                false,
+                testConfig.appConfig.oauth2.clientId
+            );
 
             await loginPage.waitForElements();
 
-            await loginPage.enterUsername(browser.params.testConfig.admin.email);
-            await loginPage.enterPassword(browser.params.testConfig.admin.password);
+            await loginPage.enterUsername(testConfig.admin.email);
+            await loginPage.enterPassword(testConfig.admin.password);
             await loginPage.clickSignInButton();
 
             await BrowserVisibility.waitUntilElementIsVisible(loginPage.sidenavLayout);

@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { DropActions, BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage, DropdownPage } from '@alfresco/adf-testing';
+import { DropActions, BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage, DropdownPage, getTestConfig } from '@alfresco/adf-testing';
 import { $$, browser, by, element, ElementFinder, protractor } from 'protractor';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
-
 import * as path from 'path';
+
+const testConfig = getTestConfig();
 
 export class ContentServicesPage {
 
@@ -430,15 +431,15 @@ export class ContentServicesPage {
 
     async uploadFile(fileLocation): Promise<void> {
         await this.checkUploadButton();
-        await this.uploadFileButtonInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
+        await this.uploadFileButtonInput.sendKeys(path.resolve(path.join(testConfig.main.rootPath, fileLocation)));
         await this.checkUploadButton();
     }
 
     async uploadMultipleFile(files): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
-        let allFiles = path.resolve(path.join(browser.params.testConfig.main.rootPath, files[0]));
+        let allFiles = path.resolve(path.join(testConfig.main.rootPath, files[0]));
         for (let i = 1; i < files.length; i++) {
-            allFiles = allFiles + '\n' + path.resolve(path.join(browser.params.testConfig.main.rootPath, files[i]));
+            allFiles = allFiles + '\n' + path.resolve(path.join(testConfig.main.rootPath, files[i]));
         }
         await this.uploadMultipleFileButton.sendKeys(allFiles);
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadMultipleFileButton);
@@ -446,7 +447,7 @@ export class ContentServicesPage {
 
     async uploadFolder(folderLocation: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadFolderButton);
-        await this.uploadFolderButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, folderLocation)));
+        await this.uploadFolderButton.sendKeys(path.resolve(path.join(testConfig.main.rootPath, folderLocation)));
     }
 
     async getSingleFileButtonTooltip(): Promise<string> {

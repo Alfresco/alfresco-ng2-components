@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
@@ -30,26 +29,27 @@ describe('Viewer - properties', () => {
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
+    const resources = getTestResources();
 
     const pngFile = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const fileForOverlay = new FileModel({
         'name': 'fileForOverlay.png',
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await apiService.login(acsUser.email, acsUser.password);
 
         let pngFileUploaded = await uploadActions.uploadFile(pngFile.location, pngFile.name, '-my-');
         Object.assign(pngFile, pngFileUploaded.entry);

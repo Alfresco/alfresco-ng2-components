@@ -16,30 +16,31 @@
  */
 
 import { browser } from 'protractor';
+import { AlfrescoApiConfig } from '@alfresco/js-api';
+
+export interface TestUserProfile {
+    email: string;
+    password: string;
+}
+
+export interface TestApiConfig extends AlfrescoApiConfig {
+    // TODO: deprecate or move to the JS-API
+    identityHost: string;
+    // TODO: deprecate and use AlfrescoApiConfig.hostEcm instead
+    ecmHost: string;
+    // TODO: deprecate and use AlfrescoApiConfig.hostBpm instead
+    bpmHost: string;
+    // TODO: deprecate or move out
+    log: number;
+}
 
 export interface TestConfiguration {
-
-    appConfig: {
-        ecmHost: string,
-        bpmHost: string
-    };
-
+    appConfig: TestApiConfig;
     log: boolean;
 
-    identityAdmin: {
-        email: string,
-        password: string
-    };
-
-    identityUser: {
-        email: string,
-        password: string
-    };
-
-    admin: {
-        email: string,
-        password: string
-    };
+    identityAdmin: TestUserProfile;
+    identityUser: TestUserProfile;
+    admin: TestUserProfile;
 
     main: {
         rootPath: string;
@@ -52,7 +53,6 @@ export interface TestConfiguration {
     adf_external_acs: {
         host: string;
     };
-
 }
 
 export interface TestResourceFile {
@@ -64,6 +64,7 @@ export interface TestResourceFile {
 export interface TestResourceDocumentFile extends TestResourceFile {
     first_page_text: string;
     second_page_text: string;
+    last_page_text: string;
     last_page_number: string;
     password: string;
 }
@@ -72,6 +73,18 @@ export interface TestResourceFolder {
     folder_name: string;
     folder_path: string;
     folder_location: string;
+}
+
+export interface TestResourceApp {
+    title: string;
+    file_path: string;
+    process_wse_name: string;
+    process_se_name: string;
+    formName: string;
+    processName: string;
+    form_fields: {
+        attachFile_id: string;
+    };
 }
 
 export interface TestResources {
@@ -93,6 +106,7 @@ export interface TestResources {
             DOCX: TestResourceDocumentFile;
             PPT: TestResourceDocumentFile;
             LARGE_FILE: TestResourceFile;
+            MEDIUM_FILE: TestResourceFile;
             TEXT_FOLDER: TestResourceFolder;
             FILE_ACCEPTED_INSIDE_TEXT_FOLDER: TestResourceFile;
             FILE_EXCLUDED_INSIDE_TEXT_FOLDER: TestResourceFile;
@@ -102,7 +116,34 @@ export interface TestResources {
             FILE_INSIDE_FOLDER_ONE: TestResourceFile;
             FILE_INSIDE_FOLDER_TWO: TestResourceFile;
             ADF_FOLDER: TestResourceFolder;
-        }
+            TXT_400B: TestResourceFile;
+            EXCEL_FOLDER: TestResourceFolder;
+            IMG_FOLDER: TestResourceFolder;
+            IMG_RENDITION_FOLDER: TestResourceFolder;
+            JS: TestResourceFile;
+            OTHER_FOLDER: TestResourceFolder;
+        };
+        PROFILE_IMAGES: {
+            ECM: TestResourceFile;
+            BPM: TestResourceFile;
+        };
+        APP_WITH_PROCESSES: TestResourceApp;
+        WIDGETS_SMOKE_TEST: TestResourceApp;
+        APP_WITH_DATE_FIELD_FORM: TestResourceApp;
+        START_PROCESS_ATTACH_FILE: TestResourceApp;
+        SIMPLE_APP_WITH_USER_FORM: TestResourceApp;
+        APP_DYNAMIC_TABLE_DROPDOWN: TestResourceApp;
+        DYNAMIC_TABLE_APP: TestResourceApp;
+
+        WIDGET_CHECK_APP: {
+            file_path: string;
+            UPLOAD_FILE_FORM_CS: {
+                formName: string;
+                FIELD: {
+                    widget_id: string;
+                }
+            }
+        };
     };
 }
 

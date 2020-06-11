@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ViewerPage, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FileModel } from '../../../models/ACS/file.model';
@@ -34,23 +33,24 @@ describe('Viewer', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let site;
     const acsUser = new UserModel();
     let pngFileUploaded;
 
     const pngFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const otherFolderInfo = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_path
+        'name': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.OTHER_FOLDER.folder_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({

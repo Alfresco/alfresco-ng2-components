@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MonacoExtensionPage } from '../../pages/adf/demo-shell/monaco-extension.page';
@@ -36,17 +35,18 @@ describe('Viewer', () => {
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
 
     let site;
 
     let jsFileUploaded;
     const jsFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.JS.file_path
+        'name': resources.Files.ADF_DOCUMENTS.JS.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.JS.file_path
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 

@@ -23,17 +23,21 @@ import {
     IntegrationService, LocalStorageUtil,
     LoginSSOPage,
     UploadActions, UserModel,
-    Widget
+    Widget,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach File - Content service', () => {
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+
+    const app = resources.Files.WIDGET_CHECK_APP;
 
     const loginPage = new LoginSSOPage();
     const widget = new Widget();
@@ -44,7 +48,7 @@ describe('Attach File - Content service', () => {
 
     const apiServiceExternal = new ApiService({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_external_acs.host
+        hostEcm: testConfig.adf_external_acs.host
     });
     const usersActionsExternal = new UsersActions(apiServiceExternal);
 
@@ -54,16 +58,16 @@ describe('Attach File - Content service', () => {
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
-    const { email, password } = browser.params.testConfig.admin;
+    const { email, password } = testConfig.admin;
 
     const pdfFileOne = {
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_path
     };
 
     const pdfFileTwo = {
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
     const externalFile = 'Project Overview.ppt';
@@ -73,22 +77,22 @@ describe('Attach File - Content service', () => {
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-        await apiService.getInstance().login(email, password);
+        await apiService.login(email, password);
         user = await usersActions.createUser();
 
         await apiServiceExternal.login(email, password);
         await usersActionsExternal.createUser(user);
 
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.ecmHost });
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: testConfig.appConfig.ecmHost });
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: testConfig.adf_external_acs.host });
 
-        await apiService.getInstance().login(user.email, user.password);
+        await apiService.login(user.email, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(email, password);
+        await apiService.login(email, password);
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
@@ -141,7 +145,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
-        await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
+        await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${testConfig.adf_external_acs.host}'`);
         await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);

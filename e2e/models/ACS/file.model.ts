@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import ContentModel = require('./contentModel');
 import ContentPropertiesModel = require('./contentProperties');
 import { CreatedByModel } from './created-by-model';
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil, getTestResources } from '@alfresco/adf-testing';
 
+const resources = getTestResources();
 export class FileModel {
 
     id = StringUtil.generateRandomString();
     name = StringUtil.generateRandomString();
     shortName = this.name;
-    location = browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path;
+    location = resources.Files.ADF_DOCUMENTS.PDF.file_path;
     tooltip = this.name;
     version = '';
-    firstPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.first_page_text;
-    lastPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_text;
-    secondPageText = browser.params.resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
-    lastPageNumber = browser.params.resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
+    firstPageText = resources.Files.ADF_DOCUMENTS.PDF.first_page_text;
+    lastPageText = resources.Files.ADF_DOCUMENTS.PDF.last_page_text;
+    secondPageText = resources.Files.ADF_DOCUMENTS.PDF.second_page_text;
+    lastPageNumber = resources.Files.ADF_DOCUMENTS.PDF.last_page_number;
     createdAt = '';
     password = '';
     createdByUser = new CreatedByModel();

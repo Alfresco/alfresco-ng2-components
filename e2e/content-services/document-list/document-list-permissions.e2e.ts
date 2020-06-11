@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { LoginSSOPage, ErrorPage, StringUtil, BrowserActions, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ErrorPage, StringUtil, BrowserActions, ApiService, getTestConfig } from '@alfresco/adf-testing';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
@@ -29,6 +28,7 @@ describe('Document List Component', () => {
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const testConfig = getTestConfig();
 
     let privateSite;
     let acsUser = null;
@@ -53,7 +53,7 @@ describe('Document List Component', () => {
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(testConfig.adf.url + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
             await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
@@ -61,7 +61,7 @@ describe('Document List Component', () => {
         it('[C279924] Should display custom message when accessing a file without permissions', async () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableCustomPermissionMessage();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(testConfig.adf.url + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
         });
    });

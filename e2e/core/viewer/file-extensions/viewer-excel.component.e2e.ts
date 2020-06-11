@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../../pages/adf/content-services.page';
 import CONSTANTS = require('../../../util/constants');
 import { FolderModel } from '../../../models/ACS/folder.model';
@@ -29,10 +28,11 @@ describe('Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     let site;
     const acsUser = new UserModel();
+    const resources = getTestResources();
 
     const excelFolderInfo = new FolderModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
+        'name': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_name,
+        'location': resources.Files.ADF_DOCUMENTS.EXCEL_FOLDER.folder_path
     });
 
     const apiService = new ApiService();
@@ -40,7 +40,7 @@ describe('Viewer', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         site = await apiService.getInstance().core.sitesApi.createSite({

@@ -23,9 +23,9 @@ import {
     UploadActions,
     ViewerPage,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -44,6 +44,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
     const acsUser = new UserModel();
     const folderModel = new FolderModel({ 'name': 'folderOne' });
     const parentFolderModel = new FolderModel({ 'name': 'parentFolder' });
+    const resources = getTestResources();
 
     let fileNames = [];
     const nrOfFiles = 6;
@@ -64,14 +65,14 @@ describe('Pagination - returns to previous page when current is empty', () => {
     };
 
     const pngFileInfo = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     beforeAll(async () => {
         const uploadActions = new UploadActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 

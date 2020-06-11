@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ViewerPage, ApplicationsUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import { FileModel } from '../models/ACS/file.model';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Start Task - Task App', () => {
-    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    const resources = getTestResources();
+    const app = resources.Files.WIDGETS_SMOKE_TEST;
 
     const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
@@ -37,15 +37,15 @@ describe('Start Task - Task App', () => {
     const applicationService = new ApplicationsUtil(apiService);
 
     let user: UserModel;
-    const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const wordFile = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+        name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+        location: resources.Files.ADF_DOCUMENTS.DOCX.file_path
     });
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
@@ -53,7 +53,7 @@ describe('Start Task - Task App', () => {
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
