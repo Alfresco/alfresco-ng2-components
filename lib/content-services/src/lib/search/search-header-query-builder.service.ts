@@ -16,8 +16,6 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { QueryBody, ResultSetPaging } from '@alfresco/js-api';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
@@ -26,8 +24,6 @@ import { BaseQueryBuilderService } from './base-query-builder.service';
     providedIn: 'root'
 })
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
-    updated = new Subject<QueryBody>();
-    executed = new Subject<ResultSetPaging>();
 
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
         super(appConfig, alfrescoApiService);
