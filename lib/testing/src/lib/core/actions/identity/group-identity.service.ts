@@ -19,7 +19,9 @@ import { ApiService } from '../api.service';
 import { StringUtil } from '../../utils/string.util';
 import { ApiUtil } from '../../actions/api.util';
 import { Logger } from '../../utils/logger';
-import { browser } from 'protractor';
+import { getTestParams } from '../../../test.configuration';
+
+const testParams = getTestParams();
 
 export class GroupIdentityService {
 
@@ -44,7 +46,7 @@ export class GroupIdentityService {
         const method = 'POST';
         const queryParams = {};
         const postBody = {
-            name: `${groupName}-${browser.params.groupSuffix}`
+            name: `${groupName}-${testParams.groupSuffix}`
         };
         const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
         return data;

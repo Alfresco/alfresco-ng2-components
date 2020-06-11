@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, LocalStorageUtil } from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, LocalStorageUtil, getTestResources } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -25,10 +25,11 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
+    const resources = getTestResources();
 
     describe('Process List - selection', () => {
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -52,7 +53,7 @@ describe('Process list cloud', () => {
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -60,7 +61,7 @@ describe('Process list cloud', () => {
 
             await apiService.login(testUser.email, testUser.password);
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+                .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
             for (let i = 0; i < noOfProcesses; i++) {
                 const response = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
@@ -72,7 +73,7 @@ describe('Process list cloud', () => {
         });
 
         afterAll(async() => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

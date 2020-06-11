@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import {
     AppListCloudPage,
     StringUtil,
@@ -23,14 +22,15 @@ import {
     LoginSSOPage,
     TasksService,
     IdentityService,
-    GroupIdentityService
+    GroupIdentityService,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 
 describe('Edit task filters cloud', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -48,7 +48,7 @@ describe('Edit task filters cloud', () => {
         assignedTaskName = StringUtil.generateRandomString();
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -63,7 +63,7 @@ describe('Edit task filters cloud', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 

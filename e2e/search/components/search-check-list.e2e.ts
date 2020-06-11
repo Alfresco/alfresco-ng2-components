@@ -22,7 +22,8 @@ import {
     StringUtil,
     LocalStorageUtil,
     ApiService,
-    UserModel
+    UserModel,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
@@ -33,7 +34,7 @@ import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Checklist Component', () => {
-
+    const testConfig = getTestConfig();
     const loginPage = new LoginSSOPage();
     const searchFiltersPage = new SearchFiltersPage();
     const searchDialog = new SearchDialogPage();
@@ -61,7 +62,7 @@ describe('Search Checklist Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
@@ -83,11 +84,11 @@ describe('Search Checklist Component', () => {
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=${randomName}`);
+        await BrowserActions.getUrl(`${testConfig.adf.url}/search;q=${randomName}`);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);

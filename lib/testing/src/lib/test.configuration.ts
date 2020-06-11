@@ -55,6 +55,7 @@ export interface TestConfiguration {
     adf_external_acs: {
         host: string;
     };
+    projectName: string;
 }
 
 export interface TestResourceFile {
@@ -339,6 +340,17 @@ export interface TestResources {
                     showHiddenText: string;
                 }
             };
+            TYPE_AHEAD_WIDGET: {
+                formName: string;
+                case1: {
+                    searchTerm: string;
+                    result: any[];
+                };
+                case2: {
+                    searchTerm: string;
+                    result: any[];
+                };
+            };
         };
         MORE_WIDGETS: {
             file_path: string;
@@ -446,6 +458,13 @@ export interface TestResources {
 }
 
 export interface BrowserParams {
+    namePrefix: string;
+    groupSuffix: string;
+    loginRoute: string;
+    adminapp: {
+        modeler: string;
+        modeler_password: string;
+    };
     resources: TestResources;
     testConfig: TestConfiguration;
 }

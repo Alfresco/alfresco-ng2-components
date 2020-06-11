@@ -28,12 +28,12 @@ import {
     TasksService,
     ApiService,
     IdentityService,
-    GroupIdentityService, RolesService
+    GroupIdentityService, RolesService, getTestResources
 } from '@alfresco/adf-testing';
 
 describe('Start Task - Group Cloud Component', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -52,7 +52,7 @@ describe('Start Task - Group Cloud Component', () => {
     let apsUser, testUser, hrGroup, testGroup;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUser();
         apsUser = await identityService.createIdentityUser();
@@ -78,7 +78,7 @@ describe('Start Task - Group Cloud Component', () => {
         const oneGroupTaskId = await tasksService.getTaskId(oneGroupTaskName, simpleApp);
         await tasksService.deleteTask(oneGroupTaskId, simpleApp);
 
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(apsUser.idIdentityService);
         await identityService.deleteIdentityUser(testUser.idIdentityService);
    });

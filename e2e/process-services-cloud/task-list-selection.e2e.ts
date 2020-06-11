@@ -22,17 +22,18 @@ import {
     IdentityService,
     LoginSSOPage,
     StringUtil,
-    TasksService
+    TasksService,
+    getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Task list cloud - selection', () => {
+    const resources = getTestResources();
 
     describe('Task list cloud - selection', () => {
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -49,7 +50,7 @@ describe('Task list cloud - selection', () => {
         const tasks = [];
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
@@ -67,7 +68,7 @@ describe('Task list cloud - selection', () => {
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

@@ -57,7 +57,7 @@ describe('People Groups Cloud Component', () => {
         let groups = [];
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
@@ -84,7 +84,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             for (const user of users) {
                 await identityService.deleteIdentityUser(user);
             }

@@ -16,15 +16,14 @@
  */
 
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Typeahead widget', () => {
-
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+    const resources = getTestResources();
+    const app = resources.Files.WIDGET_CHECK_APP;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -38,7 +37,7 @@ describe('Typeahead widget', () => {
     let user: UserModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
@@ -47,7 +46,7 @@ describe('Typeahead widget', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

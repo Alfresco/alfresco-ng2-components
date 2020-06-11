@@ -19,6 +19,9 @@ import { browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { getTestConfig } from '../../test.configuration';
+
+const testConfig = getTestConfig();
 
 export class SettingsPage {
 
@@ -159,7 +162,7 @@ export class SettingsPage {
         await BrowserActions.clearSendKeys(this.bpmText, processServiceURL);
     }
 
-    async setClientId(clientId: string = browser.params.testConfig.appConfig.oauth2.clientId) {
+    async setClientId(clientId: string = testConfig.appConfig.oauth2.clientId) {
         await BrowserActions.clearSendKeys(this.clientIdText, clientId);
     }
 

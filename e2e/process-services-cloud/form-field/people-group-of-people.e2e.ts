@@ -19,9 +19,9 @@ import {
     FormCloudComponentPage,
     FormPage,
     LoginSSOPage,
-    ProcessCloudWidgetPage
+    ProcessCloudWidgetPage,
+    getTestConfig
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import {
     peopleSingleModeFormMock,
     peopleMultipleModeFormMock,
@@ -35,7 +35,7 @@ import {
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('People and Group of people Widgets', () => {
-
+    const testConfig = getTestConfig();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudComponentPage = new FormCloudComponentPage();
@@ -71,7 +71,7 @@ describe('People and Group of people Widgets', () => {
     };
 
     beforeAll(async () => {
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(testConfig.hrUser.email, testConfig.hrUser.password);
         await navigationBarPage.navigateToFormCloudPage();
     });
 

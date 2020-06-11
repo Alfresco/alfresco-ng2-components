@@ -18,8 +18,10 @@
 import { Api } from '../../core/actions/api';
 import { Project } from './project';
 import { Logger } from '../../core/utils/logger';
-import { browser } from 'protractor';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
+import { getTestParams } from '../../test.configuration';
+
+const testParams = getTestParams();
 
 export class ModelingAPI extends Api {
     public project: Project;
@@ -41,8 +43,8 @@ export class ModelingAPI extends Api {
     private async login(): Promise<void> {
         try {
             await this.api.login(
-                browser.params.adminapp.modeler,
-                browser.params.adminapp.modeler_password
+                testParams.adminapp.modeler,
+                testParams.adminapp.modeler_password
             );
         } catch (error) {
             Logger.error(error);

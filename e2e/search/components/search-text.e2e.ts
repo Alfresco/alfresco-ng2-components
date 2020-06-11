@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 import { FolderModel } from '../../models/ACS/folder.model';
 
-import { LoginSSOPage, LocalStorageUtil, BrowserActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil, BrowserActions, ApiService, UserModel, getTestConfig } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
@@ -29,7 +29,7 @@ import { SearchConfiguration } from '../search.config';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Search component - Text widget', () => {
-
+    const testConfig = getTestConfig();
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
 
@@ -44,7 +44,7 @@ describe('Search component - Text widget', () => {
     const newFolderModel = new FolderModel({ 'description': 'newDescription' });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 
@@ -69,7 +69,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl(testConfig.adf.url + '/search;q=*');
         await searchResultPage.tableIsLoaded();
 
         await searchFiltersPage.checkNameFilterIsDisplayed();
@@ -84,7 +84,7 @@ describe('Search component - Text widget', () => {
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+            await BrowserActions.getUrl(testConfig.adf.url + '/search;q=*');
             await searchResultPage.tableIsLoaded();
 
             await searchFiltersPage.checkCheckListFilterIsDisplayed();

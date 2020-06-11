@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
     LoginSSOPage, ApiService,
-    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil
+    AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil, getTestResources
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -29,9 +28,9 @@ import moment = require('moment');
 import { taskFilterConfiguration } from './config/task-filter.config';
 
 describe('Edit task filters and task list properties', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -55,7 +54,7 @@ describe('Edit task filters and task list properties', () => {
     const afterDate = moment().add(1, 'days').format('DD/MM/YYYY');
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
 
@@ -78,7 +77,7 @@ describe('Edit task filters and task list properties', () => {
         await tasksService.claimTask(notDisplayedTask.entry.id, candidateBaseApp);
 
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
@@ -93,7 +92,7 @@ describe('Edit task filters and task list properties', () => {
     }, 5 * 60 * 1000);
 
     afterAll(async (done) => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         done();
     });

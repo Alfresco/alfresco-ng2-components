@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
-
+import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage, getTestConfig } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { checkboxVisibilityFormJson, multipleCheckboxVisibilityFormJson } from '../../resources/forms/checkbox-visibility-condition';
 import { multipleTextVisibilityFormJson, multipleVisibilityFormJson } from '../../resources/forms/multiple-visibility-conditions';
@@ -25,7 +23,7 @@ import { displayValueTextJson } from '../../resources/forms/display-value-visibi
 import { dropdownVisibilityFormFieldJson, dropdownVisibilityFormVariableJson } from '../../resources/forms/dropdown-visibility-condition';
 
 describe('Visibility conditions - cloud', () => {
-
+    const testConfig = getTestConfig();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudComponentPage();
@@ -81,7 +79,7 @@ describe('Visibility conditions - cloud', () => {
     };
 
     beforeAll(async () => {
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(testConfig.hrUser.email, testConfig.hrUser.password);
         await navigationBarPage.navigateToFormCloudPage();
         await formCloudDemoPage.setConfigToEditor(checkboxVisibilityFormJson);
     });

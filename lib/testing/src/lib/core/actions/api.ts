@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import { ApiService } from './api.service';
+import { getTestConfig } from '../../test.configuration';
+
+const testConfig = getTestConfig();
 
 export abstract class Api {
 
@@ -29,9 +31,9 @@ export abstract class Api {
     private configureApi(): ApiService {
         return new ApiService({
             provider: 'BPM',
-            authType: browser.params.testConfig.appConfig.authType,
-            oauth2: browser.params.testConfig.appConfig.oauth2,
-            hostBpm: browser.params.testConfig.appConfig.bpmHost
+            authType: testConfig.appConfig.authType,
+            oauth2: testConfig.appConfig.oauth2,
+            hostBpm: testConfig.appConfig.bpmHost
         });
     }
 

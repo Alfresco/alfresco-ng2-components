@@ -21,7 +21,8 @@ import {
     UploadActions,
     DataTableComponentPage,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
@@ -33,7 +34,7 @@ import { SearchConfiguration } from '../search.config';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Slider Filter', () => {
-
+    const resources = getTestResources();
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
@@ -45,8 +46,8 @@ describe('Search Slider Filter', () => {
     const acsUser = new UserModel();
 
     const file2BytesModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path
+        'name': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_path
     });
 
     let file2Bytes;
@@ -56,7 +57,7 @@ describe('Search Slider Filter', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
 

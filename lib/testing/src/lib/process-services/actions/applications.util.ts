@@ -22,11 +22,14 @@ import { ApiService } from '../../core/actions/api.service';
 import { AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
 import * as path from 'path';
 import * as fs from 'fs';
+import { getTestConfig } from '../../test.configuration';
 
 export class AppPublish {
     comment: string = '';
     force: boolean = true;
 }
+
+const testConfig = getTestConfig();
 
 export class ApplicationsUtil {
 
@@ -73,7 +76,7 @@ export class ApplicationsUtil {
     async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
+        const pathFile = path.join(testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
         const appCreated = await this.api.getInstance().activiti.appsApi.importNewAppDefinition(modelId, file);

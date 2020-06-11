@@ -25,7 +25,8 @@ import {
     BrowserActions,
     ViewerPage,
     ApiService,
-    UserModel
+    UserModel,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -37,7 +38,7 @@ import { SearchConfiguration } from './search.config';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Search component - Search Bar', () => {
-
+    const testConfig = getTestConfig();
     const search = {
         inactive: {
             firstChar: 'x',
@@ -86,7 +87,7 @@ describe('Search component - Search Bar', () => {
     let fileHighlightUploaded;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await apiService.getInstance().login(acsUser.email, acsUser.password);
 
@@ -122,7 +123,7 @@ describe('Search component - Search Bar', () => {
     });
 
     afterEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(testConfig.adf.url);
    });
 
     it('[C272798] Search bar should be visible', async () => {

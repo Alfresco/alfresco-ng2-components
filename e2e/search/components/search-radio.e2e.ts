@@ -22,7 +22,8 @@ import {
     LocalStorageUtil,
     UploadActions,
     ApiService,
-    UserModel
+    UserModel,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
@@ -33,7 +34,7 @@ import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Radio Component', () => {
-
+    const testConfig = getTestConfig();
     const loginPage = new LoginSSOPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
@@ -63,7 +64,7 @@ describe('Search Radio Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(acsUser);
         await apiService.getInstance().login(acsUser.email, acsUser.password);
@@ -81,11 +82,11 @@ describe('Search Radio Component', () => {
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
+        await BrowserActions.getUrl(testConfig.adf.url + '/search;q=' + randomName);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);

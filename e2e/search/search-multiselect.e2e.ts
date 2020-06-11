@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { StringUtil, UploadActions, LoginSSOPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { StringUtil, UploadActions, LoginSSOPage, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
@@ -35,6 +35,7 @@ describe('Search Component - Multi-Select Facet', () => {
     const apiService = new ApiService();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     let site, userOption;
 
@@ -44,16 +45,16 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+            'location': resources.Files.ADF_DOCUMENTS.JPG.file_path,
             'name': `${randomName}.jpg`
         });
         const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
             'name': `${randomName}.txt`
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await usersActions.createUser(acsUser);
 
@@ -132,21 +133,21 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const jpgFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.JPG.file_path,
+            'location': resources.Files.ADF_DOCUMENTS.JPG.file_path,
             'name': `${randomName}.jpg`
         });
         const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
             'name': `${randomName}.txt`
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await usersActions.createUser(userUploadingTxt);
             await usersActions.createUser(userUploadingImg);
 
-            await apiService.getInstance().login(userUploadingTxt.email, userUploadingTxt.password);
+            await apiService.login(userUploadingTxt.email, userUploadingTxt.password);
 
             site = await apiService.getInstance().core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(8),
@@ -194,12 +195,12 @@ describe('Search Component - Multi-Select Facet', () => {
 
         const randomName = StringUtil.generateRandomString();
         const txtFileInfo = new FileModel({
-            'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
+            'location': resources.Files.ADF_DOCUMENTS.TXT_0B.file_path,
             'name': `${randomName}.txt`
         });
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             await usersActions.createUser(acsUser);
 

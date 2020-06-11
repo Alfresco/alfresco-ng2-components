@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import { NodeEntry, ResultSetPaging } from '@alfresco/js-api';
 import { ApiUtil } from '../../core/actions/api.util';
 import { E2eRequestApiHelper, E2eRequestApiHelperOptions } from '../../core/actions/e2e-request-api.helper';
@@ -23,11 +22,14 @@ import * as fs from 'fs';
 import { StringUtil } from '../../core/utils/string.util';
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
+import { getTestParams } from '../../test.configuration';
+
+const testParams = getTestParams();
 
 export class Project {
   requestApiHelper: E2eRequestApiHelper;
   endPoint = 'modeling-service/v1/projects/';
-  namePrefix: string = browser.params.namePrefix;
+  namePrefix: string = testParams.namePrefix;
 
   constructor(api: ApiService) {
     this.requestApiHelper = new E2eRequestApiHelper(api);

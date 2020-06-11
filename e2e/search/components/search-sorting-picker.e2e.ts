@@ -21,7 +21,8 @@ import {
     SearchSortingPickerPage,
     UploadActions,
     ApiService,
-    UserModel
+    UserModel,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
@@ -33,6 +34,7 @@ import { SearchConfiguration } from '../search.config';
 import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Sorting Picker', () => {
+    const resources = getTestResources();
 
     const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
@@ -44,13 +46,13 @@ describe('Search Sorting Picker', () => {
     const acsUser = new UserModel();
 
     const pngAModel = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_path
     };
 
     const pngDModel = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG_D.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PNG_D.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PNG_D.file_path
     };
 
     let pngA, pngD;
@@ -63,7 +65,7 @@ describe('Search Sorting Picker', () => {
     let jsonFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
 
         await apiService.getInstance().login(acsUser.email, acsUser.password);

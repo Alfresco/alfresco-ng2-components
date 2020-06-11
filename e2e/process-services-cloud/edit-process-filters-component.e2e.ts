@@ -20,7 +20,8 @@ import {
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
-    LoginSSOPage
+    LoginSSOPage,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
@@ -29,8 +30,8 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Edit process filters cloud', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -47,7 +48,7 @@ describe('Edit process filters cloud', () => {
     const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -57,7 +58,7 @@ describe('Edit process filters cloud', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 

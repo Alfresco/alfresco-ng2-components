@@ -19,6 +19,9 @@ import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
+import { getTestParams } from '../../test.configuration';
+
+const testParams = getTestParams();
 
 export class LoginSSOPage {
 
@@ -63,7 +66,7 @@ export class LoginSSOPage {
     async loginSSOIdentityService(username: string, password: string) {
         browser.ignoreSynchronization = true;
 
-        const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
+        const loginURL = browser.baseUrl + (testParams.loginRoute ? testParams.loginRoute : '');
 
         await browser.get(loginURL);
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');

@@ -27,7 +27,8 @@ import {
     TaskHeaderCloudPage,
     TasksService,
     StartTasksCloudPage,
-    PeopleCloudComponentPage
+    PeopleCloudComponentPage,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -39,8 +40,8 @@ const isValueInvalid = (value: any): boolean => {
 };
 
 describe('Task Header cloud component', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -99,7 +100,7 @@ describe('Task Header cloud component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -125,7 +126,7 @@ describe('Task Header cloud component', () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 

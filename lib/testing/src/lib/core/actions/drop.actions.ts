@@ -20,6 +20,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from 'selenium-webdriver/remote';
 import { BrowserActions } from '../utils/browser-actions';
+import { getTestConfig } from '../../test.configuration';
 
 const JS_BIND_INPUT = function(target) {
     const input = document.createElement('input');
@@ -75,12 +76,14 @@ const JS_BIND_INPUT_FOLDER = function(target) {
     return input;
 };
 
+const testConfig = getTestConfig();
+
 export class DropActions {
 
     static async dropFile(dropArea, filePath) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, filePath));
+        const absolutePath = path.resolve(path.join(testConfig.main.rootPath, filePath));
 
         fs.accessSync(absolutePath, fs.constants.F_OK);
         const elem = await dropArea.getWebElement();
@@ -91,7 +94,7 @@ export class DropActions {
     static async dropFolder(dropArea, folderPath) {
         browser.setFileDetector(new remote.FileDetector());
 
-        const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, folderPath));
+        const absolutePath = path.resolve(path.join(testConfig.main.rootPath, folderPath));
         fs.accessSync(absolutePath, fs.constants.F_OK);
 
         const elem = await dropArea.getWebElement();
