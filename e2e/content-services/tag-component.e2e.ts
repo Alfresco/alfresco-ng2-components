@@ -16,7 +16,7 @@
  */
 
 import { FileModel } from '../models/ACS/file.model';
-import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tag.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
@@ -27,13 +27,14 @@ describe('Tag component', () => {
     const loginPage = new LoginSSOPage();
     const tagPage = new TagPage();
     const navigationBarPage = new NavigationBarPage();
+    const resources = getTestResources();
 
     let acsUser: UserModel;
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
-    const pdfFileModel = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const pdfFileModel = new FileModel({ name: resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const deleteFile = new FileModel({ name: StringUtil.generateRandomString() });
     const sameTag = StringUtil.generateRandomString().toLowerCase();
 
@@ -48,10 +49,11 @@ describe('Tag component', () => {
         { tag: 'test-tag-06' }, { tag: 'test-tag-07' }, { tag: 'test-tag-08' }, { tag: 'test-tag-09' }, { tag: 'test-tag-10' },
         { tag: 'test-tag-11' }];
 
-    let pdfUploadedFile, nodeId;
+    let pdfUploadedFile;
+    let nodeId;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
 

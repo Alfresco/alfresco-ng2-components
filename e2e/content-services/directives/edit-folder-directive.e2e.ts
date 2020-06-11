@@ -21,7 +21,7 @@ import {
     LoginSSOPage,
     NotificationHistoryPage,
     StringUtil,
-    UploadActions, UserModel
+    UploadActions, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
@@ -41,10 +41,11 @@ describe('Edit folder directive', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const pdfFile = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const uploadActions = new UploadActions(apiService);
@@ -52,7 +53,7 @@ describe('Edit folder directive', () => {
     let editFolder, anotherFolder, filePdfNode, subFolder;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
         await apiService.getInstance().login(acsUser.email, acsUser.password);
@@ -79,7 +80,7 @@ describe('Edit folder directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);
         await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);

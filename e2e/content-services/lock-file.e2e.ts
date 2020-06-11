@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { LockFilePage } from '../pages/adf/lock-file.page';
 import { FileModel } from '../models/ACS/file.model';
 import CONSTANTS = require('../util/constants');
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Lock File', () => {
@@ -34,23 +33,23 @@ describe('Lock File', () => {
     const managerUser = new UserModel();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
     const uploadActions = new UploadActions(apiService);
+    const resources = getTestResources();
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const pngFileToLock = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG_B.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG_B.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG_B.file_path
     });
 
     let nodeId, site, documentLibrary, lockedFileNodeId;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         await usersActions.createUser(adminUser);
         await usersActions.createUser(managerUser);

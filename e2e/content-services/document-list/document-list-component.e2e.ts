@@ -17,7 +17,7 @@
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage, getTestResources } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import moment from 'moment-es6';
 import { UsersActions } from '../../actions/users.actions';
@@ -29,13 +29,14 @@ describe('Document List Component', () => {
     let uploadedFolder, uploadedFolderExtra;
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     let testFileNode, pdfBFileNode;
 
     afterEach(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -57,20 +58,20 @@ describe('Document List Component', () => {
     describe('Custom Column', () => {
         let folderName;
         const pdfFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF.file_path
         });
         const docxFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_path
+            name: resources.Files.ADF_DOCUMENTS.DOCX.file_name,
+            location: resources.Files.ADF_DOCUMENTS.DOCX.file_path
         });
         const timeAgoFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
         const mediumFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+            name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
 
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
@@ -79,7 +80,7 @@ describe('Document List Component', () => {
             /* cspell:disable-next-line */
             folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             acsUser = await usersActions.createUser();
 
@@ -90,7 +91,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             if (pdfUploadedNode) {
                 await uploadActions.deleteFileOrFolder(pdfUploadedNode.entry.id);
@@ -148,23 +149,23 @@ describe('Document List Component', () => {
     describe('Column Sorting', () => {
         const fakeFileA = new FileModel({
             name: 'A',
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         const fakeFileB = new FileModel({
             name: 'B',
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         const fakeFileC = new FileModel({
             name: 'C',
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         let fileANode, fileBNode, fileCNode;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
 
             const user = await usersActions.createUser();
             await apiService.getInstance().login(user.email, user.password);
@@ -179,7 +180,7 @@ describe('Document List Component', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             if (fileANode) {
                 await uploadActions.deleteFileOrFolder(fileANode.entry.id);
             }
@@ -230,12 +231,12 @@ describe('Document List Component', () => {
 
     it('[C272775] Should be able to upload a file in new folder', async () => {
         const testFile = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
         /* cspell:disable-next-line */
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
@@ -248,7 +249,7 @@ describe('Document List Component', () => {
     });
 
     it('[C261997] Should be able to clean Recent Files history', async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         const cleanUser = await usersActions.createUser();
         await loginPage.login(cleanUser.email, cleanUser.password);
         await contentServicesPage.clickOnContentServices();
@@ -263,7 +264,7 @@ describe('Document List Component', () => {
     it('[C279970] Should display Islocked field for folders', async () => {
         const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderNameA, '-my-');
@@ -278,14 +279,14 @@ describe('Document List Component', () => {
 
     it('[C269086] Should display Islocked field for files', async () => {
         const testFileA = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
         const testFileB = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+            name: resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         acsUser = await usersActions.createUser();
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         testFileNode = await uploadActions.uploadFile(testFileA.location, testFileA.name, '-my-');
@@ -303,9 +304,9 @@ describe('Document List Component', () => {
 
         beforeAll(async () => {
             folderCreated = [];
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await apiService.login(acsUser.email, acsUser.password);
             let folderName = '';
             let folder = null;
 
@@ -331,15 +332,15 @@ describe('Document List Component', () => {
 
     describe('Column Template', () => {
         const file0BytesModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
+            name: resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
         });
 
         let file;
         const viewer = new ViewerPage();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
             await apiService.getInstance().login(acsUser.email, acsUser.password);
             file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');

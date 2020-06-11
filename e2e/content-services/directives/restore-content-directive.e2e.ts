@@ -28,7 +28,7 @@ import {
     UploadActions,
     BrowserActions,
     BreadcrumbPage,
-    ApiService, UserModel
+    ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { UsersActions } from '../../actions/users.actions';
 
@@ -44,20 +44,21 @@ describe('Restore content directive', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const resources = getTestResources();
 
     const pdfFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
     const testFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+        name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        location: resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
     const pngFileModel = new FileModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
+        name: resources.Files.ADF_DOCUMENTS.PNG.file_name,
+        location: resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
     const folderName = StringUtil.generateRandomString(5);
@@ -67,7 +68,7 @@ describe('Restore content directive', () => {
         siteFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await usersActions.createUser(acsUser);
         await usersActions.createUser(anotherAcsUser);
         await apiService.getInstance().login(acsUser.email, acsUser.password);
@@ -84,7 +85,7 @@ describe('Restore content directive', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
     });

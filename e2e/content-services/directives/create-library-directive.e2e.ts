@@ -19,7 +19,6 @@ import { LoginSSOPage, BrowserActions, StringUtil, ApiService, UserModel } from 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CreateLibraryDialogPage } from '../../pages/adf/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
-import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { UsersActions } from '../../actions/users.actions';
 
@@ -44,7 +43,7 @@ describe('Create library directive', () => {
     let acsUser: UserModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         acsUser = await usersActions.createUser();
 

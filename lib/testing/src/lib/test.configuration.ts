@@ -58,6 +58,7 @@ export interface TestConfiguration {
 export interface TestResourceFile {
     file_name: string;
     file_path: string;
+    file_location: string;
 }
 
 export interface TestResourceFolder {
@@ -74,6 +75,8 @@ export interface TestResources {
             PDF_B: TestResourceFile;
             PNG: TestResourceFile;
             PNG_B: TestResourceFile;
+            TEST: TestResourceFile;
+            DOCX: TestResourceFile;
             TEXT_FOLDER: TestResourceFolder;
         }
     };

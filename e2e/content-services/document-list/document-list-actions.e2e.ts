@@ -23,7 +23,7 @@ import {
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    ViewerPage, ApiService, UserModel
+    ViewerPage, ApiService, UserModel, getTestResources
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -57,14 +57,15 @@ describe('Document List Component - Actions', () => {
         let folderName;
         let fileNames = [];
         const nrOfFiles = 5;
+        const resources = getTestResources();
 
         const pdfFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+            name: resources.Files.ADF_DOCUMENTS.PDF.file_name,
+            location: resources.Files.ADF_DOCUMENTS.PDF.file_path
         });
         const testFileModel = new FileModel({
-            name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-            location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+            name: resources.Files.ADF_DOCUMENTS.TEST.file_name,
+            location: resources.Files.ADF_DOCUMENTS.TEST.file_path
         });
 
         const files = {
@@ -74,7 +75,7 @@ describe('Document List Component - Actions', () => {
 
         beforeAll(async () => {
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             acsUser = await usersActions.createUser();
             await apiService.getInstance().login(acsUser.email, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
