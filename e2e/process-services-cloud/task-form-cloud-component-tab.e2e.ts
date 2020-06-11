@@ -26,12 +26,13 @@ import {
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    IdentityService, GroupIdentityService, ProcessCloudWidgetPage, FormCloudService
+    IdentityService, GroupIdentityService, ProcessCloudWidgetPage, FormCloudService, getTestResources
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 
 describe('Task form cloud component', () => {
+    const resources = getTestResources();
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -46,8 +47,8 @@ describe('Task form cloud component', () => {
     let identityService: IdentityService;
 
     let completedTask, assigneeTask, toBeCompletedTask, formValidationsTask, testUser;
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
     const apiService = new ApiService();
     const apiServiceHrUser = new ApiService();
@@ -79,7 +80,7 @@ describe('Task form cloud component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
@@ -97,9 +98,15 @@ describe('Task form cloud component', () => {
 
         const formCloudService = new FormCloudService(apiServiceHrUser);
 
-        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
+        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(
+            resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name,
+            resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name
+        );
 
-        const tabVisibilityVarsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
+        const tabVisibilityVarsId = await formCloudService.getIdByFormName(
+            resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name,
+            resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name
+        );
 
         for (let i = 0; i < 3; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
@@ -113,8 +120,10 @@ describe('Task form cloud component', () => {
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
-        const formToTestValidationsKey = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
-            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+        const formToTestValidationsKey = await formCloudService.getIdByFormName(
+            resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
+            resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations
+        );
 
         formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
         await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
@@ -129,7 +138,7 @@ describe('Task form cloud component', () => {
         processDefinitionService = new ProcessDefinitionsService(apiServiceHrUser);
 
         const processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
@@ -146,7 +155,7 @@ describe('Task form cloud component', () => {
 
     afterAll(async () => {
         try {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         } catch (error) {
         }

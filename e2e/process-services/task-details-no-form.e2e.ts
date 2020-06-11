@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - No form', () => {
-
-    const app = browser.params.resources.Files.NO_FORM_APP;
+    const resources = getTestResources();
+    const app = resources.Files.NO_FORM_APP;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -38,7 +37,7 @@ describe('Task Details - No form', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);
@@ -49,7 +48,7 @@ describe('Task Details - No form', () => {
    });
 
     afterAll( async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 

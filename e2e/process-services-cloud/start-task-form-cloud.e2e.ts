@@ -36,7 +36,7 @@ import {
     ContentNodeSelectorDialogPage,
     ProcessInstancesService,
     ProcessDefinitionsService,
-    FileBrowserUtil, ProcessCloudWidgetPage
+    FileBrowserUtil, ProcessCloudWidgetPage, getTestResources
 } from '@alfresco/adf-testing';
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
@@ -46,7 +46,7 @@ import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {
-
+    const resources = getTestResources();
     const loginSSOPage = new LoginSSOPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const navigationBarPage = new NavigationBarPage();
@@ -77,22 +77,22 @@ describe('Start Task Form', () => {
     let processInstancesService: ProcessInstancesService;
     let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
         cancelUploadFileProcess, completeUploadFileProcess, downloadContentFileProcess;
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
+    const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const pdfFile = new FileModel({ 'name': resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const pdfFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
     const testFileModel = new FileModel({
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
+        'name': resources.Files.ADF_DOCUMENTS.TEST.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
     const folderName = StringUtil.generateRandomString(5);
     let uploadedFolder;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -102,7 +102,7 @@ describe('Start Task Form', () => {
         processDefinitionService = new ProcessDefinitionsService(apiService);
         processInstancesService = new ProcessInstancesService(apiService);
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.uploadFileProcess, candidateBaseApp);
 
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -152,7 +152,7 @@ describe('Start Task Form', () => {
         const standaloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
         await tasksService.deleteTask(standaloneTaskId, candidateBaseApp);
 
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
@@ -169,7 +169,7 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
             await startTask.addName(standaloneTaskName);
-            await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.selectFormDefinition(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
             await startTask.clickStartButton();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(standaloneTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(standaloneTaskName);
@@ -201,9 +201,9 @@ describe('Start Task Form', () => {
         it('[C311428] Should display the Standalone forms based on the flag set', async () => {
             await tasksCloudDemoPage.openNewTaskForm();
             await startTask.checkFormIsDisplayed();
-            await startTask.checkFormDefinitionIsNotDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.uploadfileform);
-            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
-            await startTask.checkFormDefinitionIsDisplayed(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+            await startTask.checkFormDefinitionIsNotDisplayed(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.uploadfileform);
+            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.starteventform);
+            await startTask.checkFormDefinitionIsDisplayed(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
         });
    });
 
@@ -215,7 +215,7 @@ describe('Start Task Form', () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
             await processCloudDemoPage.openNewProcessForm();
             await startProcessPage.clearField(startProcessPage.processNameInput);
-            await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.processwithstarteventform);
+            await startProcessPage.selectFromProcessDropdown(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.processwithstarteventform);
             await startProcessPage.enterProcessName(startEventFormProcess);
 
             await startProcessPage.formFields().checkFormIsDisplayed();

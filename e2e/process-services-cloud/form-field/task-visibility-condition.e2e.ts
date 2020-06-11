@@ -24,7 +24,8 @@ import {
     StringUtil,
     StartTasksCloudPage,
     TaskFormCloudComponent,
-    StartProcessCloudPage
+    StartProcessCloudPage,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
@@ -33,8 +34,8 @@ import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/
 import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 
 describe('Task cloud visibility', async () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const resources = getTestResources();
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -55,7 +56,7 @@ describe('Task cloud visibility', async () => {
     let testUser, groupInfo;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -65,7 +66,7 @@ describe('Task cloud visibility', async () => {
     });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
@@ -79,7 +80,7 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(standaloneTaskName);
-        await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.requirednumbervisibility.name);
+        await startTask.selectFormDefinition(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.requirednumbervisibility.name);
 
         await startTask.clickStartButton();
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -101,7 +102,7 @@ describe('Task cloud visibility', async () => {
     it('[C315169] Should be able to start a process with visibility condition for number widgets ', async () => {
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
+        await startProcessPage.selectFromProcessDropdown(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.numbervisibilityprocess);
 
         await startProcessPage.enterProcessName(processName);
         await startProcessPage.checkStartProcessButtonIsEnabled();
@@ -134,7 +135,7 @@ describe('Task cloud visibility', async () => {
     it('[C315232] Should be able to complete a process with visibility condition for boolean widgets', async () => {
         await processCloudDemoPage.openNewProcessForm();
         await startProcessPage.clearField(startProcessPage.processNameInput);
-        await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.booleanvisibilityprocess);
+        await startProcessPage.selectFromProcessDropdown(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.booleanvisibilityprocess);
         await startProcessPage.enterProcessName(processName);
         await browser.sleep(400);
         await startProcessPage.clickStartProcessButton();
@@ -162,7 +163,7 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
         await startTask.addName(standaloneTaskName);
-        await startTask.selectFormDefinition(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.booleanvisibility.name);
+        await startTask.selectFormDefinition(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.booleanvisibility.name);
 
         await startTask.clickStartButton();
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();

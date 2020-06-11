@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { FormModelActions } from '../actions/APS/form-model.actions';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -41,6 +40,7 @@ describe('Task Details - Form', () => {
     const formActions = new FormModelActions(apiService);
     const usersActions = new UsersActions(apiService);
     const applicationsService = new ApplicationsUtil(apiService);
+    const resources = getTestResources();
 
     let task, otherTask, user, newForm, attachedForm, otherAttachedForm;
 
@@ -64,7 +64,7 @@ describe('Task Details - Form', () => {
             'stencilSet': 0
         };
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
 
@@ -81,7 +81,7 @@ describe('Task Details - Form', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
@@ -170,7 +170,7 @@ describe('Task Details - Form', () => {
         let app, newTask;
 
         beforeAll(async () => {
-            app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+            app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
             await applicationsService.importPublishDeployApp(app.file_path);
         });
 

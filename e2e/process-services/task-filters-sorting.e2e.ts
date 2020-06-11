@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -27,8 +27,8 @@ import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
 describe('Task Filters Sorting', () => {
-
-    const app = browser.params.resources.Files.APP_WITH_PROCESSES;
+    const resources = getTestResources();
+    const app = resources.Files.APP_WITH_PROCESSES;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -53,7 +53,7 @@ describe('Task Filters Sorting', () => {
         { name: 'Task 6', dueDate: '03/01/2019' }];
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
 
         await apiService.getInstance().login(user.email, user.password);
@@ -82,7 +82,7 @@ describe('Task Filters Sorting', () => {
     });
 
     afterAll( async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 

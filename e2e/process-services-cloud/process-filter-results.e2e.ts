@@ -27,9 +27,9 @@ import {
     ProcessInstancesService,
     QueryService,
     StringUtil,
-    TasksService
+    TasksService,
+    getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -39,7 +39,7 @@ import { ProcessListCloudConfiguration } from './config/process-list-cloud.confi
 import moment = require('moment');
 
 describe('Process filters cloud', () => {
-
+    const resources = getTestResources();
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -66,11 +66,11 @@ describe('Process filters cloud', () => {
     let completedProcess, runningProcessInstance, suspendProcessInstance, testUser, anotherUser, groupInfo,
         anotherProcessInstance, processDefinition, anotherProcessDefinition,
         differentAppUserProcessInstance, simpleAppProcessDefinition;
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         anotherUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
@@ -81,7 +81,7 @@ describe('Process filters cloud', () => {
 
         await apiService.login(anotherUser.email, anotherUser.password);
         simpleAppProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
         differentAppUserProcessInstance = await processInstancesService.createProcessInstance(simpleAppProcessDefinition.entry.key, simpleApp, {
             'name': StringUtil.generateRandomString(),
@@ -90,10 +90,10 @@ describe('Process filters cloud', () => {
 
         await apiService.login(testUser.email, testUser.password);
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
         anotherProcessDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
 
         runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
@@ -133,7 +133,7 @@ describe('Process filters cloud', () => {
         await apiService.login(anotherUser.email, anotherUser.password);
         await processInstancesService.deleteProcessInstance(differentAppUserProcessInstance.entry.id, simpleApp);
 
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         await identityService.deleteIdentityUser(testUser.idIdentityService);
         await identityService.deleteIdentityUser(anotherUser.idIdentityService);

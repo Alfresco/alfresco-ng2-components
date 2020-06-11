@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -29,10 +29,11 @@ import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
 describe('Task', () => {
+    const resources = getTestResources();
 
     describe('Filters', () => {
 
-        const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
+        const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
         const loginPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -48,7 +49,7 @@ describe('Task', () => {
         let appId: number, user: UserModel;
 
         beforeEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
             await apiService.getInstance().login(user.email, user.password);
@@ -64,7 +65,7 @@ describe('Task', () => {
 
         afterEach(async () => {
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
@@ -182,11 +183,11 @@ describe('Task', () => {
         let user;
         let appId: number;
 
-        const app = browser.params.resources.Files.APP_WITH_PROCESSES;
+        const app = resources.Files.APP_WITH_PROCESSES;
 
         beforeAll(async () => {
             const usersActions = new UsersActions(apiService);
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             user = await usersActions.createUser();
 
             await apiService.getInstance().login(user.email, user.password);
@@ -199,7 +200,7 @@ describe('Task', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await apiService.loginWithProfile('admin');
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 

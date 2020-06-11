@@ -41,6 +41,7 @@ export interface TestConfiguration {
     identityAdmin: TestUserProfile;
     identityUser: TestUserProfile;
     admin: TestUserProfile;
+    hrUser: TestUserProfile;
 
     main: {
         rootPath: string;
@@ -81,10 +82,12 @@ export interface TestResourceApp {
     description: string;
     file_path: string;
     file_location: string;
+    attached_file: string;
     process_wse_name: string;
     process_se_name: string;
     formName: string;
     processName: string;
+    taskName: string;
     form_fields: {
         form_fieldId: string;
         attachFile_id: string;
@@ -106,6 +109,7 @@ export interface TestResourceApp {
         hyperlink_id: string;
         dropdown_id: string;
         dynamicTable_id: string;
+        container_id: string;
     };
 }
 
@@ -283,12 +287,93 @@ export interface TestResources {
                     date_time_between_input: string;
                 };
             };
+            AMOUNT: {
+                processName: string;
+                FIELD: {
+                    amount_input_id: string;
+                    checkbox_id: string;
+                };
+            };
+            DATE: {
+                processName: string;
+                FIELD: {
+                    date_input: string;
+                    date_between_input: string;
+                }
+            };
+            DROPDOWN: {
+                processName: string;
+                FIELD: {
+                    general_dropdown: string;
+                    dropdown_visible: string;
+                    checkbox_id: string;
+                }
+            }
         };
+        FILE_FORM_ADF: TestResourceApp;
         FORM_ADF: TestResourceApp;
+        STENCIL_PROCESS: TestResourceApp;
+        NO_FORM_APP: TestResourceApp;
     };
     ACTIVITI_CLOUD_APPS: {
         SIMPLE_APP: {
             name: string;
+            forms: {
+                requirednumbervisibility: {
+                    name: string;
+                };
+                booleanvisibility: {
+                    name: string;
+                };
+                uploadSingleMultiple: {
+                    widgets: {
+                        contentMultipleAttachFileId: string;
+                    }
+                };
+                tabVisibilityFields: {
+                    name: string;
+                };
+                tabVisibilityVars: {
+                    name: string;
+                }
+            };
+            processes: {
+                numbervisibilityprocess: string;
+                booleanvisibilityprocess: string;
+                simpleProcess: string;
+                candidateGroupProcess: string;
+                anotherCandidateGroupProcess: string;
+                dropdownrestprocess: string;
+                uploadSingleMultipleFiles: string;
+            };
+            tasks: {
+                uploadSingleMultipleFiles: string;
+            };
+        };
+        CANDIDATE_BASE_APP: {
+            name: string;
+            tasks: {
+                candidateUserTask: string;
+                uploadFileTask: string;
+            };
+            processes: {
+                uploadFileProcess: string;
+                candidateUserProcess: string;
+                processwithstarteventform: string;
+                candidateGroupProcess: string;
+                anotherCandidateGroupProcess: string;
+            };
+            forms: {
+                starteventform: string;
+                uploadfileform: string;
+                formtotestvalidations: string;
+            };
+        };
+        SUB_PROCESS_APP: {
+            name: string;
+            processes: {
+                processparent: string;
+            }
         };
     };
 }

@@ -23,17 +23,19 @@ import {
     FormPage,
     ApplicationsUtil,
     ProcessUtil,
-    ApiService
+    ApiService,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
-import { browser } from 'protractor';
 import { FormDemoPage } from '../../pages/adf/demo-shell/process-services/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 
 describe('Date widget', () => {
-
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.DATE;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.WIDGET_CHECK_APP.DATE;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -49,12 +51,12 @@ describe('Date widget', () => {
     const applicationsService = new ApplicationsUtil(apiService);
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+       await apiService.loginWithProfile('admin');
 
        processUserModel = await usersActions.createUser();
 
-       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+       await apiService.login(processUserModel.email, processUserModel.password);
+       appModel = await applicationsService.importPublishDeployApp(resources.Files.WIDGET_CHECK_APP.file_path);
 
        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
        deployedApp = appDefinitions.data.find((currentApp) => {
@@ -66,13 +68,13 @@ describe('Date widget', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     describe('Simple App', () => {
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
@@ -103,7 +105,7 @@ describe('Date widget', () => {
         const formPage = new FormPage();
 
         beforeAll(async () => {
-            const urlFormDemoPage = `${browser.params.testConfig.adf.url}/form`;
+            const urlFormDemoPage = `${testConfig.adf.url}/form`;
             await BrowserActions.getUrl(urlFormDemoPage);
         });
 

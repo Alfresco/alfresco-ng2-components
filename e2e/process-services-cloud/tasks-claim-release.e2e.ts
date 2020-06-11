@@ -26,7 +26,10 @@ import {
     ProcessDefinitionsService,
     ProcessInstancesService,
     TaskFormCloudComponent,
-    TaskHeaderCloudPage
+    TaskHeaderCloudPage,
+    getTestResources,
+    getTestConfig,
+    TestUserProfile
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -34,8 +37,9 @@ import { ProcessInstanceCloud } from '@alfresco/adf-process-services-cloud';
 import { taskFilterConfiguration } from './config/task-filter.config';
 
 describe('Task claim/release', () => {
-
-    const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const candidateApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -52,13 +56,13 @@ describe('Task claim/release', () => {
 
     describe('candidate user', () => {
         beforeAll(async () => {
-            await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+            await apiService.loginWithProfile('hrUser');
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.candidateUserProcess, candidateApp.name);
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
         beforeEach(async () => {
-            await navigateToApp(browser.params.testConfig.hrUser);
+            await navigateToApp(testConfig.hrUser);
         });
 
         afterAll(async () => {
@@ -84,7 +88,7 @@ describe('Task claim/release', () => {
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
 
             await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.hrUser.email);
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(testConfig.hrUser.email);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
@@ -103,29 +107,29 @@ describe('Task claim/release', () => {
         let candidate;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             identityService = new IdentityService(apiService);
             groupIdentityService = new GroupIdentityService(apiService);
             candidate = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(candidate.idIdentityService, groupInfo.id);
 
-            await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+            await apiService.loginWithProfile('hrUser');
             const processDefinition = await processDefinitionService.getProcessDefinitionByName(candidateApp.processes.uploadFileProcess, candidateApp.name);
             processInstance = (await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateApp.name)).entry;
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(candidate.idIdentityService);
 
-            await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+            await apiService.loginWithProfile('hrUser');
             await processInstancesService.deleteProcessInstance(processInstance.id, processInstance.appName);
             await navigationBarPage.clickLogoutButton();
         });
 
         it('[C306875] should be able to Claim/Release a process task which has a candidate group', async () => {
-            await navigateToApp(browser.params.testConfig.hrUser);
+            await navigateToApp(testConfig.hrUser);
             await setTaskFilter('CREATED', processInstance.id);
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(candidateApp.tasks.uploadFileTask);
@@ -142,7 +146,7 @@ describe('Task claim/release', () => {
 
             await taskFormCloudComponent.checkReleaseButtonIsDisplayed();
             await expect(await taskHeaderCloudPage.getStatus()).toEqual('ASSIGNED');
-            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(browser.params.testConfig.hrUser.email);
+            await expect(await taskHeaderCloudPage.getAssignee()).toEqual(testConfig.hrUser.email);
 
             await taskFormCloudComponent.clickReleaseButton();
             await browser.refresh();
@@ -183,7 +187,7 @@ describe('Task claim/release', () => {
 
     });
 
-    async function navigateToApp(user) {
+    async function navigateToApp(user: TestUserProfile) {
         await loginSSOPage.login(user.email, user.password);
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify(taskFilterConfiguration));
         await navigationBarPage.navigateToProcessServicesCloudPage();

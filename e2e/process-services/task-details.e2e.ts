@@ -28,15 +28,17 @@ import {
     StringUtil,
     ApplicationsUtil,
     ProcessUtil,
-    ApiService
+    ApiService,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { browser } from 'protractor';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Details component', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const processServices = new ProcessServicesPage();
     const loginPage = new LoginSSOPage();
@@ -59,22 +61,22 @@ describe('Task Details component', () => {
     beforeAll(async () => {
         const usersActions = new UsersActions(apiService);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         processUserModel = await usersActions.createUser();
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await apiService.login(processUserModel.email, processUserModel.password);
         const applicationsService = new ApplicationsUtil(apiService);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
         await loginPage.login(processUserModel.email, processUserModel.password);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(testConfig.adf.url + '/activiti');
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {

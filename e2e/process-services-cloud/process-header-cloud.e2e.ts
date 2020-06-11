@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessHeaderCloudPage, ProcessInstancesService, QueryService, StringUtil, LocalStorageUtil, getTestResources } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -25,10 +24,11 @@ import moment = require('moment');
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
 
 describe('Process Header cloud component', () => {
+    const resources = getTestResources();
 
     describe('Process Header cloud component', () => {
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-        const subProcessApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name;
+        const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const subProcessApp = resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name;
         const formatDate = 'MMM D, YYYY';
 
         const processHeaderCloudPage = new ProcessHeaderCloudPage();
@@ -54,7 +54,7 @@ describe('Process Header cloud component', () => {
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -62,9 +62,9 @@ describe('Process Header cloud component', () => {
 
             await apiService.login(testUser.email, testUser.password);
 
-            const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
-            const processparent = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.processes.processparent, subProcessApp);
+            const processparent = await processDefinitionService.getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.processes.processparent, subProcessApp);
 
             runningProcess = await processInstancesService.createProcessInstance(dropdownRestProcess.entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
@@ -86,7 +86,7 @@ describe('Process Header cloud component', () => {
         });
 
         afterAll(async() => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

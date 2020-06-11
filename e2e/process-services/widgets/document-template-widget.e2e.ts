@@ -16,14 +16,14 @@
  */
 
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
-import { browser } from 'protractor';
 
 describe('Document Template widget', () => {
-
-    const app = browser.params.resources.Files.FILE_FORM_ADF;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.FILE_FORM_ADF;
 
     const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
@@ -38,7 +38,7 @@ describe('Document Template widget', () => {
     let processUserModel;
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+       await apiService.loginWithProfile('admin');
 
        processUserModel = await usersActions.createUser();
 
@@ -54,7 +54,7 @@ describe('Document Template widget', () => {
    });
 
     beforeEach(async () => {
-        const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+        const urlToNavigateTo = `${testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();
@@ -62,7 +62,7 @@ describe('Document Template widget', () => {
 
     afterAll(async () => {
         await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
 import {
     ApiService,
     AppListCloudPage,
@@ -27,7 +26,9 @@ import {
     StringUtil,
     TaskFormCloudComponent,
     UploadActions,
-    ViewerPage
+    ViewerPage,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -35,6 +36,8 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import CONSTANTS = require('../util/constants');
 
 describe('Process Task - Attach content file', () => {
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -51,30 +54,31 @@ describe('Process Task - Attach content file', () => {
     const processInstancesService = new ProcessInstancesService(apiService);
 
     const viewerPage = new ViewerPage();
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-    const processDefinitionName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
-    const uploadWidgetId = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.uploadSingleMultiple.widgets.contentMultipleAttachFileId;
-    const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const processDefinitionName = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
+    const uploadWidgetId = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.uploadSingleMultiple.widgets.contentMultipleAttachFileId;
+    const taskName = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
     const folderName = StringUtil.generateRandomString(5);
 
     let uploadedFolder: any;
     let processInstance: any;
 
     const pdfFileOne = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PDF.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF.file_path
     };
 
     const pdfFileTwo = {
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
+        'name': resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
+        'location': resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await apiService.loginWithProfile('hrUser');
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
-        await apiService.getInstance().login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+
+        await apiService.loginWithProfile('hrUser');
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
@@ -85,7 +89,7 @@ describe('Process Task - Attach content file', () => {
     });
 
     beforeEach(async () => {
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(testConfig.hrUser.email, testConfig.hrUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
     });
