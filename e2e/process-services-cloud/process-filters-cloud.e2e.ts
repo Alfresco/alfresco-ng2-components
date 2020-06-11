@@ -26,15 +26,16 @@ import {
     ProcessInstancesService,
     QueryService,
     TasksService,
-    EditProcessFilterCloudComponentPage
+    EditProcessFilterCloudComponentPage,
+    getTestResources
 } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Process filters cloud', () => {
+    const resources = getTestResources();
 
     describe('Process Filters', () => {
         const loginSSOPage = new LoginSSOPage();
@@ -53,11 +54,11 @@ describe('Process filters cloud', () => {
         const processInstancesService = new ProcessInstancesService(apiService);
 
         let runningProcess, completedProcess, testUser, groupInfo;
-        const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+        const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
         const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
@@ -66,7 +67,7 @@ describe('Process filters cloud', () => {
             await apiService.login(testUser.email, testUser.password);
 
             const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
+                .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 'name': StringUtil.generateRandomString(),
@@ -87,7 +88,7 @@ describe('Process filters cloud', () => {
         }, 5 * 60 * 1000);
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

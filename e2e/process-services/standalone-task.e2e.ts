@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
@@ -27,8 +27,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 describe('Start Task - Task App', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -42,12 +43,11 @@ describe('Start Task - Task App', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 
-        const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
+        const pathFile = path.join(testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
         await apiService.getInstance().login(processUserModel.email, processUserModel.password);

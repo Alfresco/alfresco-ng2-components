@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage, ApiService, getTestResources, getTestConfig } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -25,13 +25,13 @@ import { ProcessListPage } from '../pages/adf/process-services/process-list.page
 
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Process Filters Test', () => {
-
-    const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
+    const app = resources.Files.APP_WITH_DATE_FIELD_FORM;
 
     const loginPage = new LoginSSOPage();
     const processListPage = new ProcessListPage();
@@ -63,8 +63,7 @@ describe('Process Filters Test', () => {
     };
 
     beforeAll(async () => {
-
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
         user = await usersActions.createUser();
         await apiService.getInstance().login(user.email, user.password);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
@@ -139,7 +138,7 @@ describe('Process Filters Test', () => {
             return currentApp.modelId === appModel.id;
         });
 
-        processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
+        processFilterUrl = testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
         const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);

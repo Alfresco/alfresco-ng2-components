@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
-import { browser, by } from 'protractor';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel, getTestResources } from '@alfresco/adf-testing';
+import { by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -26,8 +26,8 @@ import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -47,12 +47,12 @@ describe('Start Task - Custom App', () => {
     const showHeaderTask = 'Show Header';
     let appModel;
     const pngFile = new FileModel({
-        'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
-        'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
+        'location': resources.Files.ADF_DOCUMENTS.PNG.file_location,
+        'name': resources.Files.ADF_DOCUMENTS.PNG.file_name
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         assigneeUserModel = await usersActions.createUser();
         processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));

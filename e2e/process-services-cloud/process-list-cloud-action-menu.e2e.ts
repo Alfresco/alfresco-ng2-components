@@ -23,7 +23,8 @@ import {
     LoginSSOPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
-    StringUtil
+    StringUtil,
+    getTestResources
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
@@ -32,10 +33,11 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
+    const resources = getTestResources();
 
     describe('Process List - Custom Action Menu', () => {
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
@@ -52,30 +54,30 @@ describe('Process list cloud', () => {
         let testUser, groupInfo, editProcess, deleteProcess;
 
         beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
-        const processDefinition = await processDefinitionService
-                .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
+            await apiService.login(testUser.email, testUser.password);
+            const processDefinition = await processDefinitionService
+                    .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-        editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
-            });
-        deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
-                'name': StringUtil.generateRandomString(),
-                'businessKey': StringUtil.generateRandomString()
-            });
+            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+                    'name': StringUtil.generateRandomString(),
+                    'businessKey': StringUtil.generateRandomString()
+                });
+            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+                    'name': StringUtil.generateRandomString(),
+                    'businessKey': StringUtil.generateRandomString()
+                });
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
         });
 
         afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.loginWithProfile('identityAdmin');
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 

@@ -28,15 +28,19 @@ import {
     TaskFormCloudComponent,
     TaskHeaderCloudPage,
     TasksService,
-    FormCloudService
+    FormCloudService,
+    getTestResources,
+    getTestConfig
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 
 describe('Task form cloud component', () => {
+    const resources = getTestResources();
+    const testConfig = getTestConfig();
 
-    const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const candidateBaseApp = resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -56,7 +60,7 @@ describe('Task form cloud component', () => {
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
 
     beforeAll(async () => {
-        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await apiService.loginWithProfile('hrUser');
 
         createdTask = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), candidateBaseApp);
 
@@ -65,8 +69,9 @@ describe('Task form cloud component', () => {
 
         const formCloudService = new FormCloudService(apiService);
 
-        const formToTestValidationsKey = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
-            browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
+        const formToTestValidationsKey = await formCloudService.getIdByFormName(
+            resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name,
+            resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.forms.formtotestvalidations);
 
         formValidationsTask = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(), candidateBaseApp, formToTestValidationsKey);
         await tasksService.claimTask(formValidationsTask.entry.id, candidateBaseApp);
@@ -79,7 +84,7 @@ describe('Task form cloud component', () => {
         await tasksService.createAndCompleteTask(completedTaskName, candidateBaseApp);
 
         let processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateUserProcess, candidateBaseApp);
 
         const candidateUsersProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
@@ -88,7 +93,7 @@ describe('Task form cloud component', () => {
         await tasksService.claimTask(candidateUsersTask.entry.id, candidateBaseApp);
 
         processDefinition = await processDefinitionService
-            .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
+            .getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
         const formProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
@@ -97,12 +102,12 @@ describe('Task form cloud component', () => {
         formTaskId = formTasks.list.entries[0].entry.id;
 
         /* cspell: disable-next-line */
-        const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.calledprocess, simpleApp);
+        const assigneeProcessDefinition = await processDefinitionService.getProcessDefinitionByName(resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.calledprocess, simpleApp);
         const assigneeProcess = await processInstancesService.createProcessInstance(assigneeProcessDefinition.entry.key, simpleApp);
         assigneeReleaseTask = await queryService.getProcessInstanceTasks(assigneeProcess.entry.id, simpleApp);
         assigneeTaskId = assigneeReleaseTask.list.entries[0].entry.id;
 
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(testConfig.hrUser.email, testConfig.hrUser.password);
 
     }, 5 * 60 * 1000);
 

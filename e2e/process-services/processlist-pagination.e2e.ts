@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
-import { browser } from 'protractor';
+import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService, getTestResources } from '@alfresco/adf-testing';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 
 describe('Process List - Pagination', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const resources = getTestResources();
+    const app = resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -57,7 +56,7 @@ describe('Process List - Pagination', () => {
     let totalPages;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.loginWithProfile('admin');
 
         processUserModel = await usersActions.createUser();
 

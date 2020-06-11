@@ -87,6 +87,7 @@ export interface TestResourceApp {
     process_se_name: string;
     formName: string;
     processName: string;
+    process_title: string;
     taskName: string;
     form_fields: {
         form_fieldId: string;
@@ -326,6 +327,18 @@ export interface TestResources {
                     checkbox_id: string;
                 }
             };
+            TEXT: {
+                processName: string;
+                FIELD: {
+                    simpleText: string;
+                    textMinMax: string;
+                    textMask: string;
+                    textMaskReversed: string;
+                    textRegexp: string;
+                    textHidden: string;
+                    showHiddenText: string;
+                }
+            };
         };
         MORE_WIDGETS: {
             file_path: string;
@@ -397,6 +410,7 @@ export interface TestResources {
                 dropdownrestprocess: string;
                 uploadSingleMultipleFiles: string;
                 processstring: string;
+                calledprocess: string;
             };
             tasks: {
                 uploadSingleMultipleFiles: string;

@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginSSOPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginSSOPage, StartProcessCloudPage, StringUtil, getTestResources } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Process', () => {
+    const resources = getTestResources();
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
@@ -38,11 +39,11 @@ describe('Start Process', () => {
     const processNameBiggerThen255Characters = StringUtil.generateRandomString(256);
     const lengthValidationError = 'Length exceeded, 255 characters max.';
     const requiredError = 'Process Name is required';
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const simpleApp = resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     let testUser, groupInfo;
 
     beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
 
         testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
@@ -55,7 +56,7 @@ describe('Start Process', () => {
    });
 
     afterAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await apiService.loginWithProfile('identityAdmin');
         await identityService.deleteIdentityUser(testUser.idIdentityService);
    });
 
