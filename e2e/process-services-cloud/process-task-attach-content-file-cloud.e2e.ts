@@ -32,6 +32,7 @@ import {
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import CONSTANTS = require('../util/constants');
 
 describe('Process Task - Attach content file', () => {
 
@@ -98,7 +99,7 @@ describe('Process Task - Attach content file', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName('upload process');
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
 
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
         await processCloudDemoPage.processListCloudComponent().selectRowById(processInstance.entry.id);
@@ -134,7 +135,7 @@ describe('Process Task - Attach content file', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName('upload process');
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
 
-        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
+        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.COMPLETED);
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(processInstance.entry.id);
     });
 

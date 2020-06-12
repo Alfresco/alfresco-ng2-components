@@ -43,6 +43,7 @@ import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/p
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { FileModel } from '../models/ACS/file.model';
 import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
+import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {
 
@@ -246,7 +247,7 @@ describe('Start Task Form', () => {
             await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
             await startProcessPage.clickStartProcessButton();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(startEventFormProcess);
 
