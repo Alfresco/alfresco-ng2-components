@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, EventEmitter, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Inject, ViewEncapsulation } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -38,23 +38,19 @@ export class SearchHeaderComponent implements OnInit {
     @Input()
     col: DataColumn;
 
-    @Output()
-    update: EventEmitter<NodePaging> = new EventEmitter();
+    @Input()
+    update: EventEmitter<NodePaging>;
 
     category: any = {};
 
     constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
 
     ngOnInit() {
-       this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
+        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
 
-       this.searchHeaderQueryBuilder.executed.subscribe((newNodePaging: NodePaging) => {
+        this.searchHeaderQueryBuilder.executed.subscribe((newNodePaging: NodePaging) => {
             this.update.emit(newNodePaging);
         });
-
-    //    this.searchHeaderQueryBuilder.updated.subscribe((query) => {
-    //         console.log(query);
-    //     });
     }
 
     onMenuButtonClick(event: Event) {
