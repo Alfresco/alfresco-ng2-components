@@ -46,7 +46,6 @@ export class StartProcessCloudPage {
     }
 
     async enterProcessName(name: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processNameInput);
         await BrowserActions.clearSendKeys(this.processNameInput, name);
     }
 
@@ -111,9 +110,8 @@ export class StartProcessCloudPage {
     }
 
     async startProcessWithProcessDefinition(processName: string, processDefinition: string) {
-        await this.clearField(this.processNameInput);
-        await this.enterProcessName(processName);
         await this.selectFromProcessDropdown(processDefinition);
+        await this.enterProcessName(processName);
         await this.checkStartProcessButtonIsEnabled();
         await this.clickStartProcessButton();
     }
