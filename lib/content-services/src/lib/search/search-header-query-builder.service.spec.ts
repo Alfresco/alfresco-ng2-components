@@ -30,8 +30,8 @@ describe('SearchHeaderQueryBuilder', () => {
     it('should load the configuration from app config', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any>{ id: 'cat1', enabled: true },
-                <any>{ id: 'cat2', enabled: true }
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
             ],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
@@ -56,8 +56,8 @@ describe('SearchHeaderQueryBuilder', () => {
     it('should return the category assigned to a column key', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any>{ id: 'cat1', columnKey: 'fake-key-1', enabled: true },
-                <any>{ id: 'cat2', columnKey: 'fake-key-2', enabled: true }
+                <any> { id: 'cat1', columnKey: 'fake-key-1', enabled: true },
+                <any> { id: 'cat2', columnKey: 'fake-key-2', enabled: true }
             ],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
@@ -84,8 +84,8 @@ describe('SearchHeaderQueryBuilder', () => {
     it('should add the extra filter for the parent node', () => {
         const config: SearchConfiguration = {
             categories: [
-                <any>{ id: 'cat1', enabled: true },
-                <any>{ id: 'cat2', enabled: true }
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
             ],
             filterQueries: [{ query: 'query1' }, { query: 'query2' }]
         };
@@ -116,8 +116,8 @@ describe('SearchHeaderQueryBuilder', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any>{ id: 'cat1', enabled: true },
-                <any>{ id: 'cat2', enabled: true }
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
             ],
             filterQueries: expectedResult
         };
@@ -144,8 +144,8 @@ describe('SearchHeaderQueryBuilder', () => {
 
         const config: SearchConfiguration = {
             categories: [
-                <any>{ id: 'cat1', enabled: true },
-                <any>{ id: 'cat2', enabled: true }
+                <any> { id: 'cat1', enabled: true },
+                <any> { id: 'cat2', enabled: true }
             ],
             filterQueries: [
                 { query: 'query1' },
