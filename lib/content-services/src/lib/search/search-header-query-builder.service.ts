@@ -33,12 +33,36 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return this.appConfig.get<SearchConfiguration>('search-headers');
     }
 
-    getCategoryForColumn(columnName: string) {
+    getCategoryForColumn(columnKey: string) {
         let foundCategory = null;
         if (this.categories !== null) {
-            foundCategory = this.categories.find((category) => category.columnKey === columnName);
+            foundCategory = this.categories.find(
+                category => category.columnKey === columnKey
+            );
         }
         return foundCategory;
     }
 
+    setCurrentRootFolderId(currentFolderId: string, previousFolderId: string) {
+        const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
+            filterQueries.query.includes(currentFolderId)
+        );
+        if (!alreadyAddedFilter) {
+            this.removeOldFolderFiltering(previousFolderId);
+            this.filterQueries.push({
+                query: `ANCESTOR:"workspace://SpacesStore/${currentFolderId}"`
+            });
+        }
+    }
+
+    private removeOldFolderFiltering(previousFolderId: string) {
+        if (previousFolderId) {
+            const oldFilterIndex = this.filterQueries.findIndex(filterQueries =>
+                filterQueries.query.includes(previousFolderId)
+            );
+            if (oldFilterIndex) {
+                this.filterQueries.splice(oldFilterIndex, 1);
+            }
+        }
+    }
 }

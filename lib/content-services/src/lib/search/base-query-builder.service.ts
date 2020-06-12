@@ -38,7 +38,7 @@ import { FacetFieldBucket } from './facet-field-bucket.interface';
 @Injectable({
     providedIn: 'root'
 })
-export class SearchQueryBuilderService extends BaseQueryBuilderService {
+export abstract class BaseQueryBuilderService {
 
     private _userQuery = '';
 
@@ -70,18 +70,23 @@ export class SearchQueryBuilderService extends BaseQueryBuilderService {
     // TODO: to be supported in future iterations
     ranges: { [id: string]: SearchRange } = {};
 
-    constructor(private appConfig: AppConfigService, private alfrescoApiService: AlfrescoApiService) {
-        this.resetToDefaults();
+    constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
+        this.setUpConfiguration();
     }
 
-    /**
-     * Resets the query to the defaults specified in the app config.
-     */
-    resetToDefaults() {
-        const template = this.appConfig.get<SearchConfiguration>('search');
-        if (template) {
-            this.config = JSON.parse(JSON.stringify(template));
-            this.categories = (this.config.categories || []).filter((category) => category.enabled);
+    public abstract loadConfiguration(): SearchConfiguration;
+
+    public setUpConfiguration() {
+        const currentConfig = this.loadConfiguration();
+        this.setUpSearchConfiguration(currentConfig);
+    }
+
+    private setUpSearchConfiguration(currentConfiguration: SearchConfiguration) {
+        if (currentConfiguration) {
+            this.config = JSON.parse(JSON.stringify(currentConfiguration));
+            this.categories = (this.config.categories || []).filter(
+                category => category.enabled
+            );
             this.filterQueries = this.config.filterQueries || [];
             this.userFacetBuckets = {};
             if (this.config.sorting) {

@@ -20,6 +20,7 @@ import { SearchWidgetSettings } from './search-widget-settings.interface';
 export interface SearchCategory {
     id: string;
     name: string;
+    columnKey?: string;
     enabled: boolean;
     expanded: boolean;
     component: {
