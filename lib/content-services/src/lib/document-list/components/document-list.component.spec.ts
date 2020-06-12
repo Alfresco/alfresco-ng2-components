@@ -33,7 +33,8 @@ import {
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
-    fakeGetSiteMembership
+    fakeGetSiteMembership,
+    fakeNodePaging
 } from '../../mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
@@ -1485,6 +1486,15 @@ describe('DocumentList', () => {
             rootFolderId: 'folder-id',
             where: undefined
         }, undefined);
+    });
+
+    it('should update the displayed nodes when a new node paging comes from the header filters', () => {
+        const mockNodePaging: NodePaging = <NodePaging> fakeNodePaging;
+        documentList.filterUpdate.emit(mockNodePaging);
+
+        fixture.detectChanges();
+
+        expect(documentList.node).toBe(mockNodePaging);
     });
 });
 
