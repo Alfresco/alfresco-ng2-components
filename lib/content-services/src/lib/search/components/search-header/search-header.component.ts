@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, EventEmitter, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, SimpleChanges } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -33,11 +33,16 @@ import { NodePaging } from '@alfresco/js-api';
         }
     ]
 })
-export class SearchHeaderComponent {
+export class SearchHeaderComponent implements OnInit, OnChanges {
 
     @Input()
     col: DataColumn;
 
+    @Input()
+    currentFolderNodeId: string;
+
+    @Output()
+    update: EventEmitter<NodePaging> = new EventEmitter();
     @Input()
     update: EventEmitter<NodePaging>;
 
@@ -51,6 +56,17 @@ export class SearchHeaderComponent {
         this.searchHeaderQueryBuilder.executed.subscribe((newNodePaging: NodePaging) => {
             this.update.emit(newNodePaging);
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
+            const currentIdValue = changes['currentFolderNodeId'].currentValue;
+            const previousIdValue = changes['currentFolderNodeId'].previousValue;
+            this.searchHeaderQueryBuilder.setCurrentRootFolderId(
+                currentIdValue,
+                previousIdValue
+            );
+        }
     }
 
     onMenuButtonClick(event: Event) {

@@ -737,7 +737,7 @@ describe('SearchFilterComponent', () => {
 
         it('should not show the disabled widget', async(() => {
             appConfigService.config.search = { categories: disabledCategories };
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -748,7 +748,7 @@ describe('SearchFilterComponent', () => {
 
         it('should show the widget in expanded mode', async(() => {
             appConfigService.config.search = { categories: expandedCategories };
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -769,7 +769,7 @@ describe('SearchFilterComponent', () => {
 
         it('should show the widgets only if configured', async(() => {
             appConfigService.config.search = { categories: simpleCategories };
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -784,7 +784,7 @@ describe('SearchFilterComponent', () => {
         it('should be update the search query when name changed', async( async () => {
             spyOn(queryBuilder, 'update').and.stub();
             appConfigService.config.search = searchFilter;
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
 
             fixture.detectChanges();
             await fixture.whenStable();
@@ -805,7 +805,7 @@ describe('SearchFilterComponent', () => {
         it('should show the long facet options list with pagination', () => {
             const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
             appConfigService.config.search = searchFilter;
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
 
             fixture.detectChanges();
             queryBuilder.executed.next(<any> mockSearchResult);
@@ -871,7 +871,7 @@ describe('SearchFilterComponent', () => {
             delete filter.facetQueries;
 
             appConfigService.config.search = filter;
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
 
             fixture.detectChanges();
             queryBuilder.executed.next(<any> mockSearchResult);
@@ -884,7 +884,7 @@ describe('SearchFilterComponent', () => {
         it('should search the facets options and select it', () => {
             const panel = '[data-automation-id="expansion-panel-Size facet queries"]';
             appConfigService.config.search = searchFilter;
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
             fixture.detectChanges();
             queryBuilder.executed.next(<any> mockSearchResult);
             fixture.detectChanges();
@@ -930,7 +930,7 @@ describe('SearchFilterComponent', () => {
             const panel1 = '[data-automation-id="expansion-panel-Size facet queries"]';
             const panel2 = '[data-automation-id="expansion-panel-Type facet queries"]';
             appConfigService.config.search = searchFilter;
-            queryBuilder.resetToDefaults();
+            queryBuilder.setUpConfiguration();
             fixture.detectChanges();
             queryBuilder.executed.next(<any> mockSearchResult);
             fixture.detectChanges();
