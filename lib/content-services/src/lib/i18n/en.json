@@ -286,6 +286,7 @@
       }
     },
     "SEARCH_HEADER" : {
+      "TITLE":"Filter",
       "FILTER_BY": "Filter by {{ category }}",
       "CLEAR": "Clear",
       "APPLY": "Apply"

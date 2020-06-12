@@ -631,8 +631,4 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
         return '';
     }
-
-    onFilterUpdate(newNodePaging: NodePaging) {
-        this.documentList.onFilterUpdate(newNodePaging);
-    }
 }

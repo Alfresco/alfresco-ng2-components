@@ -1,0 +1,57 @@
+@mixin adf-filter-menu-theme($theme) {
+    $background: map-get($theme, background);
+
+    .adf-filter {
+
+        &-button {
+
+            .adf-icon {
+                opacity: 1;
+            }
+
+            .mat-icon {
+                height: 18px;
+                width: 18px;
+            }
+        }
+
+        &-container {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+
+            .adf-facet-buttons {
+                display: none;
+            }
+
+            .adf-search-check-list {
+                padding: 5px 0;
+            }
+        }
+
+        &-title {
+            font-size: 1.1em;
+            padding-bottom: 5px;
+        }
+
+        &-actions {
+            background-color: mat-color($background, background);
+            display: flex;
+            justify-content: flex-end;
+            padding: 5px 10px;
+
+            > button {
+                font-size: 0.9em;
+            }
+        }
+
+        &-apply-button {
+            background-color: mat-color($background, hover);
+        }
+    }
+
+    .mat-menu-panel.adf-filter-menu .mat-menu-content {
+        min-width: 250px;
+        padding: 0;
+    }
+}

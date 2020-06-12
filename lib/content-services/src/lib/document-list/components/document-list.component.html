@@ -27,7 +27,7 @@
     <adf-header-filter-template>
         <ng-template let-col>
             <ng-template [ngTemplateOutlet]="customHeaderFilterTemplate?.template"
-                [ngTemplateOutletContext]="{$implicit: col}">
+                [ngTemplateOutletContext]="{$implicit: col, update: filterUpdate}">
             </ng-template>
         </ng-template>
     </adf-header-filter-template>

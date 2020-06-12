@@ -13,6 +13,7 @@
 @import '../search/components/search-sorting-picker/search-sorting-picker.component';
 @import '../search/components/search-filter/search-filter.component';
 @import '../search/components/search-chip-list/search-chip-list.component';
+@import '../search/components/search-header/search-header.component';
 
 @import '../dialogs/folder.dialog';
 
@@ -39,6 +40,7 @@
     @include adf-search-control-theme($theme);
     @include adf-search-autocomplete-theme($theme);
     @include adf-search-sorting-picker-theme($theme);
+    @include adf-filter-menu-theme($theme);
     @include adf-dialog-theme($theme);
     @include adf-content-node-selector-dialog-theme($theme);
     @include adf-content-metadata-module-theme($theme);

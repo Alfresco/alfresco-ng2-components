@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Node } from '@alfresco/js-api';
+import { Node, NodePaging } from '@alfresco/js-api';
 
-export const fakeNodeWithCreatePermission =  new Node({
+export const fakeNodeWithCreatePermission = new Node({
     isFile: false,
     createdByUser: { id: 'admin', displayName: 'Administrator' },
     modifiedAt: '2017-06-08T13:53:46.495Z',
@@ -190,6 +190,28 @@ export const fakeGetSiteMembership = {
                     'title': 'Sample: Web Site Design Project'
                 }, 'role': 'SiteManager', 'guid': 'b4cff62a-664d-4d45-9302-98723eac1319', 'id': 'swsdp'
             }
+        }]
+    }
+};
+
+export const fakeNodePaging: NodePaging = {
+    list: {
+        pagination: {
+            count: 5,
+            hasMoreItems: false,
+            totalItems: 5,
+            skipCount: 0,
+            maxItems: 100
+        }, entries: [{
+            entry: fakeNodeWithNoPermission
+        }, {
+            entry: fakeNodeWithNoPermission
+        }, {
+            entry: fakeNodeWithNoPermission
+        }, {
+            entry: fakeNodeWithNoPermission
+        }, {
+            entry: fakeNodeWithNoPermission
         }]
     }
 };
