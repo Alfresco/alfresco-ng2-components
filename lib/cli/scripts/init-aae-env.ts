@@ -20,13 +20,15 @@
 import * as program from 'commander';
 
 /* tslint:disable */
-const alfrescoApi = require('@alfresco/js-api');
-/* tslint:enable */
 import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
+import { AlfrescoApi } from '@alfresco/js-api';
+const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
+/* tslint:enable */
 
-let alfrescoJsApi: any;
+let alfrescoJsApiModeler: any;
+let alfrescoJsApiDevops: any;
 let args: ConfigArgs;
 let isValid = true;
 
@@ -54,7 +56,7 @@ async function healthCheck(nameService: string) {
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        const health = await alfrescoJsApi.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+        const health = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
         if (health.status !== 'UP') {
             logger.error(`${nameService} is DOWN `);
@@ -75,11 +77,11 @@ function getApplicationByStatus(status: string) {
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error(`Get application by status ${error.status} `);
         isValid = false;
     }
 }
@@ -91,59 +93,59 @@ function getDescriptors() {
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error(`Get Descriptors ${error.status} `);
         isValid = false;
     }
 }
 
 function getProjects() {
-    const url = `${args.host}/deployment-service/v1/projects/'`;
+    const url = `${args.host}/modeling-service/v1/projects`;
 
     const pathParams = {}, queryParams = { maxItems: 1000 },
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error('Get Projects' + error.status);
         isValid = false;
     }
 }
 
 function getProjectRelease(projectId: string) {
-    const url = `${args.host}/deployment-service/v1/projects/${projectId}/releases`;
+    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error('Get Projects Release' + error.status);
         isValid = false;
     }
 }
 
 function releaseProject(projectId: string) {
-    const url = `${args.host}/deployment-service/v1/projects/${projectId}/releases`;
+    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error('Post Projects Release' + error.status);
         isValid = false;
     }
 }
@@ -152,45 +154,45 @@ async function importAndReleaseProject(absoluteFilePath: string) {
     const fileContent = await fs.createReadStream(absoluteFilePath);
 
     try {
-        const project = await alfrescoJsApi.oauth2Auth.callCustomApi(`${args.host}/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
+        const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
 
-        await alfrescoJsApi.oauth2Auth.callCustomApi(`${args.host}/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
+        await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
             ['application/json'], ['application/json']);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error('Import Projects' + error.status);
         isValid = false;
     }
 }
 
 function deleteDescriptor(name: string) {
-    const url = `${args.host}/v1/descriptors/${name}`;
+    const url = `${args.host}/deployment-service/v1/descriptors/${name}`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'DELETE', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error('Delete descriptor' + error.status);
         isValid = false;
     }
 }
 
 function deploy(model: any) {
-    const url = `${args.host}/v1/applications/`;
+    const url = `${args.host}/deployment-service/v1/applications/`;
 
     const pathParams = {}, queryParams = {},
         headerParams = {}, formParams = {}, bodyParam = model,
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
-        return alfrescoJsApi.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
+        return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
             contentTypes, accepts);
 
     } catch (error) {
-        logger.error(error.status);
+        logger.error('Deploy post' + error.status);
         isValid = false;
     }
 }
@@ -210,7 +212,7 @@ function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
             redirectUri: '/'
         }
     };
-    return new alfrescoApi.AlfrescoApiCompatibility(config);
+    return new AlfrescoApi(config);
 }
 
 async function deployMissingApps() {
@@ -243,7 +245,7 @@ async function checkIfAppIsReleased(absentApps: any []) {
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
 
             try {
-                projectRelease = await importProjectAndRelease(currentAbsentApp);
+                projectRelease = await importProjectAndRelease(currentAbsentApp.name);
             } catch (error) {
                 logger.info(`error status ${error.status}`);
 
@@ -320,13 +322,13 @@ async function importProjectAndRelease(app: any) {
 
 function findMissingApps(deployedApps: any []) {
     const absentApps: any [] = [];
-    ['candidatebaseapp', 'simpleapp', 'subprocessapp'].forEach((app) => {
+    Object.keys(ACTIVITI_CLOUD_APPS).forEach((key) => {
         const isPresent = deployedApps.find((currentApp: any) => {
-            return app === currentApp.entry.name;
+            return ACTIVITI_CLOUD_APPS[key].name === currentApp.entry.name;
         });
 
         if (!isPresent) {
-            absentApps.push(app);
+            absentApps.push(ACTIVITI_CLOUD_APPS[key]);
         }
     });
     return absentApps;
@@ -341,6 +343,7 @@ async function getFileFromRemote(url: string, name: string) {
                 resolve();
             })
             .on('error', (error: any) => {
+                logger.error(`Not possible to download the project form remote`);
                 reject(error);
             });
     });
@@ -369,7 +372,7 @@ async function main(configArgs: ConfigArgs) {
     program
         .version('0.1.0')
         .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
-            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
+            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
         .option('-jsonAppsPath, --oauth [type]', 'Host sso server')
@@ -385,8 +388,14 @@ async function main(configArgs: ConfigArgs) {
         return;
     }
 
-    alfrescoJsApi = getAlfrescoJsApiInstance(args);
-    await alfrescoJsApi.login(args.modelerUsername, args.modelerPassword);
+    alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
+    alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
+    await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
+        logger.info('login SSO ok');
+    }, (error) => {
+        logger.info(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
+        process.exit(1);
+    });
 
     AAE_MICROSERVICES.map(async (serviceName) => {
         await healthCheck(serviceName);
@@ -394,7 +403,13 @@ async function main(configArgs: ConfigArgs) {
 
     if (isValid) {
         logger.error('The environment is up and running');
-        await alfrescoJsApi.login(args.devopsUsername, args.devopsPassword);
+        await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword).then(() => {
+            logger.info('login SSO ok devopsUsername');
+        }, (error) => {
+            logger.info(`login SSO error ${JSON.stringify(error)} ${args.devopsUsername}`);
+            process.exit(1);
+        });
+
         await deployMissingApps();
     } else {
         logger.info('The environment is not up');
