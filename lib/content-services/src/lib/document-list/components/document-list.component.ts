@@ -313,7 +313,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     selection = new Array<NodeEntry>();
     $folderNode: Subject<Node> = new Subject<Node>();
     allowFiltering: boolean = true;
-    filterUpdate: EventEmitter<NodePaging> = new EventEmitter();
 
     // @deprecated 3.0.0
     folderNode: Node;
@@ -405,12 +404,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .subscribe(val => this.contextActionCallback(val));
 
         this.enforceSingleClickNavigationForMobile();
-
-        this.filterUpdate
-            .subscribe((newNodePaging: NodePaging) => {
-                this.node = newNodePaging;
-                this.reload();
-            });
     }
 
     ngAfterContentInit() {
@@ -864,5 +857,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.setLoadingState(false);
         this.error.emit(err);
+    }
+
+    updateDisplayedNodes(newNodePaging: NodePaging) {
+        if (newNodePaging) {
+            this.node = newNodePaging;
+            this.reload();
+        }
     }
 }

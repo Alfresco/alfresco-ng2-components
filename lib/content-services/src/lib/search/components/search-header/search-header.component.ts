@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -43,8 +43,6 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
 
     @Output()
     update: EventEmitter<NodePaging> = new EventEmitter();
-    @Input()
-    update: EventEmitter<NodePaging>;
 
     category: any = {};
 
