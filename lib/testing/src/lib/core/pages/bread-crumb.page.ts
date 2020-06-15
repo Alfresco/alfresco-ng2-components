@@ -29,7 +29,7 @@ export class BreadcrumbPage {
     }
 
     async getActiveBreadCrumbItemName(): Promise<string> {
-        return this.currentItem.getText();
+        return BrowserActions.getText(this.currentItem);
     }
 
 }
