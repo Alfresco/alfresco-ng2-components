@@ -225,6 +225,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {
         const filesSaved = [];
+
+        fileNodeList.forEach(node => {
+            node.isLink = this.field.params.link;
+        });
+
         from(fileNodeList).pipe(
             mergeMap((node) =>
                 zip(
