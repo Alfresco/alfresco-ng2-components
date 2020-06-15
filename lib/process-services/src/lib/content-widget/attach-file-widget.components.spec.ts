@@ -63,6 +63,13 @@ const allSourceParams = {
     }
 };
 
+const allSourceParamsWithLinkEnabled = {
+    fileSource: {
+        serviceId: 'all-file-sources'
+    },
+    link: true
+};
+
 const definedSourceParams = {
     fileSource: {
         serviceId: 'goku-sources',
@@ -163,7 +170,7 @@ describe('AttachFileWidgetComponent', () => {
         });
     }));
 
-    it('should show up all the repository option on menu list', async(() => {
+    it('should show up all the repository option on menu list', async() => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -178,15 +185,51 @@ describe('AttachFileWidgetComponent', () => {
             attachButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeNull();
-                expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeUndefined();
-                expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeNull();
-                expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeUndefined();
-                expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeNull();
-                expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeUndefined();
+                const localFileOption = fixture.debugElement.queryAll(By.css('#attach-local-file'));
+                const fakeRepoOption1 = fixture.debugElement.queryAll(By.css('#attach-SHAREME'));
+                const fakeRepoOption2 = fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'));
+
+                expect(localFileOption.length).toEqual(1);
+                expect(localFileOption[0]).not.toBeNull();
+
+                expect(fakeRepoOption1.length).toEqual(1);
+                expect(fakeRepoOption1[0]).not.toBeNull();
+
+                expect(fakeRepoOption2.length).toEqual(1);
+                expect(fakeRepoOption2[0]).not.toBeNull();
             });
         });
-    }));
+    });
+
+    it ('should show only remote repos when just link to files is true', async () => {
+        widget.field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.UPLOAD,
+            value: []
+        });
+        widget.field.id = 'attach-file-attach';
+        widget.field.params = <FormFieldMetadata> allSourceParamsWithLinkEnabled;
+        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
+        fixture.detectChanges();
+        fixture.whenRenderingDone().then(() => {
+            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
+            expect(attachButton).not.toBeNull();
+            attachButton.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const localFileOption = fixture.debugElement.queryAll(By.css('#attach-local-file'));
+                const fakeRepoOption1 = fixture.debugElement.queryAll(By.css('#attach-SHAREME'));
+                const fakeRepoOption2 = fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'));
+
+                expect(localFileOption.length).toEqual(0);
+
+                expect(fakeRepoOption1.length).toEqual(1);
+                expect(fakeRepoOption1[0]).not.toBeNull();
+
+                expect(fakeRepoOption2.length).toEqual(1);
+                expect(fakeRepoOption2[0]).not.toBeNull();
+            });
+        });
+    });
 
     it('should be able to upload files coming from content node selector', async(() => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
