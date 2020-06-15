@@ -185,7 +185,7 @@ export class FormFields {
     }
 
     async isCancelButtonEnabled(): Promise<boolean> {
-            return this.cancelButton.isEnabled();
+        return this.cancelButton.isEnabled();
     }
 
     async clickCancelButton(): Promise<void> {

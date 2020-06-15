@@ -158,6 +158,6 @@ export class FormFieldsPage {
     }
 
     async isCompleteFormButtonEnabled(): Promise<boolean> {
-            return this.completeButton.isEnabled();
+        return this.completeButton.isEnabled();
     }
 }
