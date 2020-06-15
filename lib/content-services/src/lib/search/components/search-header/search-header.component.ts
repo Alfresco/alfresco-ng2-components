@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, SimpleChanges, ViewEncapsulation, ViewChild } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
+import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { NodePaging } from '@alfresco/js-api';
@@ -43,6 +44,9 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
 
     @Output()
     update: EventEmitter<NodePaging> = new EventEmitter();
+
+    @ViewChild(SearchWidgetContainerComponent)
+    widgetContainer: SearchWidgetContainerComponent;
 
     category: any = {};
 
@@ -76,6 +80,12 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     }
 
     onApplyButtonClick() {
+        this.searchHeaderQueryBuilder.execute();
+    }
+
+    onClearButtonClick(event: Event) {
+        event.stopPropagation();
+        this.widgetContainer.resetInnerWidget();
         this.searchHeaderQueryBuilder.execute();
     }
 }

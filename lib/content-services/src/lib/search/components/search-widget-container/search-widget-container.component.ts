@@ -75,4 +75,9 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
         }
     }
 
+    resetInnerWidget() {
+        if (this.componentRef && this.componentRef.instance) {
+            this.componentRef.instance.reset();
+        }
+    }
 }

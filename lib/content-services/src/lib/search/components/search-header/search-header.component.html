@@ -16,7 +16,7 @@
             </adf-search-widget-container>
         </div>
         <mat-dialog-actions class="adf-filter-actions">
-            <button mat-button>{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
+            <button mat-button (click)="onClearButtonClick($event)">{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
             </button>
             <button mat-button color="primary" class="adf-filter-apply-button" (click)="onApplyButtonClick()">{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
             </button>
