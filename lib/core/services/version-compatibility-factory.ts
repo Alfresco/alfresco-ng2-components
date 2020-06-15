@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-export * from './highlight.directive';
-export * from './logout.directive';
-export * from './node-delete.directive';
-export * from './node-favorite.directive';
-export * from './check-allowable-operation.directive';
-export * from './node-restore.directive';
-export * from './node-download.directive';
-export * from './upload.directive';
-export * from './version-compatibility.directive';
+import { VersionCompatibilityService } from './version-compatibility.service';
 
-export * from './directive.module';
+export function versionCompatibilityFactory(
+    versionCompatibilityService: VersionCompatibilityService
+): Function { return () => versionCompatibilityService; }
