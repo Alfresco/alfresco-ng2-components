@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
+import { FormFieldModel } from '../core';
 
 @Component({
     selector: 'hyperlink-widget',
@@ -40,11 +41,14 @@ import { WidgetComponent } from './../widget.component';
 })
 export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit {
 
-    linkUrl: string = WidgetComponent.DEFAULT_HYPERLINK_URL;
+    static DEFAULT_HYPERLINK_URL: string = '#';
+    static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
+
+    linkUrl: string = '#';
     linkText: string = null;
 
     constructor(public formService: FormService) {
-         super(formService);
+        super(formService);
     }
 
     ngOnInit() {
@@ -54,4 +58,20 @@ export class HyperlinkWidgetComponent extends WidgetComponent implements OnInit 
         }
     }
 
+    protected getHyperlinkUrl(field: FormFieldModel) {
+        let value = field.value || field.hyperlinkUrl;
+
+        if (value && !/^https?:\/\//i.test(value)) {
+            value = `${HyperlinkWidgetComponent.DEFAULT_HYPERLINK_SCHEME}${value}`;
+        }
+
+        return value || HyperlinkWidgetComponent.DEFAULT_HYPERLINK_URL;
+    }
+
+    protected getHyperlinkText(field: FormFieldModel) {
+        if (field) {
+            return field.displayText || field.hyperlinkUrl || field.value;
+        }
+        return null;
+    }
 }
