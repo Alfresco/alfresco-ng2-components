@@ -200,6 +200,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(completedProcess.entry.id);
 
