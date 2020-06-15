@@ -858,11 +858,4 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.setLoadingState(false);
         this.error.emit(err);
     }
-
-    updateDisplayedNodes(newNodePaging: NodePaging) {
-        if (newNodePaging) {
-            this.node = newNodePaging;
-            this.reload();
-        }
-    }
 }
