@@ -27,6 +27,7 @@ import { CheckAllowableOperationDirective } from './check-allowable-operation.di
 import { NodeRestoreDirective } from './node-restore.directive';
 import { UploadDirective } from './upload.directive';
 import { NodeDownloadDirective } from './node-download.directive';
+import { VersionCompatibilityDirective } from './version-compatibility.directive';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { NodeDownloadDirective } from './node-download.directive';
         CheckAllowableOperationDirective,
         NodeRestoreDirective,
         NodeDownloadDirective,
-        UploadDirective
+        UploadDirective,
+        VersionCompatibilityDirective
     ],
     exports: [
         HighlightDirective,
@@ -51,7 +53,8 @@ import { NodeDownloadDirective } from './node-download.directive';
         CheckAllowableOperationDirective,
         NodeRestoreDirective,
         NodeDownloadDirective,
-        UploadDirective
+        UploadDirective,
+        VersionCompatibilityDirective
     ]
 })
 export class DirectiveModule {}
