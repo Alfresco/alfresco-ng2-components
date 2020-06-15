@@ -105,7 +105,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     isAllFileSourceSelected(): boolean {
         return this.field.params &&
             this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'all-file-sources';
+            this.field.params.fileSource.serviceId === 'all-file-sources' &&
+            !this.field.params.link;
     }
 
     isOnlyLocalSourceSelected(): boolean {
