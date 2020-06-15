@@ -49,7 +49,7 @@ describe('Process list cloud', () => {
         const processInstances = [];
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
-        const PROCESSES = CONSTANTS.PROCSES_FILTERS;
+        const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
