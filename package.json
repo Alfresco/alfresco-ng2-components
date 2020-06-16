@@ -84,7 +84,7 @@
     "@alfresco/adf-insights": "3.9.0-1def8000f06e92a78297806a760be7fabdda3c6f",
     "@alfresco/adf-process-services": "3.9.0-1def8000f06e92a78297806a760be7fabdda3c6f",
     "@alfresco/adf-process-services-cloud": "3.9.0-1def8000f06e92a78297806a760be7fabdda3c6f",
-    "@alfresco/js-api": "3.9.0-e493d078d3320858e4dcb2e1c9aab2a0a3c67214",
+    "@alfresco/js-api": "3.9.0-b6b4d438601f58a935dca623b56bab09f289a1ec",
     "@angular/animations": "^7.2.15",
     "@angular/cdk": "7.3.7",
     "@angular/common": "^7.2.15",
