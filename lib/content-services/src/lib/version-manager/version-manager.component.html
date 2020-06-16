@@ -38,7 +38,8 @@
                     [allowDownload]="allowDownload"
                     [showComments]="showComments"
                     (deleted)="refresh($event)"
-                    (restored)="refresh($event)">
+                    (restored)="refresh($event)"
+                    (viewVersion)="onViewVersion($event)">
                 </adf-version-list>
             </div>
         </div>

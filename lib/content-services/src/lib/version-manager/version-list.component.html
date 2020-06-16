@@ -15,7 +15,7 @@
                 <button *ngIf="allowViewVersions"
                     [id]="'adf-version-list-action-view-'+version.entry.id"
                     mat-menu-item
-                    (click)="viewVersion(version.entry.id)">
+                    (click)="showVersion(version.entry.id)">
                     {{ 'ADF_VERSION_LIST.ACTIONS.VIEW' | translate }}
                 </button>
                 <button

@@ -75,6 +75,10 @@ export class VersionManagerComponent implements OnInit {
     @Output()
     uploadCancel: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    /** Emitted when viewing a version. */
+    @Output()
+    viewVersion: EventEmitter<string> = new EventEmitter<string>();
+
     @ViewChild('versionList')
     versionListComponent: VersionListComponent;
 
@@ -115,6 +119,10 @@ export class VersionManagerComponent implements OnInit {
         this.showVersionComparison = false;
         this.newFileVersion = null;
         this.uploadCancel.emit(true);
+    }
+
+    onViewVersion(versionId: string) {
+        this.viewVersion.emit(versionId);
     }
 
     toggleNewVersion() {
