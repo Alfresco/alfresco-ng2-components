@@ -2,6 +2,7 @@
   "ADF_VERSION_LIST": {
     "ACTIONS": {
       "RESTORE": "Restore",
+      "VIEW": "View",
       "DELETE": "Delete",
       "DOWNLOAD": "Download",
       "UPLOAD": {
