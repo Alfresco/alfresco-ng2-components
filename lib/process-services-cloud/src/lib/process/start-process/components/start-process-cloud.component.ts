@@ -226,6 +226,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processDefinition.setValue(selectedProcess.name);
+            this.processDefinitionSelectionChanged(selectedProcess);
         }
     }
 

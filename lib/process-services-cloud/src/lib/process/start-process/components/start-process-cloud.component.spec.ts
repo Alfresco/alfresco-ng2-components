@@ -451,6 +451,18 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
+        it('should select automatically the form when processDefinition is selected as default', async(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
+            const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnChanges({ appName: change });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(component.processForm.controls['processDefinition'].value).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[0])).name);
+                const selectElement = fixture.nativeElement.querySelector('adf-cloud-form');
+                expect(selectElement).toBeNull();
+            });
+        }));
+
         it('should not select automatically any processDefinition if the app contain multiple process and does not have any processDefinition as input', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of(fakeProcessDefinitions));
             component.appName = 'myApp';
