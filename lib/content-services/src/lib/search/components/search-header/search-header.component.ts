@@ -49,6 +49,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     widgetContainer: SearchWidgetContainerComponent;
 
     category: any = {};
+    isActive: boolean = false;
 
     constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
 
@@ -68,6 +69,8 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
                 currentIdValue,
                 previousIdValue
             );
+
+            this.isActive = false;
         }
     }
 
@@ -81,11 +84,13 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
 
     onApplyButtonClick() {
         this.searchHeaderQueryBuilder.execute();
+        this.isActive = true;
     }
 
     onClearButtonClick(event: Event) {
         event.stopPropagation();
         this.widgetContainer.resetInnerWidget();
         this.searchHeaderQueryBuilder.execute();
+        this.isActive = false;
     }
 }

@@ -1,9 +1,14 @@
 <div *ngIf="!!category" class="adf-filter">
     <button mat-icon-button [matMenuTriggerFor]="filter"
+        #menuTrigger="matMenuTrigger"
         (click)="onMenuButtonClick($event)"
         class="adf-filter-button"
         matTooltip="{{ 'SEARCH.SEARCH_HEADER.FILTER_BY' | translate: { category: col.title || 'Type' } }}">
-        <adf-icon value="adf:filter" color="primary"></adf-icon>
+        <adf-icon value="adf:filter"
+            [ngClass]="{ 'adf-icon-active': isActive || menuTrigger.menuOpen }"
+            matBadge="&#8288;"
+            matBadgeColor="warn"
+            [matBadgeHidden]="!isActive"></adf-icon>
     </button>
 
     <mat-menu #filter="matMenu" class="adf-filter-menu">

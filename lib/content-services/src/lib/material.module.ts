@@ -36,7 +36,8 @@ import {
     MatSlideToggleModule,
     MatRadioModule,
     MatSliderModule,
-    MatTreeModule
+    MatTreeModule,
+    MatBadgeModule
 } from '@angular/material';
 
 export function modules() {
@@ -60,7 +61,8 @@ export function modules() {
         MatSlideToggleModule,
         MatRadioModule,
         MatSliderModule,
-        MatTreeModule
+        MatTreeModule,
+        MatBadgeModule
     ];
 }
 
