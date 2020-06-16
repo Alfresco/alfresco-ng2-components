@@ -42,5 +42,6 @@ export * from './models/task-details.model';
 export * from './models/task-list.model';
 export * from './models/user-event.model';
 export * from './models/user-group.model';
+export * from './models/task-claim-status.model';
 
 export * from './task-list.module';

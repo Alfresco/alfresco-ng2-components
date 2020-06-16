@@ -40,7 +40,8 @@ import {
     initiatorCanCompleteTaskDetailsMock,
     taskDetailsWithOutCandidateGroup,
     claimedTaskDetailsMock,
-    claimedByGroupMemberMock
+    claimedByGroupMemberMock,
+    initiatorWithCandidatesTaskDetailsMock
 } from '../../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -81,7 +82,7 @@ describe('TaskFormComponent', () => {
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
         authService = TestBed.get(AuthenticationService);
-        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ id: 1001, email: 'fake-email' }));
+        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ id: 1001, email: 'fake-email@gmail.com' }));
     });
 
     afterEach(async() => {
@@ -162,6 +163,16 @@ describe('TaskFormComponent', () => {
             expect(errorSpy).toHaveBeenCalled();
         });
 
+        it('Should be able to disable complete button in case task shared with candidates and initiatorCanCompleteTask set to true', async () => {
+            getTaskDetailsSpy.and.returnValue(of(initiatorWithCandidatesTaskDetailsMock));
+            component.taskId = '123';
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const activitFormSelector = element.querySelector('adf-form');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('#adf-form-complete');
+            expect(activitFormSelector).toBeDefined();
+            expect(completeButton['disabled']).toEqual(true);
+        });
     });
 
     describe('change detection', () => {
