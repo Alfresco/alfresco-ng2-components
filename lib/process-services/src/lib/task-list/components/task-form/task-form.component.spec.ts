@@ -46,6 +46,7 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
+import { TaskClaimModel, ClaimStatusType } from '../../models/task-claim-status.model';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -589,8 +590,29 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.claim.subscribe((taskId) => {
-                expect(taskId).toEqual(taskId);
+            component.claim.subscribe((taskClaimed: TaskClaimModel) => {
+                expect(taskClaimed.status).toEqual(ClaimStatusType.CLAIM);
+                expect(taskClaimed.taskId).toEqual(component.taskId);
+                done();
+            });
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            const claimBtn = fixture.debugElement.query(By.css('[adf-claim-task]'));
+            claimBtn.nativeElement.click();
+        });
+
+        it('should emit error event in case claim task api fails', (done) => {
+            const mockError = { message: 'Api Failed' };
+            spyOn(taskListService, 'claimTask').and.returnValue(throwError(mockError));
+            getTaskDetailsSpy.and.returnValue(of(claimableTaskDetailsMock));
+
+            component.taskId = 'mock-task-id';
+
+            component.claim.subscribe((taskClaimed: TaskClaimModel) => {
+                expect(taskClaimed.status).toEqual(ClaimStatusType.FAILED);
+                expect(taskClaimed.error).toEqual(mockError);
                 done();
             });
 
@@ -608,8 +630,30 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.claim.subscribe((taskId: any) => {
-                expect(taskId).toEqual(taskId);
+            component.claim.subscribe((taskUnClaimed: TaskClaimModel) => {
+                expect(taskUnClaimed.status).toEqual(ClaimStatusType.UNCLAIM);
+                expect(taskUnClaimed.taskId).toEqual(component.taskId);
+                done();
+            });
+
+            component.ngOnInit();
+            fixture.detectChanges();
+
+            const unclaimBtn = fixture.debugElement.query(By.css('[adf-unclaim-task]'));
+            unclaimBtn.nativeElement.click();
+        });
+
+        it('should emit error event in case unclaim task api fails', (done) => {
+            const mockError = { message: 'Api Failed' };
+            spyOn(taskListService, 'unclaimTask').and.returnValue(throwError(mockError));
+            getBpmLoggedUserSpy.and.returnValue(of(claimedTaskDetailsMock.assignee));
+            getTaskDetailsSpy.and.returnValue(of(claimedTaskDetailsMock));
+
+            component.taskId = 'mock-task-id';
+
+            component.claim.subscribe((taskUnClaimed: TaskClaimModel) => {
+                expect(taskUnClaimed.status).toEqual(ClaimStatusType.FAILED);
+                expect(taskUnClaimed.error).toEqual(mockError);
                 done();
             });
 

@@ -507,7 +507,7 @@ export let taskDetailsWithOutFormMock = new TaskDetailsModel({
     'name': 'Request translation',
     'description': 'fake description',
     'category': null,
-    'assignee': {'id': 1001, 'firstName': 'Admin', 'lastName': 'Paul', 'email': 'my@mymail.com' },
+    'assignee': {'id': 1001, 'firstName': 'Admin', 'lastName': 'Paul', 'email': 'fake-email' },
     'created': '2016-11-03T15:25:42.749+0000',
     'dueDate': '2016-11-03T15:25:42.749+0000',
     'endDate': null,
