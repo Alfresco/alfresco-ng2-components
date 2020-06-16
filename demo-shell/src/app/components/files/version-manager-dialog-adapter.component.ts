@@ -19,6 +19,7 @@ import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MinimalNodeEntryEntity } from '@alfresco/js-api';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PreviewService } from '../../services/preview.service';
 
 @Component({
     templateUrl: './version-manager-dialog-adapter.component.html',
@@ -34,9 +35,11 @@ export class VersionManagerDialogAdapterComponent {
     readOnly = false;
     showVersionComparison = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: any,
+    constructor(private previewService: PreviewService,
+                @Inject(MAT_DIALOG_DATA) data: any,
                 private snackBar: MatSnackBar,
-                private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>) {
+                private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>,
+                ) {
         this.contentEntry = data.contentEntry;
         this.newFileVersion = data.hasOwnProperty('newFileVersion') ? data.newFileVersion : this.newFileVersion;
         this.showComments = data.hasOwnProperty('showComments') ? data.showComments : this.showComments;
@@ -49,6 +52,11 @@ export class VersionManagerDialogAdapterComponent {
 
     close() {
         this.containingDialog.close();
+    }
+
+    onViewVersion(versionId: string) {
+        this.previewService.showResource(this.contentEntry.id, versionId);
+        this.close();
     }
 
     hideVersionComparison(isCancelled: boolean | Node) {
