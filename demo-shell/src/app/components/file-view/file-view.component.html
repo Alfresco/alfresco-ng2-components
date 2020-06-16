@@ -108,7 +108,8 @@
                 <mat-card>
                     <mat-card-content>
                         <adf-version-manager [node]="node"
-                                             (uploadError)="onUploadError($event)">
+                                             (uploadError)="onUploadError($event)"
+                                             (viewVersion)="onViewVersion($event)">
                         </adf-version-manager>
                     </mat-card-content>
                 </mat-card>

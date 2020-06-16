@@ -94,6 +94,10 @@ export class FileViewComponent implements OnInit {
         });
     }
 
+    onViewVersion(versionId: string) {
+        this.preview.showResource(this.nodeId, versionId);
+    }
+
     onViewerVisibilityChanged() {
         const primaryUrl = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].toString();
         this.router.navigateByUrl(primaryUrl);
