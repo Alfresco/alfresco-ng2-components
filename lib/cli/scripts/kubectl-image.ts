@@ -30,6 +30,7 @@ export interface KubeArgs {
     clusterUrl?: string;
     dockerRepo?: string;
     label?: string;
+    namespaces?: string;
 }
 
 function setCluster(args: KubeArgs) {
@@ -56,30 +57,16 @@ function useContext(args: KubeArgs) {
     logger.info(response);
 }
 
-function getContainersName(args: KubeArgs): string[] {
-    logger.info('Perform get containers name...');
-    const result = exec('kubectl', [`get`, `pods`,  `--all-namespaces`, `-l`, `app=${args.label}`, `-o`, `jsonpath={.items[*].spec.containers[*].name}`], {});
-    logger.info(`container ${result}`);
-    return result ? result.split(' ') : [];
+function getDeploymentName(args: KubeArgs, namespace: string): string {
+    logger.info('Perform get deployment name...');
+    const result =  exec('kubectl', [`get`, `deployments`, `--namespace=${namespace}`, `-l`, `app=${args.label}`, `-o`, `name`], {});
+    logger.info(`deployment name: ${result}`);
+    return result;
 }
 
-function getUiName(args: KubeArgs): string[] {
-    logger.info('Perform get ui name...');
-    const result =  exec('kubectl', [`get`, `pods`, `--all-namespaces`, `-l`, `app=${args.label}`, `-o`, `jsonpath={.items[*]..uiName}`], {});
-    logger.info(`ui ${result}`);
-    return result ? result.split(' ') : [];
-}
-
-function getNamespace(args: KubeArgs): string[] {
-    logger.info('Perform get ui namespace...');
-    const result =  exec('kubectl', [`get`, `pods`, `--all-namespaces`, `-l`, `app=${args.label}`, `-o`, `jsonpath={.items[*]..namespace}`], {});
-    logger.info(`namespace ${result}`);
-    return result ? result.split(' ') : [];
-}
-
-function setImage(args: KubeArgs, uiName: string, serviceName: string, namespace: string) {
+function setImage(args: KubeArgs, deploymentName: string, serviceName: string, namespace: string) {
     logger.info('Perform set image...');
-    const response = exec('kubectl', [`set`, `image`, `--namespace=${namespace}`, `deployment/${uiName}`, `${serviceName}=${args.dockerRepo}:${args.tag}`], {});
+    const response = exec('kubectl', [`set`, `image`, `--namespace=${namespace}`, `${deploymentName}`, `${serviceName}=${args.dockerRepo}:${args.tag}`], {});
     logger.info(response);
 }
 
@@ -99,7 +86,7 @@ function main(args) {
     program
         .version('0.1.0')
         .description('his command allows you to update a specific service on the rancher env with a specific tag \n\n' +
-            'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --dockerRepo ${dockerRepo} --tag ${tag}')
+            'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --namespaces ${namespaces} --dockerRepo ${dockerRepo} --tag ${tag}')
         .option('--tag [type]', 'tag')
         .option('--installCheck [type]', 'install kube ctl')
         .option('--username [type]', 'username')
@@ -107,6 +94,7 @@ function main(args) {
         .option('--clusterUrl [type]', 'cluster Url')
         .option('--dockerRepo [type]', 'docker Repo')
         .option('--label [type]', 'pod label')
+        .option('--namespaces [type]', 'list of namespaces')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -123,17 +111,12 @@ function main(args) {
         setCredentials(args);
         setContext(args);
         useContext(args);
-        const containers: string [] = getContainersName(args);
-        logger.info(`container ${containers[0]}, ${containers.length}`);
-
-        const uiNames = getUiName(args);
-        const namespaces = getNamespace(args);
-        for (let i = 0; i < containers.length; i++) {
-            const container = containers[i];
-            const uiName = uiNames[i];
-            const namespace = namespaces[i];
-            logger.info(`Set image for ${container} with name ${uiName} of namespace: ${namespace}`);
-            setImage(args, uiName, container, namespace);
-        }
+        const namespaces: string [] = args.namespaces.split(',');
+        namespaces.forEach( (namespace) => {
+            logger.info(`Find deployment name based on label and namespace ${namespace}`);
+            const deploymentName = getDeploymentName(args, namespace);
+            logger.info(`Found ${deploymentName}`);
+            setImage(args, deploymentName.trim(), '*', namespace);
+        });
     }
 }
