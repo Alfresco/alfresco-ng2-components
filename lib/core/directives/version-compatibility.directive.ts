@@ -20,7 +20,7 @@ import { VersionCompatibilityService } from '../services/version-compatibility.s
 import { VersionModel } from '../models/product-version.model';
 
 @Directive({
-    selector: '[adf-ecm-version]'
+    selector: '[adf-acs-version]'
 })
 export class VersionCompatibilityDirective {
 
