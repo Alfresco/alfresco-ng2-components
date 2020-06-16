@@ -20,12 +20,12 @@ import { VersionCompatibilityService } from '../services/version-compatibility.s
 import { VersionModel } from '../models/product-version.model';
 
 @Directive({
-    // tslint:disable-next-line: directive-selector
+    
     selector: '[adf-ecm-version]'
 })
 export class VersionCompatibilityDirective {
 
-    /** Enables/disables . */
+    /** Minimum version required for component to work correctly . */
     @Input('adf-ecm-version')
     set version(requiredVersion: string) {
         this.validateVersion(requiredVersion);
