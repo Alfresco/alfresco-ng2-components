@@ -47,7 +47,7 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |docker-publish    |publish docker image|
 |init-aae-env      |Init env|
 |kubectl-delete    |delete kubectl |
-|kubectl-image     |This command allows you to update a specific service on the rancher env with a specific tag |
+|kubectl-image     |This command allows you to update a specific service on the rancher env with a specifig tag |
 |npm-publish    | publish on npm |
 | update-commit-sha   | his command allows you to update the commit sha as part of the `package.json`. Your `package.json` must to have an existing property called "commit" |
 |update-version     |This command allows you to update the adf dependencies and js-api with different versions Update adf libs and js-api with latest alpha|
