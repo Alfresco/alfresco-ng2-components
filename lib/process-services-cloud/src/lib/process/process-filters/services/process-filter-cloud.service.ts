@@ -259,15 +259,6 @@ export class ProcessFilterCloudService {
     private defaultProcessFilters(appName: string): ProcessFilterCloudModel[] {
         return [
             new ProcessFilterCloudModel({
-                name: 'ADF_CLOUD_PROCESS_FILTERS.ALL_PROCESSES',
-                key: 'all-processes',
-                icon: 'adjust',
-                appName: appName,
-                sort: 'startDate',
-                status: '',
-                order: 'DESC'
-            }),
-            new ProcessFilterCloudModel({
                 name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
                 icon: 'inbox',
                 key: 'running-processes',
@@ -283,6 +274,15 @@ export class ProcessFilterCloudService {
                 appName: appName,
                 sort: 'startDate',
                 status: 'COMPLETED',
+                order: 'DESC'
+            }),
+            new ProcessFilterCloudModel({
+                name: 'ADF_CLOUD_PROCESS_FILTERS.ALL_PROCESSES',
+                key: 'all-processes',
+                icon: 'adjust',
+                appName: appName,
+                sort: 'startDate',
+                status: '',
                 order: 'DESC'
             })
         ];

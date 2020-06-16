@@ -22,6 +22,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
+import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
 
@@ -48,6 +49,7 @@ describe('Process list cloud', () => {
         const processInstances = [];
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
+        const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -81,7 +83,7 @@ describe('Process list cloud', () => {
             await appListCloudComponent.goToApp(simpleApp);
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayProcessDetails();
             await tasksCloudDemoPage.clickAppButton();
@@ -92,7 +94,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.selectSelectionMode('None');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -104,7 +106,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.selectSelectionMode('Single');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -121,7 +123,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.selectSelectionMode('Multiple');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -138,7 +140,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
@@ -158,7 +160,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await browser.sleep(1000);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRows();
@@ -179,7 +181,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);

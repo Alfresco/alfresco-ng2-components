@@ -29,6 +29,7 @@ import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
 
@@ -103,7 +104,7 @@ describe('Process list cloud', () => {
         it('[C315236] Should be able to see and execute custom action menu', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(editProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(editProcess.entry.id);
             await processCloudDemoPage.processListCloudComponent().clickOptionsButton(editProcess.entry.id);

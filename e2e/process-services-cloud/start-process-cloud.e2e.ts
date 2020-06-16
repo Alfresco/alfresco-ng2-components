@@ -19,6 +19,7 @@ import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, Ide
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import CONSTANTS = require('../util/constants');
 
 describe('Start Process', () => {
 
@@ -107,7 +108,7 @@ describe('Start Process', () => {
         await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
         await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(processName);
-        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+        await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
         await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedByName(processName);
    });
 });

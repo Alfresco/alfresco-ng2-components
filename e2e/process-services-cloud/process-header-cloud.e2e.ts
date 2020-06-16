@@ -51,6 +51,7 @@ describe('Process Header cloud component', () => {
         let testUser, groupInfo;
 
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
+        const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
@@ -100,7 +101,7 @@ describe('Process Header cloud component', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
 
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: runningProcess.entry.name });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -123,7 +124,7 @@ describe('Process Header cloud component', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ initiator: testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
