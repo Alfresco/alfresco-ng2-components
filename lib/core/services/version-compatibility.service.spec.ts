@@ -30,7 +30,7 @@ describe('VersionCompatibilityService', () => {
     let alfrescoApiService: AlfrescoApiServiceMock;
     let discoveryApiService: DiscoveryApiService;
 
-    const ecmResponceMock = {
+    const acsResponceMock = {
         version: {
             display: '7.0.1',
             major: '7',
@@ -48,19 +48,19 @@ describe('VersionCompatibilityService', () => {
 
     beforeEach(() => {
         discoveryApiService = TestBed.get(DiscoveryApiService);
-        spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(ecmResponceMock));
+        spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(acsResponceMock));
         versionCompatibilityService = TestBed.get(VersionCompatibilityService);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
 
     });
 
-    it('should get ECMs running version', (done) => {
+    it('should get ACS running version', (done) => {
         versionCompatibilityService = new VersionCompatibilityService(alfrescoApiService, discoveryApiService);
         alfrescoApiService.initialize();
         setTimeout(() => {
-            const ecmVersion = versionCompatibilityService.getEcmVersion();
-            expect(ecmVersion).toBeDefined();
-            expect(ecmVersion.display).toBe('7.0.1');
+            const acsVersion = versionCompatibilityService.getAcsVersion();
+            expect(acsVersion).toBeDefined();
+            expect(acsVersion.display).toBe('7.0.1');
             done();
         }, 100);
     });

@@ -25,22 +25,22 @@ import { VersionCompatibilityService } from '@alfresco/adf-core';
 
 @Component({
     template: `
-        <div *adf-ecm-version="'8'" class="hidden-content-1">
+        <div *adf-acs-version="'8'" class="hidden-content-1">
             My hidden content 1
         </div>
-        <div *adf-ecm-version="'7.1'" class="hidden-content-2">
+        <div *adf-acs-version="'7.1'" class="hidden-content-2">
             My hidden content 2
         </div>
-        <div *adf-ecm-version="'7.0.2'" class="hidden-content-3">
+        <div *adf-acs-version="'7.0.2'" class="hidden-content-3">
             My hidden content 3
         </div>
-        <div *adf-ecm-version="'6.1.5'" class="visible-content-1">
+        <div *adf-acs-version="'6.1.5'" class="visible-content-1">
             My visible content 1
         </div>
-        <div *adf-ecm-version="'6.1'" class="visible-content-2">
+        <div *adf-acs-version="'6.1'" class="visible-content-2">
             My visible content 2
         </div>
-        <div *adf-ecm-version="'6'" class="visible-content-3">
+        <div *adf-acs-version="'6'" class="visible-content-3">
             My visible content 3
         </div>
         `
@@ -51,7 +51,7 @@ describe('VersionCompatibilityDirective', () => {
     let fixture: ComponentFixture<TestComponent>;
     let versionCompatibilityService: VersionCompatibilityService;
 
-    const ecmVersionMock = {
+    const acsResponceMock = {
         display: '7.0.1',
         major: '7',
         minor: '0',
@@ -70,7 +70,7 @@ describe('VersionCompatibilityDirective', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         versionCompatibilityService = TestBed.get(VersionCompatibilityService);
-        spyOn(versionCompatibilityService, 'getEcmVersion').and.returnValue(ecmVersionMock);
+        spyOn(versionCompatibilityService, 'getAcsVersion').and.returnValue(acsResponceMock);
     });
 
     it('should display component when the version is supported', () => {
