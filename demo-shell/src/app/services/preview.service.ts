@@ -18,21 +18,26 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class PreviewService {
 
     public content: Blob = null;
     public name: string = null;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) {
+    }
 
-    showResource(resourceId): void {
-        this.router.navigate([{ outlets: { overlay: ['files', resourceId, 'view'] } }]);
+    showResource(resourceId, versionId?): void {
+        if (versionId) {
+            this.router.navigate([{outlets: {overlay: ['files', resourceId, versionId, 'view']}}]);
+        } else {
+            this.router.navigate([{outlets: {overlay: ['files', resourceId, 'view']}}]);
+        }
     }
 
     showBlob(name: string, content: Blob): void {
         this.name = name;
         this.content = content;
-        this.router.navigate([{ outlets: { overlay: ['preview', 'blob'] } }]);
+        this.router.navigate([{outlets: {overlay: ['preview', 'blob']}}]);
     }
 }
