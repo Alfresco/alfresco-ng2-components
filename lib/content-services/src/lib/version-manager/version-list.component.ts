@@ -20,6 +20,7 @@ import { Component, Input, OnChanges, ViewEncapsulation, EventEmitter, Output } 
 import { VersionsApi, Node, VersionEntry, VersionPaging } from '@alfresco/js-api';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../dialogs/confirm.dialog';
+import { PreviewService } from '../../../../../demo-shell/src/app/services/preview.service';
 
 @Component({
     selector: 'adf-version-list',
@@ -48,6 +49,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDownload = true;
 
+    /** Enable/disable viewing a version of the current node. */
+    @Input()
+    allowViewVersions = true;
+
     /** Toggles showing/hiding of version actions */
     @Input()
     showActions = true;
@@ -62,6 +67,7 @@ export class VersionListComponent implements OnChanges {
 
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
+                private preview: PreviewService,
                 private dialog: MatDialog) {
         this.versionsApi = this.alfrescoApi.versionsApi;
     }
@@ -90,6 +96,11 @@ export class VersionListComponent implements OnChanges {
                 )
                 .then((node) => this.onVersionRestored(node));
         }
+    }
+
+    viewVersion(versionId) {
+        this.dialog.closeAll();
+        this.preview.showResource(this.node.id, versionId);
     }
 
     loadVersionHistory() {
