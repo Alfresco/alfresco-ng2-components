@@ -20,15 +20,14 @@ import { VersionCompatibilityService } from '../services/version-compatibility.s
 import { VersionModel } from '../models/product-version.model';
 
 @Directive({
-    
     selector: '[adf-ecm-version]'
 })
 export class VersionCompatibilityDirective {
 
     /** Minimum version required for component to work correctly . */
-    @Input('adf-ecm-version')
+    @Input('adf-acs-version')
     set version(requiredVersion: string) {
-        this.validateVersion(requiredVersion);
+        this.validateAcsVersion(requiredVersion);
     }
 
     constructor(
@@ -38,7 +37,7 @@ export class VersionCompatibilityDirective {
     ) {
     }
 
-    private validateVersion(requiredVersion: string) {
+    private validateAcsVersion(requiredVersion: string) {
         if (requiredVersion && this.isVersionSupported(requiredVersion)) {
             this.viewContainer.createEmbeddedView(this.templateRef);
         } else {
@@ -60,7 +59,7 @@ export class VersionCompatibilityDirective {
 
     private isVersionSupported(requiredVersion: string): boolean {
         const parsedRequiredVersion = this.parseVersion(requiredVersion);
-        const currentVersion = this.versionCompatibilityService.getEcmVersion();
+        const currentVersion = this.versionCompatibilityService.getAcsVersion();
 
         let versionSupported = false;
 

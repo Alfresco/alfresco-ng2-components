@@ -19,13 +19,13 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { filter } from 'rxjs/operators';
 import { DiscoveryApiService } from './discovery-api.service';
-import { EcmProductVersionModel, VersionModel } from '../models/product-version.model';
+import { VersionModel, EcmProductVersionModel } from '../models/product-version.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class VersionCompatibilityService {
-    private ecmVersion: VersionModel;
+    private acsVersion: VersionModel;
 
     constructor(
         private alfrescoApiService: AlfrescoApiService,
@@ -38,12 +38,12 @@ export class VersionCompatibilityService {
 
     private initCompatibilityVersion() {
         this.discoveryApiService.getEcmProductInfo().toPromise().then(
-            (ecmInfo: EcmProductVersionModel) => {
-                this.ecmVersion = ecmInfo.version;
+            (acsInfo: EcmProductVersionModel) => {
+                this.acsVersion = acsInfo.version;
             });
     }
 
-    public getEcmVersion(): VersionModel {
-        return this.ecmVersion;
+    public getAcsVersion(): VersionModel {
+        return this.acsVersion;
     }
 }
