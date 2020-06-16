@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable, Output, EventEmitter, Directive } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 
-@Directive()
 @Injectable({
     providedIn: 'root'
 })

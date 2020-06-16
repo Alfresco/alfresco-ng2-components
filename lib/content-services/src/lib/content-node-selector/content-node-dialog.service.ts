@@ -16,7 +16,7 @@
  */
 
 import { MatDialog } from '@angular/material/dialog';
-import { EventEmitter, Injectable, Output, Directive } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ContentService, ThumbnailService, SitesService, TranslationService, AllowableOperationsEnum } from '@alfresco/adf-core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { ShareDataRow } from '../document-list/data/share-data-row.model';
@@ -27,7 +27,6 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
 import { NodeLockDialogComponent } from '../dialogs/node-lock.dialog';
 import { switchMap } from 'rxjs/operators';
 
-@Directive()
 @Injectable({
     providedIn: 'root'
 })

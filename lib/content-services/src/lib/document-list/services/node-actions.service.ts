@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, Output, EventEmitter, Directive } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, ContentService, NodeDownloadDirective, DownloadService } from '@alfresco/adf-core';
@@ -24,7 +24,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 
-@Directive()
 @Injectable({
     providedIn: 'root'
 })

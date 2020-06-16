@@ -16,12 +16,11 @@
  */
 
 import { AlfrescoApiService, LogService } from '@alfresco/adf-core';
-import { EventEmitter, Injectable, Output, Directive } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TagBody,  TagPaging, TagEntry } from '@alfresco/js-api';
 
-@Directive()
 @Injectable({
     providedIn: 'root'
 })
