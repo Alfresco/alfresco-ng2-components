@@ -38,7 +38,7 @@ export class VersionManagerDialogAdapterComponent {
     constructor(private previewService: PreviewService,
                 @Inject(MAT_DIALOG_DATA) data: any,
                 private snackBar: MatSnackBar,
-                private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>,
+                private containingDialog?: MatDialogRef<VersionManagerDialogAdapterComponent>
                 ) {
         this.contentEntry = data.contentEntry;
         this.newFileVersion = data.hasOwnProperty('newFileVersion') ? data.newFileVersion : this.newFileVersion;
