@@ -79,7 +79,7 @@ describe('Process Filters Test', () => {
     it('[C260387] Should the running process be displayed when clicking on Running filter', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
@@ -110,7 +110,7 @@ describe('Process Filters Test', () => {
     it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickAllFilterButton();
         await processFiltersPage.checkFilterIsHighlighted(processFilter.all);
@@ -122,7 +122,7 @@ describe('Process Filters Test', () => {
     it('[C280064] Should the completed process be displayed when clicking on Completed filter', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickCompletedFilterButton();
         await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
@@ -144,12 +144,12 @@ describe('Process Filters Test', () => {
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await expect(taskAppFilters.size).toBe(defaultFiltersNumber);
         for (const filter of taskAppFilters.data) {
             await BrowserActions.getUrl(processFilterUrl + filter.id);
-            await processListPage.checkProcessListIsDisplayed();
+            await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
             await processFiltersPage.checkFilterIsHighlighted(filter.name);
         }
     });
@@ -157,7 +157,7 @@ describe('Process Filters Test', () => {
     it('[C260463] Should Cancel process be displayed in Completed process filters', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
@@ -178,13 +178,13 @@ describe('Process Filters Test', () => {
     it('[C213262] Default process filters', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.enterProcessName(processTitle.one);
         await startProcessPage.clickFormStartProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
@@ -195,7 +195,7 @@ describe('Process Filters Test', () => {
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.enterProcessName(processTitle.two);
         await startProcessPage.clickFormStartProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processListDemoPage.checkProcessIsDisplayed(processTitle.two);

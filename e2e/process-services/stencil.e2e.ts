@@ -69,7 +69,7 @@ describe('Stencil', () => {
     it('[C245648] Can start an app with custom stencil included', async () => {
         const name = 'test stencil process';
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 

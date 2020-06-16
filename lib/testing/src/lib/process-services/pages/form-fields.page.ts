@@ -148,8 +148,16 @@ export class FormFieldsPage {
         await BrowserActions.clearSendKeys(input, value);
     }
 
-    async isCompleteFormButtonDisabled(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this.completeButton.getAttribute('disabled');
+    async isCompleteButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isCompleteFormButtonEnabled(): Promise<boolean> {
+        return this.completeButton.isEnabled();
     }
 }

@@ -72,6 +72,6 @@ describe('Header widget', async () => {
         await taskPage.formFields().checkWidgetIsVisible(app.FIELD.header_id);
 
         await expect(await widget.headerWidget().getFieldLabel(app.FIELD.header_id)).toBe('Header');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 });

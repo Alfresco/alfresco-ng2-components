@@ -80,10 +80,10 @@ describe('Date widget', () => {
 
         it('[C268814] Should be able to set general settings for Date widget', async () => {
             await expect(await dateWidget.getDateLabel(app.FIELD.date_input)).toContain('Date');
-            await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+            await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
             await dateWidget.setDateInput(app.FIELD.date_input, '20-10-2018');
             await taskPage.formFields().saveForm();
-            await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+            await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
         });
 
         it('[C277234] Should be able to set advanced settings for Date widget ', async () => {

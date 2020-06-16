@@ -162,16 +162,22 @@ export class FormFields {
         await BrowserActions.clearSendKeys(input, value);
     }
 
-    async isCompleteFormButtonDisabled(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this.completeButton.getAttribute('disabled');
+    async isCompleteButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isCompleteFormButtonEnabled(): Promise<boolean> {
+        return this.completeButton.isEnabled();
     }
 
     async isCancelButtonDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(
-                this.cancelButton
-            );
+            await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
             return true;
         } catch (error) {
             return false;
@@ -179,12 +185,7 @@ export class FormFields {
     }
 
     async isCancelButtonEnabled(): Promise<boolean> {
-        try {
-            await this.cancelButton.isEnabled();
-            return true;
-        } catch (error) {
-            return false;
-        }
+        return this.cancelButton.isEnabled();
     }
 
     async clickCancelButton(): Promise<void> {
