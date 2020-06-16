@@ -80,6 +80,19 @@ export const appRoutes: Routes = [
         ]
     },
     {
+        path: 'files/:nodeId/:versionId/view',
+        component: AppComponent,
+        canActivate: [AuthGuardEcm],
+        canActivateChild: [AuthGuardEcm],
+        outlet: 'overlay',
+        children: [
+            {
+                path: '',
+                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
+            }
+        ]
+    },
+    {
         path: 'preview/blob',
         component: AppComponent,
         outlet: 'overlay',
