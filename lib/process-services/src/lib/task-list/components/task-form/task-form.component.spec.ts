@@ -80,7 +80,7 @@ describe('TaskFormComponent', () => {
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
         authService = TestBed.get(AuthenticationService);
-        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ email: 'fake-email' }));
+        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ id: 1001, email: 'fake-email' }));
     });
 
     afterEach(async() => {
@@ -589,8 +589,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.taskClaimed.subscribe((taskId) => {
-                expect(taskId).toEqual(component.taskId);
+            component.claim.subscribe((taskId) => {
+                expect(taskId).toEqual(taskId);
                 done();
             });
 
@@ -608,8 +608,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.taskUnclaimed.subscribe((taskId: string) => {
-                expect(taskId).toEqual(component.taskId);
+            component.claim.subscribe((taskId: any) => {
+                expect(taskId).toEqual(taskId);
                 done();
             });
 

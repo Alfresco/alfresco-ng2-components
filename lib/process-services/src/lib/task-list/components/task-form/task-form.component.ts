@@ -29,6 +29,7 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
+import { ClaimStatusType, TaskClaimModel } from '../../models/task-claim-status.model';
 
 @Component({
   selector: 'adf-task-form',
@@ -119,11 +120,7 @@ export class TaskFormComponent implements OnInit {
 
   /** Emitted when the task is claimed. */
   @Output()
-  taskClaimed = new EventEmitter<string>();
-
-  /** Emitted when the task is unclaimed (ie, requeued).. */
-  @Output()
-  taskUnclaimed = new EventEmitter<string>();
+  claim = new EventEmitter<TaskClaimModel>();
 
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
@@ -272,15 +269,26 @@ export class TaskFormComponent implements OnInit {
   }
 
   isReadOnlyForm(): boolean {
-      return this.internalReadOnlyForm || !(this.isAssignedToMe() || this.canInitiatorComplete());
+    let readOnlyForm: boolean;
+    if (this.isCandidateMember()) {
+      readOnlyForm = this.internalReadOnlyForm || !this.isAssignedToMe();
+    } else {
+      readOnlyForm = this.internalReadOnlyForm || !(this.isAssignedToMe() || (this.canInitiatorComplete() && this.isProcessInitiator()));
+    }
+
+    return readOnlyForm;
+  }
+
+  isProcessInitiator(): boolean {
+    return this.currentLoggedUser && ( this.currentLoggedUser.id === +this.taskDetails.processInstanceStartUserId);
   }
 
   isSaveButtonVisible(): boolean {
     return this.showFormSaveButton && (!this.canInitiatorComplete() || this.isAssignedToMe());
   }
 
-  canCompleteTask(): boolean {
-    return !this.isCompletedTask() && this.isAssignedToMe();
+  canCompleteNoFormTask(): boolean {
+    return this.isReadOnlyForm();
   }
 
   getCompletedTaskTranslatedMessage(): Observable<string> {
@@ -304,10 +312,18 @@ export class TaskFormComponent implements OnInit {
   }
 
   onClaimTask(taskId: string) {
-    this.taskClaimed.emit(taskId);
+    this.claim.emit(<TaskClaimModel> { status: ClaimStatusType.CLAIM, taskId: taskId });
+  }
+
+  onClaimTaskError(error: any) {
+    this.claim.emit(<TaskClaimModel> { status: ClaimStatusType.FAILED, error: error });
   }
 
   onUnclaimTask(taskId: string) {
-    this.taskUnclaimed.emit(taskId);
+    this.claim.emit(<TaskClaimModel> {status: ClaimStatusType.UNCLAIM, taskId: taskId});
+  }
+
+  onUnclaimTaskError(error: any) {
+    this.claim.emit(<TaskClaimModel> { status: ClaimStatusType.FAILED, error: error });
   }
 }
