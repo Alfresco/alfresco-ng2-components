@@ -67,14 +67,10 @@ export class VersionCompatibilityDirective {
         if (currentVersion) {
             if (+currentVersion.major > +parsedRequiredVersion.major) {
                 versionSupported = true;
-            }
-
-            if (currentVersion.major === parsedRequiredVersion.major &&
+            } else if (currentVersion.major === parsedRequiredVersion.major &&
                 +currentVersion.minor > +parsedRequiredVersion.minor) {
                 versionSupported = true;
-            }
-
-            if (currentVersion.major === parsedRequiredVersion.major &&
+            } else if (currentVersion.major === parsedRequiredVersion.major &&
                 currentVersion.minor === parsedRequiredVersion.minor &&
                 +currentVersion.patch >= +parsedRequiredVersion.patch) {
                 versionSupported = true;
