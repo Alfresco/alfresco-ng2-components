@@ -65,4 +65,10 @@ export class DataTableItem {
         await BrowserActions.click(row);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
+
+    async selectRowWithKeyboard(columnName: string, columnValue: string): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        await this.selectRow(columnName, columnValue);
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
+    }
 }
