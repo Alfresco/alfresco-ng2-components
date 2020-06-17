@@ -28,7 +28,7 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective,
+    PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent, HighlightDirective,
     SharedLinksApiService
 } from '@alfresco/adf-core';
 
@@ -104,7 +104,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showSettingsPanel = true;
 
     @Input()
-    showHeader = true;
+    showHeader: string = ShowHeaderMode.Always;
 
     @Input()
     selectionMode = 'multiple';
@@ -200,7 +200,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
-    filterActive: boolean = false;
     filtersStates: any[] = [];
 
     constructor(private notificationService: NotificationService,
@@ -647,7 +646,11 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             this.filtersStates.push(newFilterState);
         }
 
-        this.filterActive = this.isOneFilterActive();
+        if (this.isOneFilterActive() && this.showHeader !== ShowHeaderMode.Never) {
+            this.showHeader = ShowHeaderMode.Always;
+        } else {
+            this.showHeader = ShowHeaderMode.Data;
+        }
     }
 
     isOneFilterActive() {

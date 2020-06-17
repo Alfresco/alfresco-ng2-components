@@ -654,4 +654,28 @@
             }
         }
     }
+
+    .adf-datatable--empty--header-visible {
+
+        .adf-datatable-header {
+            border: $data-table-dividers-wrapper-border;
+        }
+
+        .adf-datatable-body {
+            @include flex-column;
+            justify-content: center;
+            align-items: center;
+
+            .adf-datatable-row {
+                height: 100%;
+                background-color: mat-color($background, card);
+                border: none !important;
+
+                &:hover, &:focus {
+                    background-color: unset;
+                    cursor: default;
+                }
+            }
+        }
+    }
 }

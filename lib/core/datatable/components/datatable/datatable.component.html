@@ -4,11 +4,12 @@
     [class.adf-datatable-card]="display === 'gallery'"
     [class.adf-datatable-list]="display === 'list'"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
-    [class.adf-datatable--empty]="!isHeaderVisible()">
-    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !showHeader }">
+    [class.adf-datatable--empty]="isEmpty() && !isHeaderVisible()"
+    [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
+    <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
         <adf-datatable-row
             data-automation-id="datatable-row-header"
-            [disabled]="!showHeader"
+            [disabled]="!isHeaderVisible()"
             class="adf-datatable-row"
             *ngIf="display === 'list'"
             role="row">
@@ -29,7 +30,7 @@
                  (click)="onColumnHeaderClick(col)"
                  (keyup.enter)="onColumnHeaderClick(col)"
                  role="columnheader"
-                 [attr.tabindex]="showHeader ? 0 : null"
+                 [attr.tabindex]="isHeaderVisible() ? 0 : null"
                  [attr.aria-sort]="col.sortable ? (getAriaSort(col) | translate) : null"
                  adf-drop-zone dropTarget="header" [dropColumn]="col">
                 <span *ngIf="col.title" class="adf-datatable-cell-value">{{ col.title | translate}}</span>
@@ -41,7 +42,7 @@
                 <span class="adf-sr-only">{{ 'ADF-DATATABLE.ACCESSIBILITY.ACTIONS' | translate }}</span>
             </div>
         </adf-datatable-row>
-        <mat-form-field *ngIf="display === 'gallery' && showHeader">
+        <mat-form-field *ngIf="display === 'gallery' && isHeaderVisible()">
             <mat-select [value]="getSortingKey()" [attr.data-automation-id]="'grid-view-sorting'">
                 <mat-option *ngFor="let col of getSortableColumns()"
                             [value]="col.key"

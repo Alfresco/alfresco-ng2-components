@@ -30,6 +30,7 @@ import {
     DataSorting,
     DataTableComponent,
     DisplayMode,
+    ShowHeaderMode,
     ObjectDataColumn,
     PaginatedComponent,
     AppConfigService,
@@ -127,7 +128,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Toggles the header */
     @Input()
-    showHeader: boolean = true;
+    showHeader: string = ShowHeaderMode.Data;
 
     /** User interaction for folder navigation or file preview.
      * Valid values are "click" and "dblclick". Default value: "dblclick"
@@ -275,12 +276,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     /** Default value is stored in the user preference settings. Use this only if you are not using pagination. */
     @Input()
     maxItems: number = this.DEFAULT_PAGINATION.maxItems;
-
-    /**
-     * Flag that indicate if the current data comes from a filtered datatable.
-     */
-    @Input()
-    filterActive: boolean = false;
 
     /** Emitted when the user clicks a list node */
     @Output()
