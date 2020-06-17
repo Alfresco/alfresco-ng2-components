@@ -43,7 +43,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
-import { TaskClaimModel, ClaimStatusType } from '../models/task-claim-status.model';
 
 @Component({
     selector: 'adf-task-details',
@@ -394,24 +393,6 @@ export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
     onUnclaimAction(taskId: string): void {
         this.unClaimedTask.emit(taskId);
         this.loadDetails(taskId);
-    }
-
-    onTaskClaim(taskClaimStatus: TaskClaimModel): void {
-        if (taskClaimStatus.status === ClaimStatusType.CLAIM) {
-            this.claimedTask.emit(taskClaimStatus.taskId);
-            this.taskFormComponent.loadTask(taskClaimStatus.taskId);
-            this.loadDetails(taskClaimStatus.taskId);
-        }
-
-        if (taskClaimStatus.status === ClaimStatusType.UNCLAIM) {
-            this.unClaimedTask.emit(taskClaimStatus.taskId);
-            this.taskFormComponent.loadTask(taskClaimStatus.taskId);
-            this.loadDetails(taskClaimStatus.taskId);
-        }
-
-        if (taskClaimStatus.status === ClaimStatusType.FAILED) {
-            this.error.emit(taskClaimStatus.error);
-        }
     }
 
     searchUser(searchedWord: string) {

@@ -19,14 +19,14 @@
  * This object represent the process service user group.*
  */
 
-export enum ClaimStatusType {
-    CLAIM = 'CLAIMED',
-    UNCLAIM = 'UNCLAIMED',
-    FAILED = 'FAILED'
+export enum TaskActionFailedType {
+    FORM_ACTION_FAILED = 'FORM_ACTION_FAILED',
+    COMPLETED_FAILED = 'COMPLETED_FAILED',
+    CLAIM_FAILED = 'CLAIM_FAILED',
+    UNCLAIM_FAILED = 'UNCLAIM_FAILED'
 }
 
-export interface TaskClaimModel {
-    status: ClaimStatusType;
-    taskId: string;
+export interface ErrorModel {
+    type: TaskActionFailedType;
     error: any;
 }

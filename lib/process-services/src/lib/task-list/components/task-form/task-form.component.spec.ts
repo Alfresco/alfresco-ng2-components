@@ -47,7 +47,7 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
-import { TaskClaimModel, ClaimStatusType } from '../../models/task-claim-status.model';
+import { ErrorModel, TaskActionFailedType } from '../../models/task-action-failed.model';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -601,9 +601,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.claim.subscribe((taskClaimed: TaskClaimModel) => {
-                expect(taskClaimed.status).toEqual(ClaimStatusType.CLAIM);
-                expect(taskClaimed.taskId).toEqual(component.taskId);
+            component.taskClaimed.subscribe((taskId: string) => {
+                expect(taskId).toEqual(component.taskId);
                 done();
             });
 
@@ -621,9 +620,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.claim.subscribe((taskClaimed: TaskClaimModel) => {
-                expect(taskClaimed.status).toEqual(ClaimStatusType.FAILED);
-                expect(taskClaimed.error).toEqual(mockError);
+            component.error.subscribe((error: ErrorModel) => {
+                expect(error.type).toEqual(TaskActionFailedType.CLAIM_FAILED);
                 done();
             });
 
@@ -641,9 +639,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.claim.subscribe((taskUnClaimed: TaskClaimModel) => {
-                expect(taskUnClaimed.status).toEqual(ClaimStatusType.UNCLAIM);
-                expect(taskUnClaimed.taskId).toEqual(component.taskId);
+            component.taskUnclaimed.subscribe((taskId: string) => {
+                expect(taskId).toEqual(component.taskId);
                 done();
             });
 
@@ -662,9 +659,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.claim.subscribe((taskUnClaimed: TaskClaimModel) => {
-                expect(taskUnClaimed.status).toEqual(ClaimStatusType.FAILED);
-                expect(taskUnClaimed.error).toEqual(mockError);
+            component.error.subscribe((error: ErrorModel) => {
+                expect(error.type).toEqual(TaskActionFailedType.UNCLAIM_FAILED);
                 done();
             });
 

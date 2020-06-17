@@ -29,7 +29,7 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
-import { ClaimStatusType, TaskClaimModel } from '../../models/task-claim-status.model';
+import { ErrorModel, TaskActionFailedType } from '../../models/task-action-failed.model';
 
 @Component({
   selector: 'adf-task-form',
@@ -112,15 +112,19 @@ export class TaskFormComponent implements OnInit {
 
   /** Emitted when an error occurs. */
   @Output()
-  error = new EventEmitter<any>();
+  error = new EventEmitter<ErrorModel>();
 
   /** Emitted when the "Cancel" button is clicked. */
   @Output()
   cancel = new EventEmitter<void>();
 
-  /** Emitted when the task is claimed. */
+   /** Emitted when the task is claimed. */
+   @Output()
+  taskClaimed = new EventEmitter<string>();
+
+  /** Emitted when the task is unclaimed (ie, requeued).. */
   @Output()
-  claim = new EventEmitter<TaskClaimModel>();
+  taskUnclaimed = new EventEmitter<string>();
 
   taskDetails: TaskDetailsModel;
   currentLoggedUser: UserRepresentation;
@@ -197,13 +201,14 @@ export class TaskFormComponent implements OnInit {
   }
 
   onError(error: any) {
-    this.error.emit(error);
+    this.error.emit(<ErrorModel> { type: TaskActionFailedType.FORM_ACTION_FAILED, error: error });
   }
 
   onCompleteTask() {
     this.taskListService.completeTask(this.taskDetails.id).subscribe(
       () => this.completed.emit(),
-      (error) => this.error.emit(error));
+      (error) => this.error.emit(<ErrorModel> {
+        type: TaskActionFailedType.COMPLETED_FAILED, error: error }));
   }
 
   onCancel() {
@@ -312,18 +317,18 @@ export class TaskFormComponent implements OnInit {
   }
 
   onClaimTask(taskId: string) {
-    this.claim.emit(<TaskClaimModel> { status: ClaimStatusType.CLAIM, taskId: taskId });
+    this.taskClaimed.emit(taskId);
   }
 
   onClaimTaskError(error: any) {
-    this.claim.emit(<TaskClaimModel> { status: ClaimStatusType.FAILED, error: error });
+    this.error.emit(<ErrorModel> { type: TaskActionFailedType.CLAIM_FAILED, error: error });
   }
 
   onUnclaimTask(taskId: string) {
-    this.claim.emit(<TaskClaimModel> {status: ClaimStatusType.UNCLAIM, taskId: taskId});
+    this.taskUnclaimed.emit(taskId);
   }
 
   onUnclaimTaskError(error: any) {
-    this.claim.emit(<TaskClaimModel> { status: ClaimStatusType.FAILED, error: error });
+    this.error.emit(<ErrorModel> { type: TaskActionFailedType.UNCLAIM_FAILED, error: error });
   }
 }
