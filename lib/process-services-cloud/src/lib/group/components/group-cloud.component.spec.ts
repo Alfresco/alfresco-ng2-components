@@ -27,7 +27,7 @@ import {
     IdentityGroupService,
     mockIdentityGroups,
     AlfrescoApiService,
-    CoreModule
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { SimpleChange } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -53,7 +53,7 @@ describe('GroupCloudComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreModule.forRoot(),
+            CoreTestingModule,
             ProcessServiceCloudTestingModule,
             GroupCloudModule
         ]
