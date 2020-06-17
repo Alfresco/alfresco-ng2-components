@@ -43,6 +43,12 @@ export enum DisplayMode {
     Gallery = 'gallery'
 }
 
+export enum ShowHeaderMode {
+    Never = 'never',
+    Always = 'always',
+    Data = 'data'
+}
+
 @Component({
     selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
@@ -119,7 +125,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     /** Toggles the header. */
     @Input()
-    showHeader: boolean = true;
+    showHeader: string = ShowHeaderMode.Data;
 
     /** Toggles the sticky header mode. */
     @Input()
@@ -174,12 +180,6 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
      */
     @Input()
     allowFiltering: boolean = false;
-
-    /**
-     * Flag that indicate if the current data comes from a filtered datatable.
-     */
-    @Input()
-    filterActive: boolean = false;
 
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
@@ -742,7 +742,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isHeaderVisible() {
-        return (!this.loading && !this.isEmpty() && !this.noPermission) || this.filterActive;
+        let headerVisibility: boolean;
+
+        if (this.showHeader === ShowHeaderMode.Data) {
+            headerVisibility = !this.loading && !this.noPermission && !this.isEmpty();
+        } else if (this.showHeader === ShowHeaderMode.Always) {
+            headerVisibility = !this.loading && !this.noPermission;
+        } else if (this.showHeader === ShowHeaderMode.Never) {
+            headerVisibility = false;
+        }
+        return headerVisibility;
     }
 
     isStickyHeaderEnabled() {
