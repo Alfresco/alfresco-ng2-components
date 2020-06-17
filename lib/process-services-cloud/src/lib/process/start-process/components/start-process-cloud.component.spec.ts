@@ -104,6 +104,7 @@ describe('StartProcessCloudComponent', () => {
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startCreatedProcess').and.returnValue(of(fakeProcessInstance));
         createProcessSpy = spyOn(processService, 'createProcess').and.returnValue(of(fakeCreatedProcessInstance));
+        spyOn(formCloudService, 'getForm').and.returnValue(of([]));
     });
 
     afterEach(() => {
@@ -451,15 +452,23 @@ describe('StartProcessCloudComponent', () => {
             });
         }));
 
-        it('should select automatically the form when processDefinition is selected as default', async(() => {
+        it('should select automatically the form when processDefinition is selected as default', fakeAsync(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
             const change = new SimpleChange('myApp', 'myApp1', true);
+            component.ngOnInit();
             component.ngOnChanges({ appName: change });
+            component.processForm.controls['processDefinition'].setValue('process');
             fixture.detectChanges();
+            tick(3000);
+            component.processDefinitionName = fakeProcessDefinitions[0].name;
+            component.setProcessDefinitionOnForm(fakeProcessDefinitions[0].name);
+            fixture.detectChanges();
+            tick(3000);
+
             fixture.whenStable().then(() => {
-                expect(component.processForm.controls['processDefinition'].value).toBe(JSON.parse(JSON.stringify(fakeProcessDefinitions[0])).name);
-                const selectElement = fixture.nativeElement.querySelector('adf-cloud-form');
-                expect(selectElement).toBeNull();
+                const processForm = fixture.nativeElement.querySelector('adf-cloud-form');
+                expect(component.hasForm()).toBeTruthy();
+                expect(processForm).not.toBeNull();
             });
         }));
 

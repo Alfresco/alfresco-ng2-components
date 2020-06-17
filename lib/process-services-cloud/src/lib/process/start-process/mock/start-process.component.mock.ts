@@ -50,7 +50,7 @@ export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
         id: 'NewProcess:1',
         name: 'processwithoutform1',
         key: 'process-12345-f992-4ee6-9742-3a04617469fe',
-        formKey: ''
+        formKey: 'mockFormKey'
     }),
     new ProcessDefinitionCloud({
         appName: 'myApp',
