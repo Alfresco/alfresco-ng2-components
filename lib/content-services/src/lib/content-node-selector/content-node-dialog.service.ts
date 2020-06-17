@@ -210,7 +210,7 @@ export class ContentNodeDialogService {
             actionName: action,
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
-            isSelectionValid: this.isNodeFile.bind(this),
+            isSelectionValid: (entry: Node) => entry.isFile,
             select: select,
             showFilesInResult
         };
@@ -232,10 +232,6 @@ export class ContentNodeDialogService {
         }
 
         return null;
-    }
-
-    private isNodeFile(entry: Node): boolean {
-        return entry.isFile;
     }
 
     private hasAllowableOperationsOnNodeFolder(entry: Node): boolean {
