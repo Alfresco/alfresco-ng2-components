@@ -82,7 +82,7 @@ export class UploadService {
      * @returns True if a file is uploading, false otherwise
      */
     isUploading(): boolean {
-        return this.activeTask ? true : false;
+        return !!this.activeTask;
     }
 
     /**

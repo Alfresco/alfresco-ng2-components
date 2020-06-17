@@ -70,7 +70,7 @@ export class UnclaimTaskDirective {
     @HostListener('click')
     async onClick() {
         try {
-            this.unclaimTask();
+            await this.unclaimTask();
         } catch (error) {
             this.error.emit(error);
         }

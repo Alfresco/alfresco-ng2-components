@@ -139,10 +139,6 @@ export class PaginationPage {
         return totalNumberOfFiles.split('of ')[1];
     }
 
-    async getNumberOfAllRows(): Promise<number> {
-        return +this.getTotalNumberOfFiles();
-    }
-
     /*
      * Wait until the total number of items is less then specified value
      */

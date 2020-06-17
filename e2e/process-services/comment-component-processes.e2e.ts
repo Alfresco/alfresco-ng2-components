@@ -91,7 +91,7 @@ describe('Comment component for Processes', () => {
         const taskId = taskQuery.data[0].id;
 
         const taskComments = await apiService.getInstance().activiti.commentsApi.getTaskComments(taskId, { 'latestFirst': true });
-        await expect(await taskComments.total).toEqual(0);
+        await expect(taskComments.total).toEqual(0);
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', async () => {

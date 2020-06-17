@@ -365,11 +365,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         }
 
         this.executeOutcome.emit(args);
-        if (args.defaultPrevented) {
-            return false;
-        }
-
-        return true;
+        return !args.defaultPrevented;
     }
 
     protected storeFormAsMetadata() {

@@ -74,7 +74,7 @@ export class ClaimTaskCloudDirective implements OnInit {
     @HostListener('click')
     async onClick() {
         try {
-            this.claimTask();
+            await await this.claimTask();
         } catch (error) {
             this.error.emit(error);
         }

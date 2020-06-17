@@ -53,19 +53,19 @@
     }
 
     hasPreviewStatus(): boolean {
-        return this.previewStatus === 'supported' ? true : false;
+        return this.previewStatus === 'supported';
     }
 
     isTypeImage(): boolean {
-        return this.simpleType === 'image' ? true : false;
+        return this.simpleType === 'image';
     }
 
     isTypePdf(): boolean {
-        return this.simpleType === 'pdf' ? true : false;
+        return this.simpleType === 'pdf';
     }
 
     isTypeDoc(): boolean {
-        return this.simpleType === 'word' || this.simpleType === 'content' ? true : false;
+        return this.simpleType === 'word' || this.simpleType === 'content';
     }
 
     isThumbnailReady(): boolean {

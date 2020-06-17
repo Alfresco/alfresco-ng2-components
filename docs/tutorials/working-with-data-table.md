@@ -394,7 +394,7 @@ To develop the enhancement, edit the `src/app/mydatatable/mydatatable.component.
 ```ts
 onExecuteRowAction(event: DataRowActionEvent) {
 
-    if (event.value.action.title = "Greetings") {
+    if (event.value.action.title === "Greetings") {
 
         this.apiService.getInstance().webScript.executeWebScript(
           'GET',

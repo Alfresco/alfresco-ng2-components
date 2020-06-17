@@ -37,6 +37,6 @@ export class ProcessDefinitionRepresentation {
         this.deploymentId = obj && obj.deploymentId || null;
         this.tenantId = obj && obj.tenantId || null;
         this.metaDataValues = obj && obj.metaDataValues || [];
-        this.hasStartForm = obj && obj.hasStartForm === true ? true : false;
+        this.hasStartForm = obj && obj.hasStartForm === true;
     }
 }

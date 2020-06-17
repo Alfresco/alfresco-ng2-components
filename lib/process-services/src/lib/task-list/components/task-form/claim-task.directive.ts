@@ -71,7 +71,7 @@ export class ClaimTaskDirective {
     @HostListener('click')
     async onClick() {
         try {
-            this.claimTask();
+            await this.claimTask();
         } catch (error) {
             this.error.emit(error);
         }
