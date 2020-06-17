@@ -104,7 +104,6 @@ describe('StartProcessCloudComponent', () => {
         spyOn(processService, 'updateProcess').and.returnValue(of());
         startProcessSpy = spyOn(processService, 'startCreatedProcess').and.returnValue(of(fakeProcessInstance));
         createProcessSpy = spyOn(processService, 'createProcess').and.returnValue(of(fakeCreatedProcessInstance));
-        spyOn(formCloudService, 'getForm').and.returnValue(of([]));
     });
 
     afterEach(() => {
@@ -454,6 +453,7 @@ describe('StartProcessCloudComponent', () => {
 
         it('should select automatically the form when processDefinition is selected as default', fakeAsync(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(of([fakeProcessDefinitions[0]]));
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
             const change = new SimpleChange('myApp', 'myApp1', true);
             component.ngOnInit();
             component.ngOnChanges({ appName: change });
