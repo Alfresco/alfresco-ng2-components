@@ -67,15 +67,17 @@ describe('SearchTextInputComponent', () => {
 
         beforeEach(() => {
             component.expandable = false;
-            fixture.detectChanges();
         });
 
         it('search button should be hide', () => {
+            fixture.detectChanges();
             const searchButton: any = element.querySelector('#adf-search-button');
             expect(searchButton).toBe(null);
         });
 
         it('should not have animation', () => {
+            userPreferencesService.setWithoutStore('textOrientation', 'rtl');
+            fixture.detectChanges();
             expect(component.subscriptAnimationState.value).toBe('no-animation');
         });
     });
