@@ -224,7 +224,7 @@
                     </mat-menu>
                 </div>
             </adf-datatable-row>
-            <div *ngIf="isEmpty()"
+            <div *ngIf="isEmpty() && !filterActive"
                  role="row"
                  [class.adf-datatable-row]="display === 'list'"
                  [class.adf-datatable-card-empty]="display === 'gallery'">

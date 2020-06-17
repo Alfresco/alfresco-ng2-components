@@ -200,6 +200,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
+    filterActive: boolean = false;
+    filtersStates: any[] = [];
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
@@ -634,5 +636,21 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onFilterUpdate(newNodePaging: NodePaging) {
         this.nodeResult = newNodePaging;
+    }
+
+    onFilterStateUpdate(newFilterState: any) {
+        const filter = this.filtersStates.find((filterState) => filterState.id === newFilterState.id);
+
+        if (filter) {
+            this.filtersStates[this.filtersStates.indexOf(filter)] = newFilterState;
+        } else {
+            this.filtersStates.push(newFilterState);
+        }
+
+        this.filterActive = this.isOneFilterActive();
+    }
+
+    isOneFilterActive() {
+        return !!this.filtersStates.find((filterState) => filterState.state);
     }
 }

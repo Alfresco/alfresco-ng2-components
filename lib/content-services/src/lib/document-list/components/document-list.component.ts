@@ -276,6 +276,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     maxItems: number = this.DEFAULT_PAGINATION.maxItems;
 
+    /**
+     * Flag that indicate if the current data comes from a filtered datatable.
+     */
+    @Input()
+    filterActive: boolean = false;
+
     /** Emitted when the user clicks a list node */
     @Output()
     nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();

@@ -175,6 +175,12 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     allowFiltering: boolean = false;
 
+    /**
+     * Flag that indicate if the current data comes from a filtered datatable.
+     */
+    @Input()
+    filterActive: boolean = false;
+
     headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
@@ -736,7 +742,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isHeaderVisible() {
-        return !this.loading && !this.isEmpty() && !this.noPermission;
+        return (!this.loading && !this.isEmpty() && !this.noPermission) || this.filterActive;
     }
 
     isStickyHeaderEnabled() {

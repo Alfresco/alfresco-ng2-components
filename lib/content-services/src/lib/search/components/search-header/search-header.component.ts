@@ -45,11 +45,26 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     @Output()
     update: EventEmitter<NodePaging> = new EventEmitter();
 
+    @Output()
+    state: EventEmitter<any> = new EventEmitter();
+
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
 
     category: any = {};
-    isActive: boolean = false;
+    _isActive: boolean = false;
+
+    set isActive(filterState: boolean) {
+        this._isActive = filterState;
+        this.state.emit({
+            'id': this.category.id,
+            'state': this._isActive
+        });
+    }
+
+    get isActive() {
+        return this._isActive;
+    }
 
     constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
 
