@@ -5,7 +5,7 @@ Enables/disables components based on ACS version in use.
 ## Basic usage
 
 ```html
-<button *adf-ecm-version="'6.0.0'">
+<button *adf-acs-version="'6.0.0'">
     My Action
 </button>
 ```
@@ -28,21 +28,21 @@ This will allow certain features to be only present under specific versions.
 
 #### Major version
 ```html
-<button *adf-ecm-version="'7'">
+<button *adf-acs-version="'7'">
     My Action
 </button>
 ```
 
 #### Major and minor version 
 ```html
-<button *adf-ecm-version="'6.2'">
+<button *adf-acs-version="'6.2'">
     My Action
 </button>
 ```
 
 #### Major, minor and patch version 
 ```html
-<button *adf-ecm-version="'6.0.1'">
+<button *adf-acs-version="'6.0.1'">
     My Action
 </button>
 ```
