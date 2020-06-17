@@ -24,7 +24,6 @@ import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserPreferencesService } from '../services/user-preferences.service';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { CoreModule } from '../core.module';
 
 describe('SearchTextInputComponent', () => {
 
@@ -37,7 +36,6 @@ describe('SearchTextInputComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreModule.forRoot(),
             CoreTestingModule
         ]
     });
@@ -58,6 +56,7 @@ describe('SearchTextInputComponent', () => {
     describe('component rendering', () => {
 
         it('should display a search input field when specified', async(() => {
+            fixture.detectChanges();
             component.inputType = 'search';
             fixture.detectChanges();
             expect(element.querySelectorAll('input[type="search"]').length).toBe(1);
