@@ -113,7 +113,11 @@ export const ACTIVITI_CLOUD_APPS: any = {
             poolInterruptingBoundarySubprocessThrow: 'pool-int-bound-subpr-throw',
             poolInterruptingBoundarySubprocessCatch: 'pool-int-bound-subpr-catch',
             poolInterruptingBoundaryThrow: 'pool-int-boundary-throw',
-            poolInterruptingBoundaryCatch: 'pool-int-boundary-catch'
+            poolInterruptingBoundaryCatch: 'pool-int-boundary-catch',
+            attachFilesProcess: 'attach-files-process',
+            attachFileVisible: 'attach-file-visible',
+            attachFileInvisible: 'attach-file-invisible',
+            attachLocalFile: 'attach-local-file'
         },
         forms: {
             tabVisibilityFields: {
@@ -172,8 +176,31 @@ export const ACTIVITI_CLOUD_APPS: any = {
             },
             poolForm: {
                 name: 'pool-usertaskform'
+            },
+            attachFilesForm: {
+                name: 'attach-files',
+                /* cSpell:disable */
+                attachFileWidget1: 'Attachfile09lgsk',
+                attachFileWidget2: 'Attachfile0wopvy'
+            },
+            attachFileVisible: {
+                name: 'attach-file-visible',
+                textField: 'Text0t9anw',
+                attachFileWidget1: 'Attachfile0tccnd',
+                attachFileWidget2: 'Attachfile08cfo7'
+            },
+            attachFileInvisible: {
+                name: 'attach-file-invisible',
+                textField: 'Text0nmwr7',
+                attachFileWidget1: 'Attachfile0l72dj',
+                attachFileWidget2: 'Attachfile0lccsg'
+            },
+            attachLocalFile: {
+                name: 'attach-local-file',
+                attachFileWidget1: 'Attachfile0ku0bu',
+                attachFileWidget2: 'Attachfile04mfeb'
+                /* cSpell:enable */
             }
-
         },
         tasks: {
             processstring: 'inputtask',
