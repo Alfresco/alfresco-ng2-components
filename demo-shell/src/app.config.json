@@ -434,6 +434,165 @@
       ]
     }
   },
+  "search-headers": {
+    "app:fields": [
+      "cm:name",
+      "cm:title",
+      "cm:description",
+      "ia:whatEvent",
+      "ia:descriptionEvent",
+      "lnk:title",
+      "lnk:description",
+      "TEXT",
+      "TAG"
+    ],
+    "categories": [
+      {
+        "id": "queryName",
+        "name": "Name",
+        "columnKey": "name",
+        "enabled": true,
+        "expanded": true,
+        "component": {
+          "selector": "text",
+          "settings": {
+            "pattern": "cm:name:'(.*?)'",
+            "field": "cm:name",
+            "placeholder": "Enter the name"
+          }
+        }
+      },
+      {
+        "id": "checkList",
+        "name": "Check List",
+        "enabled": true,
+        "component": {
+          "selector": "check-list",
+          "settings": {
+            "pageSize": 5,
+            "operator": "OR",
+            "options": [
+              {
+                "name": "Folder",
+                "value": "TYPE:'cm:folder'"
+              },
+              {
+                "name": "Document",
+                "value": "TYPE:'cm:content'"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "contentSize",
+        "name": "Content Size",
+        "enabled": true,
+        "component": {
+          "selector": "slider",
+          "settings": {
+            "field": "cm:content.size",
+            "min": 0,
+            "max": 18,
+            "step": 1,
+            "thumbLabel": true
+          }
+        }
+      },
+      {
+        "id": "contentSizeRange",
+        "name": "Content Size (range)",
+        "enabled": true,
+        "component": {
+          "selector": "number-range",
+          "settings": {
+            "field": "cm:content.size",
+            "format": "[{FROM} TO {TO}]"
+          }
+        }
+      },
+      {
+        "id": "createdDateRange",
+        "name": "Created Date (range)",
+        "columnKey": "modifiedAt",
+        "enabled": true,
+        "component": {
+          "selector": "date-range",
+          "settings": {
+            "field": "cm:created",
+            "dateFormat": "DD-MMM-YY",
+            "maxDate": "today"
+          }
+        }
+      }
+    ],
+    "highlight": {
+      "prefix": " ",
+      "postfix": " ",
+      "mergeContiguous": true,
+      "fields": [
+        {
+          "field": "cm:title"
+        },
+        {
+          "field": "description",
+          "prefix": "(",
+          "postfix": ")"
+        }
+      ]
+    },
+    "filterQueries": [
+      { "query": "TYPE:'cm:folder' OR TYPE:'cm:content'" },
+      { "query": "NOT cm:creator:System" }
+    ],
+    "sorting": {
+      "options": [
+        {
+          "key": "name",
+          "label": "Name",
+          "type": "FIELD",
+          "field": "cm:name",
+          "ascending": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "label": "Size",
+          "type": "FIELD",
+          "field": "content.size",
+          "ascending": true
+        },
+        {
+          "key": "createdByUser",
+          "label": "Author",
+          "type": "FIELD",
+          "field": "cm:creator",
+          "ascending": true
+        },
+        {
+          "key": "createdAt",
+          "label": "Created",
+          "type": "FIELD",
+          "field": "cm:created",
+          "ascending": true
+        },
+        {
+          "key": "score",
+          "label": "Relevance",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
+        }
+      ],
+      "defaults": [
+        {
+          "key": "score",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
+        }
+      ]
+    }
+  },
   "pagination": {
     "size": 20,
     "supportedPageSizes": [
