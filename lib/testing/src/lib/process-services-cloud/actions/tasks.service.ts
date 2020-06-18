@@ -27,80 +27,75 @@ export class TasksService {
     }
 
     async createStandaloneTask(taskName: string, appName: string, options?: Object): Promise<any> {
-        try {
-            const path = '/' + appName + '/rb/v1/tasks';
-            const method = 'POST';
+        const path = '/' + appName + '/rb/v1/tasks';
+        const method = 'POST';
 
-            const queryParams = {}, postBody = {
-                name: taskName,
-                payloadType: 'CreateTaskPayload',
-                ...options
-            };
+        const queryParams = {}, postBody = {
+            name: taskName,
+            payloadType: 'CreateTaskPayload',
+            ...options
+        };
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('Create Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
     async createStandaloneTaskWithForm(taskName: string, appName: string, formKey: string, options?: Object): Promise<any> {
-        try {
-            const path = '/' + appName + '/rb/v1/tasks';
-            const method = 'POST';
+        const path = '/' + appName + '/rb/v1/tasks';
+        const method = 'POST';
 
-            const queryParams = {};
-            const postBody = {
-                name: taskName,
-                payloadType: 'CreateTaskPayload',
-                formKey: formKey,
-                ...options
-            };
+        const queryParams = {};
+        const postBody = {
+            name: taskName,
+            payloadType: 'CreateTaskPayload',
+            formKey: formKey,
+            ...options
+        };
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Create FormTask - Service error, Response: ', JSON.parse(JSON.stringify(error)));
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('Create standalone Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
     async completeTask(taskId: string, appName: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
-            const method = 'POST';
+        const path = '/' + appName + '/rb/v1/tasks/' + taskId + '/complete';
+        const method = 'POST';
 
-            const queryParams = {}, postBody = { payloadType: 'CompleteTaskPayload' };
+        const queryParams = {}, postBody = { payloadType: 'CompleteTaskPayload' };
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('Complete Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
     async claimTask(taskId: string, appName: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
-            const method = 'POST';
+        const path = '/' + appName + '/rb/v1/tasks/' + taskId + `/claim`;
+        const method = 'POST';
 
-            const queryParams = {};
-            const postBody = {};
+        const queryParams = {};
+        const postBody = {};
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Claim Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('claim Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
     async deleteTask(taskId: string, appName: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/rb/v1/tasks/' + taskId;
-            const method = 'DELETE';
+        const path = '/' + appName + '/rb/v1/tasks/' + taskId;
+        const method = 'DELETE';
 
-            const queryParams = {};
-            const postBody = {};
+        const queryParams = {};
+        const postBody = {};
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('delete Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
     async createAndCompleteTask(taskName: string, appName: string): Promise<any> {
@@ -111,45 +106,42 @@ export class TasksService {
     }
 
     async getTask(taskId: string, appName: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/tasks/' + taskId;
-            const method = 'GET';
+        const path = '/' + appName + '/query/v1/tasks/' + taskId;
+        const method = 'GET';
 
-            const queryParams = {};
-            const postBody = {};
+        const queryParams = {};
+        const postBody = {};
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Get Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('Get Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
     async getTaskId(taskName: string, appName: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/query/v1/tasks';
-            const method = 'GET';
+        const path = '/' + appName + '/query/v1/tasks';
+        const method = 'GET';
 
-            const queryParams = { name: taskName }, postBody = {};
+        const queryParams = { name: taskName }, postBody = {};
 
-            const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
-            return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
-        } catch (error) {
-            Logger.error('Get Task Id - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+        const data = await this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('Get Task Id Service error, Response: ', JSON.stringify(error.response.text));
+            });
+        return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
     }
 
     async createStandaloneSubtask(parentTaskId: string, appName: string, name: string): Promise<any> {
-        try {
-            const path = '/' + appName + '/rb/v1/tasks';
-            const method = 'POST';
+        const path = '/' + appName + '/rb/v1/tasks';
+        const method = 'POST';
 
-            const queryParams = {},
-                postBody = { name: name, parentTaskId: parentTaskId, payloadType: 'CreateTaskPayload' };
+        const queryParams = {},
+            postBody = { name: name, parentTaskId: parentTaskId, payloadType: 'CreateTaskPayload' };
 
-            return this.api.performBpmOperation(path, method, queryParams, postBody);
-        } catch (error) {
-            Logger.error('Create Task - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
-        }
+        return this.api.performBpmOperation(path, method, queryParams, postBody)
+            .catch((error) => {
+                Logger.error('Create sub Task - Service error, Response: ', JSON.stringify(error.response.text));
+            });
     }
 
 }
