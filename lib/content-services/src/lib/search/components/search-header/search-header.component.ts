@@ -123,6 +123,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     }
 
     onApplyButtonClick() {
+        this.widgetContainer.applyInnerWidget();
         this.searchHeaderQueryBuilder.execute();
         this.isActive = true;
     }
