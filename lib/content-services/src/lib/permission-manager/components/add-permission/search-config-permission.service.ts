@@ -16,16 +16,27 @@
  */
 
 import { QueryBody } from '@alfresco/js-api';
-import { SearchConfigurationInterface } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { SearchConfigurationInterface, VersionCompatibilityService } from '@alfresco/adf-core';
+import { Injectable, Optional, Inject, InjectionToken } from '@angular/core';
+
+export const ALFRESCO_ACS_COMPATIBILITY_TOKEN = new InjectionToken<boolean>('Alfresco ACS compatibility token');
 
 @Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
 
+    public static ACS_VERSION_REQUIRED = '7.0.0';
+
+    constructor(
+        private versionCompatibilityService: VersionCompatibilityService,
+        @Optional()
+        @Inject(ALFRESCO_ACS_COMPATIBILITY_TOKEN)
+        private versionCompatibilityProvider: boolean) {
+    }
+
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         const defaultQueryBody: QueryBody = {
             query: {
-                query: searchTerm ? `authorityName:*${searchTerm}* OR userName:*${searchTerm}*` : searchTerm
+                query: this.buildQuery(searchTerm)
             },
             include: ['properties', 'aspectNames'],
             paging: {
@@ -38,5 +49,18 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
         };
 
         return defaultQueryBody;
+    }
+
+    private buildQuery(searchTerm: string): string {
+        let query: string;
+        if (!this.versionCompatibilityProvider ||
+            this.versionCompatibilityService.isAcsVersionSupported(
+                SearchPermissionConfigurationService.ACS_VERSION_REQUIRED)) {
+            query = `authorityName:*${searchTerm}* OR userName:*${searchTerm}*`;
+        } else {
+            query = `userName:*${searchTerm}*`;
+        }
+
+        return query;
     }
 }
