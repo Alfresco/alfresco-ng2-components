@@ -104,7 +104,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showSettingsPanel = true;
 
     @Input()
-    showHeader: string = ShowHeaderMode.Always;
+    showHeader: string = ShowHeaderMode.Data;
 
     @Input()
     selectionMode = 'multiple';
