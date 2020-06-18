@@ -19,8 +19,8 @@ import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, Simp
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { NodePaging } from '@alfresco/js-api';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({
     selector: 'adf-search-header',
@@ -71,10 +71,8 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
         return this._isActive;
     }
 
-    constructor(
-        @Inject(SearchQueryBuilderService)
-        private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService
-    ) {}
+    constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) {
+    }
 
     ngOnInit() {
         this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(
@@ -91,8 +89,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
             const currentIdValue = changes['currentFolderNodeId'].currentValue;
-            const previousIdValue =
-                changes['currentFolderNodeId'].previousValue;
+            const previousIdValue = changes['currentFolderNodeId'].previousValue;
             this.searchHeaderQueryBuilder.setCurrentRootFolderId(
                 currentIdValue,
                 previousIdValue
