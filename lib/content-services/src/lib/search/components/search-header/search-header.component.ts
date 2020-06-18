@@ -35,12 +35,17 @@ import { NodePaging } from '@alfresco/js-api';
     ]
 })
 export class SearchHeaderComponent implements OnInit, OnChanges {
-
     @Input()
     col: DataColumn;
 
     @Input()
     currentFolderNodeId: string;
+
+    @Input()
+    maxItems: number;
+
+    @Input()
+    skipCount: number;
 
     @Output()
     update: EventEmitter<NodePaging> = new EventEmitter();
@@ -57,8 +62,8 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     set isActive(filterState: boolean) {
         this._isActive = filterState;
         this.state.emit({
-            'id': this.category.id,
-            'state': this._isActive
+            id: this.category.id,
+            state: this._isActive
         });
     }
 
@@ -66,26 +71,52 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
         return this._isActive;
     }
 
-    constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) { }
+    constructor(
+        @Inject(SearchQueryBuilderService)
+        private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService
+    ) {}
 
     ngOnInit() {
-        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
+        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(
+            this.col.key
+        );
 
-        this.searchHeaderQueryBuilder.executed.subscribe((newNodePaging: NodePaging) => {
-            this.update.emit(newNodePaging);
-        });
+        this.searchHeaderQueryBuilder.executed.subscribe(
+            (newNodePaging: NodePaging) => {
+                this.update.emit(newNodePaging);
+            }
+        );
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
+        if (
+            changes['currentFolderNodeId'] &&
+            changes['currentFolderNodeId'].currentValue
+        ) {
             const currentIdValue = changes['currentFolderNodeId'].currentValue;
-            const previousIdValue = changes['currentFolderNodeId'].previousValue;
+            const previousIdValue =
+                changes['currentFolderNodeId'].previousValue;
             this.searchHeaderQueryBuilder.setCurrentRootFolderId(
                 currentIdValue,
                 previousIdValue
             );
 
             this.isActive = false;
+        }
+
+        if (changes['maxItems'] || changes['skipCount']) {
+            let actualMaxItems = this.maxItems;
+            let actualSkipCount = this.skipCount;
+            if (changes['maxItems'] && changes['maxItems'].currentValue) {
+                actualMaxItems = changes['maxItems'].currentValue;
+            }
+            if (changes['skipCount'] && changes['skipCount'].currentValue) {
+                actualSkipCount = changes['skipCount'].currentValue;
+            }
+            this.searchHeaderQueryBuilder.setupCurrentPagination(
+                actualMaxItems,
+                actualSkipCount
+            );
         }
     }
 
