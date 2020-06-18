@@ -33,7 +33,7 @@ Displays the version history of a node in a [Version Manager component](version-
 | ---- | ---- | ----------- |
 | deleted | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a version is deleted |
 | restored | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a version is restored |
-| viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version |
+| viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version.  Availability > 7.0.x |
 
 ## Details
 
