@@ -4,7 +4,7 @@
     [class.adf-datatable-card]="display === 'gallery'"
     [class.adf-datatable-list]="display === 'list'"
     [class.adf-sticky-header]="isStickyHeaderEnabled()"
-    [class.adf-datatable--empty]="isEmpty() && !isHeaderVisible()"
+    [class.adf-datatable--empty]="(isEmpty() && !isHeaderVisible()) || loading"
     [class.adf-datatable--empty--header-visible]="isEmpty() && isHeaderVisible()">
     <div *ngIf="isHeaderVisible()" class="adf-datatable-header" role="rowgroup" [ngClass]="{ 'adf-sr-only': !isHeaderVisible() }">
         <adf-datatable-row
@@ -225,7 +225,7 @@
                     </mat-menu>
                 </div>
             </adf-datatable-row>
-            <div *ngIf="isEmpty() && !filterActive"
+            <div *ngIf="isEmpty()"
                  role="row"
                  [class.adf-datatable-row]="display === 'list'"
                  [class.adf-datatable-card-empty]="display === 'gallery'">
