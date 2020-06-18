@@ -302,10 +302,13 @@ async function checkIfAppIsReleased(absentApps: any []) {
 async function checkDescriptorExist(name: string) {
     logger.info(`Check descriptor ${name} exist in the list `);
     const descriptorList = await getDescriptors();
-    for (const descriptor of descriptorList.list.entries) {
-        if (descriptor.entry.name === name) {
-            if (descriptor.entry.deployed === false) {
-                await deleteDescriptor(descriptor.entry.name);
+
+    if (descriptorList && descriptorList.list && descriptorList.entries) {
+        for (const descriptor of descriptorList.list.entries) {
+            if (descriptor.entry.name === name) {
+                if (descriptor.entry.deployed === false) {
+                    await deleteDescriptor(descriptor.entry.name);
+                }
             }
         }
     }
