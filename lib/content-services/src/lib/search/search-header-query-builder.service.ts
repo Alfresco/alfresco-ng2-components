@@ -33,6 +33,11 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return this.appConfig.get<SearchConfiguration>('search-headers');
     }
 
+    setupCurrentPagination(maxItems: number, skipCount: number) {
+        this.paging = { maxItems, skipCount };
+        this.execute();
+    }
+
     getCategoryForColumn(columnKey: string) {
         let foundCategory = null;
         if (this.categories !== null) {

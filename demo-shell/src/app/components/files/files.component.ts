@@ -521,22 +521,32 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.changedPageSize.emit(event);
     }
 
     onChangePageNumber(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.changedPageNumber.emit(event);
     }
 
     onNextPage(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.turnedNextPage.emit(event);
     }
 
     loadNextBatch(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.loadNext.emit(event);
     }
 
     onPrevPage(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.turnedPreviousPage.emit(event);
     }
 
