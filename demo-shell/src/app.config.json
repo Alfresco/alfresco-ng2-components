@@ -514,7 +514,7 @@
       {
         "id": "createdDateRange",
         "name": "Created Date (range)",
-        "columnKey": "modifiedAt",
+        "columnKey": "createdAt",
         "enabled": true,
         "component": {
           "selector": "date-range",
