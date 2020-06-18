@@ -287,10 +287,7 @@ export class IdentityGroupService {
     checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
                     map((response: any[]) => {
-                        if (response && response.length > 0) {
-                            return true;
-                        }
-                        return false;
+                        return response && response.length > 0;
                     }),
                     catchError((error) => this.handleError(error))
             );

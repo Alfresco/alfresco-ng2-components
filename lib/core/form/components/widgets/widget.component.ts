@@ -59,8 +59,8 @@ export class WidgetComponent implements AfterViewInit {
     constructor(public formService?: FormService) {
     }
 
-    hasField() {
-        return this.field ? true : false;
+    hasField(): boolean {
+        return !!this.field;
     }
 
     // Note for developers:
@@ -73,7 +73,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     isValid(): boolean {
-        return this.field.validationSummary ? true : false;
+        return !!this.field.validationSummary;
     }
 
     hasValue(): boolean {

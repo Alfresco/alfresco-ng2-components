@@ -58,7 +58,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     @HostListener('click')
     async onClick() {
         try {
-            this.cancelProcess();
+            await this.cancelProcess();
         } catch (error) {
             this.error.emit(error);
         }

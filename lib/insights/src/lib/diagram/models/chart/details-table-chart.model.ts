@@ -28,7 +28,7 @@ export class DetailsTableChart extends TableChart {
         }
     }
 
-    hasDetailsTable() {
-        return this.detailsTable ? true : false;
+    hasDetailsTable(): boolean {
+        return !!this.detailsTable;
     }
 }

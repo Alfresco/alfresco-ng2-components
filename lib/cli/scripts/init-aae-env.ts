@@ -302,13 +302,16 @@ async function checkIfAppIsReleased(absentApps: any []) {
 async function checkDescriptorExist(name: string) {
     logger.info(`Check descriptor ${name} exist in the list `);
     const descriptorList = await getDescriptors();
-    descriptorList.list.entries.forEach(async (descriptor: any) => {
-        if (descriptor.entry.name === name) {
-            if (descriptor.entry.deployed === false) {
-                await deleteDescriptor(descriptor.entry.name);
+
+    if (descriptorList && descriptorList.list && descriptorList.entries) {
+        for (const descriptor of descriptorList.list.entries) {
+            if (descriptor.entry.name === name) {
+                if (descriptor.entry.deployed === false) {
+                    await deleteDescriptor(descriptor.entry.name);
+                }
             }
         }
-    });
+    }
     return false;
 }
 
@@ -316,7 +319,7 @@ async function importProjectAndRelease(app: any) {
     await getFileFromRemote(app.file_location, app.name);
     logger.warn('Project imported ' + app.name);
     const projectRelease = await importAndReleaseProject(`${app.name}.zip`);
-    deleteLocalFile(`${app.name}`);
+    await deleteLocalFile(`${app.name}`);
     return projectRelease;
 }
 

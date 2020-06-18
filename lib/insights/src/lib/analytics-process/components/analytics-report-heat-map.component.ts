@@ -85,10 +85,10 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
         });
     }
 
-    hasMetric() {
-        return (this.report.totalCountsPercentages ||
-        this.report.totalTimePercentages ||
-        this.report.avgTimePercentages) ? true : false;
+    hasMetric(): boolean {
+        return !!(this.report.totalCountsPercentages ||
+            this.report.totalTimePercentages ||
+            this.report.avgTimePercentages);
     }
 
 }

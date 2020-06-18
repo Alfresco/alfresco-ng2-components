@@ -285,7 +285,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isPropertyChanged(property: SimpleChange): boolean {
-        return property && property.currentValue ? true : false;
+        return !!(property && property.currentValue);
     }
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
@@ -375,7 +375,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.rowMenuCache = {};
     }
 
-    isTableEmpty() {
+    isTableEmpty(): boolean {
         return this.data === undefined || this.data === null;
     }
 

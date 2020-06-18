@@ -120,8 +120,8 @@ export class AnalyticsGeneratorComponent implements OnChanges {
         return this.showDetails;
     }
 
-    isCurrent(position: number) {
-        return position === this.currentChartPosition ? true : false;
+    isCurrent(position: number): boolean {
+        return position === this.currentChartPosition;
     }
 
     selectCurrent(position: number) {
