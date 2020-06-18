@@ -89,10 +89,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (
-            changes['currentFolderNodeId'] &&
-            changes['currentFolderNodeId'].currentValue
-        ) {
+        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
             const currentIdValue = changes['currentFolderNodeId'].currentValue;
             const previousIdValue =
                 changes['currentFolderNodeId'].previousValue;
