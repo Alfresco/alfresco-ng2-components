@@ -245,12 +245,12 @@ async function checkIfAppIsReleased(absentApps: any []) {
             logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
 
             try {
-                projectRelease = await importProjectAndRelease(currentAbsentApp.name);
+                projectRelease = await importProjectAndRelease(currentAbsentApp);
             } catch (error) {
                 logger.info(`error status ${error.status}`);
 
                 if (error.status !== 409) {
-                    logger.info(`Not possible to upload the project ${project.entry.name} status  : ${JSON.stringify(error.status)}  ${JSON.stringify(error.response.text)}`);
+                    logger.info(`Not possible to upload the project ${currentAbsentApp.name} status  : ${JSON.stringify(error)}`);
                     process.exit(1);
                 } else {
                     logger.error(`Not possible to upload the project because inconsistency CS - Modelling try to delete manually the node`);
