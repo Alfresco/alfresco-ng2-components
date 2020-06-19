@@ -23,7 +23,7 @@ import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
 import { ObjectDataColumn } from '../../data/object-datacolumn.model';
 import { ObjectDataTableAdapter } from '../../data/object-datatable-adapter';
-import { DataTableComponent } from './datatable.component';
+import { DataTableComponent, ShowHeaderMode } from './datatable.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { DataColumnListComponent } from '../../../data-column/data-column-list.component';
@@ -160,7 +160,8 @@ describe('DataTable', () => {
         expect(element.querySelector('.adf-datatable-list')).not.toBeNull();
     });
 
-    it('should hide the header if showHeader is false', () => {
+    describe('Header modes', () => {
+
         const newData = new ObjectDataTableAdapter(
             [
                 { name: '1' },
@@ -168,65 +169,113 @@ describe('DataTable', () => {
             ],
             [new ObjectDataColumn({ key: 'name' })]
         );
+        const emptyData = new ObjectDataTableAdapter();
 
-        dataTable.showHeader = false;
-        dataTable.loading = false;
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
+        it('should show the header if showHeader is `Data` and there is data', () => {
+
+            dataTable.showHeader = ShowHeaderMode.Data;
+            dataTable.loading = false;
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, newData, false)
+            });
+
+            fixture.detectChanges();
+
+            expect(element.querySelector('.adf-datatable-header')).toBeDefined();
         });
 
-        fixture.detectChanges();
+        it('should hide the header if showHeader is `Data` and there is no data', () => {
 
-        expect(element.querySelector('.adf-datatable-header')).toBe(null);
-    });
+            dataTable.showHeader = ShowHeaderMode.Data;
+            dataTable.loading = false;
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, emptyData, false)
+            });
 
-    it('should hide the header if there are no elements inside', () => {
-        const newData = new ObjectDataTableAdapter(
-        );
+            fixture.detectChanges();
 
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
         });
 
-        fixture.detectChanges();
+        it('should always show the header if showHeader is `Always`', () => {
 
-        expect(element.querySelector('.adf-datatable-header')).toBe(null);
-    });
+            dataTable.showHeader = ShowHeaderMode.Always;
+            dataTable.loading = false;
 
-    it('should hide the header if noPermission is true', () => {
-        const newData = new ObjectDataTableAdapter(
-        );
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, newData, false)
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeDefined();
 
-        dataTable.noPermission = true;
-        dataTable.loading = false;
-
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, emptyData, false)
+            });
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeDefined();
         });
 
-        fixture.detectChanges();
+        it('should never show the header if showHeader is `Never`', () => {
 
-        expect(element.querySelector('.adf-datatable-header')).toBe(null);
-    });
+            dataTable.showHeader = ShowHeaderMode.Never;
+            dataTable.loading = false;
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, newData, false)
+            });
 
-    it('should show the header if showHeader is true', () => {
-        const newData = new ObjectDataTableAdapter(
-            [
-                { name: '1' },
-                { name: '2' }
-            ],
-            [new ObjectDataColumn({ key: 'name' })]
-        );
-        dataTable.showHeader = true;
-        dataTable.loading = false;
+            fixture.detectChanges();
 
-        dataTable.ngOnChanges({
-            data: new SimpleChange(null, newData, false)
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, emptyData, false)
+            });
+
+            fixture.detectChanges();
+
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
         });
 
-        fixture.detectChanges();
+        it('should never show the header if noPermission is true', () => {
 
-        expect(element.querySelector('.adf-datatable-header')).toBeDefined();
+            dataTable.loading = false;
+            dataTable.noPermission = true;
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, emptyData, false)
+            });
+
+            dataTable.showHeader = ShowHeaderMode.Data;
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+            dataTable.showHeader = ShowHeaderMode.Always;
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+            dataTable.showHeader = ShowHeaderMode.Never;
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+        });
+
+        it('should never show the header if loading is true', () => {
+
+            dataTable.loading = true;
+            dataTable.ngOnChanges({
+                data: new SimpleChange(null, emptyData, false)
+            });
+
+            dataTable.showHeader = ShowHeaderMode.Data;
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+            dataTable.showHeader = ShowHeaderMode.Always;
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+
+            dataTable.showHeader = ShowHeaderMode.Never;
+            fixture.detectChanges();
+            expect(element.querySelector('.adf-datatable-header')).toBeNull();
+        });
     });
 
     it('should emit "sorting-changed" DOM event', (done) => {
@@ -1394,7 +1443,7 @@ describe('Accesibility', () => {
         expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-0');
     });
 
-    it('should select header row when `showHeader` is true', () => {
+    it('should select header row when `showHeader` is `Always`', () => {
         const event = new KeyboardEvent('keyup', {
             code: 'ArrowUp',
             key: 'ArrowUp',
@@ -1408,7 +1457,7 @@ describe('Accesibility', () => {
             [new ObjectDataColumn({ key: 'name' })]
         );
 
-        dataTable.showHeader = true;
+        dataTable.showHeader = ShowHeaderMode.Always;
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -1426,7 +1475,7 @@ describe('Accesibility', () => {
         expect(document.activeElement.getAttribute('data-automation-id')).toBe('datatable-row-header');
     });
 
-    it('should not select header row when `showHeader` is false', () => {
+    it('should not select header row when `showHeader` is `Never`', () => {
         const event = new KeyboardEvent('keyup', {
             code: 'ArrowUp',
             key: 'ArrowUp',
@@ -1440,7 +1489,7 @@ describe('Accesibility', () => {
             [new ObjectDataColumn({ key: 'name' })]
         );
 
-        dataTable.showHeader = false;
+        dataTable.showHeader = ShowHeaderMode.Never;
 
         dataTable.ngOnChanges({
             rows: new SimpleChange(null, dataRows, false)
@@ -1459,7 +1508,7 @@ describe('Accesibility', () => {
     });
 
     it('should remove cell focus when [focus] is set to false', () => {
-        dataTable.showHeader = false;
+        dataTable.showHeader = ShowHeaderMode.Never;
         const dataRows = [ { name: 'name1' } ];
 
         dataTable.data = new ObjectDataTableAdapter([],
@@ -1478,7 +1527,7 @@ describe('Accesibility', () => {
     });
 
     it('should allow element focus when [focus] is set to true', () => {
-        dataTable.showHeader = false;
+        dataTable.showHeader = ShowHeaderMode.Never;
         const dataRows = [ { name: 'name1' } ];
 
         dataTable.data = new ObjectDataTableAdapter([],
