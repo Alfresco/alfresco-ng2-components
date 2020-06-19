@@ -20,7 +20,7 @@ import {
     Input, OnChanges, Output, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
+import { SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -254,6 +254,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 filter((node) => node && node.id === this.nodeId && node.name !== this.fileName)
             ).subscribe((node) => this.onNodeUpdated(node))
         );
+        this.subscriptions.push(
+            this.viewUtils.viewerTypeChange.subscribe((type: string) => {
+                this.viewerType = type;
+            })
+        );
+        this.subscriptions.push(
+            this.viewUtils.urlFileContentChange.subscribe((content: string) => {
+                this.urlFileContent = content;
+            })
+        );
 
         this.loadExtensions();
     }
@@ -375,7 +385,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (this.viewerType === 'unknown') {
-            setupNode = this.displayNodeRendition(data.id);
+            setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
         }
 
         this.extensionChange.emit(this.extension);
@@ -603,25 +613,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async displayNodeRendition(nodeId: string) {
-        try {
-            const rendition = await this.resolveRendition(nodeId, 'pdf');
-            if (rendition) {
-                const renditionId = rendition.entry.id;
-
-                if (renditionId === 'pdf') {
-                    this.viewerType = 'pdf';
-                } else if (renditionId === 'imgpreview') {
-                    this.viewerType = 'image';
-                }
-
-                this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
-            }
-        } catch (err) {
-            this.logService.error(err);
-        }
-    }
-
     private async displaySharedLinkRendition(sharedId: string) {
         try {
             const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
@@ -641,69 +632,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 this.logService.error(error);
             }
         }
-    }
-
-    private async resolveRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
-        renditionId = renditionId.toLowerCase();
-
-        const supportedRendition: RenditionPaging = await this.apiService.renditionsApi.getRenditions(nodeId);
-
-        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        if (!rendition) {
-            renditionId = 'imgpreview';
-            rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        }
-
-        if (rendition) {
-            const status: string = rendition.entry.status.toString();
-
-            if (status === 'NOT_CREATED') {
-                try {
-                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
-                        this.viewerType = 'in_creation';
-                    });
-                    rendition = await this.waitRendition(nodeId, renditionId);
-                } catch (err) {
-                    this.logService.error(err);
-                }
-            }
-        }
-
-        return rendition;
-    }
-
-    private async waitRendition(nodeId: string, renditionId: string): Promise<RenditionEntry> {
-        let currentRetry: number = 0;
-        return new Promise<RenditionEntry>((resolve, reject) => {
-            const intervalId = setInterval(() => {
-                currentRetry++;
-                if (this.maxRetries >= currentRetry) {
-                    this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
-                        const status: string = rendition.entry.status.toString();
-                        if (status === 'CREATED') {
-
-                            if (renditionId === 'pdf') {
-                                this.viewerType = 'pdf';
-                            } else if (renditionId === 'imgpreview') {
-                                this.viewerType = 'image';
-                            }
-
-                            this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
-
-                            clearInterval(intervalId);
-                            return resolve(rendition);
-                        }
-                    }, () => {
-                        this.viewerType = 'error_in_creation';
-                        return reject();
-                    });
-                } else {
-                    this.isLoading = false;
-                    this.viewerType = 'error_in_creation';
-                    clearInterval(intervalId);
-                }
-            }, this.TRY_TIMEOUT);
-        });
     }
 
     checkExtensions(extensionAllowed) {

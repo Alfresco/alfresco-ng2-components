@@ -14,7 +14,8 @@ Allows folders and/or files to be downloaded, with multiple nodes packed as a '.
 ```html
 <adf-toolbar>
     <button mat-icon-button
-            [adfNodeDownload]="documentList.selection">
+            [adfNodeDownload]="documentList.selection"
+            [version]="version">
             <mat-icon>get_app</mat-icon>
     </button>
 </adf-toolbar>
