@@ -16,10 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, NodesApiService } from '@alfresco/adf-core';
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from './search-category.interface';
+import { MinimalNode } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -29,8 +30,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: string[] = [];
+    currentParentFolderID: string;
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
+    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
     }
 
@@ -76,17 +78,27 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     setCurrentRootFolderId(currentFolderId: string, previousFolderId: string) {
         if (this.customSources.includes(currentFolderId)) {
-            this.removeOldFolderFiltering(previousFolderId);
-        } else {
-            const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
-                filterQueries.query.includes(currentFolderId)
-            );
-            if (!alreadyAddedFilter) {
-                this.removeOldFolderFiltering(previousFolderId);
-                this.filterQueries.push({
-                    query: `ANCESTOR:"workspace://SpacesStore/${currentFolderId}"`
+            if (currentFolderId !== this.currentParentFolderID) {
+                this.currentParentFolderID = currentFolderId;
+                this.nodeApiService.getNode(currentFolderId).subscribe((nodeEntity: MinimalNode) => {
+                    this.updateCurrentParentFilter(nodeEntity.id, previousFolderId);
                 });
             }
+        } else {
+            this.currentParentFolderID = currentFolderId;
+            this.updateCurrentParentFilter(currentFolderId, previousFolderId);
+        }
+    }
+
+    private updateCurrentParentFilter(currentFolderId: string, previousFolderId: string) {
+        const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
+            filterQueries.query.includes(currentFolderId)
+        );
+        if (!alreadyAddedFilter) {
+            this.removeOldFolderFiltering(previousFolderId);
+            this.filterQueries.push({
+                query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
+            });
         }
     }
 

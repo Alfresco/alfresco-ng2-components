@@ -19,12 +19,12 @@ import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { NodePaging } from '@alfresco/js-api';
-import { AppConfigService, SearchService, setupTestBed } from '@alfresco/adf-core';
+import { SearchService, setupTestBed } from '@alfresco/adf-core';
 import { SearchHeaderComponent } from './search-header.component';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { fakeNodePaging } from '../../../mock';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 const mockCategory: any = {
     'id': 'queryName',
@@ -46,7 +46,7 @@ describe('SearchHeaderComponent', () => {
     let fixture: ComponentFixture<SearchHeaderComponent>;
     let component: SearchHeaderComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
-    let appConfigService: AppConfigService;
+
     const searchMock: any = {
         dataLoaded: new Subject()
     };
@@ -62,7 +62,7 @@ describe('SearchHeaderComponent', () => {
                 useValue: searchMock
             },
             {
-                provide: SearchQueryBuilderService,
+                provide: SEARCH_QUERY_SERVICE_TOKEN,
                 useClass: SearchHeaderQueryBuilderService
             }
         ]
@@ -71,7 +71,6 @@ describe('SearchHeaderComponent', () => {
     beforeEach(() => {
         queryBuilder = TestBed.get(SearchHeaderQueryBuilderService);
         fixture = TestBed.createComponent(SearchHeaderComponent);
-        appConfigService = TestBed.get(AppConfigService);
         component = fixture.componentInstance;
         component.col = {key: '123', type: 'text'};
         component.update = new EventEmitter();

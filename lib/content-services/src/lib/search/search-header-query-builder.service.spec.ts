@@ -38,6 +38,7 @@ describe('SearchHeaderQueryBuilder', () => {
 
         const builder = new SearchHeaderQueryBuilderService(
             buildConfig(config),
+            null,
             null
         );
 
@@ -64,6 +65,7 @@ describe('SearchHeaderQueryBuilder', () => {
 
         const service = new SearchHeaderQueryBuilderService(
             buildConfig(config),
+            null,
             null
         );
 
@@ -76,6 +78,7 @@ describe('SearchHeaderQueryBuilder', () => {
     it('should have empty user query by default', () => {
         const builder = new SearchHeaderQueryBuilderService(
             buildConfig({}),
+            null,
             null
         );
         expect(builder.userQuery).toBe('');
@@ -93,11 +96,12 @@ describe('SearchHeaderQueryBuilder', () => {
         const expectedResult = [
             { query: 'query1' },
             { query: 'query2' },
-            { query: 'ANCESTOR:"workspace://SpacesStore/fake-node-id"' }
+            { query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }
         ];
 
         const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
+            null,
             null
         );
 
@@ -111,7 +115,7 @@ describe('SearchHeaderQueryBuilder', () => {
         const expectedResult = [
             { query: 'query1' },
             { query: 'query2' },
-            { query: 'ANCESTOR:"workspace://SpacesStore/fake-node-id' }
+            { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }
         ];
 
         const config: SearchConfiguration = {
@@ -124,6 +128,7 @@ describe('SearchHeaderQueryBuilder', () => {
 
         const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
+            null,
             null
         );
 
@@ -139,7 +144,7 @@ describe('SearchHeaderQueryBuilder', () => {
         const expectedResult = [
             { query: 'query1' },
             { query: 'query2' },
-            { query: 'ANCESTOR:"workspace://SpacesStore/fake-next-node-id"' }
+            { query: 'PARENT:"workspace://SpacesStore/fake-next-node-id"' }
         ];
 
         const config: SearchConfiguration = {
@@ -150,12 +155,13 @@ describe('SearchHeaderQueryBuilder', () => {
             filterQueries: [
                 { query: 'query1' },
                 { query: 'query2' },
-                { query: 'ANCESTOR:"workspace://SpacesStore/fake-node-id' }
+                { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }
             ]
         };
 
         const searchHeaderService = new SearchHeaderQueryBuilderService(
             buildConfig(config),
+            null,
             null
         );
 

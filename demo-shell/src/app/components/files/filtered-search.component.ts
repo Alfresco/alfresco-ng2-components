@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { SEARCH_QUERY_SERVICE_TOKEN, SearchHeaderQueryBuilderService } from '@alfresco/adf-content-services';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-filtered-search-component',
@@ -26,5 +27,16 @@ import { SEARCH_QUERY_SERVICE_TOKEN, SearchHeaderQueryBuilderService } from '@al
 export class FilteredSearchComponent {
 
     navigationRoute = '/filtered-search';
+    currentFolderId = '-my-';
+
+    constructor(@Optional() private route: ActivatedRoute) {
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                if (params['id'] && this.currentFolderId !== params['id']) {
+                    this.currentFolderId = params['id'];
+                }
+            });
+        }
+    }
 
 }
