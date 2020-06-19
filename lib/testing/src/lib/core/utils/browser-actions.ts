@@ -26,6 +26,7 @@ export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
         try {
+            Logger.info(`Click element: ${elementFinder.locator().toString()}`);
             await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
@@ -40,26 +41,33 @@ export class BrowserActions {
         await browser.executeScript(`arguments[0].click();`, elementFinder);
     }
 
-    static async waitUntilActionMenuIsVisible(): Promise<void> {
-        const actionMenu = element.all(by.css('div[role="menu"]')).first();
-        await BrowserVisibility.waitUntilElementIsVisible(actionMenu);
-    }
-
-    static async waitUntilActionMenuIsNotVisible(): Promise<void> {
-        const actionMenu = element.all(by.css('div[role="menu"]')).first();
-        await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
-    }
-
-    static async getUrl(url: string, timeout: number = 10000): Promise<any> {
-        return browser.get(url, timeout);
-    }
-
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
+    static async waitUntilActionMenuIsVisible(): Promise<void> {
+        Logger.info(`wait Until Action Menu Is Visible`);
+
+        const actionMenu = element.all(by.css('div[role="menu"]')).first();
+        await BrowserVisibility.waitUntilElementIsVisible(actionMenu);
+    }
+
+    static async waitUntilActionMenuIsNotVisible(): Promise<void> {
+        Logger.info(`wait Until Action Menu Is Not Visible`);
+
+        const actionMenu = element.all(by.css('div[role="menu"]')).first();
+        await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
+    }
+
+    static async getUrl(url: string, timeout: number = 10000): Promise<any> {
+        Logger.info(`Get URL ${url}`);
+        return browser.get(url, timeout);
+    }
+
     static async getText(elementFinder: ElementFinder): Promise<string> {
+        Logger.info(`Get Text ${elementFinder.locator().toString()}`);
+
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
         if (present) {
             return elementFinder.getText();
@@ -69,6 +77,8 @@ export class BrowserActions {
     }
 
     static async getInputValue(elementFinder: ElementFinder): Promise<string> {
+        Logger.info(`Get Input value ${elementFinder.locator().toString()}`);
+
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
         if (present) {
             return elementFinder.getAttribute('value');
@@ -100,6 +110,8 @@ export class BrowserActions {
     }
 
     static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
+        Logger.info(`Clear and sendKeys text:${text} locator:${elementFinder.locator().toString()}`);
+
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
@@ -107,17 +119,23 @@ export class BrowserActions {
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
+        Logger.info(`Check is disabled locator:${elementFinder.locator().toString()}`);
+
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         const valueCheck = await elementFinder.getAttribute('disabled');
         await expect(valueCheck).toEqual('true');
     }
 
     static async rightClick(elementFinder: ElementFinder): Promise<void> {
+        Logger.info(`Right click locator:${elementFinder.locator().toString()}`);
+
         await browser.actions().mouseMove(elementFinder).mouseDown().mouseMove(elementFinder).perform();
         await browser.actions().click(elementFinder, protractor.Button.RIGHT).perform();
     }
 
     static async closeMenuAndDialogs(): Promise<void> {
+        Logger.info(`close Menu And Dialogs`);
+
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
         await BrowserVisibility.waitUntilElementIsNotVisible(container);

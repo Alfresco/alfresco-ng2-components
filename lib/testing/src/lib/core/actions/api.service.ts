@@ -78,37 +78,39 @@ export class ApiService {
     }
 
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
-        const uri = this.config.hostBpm + path;
-        const pathParams = {}, formParams = {};
-        const contentTypes = ['application/json'];
-        const accepts = ['application/json'];
+        return new Promise((resolve, reject) => {
+            const uri = this.config.hostBpm + path;
+            const pathParams = {}, formParams = {};
+            const contentTypes = ['application/json'];
+            const accepts = ['application/json'];
 
-        const headerParams = {
-            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
-        };
+            const headerParams = {
+                Authorization: 'bearer ' + this.apiService.oauth2Auth.token
+            };
 
-        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            contentTypes, accepts, Object)
-            .catch((error) => {
-                throw (error);
-            });
+            this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+                contentTypes, accepts, Object)
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
+        });
     }
 
     async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
-        const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
-        const pathParams = {}, formParams = {};
-        const contentTypes = ['application/json'];
-        const accepts = ['application/json'];
+        return new Promise((resolve, reject) => {
 
-        const headerParams = {
-            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
-        };
+            const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
+            const pathParams = {}, formParams = {};
+            const contentTypes = ['application/json'];
+            const accepts = ['application/json'];
 
-        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            contentTypes, accepts, Object)
-            .catch((error) => {
-                throw (error);
-            });
+            const headerParams = {
+                Authorization: 'bearer ' + this.apiService.oauth2Auth.token
+            };
+
+            return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+                contentTypes, accepts, Object)
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
+        });
     }
-
 }

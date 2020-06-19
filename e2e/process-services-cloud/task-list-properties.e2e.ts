@@ -139,7 +139,6 @@ describe('Edit task filters and task list properties', () => {
         it('[C297476] Filter by taskName', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setTaskName(createdTask.entry.name);
             await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().getTaskName()).toEqual(createdTask.entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().getRowsWithSameName(createdTask.entry.name).then(async (list) => {
                 await expect(list.length).toEqual(1);
             });
