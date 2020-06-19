@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
 import { AcsUserModel } from '../../models/ACS/acs-user.model';
@@ -32,6 +32,7 @@ describe('Version component actions', () => {
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
+    const viewerPage = new ViewerPage();
 
     const acsUser = new AcsUserModel();
 
@@ -144,6 +145,18 @@ describe('Version component actions', () => {
         await versionManagePage.closeVersionDialog();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
+    });
+
+    it('[C362240] Should be possible to view a previous document version', async () => {
+        await contentServicesPage.versionManagerContent(fileModelVersionTwo.name);
+        await versionManagePage.viewFileVersion('1.0');
+        await viewerPage.expectUrlToContain('1.0')
+    });
+
+    it('[C362241] Should be possible to download a previous document version', async () => {
+        await viewerPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name);
+        await viewerPage.clickCloseButton();
     });
 
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
