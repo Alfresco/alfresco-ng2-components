@@ -260,6 +260,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                 filter((node) => node && node.id === this.nodeId && node.name !== this.fileName)
             ).subscribe((node) => this.onNodeUpdated(node))
         );
+        this.subscriptions.push(
+            this.viewUtils.viewerTypeChange.subscribe((type: string) => {
+                this.viewerType = type;
+            })
+        );
+        this.subscriptions.push(
+            this.viewUtils.urlFileContentChange.subscribe((content: string) => {
+                this.urlFileContent = content;
+            })
+        );
 
         this.subscriptions.push(
             this.viewUtils.viewerTypeChange.subscribe((type: string) => {
@@ -437,7 +447,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (this.viewerType === 'unknown') {
-            setupNode = this.displayNodeVersionRendition(this.nodeId, data.id);
+            setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
         }
 
         this.extensionChange.emit(this.extension);
@@ -699,87 +709,5 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
-    }
-
-    private async displayNodeVersionRendition(nodeId: string, versionId: string) {
-        try {
-            const rendition = await this.resolveVersionRendition(nodeId, versionId, 'pdf');
-            if (rendition) {
-                const renditionId = rendition.entry.id;
-
-                if (renditionId === 'pdf') {
-                    this.viewerType = 'pdf';
-                } else if (renditionId === 'imgpreview') {
-                    this.viewerType = 'image';
-                }
-
-                this.urlFileContent = this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId);
-            }
-        } catch (err) {
-            this.logService.error(err);
-        }
-    }
-
-    private async resolveVersionRendition(nodeId: string, versionId: string, renditionId: string): Promise<RenditionEntry> {
-        renditionId = renditionId.toLowerCase();
-
-        const supportedRendition: RenditionPaging = await this.apiService.versionsApi.listVersionRenditions(nodeId, versionId);
-
-        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        if (!rendition) {
-            renditionId = 'imgpreview';
-            rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        }
-
-        if (rendition) {
-            const status: string = rendition.entry.status.toString();
-
-            if (status === 'NOT_CREATED') {
-                try {
-                    await this.apiService.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId}).then(() => {
-                        this.viewerType = 'in_creation';
-                    });
-                    rendition = await this.waitVersionRendition(nodeId, versionId, renditionId);
-                } catch (err) {
-                    this.logService.error(err);
-                }
-            }
-        }
-
-        return rendition;
-    }
-
-    private async waitVersionRendition(nodeId: string, versionId: string, renditionId: string): Promise<RenditionEntry> {
-        let currentRetry: number = 0;
-        return new Promise<RenditionEntry>((resolve, reject) => {
-            const intervalId = setInterval(() => {
-                currentRetry++;
-                if (this.maxRetries >= currentRetry) {
-                    this.apiService.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
-                        const status: string = rendition.entry.status.toString();
-                        if (status === 'CREATED') {
-
-                            if (renditionId === 'pdf') {
-                                this.viewerType = 'pdf';
-                            } else if (renditionId === 'imgpreview') {
-                                this.viewerType = 'image';
-                            }
-
-                            this.urlFileContent = this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId);
-
-                            clearInterval(intervalId);
-                            return resolve(rendition);
-                        }
-                    }, () => {
-                        this.viewerType = 'error_in_creation';
-                        return reject();
-                    });
-                } else {
-                    this.isLoading = false;
-                    this.viewerType = 'error_in_creation';
-                    clearInterval(intervalId);
-                }
-            }, this.TRY_TIMEOUT);
-        });
     }
 }

@@ -169,7 +169,7 @@ export class ViewUtilService {
 
             if (status === 'NOT_CREATED') {
                 try {
-                    await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId });
+                    await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId});
                     rendition = await this.waitRendition(nodeId, renditionId, 0);
                 } catch (err) {
                     this.logService.error(err);
