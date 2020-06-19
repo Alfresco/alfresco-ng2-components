@@ -114,7 +114,7 @@ export class AlfrescoApiService {
         });
     }
 
-    async reset() {
+    reset() {
         this.initAlfrescoApi();
     }
 
