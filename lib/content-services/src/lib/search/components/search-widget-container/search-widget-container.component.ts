@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, ComponentFactoryResolver } from '@angular/core';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, ComponentFactoryResolver, Inject } from '@angular/core';
 import { SearchFilterService } from '../search-filter/search-filter.service';
+import { BaseQueryBuilderService } from '../../base-query-builder.service';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 @Component({
     selector: 'adf-search-widget-container',
@@ -44,7 +45,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
 
     constructor(
         private searchFilterService: SearchFilterService,
-        private queryBuilder: SearchQueryBuilderService,
+        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: BaseQueryBuilderService,
         private componentFactoryResolver: ComponentFactoryResolver) {
     }
 

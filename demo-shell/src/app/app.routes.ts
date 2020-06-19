@@ -59,6 +59,7 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
+import { FilteredSearchComponent } from './components/files/filtered-search.component';
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: 'app/components/login/login.module#AppLoginModule' },
     { path: 'logout', component: LogoutComponent },
@@ -249,6 +250,21 @@ export const appRoutes: Routes = [
             {
                 path: 'files',
                 component: FilesComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'filtered-search',
+                component: FilteredSearchComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'filtered-search/:id',
+                component: FilteredSearchComponent,
+                canActivate: [AuthGuardEcm]
+            },
+            {
+                path: 'filtered-search/:id/display/:mode',
+                component: FilteredSearchComponent,
                 canActivate: [AuthGuardEcm]
             },
             {

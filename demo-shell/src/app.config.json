@@ -347,21 +347,6 @@
         }
       },
       {
-        "id": "contentSize",
-        "name": "Content Size",
-        "enabled": true,
-        "component": {
-          "selector": "slider",
-          "settings": {
-            "field": "cm:content.size",
-            "min": 0,
-            "max": 18,
-            "step": 1,
-            "thumbLabel": true
-          }
-        }
-      },
-      {
         "id": "contentSizeRange",
         "name": "Content Size (range)",
         "enabled": true,
@@ -465,6 +450,7 @@
       {
         "id": "checkList",
         "name": "Check List",
+        "columnKey":"$thumbnail",
         "enabled": true,
         "component": {
           "selector": "check-list",
@@ -485,21 +471,6 @@
         }
       },
       {
-        "id": "contentSize",
-        "name": "Content Size",
-        "enabled": true,
-        "component": {
-          "selector": "slider",
-          "settings": {
-            "field": "cm:content.size",
-            "min": 0,
-            "max": 18,
-            "step": 1,
-            "thumbLabel": true
-          }
-        }
-      },
-      {
         "id": "contentSizeRange",
         "name": "Content Size (range)",
         "enabled": true,
@@ -508,6 +479,35 @@
           "settings": {
             "field": "cm:content.size",
             "format": "[{FROM} TO {TO}]"
+          }
+        }
+      },
+      {
+        "id": "contentSize",
+        "name": "SEARCH.CATEGORIES.SIZE",
+        "columnKey":"content.sizeInBytes",
+        "enabled": true,
+        "component": {
+          "selector": "check-list",
+          "settings": {
+            "options": [
+              {
+                "name": "Small",
+                "value": "content.size:[0 TO 1048576>"
+              },
+              {
+                "name": "Medium",
+                "value": "content.size:[1048576 TO 52428800]"
+              },
+              {
+                "name": "Large",
+                "value": "content.size:<52428800 TO 524288000]"
+              },
+              {
+                "name": "Huge",
+                "value": "content.size:<524288000 TO MAX]"
+              }
+            ]
           }
         }
       },

@@ -76,6 +76,8 @@ export abstract class BaseQueryBuilderService {
 
     public abstract loadConfiguration(): SearchConfiguration;
 
+    public abstract isFilterServiceActive(): boolean;
+
     public setUpConfiguration() {
         const currentConfig = this.loadConfiguration();
         this.setUpSearchConfiguration(currentConfig);

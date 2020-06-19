@@ -157,6 +157,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     searchTerm = '';
 
+    @Input()
+    navigationRoute = '/files';
+
+    @Input()
+    enableCustomHeaderFilter = false;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -195,7 +201,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     stickyHeader: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
-    enableCustomHeaderFilter = true;
+
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
@@ -363,7 +369,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-        this.router.navigate(['/files', $event.value.id, 'display', this.displayMode]);
+        this.router.navigate([this.navigationRoute, $event.value.id, 'display', this.displayMode]);
     }
 
     handlePermissionError(event: any) {
@@ -647,23 +653,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.nodeResult = newNodePaging;
     }
 
-    onFilterStateUpdate(newFilterState: any) {
-        const filter = this.filtersStates.find((filterState) => filterState.id === newFilterState.id);
-
-        if (filter) {
-            this.filtersStates[this.filtersStates.indexOf(filter)] = newFilterState;
-        } else {
-            this.filtersStates.push(newFilterState);
-        }
-
-        if (this.isOneFilterActive() && this.showHeader !== ShowHeaderMode.Never) {
-            this.showHeader = ShowHeaderMode.Always;
-        } else {
-            this.showHeader = ShowHeaderMode.Data;
-        }
+    onAllFilterCleared() {
+        this.documentList.node = null;
+        this.documentList.reload();
     }
 
-    isOneFilterActive() {
-        return !!this.filtersStates.find((filterState) => filterState.state);
-    }
 }

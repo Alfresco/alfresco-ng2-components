@@ -36,6 +36,8 @@ import { SearchCheckListComponent } from './components/search-check-list/search-
 import { SearchDateRangeComponent } from './components/search-date-range/search-date-range.component';
 import { SearchSortingPickerComponent } from './components/search-sorting-picker/search-sorting-picker.component';
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
+import { SEARCH_QUERY_SERVICE_TOKEN } from './search-query-service.token';
+import { SearchQueryBuilderService } from './search-query-builder.service';
 
 @NgModule({
     imports: [
@@ -85,6 +87,9 @@ import { SearchHeaderComponent } from './components/search-header/search-header.
         SearchNumberRangeComponent,
         SearchCheckListComponent,
         SearchDateRangeComponent
+    ],
+    providers: [
+        { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }
     ]
 })
 export class SearchModule {}

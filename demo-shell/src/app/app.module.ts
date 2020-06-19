@@ -102,6 +102,7 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
+import { FilteredSearchComponent } from './components/files/filtered-search.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -158,6 +159,7 @@ registerLocaleData(localeSv);
         FormNodeViewerComponent,
         AppsViewComponent,
         FilesComponent,
+        FilteredSearchComponent,
         FormComponent,
         FormListComponent,
         VersionManagerDialogAdapterComponent,

@@ -40,6 +40,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
             ]
         },
         { href: '/files', icon: 'folder_open', title: 'APP_LAYOUT.CONTENT_SERVICES' },
+        { href: '/filtered-search', icon: 'rowing', title: 'APP_LAYOUT.FILTERED_SEARCH' },
         { href: '/breadcrumb', icon: 'label', title: 'APP_LAYOUT.BREADCRUMB' },
         { href: '/notifications', icon: 'alarm', title: 'APP_LAYOUT.NOTIFICATIONS' },
         { href: '/card-view', icon: 'view_headline', title: 'APP_LAYOUT.CARD_VIEW' },

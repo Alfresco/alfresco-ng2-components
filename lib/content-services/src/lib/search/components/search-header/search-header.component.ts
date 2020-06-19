@@ -15,26 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, OnChanges, EventEmitter, Inject, SimpleChanges, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, EventEmitter, SimpleChanges, ViewEncapsulation, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { DataColumn } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { NodePaging } from '@alfresco/js-api';
-import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SearchCategory } from '../../search-category.interface';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-search-header',
     templateUrl: './search-header.component.html',
     styleUrls: ['./search-header.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    providers: [
-        {
-            provide: SearchQueryBuilderService,
-            useClass: SearchHeaderQueryBuilderService
-        }
-    ]
+    encapsulation: ViewEncapsulation.None
 })
-export class SearchHeaderComponent implements OnInit, OnChanges {
+export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     col: DataColumn;
 
@@ -51,27 +48,20 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     update: EventEmitter<NodePaging> = new EventEmitter();
 
     @Output()
-    state: EventEmitter<any> = new EventEmitter();
+    clear: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
 
-    category: any = {};
-    _isActive: boolean = false;
+    public isActive: boolean;
 
-    set isActive(filterState: boolean) {
-        this._isActive = filterState;
-        this.state.emit({
-            id: this.category.id,
-            state: this._isActive
-        });
-    }
+    category: SearchCategory;
+    isFilterServiceActive: boolean;
 
-    get isActive() {
-        return this._isActive;
-    }
+    private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(SearchQueryBuilderService) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) {
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) {
+        this.isFilterServiceActive = this.searchHeaderQueryBuilder.isFilterServiceActive();
     }
 
     ngOnInit() {
@@ -79,11 +69,11 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
             this.col.key
         );
 
-        this.searchHeaderQueryBuilder.executed.subscribe(
-            (newNodePaging: NodePaging) => {
+        this.searchHeaderQueryBuilder.executed
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((newNodePaging: NodePaging) => {
                 this.update.emit(newNodePaging);
-            }
-        );
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -101,17 +91,21 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
         if (changes['maxItems'] || changes['skipCount']) {
             let actualMaxItems = this.maxItems;
             let actualSkipCount = this.skipCount;
+
             if (changes['maxItems'] && changes['maxItems'].currentValue) {
                 actualMaxItems = changes['maxItems'].currentValue;
             }
             if (changes['skipCount'] && changes['skipCount'].currentValue) {
                 actualSkipCount = changes['skipCount'].currentValue;
             }
-            this.searchHeaderQueryBuilder.setupCurrentPagination(
-                actualMaxItems,
-                actualSkipCount
-            );
+
+            this.searchHeaderQueryBuilder.setupCurrentPagination(actualMaxItems, actualSkipCount);
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     onMenuButtonClick(event: Event) {
@@ -123,15 +117,21 @@ export class SearchHeaderComponent implements OnInit, OnChanges {
     }
 
     onApplyButtonClick() {
-        this.widgetContainer.applyInnerWidget();
-        this.searchHeaderQueryBuilder.execute();
         this.isActive = true;
+        this.widgetContainer.applyInnerWidget();
+        this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey);
+        this.searchHeaderQueryBuilder.execute();
     }
 
     onClearButtonClick(event: Event) {
         event.stopPropagation();
         this.widgetContainer.resetInnerWidget();
-        this.searchHeaderQueryBuilder.execute();
         this.isActive = false;
+        this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
+        if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
+            this.clear.emit();
+        } else {
+            this.searchHeaderQueryBuilder.execute();
+        }
     }
 }

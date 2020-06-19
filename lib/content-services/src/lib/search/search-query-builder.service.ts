@@ -25,6 +25,10 @@ import { BaseQueryBuilderService } from './base-query-builder.service';
 })
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
 
+    public isFilterServiceActive(): boolean {
+        return false;
+    }
+
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
         super(appConfig, alfrescoApiService);
     }

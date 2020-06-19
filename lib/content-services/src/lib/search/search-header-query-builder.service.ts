@@ -19,14 +19,23 @@ import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
+import { SearchCategory } from './search-category.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
+    private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
+
+    activeFilters: string[] = [];
+
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
         super(appConfig, alfrescoApiService);
+    }
+
+    public isFilterServiceActive(): boolean {
+        return true;
     }
 
     loadConfiguration(): SearchConfiguration {
@@ -34,11 +43,28 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setupCurrentPagination(maxItems: number, skipCount: number) {
-        this.paging = { maxItems, skipCount };
-        this.execute();
+        if (!this.paging ||
+            (this.paging &&
+                this.paging.maxItems !== maxItems || this.paging.skipCount !== skipCount)) {
+            this.paging = { maxItems, skipCount };
+            this.execute();
+        }
     }
 
-    getCategoryForColumn(columnKey: string) {
+    setActiveFilter(columnActivated: string) {
+        this.activeFilters.push(columnActivated);
+    }
+
+    isNoFilterActive(): boolean {
+        return this.activeFilters.length === 0;
+    }
+
+    removeActiveFilter(columnRemoved: string) {
+        const removeIndex = this.activeFilters.findIndex((column) => column === columnRemoved);
+        this.activeFilters.splice(removeIndex, 1);
+    }
+
+    getCategoryForColumn(columnKey: string): SearchCategory {
         let foundCategory = null;
         if (this.categories !== null) {
             foundCategory = this.categories.find(
@@ -49,14 +75,18 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setCurrentRootFolderId(currentFolderId: string, previousFolderId: string) {
-        const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
-            filterQueries.query.includes(currentFolderId)
-        );
-        if (!alreadyAddedFilter) {
+        if (this.customSources.includes(currentFolderId)) {
             this.removeOldFolderFiltering(previousFolderId);
-            this.filterQueries.push({
-                query: `ANCESTOR:"workspace://SpacesStore/${currentFolderId}"`
-            });
+        } else {
+            const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
+                filterQueries.query.includes(currentFolderId)
+            );
+            if (!alreadyAddedFilter) {
+                this.removeOldFolderFiltering(previousFolderId);
+                this.filterQueries.push({
+                    query: `ANCESTOR:"workspace://SpacesStore/${currentFolderId}"`
+                });
+            }
         }
     }
 

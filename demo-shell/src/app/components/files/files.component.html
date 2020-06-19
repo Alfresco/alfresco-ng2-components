@@ -247,10 +247,11 @@
                 <adf-custom-header-filter-template *ngIf="enableCustomHeaderFilter">
                     <ng-template let-col>
                         <adf-search-header [col]="col"
-                            [maxItems]="pagination?.maxItems"
-                            [skipCount]="pagination?.skipCount"
-                            (update)="onFilterUpdate($event)"
-                            (state)="onFilterStateUpdate($event)">
+                                           [currentFolderNodeId]="currentFolderId"
+                                           [maxItems]="pagination?.maxItems"
+                                           [skipCount]="pagination?.skipCount"
+                                           (update)="onFilterUpdate($event)"
+                                           (clear)="onAllFilterCleared()">
                         </adf-search-header>
                     </ng-template>
                 </adf-custom-header-filter-template>
