@@ -54,7 +54,8 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
     private getQuery(searchTerm: string) {
         let query: string;
         if (this.queryProvider && this.queryProvider.query) {
-            query = this.queryProvider.query.replace('${searchTerm}', searchTerm);
+            query = this.queryProvider.query.replace(
+                new RegExp(/\${([^}]+)}/g), searchTerm);
         } else {
             query = `authorityName:*${searchTerm}* OR userName:*${searchTerm}*`;
         }

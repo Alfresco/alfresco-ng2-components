@@ -25,5 +25,6 @@ export * from './components/add-permission/add-permission-dialog-data.interface'
 export * from './components/add-permission/add-permission-panel.component';
 export * from './components/add-permission/add-permission.component';
 export * from './components/add-permission/add-permission-dialog.component';
+export * from './components/add-permission/search-config-permission.service';
 
 export * from './permission-manager.module';
