@@ -622,6 +622,7 @@ describe('TaskFormComponent', () => {
 
             component.error.subscribe((error: ErrorModel) => {
                 expect(error.type).toEqual(TaskActionFailedType.CLAIM_FAILED);
+                expect(error.error).toEqual(mockError);
                 done();
             });
 
@@ -661,6 +662,7 @@ describe('TaskFormComponent', () => {
 
             component.error.subscribe((error: ErrorModel) => {
                 expect(error.type).toEqual(TaskActionFailedType.UNCLAIM_FAILED);
+                expect(error.error).toEqual(mockError);
                 done();
             });
 
