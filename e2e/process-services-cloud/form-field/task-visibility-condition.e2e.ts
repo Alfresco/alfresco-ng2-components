@@ -24,7 +24,7 @@ import {
     StringUtil,
     StartTasksCloudPage,
     TaskFormCloudComponent,
-    StartProcessCloudPage
+    StartProcessCloudPage, ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
@@ -44,6 +44,7 @@ describe('Task cloud visibility', async () => {
     const startProcessPage = new StartProcessCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const loginSSOPage = new LoginSSOPage();
+    const widget = new ProcessCloudWidgetPage();
 
     const apiService = new ApiService();
     const identityService = new IdentityService(apiService);
@@ -57,7 +58,7 @@ describe('Task cloud visibility', async () => {
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -146,13 +147,16 @@ describe('Task cloud visibility', async () => {
         await tasksCloudDemoPage.taskListCloudComponent().selectRow('boolean_visibility_task');
         await taskFormCloudComponent.clickClaimButton();
 
+        await browser.sleep(400);
+
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox2');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Checkbox3');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
-        await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox1');
-        await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox2');
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox3');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox1');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+
+        await widget.checkboxWidget().isCheckboxDisplayed('Checkbox3');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
         await taskFormCloudComponent.clickCompleteButton();
@@ -172,9 +176,10 @@ describe('Task cloud visibility', async () => {
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Checkbox3');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
-        await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox1');
-        await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox2');
-        await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox3');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox1');
+        await widget.checkboxWidget().clickCheckboxInput('Checkbox2');
+
+        await widget.checkboxWidget().isCheckboxDisplayed('Checkbox3');
         await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
         await taskFormCloudComponent.clickCompleteButton();

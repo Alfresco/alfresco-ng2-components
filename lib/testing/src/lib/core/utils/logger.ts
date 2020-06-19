@@ -32,35 +32,43 @@ export class LogLevelsEnum extends Number {
 }
 
 export let logLevels: any[] = [
-    {level: LogLevelsEnum.TRACE, name: 'TRACE'},
-    {level: LogLevelsEnum.DEBUG, name: 'DEBUG'},
-    {level: LogLevelsEnum.INFO, name: 'INFO'},
-    {level: LogLevelsEnum.WARN, name: 'WARN'},
-    {level: LogLevelsEnum.ERROR, name: 'ERROR'},
-    {level: LogLevelsEnum.SILENT, name: 'SILENT'}
+    { level: LogLevelsEnum.TRACE, name: 'TRACE' },
+    { level: LogLevelsEnum.DEBUG, name: 'DEBUG' },
+    { level: LogLevelsEnum.INFO, name: 'INFO' },
+    { level: LogLevelsEnum.WARN, name: 'WARN' },
+    { level: LogLevelsEnum.ERROR, name: 'ERROR' },
+    { level: LogLevelsEnum.SILENT, name: 'SILENT' }
 ];
 
 /* tslint:disable:no-console */
 export class Logger {
     static info(...messages: string[]): void {
-        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.INFO) {
+        if (browser.params.testConfig && Logger.getLogLevelByName(browser.params.testConfig.appConfig.log) >= LogLevelsEnum.INFO) {
             console.log(infoColor, messages.join(''));
         }
     }
 
     static log(...messages: string[]): void {
-        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.TRACE) {
+        if (browser.params.testConfig && Logger.getLogLevelByName(browser.params.testConfig.appConfig.log) >= LogLevelsEnum.TRACE) {
             console.log(logColor, messages.join(''));
         }
     }
 
     static warn(...messages: string[]): void {
-        if (browser.params.testConfig && browser.params.testConfig.appConfig.log >= LogLevelsEnum.WARN) {
+        if (browser.params.testConfig && Logger.getLogLevelByName(browser.params.testConfig.appConfig.log) >= LogLevelsEnum.WARN) {
             console.log(warnColor, messages.join(''));
         }
     }
 
     static error(...messages: string[]): void {
         console.log(errorColor, messages.join(''));
+    }
+
+    private static getLogLevelByName(name: string): number {
+        const log = logLevels.find((currentLog) => {
+            return currentLog.name === name;
+        });
+
+        return log.level || 1;
     }
 }
