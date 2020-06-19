@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import path = require('path');
+import * as path from 'path';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 export class VersionManagePage {
 
-    togglePage: TogglePage = new TogglePage();
+    togglePage = new TogglePage();
 
-    showNewVersionButton: ElementFinder = element(by.id('adf-show-version-upload-button'));
-    uploadNewVersionInput: ElementFinder = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
-    uploadNewVersionButton: ElementFinder = element(by.css('adf-upload-version-button'));
-    uploadNewVersionContainer: ElementFinder = element(by.id('adf-new-version-uploader-container'));
-    cancelButton: ElementFinder = element(by.id('adf-new-version-cancel'));
-    majorRadio: ElementFinder = element(by.id('adf-new-version-major'));
-    minorRadio: ElementFinder = element(by.id('adf-new-version-minor'));
-    commentText: ElementFinder = element(by.id('adf-new-version-text-area'));
-    readOnlySwitch: ElementFinder = element(by.id('adf-version-manager-switch-readonly'));
-    downloadSwitch: ElementFinder = element(by.id('adf-version-manager-switch-download'));
-    commentsSwitch: ElementFinder = element(by.id('adf-version-manager-switch-comments'));
+    showNewVersionButton = element(by.id('adf-show-version-upload-button'));
+    uploadNewVersionInput = element(by.css('adf-upload-version-button input[data-automation-id="upload-single-file"]'));
+    uploadNewVersionButton = element(by.css('adf-upload-version-button'));
+    uploadNewVersionContainer = element(by.id('adf-new-version-uploader-container'));
+    cancelButton = element(by.id('adf-new-version-cancel'));
+    majorRadio = element(by.id('adf-new-version-major'));
+    minorRadio = element(by.id('adf-new-version-minor'));
+    commentText = element(by.id('adf-new-version-text-area'));
+    readOnlySwitch = element(by.id('adf-version-manager-switch-readonly'));
+    downloadSwitch = element(by.id('adf-version-manager-switch-download'));
+    commentsSwitch = element(by.id('adf-version-manager-switch-comments'));
 
     async checkUploadNewVersionsButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
@@ -43,48 +43,48 @@ export class VersionManagePage {
         await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
     }
 
-    async uploadNewVersionFile(fileLocation): Promise<void> {
+    async uploadNewVersionFile(fileLocation: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsPresent(this.uploadNewVersionInput);
         await this.uploadNewVersionInput.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
         await BrowserVisibility.waitUntilElementIsVisible(this.showNewVersionButton);
     }
 
-    async getFileVersionName(version): Promise<string> {
-        const fileElement: ElementFinder = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
+    async getFileVersionName(version: string): Promise<string> {
+        const fileElement = element(by.css(`[id="adf-version-list-item-name-${version}"]`));
         return BrowserActions.getText(fileElement);
     }
 
-    async checkFileVersionExist(version): Promise<void> {
-        const fileVersion: ElementFinder = element(by.id(`adf-version-list-item-version-${version}`));
+    async checkFileVersionExist(version: string): Promise<void> {
+        const fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
         await BrowserVisibility.waitUntilElementIsVisible(fileVersion);
     }
 
-    async checkFileVersionNotExist(version): Promise<void> {
-        const fileVersion: ElementFinder = element(by.id(`adf-version-list-item-version-${version}`));
+    async checkFileVersionNotExist(version: string): Promise<void> {
+        const fileVersion = element(by.id(`adf-version-list-item-version-${version}`));
         await BrowserVisibility.waitUntilElementIsNotVisible(fileVersion);
     }
 
-    async getFileVersionComment(version): Promise<string> {
-        const fileComment: ElementFinder = element(by.id(`adf-version-list-item-comment-${version}`));
+    async getFileVersionComment(version: string): Promise<string> {
+        const fileComment = element(by.id(`adf-version-list-item-comment-${version}`));
         return BrowserActions.getText(fileComment);
     }
 
-    async getFileVersionDate(version): Promise<string> {
-        const fileDate: ElementFinder = element(by.id(`adf-version-list-item-date-${version}`));
+    async getFileVersionDate(version: string): Promise<string> {
+        const fileDate = element(by.id(`adf-version-list-item-date-${version}`));
         return BrowserActions.getText(fileDate);
     }
 
-    async enterCommentText(text): Promise<void> {
+    async enterCommentText(text: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.commentText, text);
     }
 
     async clickMajorChange(): Promise<void> {
-        const radioMajor: ElementFinder = element(by.id(`adf-new-version-major`));
+        const radioMajor = element(by.id(`adf-new-version-major`));
         await BrowserActions.click(radioMajor);
     }
 
     async clickMinorChange(): Promise<void> {
-        const radioMinor: ElementFinder = element(by.id(`adf-new-version-minor`));
+        const radioMinor = element(by.id(`adf-new-version-minor`));
         await BrowserActions.click(radioMinor);
     }
 
@@ -131,7 +131,7 @@ export class VersionManagePage {
         await this.togglePage.enableToggle(this.commentsSwitch);
     }
 
-    async clickActionButton(version): Promise<void> {
+    async clickActionButton(version: string): Promise<void> {
         await BrowserActions.click(element(by.id(`adf-version-list-action-menu-button-${version}`)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('.cdk-overlay-container .mat-menu-content')));
     }
@@ -149,27 +149,27 @@ export class VersionManagePage {
     }
 
     async closeDisabledActionsMenu(): Promise<void> {
-        const container: ElementFinder = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
+        const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await BrowserActions.closeDisabledMenu();
         await BrowserVisibility.waitUntilElementIsNotVisible(container);
     }
 
-    async downloadFileVersion(version): Promise<void> {
+    async downloadFileVersion(version: string): Promise<void> {
         await this.clickActionButton(version);
-        const downloadButton: ElementFinder = element(by.id(`adf-version-list-action-download-${version}`));
+        const downloadButton = element(by.id(`adf-version-list-action-download-${version}`));
         await BrowserActions.click(downloadButton);
         await BrowserVisibility.waitUntilElementIsNotVisible(downloadButton);
     }
 
-    async deleteFileVersion(version): Promise<void> {
+    async deleteFileVersion(version: string): Promise<void> {
         await this.clickActionButton(version);
-        const deleteButton: ElementFinder = element(by.id(`adf-version-list-action-delete-${version}`));
+        const deleteButton = element(by.id(`adf-version-list-action-delete-${version}`));
         await BrowserActions.click(deleteButton);
     }
 
-    async restoreFileVersion(version): Promise<void> {
+    async restoreFileVersion(version: string): Promise<void> {
         await this.clickActionButton(version);
-        const restoreButton: ElementFinder = element(by.id(`adf-version-list-action-restore-${version}`));
+        const restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
         await BrowserActions.click(restoreButton);
     }
 
@@ -179,7 +179,7 @@ export class VersionManagePage {
         await BrowserActions.click(viewButton);
     }
 
-    async checkActionsArePresent(version): Promise<void> {
+    async checkActionsArePresent(version: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-download-${version}`)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-delete-${version}`)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-restore-${version}`)));

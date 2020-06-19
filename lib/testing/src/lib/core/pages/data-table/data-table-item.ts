@@ -16,7 +16,7 @@
  */
 
 import { Column } from './column';
-import { by, element, ElementFinder, Locator } from 'protractor';
+import { by, element, ElementFinder, Locator, protractor, browser } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 
@@ -25,7 +25,7 @@ export class DataTableItem {
     rootElement: ElementFinder;
     rows: Locator = by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
 
-    constructor(rootElement: ElementFinder = element.all(by.css('adf-datatable')).first()) {
+    constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
     }
 
@@ -58,5 +58,11 @@ export class DataTableItem {
 
     async waitForFirstRow(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(this.rows).first());
+    }
+
+    async clickAndEnterOnRow(columnName: string, columnValue: string): Promise<void> {
+        const row = this.getRow(columnName, columnValue);
+        await BrowserActions.click(row);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 }

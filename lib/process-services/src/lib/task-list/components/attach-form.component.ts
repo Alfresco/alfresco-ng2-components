@@ -64,11 +64,7 @@ export class AttachFormComponent implements OnInit, OnChanges {
         this.attachFormControl = new FormControl('', Validators.required);
         this.attachFormControl.valueChanges.subscribe( (currentValue) => {
             if (this.attachFormControl.valid) {
-                if ( this.formId !== currentValue) {
-                    this.disableSubmit = false;
-                } else {
-                    this.disableSubmit = true;
-                }
+                this.disableSubmit = this.formId === currentValue;
             }
         });
     }

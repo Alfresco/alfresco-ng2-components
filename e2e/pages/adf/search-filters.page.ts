@@ -16,28 +16,28 @@
  */
 
 import { BrowserVisibility, DateRangeFilterPage, NumberRangeFilterPage, SearchCategoriesPage, SearchCheckListPage, SearchRadioPage, SearchSliderPage, SearchTextPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 
 export class SearchFiltersPage {
 
     searchCategoriesPage: SearchCategoriesPage = new SearchCategoriesPage();
 
-    searchFilters: ElementFinder = element(by.css('adf-search-filter'));
-    fileTypeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
-    creatorFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
-    fileSizeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
-    nameFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
-    checkListFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
-    createdDateRangeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
-    typeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
-    sizeRangeFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]'));
-    sizeSliderFilter: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]'));
-    facetQueriesDefaultGroup: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' +
+    searchFilters = element(by.css('adf-search-filter'));
+    fileTypeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.TYPE"]'));
+    creatorFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.CREATOR"]'));
+    fileSizeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_FIELDS.SIZE"]'));
+    nameFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Name"]'));
+    checkListFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Check List"]'));
+    createdDateRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Created Date (range)"]'));
+    typeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type"]'));
+    sizeRangeFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size (range)"]'));
+    sizeSliderFilter = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Content Size"]'));
+    facetQueriesDefaultGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-SEARCH.FACET_QUERIES.MY_FACET_QUERIES"],' +
         'mat-expansion-panel[data-automation-id="expansion-panel-My facet queries"]'));
-    facetQueriesTypeGroup: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]'));
-    facetQueriesSizeGroup: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]'));
-    facetIntervalsByCreated: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-The Created"]'));
-    facetIntervalsByModified: ElementFinder = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]'));
+    facetQueriesTypeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Type facet queries"]'));
+    facetQueriesSizeGroup = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-Size facet queries"]'));
+    facetIntervalsByCreated = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-The Created"]'));
+    facetIntervalsByModified = element(by.css('mat-expansion-panel[data-automation-id="expansion-panel-TheModified"]'));
 
     async checkSearchFiltersIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchFilters);
@@ -71,7 +71,7 @@ export class SearchFiltersPage {
         return SearchCategoriesPage.radioFiltersPage(this.typeFilter);
     }
 
-    async checkCustomFacetFieldLabelIsDisplayed(fieldLabel): Promise<void> {
+    async checkCustomFacetFieldLabelIsDisplayed(fieldLabel: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`mat-expansion-panel[data-automation-id="expansion-panel-${fieldLabel}"]`)));
     }
 

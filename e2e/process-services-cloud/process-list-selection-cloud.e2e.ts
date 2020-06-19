@@ -22,10 +22,14 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { EditProcessFilterConfiguration } from './config/edit-process-filter.config';
+import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
 
     describe('Process List - selection', () => {
+
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
@@ -33,39 +37,37 @@ describe('Process list cloud', () => {
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
 
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
+        const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
+
         let testUser, groupInfo;
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
         const noOfProcesses = 3;
         const processInstances = [];
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
+        const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+
+            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
-            processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
             for (let i = 0; i < noOfProcesses; i++) {
                 const response = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
                 processInstances.push(response.entry.id);
             }
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+            await loginSSOPage.login(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 
@@ -81,7 +83,7 @@ describe('Process list cloud', () => {
             await appListCloudComponent.goToApp(simpleApp);
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayProcessDetails();
             await tasksCloudDemoPage.clickAppButton();
@@ -92,7 +94,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.selectSelectionMode('None');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProperty('initiator', testUser.username);
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -104,7 +106,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.selectSelectionMode('Single');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -121,7 +123,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.selectSelectionMode('Multiple');
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().selectRowById(processInstances[0]);
@@ -138,7 +140,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);
@@ -158,7 +160,7 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await browser.sleep(1000);
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
             await processCloudDemoPage.processListCloudComponent().getDataTable().checkAllRows();
@@ -179,7 +181,7 @@ describe('Process list cloud', () => {
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();
             await processCloudDemoPage.processFilterCloudComponent.isProcessFiltersListVisible();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toEqual(PROCESSES.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ 'initiator': testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
             await processCloudDemoPage.processListCloudComponent().checkCheckboxById(processInstances[0]);

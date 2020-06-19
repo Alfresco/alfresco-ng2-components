@@ -16,29 +16,27 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     let uploadedFolder, uploadedFolderExtra;
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     let testFileNode, pdfBFileNode;
     const navigationBarPage = new NavigationBarPage();
+    const usersActions = new UsersActions(apiService);
 
     afterEach(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -55,11 +53,9 @@ describe('Document List Component', () => {
             await uploadActions.deleteFileOrFolder(pdfBFileNode.entry.id);
             pdfBFileNode = null;
         }
-
     });
 
     describe('Thumbnails and tooltips', () => {
-
         const pdfFile = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
@@ -78,12 +74,11 @@ describe('Document List Component', () => {
         let filePdfNode, fileTestNode, fileDocxNode, folderNode;
 
         beforeAll(async () => {
-            acsUser = new AcsUserModel();
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            acsUser = await usersActions.createUser();
 
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
@@ -93,7 +88,7 @@ describe('Document List Component', () => {
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }
@@ -106,11 +101,10 @@ describe('Document List Component', () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-
-        });
+    });
 
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
         });
 

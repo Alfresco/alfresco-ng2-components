@@ -18,7 +18,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
-import { WidgetComponent } from './../widget.component';
 import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing';
@@ -87,7 +86,7 @@ describe('HyperlinkWidgetComponent', () => {
         widget.field = null;
         widget.ngOnInit();
 
-        expect(widget.linkUrl).toBe(WidgetComponent.DEFAULT_HYPERLINK_URL);
+        expect(widget.linkUrl).toBe(HyperlinkWidgetComponent.DEFAULT_HYPERLINK_URL);
     });
 
     it('should return default url for missing field property', () => {
@@ -96,7 +95,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        expect(widget.linkUrl).toBe(WidgetComponent.DEFAULT_HYPERLINK_URL);
+        expect(widget.linkUrl).toBe(HyperlinkWidgetComponent.DEFAULT_HYPERLINK_URL);
     });
 
     it('should prepend url with scheme', () => {
@@ -106,7 +105,7 @@ describe('HyperlinkWidgetComponent', () => {
         });
         widget.ngOnInit();
 
-        expect(widget.linkUrl).toBe(`${WidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`);
+        expect(widget.linkUrl).toBe(`${HyperlinkWidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`);
     });
 
     it('should not prepend url with scheme', () => {
@@ -117,6 +116,42 @@ describe('HyperlinkWidgetComponent', () => {
         widget.ngOnInit();
 
         expect(widget.linkUrl).toBe(url);
+    });
+
+    it('should  value property content be use as link if present', () => {
+        const url = 'www.alfresco.com';
+
+        widget.field = new FormFieldModel(new FormModel(), {
+            value: url
+        });
+        widget.ngOnInit();
+
+        expect(widget.linkUrl).toBe(`${HyperlinkWidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`);
+    });
+
+    it('should use value property content over hyperlinkUrl ', () => {
+        const url = 'www.alfresco.com';
+
+        widget.field = new FormFieldModel(new FormModel(), {
+            value:  url,
+            hyperlinkUrl:  'www.alfresco-test.com'
+        });
+        widget.ngOnInit();
+
+        expect(widget.linkUrl).toBe(`${HyperlinkWidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`);
+    });
+
+    it('should use value property id displayText is not present ', () => {
+        const url = 'www.alfresco.com';
+
+        widget.field = new FormFieldModel(new FormModel(), {
+            displayText:  url
+        });
+        widget.ngOnInit();
+
+        fixture.detectChanges();
+        const hyperlinkWidgetLink = element.querySelector('a');
+        expect(hyperlinkWidgetLink.innerText).toBe(url);
     });
 
     it('should be able to set label property', () => {

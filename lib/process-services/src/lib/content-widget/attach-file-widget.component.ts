@@ -105,7 +105,8 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
     isAllFileSourceSelected(): boolean {
         return this.field.params &&
             this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'all-file-sources';
+            this.field.params.fileSource.serviceId === 'all-file-sources' &&
+            !this.field.params.link;
     }
 
     isOnlyLocalSourceSelected(): boolean {
@@ -224,6 +225,11 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
 
     private uploadFileFromCS(fileNodeList: any[], accountId: string, siteId?: string) {
         const filesSaved = [];
+
+        fileNodeList.forEach(node => {
+            node.isLink = this.field.params.link;
+        });
+
         from(fileNodeList).pipe(
             mergeMap((node) =>
                 zip(

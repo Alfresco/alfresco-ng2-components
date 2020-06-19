@@ -15,32 +15,29 @@
  * limitations under the License.
  */
 
-import { DataTableComponentPage, LoginPage } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, DataTableComponentPage, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Datatable component - selection', () => {
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
     const dataTablePage = new DataTablePage();
-    const loginPage = new LoginPage();
-    const acsUser = new AcsUserModel();
+    const loginPage = new LoginSSOPage();
+    const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const dataTableComponent = new DataTableComponentPage();
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await usersActions.createUser(acsUser);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.navigateToDatatable();
    });

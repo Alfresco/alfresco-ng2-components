@@ -17,7 +17,7 @@
 
 import { element, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../utils/public-api';
-import { DropdownPage } from '../../../material/pages/dropdown.page';
+import { DropdownPage } from '../material/dropdown.page';
 
 export class CardSelectItemPage {
 
@@ -31,7 +31,7 @@ export class CardSelectItemPage {
     }
 
     async checkLabelIsPresent(): Promise<void> {
-        const labelElement: ElementFinder = this.rootElement.element(this.labelLocator);
+        const labelElement = this.rootElement.element(this.labelLocator);
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 

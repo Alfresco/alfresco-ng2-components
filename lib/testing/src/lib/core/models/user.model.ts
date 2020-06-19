@@ -17,24 +17,49 @@
 
 import { StringUtil } from '../utils/string.util';
 import { browser } from 'protractor';
+import { UserRepresentation } from '@alfresco/js-api';
 
 export class UserModel {
 
-    EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
+    firstName?: string = StringUtil.generateRandomLowercaseString();
+    lastName?: string = StringUtil.generateRandomLowercaseString();
+    password?: string = StringUtil.generateRandomLowercaseString(4) + StringUtil.generateRandomString(4).toUpperCase();
+    email?: string;
+    username?: string;
+    idIdentityService?: string;
+    type = 'enterprise';
+    tenantId;
+    company;
+    id: number;
 
-    firstName: string = StringUtil.generateRandomString();
-    lastName: string = StringUtil.generateRandomString();
-    password: string = StringUtil.generateRandomString();
-    email: string = StringUtil.generateRandomEmail(`@${this.EMAIL_DOMAIN}.com`);
-    username: string = StringUtil.generateRandomString().toLowerCase();
-    idIdentityService: string;
+    constructor(details: any = {}) {
+        const EMAIL_DOMAIN = browser.params.testConfig ? browser.params.testConfig.projectName : 'alfresco';
+        this.firstName = details.firstName ? details.firstName : this.firstName;
+        this.lastName = details.lastName ? details.lastName : this.lastName;
 
-    constructor(details?: any) {
-        Object.assign(this, details);
+        const USER_IDENTIFY = `${this.firstName}${this.lastName}.${StringUtil.generateRandomLowercaseString(5)}`;
+
+        this.password = details.password ? details.password : this.password;
+        this.email = details.email ? details.email : `${USER_IDENTIFY}@${EMAIL_DOMAIN}.com`;
+        this.username = details.username ? details.username : USER_IDENTIFY;
+        this.idIdentityService = details.idIdentityService ? details.idIdentityService : this.idIdentityService;
+        this.type = details.type ? details.type : this.type;
+        this.tenantId = details.tenantId ? details.tenantId : this.tenantId;
+        this.company = details.company ? details.company : this.company;
+        this.id = details.id ? details.id : this.id;
     }
 
-    get id() {
-        return this.email;
+    getAPSModel() {
+        return new UserRepresentation({
+            firstName: this.firstName,
+            lastName: this.lastName,
+            password: this.password,
+            email: this.email,
+            type: this.type,
+            tenantId: this.tenantId,
+            company: this.company,
+            id: this.id
+        });
     }
 
 }

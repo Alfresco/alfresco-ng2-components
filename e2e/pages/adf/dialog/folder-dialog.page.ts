@@ -19,13 +19,13 @@ import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialogPage {
-    folderDialog: ElementFinder = element(by.css('adf-folder-dialog'));
-    folderNameField: ElementFinder = this.folderDialog.element(by.id('adf-folder-name-input'));
-    folderDescriptionField: ElementFinder = this.folderDialog.element(by.id('adf-folder-description-input'));
-    createUpdateButton: ElementFinder = this.folderDialog.element(by.id('adf-folder-create-button'));
-    cancelButton: ElementFinder = this.folderDialog.element(by.id('adf-folder-cancel-button'));
-    folderTitle: ElementFinder = this.folderDialog.element((by.css('h2.mat-dialog-title')));
-    validationMessage: ElementFinder = this.folderDialog.element(by.css('div.mat-form-field-subscript-wrapper mat-hint span'));
+    folderDialog = element(by.css('adf-folder-dialog'));
+    folderNameField = this.folderDialog.element(by.id('adf-folder-name-input'));
+    folderDescriptionField = this.folderDialog.element(by.id('adf-folder-description-input'));
+    createUpdateButton = this.folderDialog.element(by.id('adf-folder-create-button'));
+    cancelButton = this.folderDialog.element(by.id('adf-folder-cancel-button'));
+    folderTitle = this.folderDialog.element((by.css('h2.mat-dialog-title')));
+    validationMessage = this.folderDialog.element(by.css('div.mat-form-field-subscript-wrapper mat-hint span'));
 
     async getDialogTitle(): Promise<string> {
         return BrowserActions.getText(this.folderTitle);

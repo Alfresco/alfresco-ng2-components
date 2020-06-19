@@ -78,8 +78,8 @@ export class FilterRepresentationModel implements UserTaskFilterRepresentation {
         }
     }
 
-    hasFilter() {
-        return this.filter ? true : false;
+    hasFilter(): boolean {
+        return !!this.filter;
     }
 }
 

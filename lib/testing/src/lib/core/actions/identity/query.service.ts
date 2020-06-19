@@ -17,7 +17,7 @@
 
 import { ApiService } from '../api.service';
 import { Logger } from '../../utils/logger';
-import { ApiUtil } from '../../structure/api.util';
+import { ApiUtil } from '../../actions/api.util';
 
 export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED' | 'COMPLETED';
 

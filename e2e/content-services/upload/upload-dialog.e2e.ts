@@ -15,30 +15,29 @@
  * limitations under the License.
  */
 
-import { BrowserActions, LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginPage();
-    const acsUser = new AcsUserModel();
+    const loginPage = new LoginSSOPage();
     const versionManagePage = new VersionManagePage();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const apiService = new ApiService();
+
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    let acsUser: UserModel;
 
     const firstPdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -88,10 +87,10 @@ describe('Upload component', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
    });
 
@@ -102,9 +101,8 @@ describe('Upload component', () => {
     afterEach(async () => {
         const nbResults = await contentServicesPage.numberOfResultsDisplayed();
         if (nbResults > 1) {
-            const nodesPromise = await contentServicesPage.getElementsDisplayedId();
-            for (const node of nodesPromise) {
-                const nodeId = await node;
+            const nodeIds = await contentServicesPage.getElementsDisplayedId();
+            for (const nodeId of nodeIds) {
                 await uploadActions.deleteFileOrFolder(nodeId);
             }
         }
@@ -232,7 +230,7 @@ describe('Upload component', () => {
                     document.querySelector("#adf-upload-dialog-cancel-all").click();
                     document.querySelector("#adf-upload-dialog-cancel").click();
                 }
-              }, 2000)`);
+              }, 500)`);
         await contentServicesPage.uploadFolder(adfBigFolder.location);
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');

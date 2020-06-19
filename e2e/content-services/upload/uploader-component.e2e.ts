@@ -17,29 +17,27 @@
 
 import { element, by, browser } from 'protractor';
 
-import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { DropActions, LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { DropActions } from '../../actions/drop.actions';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginPage();
-    const acsUser = new AcsUserModel();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const uploadActions = new UploadActions(apiService);
+
+    let acsUser: UserModel;
 
     const firstPdfFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
@@ -67,10 +65,10 @@ describe('Upload component', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await loginPage.login(acsUser.email, acsUser.password);
         const pdfUploadedFile = await uploadActions.uploadFile(firstPdfFileModel.location, firstPdfFileModel.name, '-my-');
         Object.assign(firstPdfFileModel, pdfUploadedFile.entry);
     });
@@ -84,7 +82,6 @@ describe('Upload component', () => {
     });
 
     describe('', () => {
-
         afterEach(async () => {
             const nodeList = await contentServicesPage.getElementsDisplayedId();
             for (const node of nodeList) {
@@ -264,10 +261,9 @@ describe('Upload component', () => {
         await browser.sleep(1000);
         await uploadToggles.addExtension('.docx');
 
-        const dragAndDrop = new DropActions();
         const dragAndDropArea = element.all(by.css('adf-upload-drag-area div')).first();
 
-        await dragAndDrop.dropFile(dragAndDropArea, docxFileModel.location);
+        await DropActions.dropFile(dragAndDropArea, docxFileModel.location);
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
 
         await uploadDialog.removeUploadedFile(docxFileModel.name);
@@ -275,7 +271,7 @@ describe('Upload component', () => {
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
 
-        await dragAndDrop.dropFile(dragAndDropArea, pngFileModel.location);
+        await DropActions.dropFile(dragAndDropArea, pngFileModel.location);
         await contentServicesPage.checkContentIsNotDisplayed(pngFileModel.name);
         await uploadDialog.dialogIsNotDisplayed();
         await uploadToggles.disableExtensionFilter();

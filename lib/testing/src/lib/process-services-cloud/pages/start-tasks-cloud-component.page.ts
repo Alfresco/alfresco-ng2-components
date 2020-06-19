@@ -21,16 +21,16 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class StartTasksCloudPage {
 
-    name: ElementFinder = element(by.css('input[id="name_id"]'));
-    dueDate: ElementFinder = element(by.css('input[id="date_id"]'));
-    description: ElementFinder = element(by.css('textarea[id="description_id"]'));
-    priority: ElementFinder = element(by.css('input[formcontrolname="priority"]'));
-    startButton: ElementFinder = element(by.css('button[id="button-start"]'));
+    name = element(by.css('input[id="name_id"]'));
+    dueDate = element(by.css('input[id="date_id"]'));
+    description = element(by.css('textarea[id="description_id"]'));
+    priority = element(by.css('input[formcontrolname="priority"]'));
+    startButton = element(by.css('button[id="button-start"]'));
     startButtonEnabled = element(by.css('button[id="button-start"]:not(disabled)'));
-    cancelButton: ElementFinder = element(by.css('button[id="button-cancel"]'));
-    form: ElementFinder = element.all(by.css('adf-cloud-start-task form')).first();
-    formDefinitionSelector: ElementFinder = element(by.css('.adf-form-definition-selector'));
-    priorityStartTaskField: ElementFinder = element(by.css('input[formControlName="priority"]'));
+    cancelButton = element(by.css('button[id="button-cancel"]'));
+    form = element.all(by.css('adf-cloud-start-task form')).first();
+    formDefinitionSelector = element(by.css('.adf-form-definition-selector'));
+    priorityStartTaskField = element(by.css('input[formControlName="priority"]'));
 
     async checkFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.form);

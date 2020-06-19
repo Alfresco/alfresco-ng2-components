@@ -23,48 +23,44 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('Process list cloud', () => {
 
     describe('Process List - Custom Action Menu', () => {
+
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let queryService: QueryService;
-        let tasksService: TasksService;
+        const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
+        const queryService = new QueryService(apiService);
+        const tasksService = new TasksService(apiService);
+
         let testUser, groupInfo, editProcess, deleteProcess, editTask, deleteTask;
 
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
-
         beforeAll(async () => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
-            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-            await apiService.login(testUser.email, testUser.password);
-            processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService
+        await apiService.login(testUser.email, testUser.password);
+        const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
-            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
-            queryService = new QueryService(apiService);
+        editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
+        deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp);
 
-            editTask = await queryService.getProcessInstanceTasks(editProcess.entry.id, simpleApp);
-            deleteTask = await queryService.getProcessInstanceTasks(deleteProcess.entry.id, simpleApp);
-            tasksService = new TasksService(apiService);
-            await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
-            await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
+        editTask = await queryService.getProcessInstanceTasks(editProcess.entry.id, simpleApp);
+        deleteTask = await queryService.getProcessInstanceTasks(deleteProcess.entry.id, simpleApp);
+        await tasksService.claimTask(editTask.list.entries[0].entry.id, simpleApp);
+        await tasksService.claimTask(deleteTask.list.entries[0].entry.id, simpleApp);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         });
 
         afterAll(async() => {

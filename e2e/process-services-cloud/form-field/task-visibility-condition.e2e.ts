@@ -34,6 +34,8 @@ import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-service
 
 describe('Task cloud visibility', async () => {
 
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
@@ -43,23 +45,23 @@ describe('Task cloud visibility', async () => {
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const loginSSOPage = new LoginSSOPage();
 
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+    const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const processName = StringUtil.generateRandomString(5);
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
+
     let testUser, groupInfo;
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
     });
 
     afterAll(async () => {
@@ -85,14 +87,14 @@ describe('Task cloud visibility', async () => {
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 5);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '5');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 123);
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '123');
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
     });
 
@@ -114,18 +116,18 @@ describe('Task cloud visibility', async () => {
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number1');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 5);
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '5');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Number2');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 123);
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '123');
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Number2');
 
-        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', 4);
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await taskFormCloudComponent.formFields().setFieldValue(by.id, 'Number1', '4');
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
         await taskFormCloudComponent.clickCompleteButton();
     });
 
@@ -146,12 +148,12 @@ describe('Task cloud visibility', async () => {
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox2');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Checkbox3');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox1');
         await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox2');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox3');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
         await taskFormCloudComponent.clickCompleteButton();
     });
@@ -168,12 +170,12 @@ describe('Task cloud visibility', async () => {
 
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox2');
         await taskFormCloudComponent.formFields().checkWidgetIsHidden('Checkbox3');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox1');
         await taskFormCloudComponent.formFields().clickField(by.id, 'Checkbox2');
         await taskFormCloudComponent.formFields().checkWidgetIsVisible('Checkbox3');
-        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskFormCloudComponent.formFields().isCompleteFormButtonEnabled()).toEqual(true);
 
         await taskFormCloudComponent.clickCompleteButton();
     });

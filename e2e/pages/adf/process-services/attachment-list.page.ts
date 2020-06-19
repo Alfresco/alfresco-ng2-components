@@ -15,34 +15,33 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser, ElementFinder } from 'protractor';
-
-import path = require('path');
-import remote = require('selenium-webdriver/remote');
+import { element, by, protractor, browser } from 'protractor';
+import * as path from 'path';
+import * as remote from 'selenium-webdriver/remote';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {
 
-    attachFileButton: ElementFinder = element(by.css("input[type='file']"));
-    buttonMenu: ElementFinder = element(by.css("button[data-automation-id='action_menu_0']"));
-    viewButton: ElementFinder = element(by.css("button[data-automation-id*='MENU_ACTIONS.VIEW_CONTENT']"));
-    removeButton: ElementFinder = element(by.css("button[data-automation-id*='MENU_ACTIONS.REMOVE_CONTENT']"));
-    downloadButton: ElementFinder = element(by.css("button[data-automation-id*='MENU_ACTIONS.DOWNLOAD_CONTENT']"));
-    noContentContainer: ElementFinder = element(by.css("div[class*='adf-no-content-container']"));
+    attachFileButton = element(by.css("input[type='file']"));
+    buttonMenu = element(by.css("button[data-automation-id='action_menu_0']"));
+    viewButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.VIEW_CONTENT']"));
+    removeButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.REMOVE_CONTENT']"));
+    downloadButton = element(by.css("button[data-automation-id*='MENU_ACTIONS.DOWNLOAD_CONTENT']"));
+    noContentContainer = element(by.css("div[class*='adf-no-content-container']"));
 
     async checkEmptyAttachmentList(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noContentContainer);
     }
 
-    async clickAttachFileButton(fileLocation): Promise<void> {
+    async clickAttachFileButton(fileLocation: string): Promise<void> {
         browser.setFileDetector(new remote.FileDetector());
 
         await BrowserVisibility.waitUntilElementIsPresent(this.attachFileButton);
         await this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
     }
 
-    async checkFileIsAttached(name): Promise<void> {
-        const fileAttached: ElementFinder = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+    async checkFileIsAttached(name: string): Promise<void> {
+        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
@@ -50,7 +49,7 @@ export class AttachmentListPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.attachFileButton);
     }
 
-    async viewFile(name): Promise<void> {
+    async viewFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         await BrowserActions.click(this.buttonMenu);
@@ -59,7 +58,7 @@ export class AttachmentListPage {
         await browser.sleep(500);
     }
 
-    async removeFile(name): Promise<void> {
+    async removeFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         await BrowserActions.click(this.buttonMenu);
@@ -68,7 +67,7 @@ export class AttachmentListPage {
         await browser.sleep(500);
     }
 
-    async downloadFile(name): Promise<void> {
+    async downloadFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
         await BrowserActions.click(this.buttonMenu);
@@ -76,16 +75,16 @@ export class AttachmentListPage {
         await BrowserActions.click(this.downloadButton);
     }
 
-    async doubleClickFile(name): Promise<void> {
+    async doubleClickFile(name: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserVisibility.waitUntilElementIsVisible(element.all(by.css('div[data-automation-id="' + name + '"]')).first());
-        const fileAttached: ElementFinder = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
         await BrowserActions.click(fileAttached);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
-    async checkFileIsRemoved(name): Promise<void> {
-        const fileAttached: ElementFinder = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
+    async checkFileIsRemoved(name: string): Promise<void> {
+        const fileAttached = element.all(by.css('div[data-automation-id="' + name + '"]')).first();
         await BrowserVisibility.waitUntilElementIsNotVisible(fileAttached);
     }
 

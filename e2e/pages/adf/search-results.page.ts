@@ -16,17 +16,17 @@
  */
 
 import { BrowserVisibility, DataTableComponentPage, SearchSortingPickerPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { ContentServicesPage } from './content-services.page';
 
 export class SearchResultsPage {
 
-    noResultsMessage: ElementFinder = element(by.css('div[class="app-no-result-message"]'));
-    dataTable: DataTableComponentPage = new DataTableComponentPage();
-    searchSortingPicker: SearchSortingPickerPage = new SearchSortingPickerPage();
-    contentServices: ContentServicesPage = new ContentServicesPage();
+    noResultsMessage = element(by.css('div[class="app-no-result-message"]'));
+    dataTable = new DataTableComponentPage();
+    searchSortingPicker = new SearchSortingPickerPage();
+    contentServices = new ContentServicesPage();
 
-    getNodeHighlight(content) {
+    getNodeHighlight(content: string) {
         return this.dataTable.getCellByRowContentAndColumn('Display name', content, 'Search');
     }
 
@@ -34,7 +34,7 @@ export class SearchResultsPage {
         await this.dataTable.tableIsLoaded();
     }
 
-    async checkContentIsDisplayed(content): Promise<void> {
+    async checkContentIsDisplayed(content: string): Promise<void> {
         await this.dataTable.checkContentIsDisplayed('Display name', content);
     }
 
@@ -42,7 +42,7 @@ export class SearchResultsPage {
         return this.dataTable.numberOfRows();
     }
 
-    async checkContentIsNotDisplayed(content): Promise<void> {
+    async checkContentIsNotDisplayed(content: string): Promise<void> {
         await this.dataTable.checkContentIsNotDisplayed('Display name', content);
     }
 
@@ -54,11 +54,11 @@ export class SearchResultsPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.noResultsMessage);
     }
 
-    async navigateToFolder(content): Promise<void> {
+    async navigateToFolder(content: string): Promise<void> {
         await this.dataTable.doubleClickRow('Display name', content);
     }
 
-    async deleteContent(content): Promise<void> {
+    async deleteContent(content: string): Promise<void> {
         await this.contentServices.deleteContent(content);
     }
 

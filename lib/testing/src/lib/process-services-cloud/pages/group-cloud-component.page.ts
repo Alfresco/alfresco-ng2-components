@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class GroupCloudComponentPage {
 
-    groupCloudSearch: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
-    formFields: FormFields = new FormFields();
+    groupCloudSearch = element(by.css('input[data-automation-id="adf-cloud-group-search-input"]'));
+    formFields = new FormFields();
 
     async searchGroups(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
     }
 
-    async searchGroupsToExisting(name) {
+    async searchGroupsToExisting(name: string) {
         await BrowserActions.clearSendKeys(this.groupCloudSearch, name);
     }
 
@@ -87,7 +87,7 @@ export class GroupCloudComponentPage {
         }
     }
 
-    async checkGroupActiveField(name): Promise <boolean> {
+    async checkGroupActiveField(name: string): Promise <boolean> {
         const activeGroupField = element(by.css('group-cloud-widget .adf-readonly'));
         try {
             await BrowserActions.clearSendKeys(activeGroupField, name);

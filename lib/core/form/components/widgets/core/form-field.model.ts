@@ -221,7 +221,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private isTypeaheadFieldType(type: string): boolean {
-        return type === 'typeahead' ? true : false;
+        return type === 'typeahead';
     }
 
     private getFieldNameWithLabel(name: string): string {
@@ -419,11 +419,7 @@ export class FormFieldModel extends FormWidgetModel {
      * @param type
      */
     isInvalidFieldType(type: string) {
-        if (type === 'container') {
-            return true;
-        } else {
-            return false;
-        }
+        return type === 'container';
     }
 
     getOptionName(): string {

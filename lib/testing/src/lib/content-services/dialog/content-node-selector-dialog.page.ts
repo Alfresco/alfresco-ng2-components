@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
-import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class ContentNodeSelectorDialogPage {
-    dialog: ElementFinder = element(by.css(`adf-content-node-selector`));
-    header: ElementFinder = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
-    searchInputElement: ElementFinder = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-    searchLabel: ElementFinder = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
-    selectedRow: ElementFinder = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
-    cancelButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
-    moveCopyButton: ElementFinder = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
+    dialog = element(by.css(`adf-content-node-selector`));
+    header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
+    searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
+    searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
+    selectedRow = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
+    cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
+    moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));
 
-    contentList: DocumentListPage = new DocumentListPage(this.dialog);
-    dataTable: DataTableComponentPage = this.contentList.dataTablePage();
+    contentList = new DocumentListPage(this.dialog);
+    dataTable = this.contentList.dataTablePage();
     siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
 
     async checkDialogIsDisplayed(): Promise<void> {
@@ -55,7 +54,7 @@ export class ContentNodeSelectorDialogPage {
         return BrowserActions.getText(this.searchLabel);
     }
 
-    async checkSelectedSiteIsDisplayed(siteName): Promise<void> {
+    async checkSelectedSiteIsDisplayed(siteName: string): Promise<void> {
         await this.siteListDropdown.checkOptionIsSelected(siteName);
     }
 
@@ -100,11 +99,11 @@ export class ContentNodeSelectorDialogPage {
         await BrowserActions.clearSendKeys(this.searchInputElement, text);
     }
 
-    async clickContentNodeSelectorResult(name): Promise<void> {
+    async clickContentNodeSelectorResult(name: string): Promise<void> {
         await this.dataTable.clickRowByContent(name);
     }
 
-    async doubleClickContentNodeSelectorResult(name): Promise<void> {
+    async doubleClickContentNodeSelectorResult(name: string): Promise<void> {
         // First click to select from search mode and second click to actually open node
         await this.dataTable.doubleClickRowByContent(name);
         await this.dataTable.doubleClickRowByContent(name);

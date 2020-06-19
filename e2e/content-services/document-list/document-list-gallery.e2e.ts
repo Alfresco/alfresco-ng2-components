@@ -16,27 +16,24 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { LoginPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
-    this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const uploadActions = new UploadActions(apiService);
     let acsUser = null;
     const navigationBarPage = new NavigationBarPage();
 
     describe('Gallery View', () => {
-
         const cardProperties = {
             DISPLAY_NAME: 'Display name',
             SIZE: 'Size',
@@ -44,8 +41,6 @@ describe('Document List Component', () => {
             CREATED_BY: 'Created by',
             CREATED: 'Created'
         };
-
-        let funnyUser;
 
         const pdfFile = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -65,23 +60,22 @@ describe('Document List Component', () => {
         let filePdfNode, fileTestNode, fileDocxNode, folderNode, filePDFSubNode;
 
         beforeAll(async () => {
-            acsUser = new AcsUserModel();
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-            funnyUser = await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            acsUser = await usersActions.createUser();
+            await apiService.getInstance().login(acsUser.email, acsUser.password);
             filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
             fileTestNode = await uploadActions.uploadFile(testFile.location, testFile.name, '-my-');
             fileDocxNode = await uploadActions.uploadFile(docxFile.location, docxFile.name, '-my-');
             folderNode = await uploadActions.createFolder(folderName, '-my-');
             filePDFSubNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, folderNode.entry.id);
 
-            await loginPage.loginToContentServicesUsingUserModel(acsUser);
+            await loginPage.login(acsUser.email, acsUser.password);
         });
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
 
-            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             if (filePdfNode) {
                 await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
             }
@@ -97,8 +91,7 @@ describe('Document List Component', () => {
             if (folderNode) {
                 await uploadActions.deleteFileOrFolder(folderNode.entry.id);
             }
-
-        });
+    });
 
         beforeEach(async () => {
             await navigationBarPage.clickHomeButton();
@@ -129,27 +122,27 @@ describe('Document List Component', () => {
             await contentServicesPage.checkDocumentCardPropertyIsShowed(folderName, cardProperties.CREATED);
 
             await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.DISPLAY_NAME)).toBe(folderName);
-            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED_BY)).toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(folderName, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.DISPLAY_NAME)).toBe(pdfFile.name);
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.SIZE)).toBe(`105.02 KB`);
-            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+            await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED_BY)).toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(pdfFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.DISPLAY_NAME)).toBe(docxFile.name);
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.SIZE)).toBe(`11.81 KB`);
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED_BY))
-                .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+                .toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(docxFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
 
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.DISPLAY_NAME)).toBe(testFile.name);
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.SIZE)).toBe(`14 Bytes`);
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED_BY))
-                .toBe(`${funnyUser.entry.firstName} ${funnyUser.entry.lastName}`);
+                .toBe(`${acsUser.firstName} ${acsUser.lastName}`);
 
             await expect(await contentServicesPage.getAttributeValueForElement(testFile.name, cardProperties.CREATED)).toMatch(/(ago|few)/);
         });

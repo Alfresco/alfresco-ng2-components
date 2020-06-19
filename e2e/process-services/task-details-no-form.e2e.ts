@@ -15,46 +15,42 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Task Details - No form', () => {
 
-    const loginPage = new LoginPage();
-    const navigationBarPage = new NavigationBarPage();
-    let processUserModel;
     const app = browser.params.resources.Files.NO_FORM_APP;
+
+    const loginPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
+    const apiService = new ApiService();
+
+    let processUserModel;
     const taskPage = new TasksPage();
     const noFormMessage = 'No forms attached';
     let importedApp;
 
     beforeAll(async () => {
-        const users = new UsersActions();
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        const usersActions = new UsersActions(apiService);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        const { id } = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        processUserModel = await usersActions.createUser();
 
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(apiService);
         importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(importedApp.name);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await new ProcessUtil(apiService).startProcessOfApp(importedApp.name);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     afterAll( async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C289311] Should attach form and complete buttons to be displayed when no form is attached', async () => {

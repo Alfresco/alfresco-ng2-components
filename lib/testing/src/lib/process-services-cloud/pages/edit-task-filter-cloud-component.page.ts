@@ -19,25 +19,25 @@ import { browser, by, element, protractor, ElementFinder } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../material/pages/dropdown.page';
+import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class EditTaskFilterCloudComponentPage {
 
-    customiseFilter: ElementFinder = element(by.id('adf-edit-task-filter-title-id'));
-    assignee: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
-    priority: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
-    taskName: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
-    id: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
-    processDefinitionId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
-    processInstanceId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
-    lastModifiedFrom: ElementFinder = element(by.css('input[placeholder="LastModifiedFrom"]'));
-    lastModifiedTo: ElementFinder = element(by.css('input[placeholder="LastModifiedTo"]'));
-    parentTaskId: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
-    owner: ElementFinder = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
-    saveButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-save"]'));
-    saveAsButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
-    deleteButton: ElementFinder = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
-    filter: ElementFinder = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
+    customiseFilter = element(by.id('adf-edit-task-filter-title-id'));
+    assignee = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-assignee"]'));
+    priority = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-priority"]'));
+    taskName = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskName"]'));
+    id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
+    processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
+    processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
+    lastModifiedFrom = element(by.css('input[placeholder="LastModifiedFrom"]'));
+    lastModifiedTo = element(by.css('input[placeholder="LastModifiedTo"]'));
+    parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
+    owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
+    saveButton = element(by.css('[data-automation-id="adf-filter-action-save"]'));
+    saveAsButton = element(by.css('[data-automation-id="adf-filter-action-saveAs"]'));
+    deleteButton = element(by.css('[data-automation-id="adf-filter-action-delete"]'));
+    filter = element(by.css(`adf-cloud-edit-task-filter mat-expansion-panel-header`));
 
     private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-appName']`));
     private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-task-property-status']`));
@@ -183,7 +183,7 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async clearAssignee(): Promise<void> {
-        await BrowserActions.clearWithBackSpace(this.assignee, 200);
+        await BrowserActions.clearWithBackSpace(this.assignee, 250);
         await browser.driver.sleep(1000);
     }
 
@@ -200,7 +200,7 @@ export class EditTaskFilterCloudComponentPage {
         return this.appNameDropdown.getSelectedOptionText();
     }
 
-    async setId(option): Promise<void> {
+    async setId(option: string): Promise<void> {
         await this.setProperty('taskId', option);
     }
 

@@ -16,58 +16,55 @@
  */
 
 import {
+    ApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
-    IntegrationService,
-    LoginPage,
+    IntegrationService, LocalStorageUtil,
+    LoginSSOPage, UserModel,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { User } from '../models/APS/user';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach Folder', () => {
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ALL',
-        hostEcm: browser.params.testConfig.adf_acs.host,
-        hostBpm: browser.params.testConfig.adf_aps.host
-    });
-    const integrationService = new IntegrationService(this.alfrescoJsApi);
-    const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
-    const users = new UsersActions();
-    const loginPage = new LoginPage();
+    const apiService = new ApiService({ provider: 'ALL' });
+    const integrationService = new IntegrationService(apiService);
+    const applicationService = new ApplicationsUtil(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    const loginPage = new LoginSSOPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-    const meetingNotes = 'Meeting Notes';
-    const { adminEmail, adminPassword } = browser.params.testConfig.adf;
-    let user: User;
+    let user: UserModel;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(adminEmail, adminPassword);
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
-        const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        user = await usersActions.createUser();
 
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: 'adf dev', host: browser.params.testConfig.adf_acs.host });
-        await this.alfrescoJsApi.login(user.email, user.password);
+        await integrationService.addCSIntegration({
+            tenantId: user.tenantId,
+            name: 'adf dev',
+            host: browser.params.testConfig.appConfig.ecmHost
+        });
+        await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
-        await loginPage.loginToAllUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.login(adminEmail, adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
-   });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+    });
 
     it('[C246534] Attach folder - ACS', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -81,7 +78,7 @@ describe('Attach Folder', () => {
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
-        await contentNodeSelector.searchAndSelectResult(meetingNotes, meetingNotes);
+        await contentNodeSelector.searchAndSelectResult('Meeting Notes', 'Meeting Notes');
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
 

@@ -28,9 +28,9 @@ export interface KubeArgs {
     token?: string;
     clusterEnv?: string;
     clusterUrl?: string;
-    serviceName?: string;
     dockerRepo?: string;
-    deployName?: string;
+    label?: string;
+    namespaces?: string;
 }
 
 function setCluster(args: KubeArgs) {
@@ -57,9 +57,16 @@ function useContext(args: KubeArgs) {
     logger.info(response);
 }
 
-function setImage(args: KubeArgs) {
+function getDeploymentName(args: KubeArgs, namespace: string): string {
+    logger.info('Perform get deployment name...');
+    const result =  exec('kubectl', [`get`, `deployments`, `--namespace=${namespace}`, `-l`, `app=${args.label}`, `-o`, `name`], {});
+    logger.info(`deployment name: ${result}`);
+    return result;
+}
+
+function setImage(args: KubeArgs, deploymentName: string, serviceName: string, namespace: string) {
     logger.info('Perform set image...');
-    const response = exec('kubectl', [`set`, `image`, `deployment/${args.deployName}`, `${args.serviceName}=${args.dockerRepo}:${args.tag}`], {});
+    const response = exec('kubectl', [`set`, `image`, `--namespace=${namespace}`, `${deploymentName}`, `${serviceName}=${args.dockerRepo}:${args.tag}`], {});
     logger.info(response);
 }
 
@@ -78,16 +85,16 @@ function main(args) {
 
     program
         .version('0.1.0')
-        .description('his command allows you to update a specific service on the rancher env with a specifig tag \n\n' +
-            'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --deployName ${deployName} --dockerRepo ${dockerRepo} --tag ${tag}')
+        .description('his command allows you to update a specific service on the rancher env with a specific tag \n\n' +
+            'adf-cli kubectl-image --clusterEnv ${clusterEnv} --clusterUrl ${clusterUrl} --username ${username} --token ${token} --label ${label} --namespaces ${namespaces} --dockerRepo ${dockerRepo} --tag ${tag}')
         .option('--tag [type]', 'tag')
         .option('--installCheck [type]', 'install kube ctl')
         .option('--username [type]', 'username')
         .option('--clusterEnv [type]', 'cluster Env')
         .option('--clusterUrl [type]', 'cluster Url')
-        .option('--serviceName [type]', 'serviceName')
         .option('--dockerRepo [type]', 'docker Repo')
-        .option('--deployName [type]', 'deploy Name')
+        .option('--label [type]', 'pod label')
+        .option('--namespaces [type]', 'list of namespaces')
         .parse(process.argv);
 
     if (process.argv.includes('-h') || process.argv.includes('--help')) {
@@ -104,6 +111,12 @@ function main(args) {
         setCredentials(args);
         setContext(args);
         useContext(args);
-        setImage(args);
+        const namespaces: string [] = args.namespaces.split(',');
+        namespaces.forEach( (namespace) => {
+            logger.info(`Find deployment name based on label and namespace ${namespace}`);
+            const deploymentName = getDeploymentName(args, namespace);
+            logger.info(`Found ${deploymentName}`);
+            setImage(args, deploymentName.trim(), '*', namespace);
+        });
     }
 }

@@ -28,7 +28,7 @@ export class FileSizePipe implements PipeTransform {
     }
 
     transform(bytes: number, decimals: number = 2): string {
-        if (bytes == null || bytes === undefined) {
+        if (bytes == null) {
             return '';
         }
 

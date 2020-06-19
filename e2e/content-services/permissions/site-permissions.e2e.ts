@@ -16,10 +16,15 @@
  */
 
 import { PermissionsPage } from '../../pages/adf/permissions.page';
-import { LoginPage, BrowserActions, UploadActions, StringUtil, NotificationHistoryPage, ViewerPage } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    BrowserActions,
+    UploadActions,
+    StringUtil,
+    NotificationHistoryPage,
+    ViewerPage, ApiService, UserModel
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');
@@ -27,17 +32,15 @@ import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Permissions Component', () => {
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const loginPage = new LoginPage();
+    const apiService = new ApiService();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
 
     const contentList = contentServicesPage.getDocumentList();
 
@@ -47,8 +50,6 @@ describe('Permissions Component', () => {
     const notificationHistoryPage = new NotificationHistoryPage();
     const uploadDialog = new UploadDialogPage();
     const versionManagePage = new VersionManagePage();
-
-    let folderOwnerUser, consumerUser, siteConsumerUser, contributorUser, managerUser, collaboratorUser;
 
     let publicSite, privateSite, folderName;
 
@@ -74,23 +75,23 @@ describe('Permissions Component', () => {
 
     let siteFolder, privateSiteFile;
 
-    folderOwnerUser = new AcsUserModel();
-    consumerUser = new AcsUserModel();
-    siteConsumerUser = new AcsUserModel();
-    collaboratorUser = new AcsUserModel();
-    contributorUser = new AcsUserModel();
-    managerUser = new AcsUserModel();
+    const folderOwnerUser = new UserModel();
+    const consumerUser: UserModel = new UserModel();
+    const siteConsumerUser: UserModel = new UserModel();
+    const collaboratorUser: UserModel = new UserModel();
+    const contributorUser: UserModel = new UserModel();
+    const managerUser: UserModel = new UserModel();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(folderOwnerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(siteConsumerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(consumerUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(contributorUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(collaboratorUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(managerUser);
-        await this.alfrescoJsApi.login(folderOwnerUser.id, folderOwnerUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await usersActions.createUser(folderOwnerUser);
+        await usersActions.createUser(siteConsumerUser);
+        await usersActions.createUser(consumerUser);
+        await usersActions.createUser(contributorUser);
+        await usersActions.createUser(collaboratorUser);
+        await usersActions.createUser(managerUser);
+        await apiService.getInstance().login(folderOwnerUser.email, folderOwnerUser.password);
 
         await browser.sleep(15000);
 
@@ -104,42 +105,42 @@ describe('Permissions Component', () => {
 
         const privateSiteBody = { visibility: 'PRIVATE', title: privateSiteName };
 
-        publicSite = await this.alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
-        privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
+        publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
+        privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: siteConsumerUser.id,
+        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: siteConsumerUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: collaboratorUser.id,
+        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: collaboratorUser.email,
             role: CONSTANTS.CS_USER_ROLES.COLLABORATOR
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: contributorUser.id,
+        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: contributorUser.email,
             role: CONSTANTS.CS_USER_ROLES.CONTRIBUTOR
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(publicSite.entry.id, {
-            id: managerUser.id,
+        await apiService.getInstance().core.sitesApi.addSiteMember(publicSite.entry.id, {
+            id: managerUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await this.alfrescoJsApi.core.sitesApi.addSiteMember(privateSite.entry.id, {
-            id: managerUser.id,
+        await apiService.getInstance().core.sitesApi.addSiteMember(privateSite.entry.id, {
+            id: managerUser.email,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
         siteFolder = await uploadActions.createFolder(folderName, publicSite.entry.guid);
         privateSiteFile = await uploadActions.uploadFile(fileModel.location, 'privateSite' + fileModel.name, privateSite.entry.guid);
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(privateSiteFile.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(privateSiteFile.entry.id,
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: managerUser.getId(),
+                        authorityId: managerUser.email,
                         name: 'SiteConsumer',
                         accessStatus: 'ALLOWED'
                     }]
@@ -152,15 +153,14 @@ describe('Permissions Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
-        await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
+        await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
     });
 
     describe('Role Site Dropdown', () => {
-
         beforeAll(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(folderOwnerUser);
+            await loginPage.login(folderOwnerUser.email, folderOwnerUser.password);
 
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + publicSite.entry.guid);
         });
@@ -181,14 +181,14 @@ describe('Permissions Component', () => {
             await permissionsPage.checkAddPermissionDialogIsDisplayed();
             await permissionsPage.checkSearchUserInputIsDisplayed();
 
-            await permissionsPage.searchUserOrGroup(consumerUser.getId());
+            await permissionsPage.searchUserOrGroup(consumerUser.email);
 
-            await permissionsPage.clickUserOrGroup(consumerUser.getFirstName());
-            await permissionsPage.checkUserOrGroupIsAdded(consumerUser.getId());
+            await permissionsPage.clickUserOrGroup(consumerUser.firstName);
+            await permissionsPage.checkUserOrGroupIsAdded(consumerUser.email);
 
-            await expect(await permissionsPage.getRoleCellValue(consumerUser.getId())).toEqual('SiteCollaborator');
+            await expect(await permissionsPage.getRoleCellValue(consumerUser.email)).toEqual('SiteCollaborator');
 
-            await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.getId());
+            await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.email);
 
             const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
 
@@ -201,9 +201,9 @@ describe('Permissions Component', () => {
     });
 
     describe('Roles: SiteConsumer, SiteCollaborator, SiteContributor, SiteManager', () => {
-
         it('[C276994] Role SiteConsumer', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(siteConsumerUser);
+            await loginPage.login(siteConsumerUser.email, siteConsumerUser.password);
+
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
@@ -230,7 +230,8 @@ describe('Permissions Component', () => {
         });
 
         it('[C276997] Role SiteContributor', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(contributorUser);
+            await loginPage.login(contributorUser.email, contributorUser.password);
+
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
@@ -260,8 +261,8 @@ describe('Permissions Component', () => {
         });
 
         it('[C277005] Role SiteCollaborator', async () => {
+            await loginPage.login(collaboratorUser.email, collaboratorUser.password);
 
-            await loginPage.loginToContentServicesUsingUserModel(collaboratorUser);
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
@@ -299,7 +300,8 @@ describe('Permissions Component', () => {
         });
 
         it('[C277006] Role SiteManager', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await loginPage.login(managerUser.email, managerUser.password);
+
             await navigationBarPage.openContentServicesFolder(siteFolder.entry.id);
             await contentServicesPage.checkContentIsDisplayed('Site' + fileModel.name);
 
@@ -336,9 +338,9 @@ describe('Permissions Component', () => {
     });
 
     describe('Roles: Private site and Manager User', () => {
-
         it('[C277196] should a user with Manager permissions be able to upload a new version for the created file', async () => {
-            await loginPage.loginToContentServicesUsingUserModel(managerUser);
+            await loginPage.login(managerUser.email, managerUser.password);
+
             await navigationBarPage.openContentServicesFolder(privateSite.entry.guid);
 
             await contentServicesPage.versionManagerContent('privateSite' + fileModel.name);

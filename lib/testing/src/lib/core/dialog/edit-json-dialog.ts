@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 
 export class EditJsonDialog {
 
-    dialog: ElementFinder = element(by.css(`.adf-edit-json-dialog`));
-    closeButton: ElementFinder = element(by.cssContainingText(`button span`, 'Close'));
-    dialogContent: ElementFinder = this.dialog.element(by.css(`mat-dialog-content textarea`));
+    dialog = element(by.css(`.adf-edit-json-dialog`));
+    closeButton = element(by.cssContainingText(`button span`, 'Close'));
+    dialogContent = this.dialog.element(by.css(`mat-dialog-content textarea`));
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);

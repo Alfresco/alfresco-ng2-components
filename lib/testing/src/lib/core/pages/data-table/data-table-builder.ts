@@ -23,7 +23,7 @@ import { ElementFinder } from 'protractor';
 
 export class DataTableBuilder {
 
-    createDataTable(columns: Array<Column>, rootElement?: ElementFinder): DataTableItem {
+    createDataTable(columns: Column[], rootElement?: ElementFinder): DataTableItem {
         const datatable: DataTableItem = new DataTableItem(rootElement);
         for (const column of columns) {
             switch (column.columnType) {

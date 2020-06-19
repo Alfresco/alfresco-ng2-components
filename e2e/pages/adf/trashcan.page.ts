@@ -16,17 +16,16 @@
  */
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
-
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { element, by } from 'protractor';
 
 export class TrashcanPage {
 
-    contentList: DocumentListPage = new DocumentListPage(element(by.css('adf-document-list')));
-    rows: Locator = by.css('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody: ElementFinder = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
-    pagination: ElementFinder = element(by.css('adf-pagination'));
-    emptyTrashcan: ElementFinder = element(by.css('adf-empty-content'));
-    restoreButton: ElementFinder = element(by.css(`button[title='Restore']`));
+    contentList = new DocumentListPage(element(by.css('adf-document-list')));
+    rows = by.css('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
+    tableBody = element.all(by.css('adf-document-list div[class="adf-datatable-body"]')).first();
+    pagination = element(by.css('adf-pagination'));
+    emptyTrashcan = element(by.css('adf-empty-content'));
+    restoreButton = element(by.css(`button[title='Restore']`));
 
     async numberOfResultsDisplayed(): Promise<number> {
         return element.all(this.rows).count();

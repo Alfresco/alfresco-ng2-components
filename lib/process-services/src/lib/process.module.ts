@@ -30,6 +30,7 @@ import { AttachmentModule } from './attachment/attachment.module';
 import { PeopleModule } from './people/people.module';
 import { FormModule } from './form/form.module';
 import { ProcessFormRenderingService } from './form/process-form-rendering.service';
+import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import { ProcessFormRenderingService } from './form/process-form-rendering.servi
         AppsListModule,
         AttachmentModule,
         PeopleModule,
-        FormModule
+        FormModule,
+        ProcessServicesPipeModule
     ],
     providers: [
         {
@@ -66,7 +68,8 @@ import { ProcessFormRenderingService } from './form/process-form-rendering.servi
         AppsListModule,
         AttachmentModule,
         PeopleModule,
-        FormModule
+        FormModule,
+        ProcessServicesPipeModule
     ]
 })
 export class ProcessModule {

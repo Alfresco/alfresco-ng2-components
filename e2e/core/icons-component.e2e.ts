@@ -15,30 +15,26 @@
  * limitations under the License.
  */
 
-import { LoginPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { IconsPage } from '../pages/adf/icons.page';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
-
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Universal Icon component', () => {
 
-    const loginPage = new LoginPage();
-    const acsUser = new AcsUserModel();
+    const loginPage = new LoginSSOPage();
+    const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const iconsPage = new IconsPage();
 
-    beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+    beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await usersActions.createUser(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {

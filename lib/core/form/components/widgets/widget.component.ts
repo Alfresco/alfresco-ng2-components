@@ -42,9 +42,6 @@ import { FormFieldModel } from './core/index';
 })
 export class WidgetComponent implements AfterViewInit {
 
-    static DEFAULT_HYPERLINK_URL: string = '#';
-    static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
-
     /** Does the widget show a read-only value? (ie, can't be edited) */
     @Input()
     readOnly: boolean = false;
@@ -62,8 +59,8 @@ export class WidgetComponent implements AfterViewInit {
     constructor(public formService?: FormService) {
     }
 
-    hasField() {
-        return this.field ? true : false;
+    hasField(): boolean {
+        return !!this.field;
     }
 
     // Note for developers:
@@ -76,7 +73,7 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     isValid(): boolean {
-        return this.field.validationSummary ? true : false;
+        return !!this.field.validationSummary;
     }
 
     hasValue(): boolean {
@@ -99,24 +96,6 @@ export class WidgetComponent implements AfterViewInit {
 
     onFieldChanged(field: FormFieldModel) {
         this.fieldChanged.emit(field);
-    }
-
-    protected getHyperlinkUrl(field: FormFieldModel) {
-        let url = WidgetComponent.DEFAULT_HYPERLINK_URL;
-        if (field && field.hyperlinkUrl) {
-            url = field.hyperlinkUrl;
-            if (!/^https?:\/\//i.test(url)) {
-                url = `${WidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`;
-            }
-        }
-        return url;
-    }
-
-    protected getHyperlinkText(field: FormFieldModel) {
-        if (field) {
-            return field.displayText || field.hyperlinkUrl;
-        }
-        return null;
     }
 
     event(event: Event): void {

@@ -18,13 +18,13 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 
 export class ProcessListPage {
 
-    processListEmptyTitle: ElementFinder = element(by.css('div[class="adf-empty-content__title"]'));
-    processInstanceList: ElementFinder = element(by.css('adf-process-instance-list'));
-    dataTable: DataTableComponentPage = new DataTableComponentPage(this.processInstanceList);
+    processListEmptyTitle = element(by.css('div[class="adf-empty-content__title"]'));
+    processInstanceList = element(by.css('adf-process-instance-list'));
+    dataTable = new DataTableComponentPage(this.processInstanceList);
 
     getDisplayedProcessListEmptyTitle(): Promise<string> {
         return BrowserActions.getText(this.processListEmptyTitle);
@@ -34,8 +34,13 @@ export class ProcessListPage {
         return BrowserVisibility.waitUntilElementIsNotPresent(this.processListEmptyTitle);
     }
 
-    async checkProcessListIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
+    async isProcessListDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     checkContentIsDisplayedByColumn(column: string, processName: string): Promise<void> {

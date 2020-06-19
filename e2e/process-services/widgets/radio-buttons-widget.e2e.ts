@@ -15,47 +15,43 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Radio Buttons Widget', () => {
 
-    const loginPage = new LoginPage();
-    let processUserModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.RADIO_BUTTONS;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    let alfrescoJsApi;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.RADIO_BUTTONS;
     let deployedApp, process;
+    let processUserModel;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+       processUserModel = await usersActions.createUser();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
-        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
-
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
+       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+       deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
 
-        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+       await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {
@@ -66,9 +62,9 @@ describe('Radio Buttons Widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C277316] Should display empty radio buttons when no preselection is configured', async () => {
@@ -78,11 +74,11 @@ describe('Radio Buttons Widget', () => {
 
     it('[C274704] Should be able to set visibility properties for Radio Button widget', async () => {
         await taskPage.formFields().checkWidgetIsHidden(app.FIELD.radio_buttons_id);
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
 
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_id);
         await expect(await widget.radioWidget().getRadioWidgetLabel(app.FIELD.radio_buttons_id)).toContain('Radio posts');
         await widget.radioWidget().selectOption(app.FIELD.radio_buttons_id, 1);
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 });

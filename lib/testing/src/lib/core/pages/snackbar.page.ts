@@ -15,23 +15,24 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { Logger } from '../utils/logger';
+import { BrowserActions } from '../utils/browser-actions';
 
 export class SnackbarPage {
 
-    notificationSnackBar: ElementFinder = element(by.css('simple-snack-bar span'));
+    notificationSnackBar = element.all(by.css('simple-snack-bar span')).first();
+    snackBarAction = element(by.css('simple-snack-bar button span'));
     snackBarContainerCss = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {
-        return BrowserVisibility.waitUntilElementIsVisible(element(this.snackBarContainerCss), 20000,
+        return BrowserVisibility.waitUntilElementIsVisible(element.all(this.snackBarContainerCss).first(), 5000,
             'snackbar did not appear'
         );
     }
 
     async waitForSnackBarToClose() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(element(this.snackBarContainerCss), 20000);
+        return BrowserVisibility.waitUntilElementIsNotVisible(element.all(this.snackBarContainerCss).first(), 5000);
     }
 
     async getSnackBarMessage(): Promise<string> {
@@ -39,12 +40,21 @@ export class SnackbarPage {
         return this.notificationSnackBar.getText();
     }
 
+    async getSnackBarActionMessage(): Promise<string> {
+        await this.waitForSnackBarToAppear();
+        return this.snackBarAction.getText();
+    }
+
+    async clickSnackBarAction(): Promise<void> {
+        await this.waitForSnackBarToAppear();
+        await BrowserActions.click(this.snackBarAction);
+    }
+
     async isNotificationSnackBarDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar);
+            await BrowserVisibility.waitUntilElementIsVisible(this.notificationSnackBar, 2000);
             return true;
         } catch {
-            Logger.error(`Snackbar is not displayed `);
             return false;
         }
     }

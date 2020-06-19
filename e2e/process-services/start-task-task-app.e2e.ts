@@ -15,30 +15,33 @@
  * limitations under the License.
  */
 
-import { LoginPage, StringUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { ApiService, LoginSSOPage, StringUtil, UserModel } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
-import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
-import fs = require('fs');
-import path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Start Task - Task App', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
     let processUserModel, assigneeUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
@@ -54,37 +57,28 @@ describe('Start Task - Task App', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        assigneeUserModel = await usersActions.createUser();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-
-        assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-        await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
+        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
 
-        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: showHeaderTask });
+        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: showHeaderTask }));
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
-   });
+        await loginPage.login(processUserModel.email, processUserModel.password);
+    });
 
     beforeEach(async () => {
         await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-   });
+    });
 
     it('[C260383] Should be possible to modify a task', async () => {
         const task = await taskPage.createNewTask();
@@ -197,5 +191,5 @@ describe('Start Task - Task App', () => {
         await startDialog.blur(startDialog.name);
         await startDialog.checkValidationErrorIsDisplayed(lengthValidationError);
         await startDialog.checkStartButtonIsDisabled();
-   });
+    });
 });

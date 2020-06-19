@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { NavigationBarPage } from '../navigation-bar.page';
 
 const source = {
@@ -36,10 +36,10 @@ const column = {
 };
 
 export class CustomSourcesPage {
-    dataTable: DataTableComponentPage = new DataTableComponentPage();
-    navigationBarPage: NavigationBarPage = new NavigationBarPage();
+    dataTable = new DataTableComponentPage();
+    navigationBarPage = new NavigationBarPage();
 
-    toolbar: ElementFinder = element(by.css('app-custom-sources .adf-toolbar-title'));
+    toolbar = element(by.css('app-custom-sources .adf-toolbar-title'));
     selectModeDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="custom-sources-select"]')));
 
     async waitForToolbarToBeVisible(): Promise<void> {
@@ -63,15 +63,15 @@ export class CustomSourcesPage {
         await this.selectModeDropdown.selectDropdownOption(source.sharedLinks);
     }
 
-    checkRowIsDisplayed(rowName): Promise<void> {
+    checkRowIsDisplayed(rowName: string): Promise<void> {
         return this.dataTable.checkContentIsDisplayed('Name', rowName);
     }
 
-    checkRowIsNotDisplayed(rowName): Promise<void> {
+    checkRowIsNotDisplayed(rowName: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed('Name', rowName);
     }
 
-    async getStatusCell(rowName): Promise<string> {
+    async getStatusCell(rowName: string): Promise<string> {
         const cell = this.dataTable.getCellByRowContentAndColumn('Name', rowName, column.status);
         return BrowserActions.getText(cell);
     }

@@ -6,72 +6,83 @@
 require('dotenv').config({path: process.env.ENV_FILE});
 
 const HOST = process.env.URL_HOST_ADF;
-const HOST_BPM = process.env.URL_HOST_BPM_ADF;
-const HOST_SSO = process.env.URL_HOST_SSO_ADF;
-const HOST_IDENTITY = process.env.URL_HOST_IDENTITY;
-const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
-const PROXY = process.env.PROXY_HOST_ADF;
+
 const LOG = process.env.LOG;
 
-const BPM_HOST = process.env.URL_HOST_BPM_ADF || "bpm";
-const OAUTH_HOST = process.env.URL_HOST_SSO_ADF || "keycloak";
-const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || "alfresco";
+const HOST_ECM = process.env.PROXY_HOST_ADF || HOST || 'ecm';
+const HOST_BPM = process.env.PROXY_HOST_ADF || HOST || 'bpm';
 
-const IDENTITY_HOST = process.env.URL_HOST_IDENTITY || "identity";
+const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'ALL';
+const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'BASIC';
+
+const OAUTH_HOST = process.env.HOST_SSO || process.env.PROXY_HOST_ADF || HOST || 'oauth';
+const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || 'alfresco';
+
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
 const IDENTITY_ADMIN_PASSWORD = process.env.IDENTITY_ADMIN_PASSWORD || "defaultadminpassword";
-const IDENTITY_USERNAME_ADF = process.env.IDENTITY_USERNAME_ADF || "defaultuser";
-const IDENTITY_PASSWORD_ADF = process.env.IDENTITY_PASSWORD_ADF;
+
+const HR_USER = process.env.HR_USER || "hruser";
+const HR_USER_PASSWORD = process.env.HR_USER_PASSWORD || "defaulthruserpassword";
 
 const USERNAME_ADF = process.env.USERNAME_ADF || "defaultuser";
 const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
-const EMAIL = process.env.EMAIL_ADF || USERNAME_ADF;
 
-const SCREENSHOT_URL = process.env.SCREENSHOT_URL || process.env.URL_HOST_ADF;
+const REDIRECT_URI = process.env.REDIRECT_URI || "/";
+const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "/logout";
+
+const SCREENSHOT_URL = process.env.SCREENSHOT_URL || HOST;
 const SCREENSHOT_PASSWORD = process.env.SCREENSHOT_PASSWORD || process.env.PASSWORD_ADF;
 const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERNAME_ADF;
 
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 
 const appConfig = {
-    "bpmHost": BPM_HOST,
-    "identityHost": IDENTITY_HOST,
-    "providers": "BPM",
-    "authType": "OAUTH",
+    "ecmHost": HOST_ECM,
+    "bpmHost": HOST_BPM,
+    "identityHost": `${OAUTH_HOST}/auth/admin/realms/alfresco`,
+    "provider": PROVIDER,
+    "authType": AUTH_TYPE,
     "oauth2": {
-        "host": OAUTH_HOST,
+        "host": `${OAUTH_HOST}/auth/realms/alfresco`,
         "clientId": OAUTH_CLIENT_ID,
         "scope": "openid",
         "secret": "",
         "implicitFlow": true,
         "silentLogin": true,
-        "redirectUri": "/",
-        "redirectUriLogout": "/logout"
+        "redirectUri": REDIRECT_URI,
+        "redirectUriLogout": REDIRECT_URI_LOGOUT,
+        "redirectSilentIframeUri": `${HOST}/assets/silent-refresh.html`,
+        "publicUrls": [
+            "**/preview/s/*",
+            "**/settings"
+        ]
     }
 };
 
 if (LOG) {
     console.log('======= test.config.js hostBPM ====== ');
-    console.log('hostBPM : ' + (HOST_BPM || PROXY || HOST));
-    console.log('EMAIL : ' + (EMAIL));
-    console.log('PROXY_HOST_ADF : ' + PROXY);
+    console.log('hostBPM : ' + HOST_ECM);
+    console.log('hostECM : ' + HOST_BPM);
     console.log('HOST : ' + HOST);
     console.log('USERNAME_ADF : ' + USERNAME_ADF + ' PASSWORD_ADF : ' + PASSWORD_ADF);
     console.log('IDENTITY_ADMIN_EMAIL : ' + IDENTITY_ADMIN_EMAIL + ' IDENTITY_ADMIN_PASSWORD : ' + IDENTITY_ADMIN_PASSWORD);
-    console.log(JSON.stringify(appConfig))
 }
 
 module.exports = {
 
-    projectName: 'ADF',
+    projectName: 'adf',
 
     appConfig: appConfig,
 
     log: LOG,
 
     main: {
-        timeout: TIMEOUT,
         rootPath: __dirname
+    },
+
+    admin: {
+        email: USERNAME_ADF,
+        password: PASSWORD_ADF
     },
 
     identityAdmin: {
@@ -79,14 +90,9 @@ module.exports = {
         password: IDENTITY_ADMIN_PASSWORD
     },
 
-    identityUser: {
-        email: IDENTITY_USERNAME_ADF,
-        password: IDENTITY_PASSWORD_ADF
-    },
-
     hrUser: {
-        email: process.env.HR_USER,
-        password: process.env.HR_USER_PASSWORD
+        email: HR_USER,
+        password: HR_USER_PASSWORD
     },
 
     screenshot: {
@@ -99,159 +105,14 @@ module.exports = {
         /**
          * base
          */
-        url: HOST,
-
-        /**
-         * adf port
-         */
-        port: "",
-
-        /**
-         * adf login
-         */
-        login: "/login",
-
-        /**
-         * admin username
-         */
-        adminUser: USERNAME_ADF,
-
-        /**
-         * main admin email
-         */
-        adminEmail: EMAIL,
-
-        /**
-         * main admin password
-         */
-        adminPassword: PASSWORD_ADF,
-
-        hostBPM: HOST_BPM || PROXY || HOST,
-
-        clientIdSso: "alfresco",
-
-        hostSso: function () {
-            let baseUrl;
-
-            if (HOST_SSO) {
-                baseUrl = HOST_SSO;
-            } else if (PROXY) {
-                baseUrl = PROXY;
-            } else {
-                baseUrl = HOST;
-            }
-
-            if (LOG) {
-                console.log('hostSso baseUrl : ' + baseUrl);
-            }
-
-            return `${baseUrl}/auth/realms/alfresco`;
-        }(),
-
-        hostIdentity: function () {
-            let baseUrl;
-
-            if (HOST_IDENTITY) {
-                baseUrl = HOST_IDENTITY;
-            } else if (HOST_SSO) {
-                baseUrl = HOST_SSO;
-            } else if (PROXY) {
-                baseUrl = PROXY;
-            } else {
-                baseUrl = HOST;
-            }
-
-            if (LOG) {
-                console.log('hostIdentity baseUrl : ' + baseUrl);
-            }
-
-            return `${baseUrl}/auth/admin/realms/alfresco`;
-        }()
-
-    },
-
-    adf_acs: {
-        /**
-         * The protocol where the app runs.
-         * @config main.protocol {String}
-         */
-        protocol: "http",
-
-        /**
-         * The protocol where the app runs.
-         * @config main.protocol {String}
-         */
-        host: PROXY || HOST,
-
-        /**
-         * The port where the app runs.
-         * @config main.port {String}
-         */
-        port: "",
-
-        /**
-         * The ECM API context required for calls
-         * @config adf.ACSAPIContextRoot {String}
-         */
-        apiContextRoot: "/alfresco/api/-default-/public",
-
-        clientIdSso: "alfresco",
+        url: HOST
     },
 
     adf_external_acs: {
         /**
-         * The protocol where the app runs.
-         * @config main.protocol {String}
-         */
-        protocol: "http",
-
-        /**
-         * The protocol where the app runs.
          * @config main.protocol {String}
          */
         host: EXTERNAL_ACS_HOST,
-
-        /**
-         * The port where the app runs.
-         * @config main.port {String}
-         */
-        port: "",
-
-        /**
-         * The ECM API context required for calls
-         * @config adf.ACSAPIContextRoot {String}
-         */
-        apiContextRoot: "/alfresco/api/-default-/public",
-
-        clientIdSso: "alfresco",
     },
-
-    adf_aps: {
-        /**
-         * The protocol where the app runs.
-         * @config main.protocol {String}
-         */
-        protocol: "http",
-
-        /**
-         * The host where the app runs.
-         * @config main.host {String}
-         */
-        host: PROXY || HOST,
-
-        /**
-         * The port where the app runs.
-         * @config main.port {String}
-         */
-        port: "",
-
-        /**
-         * The BPM API context required for calls
-         * @config adf.APSAPIContextRoot {String}
-         */
-        apiContextRoot: "/activiti-app",
-
-        clientIdSso: "activiti"
-    }
 
 };

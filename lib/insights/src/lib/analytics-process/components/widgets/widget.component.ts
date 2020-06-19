@@ -35,8 +35,8 @@ export class WidgetComponent implements OnChanges {
         }
     }
 
-    hasField() {
-        return this.field ? true : false;
+    hasField(): boolean {
+        return !!this.field;
     }
 
     hasValue(): boolean {

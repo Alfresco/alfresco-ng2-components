@@ -201,10 +201,7 @@ export class IdentityUserService {
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
             map((clientRoles: any[]) => {
-                if (clientRoles.length > 0) {
-                    return true;
-                }
-                return false;
+                return clientRoles.length > 0;
             })
         );
     }

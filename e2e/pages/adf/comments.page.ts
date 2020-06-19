@@ -16,18 +16,18 @@
  */
 
 import { BrowserActions, BrowserVisibility, TabsPage } from '@alfresco/adf-testing';
-import { by, element, ElementArrayFinder, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 
 export class CommentsPage {
 
-    tabsPage: TabsPage = new TabsPage();
-    numberOfComments: ElementFinder = element(by.id('comment-header'));
-    commentUserIcon: ElementArrayFinder = element.all(by.id('comment-user-icon'));
-    commentUserName: ElementArrayFinder = element.all(by.id('comment-user'));
-    commentMessage: ElementArrayFinder = element.all(by.id('comment-message'));
-    commentTime: ElementArrayFinder = element.all(by.id('comment-time'));
-    commentInput: ElementFinder = element(by.id('comment-input'));
-    addCommentButton: ElementFinder = element(by.css("[data-automation-id='comments-input-add']"));
+    tabsPage = new TabsPage();
+    numberOfComments = element(by.id('comment-header'));
+    commentUserIcon = element.all(by.id('comment-user-icon'));
+    commentUserName = element.all(by.id('comment-user'));
+    commentMessage = element.all(by.id('comment-message'));
+    commentTime = element.all(by.id('comment-time'));
+    commentInput = element(by.id('comment-input'));
+    addCommentButton = element(by.css("[data-automation-id='comments-input-add']"));
 
     async getTotalNumberOfComments(): Promise<string> {
         return BrowserActions.getText(this.numberOfComments);
@@ -37,16 +37,16 @@ export class CommentsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.commentUserIcon.first());
     }
 
-    getUserName(position): Promise<string> {
+    getUserName(position: number): Promise<string> {
         return BrowserActions.getText(this.commentUserName.get(position));
     }
 
-    getMessage(position): Promise<string> {
+    getMessage(position: number): Promise<string> {
         return BrowserActions.getText(this.commentMessage.get(position));
 
     }
 
-    getTime(position): Promise<string> {
+    getTime(position: number): Promise<string> {
         return BrowserActions.getText(this.commentTime.get(position));
     }
 
@@ -54,7 +54,7 @@ export class CommentsPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.commentInput);
     }
 
-    async addComment(comment): Promise<void> {
+    async addComment(comment: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.commentInput, comment);
         await BrowserActions.click(this.addCommentButton);
     }

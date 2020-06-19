@@ -32,6 +32,7 @@ import { LibraryStatusColumnComponent } from './components/library-status-column
 import { LibraryRoleColumnComponent } from './components/library-role-column/library-role-column.component';
 import { LibraryNameColumnComponent } from './components/library-name-column/library-name-column.component';
 import { NameColumnComponent } from './components/name-column/name-column.component';
+import { FilterMenuComponent } from './components/filter-menu/filter-menu.component';
 
 @NgModule({
     imports: [
@@ -50,7 +51,8 @@ import { NameColumnComponent } from './components/name-column/name-column.compon
         LibraryNameColumnComponent,
         NameColumnComponent,
         ContentActionComponent,
-        ContentActionListComponent
+        ContentActionListComponent,
+        FilterMenuComponent
     ],
     exports: [
         DocumentListComponent,

@@ -15,63 +15,118 @@
  * limitations under the License.
  */
 
-import { Tenant } from '../models/APS/tenant';
-import { User } from '../models/APS/user';
-import path = require('path');
-import fs = require('fs');
-import remote = require('selenium-webdriver/remote');
+import * as path from 'path';
+import * as fs from 'fs';
+import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
+import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
+import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
+import { Tenant } from '../models/APS/tenant';
 
 export class UsersActions {
 
-    async createTenantAndUser(alfrescoJsApi) {
-        const newTenant = await alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+    api: ApiService;
+    identityService: IdentityService;
 
-        const user = new User({ tenantId: newTenant.id });
-
-        const { id } = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
-
-        return { ...user, id };
+    constructor(alfrescoApi: ApiService) {
+        this.api = alfrescoApi;
+        if (this.api.apiService.isOauthConfiguration()) {
+            this.identityService = new IdentityService(this.api);
+        }
     }
 
-    async createApsUser(alfrescoJsApi, tenantId) {
-        const user = new User({ tenantId });
+    async createUser(emailOrUserModel?: string | UserModel, firstName?: string, lastName?: string, tenantId?: number, password?: string): Promise<UserModel> {
+        let user;
 
-        const { id } = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+        if (typeof emailOrUserModel !== 'string') {
+            user = new UserModel(emailOrUserModel);
+        } else {
+            user = new UserModel({ emailOrUserModel, firstName, lastName, tenantId, password });
+        }
 
-        return { ...user, id };
-    }
+        try {
 
-    async getApsUserByEmail(alfrescoJsApi, email) {
+            if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+                Logger.log('Create user ECM');
+                await this.api.apiService.core.peopleApi.addPerson({
+                    id: user.email,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    password: user.password
+                });
+            }
 
-        const users = await alfrescoJsApi.activiti.adminUsersApi.getUsers();
+            if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
+                Logger.log('Create user BPM');
 
-        const user = users.data.filter((currentUser) => {
-            return currentUser.email === email;
-        });
+                if (tenantId || (emailOrUserModel && typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId)) {
+                    let tenantIdUser = 1;
+
+                    if (typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId) {
+                        tenantIdUser = emailOrUserModel.tenantId;
+                    } else if (tenantIdUser) {
+                        tenantIdUser = tenantId;
+                    }
+
+                    const apsUser = await this.createApsUser(tenantIdUser, user.email, user.firstName, user.lastName, user.password);
+                    user.id = apsUser.id;
+
+                } else {
+                    const apsUser = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
+                    user.tenantId = apsUser.tenantId;
+                    user.id = apsUser.id;
+                }
+
+            }
+
+            if (this.api.apiService.isOauthConfiguration()) {
+                Logger.log('Create user identity');
+
+                const identityUser = await this.identityService.createIdentityUser(user);
+                user.idIdentityService = identityUser.idIdentityService;
+            }
+
+        } catch (e) {
+            Logger.error('Error create user' + JSON.stringify(e));
+        }
 
         return user;
     }
 
-    async createApsUserWithName(alfrescoJsApi, tenantId, email, firstName, lastName) {
-        const user = new User({ tenantId , email, firstName, lastName});
+    async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
+        const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
-        const { id } = await alfrescoJsApi.activiti.adminUsersApi.createNewUser(user);
+        const user = new UserModel({
+            tenantId: newTenant.id,
+            email,
+            firstName,
+            lastName,
+            password
+        });
 
-        return { ...user, id };
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
     }
 
-    async cleanupTenant(alfrescoJsApi, tenantId) {
-        return alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+    async createApsUser(tenantId?: number, email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
+
+        const user = new UserModel({
+            tenantId,
+            email,
+            firstName,
+            lastName,
+            password
+        });
+
+        return this.api.apiService.activiti.adminUsersApi.createNewUser(user.getAPSModel());
     }
 
-    async changeProfilePictureAps(alfrescoJsApi, fileLocation) {
+    async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
         browser.setFileDetector(new remote.FileDetector());
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 
-        return alfrescoJsApi.activiti.profileApi.uploadProfilePicture(file);
+        return this.api.apiService.activiti.profileApi.uploadProfilePicture(file);
     }
-
 }

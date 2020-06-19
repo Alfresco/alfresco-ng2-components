@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder, browser, Locator } from 'protractor';
+import { by, element, ElementFinder, browser } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -23,11 +23,11 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class DocumentListPage {
 
     rootElement: ElementFinder;
-    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
+    optionButton = by.css('button[data-automation-id*="action_menu_"]');
     tableBody: ElementFinder;
     dataTable: DataTableComponentPage;
 
-    constructor(rootElement: ElementFinder = element.all(by.css('adf-document-list')).first()) {
+    constructor(rootElement = element.all(by.css('adf-document-list')).first()) {
         this.rootElement = rootElement;
         this.dataTable = new DataTableComponentPage(this.rootElement);
         this.tableBody = rootElement.all(by.css('div[class="adf-datatable-body"]')).first();
@@ -67,7 +67,7 @@ export class DocumentListPage {
 
     async clickOnActionMenu(content: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const row: ElementFinder = this.dataTable.getRow('Display name', content);
+        const row = this.dataTable.getRow('Display name', content);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserActions.waitUntilActionMenuIsVisible();
         await browser.sleep(500);

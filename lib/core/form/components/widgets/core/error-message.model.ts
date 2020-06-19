@@ -27,8 +27,8 @@ export class ErrorMessageModel {
         this.attributes = new Map();
     }
 
-    isActive() {
-        return this.message ? true : false;
+    isActive(): boolean {
+        return !!this.message;
     }
 
     getAttributesAsJsonObj() {

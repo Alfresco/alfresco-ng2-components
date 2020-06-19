@@ -15,36 +15,32 @@
  * limitations under the License.
  */
 
-import { LoginPage, NotificationHistoryPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, NotificationHistoryPage, StringUtil, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, Key } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Create folder directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const createFolderDialog = new FolderDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const metadataViewPage = new MetadataViewPage();
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
     const navigationBarPage = new NavigationBarPage();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        acsUser = await usersActions.createUser();
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
     });

@@ -15,68 +15,71 @@
  * limitations under the License.
  */
 
-import { BrowserActions, LoginPage, NotificationHistoryPage, StringUtil, UploadActions } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    BrowserActions,
+    LoginSSOPage,
+    NotificationHistoryPage,
+    StringUtil,
+    UploadActions, UserModel
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Edit folder directive', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const editFolderDialog = new FolderDialogPage();
-    const acsUser = new AcsUserModel();
-    const anotherAcsUser = new AcsUserModel();
+    const acsUser = new UserModel();
+    const anotherAcsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
     const pdfFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_path
     });
 
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const uploadActions = new UploadActions(apiService);
     const updateFolderName = StringUtil.generateRandomString(5);
     let editFolder, anotherFolder, filePdfNode, subFolder;
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await usersActions.createUser(acsUser);
+        await usersActions.createUser(anotherAcsUser);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         editFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         anotherFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), editFolder.entry.id);
         filePdfNode = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(editFolder.entry.id,
+        await apiService.getInstance().core.nodesApi.updateNode(editFolder.entry.id,
 
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: anotherAcsUser.getId(),
+                        authorityId: anotherAcsUser.email,
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
             });
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(editFolder.entry.id);
         await uploadActions.deleteFileOrFolder(anotherFolder.entry.id);
         await uploadActions.deleteFileOrFolder(filePdfNode.entry.id);
@@ -223,9 +226,8 @@ describe('Edit folder directive', () => {
     });
 
     describe('Edit Folder - no permission', () => {
-
         beforeEach(async () => {
-            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
+            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });

@@ -29,14 +29,13 @@ describe('Edit task filters and task list properties', () => {
 
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
-
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-    let tasksService: TasksService;
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
-    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+    const apiService = new ApiService();
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const tasksService = new TasksService(apiService);
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
@@ -45,13 +44,9 @@ describe('Edit task filters and task list properties', () => {
     const priority = 30;
 
     beforeAll(async () => {
-
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        tasksService = new TasksService(apiService);
 
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -75,7 +70,7 @@ describe('Edit task filters and task list properties', () => {
 
         const jsonFile = new TaskListCloudConfiguration().getConfiguration();
 
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-task-list', JSON.stringify(jsonFile));
         await LocalStorageUtil.setConfigField('adf-edit-task-filter', JSON.stringify({
             'filterProperties': [
@@ -122,7 +117,6 @@ describe('Edit task filters and task list properties', () => {
     });
 
     describe('Edit task filters and task list properties - sort properties', () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

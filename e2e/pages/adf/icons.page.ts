@@ -19,15 +19,15 @@ import { browser, by, element, ElementFinder } from 'protractor';
 
 export class IconsPage {
 
-    locateCustomIcon(name): ElementFinder {
+    locateCustomIcon(name: string): ElementFinder {
         return element(by.css(`adf-icon[value='${name}'] svg`));
     }
 
-    locateLigatureIcon(name): ElementFinder {
+    locateLigatureIcon(name: string): ElementFinder {
         return element(by.css(`adf-icon[value='${name}'] .material-icons`));
     }
 
-    async isCustomIconDisplayed(name) {
+    async isCustomIconDisplayed(name: string) {
         const present = await browser.isElementPresent(this.locateCustomIcon(name));
         if (present) {
           return this.locateCustomIcon(name).isDisplayed();
@@ -36,7 +36,7 @@ export class IconsPage {
         }
     }
 
-    async isLigatureIconDisplayed(name) {
+    async isLigatureIconDisplayed(name: string) {
         const present = await browser.isElementPresent(this.locateLigatureIcon(name));
         if (present) {
           return this.locateLigatureIcon(name).isDisplayed();

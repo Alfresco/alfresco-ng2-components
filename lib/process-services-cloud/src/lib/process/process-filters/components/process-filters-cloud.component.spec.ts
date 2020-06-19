@@ -287,6 +287,17 @@ describe('ProcessFiltersCloudComponent', () => {
         filterButton.click();
     });
 
+    it('should not emit a filter click event on binding changes', () => {
+        spyOn(component, 'selectFilterAndEmit').and.callThrough();
+
+        const change = new SimpleChange(null, undefined, false);
+        component.ngOnChanges({ 'filterParam': change });
+        fixture.detectChanges();
+
+        expect(component.selectFilterAndEmit).toHaveBeenCalled();
+        expect(component.currentFilter).not.toBeDefined();
+    });
+
     it('should reload filters by appName on binding changes', () => {
         spyOn(component, 'getFilters').and.stub();
         const appName = 'my-app-1';

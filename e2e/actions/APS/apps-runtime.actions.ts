@@ -15,11 +15,19 @@
  * limitations under the License.
  */
 
+import { ApiService } from '@alfresco/adf-testing';
+import { AppDefinitionRepresentation, ResultListDataRepresentationAppDefinitionRepresentation } from '@alfresco/js-api';
+
 export class AppsRuntimeActions {
 
-    async getRuntimeAppByName(alfrescoJsApi, appName) {
+    api: ApiService;
 
-        const runtimeApps = await this.getRuntimeAppDefinitions(alfrescoJsApi);
+    constructor(api: ApiService) {
+        this.api = api;
+    }
+
+    async getRuntimeAppByName(appName: string): Promise<AppDefinitionRepresentation> {
+        const runtimeApps = await this.getRuntimeAppDefinitions();
         let desiredApp;
 
         for (let i = 0; i < runtimeApps.data.length; i++) {
@@ -31,9 +39,8 @@ export class AppsRuntimeActions {
         return desiredApp;
     }
 
-    async getRuntimeAppDefinitions(alfrescoJsApi) {
-
-        return alfrescoJsApi.activiti.appsRuntimeApi.getAppDefinitions();
+    async getRuntimeAppDefinitions(): Promise<ResultListDataRepresentationAppDefinitionRepresentation> {
+        return this.api.getInstance().activiti.appsRuntimeApi.getAppDefinitions();
     }
 
 }

@@ -46,7 +46,7 @@ export class ContentCloudNodeSelectorService {
       actionName: 'Choose',
       currentFolderId: '-my-',
       select,
-      isSelectionValid: this.isNodeFile.bind(this),
+      isSelectionValid: (entry: Node) => entry.isFile,
       showFilesInResult: true
     };
 
@@ -60,9 +60,5 @@ export class ContentCloudNodeSelectorService {
 
   close() {
     this.dialog.closeAll();
-  }
-
-  private isNodeFile(entry: Node): boolean {
-    return entry && entry.isFile;
   }
 }
