@@ -23,16 +23,17 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
-
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
-
-        const apiService = new ApiService();
-        const identityService = new IdentityService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
 
         let apsUser, testUser;
         let noRoleUser;
@@ -44,11 +45,13 @@ describe('People Groups Cloud Component', () => {
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
             testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
 
-            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-            apsUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
             await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
             noRoleUser = await identityService.createIdentityUser();
@@ -57,7 +60,7 @@ describe('People Groups Cloud Component', () => {
 
             users = [apsUser.idIdentityService, noRoleUser.idIdentityService, testUser.idIdentityService];
 
-            await loginSSOPage.login(apsUser.email, apsUser.password);
+            await loginSSOPage.loginSSOIdentityService(apsUser.email, apsUser.password);
         });
 
         afterAll(async () => {

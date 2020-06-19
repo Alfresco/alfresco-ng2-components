@@ -18,7 +18,7 @@
 import { browser, by, element, ElementFinder, protractor } from 'protractor';
 
 const DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 20000;
-const NOT_VISIBLE_DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 2000;
+const NOT_VISIBLE_DEFAULT_TIMEOUT = global['TestConfig'] ? global['TestConfig'].main.timeout : 5000;
 
 export class BrowserVisibility {
 

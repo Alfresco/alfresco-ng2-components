@@ -19,20 +19,20 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { By } from 'selenium-webdriver';
-import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class FormFieldsPage {
 
-    formContent = element(by.css('adf-form'));
-    refreshButton = element(by.css('div[class*="form-reload-button"] mat-icon'));
-    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
-    valueLocator = by.css('input');
-    labelLocator = by.css('label');
-    noFormMessage = element(by.css('.adf-empty-content__title'));
-    completedTaskNoFormMessage = element(by.css('div[id*="completed-form-message"] p'));
-    attachFormButton = element(by.id('adf-attach-form-attach-button'));
-    completeButton = element(by.id('adf-form-complete'));
-    errorMessage = by.css('.adf-error-text-container .adf-error-text');
+    formContent: ElementFinder = element(by.css('adf-form'));
+    refreshButton: ElementFinder = element(by.css('div[class*="form-reload-button"] mat-icon'));
+    saveButton: ElementFinder = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
+    valueLocator: Locator = by.css('input');
+    labelLocator: Locator = by.css('label');
+    noFormMessage: ElementFinder = element(by.css('.adf-empty-content__title'));
+    completedTaskNoFormMessage: ElementFinder = element(by.css('div[id*="completed-form-message"] p'));
+    attachFormButton: ElementFinder = element(by.id('adf-attach-form-attach-button'));
+    completeButton: ElementFinder = element(by.id('adf-form-complete'));
+    errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first());
 
@@ -59,7 +59,7 @@ export class FormFieldsPage {
     }
 
     async getFieldValue(fieldId: string, valueLocatorParam: Locator): Promise<string> {
-        const widget = await this.getWidget(fieldId);
+        const widget: ElementFinder = await this.getWidget(fieldId);
         const value = widget.element(valueLocatorParam || this.valueLocator);
         await BrowserVisibility.waitUntilElementIsVisible(value);
         return value.getAttribute('value');
@@ -148,16 +148,8 @@ export class FormFieldsPage {
         await BrowserActions.clearSendKeys(input, value);
     }
 
-    async isCompleteButtonDisplayed(): Promise<boolean> {
-        try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    async isCompleteFormButtonEnabled(): Promise<boolean> {
-        return this.completeButton.isEnabled();
+    async isCompleteFormButtonDisabled(): Promise<string> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+        return this.completeButton.getAttribute('disabled');
     }
 }

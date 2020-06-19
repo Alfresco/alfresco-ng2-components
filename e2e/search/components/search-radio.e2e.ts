@@ -15,36 +15,30 @@
  * limitations under the License.
  */
 
-import {
-    LoginSSOPage,
-    BrowserActions,
-    StringUtil,
-    LocalStorageUtil,
-    UploadActions,
-    ApiService,
-    UserModel
-} from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil, LocalStorageUtil, UploadActions } from '@alfresco/adf-testing';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Radio Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
     const searchDialog = new SearchDialogPage();
     const searchResults = new SearchResultsPage();
 
-    const acsUser = new UserModel();
-    const apiService = new ApiService();
-
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
+    const acsUser = new AcsUserModel();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const filterType = {
         none: 'None',
@@ -63,29 +57,29 @@ describe('Search Radio Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await usersActions.createUser(acsUser);
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
+        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        createdFile = await apiService.getInstance().nodes.addNode('-my-', {
+        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });
 
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
@@ -128,6 +122,7 @@ describe('Search Radio Component', () => {
     });
 
     describe('configuration change', () => {
+
         let jsonFile;
 
         beforeEach(() => {
@@ -256,6 +251,7 @@ describe('Search Radio Component', () => {
    });
 
     describe('Properties', () => {
+
         let jsonFile;
 
         beforeEach(() => {
@@ -263,7 +259,7 @@ describe('Search Radio Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
         });
 
         it('[C277033] Should be able to add a new option', async () => {

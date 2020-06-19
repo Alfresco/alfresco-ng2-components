@@ -16,20 +16,21 @@
  */
 
 import {
-    LoginSSOPage,
+    LoginPage,
     LocalStorageUtil,
     BrowserActions,
     UploadActions,
     ViewerPage,
-    StringUtil, ApiService, UserModel
+    StringUtil
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import moment = require('moment');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Metadata component', () => {
 
@@ -46,13 +47,13 @@ describe('Metadata component', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
 
-    let acsUser: UserModel;
+    const acsUser = new AcsUserModel();
 
     const folderName = StringUtil.generateRandomString();
 
@@ -61,14 +62,17 @@ describe('Metadata component', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
 
-    const apiService = new ApiService();
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         const pngUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
         Object.assign(pngFileModel, pngUploadedFile.entry);
         pngFileModel.update(pngUploadedFile.entry);
@@ -79,8 +83,9 @@ describe('Metadata component', () => {
     });
 
     describe('Viewer Metadata', () => {
+
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
             await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
@@ -224,10 +229,11 @@ describe('Metadata component', () => {
     });
 
     describe('Folder metadata', () => {
+
         beforeAll(async () => {
             await uploadActions.createFolder(folderName, '-my-');
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
         });
@@ -260,7 +266,7 @@ describe('Metadata component', () => {
     });
 
     it('[C279960] Should show the last username modifier when modify a File', async () => {
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.loginToContentServices(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
 
@@ -277,7 +283,7 @@ describe('Metadata component', () => {
         await metadataViewPage.clickSaveMetadata();
         await expect(await metadataViewPage.getPropertyText('properties.cm:description')).toEqual('check author example description');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickContentServicesButton();
 
         await viewerPage.viewFile(pngFileModel.name);

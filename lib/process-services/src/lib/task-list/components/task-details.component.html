@@ -35,8 +35,6 @@
                           (completed)="onComplete()"
                           (showAttachForm)="onShowAttachForm()"
                           (executeOutcome)='onFormExecuteOutcome($event)'
-                          (taskClaimed)="onClaimAction($event)"
-                          (taskUnclaimed)="onUnclaimAction($event)"
                           (error)="onFormError($event)" #activitiTaskForm>
                 </adf-task-form>
                 <adf-attach-form *ngIf="isShowAttachForm()"

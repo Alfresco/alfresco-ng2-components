@@ -16,23 +16,23 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, StartProcessPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 
 export class ProcessFiltersPage {
 
     dataTable = new DataTableComponentPage();
-    runningFilter = element(by.css('button[data-automation-id="Running_filter"]'));
-    completedFilter = element(by.css('button[data-automation-id="Completed_filter"]'));
-    allFilter = element(by.css('button[data-automation-id="All_filter"]'));
-    createProcessButton = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
-    newProcessButton = element(by.css('div > button[data-automation-id="btn-start-process"]'));
-    processesPage = element(by.css('div[class="app-grid"] > div[class="app-grid-item app-processes-menu"]'));
-    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
-    buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    noContentMessage = element.all(by.css('div[class="adf-empty-content__title"]')).first();
-    rows = by.css('adf-process-instance-list div[class="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
-    tableBody = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
-    nameColumn = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
+    runningFilter: ElementFinder = element(by.css('button[data-automation-id="Running_filter"]'));
+    completedFilter: ElementFinder = element(by.css('button[data-automation-id="Completed_filter"]'));
+    allFilter: ElementFinder = element(by.css('button[data-automation-id="All_filter"]'));
+    createProcessButton: ElementFinder = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
+    newProcessButton: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"]'));
+    processesPage: ElementFinder = element(by.css('div[class="app-grid"] > div[class="app-grid-item app-processes-menu"]'));
+    accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
+    buttonWindow: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
+    noContentMessage: ElementFinder = element.all(by.css('div[class="adf-empty-content__title"]')).first();
+    rows: Locator = by.css('adf-process-instance-list div[class="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
+    tableBody: ElementFinder = element.all(by.css('adf-datatable div[class="adf-datatable-body"]')).first();
+    nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
     processIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     async startProcess(): Promise<StartProcessPage> {
@@ -71,14 +71,14 @@ export class ProcessFiltersPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.noContentMessage);
     }
 
-    async selectFromProcessList(title: string): Promise<void> {
+    async selectFromProcessList(title): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const processName = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
+        const processName: ElementFinder = element.all(by.css(`div[data-automation-id="text_${title}"]`)).first();
         await BrowserActions.click(processName);
     }
 
-    async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const processNameHighlighted = element(by.css(`adf-process-instance-filters .adf-active button[data-automation-id='${filterName}_filter']`));
+    async checkFilterIsHighlighted(filterName): Promise<void> {
+        const processNameHighlighted: ElementFinder = element(by.css(`adf-process-instance-filters .adf-active button[data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
     }
 
@@ -103,26 +103,26 @@ export class ProcessFiltersPage {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 
-    async checkFilterIsDisplayed(name: string): Promise<void> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async checkFilterIsDisplayed(name): Promise<void> {
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
     }
 
-    async checkFilterHasNoIcon(name: string): Promise<void> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async checkFilterHasNoIcon(name): Promise<void> {
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName.element(this.processIcon));
     }
 
-    async getFilterIcon(name: string): Promise<string> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async getFilterIcon(name): Promise<string> {
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
         return BrowserActions.getText(icon);
     }
 
-    async checkFilterIsNotDisplayed(name: string): Promise<void> {
-        const filterName = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async checkFilterIsNotDisplayed(name): Promise<void> {
+        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName);
     }
 

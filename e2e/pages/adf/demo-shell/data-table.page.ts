@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
 
 export class DataTablePage {
 
@@ -33,17 +33,17 @@ export class DataTablePage {
     };
 
     dataTable: DataTableComponentPage;
-    multiSelect = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
-    reset = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
-    allSelectedRows = element.all(by.css(`adf-datatable-row[class*='is-selected']`));
-    selectedRowNumber = element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
-    selectAll = element(by.css(`div[class*='header'] label`));
-    addRowElement = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
-    replaceRowsElement = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
-    replaceColumnsElement = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
-    createdOnColumn = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
-    idColumnHeader = element(by.css(`div[data-automation-id='auto_id_id']`));
-    pasteClipboardInput = element(by.css(`input[data-automation-id='paste clipboard input']`));
+    multiSelect: ElementFinder = element(by.css(`div[data-automation-id='multiselect'] label > div[class='mat-checkbox-inner-container']`));
+    reset: ElementFinder = element(by.xpath(`//span[contains(text(),'Reset to default')]/..`));
+    allSelectedRows: ElementArrayFinder = element.all(by.css(`adf-datatable-row[class*='is-selected']`));
+    selectedRowNumber: ElementFinder = element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
+    selectAll: ElementFinder = element(by.css(`div[class*='header'] label`));
+    addRowElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Add row')]/..`));
+    replaceRowsElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Replace rows')]/..`));
+    replaceColumnsElement: ElementFinder = element(by.xpath(`//span[contains(text(),'Replace columns')]/..`));
+    createdOnColumn: ElementFinder = element(by.css(`div[data-automation-id='auto_id_createdOn']`));
+    idColumnHeader: ElementFinder = element(by.css(`div[data-automation-id='auto_id_id']`));
+    pasteClipboardInput: ElementFinder = element(by.css(`input[data-automation-id='paste clipboard input']`));
 
     selectModeDropdown = new DropdownPage(element(by.css(`mat-select[data-automation-id='datatable-selection-mode']`)));
 
@@ -55,8 +55,8 @@ export class DataTablePage {
         }
     }
 
-    async insertFilter(filterText: string): Promise<void> {
-        const inputFilter = element(by.css(`#adf-datatable-filter-input`));
+    async insertFilter(filterText): Promise<void> {
+        const inputFilter: ElementFinder = element(by.css(`#adf-datatable-filter-input`));
         await BrowserActions.clearSendKeys(inputFilter, filterText);
     }
 
@@ -64,7 +64,7 @@ export class DataTablePage {
         await BrowserActions.click(this.addRowElement);
     }
 
-    async replaceRows(id: string): Promise<void> {
+    async replaceRows(id): Promise<void> {
         const rowID = this.dataTable.getCellElementByValue(this.columns.id, id);
         await BrowserVisibility.waitUntilElementIsVisible(rowID);
         await BrowserActions.click(this.replaceRowsElement);
@@ -128,7 +128,7 @@ export class DataTablePage {
         await browser.actions().sendKeys(protractor.Key.NULL).perform();
     }
 
-    async selectSelectionMode(selectionMode: string): Promise<void> {
+    async selectSelectionMode(selectionMode): Promise<void> {
         await this.selectModeDropdown.selectDropdownOption(selectionMode);
     }
 
@@ -174,11 +174,11 @@ export class DataTablePage {
         await BrowserActions.click(this.dataTable.getCellByRowNumberAndColumnName(rowNumber - 1, this.columns.json));
     }
 
-    async clickOnNameColumn(name: string): Promise<void> {
+    async clickOnNameColumn(name): Promise<void> {
         await this.dataTable.clickColumn(this.columns.name, name);
     }
 
-    async clickOnCreatedByColumn(name: string): Promise<void> {
+    async clickOnCreatedByColumn(name): Promise<void> {
         await this.dataTable.clickColumn(this.columns.createdBy, name);
     }
 

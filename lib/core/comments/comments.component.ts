@@ -175,14 +175,14 @@ export class CommentsComponent implements OnChanges {
     }
 
     isATask(): boolean {
-        return !!this.taskId;
+        return this.taskId ? true : false;
     }
 
     isANode(): boolean {
-        return !!this.nodeId;
+        return this.nodeId ? true : false;
     }
 
-    private sanitize(input: string): string {
+    private sanitize(input: string) {
         return input.replace(/<[^>]+>/g, '')
             .replace(/^\s+|\s+$|\s+(?=\s)/g, '')
             .replace(/\r?\n/g, '<br/>');

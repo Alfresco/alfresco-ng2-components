@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions, DropdownPage, SnackbarPage } from '@alfresco/adf-testing';
 
 export class NotificationDemoPage {
 
     snackbarPage = new SnackbarPage();
 
-    messageField = element(by.css('input[data-automation-id="notification-message"]'));
-    durationField = element(by.css('input[data-automation-id="notification-duration"]'));
-    actionToggle = element(by.css('mat-slide-toggle[data-automation-id="notification-action-toggle"]'));
-    notificationSnackBar = element.all(by.css('simple-snack-bar')).first();
-    actionOutput = element(by.css('div[data-automation-id="notification-action-output"]'));
-    notificationsPage = element(by.css('.app-sidenav-link[data-automation-id="Notifications"]'));
-    notificationConfig = element(by.css('p[data-automation-id="notification-custom-object"]'));
+    messageField: ElementFinder = element(by.css('input[data-automation-id="notification-message"]'));
+    durationField: ElementFinder = element(by.css('input[data-automation-id="notification-duration"]'));
+    actionToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="notification-action-toggle"]'));
+    notificationSnackBar: ElementFinder = element.all(by.css('simple-snack-bar')).first();
+    actionOutput: ElementFinder = element(by.css('div[data-automation-id="notification-action-output"]'));
+    notificationsPage: ElementFinder = element(by.css('.app-sidenav-link[data-automation-id="Notifications"]'));
+    notificationConfig: ElementFinder = element(by.css('p[data-automation-id="notification-custom-object"]'));
 
     horizontalPositionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-horizontal-position"]')));
     verticalPositionDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="notification-vertical-position"]')));
@@ -58,28 +58,28 @@ export class NotificationDemoPage {
         await this.snackbarPage.waitForSnackBarToClose();
     }
 
-    async enterMessageField(text: string): Promise<void> {
+    async enterMessageField(text): Promise<void> {
         await BrowserActions.clearSendKeys(this.messageField, text);
     }
 
-    async enterDurationField(time: number): Promise<void> {
-        await BrowserActions.clearSendKeys(this.durationField, time.toString());
+    async enterDurationField(time): Promise<void> {
+        await BrowserActions.clearSendKeys(this.durationField, time);
     }
 
-    async selectHorizontalPosition(selectItem: string): Promise<void> {
+    async selectHorizontalPosition(selectItem): Promise<void> {
         await this.horizontalPositionDropdown.selectDropdownOption(selectItem);
     }
 
-    async selectVerticalPosition(selectItem: string): Promise<void> {
+    async selectVerticalPosition(selectItem): Promise<void> {
         await this.verticalPositionDropdown.selectDropdownOption(selectItem);
     }
 
-    async selectDirection(selectItem: string): Promise<void> {
+    async selectDirection(selectItem): Promise<void> {
         await this.directionDropdown.selectDropdownOption(selectItem);
     }
 
     async clickNotificationButton(): Promise<void> {
-        const button = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
+        const button: ElementFinder = element(by.css('button[data-automation-id="notification-custom-config-button"]'));
         await BrowserActions.click(button);
     }
 

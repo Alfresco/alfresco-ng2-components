@@ -102,7 +102,7 @@ export class ActivitiContentService {
             mimeType: node.content.mimeType,
             sourceId: node.id + ';' + node.properties['cm:versionLabel'] + '@' + currentSideId,
             name: node.name,
-            link: node.isLink
+            link: false
         };
         return from(apiService.activiti.contentApi.createTemporaryRelatedContent(params))
             .pipe(

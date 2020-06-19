@@ -30,7 +30,6 @@ import {
 } from './services/public-api';
 import { PeopleCloudModule } from './people/people-cloud.module';
 import { CloudFormRenderingService } from './form/components/cloud-form-rendering.service';
-import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-pipe.module';
 
 @NgModule({
     imports: [
@@ -41,8 +40,7 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
         GroupCloudModule,
         PeopleCloudModule,
         FormCloudModule,
-        TaskFormModule,
-        ProcessServicesCloudPipeModule
+        TaskFormModule
     ],
     providers: [
         {
@@ -65,8 +63,7 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
         GroupCloudModule,
         FormCloudModule,
         TaskFormModule,
-        PeopleCloudModule,
-        ProcessServicesCloudPipeModule
+        PeopleCloudModule
     ]
 })
 export class ProcessServicesCloudModule { }

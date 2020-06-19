@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, UserModel, ViewerPage } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { check, uncheck } from '../../util/material';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('CardView Component - properties', () => {
 
@@ -38,26 +40,29 @@ describe('CardView Component - properties', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const contentServicesPage = new ContentServicesPage();
 
-    let acsUser: UserModel;
+    const acsUser = new AcsUserModel();
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    const apiService = new ApiService();
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pdfUploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
@@ -65,7 +70,7 @@ describe('CardView Component - properties', () => {
 
         pngFileModel.update(pdfUploadedFile.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
@@ -91,7 +96,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsNotVisible('properties.exif:model', 'textitem');
 
-        await CheckboxPage.check(metadataViewPage.displayEmptySwitch);
+        await check(metadataViewPage.displayEmptySwitch);
 
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');
@@ -104,7 +109,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.clickOnPropertiesTab();
         await metadataViewPage.editIconIsDisplayed();
 
-        await CheckboxPage.check(metadataViewPage.readonlySwitch);
+        await check(metadataViewPage.readonlySwitch);
 
         await metadataViewPage.editIconIsNotDisplayed();
     });
@@ -130,7 +135,7 @@ describe('CardView Component - properties', () => {
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
 
-        await CheckboxPage.check(metadataViewPage.multiSwitch);
+        await check(metadataViewPage.multiSwitch);
 
         await metadataViewPage.clickMetadataGroup('properties');
 
@@ -144,13 +149,13 @@ describe('CardView Component - properties', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsNotPresent('properties');
         await metadataViewPage.checkMetadataGroupIsPresent('EXIF');
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
 
-        await CheckboxPage.check(metadataViewPage.defaultPropertiesSwitch);
+        await check(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.checkMetadataGroupIsPresent('properties');
         await metadataViewPage.checkMetadataGroupIsExpand('properties');
@@ -164,7 +169,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.informationButtonIsDisplayed();
 
-        await CheckboxPage.uncheck(metadataViewPage.defaultPropertiesSwitch);
+        await uncheck(metadataViewPage.defaultPropertiesSwitch);
 
         await metadataViewPage.informationButtonIsNotDisplayed();
     });
@@ -180,7 +185,7 @@ describe('CardView Component - properties', () => {
 
         await metadataViewPage.checkMetadataGroupIsExpand('EXIF');
         await metadataViewPage.checkMetadataGroupIsNotExpand('properties');
-        await CheckboxPage.check(metadataViewPage.displayEmptySwitch);
+        await check(metadataViewPage.displayEmptySwitch);
 
         await metadataViewPage.checkPropertyIsVisible('properties.exif:flash', 'boolean');
         await metadataViewPage.checkPropertyIsVisible('properties.exif:model', 'textitem');

@@ -15,24 +15,18 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { FiltersPage } from './filters.page';
 
 export class TaskFiltersPage {
-    defaultTaskFilters = {
-        myTasks: 'My Tasks',
-        queuedTasks: 'Queued Tasks',
-        involvedTasks: 'Involved Tasks',
-        completedTasks: 'Completed Tasks'
-    };
 
     filtersPage = new FiltersPage();
 
-    myTasks = element(by.css('[data-automation-id="My Tasks_filter"]'));
-    queuedTask = element(by.css('[data-automation-id="Queued Tasks_filter"]'));
-    completedTask = element(by.css('[data-automation-id="Completed Tasks_filter"]'));
-    involvedTask = element(by.css('[data-automation-id="Involved Tasks_filter"]'));
-    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
+    myTasks: ElementFinder = element(by.css('button[data-automation-id="My Tasks_filter"]'));
+    queuedTask: ElementFinder = element(by.css('button[data-automation-id="Queued Tasks_filter"]'));
+    completedTask: ElementFinder = element(by.css('button[data-automation-id="Completed Tasks_filter"]'));
+    involvedTask: ElementFinder = element(by.css('button[data-automation-id="Involved Tasks_filter"]'));
+    accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
 
     async clickMyTasksFilterButton(): Promise<void> {
         await this.filtersPage.clickFilterButton(this.myTasks);
@@ -51,34 +45,34 @@ export class TaskFiltersPage {
     }
 
     async isMyTasksFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.myTasks);
+        return this.filtersPage.isFilterHighlighted('My Tasks');
     }
 
     async isQueuedFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.queuedTasks);
+        return this.filtersPage.isFilterHighlighted('Queued Tasks');
     }
 
     async isCompletedFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.completedTasks);
+        return this.filtersPage.isFilterHighlighted('Completed Tasks');
     }
 
     async isInvolvedFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultTaskFilters.involvedTasks);
+        return this.filtersPage.isFilterHighlighted('Involved Tasks');
     }
 
     async isMyTasksFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultTaskFilters.myTasks);
+        return this.filtersPage.isFilterDisplayed('My Tasks');
     }
 
     async isQueuedFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultTaskFilters.queuedTasks);
+        return this.filtersPage.isFilterDisplayed('Queued Tasks');
     }
 
     async isCompletedFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultTaskFilters.completedTasks);
+        return this.filtersPage.isFilterDisplayed('Completed Tasks');
     }
 
     async isInvolvedFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultTaskFilters.involvedTasks);
+        return this.filtersPage.isFilterDisplayed('Involved Tasks');
     }
 }

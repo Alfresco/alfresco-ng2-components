@@ -15,23 +15,22 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { CreateLibraryDialogPage } from '../../pages/adf/dialog/create-library-dialog.page';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Create library directive', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const createLibraryDialog = new CreateLibraryDialogPage();
     const customSourcesPage = new CustomSourcesPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
 
     const visibility = {
         public: 'Public',
@@ -41,16 +40,21 @@ describe('Create library directive', () => {
 
     let createSite;
 
-    let acsUser: UserModel;
+    const acsUser = new AcsUserModel();
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
 
-        acsUser = await usersActions.createUser();
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        createSite = await apiService.getInstance().core.sitesApi.createSite({
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        createSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),
             visibility: 'PUBLIC'
         });
@@ -58,7 +62,7 @@ describe('Create library directive', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(createSite.entry.id, { permanent: true });
     });
 
     beforeEach(async () => {

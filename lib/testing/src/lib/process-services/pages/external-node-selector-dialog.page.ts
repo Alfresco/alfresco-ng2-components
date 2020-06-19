@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { ContentNodeSelectorDialogPage } from '../../content-services/dialog/content-node-selector-dialog.page';
 import { DocumentListPage } from '../../content-services/pages/document-list.page';
 
 export class ExternalNodeSelectorDialogPage extends ContentNodeSelectorDialogPage {
-    txtUsername = element(by.css('input[id="username"]'));
-    txtPassword = element(by.css('input[id="password"]'));
-    loginElement = element(by.css('[data-automation-id="attach-file-dialog-actions-login"]'));
-    title = element(by.css('[data-automation-id="content-node-selector-title"]'));
+    txtUsername: ElementFinder = element(by.css('input[id="username"]'));
+    txtPassword: ElementFinder = element(by.css('input[id="password"]'));
+    loginElement: ElementFinder = element(by.css('[data-automation-id="attach-file-dialog-actions-login"]'));
+    title: ElementFinder = element(by.css('[data-automation-id="content-node-selector-title"]'));
 
     constructor() {
         super();

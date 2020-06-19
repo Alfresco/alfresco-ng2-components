@@ -15,30 +15,26 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { Util } from '../util/util';
 import CONSTANTS = require('../util/constants');
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task List Pagination - Sorting', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfTasks = 20;
     let processUserModel;
     const taskNameBase = 'Task';
-    const taskNames = StringUtil.generateFilesNames(10, nrOfTasks + 9, taskNameBase, '');
+    const taskNames = Util.generateSequenceFiles(10, nrOfTasks + 9, taskNameBase, '');
 
     const itemsPerPage = {
         five: '5',
@@ -50,19 +46,28 @@ describe('Task List Pagination - Sorting', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        processUserModel = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         await applicationsService.importPublishDeployApp(app.file_path);
 
         for (let i = 0; i < nrOfTasks; i++) {
-            await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskNames[i] }));
+            await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskNames[i] });
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 
     it('[C260308] Should be possible to sort tasks by name', async () => {

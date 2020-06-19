@@ -16,11 +16,11 @@
  */
 
 import { BrowserActions } from '../utils/browser-actions';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../public-api';
 
 export class ContextMenuPage {
-    contextMenu = element(by.id('adf-context-menu-content'));
+    contextMenu: ElementFinder = element(by.id('adf-context-menu-content'));
 
     async isContextMenuDisplayed(): Promise<boolean> {
         try {

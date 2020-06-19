@@ -15,25 +15,28 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ErrorPage, BrowserActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, ErrorPage, BrowserActions } from '@alfresco/adf-testing';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Error Component', () => {
 
-    const acsUser = new UserModel();
-    const loginPage = new LoginSSOPage();
+    const acsUser = new AcsUserModel();
+    const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await usersActions.createUser(acsUser);
-        await loginPage.login(acsUser.email, acsUser.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
    });
 
     afterAll(async () => {

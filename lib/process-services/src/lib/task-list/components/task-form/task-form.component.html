@@ -16,10 +16,6 @@
     (formError)='onFormError($event)'
     (error)='onError($event)'
     (executeOutcome)='onFormExecuteOutcome($event)'>
-    <adf-form-custom-outcomes>
-        <ng-template [ngTemplateOutlet]="taskFormButtons">
-        </ng-template>
-    </adf-form-custom-outcomes>
   </adf-form>
   <ng-template #withoutForm>
     <adf-task-standalone *ngIf="isStandaloneTask(); else emptyFormMessage"
@@ -60,7 +56,6 @@
                 </ng-template>
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
-                <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
                 <button id="adf-no-form-cancel-button" mat-button *ngIf="showCancelButton" (click)="onCancel()">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
                 </button>
@@ -70,23 +65,6 @@
             </mat-card-actions>
         </mat-card>
       </ng-template>
-  </ng-template>
-
-  <ng-template #taskFormButtons>
-        <button mat-button data-automation-id="adf-task-form-claim-button"
-            *ngIf="isTaskClaimable()" 
-            adf-claim-task
-            [taskId]="taskId"
-            (success)="onClaimTask($event)">
-            {{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
-        </button>
-        <button mat-button data-automation-id="adf-task-form-unclaim-button"
-            *ngIf="isTaskClaimedByCandidateMember()"
-            adf-unclaim-task
-            [taskId]="taskId"
-            (success)="onUnclaimTask($event)">
-            {{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
-        </button>
   </ng-template>
 </ng-container>
 <ng-template #loadingTemplate>

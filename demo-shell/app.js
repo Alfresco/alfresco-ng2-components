@@ -27,7 +27,7 @@ var server = http.createServer(function (req, res) {
         req.on('end', function() {
             if (req.url === '/') {
                 log('Received message: ' + body);
-            } else if (req.url === '/scheduled') {
+            } else if (req.url = '/scheduled') {
                 log('Received task ' + req.headers['x-aws-sqsd-taskname'] + ' scheduled at ' + req.headers['x-aws-sqsd-scheduled-at']);
             }
 

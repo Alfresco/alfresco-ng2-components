@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ChecklistDialog {
 
-    nameField = element(by.css('input[data-automation-id="checklist-name"]'));
-    addChecklistButton = element(by.css('button[id="add-check"] span'));
-    closeButton = element(by.css('button[id="close-check-dialog"] span'));
-    dialogTitle = element(by.id('add-checklist-title'));
+    nameField: ElementFinder = element(by.css('input[data-automation-id="checklist-name"]'));
+    addChecklistButton: ElementFinder = element(by.css('button[id="add-check"] span'));
+    closeButton: ElementFinder = element(by.css('button[id="close-check-dialog"] span'));
+    dialogTitle: ElementFinder = element(by.id('add-checklist-title'));
 
-    async addName(name: string): Promise<void> {
+    async addName(name): Promise<void> {
         await BrowserActions.clearSendKeys(this.nameField, name);
     }
 

@@ -101,7 +101,7 @@ export class BarChart extends Chart {
         };
     };
 
-    hasDatasets(): boolean {
-        return this.datasets && this.datasets.length > 0;
+    hasDatasets() {
+        return this.datasets && this.datasets.length > 0 ? true : false;
     }
 }

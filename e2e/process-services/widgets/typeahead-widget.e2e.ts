@@ -15,40 +15,43 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
+import { User } from '../../models/APS/user';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('Typeahead widget', () => {
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
+    const usersActions = new UsersActions();
+    const alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
-    let user: UserModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+    let user: User;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createUser();
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await usersActions.createTenantAndUser(alfrescoJsApi);
 
-        await apiService.getInstance().login(user.email, user.password);
+        await alfrescoJsApi.login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-        await loginPage.login(user.email, user.password);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {

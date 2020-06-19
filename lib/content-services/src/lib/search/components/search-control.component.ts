@@ -101,7 +101,7 @@ export class SearchControlComponent implements OnDestroy {
     ) {}
 
     isNoSearchTemplatePresent(): boolean {
-        return !!this.emptySearchTemplate;
+        return this.emptySearchTemplate ? true : false;
     }
 
     ngOnDestroy(): void {

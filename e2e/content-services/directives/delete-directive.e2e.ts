@@ -16,33 +16,29 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import {
-    BrowserActions,
-    LoginSSOPage,
-    UploadActions,
-    PaginationPage,
-    StringUtil,
-    PermissionActions,
-    ApiService, UserModel
-} from '@alfresco/adf-testing';
+import { BrowserActions, LoginPage, UploadActions, PaginationPage, StringUtil, PermissionActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Delete Directive', () => {
 
-    const apiService = new ApiService();
-    const loginPage = new LoginSSOPage();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();
-    const acsUser = new UserModel();
-    const secondAcsUser = new UserModel();
-    const uploadActions = new UploadActions(apiService);
-    const permissionActions = new PermissionActions(apiService);
+    const acsUser = new AcsUserModel();
+    const secondAcsUser = new AcsUserModel();
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const permissionActions = new PermissionActions(this.alfrescoJsApi);
     let baseFolderUploaded;
-    const usersActions = new UsersActions(apiService);
 
     const txtFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
@@ -90,10 +86,10 @@ describe('Delete Directive', () => {
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await usersActions.createUser(acsUser);
-        await usersActions.createUser(secondAcsUser);
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(secondAcsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
     });
 
     beforeEach(async () => {
@@ -108,6 +104,7 @@ describe('Delete Directive', () => {
     });
 
     describe('Handling multiselection', () => {
+
         beforeEach(async () => {
             await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
@@ -116,7 +113,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, textFolderUploaded.entry.id);
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -181,6 +178,7 @@ describe('Delete Directive', () => {
     });
 
     describe('When selection on multiple pages', () => {
+
         beforeEach(async () => {
             await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
@@ -189,7 +187,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
@@ -207,20 +205,22 @@ describe('Delete Directive', () => {
             await contentListPage.dataTable.checkContentIsNotDisplayed('Display name', file0BytesModel.name);
             await contentListPage.dataTable.checkContentIsDisplayed('Display name', txtFileModel.name);
         });
+
     });
 
     describe('when user does not have `delete` permission', () => {
+
         let createdSite = null;
         let fileTxt, filePdf, folderA, folderB;
 
         beforeAll(async () => {
-            createdSite = await apiService.getInstance().core.sitesApi.createSite({
+            createdSite = await this.alfrescoJsApi.core.sitesApi.createSite({
                 title: StringUtil.generateRandomString(20).toLowerCase(),
                 visibility: 'PRIVATE'
             });
 
-            await apiService.getInstance().core.sitesApi.addSiteMember(createdSite.entry.id, {
-                id: secondAcsUser.email,
+            await this.alfrescoJsApi.core.sitesApi.addSiteMember(createdSite.entry.id, {
+                id: secondAcsUser.id,
                 role: 'SiteCollaborator'
             });
 
@@ -229,24 +229,24 @@ describe('Delete Directive', () => {
             folderA = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
             folderB = await uploadActions.createFolder(StringUtil.generateRandomString(5), createdSite.entry.guid);
 
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', folderA);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteManager', fileTxt);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', folderB);
-            await permissionActions.addRoleForUser(secondAcsUser.email, 'SiteConsumer', filePdf);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteManager', folderA);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteManager', fileTxt);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteConsumer', folderB);
+            await permissionActions.addRoleForUser(secondAcsUser.getId(), 'SiteConsumer', filePdf);
 
             await permissionActions.disableInheritedPermissionsForNode(folderA.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(folderB.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(fileTxt.entry.id);
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
-            await loginPage.login(secondAcsUser.email, secondAcsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(secondAcsUser);
             await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });
 
         afterAll(async () => {
             try {
-                await apiService.getInstance().core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
             } catch (error) {}
         });
 

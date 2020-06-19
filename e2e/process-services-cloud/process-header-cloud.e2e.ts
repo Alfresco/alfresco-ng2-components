@@ -27,6 +27,7 @@ import { EditProcessFilterConfiguration } from './config/edit-process-filter.con
 describe('Process Header cloud component', () => {
 
     describe('Process Header cloud component', () => {
+
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const subProcessApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.name;
         const formatDate = 'MMM D, YYYY';
@@ -40,32 +41,37 @@ describe('Process Header cloud component', () => {
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
-        const apiService = new ApiService();
-        const identityService = new IdentityService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
-        const processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processInstancesService = new ProcessInstancesService(apiService);
-        const queryService = new QueryService(apiService);
-
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let queryService: QueryService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo;
 
         let runningProcess, runningCreatedDate, parentCompleteProcess, childCompleteProcess, completedCreatedDate;
-        const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
 
-            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
 
+            processDefinitionService = new ProcessDefinitionsService(apiService);
             const dropdownRestProcess = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.dropdownrestprocess, simpleApp);
 
             const processparent = await processDefinitionService.getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SUB_PROCESS_APP.processes.processparent, subProcessApp);
 
+            processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(dropdownRestProcess.entry.key,
                 simpleApp, { name: StringUtil.generateRandomString(), businessKey: 'test' });
 
@@ -74,6 +80,8 @@ describe('Process Header cloud component', () => {
             parentCompleteProcess = await processInstancesService.createProcessInstance(processparent.entry.key,
                 subProcessApp);
 
+            queryService = new QueryService(apiService);
+
             const parentProcessInstance = await queryService.getProcessInstanceSubProcesses(parentCompleteProcess.entry.id,
                 subProcessApp);
 
@@ -81,7 +89,7 @@ describe('Process Header cloud component', () => {
 
             completedCreatedDate = moment(childCompleteProcess.entry.startDate).format(formatDate);
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
             await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         });
 
@@ -101,7 +109,7 @@ describe('Process Header cloud component', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
 
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ processName: runningProcess.entry.name });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
@@ -124,7 +132,7 @@ describe('Process Header cloud component', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
 
             await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ initiator: testUser.username });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();

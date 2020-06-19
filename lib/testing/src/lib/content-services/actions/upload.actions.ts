@@ -17,23 +17,22 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
-import { NodeEntry } from '@alfresco/js-api';
-import { ApiUtil } from '../../core/actions/api.util';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { NodeEntry } from '@alfresco/js-api/src/api/content-rest-api/model/nodeEntry';
+import { ApiUtil } from '../../core/structure/api.util';
 import { Logger } from '../../core/utils/logger';
-import { ApiService } from '../../core/actions/api.service';
 
 export class UploadActions {
+    alfrescoJsApi: AlfrescoApi = null;
 
-    api: ApiService;
-
-    constructor(alfrescoJsApi: ApiService) {
-        this.api = alfrescoJsApi;
+    constructor(alfrescoJsApi: AlfrescoApi) {
+        this.alfrescoJsApi = alfrescoJsApi;
     }
 
     async uploadFile(fileLocation, fileName, parentFolderId): Promise<any> {
         const file = fs.createReadStream(fileLocation);
 
-        return this.api.apiService.upload.uploadFile(
+        return this.alfrescoJsApi.upload.uploadFile(
             file,
             '',
             parentFolderId,
@@ -56,11 +55,11 @@ export class UploadActions {
             filesRequest.push(jsonItem);
         }
 
-        return this.api.apiService.nodes.addNode(parentFolderId, <any> filesRequest, {});
+        return this.alfrescoJsApi.nodes.addNode(parentFolderId, <any> filesRequest, {});
     }
 
     async createFolder(folderName, parentFolderId): Promise<NodeEntry> {
-        return this.api.apiService.node.addNode(parentFolderId, {
+        return this.alfrescoJsApi.node.addNode(parentFolderId, {
             name: folderName,
             nodeType: 'cm:folder'
         }, {});
@@ -69,7 +68,7 @@ export class UploadActions {
     async deleteFileOrFolder(nodeId) {
         const apiCall = async () => {
             try {
-                return this.api.apiService.node.deleteNode(nodeId, { permanent: true });
+                return this.alfrescoJsApi.node.deleteNode(nodeId, { permanent: true });
             } catch (error) {
                 Logger.error('Error delete file or folder');
             }

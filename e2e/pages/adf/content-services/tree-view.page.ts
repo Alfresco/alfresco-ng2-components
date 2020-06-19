@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, ElementFinder, ElementArrayFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TreeViewPage {
 
-    treeViewTitle = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
-    nodeIdInput = element(by.css('input[placeholder="Node Id"]'));
-    noNodeMessage = element(by.id('adf-tree-view-missing-node'));
-    nodesOnPage = element.all(by.css('mat-tree-node'));
+    treeViewTitle: ElementFinder = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
+    nodeIdInput: ElementFinder = element(by.css('input[placeholder="Node Id"]'));
+    noNodeMessage: ElementFinder = element(by.id('adf-tree-view-missing-node'));
+    nodesOnPage: ElementArrayFinder = element.all(by.css('mat-tree-node'));
 
     async checkTreeViewTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.treeViewTitle);
@@ -34,28 +34,28 @@ export class TreeViewPage {
         return this.nodeIdInput.getAttribute('value');
     }
 
-    async clickNode(nodeName: string): Promise<void> {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
+    async clickNode(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"] button'));
         await BrowserActions.click(node);
     }
 
-    async checkNodeIsDisplayedAsClosed(nodeName: string): Promise<void> {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
+    async checkNodeIsDisplayedAsClosed(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="false"]'));
         await BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
-    async checkNodeIsDisplayedAsOpen(nodeName: string): Promise<void> {
-        const node = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
+    async checkNodeIsDisplayedAsOpen(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.css('mat-tree-node[id="' + nodeName + '-tree-child-node"][aria-expanded="true"]'));
         await BrowserVisibility.waitUntilElementIsVisible(node);
     }
 
-    async checkClickedNodeName(nodeName: string): Promise<void> {
-        const clickedNode = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
+    async checkClickedNodeName(nodeName): Promise<void> {
+        const clickedNode: ElementFinder = element(by.cssContainingText('span', ' CLICKED NODE: ' + nodeName + ''));
         await BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
-    async checkNodeIsNotDisplayed(nodeName: string): Promise<void> {
-        const node = element(by.id('' + nodeName + '-tree-child-node'));
+    async checkNodeIsNotDisplayed(nodeName): Promise<void> {
+        const node: ElementFinder = element(by.id('' + nodeName + '-tree-child-node'));
         await BrowserVisibility.waitUntilElementIsNotVisible(node);
     }
 
@@ -68,7 +68,7 @@ export class TreeViewPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.noNodeMessage);
     }
 
-    async addNodeId(nodeId: string): Promise<void> {
+    async addNodeId(nodeId): Promise<void> {
         await BrowserActions.click(this.nodeIdInput);
         await BrowserActions.clearSendKeys(this.nodeIdInput, nodeId);
         await this.nodeIdInput.sendKeys('a');
@@ -76,11 +76,11 @@ export class TreeViewPage {
     }
 
     async checkErrorMessageIsDisplayed(): Promise<void> {
-        const clickedNode = element(by.cssContainingText('span', 'An Error Occurred '));
+        const clickedNode: ElementFinder = element(by.cssContainingText('span', 'An Error Occurred '));
         await BrowserVisibility.waitUntilElementIsVisible(clickedNode);
     }
 
-    async getTotalNodes(): Promise<number> {
+    async getTotalNodes() {
         return this.nodesOnPage.count();
     }
 }

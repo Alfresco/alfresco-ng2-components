@@ -18,7 +18,7 @@
 import { browser, by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
-import { DropdownPage } from '../../../core/pages/material/dropdown.page';
+import { DropdownPage } from '../../../material/pages/dropdown.page';
 
 export class SearchSortingPickerPage {
 

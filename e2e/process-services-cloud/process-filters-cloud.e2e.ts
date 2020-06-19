@@ -32,7 +32,6 @@ import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
 
 describe('Process filters cloud', () => {
 
@@ -43,31 +42,36 @@ describe('Process filters cloud', () => {
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
         const editProcessFilterCloudComponentPage = new EditProcessFilterCloudComponentPage();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
-        const apiService = new ApiService();
-        const identityService = new IdentityService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
-        const processDefinitionService = new ProcessDefinitionsService(apiService);
-        const queryService = new QueryService(apiService);
-        const tasksService = new TasksService(apiService);
-        const processInstancesService = new ProcessInstancesService(apiService);
+        let tasksService: TasksService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let queryService: QueryService;
 
         let runningProcess, completedProcess, testUser, groupInfo;
         const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
-        const PROCESSES = CONSTANTS.PROCESS_FILTERS;
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-
-            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
             await apiService.login(testUser.email, testUser.password);
 
+            processDefinitionService = new ProcessDefinitionsService(apiService);
             const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
+            processInstancesService = new ProcessInstancesService(apiService);
             runningProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
@@ -77,12 +81,14 @@ describe('Process filters cloud', () => {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
+            queryService = new QueryService(apiService);
 
             const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
+            tasksService = new TasksService(apiService);
             const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
             await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
         }, 5 * 60 * 1000);
 
@@ -109,17 +115,17 @@ describe('Process filters cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await editProcessFilterCloudComponentPage.openFilter();
             await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(runningProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await editProcessFilterCloudComponentPage.setProcessName(runningProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.ALL);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(runningProcess.entry.id);
         });
 
@@ -127,17 +133,17 @@ describe('Process filters cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
             await editProcessFilterCloudComponentPage.openFilter();
             await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.RUNNING);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsNotDisplayedById(completedProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickCompletedProcessesFilter();
             await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.COMPLETED);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Completed Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
 
             await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await editProcessFilterCloudComponentPage.setProcessName(completedProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(PROCESSES.ALL);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('All Processes');
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(completedProcess.entry.id);
         });
     });

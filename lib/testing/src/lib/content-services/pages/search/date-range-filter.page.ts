@@ -16,7 +16,7 @@
  */
 
 import { by, protractor, ElementFinder, Locator, element } from 'protractor';
-import { DatePickerCalendarPage } from '../../../core/pages/material/date-picker-calendar.page';
+import { DatePickerCalendarPage } from '../../../material/pages/date-picker-calendar.page';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 

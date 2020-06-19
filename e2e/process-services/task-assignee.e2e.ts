@@ -15,73 +15,65 @@
  * limitations under the License.
  */
 
-import {
-    LoginSSOPage,
-    ApplicationsUtil,
-    ProcessUtil,
-    StartProcessPage,
-    ApiService,
-    UserModel
-} from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, ProcessUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
+import { User } from '../models/APS/user';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Assignee', () => {
-
-    const app = browser.params.resources.Files.TEST_ASSIGNEE;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
-    const processListPage = new ProcessListPage();
-    const processFiltersPage = new ProcessFiltersPage();
-    const startProcessPage = new StartProcessPage();
-    const processServiceTabBarPage = new ProcessServiceTabBarPage();
-    const processDetailsPage = new ProcessDetailsPage();
     const taskPage = new TasksPage();
+    const users = new UsersActions();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
+    const app = browser.params.resources.Files.TEST_ASSIGNEE;
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
 
     describe('Candidate User Assignee', () => {
+        const processListPage = new ProcessListPage();
+        const processFiltersPage = new ProcessFiltersPage();
+        const startProcessPage = new StartProcessPage();
+        const processServiceTabBarPage = new ProcessServiceTabBarPage();
+        const processDetailsPage = new ProcessDetailsPage();
 
-        let user: UserModel;
+        let user: User;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
-            user = await usersActions.createUser(new UserModel({
-                firstName: app.candidate.firstName,
-                lastName: app.candidate.lastName
-            }));
-
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            user = await users.createTenantAndUser(this.alfrescoJsApi);
+            try {// creates user and group if not available
+                await users.createApsUserWithName(this.alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
+            } catch (e) {}
             try {// creates group if not available
-                await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-                    'name': app.candidateGroup,
-                    'tenantId': user.tenantId,
-                    'type': 1
-                });
+                await this.alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 });
+            } catch (e) {}
+
+            await this.alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+            try {
+                await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
             } catch (e) {
+                console.error(`failed to publish the application`);
             }
-
-            await apiService.getInstance().login(user.email, user.password);
-            await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-
-            await loginPage.login(user.email, user.password);
+            await loginPage.loginToProcessServicesUsingUserModel(user);
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
         beforeEach(async () => {
@@ -93,7 +85,7 @@ describe('Task Assignee', () => {
             const name = 'sample-process-one';
             await processServicesPage.goToApp(app.title);
             await processServiceTabBarPage.clickProcessButton();
-            await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+            await processListPage.checkProcessListIsDisplayed();
             await processFiltersPage.clickCreateProcessButton();
             await processFiltersPage.clickNewProcessDropdown();
             await startProcessPage.startProcess(name, app.processNames[0]);
@@ -118,57 +110,49 @@ describe('Task Assignee', () => {
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
             await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.simple.two);
         });
+
     });
 
     describe('Candidate Group Assignee', () => {
-        let user: UserModel;
-        let candidate1: UserModel;
-        let candidate2: UserModel;
+        let user: User;
+        let candidate1: User;
+        let candidate2: User;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            user = await usersActions.createUser();
-            candidate1 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
-            candidate2 = await usersActions.createUser(new UserModel({ tenantId: user.tenantId }));
-
-            const adminGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            user = await users.createTenantAndUser(this.alfrescoJsApi);
+            candidate1 = await users.createApsUser(this.alfrescoJsApi, user.tenantId);
+            candidate2 = await users.createApsUser(this.alfrescoJsApi, user.tenantId);
+            const adminGroup = await this.alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.adminGroup, 'tenantId': user.tenantId }
             );
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
 
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(adminGroup.id, user.id);
-
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupCapabilities(adminGroup.id, { capabilities: app.adminCapabilities });
-
-            const candidateGroup = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup(
+            const candidateGroup = await this.alfrescoJsApi.activiti.adminGroupsApi.createNewGroup(
                 { 'name': app.candidateGroup, 'tenantId': user.tenantId, 'type': 1 }
             );
-
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
-            await apiService.getInstance().activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate1.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, candidate2.id);
+            await this.alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(candidateGroup.id, user.id);
 
             try {// for creates user if not available
-                await usersActions.createUser(new UserModel({
-                    tenantId: user.tenantId,
-                    firstName: app.candidate.firstName,
-                    lastName: app.candidate.lastName
-                }));
-            } catch (e) {
-            }
+                await users.createApsUserWithName(this.alfrescoJsApi, user.tenantId, app.candidate.email, app.candidate.firstName, app.candidate.lastName);
+            } catch (e) {}
 
-            await apiService.getInstance().login(user.email, user.password);
+            await this.alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
             const appModel = await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
-
-            await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processNames[1]);
+            await new ProcessUtil(this.alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processNames[1]);
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
         });
 
         it('[C216430] Start Task - Claim and Requeue a task', async () => {
-            await loginPage.login(candidate1.email, candidate1.password);
+            await loginPage.loginToProcessServicesUsingUserModel(candidate1);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -214,7 +198,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-            await loginPage.login(candidate2.email, candidate2.password);
+            await loginPage.loginToProcessServicesUsingUserModel(candidate2);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -225,7 +209,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-            await loginPage.login(candidate1.email, candidate1.password);
+            await loginPage.loginToProcessServicesUsingUserModel(candidate1);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');
@@ -253,7 +237,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
             await taskPage.taskDetails().checkClaimEnabled();
 
-            await loginPage.login(candidate2.email, candidate2.password);
+            await loginPage.loginToProcessServicesUsingUserModel(candidate2);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
             await processServicesPage.goToApp('Task App');

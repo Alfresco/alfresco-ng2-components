@@ -16,59 +16,65 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Comment component for Processes', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const commentsPage = new CommentsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
-    let user, appId, processInstanceId, addedComment;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    let user, tenantId, appId, processInstanceId, addedComment;
     const processName = 'Comment APS';
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-       user = await usersActions.createUser();
+        const users = new UsersActions();
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
-       await apiService.getInstance().login(user.email, user.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-       const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
-       appId = importedApp.id;
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
 
-       const processWithComment = await new ProcessUtil(apiService).startProcessOfApp(importedApp.name, processName);
-       processInstanceId = processWithComment.id;
+        tenantId = user.tenantId;
 
-       await loginPage.login(user.email, user.password);
+        await this.alfrescoJsApi.login(user.email, user.password);
+
+        const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
+        appId = importedApp.id;
+
+        const processWithComment = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(importedApp.name, processName);
+        processInstanceId = processWithComment.id;
+
+        await loginPage.loginToProcessServicesUsingUserModel(user);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C260464] Should be able to add a comment on APS and check on ADF', async () => {
-        await apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: 'HELLO' }, processInstanceId);
+        await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment({ message: 'HELLO' }, processInstanceId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        addedComment = await apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
+        addedComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
 
@@ -79,34 +85,34 @@ describe('Comment component for Processes', () => {
     });
 
     it('[C260465] Should not be able to view process comment on included task', async () => {
-        await apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({ message: 'GOODBYE' }, processInstanceId);
+        await this.alfrescoJsApi.activiti.commentsApi.addProcessInstanceComment({ message: 'GOODBYE' }, processInstanceId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        const taskQuery = await apiService.getInstance().activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
+        const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
 
         const taskId = taskQuery.data[0].id;
 
-        const taskComments = await apiService.getInstance().activiti.commentsApi.getTaskComments(taskId, { 'latestFirst': true });
-        await expect(taskComments.total).toEqual(0);
+        const taskComments = await this.alfrescoJsApi.activiti.commentsApi.getTaskComments(taskId, { 'latestFirst': true });
+        await expect(await taskComments.total).toEqual(0);
     });
 
     it('[C260466] Should be able to display comments from Task on the related Process', async () => {
-        const taskQuery = await apiService.getInstance().activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
+        const taskQuery = await this.alfrescoJsApi.activiti.taskApi.listTasks({ processInstanceId: processInstanceId });
 
         const taskId = taskQuery.data[0].id;
 
-        await apiService.getInstance().activiti.taskApi.addTaskComment({ message: 'Task Comment' }, taskId);
+        await this.alfrescoJsApi.activiti.taskApi.addTaskComment({ message: 'Task Comment' }, taskId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName);
 
-        const addedTaskComment = await apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
+        const addedTaskComment = await this.alfrescoJsApi.activiti.commentsApi.getProcessInstanceComments(processInstanceId, { 'latestFirst': true });
 
         await commentsPage.checkUserIconIsDisplayed();
 

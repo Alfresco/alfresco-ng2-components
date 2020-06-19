@@ -98,7 +98,7 @@ export abstract class FormBaseComponent {
     }
 
     hasForm(): boolean {
-        return !!this.form;
+        return this.form ? true : false;
     }
 
     isTitleEnabled(): boolean {

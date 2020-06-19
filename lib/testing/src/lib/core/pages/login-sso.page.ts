@@ -18,7 +18,6 @@
 import { element, by, browser, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
-import { LocalStorageUtil } from '../utils/local-storage.util';
 
 export class LoginSSOPage {
 
@@ -29,11 +28,9 @@ export class LoginSSOPage {
     header = element(by.tagName('adf-layout-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
 
-    txtUsernameBasicAuth = element(by.css('input[id="username"]'));
-    txtPasswordBasicAuth = element(by.css('input[id="password"]'));
-    signInButtonBasicAuth = element(by.id('login-button'));
+    async loginSSOIdentityService(username, password) {
+        browser.ignoreSynchronization = true;
 
-    async goToLoginPage(): Promise<void> {
         let currentUrl;
 
         try {
@@ -41,35 +38,9 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (!currentUrl || currentUrl.indexOf(`${browser.baseUrl}/login`) === -1) {
-            await BrowserActions.getUrl(browser.baseUrl + '/login');
-        }
-
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtUsernameBasicAuth);
-        await BrowserVisibility.waitUntilElementIsVisible(this.txtPasswordBasicAuth);
-    }
-
-    async login(username: string, password: string) {
-
-        const authType = await LocalStorageUtil.getConfigField('authType');
-
-        if (!authType || authType === 'OAUTH') {
-            await this.loginSSOIdentityService(username, password);
-        } else {
-            await this.loginBasicAuth(username, password);
-        }
-    }
-
-    async loginSSOIdentityService(username: string, password: string) {
-        browser.ignoreSynchronization = true;
-
-        const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
-
-        await browser.get(loginURL);
-        const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
-
-        if (oauth2 && oauth2.silentLogin === false) {
-            await this.clickOnSSOButton();
+        if (!currentUrl || currentUrl === '' || currentUrl === 'data:,') {
+            const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
+            await browser.get(loginURL);
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
@@ -82,36 +53,15 @@ export class LoginSSOPage {
         await browser.waitForAngular();
     }
 
-    async loginBasicAuth(username: string, password: string): Promise<void> {
-        await this.goToLoginPage();
-
-        await this.enterUsernameBasicAuth(username);
-        await this.enterPasswordBasicAuth(password);
-        await this.clickSignInBasicAuthButton();
-        await BrowserVisibility.waitUntilElementIsVisible(this.header);
-    }
-
-    async clickSignInBasicAuthButton(): Promise<void> {
-        await BrowserActions.click(this.signInButtonBasicAuth);
-    }
-
-    async enterUsernameBasicAuth(username: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.txtUsernameBasicAuth, username);
-    }
-
-    async enterPasswordBasicAuth(password: string): Promise<void> {
-        await BrowserActions.clearSendKeys(this.txtPasswordBasicAuth, password);
-    }
-
     async clickOnSSOButton() {
-        await BrowserActions.click(this.ssoButton);
+        await BrowserActions.clickExecuteScript('[data-automation-id="login-button-sso"]');
     }
 
-    async enterUsername(username: string) {
+    async enterUsername(username) {
         await BrowserActions.clearSendKeys(this.usernameField, username);
     }
 
-    async enterPassword(password: string) {
+    async enterPassword(password) {
         await BrowserActions.clearSendKeys(this.passwordField, password);
     }
 

@@ -31,7 +31,11 @@ export class ButtonsMenuComponent implements  AfterContentInit {
     isMenuEmpty: boolean;
 
     ngAfterContentInit() {
-        this.isMenuEmpty = this.buttons.length <= 0;
+        if (this.buttons.length > 0) {
+            this.isMenuEmpty = false;
+        } else {
+            this.isMenuEmpty = true;
+        }
     }
 
     isMobile(): boolean {

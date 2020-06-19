@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -23,18 +24,6 @@ import { ProcessDetailsPage } from '../pages/adf/process-services/process-detail
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 
 describe('Process List - Pagination', () => {
-
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
-    const navigationBarPage = new NavigationBarPage();
-    const paginationPage = new PaginationPage();
-    const processFiltersPage = new ProcessFiltersPage();
-    const processDetailsPage = new ProcessDetailsPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
 
     const itemsPerPage = {
         five: '5',
@@ -50,38 +39,61 @@ describe('Process List - Pagination', () => {
 
     const processFilterRunning = 'Running';
 
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const paginationPage = new PaginationPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
     let deployedTestApp;
     let processUserModel;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const nrOfProcesses = 20;
     let page;
     let totalPages;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        processUserModel = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         deployedTestApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
-    });
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+   });
 
     describe('With processes Pagination', () => {
+
         beforeAll(async () => {
-            await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+
+            this.alfrescoJsApi = new AlfrescoApi({
+                provider: 'BPM',
+                hostBpm: browser.params.testConfig.adf_aps.host
+            });
+
+            await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
             for (let i = 0; i < nrOfProcesses; i++) {
-                await new ProcessUtil(apiService).startProcessOfApp(deployedTestApp.name);
+                await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(deployedTestApp.name);
             }
+
         });
 
         beforeEach(async () => {
             await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
         });
 
-        it('[C261042] Should display default pagination', async () => {
+        it('[C261042] Should display default pagination',  async() => {
             page = 1;
             totalPages = 1;
             await processFiltersPage.clickRunningFilterButton();
@@ -98,7 +110,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261043] Should be possible to Items per page to 15', async () => {
+        it('[C261043] Should be possible to Items per page to 15',  async() => {
             page = 1;
             totalPages = 2;
             await processFiltersPage.clickRunningFilterButton();
@@ -139,7 +151,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         });
 
-        it('[C261044] Should be possible to Items per page to 10', async () => {
+        it('[C261044] Should be possible to Items per page to 10',  async() => {
             page = 1;
             totalPages = 2;
             await processFiltersPage.clickRunningFilterButton();
@@ -180,7 +192,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         });
 
-        it('[C261047] Should be possible to Items per page to 20', async () => {
+        it('[C261047] Should be possible to Items per page to 20',  async() => {
             page = 1;
             totalPages = 1;
             await processFiltersPage.clickRunningFilterButton();
@@ -208,7 +220,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         });
 
-        it('[C261045] Should be possible to Items per page to 5', async () => {
+        it('[C261045] Should be possible to Items per page to 5',  async() => {
             let showing;
             page = 1;
             totalPages = 4;
@@ -282,7 +294,7 @@ describe('Process List - Pagination', () => {
             await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         });
 
-        it('[C261049] Should be possible to open page number dropdown', async () => {
+        it('[C261049] Should be possible to open page number dropdown',  async() => {
             let showing;
             page = 1;
             totalPages = 2;
@@ -335,7 +347,7 @@ describe('Process List - Pagination', () => {
             await paginationPage.checkPreviousPageButtonIsDisabled();
         });
 
-        it('[C261048] Should be possible to sort processes by name', async () => {
+        it('[C261048] Should be possible to sort processes by name',  async() => {
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -354,7 +366,7 @@ describe('Process List - Pagination', () => {
             await processFiltersPage.checkProcessesSortedByNameDesc();
         });
 
-        it('[C286260] Should keep sorting when changing \'Items per page\'', async () => {
+        it('[C286260] Should keep sorting when changing \'Items per page\'',  async() => {
             await processFiltersPage.clickRunningFilterButton();
             await processFiltersPage.checkFilterIsHighlighted(processFilterRunning);
             await processDetailsPage.checkProcessTitleIsDisplayed();

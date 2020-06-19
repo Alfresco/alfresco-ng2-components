@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -24,17 +25,12 @@ import CONSTANTS = require('../util/constants');
 
 describe('Items per page set to 15 and adding of tasks', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
     let processUserModel;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     let currentPage = 1;
     const nrOfTasks = 25;
     const totalPages = 2;
@@ -47,20 +43,29 @@ describe('Items per page set to 15 and adding of tasks', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        processUserModel = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        const processUtil = new ProcessUtil(apiService);
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
         for (i = 0; i < (nrOfTasks - 5); i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 
     it('[C260306] Items per page set to 15 and adding of tasks', async () => {
@@ -74,7 +79,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue + ' of ' + (nrOfTasks - 5));
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fifteenValue);
 
-        const processUtil = new ProcessUtil(apiService);
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
         for (i; i < nrOfTasks; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }

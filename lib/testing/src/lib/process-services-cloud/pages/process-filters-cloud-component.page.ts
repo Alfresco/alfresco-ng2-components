@@ -24,10 +24,10 @@ export class ProcessFiltersCloudComponentPage {
     filter: ElementFinder;
     filterIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
-    processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
+    processFilters: ElementFinder = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 
-    activeFilter = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
-    processFiltersList = element(by.css('adf-cloud-process-filters'));
+    activeFilter: ElementFinder = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
+    processFiltersList: ElementFinder = element(by.css('adf-cloud-process-filters'));
 
     async checkProcessFilterIsDisplayed(filterName: string): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName(filterName);
@@ -50,21 +50,25 @@ export class ProcessFiltersCloudComponentPage {
 
     async clickProcessFilter(filterName: string): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName(filterName);
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async clickAllProcessesFilter(): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName('all-processes');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async clickCompletedProcessesFilter(): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName('completed-processes');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 
     async clickRunningProcessesFilter(): Promise<void> {
         this.filter = this.getProcessFilterLocatorByFilterName('running-processes');
+        await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
     }
 

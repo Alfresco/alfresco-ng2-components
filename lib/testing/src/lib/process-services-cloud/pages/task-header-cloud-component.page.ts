@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { CardTextItemPage } from '../../core/pages/card-view/card-view-text-item.page';
 
 export class TaskHeaderCloudPage {
 
-    assigneeCardTextItem = new CardTextItemPage('assignee');
-    statusCardTextItem = new CardTextItemPage('status');
-    priorityCardTextItem = new CardTextItemPage('priority');
-    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
-    categoryCardTextItem = new CardTextItemPage('category');
-    createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    parentNameCardTextItem = new CardTextItemPage('parentName');
-    parentTaskIdCardTextItem = new CardTextItemPage('parentTaskId');
-    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    idCardTextItem = new CardTextItemPage('id');
-    descriptionCardTextItem = new CardTextItemPage('description');
-    taskPropertyList = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
+    assigneeCardTextItem: CardTextItemPage = new CardTextItemPage('assignee');
+    statusCardTextItem: CardTextItemPage = new CardTextItemPage('status');
+    priorityCardTextItem: CardTextItemPage = new CardTextItemPage('priority');
+    dueDateField: ElementFinder = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
+    categoryCardTextItem: CardTextItemPage = new CardTextItemPage('category');
+    createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
+    parentNameCardTextItem: CardTextItemPage = new CardTextItemPage('parentName');
+    parentTaskIdCardTextItem: CardTextItemPage = new CardTextItemPage('parentTaskId');
+    endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
+    idCardTextItem: CardTextItemPage = new CardTextItemPage('id');
+    descriptionCardTextItem: CardTextItemPage = new CardTextItemPage('description');
+    taskPropertyList: ElementFinder = element(by.css('adf-cloud-task-header adf-card-view div[class="adf-property-list"]'));
 
     async getAssignee(): Promise<string> {
         return this.assigneeCardTextItem.getFieldValue();

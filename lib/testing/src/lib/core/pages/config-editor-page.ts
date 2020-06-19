@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class ConfigEditorPage {
 
-    textField = element(by.css('#adf-form-config-editor div.overflow-guard > textarea'));
+    textField: ElementFinder = element(by.css('#adf-form-config-editor div.overflow-guard > textarea'));
 
-    async enterConfiguration(text: string): Promise<void> {
+    async enterConfiguration(text): Promise<void> {
         await BrowserActions.clearSendKeys(this.textField, text);
     }
 
     async clickSaveButton(): Promise<void> {
-        const saveButton = element(by.id('app-form-config-save'));
+        const saveButton: ElementFinder = element(by.id('app-form-config-save'));
         await BrowserActions.click(saveButton);
     }
 
     async clickClearButton(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.textField);
-        const clearButton = element(by.id('app-form-config-clear'));
+        const clearButton: ElementFinder = element(by.id('app-form-config-clear'));
         await BrowserActions.click(clearButton);
     }
 

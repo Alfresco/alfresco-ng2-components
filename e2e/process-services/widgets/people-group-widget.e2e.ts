@@ -15,38 +15,46 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, Widget, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, Widget, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
+import { User } from '../../models/APS/user';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('People and Group widget', () => {
 
-    const app = browser.params.resources.Files.MORE_WIDGETS;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
+    const usersActions = new UsersActions();
+    const alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
-    let user: UserModel;
+    const app = browser.params.resources.Files.MORE_WIDGETS;
+    let user: User;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
-        user = await usersActions.createUser();
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await usersActions.createTenantAndUser(alfrescoJsApi);
         await createGroupAndUsers(user.tenantId);
-        await apiService.getInstance().login(user.email, user.password);
 
-        await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
+        await alfrescoJsApi.login(user.email, user.password);
+        try {
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+            await applicationsService.importPublishDeployApp(app.file_path, { renewIdmEntries: true });
+        } catch (e) { console.error('failed to deploy the application'); }
+        await loginPage.loginToProcessServicesUsingUserModel(user);
+    });
 
-        await loginPage.login(user.email, user.password);
+    afterAll(async () => {
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach(async () => {
@@ -57,7 +65,7 @@ describe('People and Group widget', () => {
     it('[C275715] Add group widget - Visibility and group restriction', async () => {
         const name = 'group visibility task';
         const groupVisibilityForm = app.ADD_GROUP_VISIBILITY;
-        await taskPage.createTask({ name, formName: groupVisibilityForm.formName });
+        await taskPage.createTask({name, formName: groupVisibilityForm.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(groupVisibilityForm.FIELD.widget_id);
@@ -67,7 +75,7 @@ describe('People and Group widget', () => {
         await widget.groupWidget().insertGroup(groupVisibilityForm.FIELD.widget_id, groupVisibilityForm.searchTerm);
         await widget.groupWidget().checkDropDownListIsDisplayed();
         const suggestions = await widget.groupWidget().getDropDownList();
-        await expect(suggestions.sort()).toEqual(['Heros', 'Users']);
+        await expect(suggestions.sort()).toEqual([ 'Heros', 'Users' ]);
         await widget.groupWidget().selectGroupFromDropDown('Users');
         await taskPage.taskDetails().clickCompleteFormTask();
     });
@@ -75,7 +83,7 @@ describe('People and Group widget', () => {
     it('[C275716] Add group widget - sub group restrictions', async () => {
         const name = 'group widget - subgroup restriction';
         const subgroupFrom = app.ADD_GROUP_AND_SUBGROUP_RESTRICTION;
-        await taskPage.createTask({ name, formName: subgroupFrom.formName });
+        await taskPage.createTask({name, formName: subgroupFrom.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(subgroupFrom.FIELD.widget_id);
@@ -100,7 +108,7 @@ describe('People and Group widget', () => {
     it('[C275714] Add people widget - group restrictions', async () => {
         const name = 'people widget - group restrictions';
         const peopleWidget = app.ADD_PEOPLE_AND_GROUP_RESTRICTION;
-        await taskPage.createTask({ name, formName: peopleWidget.formName });
+        await taskPage.createTask({name, formName: peopleWidget.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
         await taskPage.formFields().checkWidgetIsHidden(peopleWidget.FIELD.widget_id);
@@ -115,40 +123,23 @@ describe('People and Group widget', () => {
         await taskPage.taskDetails().clickCompleteFormTask();
     });
 
-    async function createGroupAndUsers(tenantId: number) {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+    async function createGroupAndUsers(tenantId) {
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        const userCreated = await Promise.all(app.groupUser.map(usersToCreate =>
-            usersActions.createUser(new UserModel({
-                tenantId: tenantId,
-                firstName: usersToCreate.firstName,
-                lastName: usersToCreate.lastName
-            }))
-        ));
+        try {
+            const happyUsers: any[] = await Promise.all(app.groupUser.map(happyUser =>
+                usersActions.createApsUserWithName(alfrescoJsApi, tenantId, StringUtil.generateRandomString(), happyUser.firstName, happyUser.lastName)));
+            const subgroupUser = await usersActions.createApsUserWithName(
+                alfrescoJsApi, tenantId, StringUtil.generateRandomString(), app.subGroupUser.firstName, app.subGroupUser.lastName);
 
-        const subgroupUser = await usersActions.createUser(new UserModel({
-            tenantId: tenantId, firstName: app.subGroupUser.firstName, lastName: app.subGroupUser.lastName
-        }));
+            const group = await alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ name: app.group.name, tenantId, type: 1 });
+            await  Promise.all(happyUsers.map(happyUser => alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(group.id, happyUser.id)));
 
-        const group = await apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-            name: app.group.name,
-            tenantId,
-            type: 1
-        });
+            const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
+                alfrescoJsApi.activiti.adminGroupsApi.createNewGroup({ name, tenantId , type: 1, parentGroupId: group.id })));
+            await Promise.all(subgroups.map((subgroup) => alfrescoJsApi.activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
 
-        await Promise.all(userCreated.map((userToAddGroup: UserModel) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(group.id, userToAddGroup.id)));
-
-        const subgroups: any[] = await Promise.all(getSubGroupsName().map((name) =>
-            apiService.getInstance().activiti.adminGroupsApi.createNewGroup({
-                name,
-                tenantId,
-                type: 1,
-                parentGroupId: group.id
-            })
-        ));
-
-        await Promise.all(subgroups.map((subgroup) => apiService.getInstance().activiti.adminGroupsApi.addGroupMember(subgroup.id, subgroupUser.id)));
-
+        } catch (e) {}
     }
 
     function getSubGroupsName() {

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { FormFields, LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { FormFields, LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -23,24 +24,19 @@ import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import CONSTANTS = require('../util/constants');
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attach Form Component', () => {
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();
     const formFields = new FormFields();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationService = new ApplicationsUtil(apiService);
-
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
-    let user, tenantId, appModel;
+    let user, tenantId, appId;
 
     const testNames = {
         taskName: 'Test Task',
@@ -51,25 +47,36 @@ describe('Attach Form Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        user = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+        const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
+
+        const users = new UsersActions();
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         tenantId = user.tenantId;
 
-        await apiService.getInstance().login(user.email, user.password);
+        await this.alfrescoJsApi.login(user.email, user.password);
 
-        appModel = await applicationService.importPublishDeployApp(app.file_path);
+        const appModel = await applicationService.importPublishDeployApp(app.file_path);
 
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: testNames.taskName }));
+        appId = appModel.id;
 
-        await loginPage.login(user.email, user.password);
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: testNames.taskName });
+
+        await loginPage.loginToProcessServicesUsingUserModel(user);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     it('[C280047] Should be able to view the attach-form component after creating a standalone task', async () => {

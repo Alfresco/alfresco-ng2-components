@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { LoginPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { UsersActions } from '../../actions/users.actions';
 import CONSTANTS = require('../../util/constants');
@@ -45,34 +46,38 @@ const checkbox = {
 
 describe('Process-Services - Visibility conditions', () => {
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
+    const loginPage = new LoginPage();
 
-    const loginPage = new LoginSSOPage();
+    let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
+    let alfrescoJsApi;
     let appModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.VISIBILITY;
     let deployedApp, process;
-    let processUserModel;
 
     beforeAll(async () => {
-       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-       processUserModel = await usersActions.createUser();
+        alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-       deployedApp = appDefinitions.data.find((currentApp) => {
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
+
+        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
-       await loginPage.login(processUserModel.email, processUserModel.password);
+        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
 
     beforeEach(async () => {
@@ -83,9 +88,9 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     it('[C309647] Should be able to see Checkbox widget when visibility condition refers to another field with specific value', async () => {
@@ -96,6 +101,7 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     it('[C309648] Should be able to see Checkbox widget when visibility condition refers to a form variable and a field', async () => {
+
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxVariableField);
 
@@ -107,6 +113,7 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     it('[C309649] Should be able to see Checkbox widget when visibility condition refers to a field and a form variable', async () => {
+
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxHidden(checkbox.checkboxFieldVariable);
 
@@ -118,6 +125,7 @@ describe('Process-Services - Visibility conditions', () => {
     });
 
     it('[C311425] Should be able to see Checkbox widget when visibility condition refers to a field and another field', async () => {
+
         await widget.textWidget().isWidgetVisible(widgets.textOneId);
         await widget.checkboxWidget().isCheckboxDisplayed(checkbox.checkboxFieldField);
         await widget.textWidget().setValue(widgets.textOneId, value.displayCheckbox);

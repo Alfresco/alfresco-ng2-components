@@ -15,36 +15,41 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { DropActions } from '../../actions/drop.actions';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Datatable component', () => {
 
     const dataTablePage = new DataTablePage('defaultTable');
     const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
     const dragAndDropDataTablePage = new DataTablePage();
-    const loginPage = new LoginSSOPage();
-    const acsUser = new UserModel();
+    const loginPage = new LoginPage();
+    const acsUser = new AcsUserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
+    const dragAndDrop = new DropActions();
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
 
-        await usersActions.createUser(acsUser);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     afterAll(async () => {
@@ -52,6 +57,7 @@ describe('Datatable component', () => {
     });
 
     describe('Datatable component - copyContent', () => {
+
         beforeAll(async () => {
             await navigationBarPage.navigateToCopyContentDatatable();
             await dataTablePage.dataTable.waitForTableBody();
@@ -136,6 +142,7 @@ describe('Datatable component', () => {
     });
 
     describe('Datatable component - Drag and Drop', () => {
+
         beforeAll(async () => {
             await navigationBarPage.navigateToDragAndDropDatatable();
             await dragAndDropDataTablePage.dataTable.waitForTableBody();
@@ -143,11 +150,11 @@ describe('Datatable component', () => {
 
         it('[C307984] Should trigger the event handling header-drop and cell-drop', async () => {
             const dragAndDropHeader = dragAndDropDataTablePage.getDropTargetIdColumnHeader();
-            await DropActions.dropFile(dragAndDropHeader, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropHeader, pngFile.location);
             await notificationHistoryPage.checkNotifyContains('Dropped data on [ id ] header');
 
             const dragAndDropCell = dragAndDropDataTablePage.getDropTargetIdColumnCell(1);
-            await DropActions.dropFile(dragAndDropCell, pngFile.location);
+            await dragAndDrop.dropFile(dragAndDropCell, pngFile.location);
             await notificationHistoryPage.checkNotifyContains('Dropped data on [ id ] cell');
         });
     });

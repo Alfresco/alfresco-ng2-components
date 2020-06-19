@@ -20,7 +20,6 @@ import { MaterialModule } from '../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { FormComponent } from './form.component';
 import { StartFormComponent } from './start-form.component';
-import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
 
 @NgModule({
     imports: [
@@ -29,13 +28,11 @@ import { FormCustomOutcomesComponent } from './form-custom-outcomes.component';
     ],
     declarations: [
         FormComponent,
-        StartFormComponent,
-        FormCustomOutcomesComponent
+        StartFormComponent
     ],
     exports: [
         FormComponent,
-        StartFormComponent,
-        FormCustomOutcomesComponent
+        StartFormComponent
     ]
 })
 export class FormModule {}

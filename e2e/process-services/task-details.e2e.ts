@@ -15,36 +15,24 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');
 import TaskModel = require('../models/APS/TaskModel');
 import FormModel = require('../models/APS/FormModel');
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
 import moment = require('moment');
-import {
-    LoginSSOPage,
-    BrowserActions,
-    StringUtil,
-    ApplicationsUtil,
-    ProcessUtil,
-    ApiService
-} from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, StringUtil, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Details component', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
     const processServices = new ProcessServicesPage();
-    const loginPage = new LoginSSOPage();
-    const taskPage = new TasksPage();
-
-    const apiService = new ApiService();
-
     let processUserModel, appModel;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const tasks = ['Modifying task', 'Information box', 'No form', 'Not Created', 'Refreshing form', 'Assignee task', 'Attach File'];
     const TASK_DATE_FORMAT = 'll';
     let formModel;
@@ -56,21 +44,30 @@ describe('Task Details component', () => {
         'stencilSet': 0
     };
 
+    const loginPage = new LoginPage();
+    const taskPage = new TasksPage();
+
     beforeAll(async () => {
-        const usersActions = new UsersActions(apiService);
+        const users = new UsersActions();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        processUserModel = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(apiService);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const { id } = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
 
-    afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+    afterAll( async () => {
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {
@@ -82,10 +79,10 @@ describe('Task Details component', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
-        await taskPage.createTask({ name: tasks[1], description: 'Description', formName: app.formName });
+        await taskPage.createTask({name: tasks[1], description: 'Description', formName: app.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -101,7 +98,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getEndDate()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
         formModel = new FormModel(taskForm);
 
         await expect(await taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
@@ -111,10 +108,10 @@ describe('Task Details component', () => {
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        await taskPage.createTask({ name: tasks[1], description: 'Description', formName: app.formName });
+        await taskPage.createTask({name: tasks[1], description: 'Description', formName: app.formName});
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -132,7 +129,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
@@ -140,7 +137,7 @@ describe('Task Details component', () => {
     });
 
     it('[C286706] Should display task details for task - Task App', async () => {
-        await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 
@@ -148,7 +145,7 @@ describe('Task Details component', () => {
 
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
 
@@ -165,7 +162,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
@@ -174,14 +171,14 @@ describe('Task Details component', () => {
     });
 
     it('[C286705] Should display task details for task - Custom App', async () => {
-        await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
 
         await expect(await taskPage.taskDetails().getTitle()).toEqual('Activities');
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
         const taskModel = new TaskModel(allTasks.data[0]);
 
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -197,7 +194,7 @@ describe('Task Details component', () => {
         await expect(await taskPage.taskDetails().getParentTaskId()).toEqual('');
         await expect(await taskPage.taskDetails().getStatus()).toEqual(CONSTANTS.TASK_STATUS.RUNNING);
 
-        const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
+        const taskForm = await this.alfrescoJsApi.activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
 
         formModel = new FormModel(taskForm);
 
@@ -208,7 +205,7 @@ describe('Task Details component', () => {
     it('[C286708] Should display task details for subtask - Task App', async () => {
         const taskName = 'TaskAppSubtask';
         const checklistName = 'TaskAppChecklist';
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': taskName }));
+        await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 
@@ -225,7 +222,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -245,7 +242,7 @@ describe('Task Details component', () => {
     it('[C286707] Should display task details for subtask - Custom App', async () => {
         const checklistName = 'CustomAppChecklist';
 
-        await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
+        await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 
@@ -262,7 +259,7 @@ describe('Task Details component', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(checklistName);
         await taskPage.tasksListPage().selectRow(checklistName);
 
-        const allTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        const allTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
 
         const taskModel = new TaskModel(allTasks.data[0]);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -281,7 +278,7 @@ describe('Task Details component', () => {
 
     it('[C286709] Should display task details for completed task - Task App', async () => {
         const taskName = 'TaskAppCompleted';
-        const taskId = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': taskName }));
+        const taskId = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
         await (await processServices.goToTaskApp()).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -293,7 +290,7 @@ describe('Task Details component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);
         await taskPage.tasksListPage().selectRow(taskName);
 
-        const getTaskResponse = await apiService.getInstance().activiti.taskApi.getTask(taskId.id);
+        const getTaskResponse = await this.alfrescoJsApi.activiti.taskApi.getTask(taskId.id);
 
         const taskModel = new TaskModel(getTaskResponse);
         await taskPage.tasksListPage().checkContentIsDisplayed(taskModel.getName());
@@ -312,10 +309,10 @@ describe('Task Details component', () => {
 
     it('[C260321] Should not be able to edit a completed task\'s details', async () => {
         const taskName = 'TaskCompleted';
-        const form = await apiService.getInstance().activiti.modelsApi.createModel(taskFormModel);
-        const task = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ 'name': taskName }));
-        await apiService.getInstance().activiti.taskApi.attachForm(task.id, { 'formId': form.id });
-        await apiService.getInstance().activiti.taskApi.completeTaskForm(task.id, { values: { label: null } });
+        const form = await this.alfrescoJsApi.activiti.modelsApi.createModel(taskFormModel);
+        const task = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ 'name': taskName });
+        await this.alfrescoJsApi.activiti.taskApi.attachForm(task.id, { 'formId': form.id });
+        await this.alfrescoJsApi.activiti.taskApi.completeTaskForm(task.id, { values: { label: null } });
 
         await (await processServices.goToTaskApp()).clickTasksButton();
 

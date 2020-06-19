@@ -71,7 +71,7 @@ export class StringUtil {
      * @param length {int} If this parameter is not provided the length is set to 3 by default.
      */
     static generateRandomStringNonLatin(length: number = 3): string {
-        return StringUtil.generateRandomCharset(length, '密码你好𠮷');
+        return StringUtil.generateRandomCharset(length,  '密码你好𠮷');
     }
 
     /**
@@ -88,23 +88,6 @@ export class StringUtil {
         }
 
         return text;
-    }
-
-    /**
-     * Generates a sequence of files with name: baseName + index + extension (e.g.) baseName1.txt, baseName2.txt, ...
-     *
-     * @param startIndex
-     * @param endIndex
-     * @param baseName  the base name of all files
-     * @param extension the extension of the file
-     * @return fileNames
-     */
-    static generateFilesNames(startIndex: number, endIndex: number, baseName: string, extension: string): string [] {
-        const fileNames: string[] = [];
-        for (let i = startIndex; i <= endIndex; i++) {
-            fileNames.push(baseName + i + extension);
-        }
-        return fileNames;
     }
 
 }

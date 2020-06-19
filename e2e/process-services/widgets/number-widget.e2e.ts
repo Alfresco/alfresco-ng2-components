@@ -15,42 +15,46 @@
  * limitations under the License.
  */
 
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Number widget', () => {
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.NUMBER;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
+    let processUserModel;
     const taskPage = new TasksPage();
     const widget = new Widget();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
+    let alfrescoJsApi;
     let appModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.NUMBER;
     let deployedApp, process;
-    let processUserModel;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        processUserModel = await usersActions.createUser();
+        alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
+
+        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 
     beforeEach(async () => {
@@ -61,18 +65,18 @@ describe('Number widget', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C269111] Should be able to set general properties for Number Widget', async () => {
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await expect(await widget.numberWidget().getNumberFieldLabel(app.FIELD.number_general)).toContain('Number General');
         await expect(await widget.numberWidget().getPlaceholder(app.FIELD.number_general)).toContain('Type a number');
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_general, 2);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 
     it('[C274702] Should be able to set advanced and visibility properties for Number Widget', async () => {
@@ -84,15 +88,15 @@ describe('Number widget', () => {
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 2);
         await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be less than 3');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 101);
         await expect(await widget.numberWidget().getErrorMessage(app.FIELD.number_visible)).toBe('Can\'t be greater than 100');
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
         await widget.numberWidget().clearFieldValue(app.FIELD.number_visible);
 
         await widget.numberWidget().setFieldValue(app.FIELD.number_visible, 4);
-        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
+        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
     });
 });

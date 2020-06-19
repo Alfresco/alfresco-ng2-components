@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, ElementFinder } from 'protractor';
+
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class HeaderPage {
 
-    checkBox = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
-    headerColor = element(by.css('option[value="primary"]'));
-    titleInput = element(by.css('input[name="title"]'));
-    iconInput = element(by.css('input[placeholder="URL path"]'));
-    hexColorInput = element(by.css('input[placeholder="hex color code"]'));
-    logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
-    positionStart = element.all(by.css('mat-radio-button[value="start"]')).first();
-    positionEnd = element.all(by.css('mat-radio-button[value="end"]')).first();
-    sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
-    sideBarPositionLeft = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
+    checkBox: ElementFinder = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
+    headerColor: ElementFinder = element(by.css('option[value="primary"]'));
+    titleInput: ElementFinder = element(by.css('input[name="title"]'));
+    iconInput: ElementFinder = element(by.css('input[placeholder="URL path"]'));
+    hexColorInput: ElementFinder = element(by.css('input[placeholder="hex color code"]'));
+    logoHyperlinkInput: ElementFinder = element(by.css('input[placeholder="Redirect URL"]'));
+    logoTooltipInput: ElementFinder = element(by.css('input[placeholder="Tooltip text"]'));
+    positionStart: ElementFinder = element.all(by.css('mat-radio-button[value="start"]')).first();
+    positionEnd: ElementFinder = element.all(by.css('mat-radio-button[value="end"]')).first();
+    sideBarPositionRight: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));
+    sideBarPositionLeft: ElementFinder = element(by.css('mat-sidenav.mat-drawer.mat-sidenav'));
 
     async checkShowMenuCheckBoxIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.checkBox);
@@ -49,32 +50,32 @@ export class HeaderPage {
     }
 
     async clickShowMenuButton(): Promise<void> {
-        const checkBox = element(by.css('mat-checkbox'));
+        const checkBox: ElementFinder = element(by.css('mat-checkbox'));
         await BrowserActions.click(checkBox.get(0));
     }
 
-    async changeHeaderColor(color: string): Promise<void> {
-        const headerColor = element(by.css('option[value="' + color + '"]'));
+    async changeHeaderColor(color): Promise<void> {
+        const headerColor: ElementFinder = element(by.css('option[value="' + color + '"]'));
         await BrowserActions.click(headerColor);
     }
 
-    async checkAppTitle(name: string): Promise<void> {
-        const title = element(by.cssContainingText('.adf-app-title', name));
+    async checkAppTitle(name): Promise<void> {
+        const title: ElementFinder = element(by.cssContainingText('.adf-app-title', name));
         await BrowserVisibility.waitUntilElementIsVisible(title);
     }
 
-    async addTitle(title: string): Promise<void> {
+    async addTitle(title): Promise<void> {
         await BrowserActions.click(this.titleInput);
         await BrowserActions.clearSendKeys(this.titleInput, title);
         await this.titleInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async checkIconIsDisplayed(url: string): Promise<void> {
-        const icon = element(by.css('img[src="' + url + '"]'));
+    async checkIconIsDisplayed(url): Promise<void> {
+        const icon: ElementFinder = element(by.css('img[src="' + url + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(icon);
     }
 
-    async addIcon(url: string): Promise<void> {
+    async addIcon(url): Promise<void> {
         await BrowserActions.click(this.iconInput);
         await BrowserActions.clearSendKeys(this.iconInput, url);
         await this.iconInput.sendKeys(protractor.Key.ENTER);
@@ -92,19 +93,19 @@ export class HeaderPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.logoTooltipInput);
     }
 
-    async addHexCodeColor(hexCode: string): Promise<void> {
+    async addHexCodeColor(hexCode): Promise<void> {
         await BrowserActions.click(this.hexColorInput);
         await this.hexColorInput.sendKeys(hexCode);
         await this.hexColorInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async addLogoHyperlink(hyperlink: string): Promise<void> {
+    async addLogoHyperlink(hyperlink): Promise<void> {
         await BrowserActions.click(this.logoHyperlinkInput);
         await this.logoHyperlinkInput.sendKeys(hyperlink);
         await this.logoHyperlinkInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async addLogoTooltip(tooltip: string): Promise<void> {
+    async addLogoTooltip(tooltip): Promise<void> {
         await BrowserActions.click(this.logoTooltipInput);
         await this.logoTooltipInput.sendKeys(tooltip);
         await this.logoTooltipInput.sendKeys(protractor.Key.ENTER);

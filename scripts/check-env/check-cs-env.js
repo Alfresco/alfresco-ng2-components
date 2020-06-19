@@ -23,12 +23,12 @@ async function main() {
 
 async function checkEnv() {
     try {
-        const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ECM',
             hostEcm: program.host
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await this.alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         console.log('Login error environment down or inaccessible');
         counter++;
@@ -46,12 +46,12 @@ async function checkEnv() {
 async function checkDiskSpaceFullEnv() {
     try {
 
-        const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'ECM',
             hostEcm: program.host
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await this.alfrescoJsApi.login(program.username, program.password);
 
         let folder;
 
@@ -88,7 +88,7 @@ async function checkDiskSpaceFullEnv() {
             }
         );
 
-        alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
+        this.alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
     } catch (error) {
         counter++;
 

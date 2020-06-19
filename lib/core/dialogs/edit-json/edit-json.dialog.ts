@@ -44,7 +44,7 @@ export class EditJsonDialogComponent implements OnInit {
 
     ngOnInit() {
         if (this.settings) {
-            this.editable = this.settings.editable;
+            this.editable = this.settings.editable ? true : false;
             this.value = this.settings.value || '';
             this.title = this.settings.title || 'JSON';
         }

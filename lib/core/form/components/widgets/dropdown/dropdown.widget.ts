@@ -110,7 +110,7 @@ export class DropdownWidgetComponent extends WidgetComponent implements OnInit {
     }
 
     isReadOnlyType(): boolean {
-        return this.field.type === 'readonly';
+        return this.field.type === 'readonly' ? true : false;
     }
 
 }

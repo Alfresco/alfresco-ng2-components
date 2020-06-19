@@ -14,25 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginSSOPage, AboutPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, AboutPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 
 describe('About Content Services', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
-    let acsUser: UserModel;
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
+    const acsUser = new AcsUserModel();
 
     beforeAll(async() => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
-        await loginPage.login(acsUser.email, acsUser.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickAboutButton();
     });
 

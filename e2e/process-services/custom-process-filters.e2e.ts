@@ -17,24 +17,22 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { LoginPage } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('New Process Filters', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const appSettingsToggles = new AppSettingsTogglesPage();
     const navigationBarPage = new NavigationBarPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
 
     let tenantId, user, filterId, customProcessFilter;
 
@@ -50,21 +48,28 @@ describe('New Process Filters', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        user = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
 
         tenantId = user.tenantId;
 
-        await apiService.getInstance().login(user.email, user.password);
+        await this.alfrescoJsApi.login(user.email, user.password);
 
-        await loginPage.login(user.email, user.password);
-    });
+        await loginPage.loginToProcessServicesUsingUserModel(user);
+   });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
-    });
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+   });
 
     it('[C279965] Should be able to view default filters on ADF', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
@@ -75,7 +80,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C260473] Should be able to create a new filter on APS and display it on ADF', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.new_filter,
             'icon': 'glyphicon-random',
@@ -90,7 +95,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C286450] Should display the process filter icon when a custom filter is added', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.new_icon,
             'icon': 'glyphicon-cloud',
@@ -112,20 +117,20 @@ describe('New Process Filters', () => {
     });
 
     it('[C260474] Should be able to edit a filter on APS and check it on ADF', async () => {
-        await apiService.getInstance().activiti.userFiltersApi.updateUserProcessInstanceFilter(filterId, {
+         this.alfrescoJsApi.activiti.userFiltersApi.updateUserProcessInstanceFilter(filterId, {
             'appId': null,
             'name': processFilter.edited,
             'icon': 'glyphicon-random',
             'filter': { 'sort': 'created-desc', 'name': '', 'state': 'running' }
         });
 
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
+         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 
-        await processFiltersPage.checkFilterIsDisplayed(processFilter.edited);
+         await processFiltersPage.checkFilterIsDisplayed(processFilter.edited);
     });
 
     it('[C286451] Should display changes on a process filter when this filter icon is edited', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.edit_icon,
             'icon': 'glyphicon-random',
@@ -138,7 +143,7 @@ describe('New Process Filters', () => {
 
         await processFiltersPage.checkFilterIsDisplayed(processFilter.edit_icon);
 
-        await apiService.getInstance().activiti.userFiltersApi.updateUserProcessInstanceFilter(filterId, {
+        await this.alfrescoJsApi.activiti.userFiltersApi.updateUserProcessInstanceFilter(filterId, {
             'appId': null,
             'name': processFilter.edit_icon,
             'icon': 'glyphicon-cloud',
@@ -170,7 +175,7 @@ describe('New Process Filters', () => {
     });
 
     it('[C260475] Should be able to delete a filter on APS and check it on ADF', async () => {
-        customProcessFilter = await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
+        customProcessFilter = await this.alfrescoJsApi.activiti.userFiltersApi.createUserProcessInstanceFilter({
             'appId': null,
             'name': processFilter.deleted,
             'icon': 'glyphicon-random',
@@ -179,7 +184,7 @@ describe('New Process Filters', () => {
 
         filterId = customProcessFilter.id;
 
-        await apiService.getInstance().activiti.userFiltersApi.deleteUserProcessInstanceFilter(filterId);
+        await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(filterId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
 

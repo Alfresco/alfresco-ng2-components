@@ -136,7 +136,7 @@ export class BreadcrumbComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     hasPreviousNodes(): boolean {
-        return !!this.previousNodes;
+        return this.previousNodes ? true : false;
     }
 
     parseRoute(node: Node): PathElementEntity[] {

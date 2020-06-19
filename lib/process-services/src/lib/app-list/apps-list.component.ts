@@ -176,7 +176,10 @@ export class AppsListComponent implements OnInit, AfterContentInit, OnDestroy {
      * Check if the value of the layoutType property is an allowed value
      */
     isValidType(): boolean {
-        return this.layoutType && (this.layoutType === AppsListComponent.LAYOUT_LIST || this.layoutType === AppsListComponent.LAYOUT_GRID);
+        if (this.layoutType && (this.layoutType === AppsListComponent.LAYOUT_LIST || this.layoutType === AppsListComponent.LAYOUT_GRID)) {
+            return true;
+        }
+        return false;
     }
 
     /**

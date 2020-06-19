@@ -15,47 +15,50 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
+import { Tenant } from '../models/APS/tenant';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {
 
+    const loginPage = new LoginPage();
+    let processUserModel;
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
-    let processUserModel;
-
     const taskTaskApp = 'Audit task task app';
     const taskCustomApp = 'Audit task custom app';
     const taskCompleteCustomApp = 'Audit completed task custom app';
     const auditLogFile = 'Audit.pdf';
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        processUserModel = await usersActions.createUser();
+        const users = new UsersActions();
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
-        await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskTaskApp }));
-        const applicationsService = new ApplicationsUtil(apiService);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const { id } = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+        processUserModel = await users.createApsUser(this.alfrescoJsApi, id);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+        this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: taskTaskApp });
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
     });
 
     afterAll( async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
     });
 
     beforeEach(async () => {

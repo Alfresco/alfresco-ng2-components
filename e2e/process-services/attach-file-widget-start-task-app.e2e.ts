@@ -15,28 +15,32 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, Widget, ViewerPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { User } from '../models/APS/user';
 
 describe('Start Task - Task App', () => {
-    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
+    const users = new UsersActions();
+    const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationService = new ApplicationsUtil(apiService);
-
-    let user: UserModel;
+    let user: User;
+    const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
     const pdfFile = new FileModel({ 'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const wordFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -45,16 +49,16 @@ describe('Start Task - Task App', () => {
     const appFields = app.form_fields;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createUser();
-        await apiService.getInstance().login(user.email, user.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await this.alfrescoJsApi.login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
-        await loginPage.login(user.email, user.password);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     it('[C274690] Should be able to open a file attached to a start form', async () => {

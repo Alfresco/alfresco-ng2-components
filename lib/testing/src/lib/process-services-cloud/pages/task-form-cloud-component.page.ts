@@ -22,16 +22,16 @@ import { FormFields } from '../../core/pages/form/form-fields';
 
 export class TaskFormCloudComponent {
 
-    cancelButton = element(by.css('button[id="adf-cloud-cancel-task"]'));
-    completeButton = element(by.css('button[id="adf-form-complete"]'));
-    releaseButton = element(by.css('button[adf-cloud-unclaim-task]'));
-    saveButton = element(by.css('button[id="adf-form-save"]'));
-    claimButton = element(by.css('button[adf-cloud-claim-task]'));
-    form = element(by.css('adf-cloud-form'));
-    formTitle = element(by.css(`span.adf-form-title`));
-    emptyContentIcon = element(by.css(`div.adf-empty-content adf-icon.adf-empty-content__icon`));
-    emptyContentTitle = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
-    emptyContentSubtitle = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
+    cancelButton: ElementFinder = element(by.css('button[id="adf-cloud-cancel-task"]'));
+    completeButton: ElementFinder = element(by.css('button[id="adf-form-complete"]'));
+    releaseButton: ElementFinder = element(by.css('button[adf-cloud-unclaim-task]'));
+    saveButton: ElementFinder = element(by.css('button[id="adf-form-save"]'));
+    claimButton: ElementFinder = element(by.css('button[adf-cloud-claim-task]'));
+    form: ElementFinder = element(by.css('adf-cloud-form'));
+    formTitle: ElementFinder = element(by.css(`span.adf-form-title`));
+    emptyContentIcon: ElementFinder = element(by.css(`div.adf-empty-content mat-icon.adf-empty-content__icon`));
+    emptyContentTitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__title`));
+    emptyContentSubtitle: ElementFinder = element(by.css(`div.adf-empty-content div.adf-empty-content__subtitle`));
     readOnlyForm = element(by.css('div[class="adf-readonly-form"]'));
 
     async isCompleteButtonEnabled(): Promise<boolean> {

@@ -17,44 +17,49 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { LoginPage } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
+import { Tenant } from '../models/APS/tenant';
 import Task = require('../models/APS/Task');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
-import * as fs from 'fs';
-import * as path from 'path';
+import fs = require('fs');
+import path = require('path');
 
 describe('Start Task - Task App', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
-    const taskPage = new TasksPage();
-
     let processUserModel;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const taskPage = new TasksPage();
     const tasks = ['Standalone task', 'Completed standalone task', 'Add a form', 'Remove form'];
     const noFormMessage = 'No forms attached';
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
     beforeAll(async () => {
+        const users = new UsersActions();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        processUserModel = await usersActions.createUser();
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
+
+        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
 
         const pathFile = path.join(browser.params.testConfig.main.rootPath + app.file_location);
         const file = fs.createReadStream(pathFile);
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
 
-        await apiService.getInstance().activiti.appsApi.importAppDefinition(file);
+        await this.alfrescoJsApi.activiti.appsApi.importAppDefinition(file);
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
    });
 
     beforeEach(async () => {
@@ -63,6 +68,7 @@ describe('Start Task - Task App', () => {
    });
 
     it('[C260421] Should a standalone task be displayed when creating a new task without form', async () => {
+
         const task = await taskPage.createNewTask();
         await task.addName(tasks[0]);
         await task.clickStartButton();
@@ -122,8 +128,8 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
         await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
 
-        const listOfTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
-        await apiService.getInstance().activiti.taskApi.removeForm(listOfTasks.data[0].id);
+        const listOfTasks = await this.alfrescoJsApi.activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
+        await this.alfrescoJsApi.activiti.taskApi.removeForm(listOfTasks.data[0].id);
 
         await browser.refresh();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);

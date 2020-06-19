@@ -55,7 +55,7 @@ export class VersionUploadComponent {
     }
 
     isMajorVersion(): boolean {
-        return this.semanticVersion !== 'minor';
+        return this.semanticVersion === 'minor' ? false : true;
     }
 
     cancelUpload() {

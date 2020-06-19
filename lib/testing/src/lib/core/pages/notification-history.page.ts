@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../utils/browser-actions';
 import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class NotificationHistoryPage {
 
-    notificationList = element(by.css('#adf-notification-history-list'));
+    notificationList: ElementFinder = element(by.css('#adf-notification-history-list'));
 
     async clickNotificationButton(): Promise<void> {
         await BrowserActions.clickExecuteScript('#adf-notification-history-open-button');

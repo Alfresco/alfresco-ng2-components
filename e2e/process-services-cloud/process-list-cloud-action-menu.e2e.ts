@@ -29,49 +29,50 @@ import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
 
 describe('Process list cloud', () => {
 
     describe('Process List - Custom Action Menu', () => {
-
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
 
-        const apiService = new ApiService();
-        const identityService = new IdentityService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
-        const processDefinitionService = new ProcessDefinitionsService(apiService);
-        const processInstancesService = new ProcessInstancesService(apiService);
-
+        let processDefinitionService: ProcessDefinitionsService;
+        let processInstancesService: ProcessInstancesService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
         let testUser, groupInfo, editProcess, deleteProcess;
 
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
+        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
+
         beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
-        const processDefinition = await processDefinitionService
+            await apiService.login(testUser.email, testUser.password);
+            processDefinitionService = new ProcessDefinitionsService(apiService);
+            const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-        editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+            processInstancesService = new ProcessInstancesService(apiService);
+            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
-        deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 
         afterAll(async () => {
@@ -104,7 +105,7 @@ describe('Process list cloud', () => {
         it('[C315236] Should be able to see and execute custom action menu', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(editProcess.entry.name);
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
             await processCloudDemoPage.processListCloudComponent().checkProcessListIsLoaded();
             await processCloudDemoPage.processListCloudComponent().checkContentIsDisplayedById(editProcess.entry.id);
             await processCloudDemoPage.processListCloudComponent().clickOptionsButton(editProcess.entry.id);

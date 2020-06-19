@@ -16,29 +16,29 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class TypeaheadWidgetPage {
 
-    field = element(by.css('input[data-automation-id="adf-typeahed-search-input"]'));
-    firstResult = element(by.id('adf-typeahed-widget-user-0'));
-    formFields = new FormFields();
-    groupDropDownList = by.css('.mat-autocomplete-panel');
+    field: ElementFinder = element(by.css('input[data-automation-id="adf-typeahed-search-input"]'));
+    firstResult: ElementFinder = element(by.id('adf-typeahed-widget-user-0'));
+    formFields: FormFields = new FormFields();
+    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 
-    getFieldLabel(fieldId: string): Promise<string> {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);
     }
 
-    getFieldValue(fieldId: string): Promise<string> {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    getFieldText(fieldId: string): Promise<string> {
+    getFieldText(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId);
     }
 
-    insertValue(fieldId: string, value: string): Promise<void> {
+    insertValue(fieldId, value): Promise<void> {
         return this.formFields.setValueInInputById(fieldId, value);
     }
 
@@ -46,7 +46,7 @@ export class TypeaheadWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(element(this.groupDropDownList));
     }
 
-    async checkOptionIsListed(option: string): Promise<void> {
+    async checkOptionIsListed(option): Promise<void> {
         const optionElement = element(by.cssContainingText('[id="adf-typeahed-label-name"]', option));
         await BrowserVisibility.waitUntilElementIsVisible(optionElement);
     }
@@ -57,7 +57,7 @@ export class TypeaheadWidgetPage {
         return element.all(option).map((elementFinder) => elementFinder.getText());
     }
 
-    async selectOptionFromDropDown(userName: string): Promise<void> {
+    async selectOptionFromDropDown(userName): Promise<void> {
         const option = element(by.cssContainingText('[id="adf-typeahed-label-name"]', userName));
         await BrowserActions.click(option);
     }
@@ -66,7 +66,7 @@ export class TypeaheadWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.field);
     }
 
-    async fillTypeaheadField(value: string): Promise<void> {
+    async fillTypeaheadField(value): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.field);
         await BrowserActions.clearSendKeys(this.field, value);
     }

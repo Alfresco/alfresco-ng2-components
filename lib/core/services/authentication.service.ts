@@ -157,7 +157,7 @@ export class AuthenticationService {
      * @returns True if set, false otherwise
      */
     isRememberMeSet(): boolean {
-        return (this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) !== null);
+        return (this.cookie.getItem(REMEMBER_ME_COOKIE_KEY) === null) ? false : true;
     }
 
     /**

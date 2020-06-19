@@ -15,30 +15,30 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { TabsPage } from '../../core/pages/material/tabs.page';
+import { TabsPage } from '../../material/pages/tabs.page';
 import { BrowserActions } from '../utils/browser-actions';
 
 export class UserInfoPage {
 
-    dialog = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
-    userImage = element(by.css('div[id="user-initial-image"]'));
-    userInfoEcmHeaderTitle = element(by.css('div[id="ecm-username"]'));
-    userInfoEcmTitle = element(by.css('mat-card-content span[id="ecm-full-name"]'));
-    ecmEmail = element(by.css('span[id="ecm-email"]'));
-    ecmJobTitle = element(by.css('span[id="ecm-job-title"]'));
-    userInfoProcessHeaderTitle = element(by.css('div[id="bpm-username"]'));
-    userInfoProcessTitle = element(by.css('mat-card-content span[id="bpm-full-name"]'));
-    processEmail = element(by.css('span[id="bpm-email"]'));
-    processTenant = element(by.css('span[class="detail-profile"]'));
-    apsImage = element(by.css('img[id="bpm-user-detail-image"]'));
-    acsImage = element(by.css('img[id="ecm-user-detail-image"]'));
-    initialImage = element.all(by.css('div[id="user-initials-image"]')).first();
-    userInfoSsoHeaderTitle = this.dialog.element(by.css('div[id="identity-username"]'));
-    userInfoSsoTitle = element(by.css('.adf-userinfo__detail-title'));
-    ssoEmail = element(by.id('identity-email'));
-    userProfileButton = element(by.css('button[data-automation-id="adf-user-profile"]'));
+    dialog: ElementFinder = element.all(by.css('mat-card[class*="adf-userinfo-card"]')).first();
+    userImage: ElementFinder = element(by.css('div[id="user-initial-image"]'));
+    userInfoEcmHeaderTitle: ElementFinder = element(by.css('div[id="ecm-username"]'));
+    userInfoEcmTitle: ElementFinder = element(by.css('mat-card-content span[id="ecm-full-name"]'));
+    ecmEmail: ElementFinder = element(by.css('span[id="ecm-email"]'));
+    ecmJobTitle: ElementFinder = element(by.css('span[id="ecm-job-title"]'));
+    userInfoProcessHeaderTitle: ElementFinder = element(by.css('div[id="bpm-username"]'));
+    userInfoProcessTitle: ElementFinder = element(by.css('mat-card-content span[id="bpm-full-name"]'));
+    processEmail: ElementFinder = element(by.css('span[id="bpm-email"]'));
+    processTenant: ElementFinder = element(by.css('span[class="detail-profile"]'));
+    apsImage: ElementFinder = element(by.css('img[id="bpm-user-detail-image"]'));
+    acsImage: ElementFinder = element(by.css('img[id="ecm-user-detail-image"]'));
+    initialImage: ElementFinder = element.all(by.css('div[id="user-initials-image"]')).first();
+    userInfoSsoHeaderTitle: ElementFinder = this.dialog.element(by.css('div[id="identity-username"]'));
+    userInfoSsoTitle: ElementFinder = element(by.css('.adf-userinfo__detail-title'));
+    ssoEmail: ElementFinder = element(by.id('identity-email'));
+    userProfileButton: ElementFinder = element(by.css('button[data-automation-id="adf-user-profile"]'));
     tabsPage: TabsPage;
 
     constructor() {

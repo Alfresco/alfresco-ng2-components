@@ -16,30 +16,25 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import CONSTANTS = require('../util/constants');
-import * as fs from 'fs';
-import * as path from 'path';
+import path = require('path');
+import fs = require('fs');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
-import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Attachment list action menu for tasks', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const attachmentListPage = new AttachmentListPage();
     const viewerPage = new ViewerPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
@@ -54,30 +49,36 @@ describe('Attachment list action menu for tasks', () => {
     };
 
     beforeAll(async () => {
+        const users = new UsersActions();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const user = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        const user = await users.createTenantAndUser(this.alfrescoJsApi);
         tenantId = user.tenantId;
 
-        await apiService.getInstance().login(user.email, user.password);
-        const applicationsService = new ApplicationsUtil(apiService);
+        await this.alfrescoJsApi.login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         const { id } = await applicationsService.importPublishDeployApp(app.file_path);
         appId = id;
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C277311] Should be able to View /Download /Remove from Attachment List on an active task', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickTasksButton();
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-        await taskPage.createTask({ name: taskName.active });
+        await taskPage.createTask({name: taskName.active});
 
         await attachmentListPage.clickAttachFileButton(pngFile.location);
         await attachmentListPage.viewFile(pngFile.name);
@@ -160,12 +161,12 @@ describe('Attachment list action menu for tasks', () => {
     });
 
     it('[C260234] Should be able to attache a file on a task on APS and check on ADF', async () => {
-        const newTask = await apiService.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: 'SHARE KNOWLEDGE' }));
+        const newTask = await this.alfrescoJsApi.activiti.taskApi.createNewTask({ name: 'SHARE KNOWLEDGE' });
         const newTaskId = newTask.id;
         const filePath = path.join(browser.params.testConfig.main.rootPath + pngFile.location);
         const file = fs.createReadStream(filePath);
 
-        relatedContent = await apiService.getInstance().activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
+        relatedContent = await this.alfrescoJsApi.activiti.contentApi.createRelatedContentOnTask(newTaskId, file, { 'isRelatedContent': true });
         relatedContentId = relatedContent.id;
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
@@ -175,7 +176,7 @@ describe('Attachment list action menu for tasks', () => {
 
         await attachmentListPage.checkFileIsAttached(pngFile.name);
 
-        await apiService.getInstance().activiti.contentApi.deleteContent(relatedContentId);
+        await this.alfrescoJsApi.activiti.contentApi.deleteContent(relatedContentId);
 
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
 

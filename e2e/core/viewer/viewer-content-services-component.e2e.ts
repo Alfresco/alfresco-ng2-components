@@ -16,17 +16,18 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, ViewerPage, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Content Services Viewer', () => {
-    const acsUser = new UserModel();
+    const acsUser = new AcsUserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
 
     let zoom;
@@ -67,17 +68,18 @@ describe('Content Services Viewer', () => {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PPT.file_name,
         'firstPageText': browser.params.resources.Files.ADF_DOCUMENTS.PPT.first_page_text
     });
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const uploadActions = new UploadActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await usersActions.createUser(acsUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const pdfFileUploaded = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
         Object.assign(pdfFile, pdfFileUploaded.entry);
@@ -100,7 +102,7 @@ describe('Content Services Viewer', () => {
         const unsupportedFileUploaded = await uploadActions.uploadFile(unsupportedFile.location, unsupportedFile.name, '-my-');
         Object.assign(unsupportedFile, unsupportedFileUploaded.entry);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await contentServicesPage.goToDocumentList();
    });

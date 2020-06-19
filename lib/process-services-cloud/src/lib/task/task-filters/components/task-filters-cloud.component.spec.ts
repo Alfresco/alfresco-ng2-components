@@ -272,20 +272,6 @@ describe('TaskFiltersCloudComponent', () => {
         expect(component.selectFilterAndEmit).toHaveBeenCalledWith(fakeGlobalFilter[1]);
     }));
 
-    it('should reset the filter when the param is undefined', async(() => {
-        spyOn(taskFilterService, 'getTaskListFilters').and.returnValue(fakeGlobalFilterObservable);
-        spyOn(component, 'selectFilterAndEmit');
-        component.currentFilter = null;
-
-        const filterName = undefined;
-        const change = new SimpleChange(null, filterName, false);
-        component.ngOnChanges({ 'filterParam': change });
-
-        fixture.detectChanges();
-        expect(component.selectFilterAndEmit).toHaveBeenCalledWith(undefined);
-        expect(component.currentFilter).toEqual(undefined);
-    }));
-
     it('should reload filters by appName on binding changes', () => {
         spyOn(component, 'getFilters').and.stub();
         const appName = 'my-app-1';

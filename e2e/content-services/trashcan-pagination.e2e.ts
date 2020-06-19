@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, UploadActions } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../pages/adf/trashcan.page';
-import { UsersActions } from '../actions/users.actions';
+import { Util } from '../util/util';
 
 describe('Trashcan - Pagination', () => {
     const pagination = {
@@ -40,31 +42,33 @@ describe('Trashcan - Pagination', () => {
         default: '25'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const trashcanPage = new TrashcanPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
 
-    let acsUser: UserModel;
+    const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     const noOfFiles = 20;
 
     beforeAll(async () => {
-        const uploadActions = new UploadActions(apiService);
-        const fileNames = StringUtil.generateFilesNames(10, noOfFiles + 9, pagination.base, pagination.extension);
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        const fileNames = Util.generateSequenceFiles(10, noOfFiles + 9, pagination.base, pagination.extension);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
         for (const entry of emptyFiles.list.entries) {
-            await apiService.getInstance().node.deleteNode(entry.entry.id).then(() => {}, async () => {
-                await apiService.getInstance().node.deleteNode(entry.entry.id);
+            await this.alfrescoJsApi.node.deleteNode(entry.entry.id).then(() => {}, () => {
+                this.alfrescoJsApi.node.deleteNode(entry.entry.id);
             });
         }
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
     });

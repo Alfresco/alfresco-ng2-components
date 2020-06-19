@@ -26,10 +26,11 @@ import {
     ProcessInstancesService,
     TaskHeaderCloudPage,
     TaskFormCloudComponent,
-    IdentityService, GroupIdentityService, ProcessCloudWidgetPage, FormCloudService
+    IdentityService, GroupIdentityService, ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import { FormCloudService } from '../../lib/testing/src/lib/form-cloud/actions/form-cloud.service';
 
 describe('Task form cloud component', () => {
 
@@ -49,8 +50,8 @@ describe('Task form cloud component', () => {
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const completedTaskName = StringUtil.generateRandomString(), assignedTaskName = StringUtil.generateRandomString();
-    const apiService = new ApiService();
-    const apiServiceHrUser = new ApiService();
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+    const apiServiceHrUser = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
 
     const visibilityConditionTasks = [];
 
@@ -84,7 +85,7 @@ describe('Task form cloud component', () => {
         identityService = new IdentityService(apiService);
         const groupIdentityService = new GroupIdentityService(apiService);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
         const groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
@@ -134,7 +135,7 @@ describe('Task form cloud component', () => {
         processInstancesService = new ProcessInstancesService(apiServiceHrUser);
         await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
 
     }, 5 * 60 * 1000);
 
@@ -155,6 +156,7 @@ describe('Task form cloud component', () => {
     });
 
     describe('Complete task with form - cloud directive', () => {
+
         it('[C315174] Should be able to complete a standalone task with visible tab with empty value for field', async () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');

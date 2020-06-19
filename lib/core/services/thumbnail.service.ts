@@ -157,8 +157,7 @@ export class ThumbnailService {
         'disable/folder': './assets/images/ft_ic_folder_disable.svg',
         'selected': './assets/images/ft_ic_selected.svg',
         'dynamic-feed': './assets/images/dynamic_feed-24px.svg',
-        'ic-process': './assets/images/ic-process.svg',
-        'filter': './assets/images/ft_ic_filter.svg'
+        'ic-process': './assets/images/ic-process.svg'
     };
 
     constructor(protected apiService: AlfrescoApiService, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

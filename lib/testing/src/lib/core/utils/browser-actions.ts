@@ -19,9 +19,6 @@ import { browser, by, element, ElementArrayFinder, ElementFinder, protractor } f
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { Logger } from './logger';
 
-import * as path from 'path';
-import * as fs from 'fs';
-
 export class BrowserActions {
 
     static async click(elementFinder: ElementFinder): Promise<void> {
@@ -30,23 +27,23 @@ export class BrowserActions {
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
-            Logger.error(`click error element ${elementFinder.locator().toString()} consider to use directly clickScript`);
-            await this.clickScript(elementFinder);
+            try {
+                await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
+                await browser.executeScript(`arguments[0].click();`, elementFinder);
+            } catch (jsErr) {
+                Logger.error(`click error element ${elementFinder.locator()}`);
+                throw jsErr;
+            }
         }
     }
 
-    static async clickScript(elementFinder: ElementFinder): Promise<void> {
-        await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
-        await browser.executeScript(`arguments[0].click();`, elementFinder);
-    }
-
     static async waitUntilActionMenuIsVisible(): Promise<void> {
-        const actionMenu = element.all(by.css('div[role="menu"]')).first();
+        const actionMenu = element(by.css('div[role="menu"]'));
         await BrowserVisibility.waitUntilElementIsVisible(actionMenu);
     }
 
     static async waitUntilActionMenuIsNotVisible(): Promise<void> {
-        const actionMenu = element.all(by.css('div[role="menu"]')).first();
+        const actionMenu = element(by.css('div[role="menu"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(actionMenu);
     }
 
@@ -90,8 +87,6 @@ export class BrowserActions {
     static async clearWithBackSpace(elementFinder: ElementFinder, sleepTime: number = 0) {
         await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         await elementFinder.click();
-        await elementFinder.sendKeys(protractor.Key.END);
-
         const value = await elementFinder.getAttribute('value');
         for (let i = value.length; i >= 0; i--) {
             await elementFinder.sendKeys(protractor.Key.BACK_SPACE);
@@ -127,16 +122,4 @@ export class BrowserActions {
         // if the opened menu has only disabled items, pressing escape to close it won't work
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
-
-    static async takeScreenshot(screenshotFilePath: string, fileName: string) {
-        const pngData = await browser.takeScreenshot();
-        const filenameWithExt = `${fileName}.png`;
-        Logger.info('Taking screenshot: ', filenameWithExt);
-
-        const fileWithPath = path.join(screenshotFilePath, filenameWithExt);
-        const stream = fs.createWriteStream(fileWithPath);
-        stream.write(new Buffer(pngData, 'base64'));
-        stream.end();
-    }
-
 }

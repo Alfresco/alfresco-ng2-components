@@ -24,16 +24,15 @@ describe('About Process Services Cloud', () => {
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
-
-    const apiService = new ApiService();
-    const identityService  = new IdentityService(apiService);
-
+    let identityService: IdentityService;
     let testUser;
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, 'BPM');
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
-        await loginSSOPage.login(testUser.email, testUser.password);
+        identityService = new IdentityService(apiService);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER, identityService.ROLES.ACTIVITI_DEVOPS]);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         await apiService.login(testUser.email, testUser.password);
         await navigationBarPage.clickAboutButton();
     });

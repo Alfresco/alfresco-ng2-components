@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 const column = {
     role: 'Role'
@@ -26,16 +26,16 @@ export class PermissionsPage {
 
     dataTableComponentPage: DataTableComponentPage = new DataTableComponentPage();
 
-    addPermissionButton = element(by.css("button[data-automation-id='adf-add-permission-button']"));
-    addPermissionDialog = element(by.css('adf-add-permission-dialog'));
-    searchUserInput = element(by.id('searchInput'));
-    searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
-    addButton = element(by.id('add-permission-dialog-confirm-button'));
-    permissionInheritedButton = element.all(by.css("div[class='app-inherit_permission_button'] button")).first();
-    noPermissions = element(by.css('div[id="adf-no-permissions-template"]'));
-    deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
-    permissionDisplayContainer = element(by.css(`div[id='adf-permission-display-container']`));
-    closeButton = element(by.id('add-permission-dialog-close-button'));
+    addPermissionButton: ElementFinder = element(by.css("button[data-automation-id='adf-add-permission-button']"));
+    addPermissionDialog: ElementFinder = element(by.css('adf-add-permission-dialog'));
+    searchUserInput: ElementFinder = element(by.id('searchInput'));
+    searchResults: ElementFinder = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
+    addButton: ElementFinder = element(by.id('add-permission-dialog-confirm-button'));
+    permissionInheritedButton: ElementFinder = element.all(by.css("div[class='app-inherit_permission_button'] button")).first();
+    noPermissions: ElementFinder = element(by.css('div[id="adf-no-permissions-template"]'));
+    deletePermissionButton: ElementFinder = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
+    permissionDisplayContainer: ElementFinder = element(by.css(`div[id='adf-permission-display-container']`));
+    closeButton: ElementFinder = element(by.id('add-permission-dialog-close-button'));
 
     async clickCloseButton(): Promise<void> {
         await BrowserActions.click(this.closeButton);
@@ -57,7 +57,7 @@ export class PermissionsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchUserInput);
     }
 
-    async searchUserOrGroup(name: string): Promise<void> {
+    async searchUserOrGroup(name): Promise<void> {
         await BrowserActions.clearSendKeys(this.searchUserInput, name);
     }
 
@@ -65,19 +65,19 @@ export class PermissionsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchResults);
     }
 
-    async clickUserOrGroup(name: string): Promise<void> {
-        const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
-        await BrowserActions.clickScript(userOrGroupName);
+    async clickUserOrGroup(name): Promise<void> {
+        const userOrGroupName: ElementFinder = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+        await BrowserActions.click(userOrGroupName);
         await BrowserActions.click(this.addButton);
     }
 
-    async checkUserOrGroupIsAdded(name: string): Promise<void> {
-        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+    async checkUserOrGroupIsAdded(name): Promise<void> {
+        const userOrGroupName: ElementFinder = element(by.css('div[data-automation-id="text_' + name + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
     }
 
-    async checkUserOrGroupIsDeleted(name: string): Promise<void> {
-        const userOrGroupName = element(by.css('div[data-automation-id="text_' + name + '"]'));
+    async checkUserOrGroupIsDeleted(name): Promise<void> {
+        const userOrGroupName: ElementFinder = element(by.css('div[data-automation-id="text_' + name + '"]'));
         await BrowserVisibility.waitUntilElementIsNotVisible(userOrGroupName);
     }
 
@@ -105,12 +105,12 @@ export class PermissionsPage {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css('[class*="adf-datatable-permission"]')));
     }
 
-    async getRoleCellValue(rowName: string): Promise<string> {
+    async getRoleCellValue(rowName): Promise<string> {
         const locator = this.dataTableComponentPage.getCellByRowContentAndColumn('Authority ID', rowName, column.role);
         return BrowserActions.getText(locator);
     }
 
-    async clickRoleDropdownByUserOrGroupName(name: string): Promise<void> {
+    async clickRoleDropdownByUserOrGroupName(name): Promise<void> {
         const row = this.dataTableComponentPage.getRow('Authority ID', name);
         await BrowserActions.click(row.element(by.id('adf-select-role-permission')));
     }
@@ -119,7 +119,7 @@ export class PermissionsPage {
         return element.all(by.css('.mat-option-text'));
     }
 
-    async selectOption(name: string): Promise<void> {
+    async selectOption(name): Promise<void> {
         await new DropdownPage().selectOption(name);
     }
 
@@ -127,8 +127,8 @@ export class PermissionsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.permissionDisplayContainer);
     }
 
-    async checkUserOrGroupIsDisplayed(name: string): Promise<void> {
-        const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
+    async checkUserOrGroupIsDisplayed(name): Promise<void> {
+        const userOrGroupName: ElementFinder = element(by.cssContainingText('mat-list-option .mat-list-text', name));
         await BrowserVisibility.waitUntilElementIsVisible(userOrGroupName);
     }
 }

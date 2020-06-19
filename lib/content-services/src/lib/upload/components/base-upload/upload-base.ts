@@ -96,6 +96,7 @@ export abstract class UploadBase implements OnInit, OnDestroy {
     /**
      * Upload a list of file in the specified path
      * @param files
+     * @param path
      */
     uploadFiles(files: File[]): void {
         const filteredFiles: FileModel[] = files
@@ -151,16 +152,17 @@ export abstract class UploadBase implements OnInit, OnDestroy {
             .split(',')
             .map((ext) => ext.trim().replace(/^\./, ''));
 
-        return allowedExtensions.indexOf(file.extension) !== -1;
+        if (allowedExtensions.indexOf(file.extension) !== -1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Creates FileModel from File
      *
      * @param file
-     * @param parentId
-     * @param path
-     * @param id
      */
     protected createFileModel(file: File, parentId: string, path: string, id?: string): FileModel {
         return new FileModel(file, {

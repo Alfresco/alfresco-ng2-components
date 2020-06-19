@@ -14,34 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginSSOPage, AboutPage, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, AboutPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('About Process Services', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
-
-    let user;
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
+    let user, tenantId;
 
     beforeAll(async() => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createUser();
-        await apiService.getInstance().login(user.email, user.password);
-        await loginPage.login(user.email, user.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+        const users = new UsersActions();
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        tenantId = user.tenantId;
+        await this.alfrescoJsApi.login(user.email, user.password);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
         await navigationBarPage.clickAboutButton();
+
     });
 
     afterAll(async() => {
         await navigationBarPage.clickLogoutButton();
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C280002] Should be able to view about process services info', async () => {

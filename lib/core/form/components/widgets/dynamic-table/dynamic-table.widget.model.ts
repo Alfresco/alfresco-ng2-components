@@ -180,7 +180,7 @@ export class DynamicTableModel extends FormWidgetModel {
         }
 
         if (column.type === 'Boolean') {
-            return !!rowValue;
+            return rowValue ? true : false;
         }
 
         if (column.type === 'Date') {

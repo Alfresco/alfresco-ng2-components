@@ -15,36 +15,30 @@
  * limitations under the License.
  */
 
-import {
-    LoginSSOPage,
-    BrowserActions,
-    UploadActions,
-    StringUtil,
-    LocalStorageUtil,
-    ApiService,
-    UserModel
-} from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, UploadActions, StringUtil, LocalStorageUtil } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { SearchConfiguration } from '../search.config';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Checklist Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const searchDialog = new SearchDialogPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new UserModel();
-    const apiService = new ApiService();
-
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
+    const acsUser = new AcsUserModel();
+    this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const filterType = {
         folder: 'Folder',
@@ -61,25 +55,19 @@ describe('Search Checklist Component', () => {
     let createdFile, createdFolder;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await usersActions.createUser(acsUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        createdFolder = await apiService.getInstance().nodes.addNode('-my-', {
-            name: nodeNames.folder,
-            nodeType: 'cm:folder'
-        });
-        createdFile = await apiService.getInstance().nodes.addNode('-my-', {
-            name: nodeNames.document,
-            nodeType: 'cm:content'
-        });
+        createdFolder = await this.alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.folder, nodeType: 'cm:folder' });
+        createdFile = await this.alfrescoJsApi.nodes.addNode('-my-', { name: nodeNames.document, nodeType: 'cm:content' });
 
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
-    });
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+   });
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
@@ -87,15 +75,15 @@ describe('Search Checklist Component', () => {
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(createdFile.entry.id);
         await uploadActions.deleteFileOrFolder(createdFolder.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-    });
+   });
 
-    it('[C276991] Should be able to click between options and Clear All button', async () => {
+    it('[C276991] Should be able to click between options and Clear All button', async() => {
         await searchFiltersPage.checkCheckListFilterIsDisplayed();
         await searchFiltersPage.checkCheckListFilterIsCollapsed();
         await searchFiltersPage.clickCheckListFilter();
@@ -283,9 +271,10 @@ describe('Search Checklist Component', () => {
             await searchFiltersPage.checkListFiltersPage().checkShowMoreButtonIsNotDisplayed();
             await searchFiltersPage.checkListFiltersPage().checkShowLessButtonIsDisplayed();
         });
-    });
+   });
 
     describe('Properties', () => {
+
         let jsonFile;
 
         beforeEach(() => {
@@ -293,7 +282,7 @@ describe('Search Checklist Component', () => {
         });
 
         beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
         });
 
         it('[C277018] Should be able to change the operator', async () => {

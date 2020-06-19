@@ -16,11 +16,11 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class FiltersPage {
 
-    activeFilter = element(by.css('.adf-active'));
+    activeFilter: ElementFinder = element(by.css('.adf-active'));
     dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     async getActiveFilter(): Promise<string> {
@@ -29,19 +29,19 @@ export class FiltersPage {
 
     async goToFilter(filterName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickExecuteScript(`[data-automation-id="${filterName}_filter"]`);
+        await BrowserActions.clickExecuteScript(`button[data-automation-id="${filterName}_filter"]`);
     }
 
     async sortByName(sortOrder: string): Promise<void> {
         await this.dataTable.sortByColumn(sortOrder, 'name');
     }
 
-    async getAllRowsNameColumn(): Promise<string[]> {
+    async getAllRowsNameColumn() {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 
     async checkFilterIsHighlighted(filterName: string): Promise<void> {
-        const highlightedFilter = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
+        const highlightedFilter: ElementFinder = element(by.css(`.adf-active button[data-automation-id='${filterName}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(highlightedFilter);
     }
 }

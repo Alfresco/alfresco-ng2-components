@@ -22,8 +22,8 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class TaskFiltersCloudComponentPage {
 
     filter: ElementFinder;
-    taskFilters = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
-    activeFilter = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
+    taskFilters: ElementFinder = element(by.css(`mat-expansion-panel[data-automation-id='Task Filters']`));
+    activeFilter: ElementFinder = element(by.css('.adf-active [data-automation-id="adf-filter-label"]'));
 
     async checkTaskFilterIsDisplayed(filterName: string): Promise<void> {
         this.filter = this.getTaskFilterLocatorByFilterName(filterName);

@@ -16,25 +16,25 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, protractor } from 'protractor';
+import { by, element, ElementArrayFinder, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DynamicTableWidgetPage {
 
-    formFields = new FormFields();
+    formFields: FormFields = new FormFields();
 
-    labelLocator = by.css('dynamic-table-widget div div');
-    columnNameLocator = by.css('table[id*="dynamic-table"] th');
-    cancelButton = element(by.cssContainingText('button span', 'Cancel'));
-    editButton = element(by.cssContainingText('button span', 'edit'));
-    columnDateTime = element(by.id('columnDateTime'));
-    columnDate = element(by.id('columnDate'));
-    calendarHeader = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
-    calendarContent = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
-    saveButton = element(by.cssContainingText('button span', 'Save'));
-    errorMessage = element(by.css('div[class="adf-error-text"]'));
-    dateWidget = element.all(by.css('mat-datepicker-toggle button')).first();
-    tableRow = element.all(by.css('tbody tr'));
+    labelLocator: Locator = by.css('dynamic-table-widget div div');
+    columnNameLocator: Locator = by.css('table[id*="dynamic-table"] th');
+    cancelButton: ElementFinder = element(by.cssContainingText('button span', 'Cancel'));
+    editButton: ElementFinder = element(by.cssContainingText('button span', 'edit'));
+    columnDateTime: ElementFinder = element(by.id('columnDateTime'));
+    columnDate: ElementFinder = element(by.id('columnDate'));
+    calendarHeader: ElementFinder = element(by.css('div[class="mat-datetimepicker-calendar-header-date-time"]'));
+    calendarContent: ElementFinder = element(by.css('div[class="mat-datetimepicker-calendar-content"]'));
+    saveButton: ElementFinder = element(by.cssContainingText('button span', 'Save'));
+    errorMessage: ElementFinder = element(by.css('div[class="adf-error-text"]'));
+    dateWidget: ElementFinder = element.all(by.css('mat-datepicker-toggle button')).first();
+    tableRow: ElementArrayFinder = element.all(by.css('tbody tr'));
 
     getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -63,7 +63,7 @@ export class DynamicTableWidgetPage {
     }
 
     async setDatatableInput(text, id = 'id'): Promise<void> {
-        const dataTableInput = element(by.id(id));
+        const dataTableInput: ElementFinder = element(by.id(id));
         await BrowserVisibility.waitUntilElementIsVisible(dataTableInput);
         await BrowserActions.clearSendKeys(dataTableInput, text);
      }

@@ -41,8 +41,7 @@ const fakeRepositoryListAnswer = [
         'serviceId': 'alfresco-9999-SHAREME',
         'metaDataAllowed': true,
         'name': 'SHAREME',
-        'repositoryUrl': 'http://localhost:0000/SHAREME',
-        'id': 1000
+        'repositoryUrl': 'http://localhost:0000/SHAREME'
     },
     {
         'authorized': true,
@@ -61,15 +60,7 @@ const onlyLocalParams = {
 const allSourceParams = {
     fileSource: {
         serviceId: 'all-file-sources'
-    },
-    link: false
-};
-
-const allSourceParamsWithLinkEnabled = {
-    fileSource: {
-        serviceId: 'all-file-sources'
-    },
-    link: true
+    }
 };
 
 const definedSourceParams = {
@@ -172,7 +163,7 @@ describe('AttachFileWidgetComponent', () => {
         });
     }));
 
-    it('should show up all the repository option on menu list', async() => {
+    it('should show up all the repository option on menu list', async(() => {
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -187,103 +178,15 @@ describe('AttachFileWidgetComponent', () => {
             attachButton.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                const localFileOption = fixture.debugElement.queryAll(By.css('#attach-local-file'));
-                const fakeRepoOption1 = fixture.debugElement.queryAll(By.css('#attach-SHAREME'));
-                const fakeRepoOption2 = fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'));
-
-                expect(localFileOption.length).toEqual(1);
-                expect(localFileOption[0]).not.toBeNull();
-
-                expect(fakeRepoOption1.length).toEqual(1);
-                expect(fakeRepoOption1[0]).not.toBeNull();
-
-                expect(fakeRepoOption2.length).toEqual(1);
-                expect(fakeRepoOption2[0]).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-local-file'))).not.toBeUndefined();
+                expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-SHAREME'))).not.toBeUndefined();
+                expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeNull();
+                expect(fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'))).not.toBeUndefined();
             });
         });
-    });
-
-    it ('should show only remote repos when just link to files is true', async () => {
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: []
-        });
-        widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParamsWithLinkEnabled;
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
-        fixture.detectChanges();
-        fixture.whenRenderingDone().then(() => {
-            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
-            expect(attachButton).not.toBeNull();
-            attachButton.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const localFileOption = fixture.debugElement.queryAll(By.css('#attach-local-file'));
-                const fakeRepoOption1 = fixture.debugElement.queryAll(By.css('#attach-SHAREME'));
-                const fakeRepoOption2 = fixture.debugElement.queryAll(By.css('#attach-GOKUSHARE'));
-
-                expect(localFileOption.length).toEqual(0);
-
-                expect(fakeRepoOption1.length).toEqual(1);
-                expect(fakeRepoOption1[0]).not.toBeNull();
-
-                expect(fakeRepoOption2.length).toEqual(1);
-                expect(fakeRepoOption2[0]).not.toBeNull();
-            });
-        });
-    });
-
-    it('should isLink property of the selected node become true when the widget has link enabled', async (done) => {
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
-        const applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: []
-        });
-        widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParamsWithLinkEnabled;
-
-        fixture.detectChanges();
-        await fixture.whenRenderingDone();
-
-        const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
-        expect(attachButton).not.toBeNull();
-        attachButton.click();
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeMinimalNode, isLink: true }, undefined, 'alfresco-1000-SHAREME');
-        done();
-    });
-
-    it('should isLink property of the selected node become false when the widget has link disabled', async (done) => {
-        spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
-        const applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
-        widget.field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.UPLOAD,
-            value: []
-        });
-        widget.field.id = 'attach-file-attach';
-        widget.field.params = <FormFieldMetadata> allSourceParams;
-
-        fixture.detectChanges();
-        await fixture.whenRenderingDone();
-
-        const attachButton: HTMLButtonElement = element.querySelector('#attach-file-attach');
-        expect(attachButton).not.toBeNull();
-        attachButton.click();
-
-        fixture.detectChanges();
-        await fixture.whenStable();
-
-        fixture.debugElement.query(By.css('#attach-SHAREME')).nativeElement.click();
-        expect(applyAlfrescoNodeSpy).toHaveBeenCalledWith({ ...fakeMinimalNode, isLink: false }, undefined, 'alfresco-1000-SHAREME');
-        done();
-    });
+    }));
 
     it('should be able to upload files coming from content node selector', async(() => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));

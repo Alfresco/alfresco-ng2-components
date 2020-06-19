@@ -25,7 +25,7 @@ export class FileTypePipe implements PipeTransform {
 
     transform(value: string) {
 
-        if ( value == null ) {
+        if ( value == null || value === undefined ) {
             return '';
         } else {
             const fileInfo = value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');

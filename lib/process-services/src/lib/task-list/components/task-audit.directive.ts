@@ -59,6 +59,11 @@ export class TaskAuditDirective implements OnChanges {
 
     public audit: any;
 
+    /**
+     *
+     * @param translateService
+     * @param taskListService
+     */
     constructor(private contentService: ContentService,
                 private taskListService: TaskListService) {
     }
@@ -69,8 +74,11 @@ export class TaskAuditDirective implements OnChanges {
         }
     }
 
-    isValidType(): boolean {
-        return this.format && (this.isJsonFormat() || this.isPdfFormat());
+    isValidType() {
+        if (this.format && (this.isJsonFormat() || this.isPdfFormat())) {
+            return true;
+        }
+        return false;
     }
 
     setDefaultFormatType(): void {

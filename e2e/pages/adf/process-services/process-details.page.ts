@@ -15,32 +15,32 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { by, element, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
-    processTitle = element(by.css('mat-card-title[class="mat-card-title"]'));
-    processDetailsMessage = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
-    processStatusField = element(by.css('[data-automation-id="card-textitem-value-status"]'));
-    processEndDateField = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
-    processCategoryField = element(by.css('[data-automation-id="card-textitem-value-category"]'));
-    processBusinessKeyField = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
-    processCreatedByField = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
-    processCreatedField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
-    processIdField = element(by.css('[data-automation-id="card-textitem-value-id"]'));
-    processDescription = element(by.css('[data-automation-id="card-textitem-value-description"]'));
-    showDiagramButtonDisabled = element(by.css('button[id="show-diagram-button"][disabled]'));
-    propertiesList = element(by.css('div[class="adf-property-list"]'));
-    showDiagramButton = element(by.id('show-diagram-button'));
-    diagramCanvas = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
-    backButton = element(by.css('app-show-diagram button[class="mat-mini-fab mat-accent"]'));
-    commentInput = element(by.id('comment-input'));
-    auditLogButton = element(by.css('button[adf-process-audit]'));
-    auditLogEmptyListMessage = element(by.css('.app-empty-list-header'));
-    cancelProcessButton = element(by.css('div[data-automation-id="header-status"] > button'));
-    activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
-    completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
-    taskTitle = element(by.css('h2[class="adf-activiti-task-details__header"]'));
+    processTitle: ElementFinder = element(by.css('mat-card-title[class="mat-card-title"]'));
+    processDetailsMessage: ElementFinder = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
+    processStatusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
+    processEndDateField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
+    processCategoryField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-category"]'));
+    processBusinessKeyField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
+    processCreatedByField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
+    processCreatedField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"]'));
+    processIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-id"]'));
+    processDescription: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-description"]'));
+    showDiagramButtonDisabled: ElementFinder = element(by.css('button[id="show-diagram-button"][disabled]'));
+    propertiesList: ElementFinder = element(by.css('div[class="adf-property-list"]'));
+    showDiagramButton: ElementFinder = element(by.id('show-diagram-button'));
+    diagramCanvas: ElementFinder = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
+    backButton: ElementFinder = element(by.css('app-show-diagram button[class="mat-mini-fab mat-accent"]'));
+    commentInput: ElementFinder = element(by.id('comment-input'));
+    auditLogButton: ElementFinder = element(by.css('button[adf-process-audit]'));
+    auditLogEmptyListMessage: ElementFinder = element(by.css('.app-empty-list-header'));
+    cancelProcessButton: ElementFinder = element(by.css('div[data-automation-id="header-status"] > button'));
+    activeTask: ElementFinder = element(by.css('div[data-automation-id="active-tasks"]'));
+    completedTask: ElementFinder = element(by.css('div[data-automation-id="completed-tasks"]'));
+    taskTitle: ElementFinder = element(by.css('h2[class="adf-activiti-task-details__header"]'));
 
     async checkDetailsAreDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
@@ -115,8 +115,8 @@ export class ProcessDetailsPage {
         await this.commentInput.sendKeys(protractor.Key.ENTER);
     }
 
-    async checkCommentIsDisplayed(comment: string): Promise<void> {
-        const commentInserted = element(by.cssContainingText('div[id="comment-message"]', comment));
+    async checkCommentIsDisplayed(comment): Promise<void> {
+        const commentInserted: ElementFinder = element(by.cssContainingText('div[id="comment-message"]', comment));
         await BrowserVisibility.waitUntilElementIsVisible(commentInserted);
     }
 

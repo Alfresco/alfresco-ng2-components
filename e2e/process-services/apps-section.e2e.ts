@@ -16,42 +16,48 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { AppsActions } from '../actions/APS/apps.actions';
 import { ModelsActions } from '../actions/APS/models.actions';
 
 describe('Modify applications', () => {
 
+    const loginPage = new LoginPage();
+    const navigationBarPage = new NavigationBarPage();
+    const processServicesPage = new ProcessServicesPage();
     const app = browser.params.resources.Files.APP_WITH_PROCESSES;
     const appToBeDeleted = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const replacingApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
-
-    const loginPage = new LoginSSOPage();
-    const navigationBarPage = new NavigationBarPage();
-    const processServicesPage = new ProcessServicesPage();
-
-    const apiService = new ApiService();
-    const modelActions = new ModelsActions(apiService);
-    const apps = new ApplicationsUtil(apiService);
-    const usersActions = new UsersActions(apiService);
-    const applicationService = new ApplicationsUtil(apiService);
-
+    const apps = new AppsActions();
+    const modelActions = new ModelsActions();
     let firstApp, appVersionToBeDeleted;
+    let applicationService;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        const user = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(user.email, user.password);
+        applicationService = new ApplicationsUtil(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        const user = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(user.email, user.password);
 
         firstApp = await applicationService.importPublishDeployApp(app.file_path);
         appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);
 
-        await loginPage.login(user.email, user.password);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
    });
 
     it('[C260198] Should the app be displayed on dashboard when is deployed on APS', async () => {
@@ -73,7 +79,7 @@ describe('Modify applications', () => {
         await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(replacingApp.file_location, firstApp.id);
+        await apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, firstApp.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -92,7 +98,7 @@ describe('Modify applications', () => {
 
         await processServicesPage.checkAppIsDisplayed(app.title);
 
-        await modelActions.deleteEntireModel(firstApp.id);
+        await modelActions.deleteEntireModel(this.alfrescoJsApi, firstApp.id);
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
 
@@ -108,7 +114,7 @@ describe('Modify applications', () => {
         await processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
 
-        await apps.importNewVersionAppDefinitionPublishDeployApp(replacingApp.file_location, appVersionToBeDeleted.id);
+        await apps.importNewVersionAppDefinitionPublishDeployApp(this.alfrescoJsApi, replacingApp.file_location, appVersionToBeDeleted.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -117,9 +123,9 @@ describe('Modify applications', () => {
 
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.GREY);
 
-        await modelActions.deleteVersionModel(appVersionToBeDeleted.id);
-        await modelActions.deleteVersionModel(appVersionToBeDeleted.id);
-        await apps.publishDeployApp(appVersionToBeDeleted.id);
+        await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
+        await modelActions.deleteVersionModel(this.alfrescoJsApi, appVersionToBeDeleted.id);
+        await apps.publishDeployApp(this.alfrescoJsApi, appVersionToBeDeleted.id);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();
@@ -149,7 +155,7 @@ describe('Modify applications', () => {
             }, 'publish': true
         };
 
-        await apiService.getInstance().activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
+        await this.alfrescoJsApi.activiti.appsApi.updateAppDefinition(appVersionToBeDeleted.id, appDefinition);
 
         await navigationBarPage.clickHomeButton();
         await navigationBarPage.navigateToProcessServicesPage();

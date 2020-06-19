@@ -4,9 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-export CONTEXT_ENV="content-services"
-export PROVIDER='ECM'
-export AUTH_TYPE='BASIC'
+CONTEXT_ENV="content-services"
 
 ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
 

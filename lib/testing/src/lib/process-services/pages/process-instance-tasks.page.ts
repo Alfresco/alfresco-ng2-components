@@ -16,15 +16,15 @@
  */
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessInstanceTasksPage {
 
-    startProcessDialog = element(by.id('adf-start-process-dialog'));
-    title = this.startProcessDialog.element(by.css('h4.mat-dialog-title'));
-    closeButton = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
-    startForm = element(by.css('div[data-automation-id="start-form"]'));
+    startProcessDialog: ElementFinder = element(by.id('adf-start-process-dialog'));
+    title: ElementFinder = this.startProcessDialog.element(by.css('h4.mat-dialog-title'));
+    closeButton: ElementFinder = this.startProcessDialog.element(by.cssContainingText(`div.adf-start-process-dialog-actions button span`, 'Close'));
+    startForm: ElementFinder = element(by.css('div[data-automation-id="start-form"]'));
 
     async clickOnStartForm(): Promise<void> {
         await BrowserActions.click(this.startForm);

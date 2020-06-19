@@ -16,7 +16,8 @@
  */
 
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Params } from '@angular/router/src/shared';
 
 @Component({
     selector: 'app-show-diagram',

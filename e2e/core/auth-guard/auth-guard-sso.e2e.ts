@@ -26,11 +26,11 @@ describe('Auth Guard SSO', () => {
 
     it('[C307058] Should be redirected to 403 when user doesn\'t have permissions', async () => {
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
-            browser.params.testConfig.appConfig.oauth2.host,
-            browser.params.testConfig.appConfig.identityHost,
-            false, true, browser.params.testConfig.appConfig.oauth2.clientId);
-
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            browser.params.testConfig.adf.hostSso,
+            browser.params.testConfig.adf.hostIdentity,
+            false, true, browser.params.config.oauth2.clientId);
+        await loginSSOPage.clickOnSSOButton();
+        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/cloud/simple-app');
         await browser.sleep(1000);
         const error = await errorPage.getErrorCode();

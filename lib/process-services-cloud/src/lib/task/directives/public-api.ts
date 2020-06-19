@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-export * from './claim-task-cloud.directive';
-export * from './unclaim-task-cloud.directive';
+export * from './claim-task.directive';
+export * from './unclaim-task.directive';
 export * from './complete-task.directive';
 
 export * from './task-directive.module';

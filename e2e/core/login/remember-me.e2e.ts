@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { SettingsPage } from '@alfresco/adf-testing';
-import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { LoginPage, SettingsPage } from '@alfresco/adf-testing';
 
 describe('Login component - Remember Me', () => {
 

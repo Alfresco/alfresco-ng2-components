@@ -14,19 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { browser, by, element, protractor } from 'protractor';
+import { browser, by, element, protractor, ElementFinder } from 'protractor';
 import { EditProcessFilterDialogPage } from './dialog/edit-process-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 
 export class EditProcessFilterCloudComponentPage {
 
-    customiseFilter = element(by.id('adf-edit-process-filter-title-id'));
-    saveButton = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
-    saveAsButton = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
-    deleteButton = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
-    filter = element(by.css(`adf-cloud-edit-process-filter mat-expansion-panel-header`));
+    customiseFilter: ElementFinder = element(by.id('adf-edit-process-filter-title-id'));
+    saveButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-save"]'));
+    saveAsButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-saveAs"]'));
+    deleteButton: ElementFinder = element(by.css('button[data-automation-id="adf-filter-action-delete"]'));
+    filter: ElementFinder = element(by.css(`adf-cloud-edit-process-filter mat-expansion-panel-header`));
 
     private locatorAppNameDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-appName']`));
     private locatorStatusDropdown = element(by.css(`mat-select[data-automation-id='adf-cloud-edit-process-property-status']`));
@@ -115,15 +115,15 @@ export class EditProcessFilterCloudComponentPage {
         return BrowserVisibility.waitUntilElementIsNotVisible(emptyList);
     }
 
-    async setProcessInstanceId(option: string): Promise<void> {
+    async setProcessInstanceId(option): Promise<void> {
         await this.setProperty('processInstanceId', option);
     }
 
-    async setProcessDefinitionKey(option: string): Promise<void> {
+    async setProcessDefinitionKey(option): Promise<void> {
         await this.setProperty('processDefinitionKey', option);
     }
 
-    async setProcessName(option: string): Promise<void> {
+    async setProcessName(option): Promise<void> {
         await this.setProperty('processName', option);
     }
 

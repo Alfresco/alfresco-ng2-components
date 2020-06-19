@@ -16,8 +16,5 @@
  */
 
 export * from './identity/public-api';
+export * from './APS/public-api';
 export * from './api.service';
-export * from './drop.actions';
-export * from './api';
-export * from './api.util';
-export * from './e2e-request-api.helper';

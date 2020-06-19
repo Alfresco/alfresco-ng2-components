@@ -71,8 +71,8 @@ export class LicenseModel {
             this.remainingDays = obj.remainingDays || null;
             this.holder = obj.holder || null;
             this.mode = obj.mode || null;
-            this.isClusterEnabled = !!obj.isClusterEnabled;
-            this.isCryptodocEnabled = !!obj.isCryptodocEnabled;
+            this.isClusterEnabled = obj.isClusterEnabled ? true : false;
+            this.isCryptodocEnabled = obj.isCryptodocEnabled ? true : false;
         }
     }
 }
@@ -85,10 +85,10 @@ export class VersionStatusModel {
 
     constructor(obj?: any) {
         if (obj) {
-            this.isReadOnly = !!obj.isReadOnly;
-            this.isAuditEnabled = !!obj.isAuditEnabled;
-            this.isQuickShareEnabled = !!obj.isQuickShareEnabled;
-            this.isThumbnailGenerationEnabled = !!obj.isThumbnailGenerationEnabled;
+            this.isReadOnly = obj.isReadOnly ? true : false;
+            this.isAuditEnabled = obj.isAuditEnabled ? true : false;
+            this.isQuickShareEnabled = obj.isQuickShareEnabled ? true : false;
+            this.isThumbnailGenerationEnabled = obj.isThumbnailGenerationEnabled ? true : false;
         }
     }
 }

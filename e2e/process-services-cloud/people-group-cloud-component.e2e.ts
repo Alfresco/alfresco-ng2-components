@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    GroupCloudComponentPage,
-    GroupIdentityService,
-    IdentityService,
-    LoginSSOPage,
-    PeopleCloudComponentPage,
-    RolesService
-} from '@alfresco/adf-testing';
+import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage, RolesService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/people-group-cloud-component.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -31,17 +23,18 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
-
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();
         const groupCloudComponentPage = new GroupCloudComponentPage();
-
-        const apiService = new ApiService();
-        const identityService = new IdentityService(apiService);
-        const rolesService = new RolesService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
+        let rolesService: RolesService;
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
         let apsUser;
         let testUser;
@@ -57,16 +50,21 @@ describe('People Groups Cloud Component', () => {
         let groups = [];
 
         beforeAll(async () => {
+
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
-            apsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
-            activitiUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
-            devopsUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_DEVOPS]);
+            identityService = new IdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            apsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            activitiUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+            devopsUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_DEVOPS]);
             noRoleUser = await identityService.createIdentityUser();
 
+            rolesService = new RolesService(apiService);
             apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.ACTIVITI_ADMIN);
             apsUserRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.ACTIVITI_USER);
+
+            groupIdentityService = new GroupIdentityService(apiService);
 
             groupUser = await groupIdentityService.createIdentityGroup();
             await groupIdentityService.assignRole(groupUser.id, apsUserRoleId, identityService.ROLES.ACTIVITI_USER);
@@ -80,7 +78,7 @@ describe('People Groups Cloud Component', () => {
                 `${testUser.idIdentityService}`, `${devopsUser.idIdentityService}`];
             groups = [`${groupUser.id}`, `${groupAdmin.id}`, `${groupNoRole.id}`];
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 
         afterAll(async () => {
@@ -91,6 +89,7 @@ describe('People Groups Cloud Component', () => {
             for (const group of groups) {
                 await groupIdentityService.deleteIdentityGroup(group);
             }
+
         });
 
         beforeEach(async () => {
@@ -104,6 +103,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         describe('[C297674] Should be able to add filtering to People Cloud Component', () => {
+
             beforeEach(async () => {
                 await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
                 await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
@@ -142,6 +142,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         describe('[C309674] Should be able to add filtering to Group Cloud Component', () => {
+
             beforeEach(async () => {
                 await peopleGroupCloudComponentPage.clickGroupCloudMultipleSelection();
                 await peopleGroupCloudComponentPage.clickGroupCloudFilterRole();
@@ -190,6 +191,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         it('[C305033] Should fetch the preselect users based on the Validate flag set to True in Single mode selection', async () => {
+
             await peopleGroupCloudComponentPage.clickPeopleCloudSingleSelection();
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
 
@@ -210,6 +212,7 @@ describe('People Groups Cloud Component', () => {
         });
 
         it('[C309676] Should fetch the preselect users based on the Validate flag set to True in Multiple mode selection', async () => {
+
             await peopleGroupCloudComponentPage.clickPeopleCloudMultipleSelection();
             await peopleGroupCloudComponentPage.checkPeopleCloudMultipleSelectionIsSelected();
             await peopleGroupCloudComponentPage.clickPreselectValidation();
@@ -249,5 +252,5 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.checkSelectedPeople('TestFirstName2 TestLastName2');
             await peopleCloudComponent.checkSelectedPeople('TestFirstName3 TestLastName3');
         });
-    });
+   });
 });

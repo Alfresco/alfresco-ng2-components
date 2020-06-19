@@ -15,42 +15,39 @@
  * limitations under the License.
  */
 
-import {
-    LoginSSOPage,
-    Widget,
-    DatePickerCalendarPage,
-    DateUtil,
-    ApplicationsUtil,
-    ApiService
-} from '@alfresco/adf-testing';
+import { LoginPage, Widget, DatePickerCalendarPage, DateUtil, ApplicationsUtil } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 
 describe('Dynamic Table', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const datePicker = new DatePickerCalendarPage();
     const navigationBarPage = new NavigationBarPage();
     const widget = new Widget();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
+    const users = new UsersActions();
+    const alfrescoJsApi = new AlfrescoApi({
+        provider: 'BPM',
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
 
     let user, tenantId, appId;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createUser();
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(alfrescoJsApi);
         tenantId = user.tenantId;
    });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
+        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
    });
 
     describe('Date Picker', () => {
@@ -68,16 +65,16 @@ describe('Dynamic Table', () => {
         const rowPosition = 0;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(apiService);
+            await alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
-            await loginPage.login(user.email, user.password);
+            await loginPage.loginToProcessServicesUsingUserModel(user);
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(user.email, user.password);
-            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await alfrescoJsApi.login(user.email, user.password);
+            await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         });
 
         beforeEach(async () => {
@@ -129,17 +126,17 @@ describe('Dynamic Table', () => {
         const dropdown = widget.dropdown();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(user.email, user.password);
-            const applicationsService = new ApplicationsUtil(apiService);
+            await alfrescoJsApi.login(user.email, user.password);
+            const applicationsService = new ApplicationsUtil(alfrescoJsApi);
 
             const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
             appId = importedApp.id;
-            await loginPage.login(user.email, user.password);
+            await loginPage.loginToProcessServicesUsingUserModel(user);
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(user.email, user.password);
-            await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await alfrescoJsApi.login(user.email, user.password);
+            await alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
         });
 
         beforeEach(async () => {

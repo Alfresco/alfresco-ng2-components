@@ -17,33 +17,29 @@
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
-import {
-    LoginSSOPage,
-    NotificationHistoryPage,
-    StringUtil,
-    UploadActions,
-    BrowserActions,
-    BreadcrumbPage,
-    ApiService, UserModel
-} from '@alfresco/adf-testing';
-import { UsersActions } from '../../actions/users.actions';
+import { LoginPage, NotificationHistoryPage, StringUtil, UploadActions, BrowserActions, BreadcrumbPage } from '@alfresco/adf-testing';
 
 describe('Restore content directive', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
-    const acsUser = new UserModel();
-    const anotherAcsUser = new UserModel();
+    const acsUser = new AcsUserModel();
+    const anotherAcsUser = new AcsUserModel();
     const trashcanPage = new TrashcanPage();
     const breadCrumbPage = new BreadcrumbPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
+
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
 
     const pdfFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -62,15 +58,15 @@ describe('Restore content directive', () => {
 
     const folderName = StringUtil.generateRandomString(5);
 
-    const uploadActions = new UploadActions(apiService);
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let folderWithContent, folderWithFolder, subFolder, subFile, testFile, restoreFile, publicSite, siteFolder,
         siteFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await usersActions.createUser(acsUser);
-        await usersActions.createUser(anotherAcsUser);
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(anotherAcsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         await uploadActions.createFolder(folderName, '-my-');
         folderWithContent = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
@@ -80,11 +76,11 @@ describe('Restore content directive', () => {
         subFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), folderWithFolder.entry.id);
         restoreFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         await uploadActions.deleteFileOrFolder(folderWithContent.entry.id);
         await uploadActions.deleteFileOrFolder(folderWithFolder.entry.id);
     });
@@ -96,6 +92,7 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore same name folders', () => {
+
         beforeAll(async () => {
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.waitForTableBody();
@@ -177,7 +174,7 @@ describe('Restore content directive', () => {
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         await contentServicesPage.deleteContent(subFolder.entry.name);
         await contentServicesPage.checkContentIsNotDisplayed(subFolder.entry.name);
-        await breadCrumbPage.chooseBreadCrumb(acsUser.email);
+        await breadCrumbPage.chooseBreadCrumb(acsUser.id);
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
         await contentServicesPage.deleteContent(folderWithFolder.entry.name);
@@ -234,19 +231,20 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore deleted library', () => {
+
         beforeAll(async () => {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             const publicSiteName = `00${StringUtil.generateRandomString(5)}`;
             const publicSiteBody = { visibility: 'PUBLIC', title: publicSiteName };
-            publicSite = await apiService.getInstance().core.sitesApi.createSite(publicSiteBody);
+            publicSite = await this.alfrescoJsApi.core.sitesApi.createSite(publicSiteBody);
             siteFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), publicSite.entry.guid);
             siteFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, siteFolder.entry.id);
-            await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id);
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id);
         });
 
         afterAll(async () => {
             try {
-                await apiService.getInstance().core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
+                await this.alfrescoJsApi.core.sitesApi.deleteSite(publicSite.entry.id, { permanent: true });
             } catch (error) {
             }
         });
@@ -271,10 +269,11 @@ describe('Restore content directive', () => {
     });
 
     describe('Restore with folder hierarchies', () => {
+
         let parentFolder, folderWithin, pdfFile, pngFile, mainFile, mainFolder;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(anotherAcsUser.email, anotherAcsUser.password);
+            await this.alfrescoJsApi.login(anotherAcsUser.id, anotherAcsUser.password);
             await uploadActions.createFolder(folderName, '-my-');
             parentFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
             folderWithin = await uploadActions.createFolder(StringUtil.generateRandomString(5), parentFolder.entry.id);
@@ -283,13 +282,13 @@ describe('Restore content directive', () => {
             mainFile = await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             mainFolder = await uploadActions.createFolder(StringUtil.generateRandomString(5), '-my-');
 
-            await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(anotherAcsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFolder.entry.id);
             await uploadActions.deleteFileOrFolder(mainFile.entry.id);

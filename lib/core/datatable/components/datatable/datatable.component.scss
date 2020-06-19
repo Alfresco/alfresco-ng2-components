@@ -340,6 +340,7 @@
                 &:hover {
                     cursor: pointer;
                 }
+                padding-top: 12px;
                 display: flex;
                 align-items: center;
             }
@@ -423,7 +424,7 @@
                 }
             }
             &--fileSize .adf-datatable-cell-value {
-                padding: 0 10px 0 0;
+                padding: 0;
             }
         }
 

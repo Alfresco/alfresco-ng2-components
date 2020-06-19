@@ -39,22 +39,6 @@ const isValueInvalid = (value: any): boolean => {
 };
 
 describe('Task Header cloud component', () => {
-
-    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-
-    const loginSSOPage = new LoginSSOPage();
-    const navigationBarPage = new NavigationBarPage();
-    const appListCloudComponent = new AppListCloudPage();
-    const tasksCloudDemoPage = new TasksCloudDemoPage();
-    const startTaskCloudPage = new StartTasksCloudPage();
-    const peopleCloudComponentPage = new PeopleCloudComponentPage();
-    const taskHeaderCloudPage = new TaskHeaderCloudPage();
-
-    const apiService = new ApiService();
-    const identityService = new IdentityService(apiService);
-    const groupIdentityService = new GroupIdentityService(apiService);
-    const tasksService = new TasksService(apiService);
-
     const basicCreatedTaskName = StringUtil.generateRandomString();
     const completedTaskName = StringUtil.generateRandomString();
     const unclaimedTaskName = StringUtil.generateRandomString();
@@ -70,11 +54,25 @@ describe('Task Header cloud component', () => {
     let groupInfo: any;
     let testUser: any;
     let unclaimedTask: any;
+    const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const priority = 30;
     const description = 'descriptionTask';
     const formatDate = 'MMM D, YYYY';
     const dateTimeFormat = 'MMM D, Y, H:mm';
     const defaultFormat = 'M/D/YY';
+
+    const taskHeaderCloudPage = new TaskHeaderCloudPage();
+
+    const loginSSOPage = new LoginSSOPage();
+    const navigationBarPage = new NavigationBarPage();
+    const appListCloudComponent = new AppListCloudPage();
+    const tasksCloudDemoPage = new TasksCloudDemoPage();
+    const startTaskCloudPage = new StartTasksCloudPage();
+    const peopleCloudComponentPage = new PeopleCloudComponentPage();
+    const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers);
+    let tasksService: TasksService;
+    let identityService: IdentityService;
+    let groupIdentityService: GroupIdentityService;
 
     const createCompletedTask = async function () {
         const completedTaskId = await tasksService.createStandaloneTask(completedTaskName,
@@ -100,11 +98,15 @@ describe('Task Header cloud component', () => {
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        identityService = new IdentityService(apiService);
+        groupIdentityService = new GroupIdentityService(apiService);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
         await apiService.login(testUser.email, testUser.password);
+
+        tasksService = new TasksService(apiService);
 
         unclaimedTask = await tasksService.createStandaloneTask(unclaimedTaskName, simpleApp);
 
@@ -121,7 +123,7 @@ describe('Task Header cloud component', () => {
         subTaskCreatedDate = moment(subTask.entry.createdDate).format(formatDate);
 
         await browser.sleep(3000);
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
     });
 
     afterAll(async () => {

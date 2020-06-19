@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 
 export class SocialPage {
 
-    nodeIdField = element(by.css(`input[id="nodeId"]`));
+    nodeIdField: ElementFinder = element(by.css(`input[id="nodeId"]`));
 
     async getNodeIdFieldValue(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.nodeIdField);

@@ -15,15 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    AppListCloudPage,
-    GroupIdentityService,
-    IdentityService,
-    LoginSSOPage,
-    StringUtil,
-    TasksService
-} from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, StringUtil, TasksService } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -31,31 +23,35 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 describe('Task list cloud - selection', () => {
 
     describe('Task list cloud - selection', () => {
-
-        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
-
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
+        const apiService = new ApiService(
+            browser.params.config.oauth2.clientId,
+            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
+        );
 
-        const apiService = new ApiService();
-        const identityService = new IdentityService(apiService);
-        const groupIdentityService = new GroupIdentityService(apiService);
-        const tasksService = new TasksService(apiService);
+        let tasksService: TasksService;
+        let identityService: IdentityService;
+        let groupIdentityService: GroupIdentityService;
 
+        const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
         const noOfTasks = 3;
         let response, testUser, groupInfo;
         const tasks = [];
 
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-
-            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+            identityService = new IdentityService(apiService);
+            groupIdentityService = new GroupIdentityService(apiService);
+            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
 
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
             await apiService.login(testUser.email, testUser.password);
+
+            tasksService = new  TasksService(apiService);
 
             for (let i = 0; i < noOfTasks; i++) {
                 response = await tasksService.createStandaloneTask(StringUtil.generateRandomString(), simpleApp);
@@ -63,10 +59,10 @@ describe('Task list cloud - selection', () => {
                 tasks.push(response.entry.name);
             }
 
-            await loginSSOPage.login(testUser.email, testUser.password);
+            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
         });
 
-        afterAll(async () => {
+        afterAll(async() => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
@@ -178,5 +174,5 @@ describe('Task list cloud - selection', () => {
             await expect(await tasksCloudDemoPage.getSelectedTaskRowText('1')).toBe(tasks[0]);
             await expect(await tasksCloudDemoPage.getSelectedTaskRowText('2')).toBe(tasks[1]);
         });
-    });
+   });
 });

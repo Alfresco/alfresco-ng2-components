@@ -23,10 +23,12 @@ import {
     CardViewMapItemModel,
     CardViewTextItemModel,
     CardViewBaseItemModel,
+    LogService,
     TranslationService,
     AppConfigService
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskListService } from './../services/tasklist.service';
 import { TaskDescriptionValidator } from '../validators/task-description.validator';
 
 @Component({
@@ -44,10 +46,6 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     @Input()
     taskDetails: TaskDetailsModel;
 
-    /** Toggles display of the claim/release button. */
-    @Input()
-    showClaimRelease = true;
-
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
@@ -64,8 +62,10 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
     dateFormat: string;
     dateLocale: string;
 
-    constructor(private bpmUserService: BpmUserService,
+    constructor(private activitiTaskService: TaskListService,
+                private bpmUserService: BpmUserService,
                 private translationService: TranslationService,
+                private logService: LogService,
                 private appConfig: AppConfigService) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
         this.dateLocale = this.appConfig.get('dateValues.defaultDateLocale');
@@ -281,12 +281,28 @@ export class TaskHeaderComponent implements OnChanges, OnInit {
         return (this.taskDetails && this.taskDetails.isCompleted()) ? 'Completed' : 'Running';
     }
 
-    onClaimTask(taskId: string) {
-        this.claim.emit(taskId);
+    /**
+     * Claim task
+     *
+     * @param taskId
+     */
+    claimTask(taskId: string) {
+        this.activitiTaskService.claimTask(taskId).subscribe(() => {
+            this.logService.info('Task claimed');
+            this.claim.emit(taskId);
+        });
     }
 
-    onUnclaimTask(taskId: string) {
-        this.unclaim.emit(taskId);
+    /**
+     * Unclaim task
+     *
+     * @param taskId
+     */
+    unclaimTask(taskId: string) {
+        this.activitiTaskService.unclaimTask(taskId).subscribe(() => {
+            this.logService.info('Task unclaimed');
+            this.unclaim.emit(taskId);
+        });
     }
 
     /**

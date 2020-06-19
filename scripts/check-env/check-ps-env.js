@@ -20,12 +20,12 @@ async function main() {
 
 async function checkEnv() {
     try {
-        const alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
+        this.alfrescoJsApi = new alfrescoApi.AlfrescoApiCompatibility({
             provider: 'BPM',
             hostBpm:  program.host
         });
 
-        await alfrescoJsApi.login(program.username, program.password);
+        await this.alfrescoJsApi.login(program.username, program.password);
     } catch (e) {
         console.log('Login error environment down or inaccessible');
         counter++;

@@ -20,7 +20,7 @@
 import * as program from 'commander';
 import { exec } from './exec';
 /* tslint:disable */
-import { AlfrescoApi } from '@alfresco/js-api';
+const alfrescoApi = require('@alfresco/js-api');
 /* tslint:enable */
 
 import { logger } from './logger';
@@ -51,7 +51,7 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
         hostBpm: `${args.host}`,
         authType: 'OAUTH',
         oauth2: {
-            host: `${args.oauth}/auth/realms/alfresco`,
+            host: `${args.oauth}`,
             clientId: `${args.clientId}`,
             scope: 'openid',
             secret: '',
@@ -60,7 +60,7 @@ function getAlfrescoJsApiInstance(args: ConfigArgs) {
             redirectUri: '/'
         }
     };
-    return new AlfrescoApi(config);
+    return new alfrescoApi.AlfrescoApiCompatibility(config);
 }
 
 async function login(username: string, password: string, alfrescoJsApi: any) {
@@ -264,14 +264,12 @@ async function main(args) {
     program
         .version('0.1.0')
         .description('The following command is in charge of cleaning the releases/application/descriptor related to an app passed as input' +
-            'adf-cli kubectl-clean-app --host "gateway_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --oauth "identity_env" --username "username" --password "password"')
+            'adf-cli kubectl-clean-app --host "gateway_env"  --oauth "identity_env" --identityHost "identity_env" --username "username" --password "password"')
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
         .option('--clientId[type]', 'sso client')
         .option('--devopsUsername [type]', 'username of user with ACTIVITI_DEVOPS role')
         .option('--devopsPassword [type]', 'password of user with ACTIVITI_DEVOPS role')
-        .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
-        .option('--modelerPassword [type]', 'modeler password')
         .option('--rancherUsername [type]', 'rancher username')
         .option('--rancherPassword [type]', 'rancher password')
         .option('--enableLike [boolean]', 'Enable the like for app name')
@@ -284,20 +282,10 @@ async function main(args) {
     }
 
     const configModeler = getAlfrescoJsApiInstance(args);
-    const alfrescoJsApiModeler = await login(args.modelerUsername, args.modelerPassword, configModeler).then(() => {
-        logger.info('login SSO ok');
-    }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)}`);
-        process.exit(1);
-    });
+    const alfrescoJsApiModeler = await login(args.modelerUsername, args.modelerPassword, configModeler);
 
     const configDevops = getAlfrescoJsApiInstance(args);
-    const alfrescoJsApiDevops = await login(args.devopsUsername, args.devopsPassword, configDevops).then(() => {
-        logger.info('login SSO ok');
-    }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)}`);
-        process.exit(1);
-    });
+    const alfrescoJsApiDevops = await login(args.devopsUsername, args.devopsPassword, configDevops);
 
     if (args.label !== undefined || args.apps !== undefined) {
         setCluster(args);

@@ -15,22 +15,17 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { FiltersPage } from './filters.page';
 
 export class ProcessFiltersPage {
-    defaultProcessFilters = {
-        running: 'Running',
-        completed: 'Completed',
-        all: 'All'
-    };
 
     filtersPage = new FiltersPage();
 
-    runningFilter = element(by.css('button[data-automation-id="Running_filter"]'));
-    completedFilter = element(by.css('button[data-automation-id="Completed_filter"]'));
-    allFilter = element(by.css('button[data-automation-id="All_filter"]'));
-    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
+    runningFilter: ElementFinder = element(by.css('button[data-automation-id="Running_filter"]'));
+    completedFilter: ElementFinder = element(by.css('button[data-automation-id="Completed_filter"]'));
+    allFilter: ElementFinder = element(by.css('button[data-automation-id="All_filter"]'));
+    accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
 
     async clickRunningFilterButton(): Promise<void> {
         await this.filtersPage.clickFilterButton(this.runningFilter);
@@ -45,26 +40,26 @@ export class ProcessFiltersPage {
     }
 
     async isRunningFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultProcessFilters.running);
+        return this.filtersPage.isFilterHighlighted('Running');
     }
 
     async isCompletedFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultProcessFilters.completed);
+        return this.filtersPage.isFilterHighlighted('Completed');
     }
 
     async isAllFilterHighlighted(): Promise<boolean> {
-        return this.filtersPage.isFilterHighlighted(this.defaultProcessFilters.all);
+        return this.filtersPage.isFilterHighlighted('All');
     }
 
     async isRunningFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultProcessFilters.running);
+        return this.filtersPage.isFilterDisplayed('Running');
     }
 
     async isCompletedFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultProcessFilters.completed);
+        return this.filtersPage.isFilterDisplayed('Completed');
     }
 
     async isAllFilterDisplayed(): Promise<boolean> {
-        return this.filtersPage.isFilterDisplayed(this.defaultProcessFilters.all);
+        return this.filtersPage.isFilterDisplayed('All');
     }
 }

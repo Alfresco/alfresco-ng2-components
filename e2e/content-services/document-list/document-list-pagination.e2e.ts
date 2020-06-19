@@ -15,23 +15,16 @@
  * limitations under the License.
  */
 
-import {
-    ArrayUtil,
-    StringUtil,
-    LoginSSOPage,
-    UploadActions,
-    PaginationPage,
-    LocalStorageUtil,
-    FileBrowserUtil,
-    ApiService, UserModel
-} from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, PaginationPage, LocalStorageUtil, FileBrowserUtil } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { Util } from '../../util/util';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List - Pagination', () => {
     const pagination = {
@@ -54,13 +47,13 @@ describe('Document List - Pagination', () => {
         default: '25'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
 
-    let acsUser: UserModel;
+    const acsUser = new AcsUserModel();
     const newFolderModel = new FolderModel({ name: 'newFolder' });
     let fileNames = [];
     const nrOfFiles = 20;
@@ -71,10 +64,12 @@ describe('Document List - Pagination', () => {
     const folderTwoModel = new FolderModel({ name: 'folderTwo' });
     const folderThreeModel = new FolderModel({ name: 'folderThree' });
     const numberOfSubFolders = 6;
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
 
-    const uploadActions = new UploadActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const docxFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.DOCX.file_name,
@@ -82,12 +77,12 @@ describe('Document List - Pagination', () => {
     });
 
     beforeAll(async () => {
-        fileNames = StringUtil.generateFilesNames(10, nrOfFiles + 9, pagination.base, pagination.extension);
-        secondSetOfFiles = StringUtil.generateFilesNames(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
+        fileNames = Util.generateSequenceFiles(10, nrOfFiles + 9, pagination.base, pagination.extension);
+        secondSetOfFiles = Util.generateSequenceFiles(10, secondSetNumber + 9, pagination.secondSetBase, pagination.extension);
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         const folderThreeUploadedModel = await uploadActions.createFolder(folderThreeModel.name, '-my-');
         const newFolderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
@@ -95,7 +90,7 @@ describe('Document List - Pagination', () => {
         await uploadActions.createEmptyFiles(fileNames, newFolderUploadedModel.entry.id);
         await uploadActions.createEmptyFiles(secondSetOfFiles, folderThreeUploadedModel.entry.id);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     afterAll(async () => {
@@ -113,7 +108,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual( `Showing 1-${nrOfFiles} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
         const list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames)).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
     });
@@ -127,17 +122,17 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual( `Showing 1-${nrOfFiles} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
         const list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames)).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames)).toEqual(true);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260069] Should be able to set Items per page to 5', async () => {
@@ -149,7 +144,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         let list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
@@ -157,7 +152,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual( `Showing 6-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
@@ -165,7 +160,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 11-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
@@ -173,13 +168,13 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 16-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
 
         await browser.refresh();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260067] Should be able to set Items per page to 10', async () => {
@@ -192,7 +187,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.tenValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
         let list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
@@ -200,13 +195,13 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 11-${itemsPerPage.tenValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(10, 20))).toEqual(true);
 
         await browser.refresh();
         await contentServicesPage.waitForTableBody();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await navigationBarPage.clickLogoutButton();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         currentPage = 1;
     });
 
@@ -221,7 +216,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.fifteenValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
         let list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
         currentPage++;
         await paginationPage.clickOnNextPage();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
@@ -230,7 +225,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual( `Showing 16-${nrOfFiles} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles - itemsPerPage.fifteenValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
 
         await browser.refresh();
         await contentServicesPage.waitForTableBody();
@@ -284,7 +279,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.fifteenValue * currentPage} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fifteenValue);
         let list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, secondSetOfFiles.slice(0, 15))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 15))).toEqual(true);
 
         currentPage++;
         await paginationPage.clickOnNextPage();
@@ -293,7 +288,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 16-${secondSetNumber} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.fifteenValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, secondSetOfFiles.slice(15, 25))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(15, 25))).toEqual(true);
 
         currentPage = 1;
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
@@ -302,7 +297,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.twentyValue * currentPage} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.twentyValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, secondSetOfFiles.slice(0, 20))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(0, 20))).toEqual(true);
 
         currentPage++;
         await paginationPage.clickOnNextPage();
@@ -311,7 +306,7 @@ describe('Document List - Pagination', () => {
         await expect(await paginationPage.getPaginationRange()).toEqual(  `Showing 21-${secondSetNumber} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.twentyValue);
         list = await contentServicesPage.getAllRowsNameColumn();
-        await expect(ArrayUtil.arrayContainsArray(list, secondSetOfFiles.slice(20, 25))).toEqual(true);
+        await expect(Util.arrayContainsArray(list, secondSetOfFiles.slice(20, 25))).toEqual(true);
     });
 
     it('[C216321] Should be able to modify the supported page size value', async () => {

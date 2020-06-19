@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { element, by, browser, ElementFinder, ElementArrayFinder } from 'protractor';
 import {
     TogglePage,
     TaskFiltersCloudComponentPage,
@@ -27,31 +27,31 @@ import {
 
 export class TasksCloudDemoPage {
 
-    createButton = element(by.css('button[data-automation-id="create-button"'));
-    newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
-    settingsButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
-    appButton = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
-    displayTaskDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
-    displayProcessDetailsToggle = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
-    actionMenuToggle = element(by.css('mat-slide-toggle[data-automation-id="actionmenu"]'));
-    contextMenuToggle = element(by.css('mat-slide-toggle[data-automation-id="contextmenu"]'));
-    multiSelectionToggle = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
-    testingModeToggle = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
-    selectedRows = element(by.xpath("//div[text()=' Selected Rows: ']"));
-    noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
-    addActionTitle = element(by.cssContainingText('.mat-card-title', 'Add Action'));
-    keyInputField = element(by.css('input[placeholder="Key"]'));
-    titleInputField = element(by.css('input[placeholder="Title"]'));
-    iconInputField = element(by.css('input[placeholder="Icon"]'));
-    addActionButton = element(by.cssContainingText('button span', 'Add'));
-    disableCheckbox = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
-    visibleCheckbox = element(by.css(`mat-checkbox[formcontrolname='visible']`));
+    createButton: ElementFinder = element(by.css('button[data-automation-id="create-button"'));
+    newTaskButton: ElementFinder = element(by.css('button[data-automation-id="btn-start-task"]'));
+    settingsButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'Settings')).first();
+    appButton: ElementFinder = element.all(by.cssContainingText('div[class*="mat-tab-label"] .mat-tab-labels div', 'App')).first();
+    displayTaskDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="taskDetailsRedirection"]'));
+    displayProcessDetailsToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="processDetailsRedirection"]'));
+    actionMenuToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="actionmenu"]'));
+    contextMenuToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="contextmenu"]'));
+    multiSelectionToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="multiSelection"]'));
+    testingModeToggle: ElementFinder = element(by.css('mat-slide-toggle[data-automation-id="testingMode"]'));
+    selectedRows: ElementFinder = element(by.xpath("//div[text()=' Selected Rows: ']"));
+    noOfSelectedRows: ElementArrayFinder = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
+    addActionTitle: ElementFinder = element(by.cssContainingText('.mat-card-title', 'Add Action'));
+    keyInputField: ElementFinder = element(by.css('input[placeholder="Key"]'));
+    titleInputField: ElementFinder = element(by.css('input[placeholder="Title"]'));
+    iconInputField: ElementFinder = element(by.css('input[placeholder="Icon"]'));
+    addActionButton: ElementFinder = element(by.cssContainingText('button span', 'Add'));
+    disableCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
+    visibleCheckbox: ElementFinder = element(by.css(`mat-checkbox[formcontrolname='visible']`));
 
     modeDropdown = new DropdownPage(element(by.css('mat-form-field[data-automation-id="selectionMode"]')));
 
-    togglePage = new TogglePage();
+    togglePage: TogglePage = new TogglePage();
 
-    editTaskFilterCloud = new EditTaskFilterCloudComponentPage();
+    editTaskFilterCloud: EditTaskFilterCloudComponentPage = new EditTaskFilterCloudComponentPage();
 
     taskFilterCloudComponent = new TaskFiltersCloudComponentPage();
 
@@ -103,7 +103,7 @@ export class TasksCloudDemoPage {
         await BrowserActions.click(this.appButton);
     }
 
-    async selectSelectionMode(mode: string): Promise<void> {
+    async selectSelectionMode(mode): Promise<void> {
         await this.modeDropdown.clickDropdown();
         await this.modeDropdown.selectOption(mode);
     }
@@ -119,7 +119,7 @@ export class TasksCloudDemoPage {
 
     async getSelectedTaskRowText(rowNo: string): Promise<string> {
         await this.checkSelectedRowsIsDisplayed();
-        const row = element(by.xpath(`//div[text()=' Selected Rows: ']//li[${rowNo}]`));
+        const row: ElementFinder = element(by.xpath(`//div[text()=' Selected Rows: ']//li[${rowNo}]`));
         return BrowserActions.getText(row);
     }
 
@@ -162,7 +162,9 @@ export class TasksCloudDemoPage {
     }
 
     async clickStartNewTaskButton() {
+        await BrowserVisibility.waitUntilElementIsClickable(this.createButton);
         await BrowserActions.click(this.createButton);
+        await BrowserVisibility.waitUntilElementIsClickable(this.newTaskButton);
         await BrowserActions.click(this.newTaskButton);
     }
 

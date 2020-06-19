@@ -17,19 +17,19 @@
 
 import { NgModule } from '@angular/core';
 import { CompleteTaskDirective } from './complete-task.directive';
-import { ClaimTaskCloudDirective } from './claim-task-cloud.directive';
-import { UnClaimTaskCloudDirective } from './unclaim-task-cloud.directive';
+import { ClaimTaskDirective } from './claim-task.directive';
+import { UnClaimTaskDirective } from './unclaim-task.directive';
 
 @NgModule({
     declarations: [
         CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
+        ClaimTaskDirective,
+        UnClaimTaskDirective
     ],
     exports: [
         CompleteTaskDirective,
-        ClaimTaskCloudDirective,
-        UnClaimTaskCloudDirective
+        ClaimTaskDirective,
+        UnClaimTaskDirective
     ]
 })
 export class TaskDirectiveModule { }

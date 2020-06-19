@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class DownloadDialogPage {
-    cancelButton = element(by.id(`cancel-button`));
+    cancelButton: ElementFinder = element(by.id(`cancel-button`));
 
     async clickCancelButton(): Promise<void> {
         await BrowserActions.click(this.cancelButton);

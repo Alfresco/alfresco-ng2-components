@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { by, element, Key, protractor, browser } from 'protractor';
+import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { DropdownPage } from '../../material/pages/dropdown.page';
 import { FormFields } from '../../core/pages/form/form-fields';
 
 export class StartProcessPage {
 
-    defaultProcessName = element(by.css('input[id="processName"]'));
-    processNameInput = element(by.id('processName'));
-    disabledSelectProcessDropdown = element(by.css('input[id="processDefinitionName"][disabled]'));
-    selectProcessDropdownArrow = element(by.css('button[id="adf-select-process-dropdown"]'));
-    cancelProcessButton = element(by.id('cancel_process'));
-    formStartProcessButton = element(by.css('button[data-automation-id="adf-form-start process"]'));
-    startProcessButton = element(by.css('button[data-automation-id="btn-start"]'));
-    noProcess = element(by.css('.adf-empty-content__title'));
-    processDefinition = element(by.css('input[id="processDefinitionName"]'));
-    processDefinitionOptionsPanel = element(by.css('div[class*="mat-autocomplete-panel"]'));
+    defaultProcessName: ElementFinder = element(by.css('input[id="processName"]'));
+    processNameInput: ElementFinder = element(by.id('processName'));
+    disabledSelectProcessDropdown: ElementFinder = element(by.css('input[id="processDefinitionName"][disabled]'));
+    selectProcessDropdownArrow: ElementFinder = element(by.css('button[id="adf-select-process-dropdown"]'));
+    cancelProcessButton: ElementFinder = element(by.id('cancel_process'));
+    formStartProcessButton: ElementFinder = element(by.css('button[data-automation-id="adf-form-start process"]'));
+    startProcessButton: ElementFinder = element(by.css('button[data-automation-id="btn-start"]'));
+    noProcess: ElementFinder = element(by.id('no-process-message'));
+    processDefinition: ElementFinder = element(by.css('input[id="processDefinitionName"]'));
+    processDefinitionOptionsPanel: ElementFinder = element(by.css('div[class*="mat-autocomplete-panel"]'));
 
     processDefinitionDropdown = new DropdownPage(element(by.id('adf-select-process-dropdown')));
     applicationDropdown = new DropdownPage(element(by.css('[data-automation-id*="start-process-app"] div[class="mat-select-arrow"]')));
@@ -134,8 +134,8 @@ export class StartProcessPage {
         return processPlaceholder;
     }
 
-    async checkValidationErrorIsDisplayed(error: string, elementRef = 'mat-error'): Promise<void> {
-        const errorElement = element(by.cssContainingText(elementRef, error));
+    async checkValidationErrorIsDisplayed(error, elementRef = 'mat-error'): Promise<void> {
+        const errorElement: ElementFinder = element(by.cssContainingText(elementRef, error));
         await BrowserVisibility.waitUntilElementIsVisible(errorElement);
     }
 
@@ -157,8 +157,8 @@ export class StartProcessPage {
     }
 
     async startProcess(name: string, processName: string) {
-        await this.selectFromProcessDropdown(processName);
         await this.enterProcessName(name);
+        await this.selectFromProcessDropdown(processName);
         await this.clickStartProcessButton();
     }
 

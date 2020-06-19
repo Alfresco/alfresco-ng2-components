@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { DataTableComponentPage } from './data-table-component.page';
 
@@ -47,23 +47,23 @@ export class AboutPage {
         version: 'version'
     };
 
-    appTitle = element(by.css('[data-automation-id="adf-github-app-title"]'));
-    sourceCodeTitle = element(by.css('[data-automation-id="adf-github-source-code-title"]'));
-    githubUrl = element(by.css('[data-automation-id="adf-github-url"]'));
-    githubVersion = element(by.css('[data-automation-id="adf-github-version"]'));
-    bpmHost = element(by.css('[data-automation-id="adf-process-service-host"]'));
-    ecmHost = element(by.css('[data-automation-id="adf-content-service-host"]'));
-    productVersionTitle = element(by.css('[data-automation-id="adf-about-product-version-title"]'));
-    bpmEdition = element(by.css('[data-automation-id="adf-about-bpm-edition"]'));
-    ecmEdition = element(by.css('[data-automation-id="adf-about-ecm-edition"]'));
-    bpmVersion = element(by.css('[data-automation-id="adf-about-bpm-version"]'));
-    ecmVersion = element(by.css('[data-automation-id="adf-about-ecm-version"]'));
-    ecmStatusTitle = element(by.css('[data-automation-id="adf-about-ecm-status-title"]'));
-    ecmLicenseTitle = element(by.css('[data-automation-id="adf-about-ecm-license-title"]'));
-    ecmModulesTitle = element(by.css('[data-automation-id="adf-about-ecm-modules-title"]'));
-    aboutModulesTitle = element(by.css('[data-automation-id="adf-about-modules-title"]'));
+    appTitle: ElementFinder = element(by.css('[data-automation-id="adf-github-app-title"]'));
+    sourceCodeTitle: ElementFinder = element(by.css('[data-automation-id="adf-github-source-code-title"]'));
+    githubUrl: ElementFinder = element(by.css('[data-automation-id="adf-github-url"]'));
+    githubVersion: ElementFinder = element(by.css('[data-automation-id="adf-github-version"]'));
+    bpmHost: ElementFinder = element(by.css('[data-automation-id="adf-process-service-host"]'));
+    ecmHost: ElementFinder = element(by.css('[data-automation-id="adf-content-service-host"]'));
+    productVersionTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-product-version-title"]'));
+    bpmEdition: ElementFinder = element(by.css('[data-automation-id="adf-about-bpm-edition"]'));
+    ecmEdition: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-edition"]'));
+    bpmVersion: ElementFinder = element(by.css('[data-automation-id="adf-about-bpm-version"]'));
+    ecmVersion: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-version"]'));
+    ecmStatusTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-status-title"]'));
+    ecmLicenseTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-license-title"]'));
+    ecmModulesTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-ecm-modules-title"]'));
+    aboutModulesTitle: ElementFinder = element(by.css('[data-automation-id="adf-about-modules-title"]'));
 
-    dataTable = new DataTableComponentPage();
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     getDataTable(): DataTableComponentPage {
         return this.dataTable;

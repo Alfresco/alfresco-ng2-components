@@ -2,7 +2,7 @@
   "$schema": "../../lib/core/app-config/schema.json",
   "ecmHost": "{protocol}//{hostname}{:port}",
   "bpmHost": "{protocol}//{hostname}{:port}",
-  "identityHost": "{protocol}//{hostname}{:port}/auth/admin/realms/alfresco",
+  "identityHost": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
   "loginRoute": "login",
   "providers": "ALL",
   "contextRootBpm": "activiti-app",

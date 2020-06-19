@@ -87,7 +87,7 @@ describe('NodeSharedDirective', () => {
     });
 
     it('should have share button disabled when selection is empty', async () => {
-        await fixture.whenStable();
+        fixture.whenStable();
         fixture.detectChanges();
         expect(shareButtonElement.disabled).toBe(true);
     });
@@ -96,7 +96,7 @@ describe('NodeSharedDirective', () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        await fixture.whenStable();
+        fixture.whenStable();
         fixture.detectChanges();
         expect(shareButtonElement.disabled).toBe(false);
     });
@@ -106,7 +106,7 @@ describe('NodeSharedDirective', () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        await fixture.whenStable();
+        fixture.whenStable();
         fixture.detectChanges();
         expect(shareButtonElement.disabled).toBe(true);
     });
@@ -115,7 +115,7 @@ describe('NodeSharedDirective', () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        await fixture.whenStable();
+        fixture.whenStable();
         fixture.detectChanges();
         expect(shareButtonElement.title).toBe('Not Shared');
     });
@@ -124,7 +124,7 @@ describe('NodeSharedDirective', () => {
         selection.entry.properties['qshare:sharedId'] = 'someId';
         component.documentList.selection = [selection];
         fixture.detectChanges();
-        await fixture.whenStable();
+        fixture.whenStable();
 
         fixture.detectChanges();
         expect(shareButtonElement.title).toBe('Shared');
@@ -135,7 +135,7 @@ describe('NodeSharedDirective', () => {
         component.documentList.selection = [selection];
         fixture.detectChanges();
 
-        await fixture.whenStable();
+        fixture.whenStable();
         fixture.detectChanges();
 
         shareButtonElement.click();

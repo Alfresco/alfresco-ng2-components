@@ -16,20 +16,20 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
-import { by, element, protractor } from 'protractor';
+import { by, element, ElementFinder, protractor } from 'protractor';
 
 export class ProcessListDemoPage {
 
-    appIdInput = element(by.css('input[data-automation-id="app-id"]'));
-    resetButton = element(by.cssContainingText('button span', 'Reset'));
-    emptyProcessContent = element(by.css('div[class="adf-empty-content"]'));
-    processDefinitionInput = element(by.css('input[data-automation-id="process-definition-id"]'));
-    processInstanceInput = element(by.css('input[data-automation-id="process-instance-id"]'));
+    appIdInput: ElementFinder = element(by.css('input[data-automation-id="app-id"]'));
+    resetButton: ElementFinder = element(by.cssContainingText('button span', 'Reset'));
+    emptyProcessContent: ElementFinder = element(by.css('div[class="adf-empty-content"]'));
+    processDefinitionInput: ElementFinder = element(by.css('input[data-automation-id="process-definition-id"]'));
+    processInstanceInput: ElementFinder = element(by.css('input[data-automation-id="process-instance-id"]'));
 
     stateDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="state"')));
     sortDropdown = new DropdownPage(element(by.css('mat-select[data-automation-id="sort"')));
 
-    dataTable = new DataTableComponentPage();
+    dataTable: DataTableComponentPage = new DataTableComponentPage();
 
     getDisplayedProcessesNames(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
@@ -55,7 +55,7 @@ export class ProcessListDemoPage {
     }
 
     async checkErrorMessageIsDisplayed(error): Promise<void> {
-        const errorMessage = element(by.cssContainingText('mat-error', error));
+        const errorMessage: ElementFinder = element(by.cssContainingText('mat-error', error));
         await BrowserVisibility.waitUntilElementIsVisible(errorMessage);
     }
 
@@ -63,11 +63,11 @@ export class ProcessListDemoPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.emptyProcessContent);
     }
 
-    async checkProcessIsNotDisplayed(processName: string): Promise<void> {
+    async checkProcessIsNotDisplayed(processName): Promise<void> {
         await this.dataTable.checkContentIsNotDisplayed('Name', processName);
     }
 
-    async checkProcessIsDisplayed(processName: string): Promise<void> {
+    async checkProcessIsDisplayed(processName): Promise<void> {
         await this.dataTable.checkContentIsDisplayed('Name', processName);
     }
 

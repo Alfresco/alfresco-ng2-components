@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, PaginationPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -24,49 +25,56 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 
 describe('Process List - Pagination when adding processes', () => {
 
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
-    const loginPage = new LoginSSOPage();
-    const paginationPage = new PaginationPage();
-    const processFiltersPage = new ProcessFiltersPage();
-    const processDetailsPage = new ProcessDetailsPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const processUtil = new ProcessUtil(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
     const itemsPerPage = {
         fifteen: '15',
         fifteenValue: 15
     };
 
+    const loginPage = new LoginPage();
+    const paginationPage = new PaginationPage();
+    const processFiltersPage = new ProcessFiltersPage();
+    const processDetailsPage = new ProcessDetailsPage();
+
     let processUserModel;
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+    const nrOfProcesses = 25;
+    let page, totalPages;
+    let i;
     let resultApp;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        const users = new UsersActions();
 
-        processUserModel = await usersActions.createUser();
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        processUserModel = await users.createTenantAndUser(this.alfrescoJsApi);
+
+        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
+
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
 
         resultApp = await applicationsService.importPublishDeployApp(app.file_path);
 
-        for (let i = 0; i < 20; i++) {
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        for (i = 0; i < (nrOfProcesses - 5); i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
-        await loginPage.login(processUserModel.email, processUserModel.password);
+        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
 
         await (await (await new NavigationBarPage().navigateToProcessServicesPage()).goToTaskApp()).clickProcessButton();
-    });
+   });
 
     it('[C261046] Should keep Items per page after adding processes', async () => {
         await processDetailsPage.checkProcessTitleIsDisplayed();
         await processFiltersPage.waitForTableBody();
-        const totalPages = 2;
-        let page = 1;
+        totalPages = 2;
+        page = 1;
 
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
         await processDetailsPage.checkProcessTitleIsDisplayed();
@@ -75,12 +83,13 @@ describe('Process List - Pagination when adding processes', () => {
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of 20' );
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fifteenValue * page + ' of ' + (nrOfProcesses - 5));
         await expect(await processFiltersPage.numberOfProcessRows()).toBe(itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsEnabled();
         await paginationPage.checkPreviousPageButtonIsDisabled();
 
-        for (let i = 0; i < 5; i++) {
+        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        for (i; i < nrOfProcesses; i++) {
             await processUtil.startProcessOfApp(resultApp.name);
         }
 
@@ -91,8 +100,8 @@ describe('Process List - Pagination when adding processes', () => {
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
-        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-25 of 25' );
-        await expect(await processFiltersPage.numberOfProcessRows()).toBe(10);
+        await expect(await paginationPage.getPaginationRange()).toEqual('Showing 16-' + nrOfProcesses + ' of ' + nrOfProcesses);
+        await expect(await processFiltersPage.numberOfProcessRows()).toBe(nrOfProcesses - itemsPerPage.fifteenValue);
         await paginationPage.checkNextPageButtonIsDisabled();
         await paginationPage.checkPreviousPageButtonIsEnabled();
     });

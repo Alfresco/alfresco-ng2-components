@@ -15,24 +15,28 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { DropActions } from '../../actions/drop.actions';
 import { FileModel } from '../../models/ACS/file.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component - Properties', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBar = new NavigationBarPage();
 
     let subFolder, parentFolder;
-    const apiService = new ApiService();
-    const uploadActions = new UploadActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
-    const usersActions = new UsersActions(apiService);
 
     const pngFile = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -40,22 +44,25 @@ describe('Document List Component - Properties', () => {
     });
 
     describe('Allow drop files property', () => {
+
         beforeEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            acsUser = new AcsUserModel();
 
-            acsUser = await usersActions.createUser();
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
             parentFolder = await uploadActions.createFolder('parentFolder', '-my-');
 
             subFolder = await uploadActions.createFolder('subFolder', parentFolder.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
         });
 
         afterEach(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             await uploadActions.deleteFileOrFolder(subFolder.entry.id);
             await uploadActions.deleteFileOrFolder(parentFolder.entry.id);
         });
@@ -68,7 +75,8 @@ describe('Document List Component - Properties', () => {
 
             const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
-            await DropActions.dropFile(dragAndDropArea, pngFile.location);
+            const dragAndDrop = new DropActions();
+            await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
             await contentServicesPage.doubleClickRow(subFolder.entry.name);
             await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
@@ -82,7 +90,8 @@ describe('Document List Component - Properties', () => {
 
             const dragAndDropArea = contentServicesPage.getRowByName(subFolder.entry.name);
 
-            await DropActions.dropFile(dragAndDropArea, pngFile.location);
+            const dragAndDrop = new DropActions();
+            await dragAndDrop.dropFile(dragAndDropArea, pngFile.location);
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
             await contentServicesPage.doubleClickRow(subFolder.entry.name);

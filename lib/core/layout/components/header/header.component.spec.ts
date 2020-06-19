@@ -74,6 +74,7 @@ describe('HeaderLayoutComponent', () => {
 
             const logo = fixture.nativeElement.querySelector('.adf-app-logo');
             const src = logo.getAttribute('src');
+            expect(logo === null).toBeFalsy();
             expect(src).toEqual('logo.png');
         });
 

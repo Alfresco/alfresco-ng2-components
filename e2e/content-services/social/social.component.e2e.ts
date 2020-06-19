@@ -15,27 +15,29 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, LikePage, RatePage, UploadActions } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SocialPage } from '../../pages/adf/demo-shell/social.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Social component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const likePage = new LikePage();
     const ratePage = new RatePage();
     const socialPage = new SocialPage();
     const navigationBarPage = new NavigationBarPage();
-    const componentOwner = new UserModel();
-    const componentVisitor = new UserModel();
-    const secondComponentVisitor = new UserModel();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const uploadActions = new UploadActions(apiService);
+    const componentOwner = new AcsUserModel();
+    const componentVisitor = new AcsUserModel();
+    const secondComponentVisitor = new AcsUserModel();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     const blueLikeColor = ('rgba(33, 150, 243, 1)');
     const greyLikeColor = ('rgba(128, 128, 128, 1)');
@@ -50,43 +52,44 @@ describe('Social component', () => {
     });
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await usersActions.createUser(componentOwner);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(componentOwner);
 
-        await usersActions.createUser(componentVisitor);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(componentVisitor);
 
-        await usersActions.createUser(secondComponentVisitor);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(secondComponentVisitor);
 
-        await apiService.getInstance().login(componentOwner.email, componentOwner.password);
+        await this.alfrescoJsApi.login(componentOwner.id, componentOwner.password);
 
         emptyFile = await uploadActions.uploadFile(emptyFileModel.location, emptyFileModel.name, '-my-');
 
-        await apiService.getInstance().core.nodesApi.updateNode(emptyFile.entry.id,
+        await this.alfrescoJsApi.core.nodesApi.updateNode(emptyFile.entry.id,
 
             {
                 permissions: {
                     locallySet: [{
-                        authorityId: componentVisitor.email,
+                        authorityId: componentVisitor.getId(),
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }, {
-                        authorityId: secondComponentVisitor.email,
+                        authorityId: secondComponentVisitor.getId(),
                         name: 'Consumer',
                         accessStatus: 'ALLOWED'
                     }]
                 }
             });
-    });
+   });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
-        await uploadActions.deleteFileOrFolder(emptyFile.entry.email);
-    });
+        await uploadActions.deleteFileOrFolder(emptyFile.entry.id);
+   });
 
     describe('User interaction on their own components', () => {
+
         beforeEach(async () => {
-            await loginPage.login(componentOwner.email, componentOwner.password);
+            await loginPage.loginToContentServicesUsingUserModel(componentOwner);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -106,11 +109,12 @@ describe('Social component', () => {
             await likePage.removeHoverFromLikeButton();
             await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
         });
-    });
+   });
 
     describe('User interaction on components that belong to other users', () => {
+
         beforeEach(async () => {
-            await loginPage.login(componentVisitor.email, componentVisitor.password);
+            await loginPage.loginToContentServicesUsingUserModel(componentVisitor);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -141,11 +145,12 @@ describe('Social component', () => {
             await expect(await ratePage.getRatingCounter()).toBe('0');
             await expect(await ratePage.isNotStarRated(4));
         });
-    });
+   });
 
     describe('Multiple Users interaction', () => {
+
         beforeEach(async () => {
-            await loginPage.login(componentVisitor.email, componentVisitor.password);
+            await loginPage.loginToContentServicesUsingUserModel(componentVisitor);
             await navigationBarPage.clickSocialButton();
         });
 
@@ -158,7 +163,7 @@ describe('Social component', () => {
             await likePage.removeHoverFromLikeButton();
             await expect(await likePage.getLikedIconColor()).toBe(blueLikeColor);
 
-            await loginPage.login(secondComponentVisitor.email, secondComponentVisitor.password);
+            await loginPage.loginToContentServicesUsingUserModel(secondComponentVisitor);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await likePage.getUnLikedIconColor()).toBe(greyLikeColor);
@@ -180,7 +185,7 @@ describe('Social component', () => {
             await expect(await ratePage.isStarRated(4));
             await expect(await ratePage.getRatedStarColor(4)).toBe(yellowRatedStarColor);
 
-            await loginPage.login(secondComponentVisitor.email, secondComponentVisitor.password);
+            await loginPage.loginToContentServicesUsingUserModel(secondComponentVisitor);
             await navigationBarPage.clickSocialButton();
             await socialPage.writeCustomNodeId(emptyFile.entry.id);
             await expect(await socialPage.getNodeIdFieldValue()).toEqual(emptyFile.entry.id);

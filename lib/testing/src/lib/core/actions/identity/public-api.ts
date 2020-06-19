@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
+export * from './applications.service';
 export * from './identity.service';
 export * from './group-identity.service';
 export * from './roles.service';
+export * from './tasks.service';
 export * from './query.service';

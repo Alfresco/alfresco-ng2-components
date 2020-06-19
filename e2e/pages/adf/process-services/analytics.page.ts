@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { element, by, protractor } from 'protractor';
+import { element, by, protractor, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AnalyticsPage {
 
-    toolbarTitleInput = element(by.css('input[data-automation-id="reportName"]'));
-    toolbarTitleContainer = element(by.css('adf-toolbar-title'));
-    toolbarTitle = element(by.xpath('//mat-toolbar/adf-toolbar-title/div/h4'));
-    reportMessage = element(by.css('div[class="ng-star-inserted"] span'));
+    toolbarTitleInput: ElementFinder = element(by.css('input[data-automation-id="reportName"]'));
+    toolbarTitleContainer: ElementFinder = element(by.css('adf-toolbar-title'));
+    toolbarTitle: ElementFinder = element(by.xpath('//mat-toolbar/adf-toolbar-title/div/h4'));
+    reportMessage: ElementFinder = element(by.css('div[class="ng-star-inserted"] span'));
 
-    async getReport(title: string): Promise<void> {
-        const reportTitle = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
+    async getReport(title): Promise<void> {
+        const reportTitle: ElementFinder = element(by.css(`mat-icon[data-automation-id="${title}_filter"]`));
         await BrowserActions.click(reportTitle);
     }
 

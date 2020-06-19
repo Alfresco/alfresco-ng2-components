@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { ConfigEditorPage } from '../../core/pages/config-editor-page';
 
 export class FormCloudComponentPage {
 
-    formCloudEditor = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
-    formCloudRender = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
+    formCloudEditor: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
+    formCloudRender: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
 
     configEditorPage = new ConfigEditorPage();
 

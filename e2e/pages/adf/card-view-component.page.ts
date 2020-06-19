@@ -15,25 +15,25 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions, CardTextItemPage, DropdownPage, CardBooleanItemPage } from '@alfresco/adf-testing';
 
 export class CardViewComponentPage {
 
-    addButton = element(by.className('adf-card-view__key-value-pairs__add-btn'));
-    nameCardTextItem = new CardTextItemPage('name');
-    booleanCardBooleanItem = new CardBooleanItemPage('boolean');
-    intField = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
-    floatField = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
-    valueInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
-    nameInputField = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
-    consoleLog = element(by.className('app-console'));
-    deleteButton = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
-    resetButton = element(by.css(`#adf-reset-card-log`));
-    editableSwitch = element(by.id('app-toggle-editable'));
-    clearDateSwitch = element(by.id('app-toggle-clear-date'));
-    noneOptionSwitch = element(by.id('app-toggle-none-option'));
-    clickableField = element(by.css(`[data-automation-id="card-textitem-toggle-click"]`));
+    addButton: ElementFinder = element(by.className('adf-card-view__key-value-pairs__add-btn'));
+    nameCardTextItem: CardTextItemPage = new CardTextItemPage('name');
+    booleanCardBooleanItem: CardBooleanItemPage = new CardBooleanItemPage('boolean');
+    intField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-int']`));
+    floatField: ElementFinder = element(by.css(`input[data-automation-id='card-textitem-editinput-float']`));
+    valueInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Value']`));
+    nameInputField: ElementFinder = element(by.xpath(`//*[contains(@id,'input') and @placeholder='Name']`));
+    consoleLog: ElementFinder = element(by.className('app-console'));
+    deleteButton: ElementFinder = element.all(by.className('adf-card-view__key-value-pairs__remove-btn')).first();
+    resetButton: ElementFinder = element(by.css(`#adf-reset-card-log`));
+    editableSwitch: ElementFinder = element(by.id('app-toggle-editable'));
+    clearDateSwitch: ElementFinder = element(by.id('app-toggle-clear-date'));
+    noneOptionSwitch: ElementFinder = element(by.id('app-toggle-none-option'));
+    clickableField: ElementFinder = element(by.css(`[data-automation-id="card-textitem-toggle-click"]`));
 
     selectDropdown = new DropdownPage(element(by.css('mat-select[data-automation-class="select-box"]')));
 
@@ -66,18 +66,18 @@ export class CardViewComponentPage {
     }
 
     async clickOnIntField(): Promise<void> {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-toggle-int"]'));
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-toggle-int"]'));
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.intField);
     }
 
     async clickOnIntClearIcon(): Promise<void> {
-        const clearIcon = element(by.css('button[data-automation-id="card-textitem-reset-int"]'));
+        const clearIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-reset-int"]'));
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnIntSaveIcon(): Promise<void> {
-        const saveIcon = element(by.css('button[data-automation-id="card-textitem-update-int"]'));
+        const saveIcon: ElementFinder = element(by.css('button[data-automation-id="card-textitem-update-int"]'));
         await BrowserActions.click(saveIcon);
     }
 
@@ -86,28 +86,28 @@ export class CardViewComponentPage {
     }
 
     getIntFieldText(): Promise<string> {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
+        const textField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-int"]'));
         return BrowserActions.getText(textField);
     }
 
     getErrorInt(): Promise<string> {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+        const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
         return BrowserActions.getText(errorElement);
     }
 
     async clickOnFloatField(): Promise<void> {
-        const toggleText = element(by.css('div[data-automation-id="card-textitem-toggle-float"]'));
+        const toggleText: ElementFinder = element(by.css('div[data-automation-id="card-textitem-toggle-float"]'));
         await BrowserActions.click(toggleText);
         await BrowserVisibility.waitUntilElementIsVisible(this.floatField);
     }
 
     async clickOnFloatClearIcon(): Promise<void> {
-        const clearIcon = element(by.css(`button[data-automation-id="card-textitem-reset-float"]`));
+        const clearIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-reset-float"]`));
         await BrowserActions.click(clearIcon);
     }
 
     async clickOnFloatSaveIcon(): Promise<void> {
-        const saveIcon = element(by.css(`button[data-automation-id="card-textitem-update-float"]`));
+        const saveIcon: ElementFinder = element(by.css(`button[data-automation-id="card-textitem-update-float"]`));
         await BrowserActions.click(saveIcon);
     }
 
@@ -116,12 +116,12 @@ export class CardViewComponentPage {
     }
 
     getFloatFieldText(): Promise<string> {
-        const textField = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
+        const textField: ElementFinder = element(by.css('span[data-automation-id="card-textitem-value-float"]'));
         return BrowserActions.getText(textField);
     }
 
     getErrorFloat(): Promise<string> {
-        const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
+        const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-float"]'));
         return BrowserActions.getText(errorElement);
     }
 
@@ -215,7 +215,7 @@ export class CardViewComponentPage {
     }
 
     async isErrorNotDisplayed(): Promise<boolean> {
-         const errorElement = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
+         const errorElement: ElementFinder = element(by.css('mat-error[data-automation-id="card-textitem-error-int"]'));
          try {
             await BrowserVisibility.waitUntilElementIsNotVisible(errorElement);
             return true;

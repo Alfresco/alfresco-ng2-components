@@ -16,32 +16,33 @@
  */
 
 import {
-    LoginSSOPage,
+    LoginPage,
     LocalStorageUtil,
     SearchSortingPickerPage,
-    UploadActions,
-    ApiService,
-    UserModel
+    UploadActions
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NodeActions } from '../../actions/ACS/node.actions';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Sorting Picker', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
     const searchSortingPicker = new SearchSortingPickerPage();
     const contentServices = new ContentServicesPage();
-    const acsUser = new UserModel();
+    const nodeActions = new NodeActions();
+    const acsUser = new AcsUserModel();
 
     const pngAModel = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -54,33 +55,33 @@ describe('Search Sorting Picker', () => {
     };
 
     let pngA, pngD;
-    const apiService = new ApiService();
-
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
-
+    this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const search = '_png_file.png';
     let jsonFile;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await usersActions.createUser(acsUser);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngA = await uploadActions.uploadFile(pngAModel.location, pngAModel.name, '-my-');
         pngD = await uploadActions.uploadFile(pngDModel.location, pngDModel.name, '-my-');
         await browser.sleep(12000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
-    });
+        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
+   });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pngA.entry.id);
         await uploadActions.deleteFileOrFolder(pngD.entry.id);
 
         await navigationBarPage.clickLogoutButton();
-    });
+   });
 
     beforeEach(async () => {
         await searchDialog.clickOnSearchIcon();
@@ -180,13 +181,13 @@ describe('Search Sorting Picker', () => {
 
     it('[C277286] Should be able to sort the search results by "Created Date" ASC', async () => {
         await searchResults.sortByCreated('ASC');
-        const results = await searchResults.dataTable.geCellElementDetail('Created');
+        const results: any = searchResults.dataTable.geCellElementDetail('Created');
         await expect(contentServices.checkElementsDateSortedAsc(results)).toBe(true);
     });
 
     it('[C277287] Should be able to sort the search results by "Created Date" DESC', async () => {
         await searchResults.sortByCreated('DESC');
-        const results = await searchResults.dataTable.geCellElementDetail('Created');
+        const results = searchResults.dataTable.geCellElementDetail('Created');
         await expect(contentServices.checkElementsDateSortedDesc(results)).toBe(true);
     });
 
@@ -213,26 +214,11 @@ describe('Search Sorting Picker', () => {
         const idList = await contentServices.getElementsDisplayedId();
         const numberOfElements = await contentServices.numberOfResultsDisplayed();
 
-        const nodeList = await getNodesDisplayed(numberOfElements, idList);
-
+        const nodeList = await nodeActions.getNodesDisplayed(this.alfrescoJsApi, idList, numberOfElements);
         const modifiedDateList = [];
         for (let i = 0; i < nodeList.length; i++) {
             modifiedDateList.push(new Date(nodeList[i].entry.modifiedAt));
         }
-
         await expect(contentServices.checkElementsDateSortedAsc(modifiedDateList)).toBe(true);
     });
-
-    const getNodesDisplayed = async function (numberOfElements: number, idList: string[]) {
-        const promises = [];
-        let nodeList;
-
-        for (let i = 0; i < (numberOfElements - 1); i++) {
-            if (idList[i] && idList[i].trim() !== '') {
-                promises.push(apiService.getInstance().core.nodesApi.getNode(idList[i]));
-            }
-        }
-        nodeList = await Promise.all(promises);
-        return nodeList;
-    };
 });

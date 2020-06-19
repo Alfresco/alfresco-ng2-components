@@ -23,7 +23,7 @@ export class InfinitePaginationPage {
     rootElement: ElementFinder;
     loadMoreButton;
 
-    constructor(rootElement = element.all(by.css('adf-infinite-pagination')).first()) {
+    constructor(rootElement: ElementFinder = element.all(by.css('adf-infinite-pagination')).first()) {
         this.rootElement = rootElement;
         this.loadMoreButton = this.rootElement.element(by.css('button[data-automation-id="adf-infinite-pagination-button"]'));
     }

@@ -15,31 +15,32 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, BrowserActions, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions, StringUtil, BrowserActions, ViewerPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const shareDialog = new ShareDialogPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const uploadActions = new UploadActions(apiService);
-
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let site;
-    const acsUser = new UserModel();
+    const acsUser = new AcsUserModel();
     let pngFileUploaded;
     const contentList = contentServicesPage.getDocumentList();
+    const shareDialog = new ShareDialogPage();
 
     const pngFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -54,38 +55,38 @@ describe('Viewer', () => {
     let pngFileShared, wordFileUploaded;
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        await usersActions.createUser(acsUser);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        site = await apiService.getInstance().core.sitesApi.createSite({
+        site = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(8),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(site.entry.id, {
-            id: acsUser.email,
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(site.entry.id, {
+            id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         pngFileUploaded = await uploadActions.uploadFile(pngFileInfo.location, pngFileInfo.name, site.entry.guid);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         wordFileUploaded = await uploadActions.uploadFile(wordFileInfo.location, wordFileInfo.name, '-my-');
 
-        pngFileShared = await apiService.getInstance().core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
+        pngFileShared = await this.alfrescoJsApi.core.sharedlinksApi.addSharedLink({ 'nodeId': pngFileUploaded.entry.id });
     });
 
     afterAll(async () => {
-        await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(site.entry.id, { permanent: true });
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         await uploadActions.deleteFileOrFolder(wordFileUploaded.entry.id);
     });
 
     beforeEach(async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {

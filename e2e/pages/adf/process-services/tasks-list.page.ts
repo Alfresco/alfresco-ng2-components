@@ -16,39 +16,39 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class TasksListPage {
 
-    taskList = element(by.css('adf-tasklist'));
-    noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    dataTable = new DataTableComponentPage(this.taskList);
+    taskList: ElementFinder = element(by.css('adf-tasklist'));
+    noTasksFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    dataTable: DataTableComponentPage = new DataTableComponentPage(this.taskList);
 
-    getDataTable(): DataTableComponentPage {
+    getDataTable() {
         return this.dataTable;
     }
 
-    getRowsDisplayedWithSameName(taskName: string): Promise<string> {
+    getRowsDisplayedWithSameName(taskName): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
     }
 
-    async checkContentIsDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsDisplayed('Name', taskName);
+    checkContentIsDisplayed(taskName): Promise<void> {
+        return this.dataTable.checkContentIsDisplayed('Name', taskName);
     }
 
-    async checkContentIsNotDisplayed(taskName: string): Promise<void> {
-        await this.dataTable.checkContentIsNotDisplayed('Name', taskName);
+    checkContentIsNotDisplayed(taskName): Promise<void> {
+        return this.dataTable.checkContentIsNotDisplayed('Name', taskName);
     }
 
-    async checkRowIsSelected(taskName: string): Promise<void> {
-        await this.dataTable.checkRowIsSelected('Name', taskName);
+    checkRowIsSelected(taskName): Promise<void> {
+        return this.dataTable.checkRowIsSelected('Name', taskName);
     }
 
-    async selectRow(taskName: string): Promise<void> {
-        await this.dataTable.selectRow('Name', taskName);
+    selectRow(taskName): Promise<void> {
+        return this.dataTable.selectRow('Name', taskName);
     }
 
-    getAllRowsNameColumn(): Promise<string[]> {
+    getAllRowsNameColumn(): Promise<any> {
         return this.dataTable.getAllRowsColumnValues('Name');
     }
 

@@ -18,24 +18,26 @@
 import { browser, by, element } from 'protractor';
 import {
     BreadcrumbPage,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     UploadActions,
     StringUtil,
     ContentNodeSelectorDialogPage,
-    ViewerPage, ApiService, UserModel
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
+import { Util } from '../../util/util';
 import { BreadCrumbDropdownPage } from '../../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
 import { InfinitePaginationPage } from '../../pages/adf/core/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component - Actions', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -44,13 +46,15 @@ describe('Document List Component - Actions', () => {
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const breadCrumbPage = new BreadcrumbPage();
     const viewerPage = new ViewerPage();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
-    const uploadActions = new UploadActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
     describe('Document List Component - Check Actions', () => {
+
         let uploadedFolder, secondUploadedFolder;
         let acsUser = null;
         let pdfUploadedNode;
@@ -73,19 +77,20 @@ describe('Document List Component - Actions', () => {
         };
 
         beforeAll(async () => {
+            acsUser = new AcsUserModel();
             folderName = `TATSUMAKY_${StringUtil.generateRandomString(5)}_SENPOUKYAKU`;
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             await uploadActions.uploadFile(testFileModel.location, testFileModel.name, '-my-');
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
             secondUploadedFolder = await uploadActions.createFolder('secondFolder', '-my-');
 
-            fileNames = StringUtil.generateFilesNames(1, nrOfFiles, files.base, files.extension);
+            fileNames = Util.generateSequenceFiles(1, nrOfFiles, files.base, files.extension);
             await uploadActions.createEmptyFiles(fileNames, uploadedFolder.entry.id);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
             await browser.sleep(10000);
         });
@@ -99,6 +104,7 @@ describe('Document List Component - Actions', () => {
         });
 
         describe('File Actions', () => {
+
             it('[C213257] Should be able to copy a file', async () => {
                 await contentServicesPage.checkContentIsDisplayed(pdfUploadedNode.entry.name);
                 await contentServicesPage.getDocumentList().rightClickOnRow(pdfFileModel.name);
@@ -207,6 +213,7 @@ describe('Document List Component - Actions', () => {
         });
 
         describe('Folder Actions', () => {
+
             it('[C260138] Should be able to copy a folder', async () => {
                 await contentServicesPage.copyContent(folderName);
                 await contentNodeSelector.checkDialogIsDisplayed();
@@ -248,6 +255,7 @@ describe('Document List Component - Actions', () => {
     });
 
     describe('Folder Actions - Copy and Move', () => {
+
         const folderModel1 = new FolderModel({ name: StringUtil.generateRandomString() });
         const folderModel2 = new FolderModel({ name: StringUtil.generateRandomString() });
         const folderModel3 = new FolderModel({ name: StringUtil.generateRandomString() });
@@ -258,12 +266,12 @@ describe('Document List Component - Actions', () => {
         let folder1, folder2, folder3, folder4, folder5, folder6;
 
         let folders;
-        const contentServicesUser = new UserModel();
+        const contentServicesUser = new AcsUserModel();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await usersActions.createUser(contentServicesUser);
-            await apiService.getInstance().login(contentServicesUser.email, contentServicesUser.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(contentServicesUser);
+            await this.alfrescoJsApi.login(contentServicesUser.id, contentServicesUser.password);
             folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
             folder2 = await uploadActions.createFolder('B' + folderModel2.name, '-my-');
             folder3 = await uploadActions.createFolder('C' + folderModel3.name, '-my-');
@@ -274,7 +282,7 @@ describe('Document List Component - Actions', () => {
         });
 
         beforeEach(async () => {
-            await loginPage.login(contentServicesUser.email, contentServicesUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(contentServicesUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');
@@ -283,7 +291,7 @@ describe('Document List Component - Actions', () => {
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             for (const folder of folders) {
                 await uploadActions.deleteFileOrFolder(folder.entry.id);
             }
@@ -335,11 +343,11 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.checkDialogIsDisplayed();
             await breadCrumbDropdownPage.clickParentFolder();
             await breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
-            await breadCrumbDropdownPage.choosePath(contentServicesUser.email);
+            await breadCrumbDropdownPage.choosePath(contentServicesUser.id);
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
 
-            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.email);
+            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.id);
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });
@@ -382,5 +390,5 @@ describe('Document List Component - Actions', () => {
             await contentServicesPage.doubleClickRow('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });
-    });
+   });
 });

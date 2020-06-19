@@ -16,25 +16,25 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class GroupWidgetPage {
 
-    groupField = element(by.css('input[data-automation-id="adf-group-search-input"]'));
-    firstResult = element(by.id('adf-group-widget-user-0'));
-    formFields = new FormFields();
-    groupDropDownList = by.css('.mat-autocomplete-panel');
+    groupField: ElementFinder = element(by.css('input[data-automation-id="adf-group-search-input"]'));
+    firstResult: ElementFinder = element(by.id('adf-group-widget-user-0'));
+    formFields: FormFields = new FormFields();
+    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 
-    getFieldLabel(fieldId: string): Promise<string> {
+    getFieldLabel(fieldId): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);
     }
 
-    getFieldValue(fieldId: string): Promise<string> {
+    getFieldValue(fieldId): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    getFieldText(fieldId: string): Promise<string> {
+    getFieldText(fieldId): Promise<string> {
         return this.formFields.getFieldText(fieldId);
     }
 

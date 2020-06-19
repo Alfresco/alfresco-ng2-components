@@ -30,7 +30,6 @@ import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap }
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
-import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
 
 @Component({
     selector: 'adf-cloud-start-process',
@@ -108,13 +107,12 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     processDefinitionLoaded = false;
 
     constructor(private startProcessCloudService: StartProcessCloudService,
-                private formBuilder: FormBuilder,
-                private processNameCloudPipe: ProcessNameCloudPipe) {
+                private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
         this.processForm = this.formBuilder.group({
-            processInstanceName: new FormControl('', [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
+            processInstanceName: new FormControl(this.name, [Validators.required, Validators.maxLength(this.getMaxNameLength()), Validators.pattern('^[^\\s]+(\\s+[^\\s]+)*$')]),
             processDefinition: new FormControl(this.processDefinitionName, [Validators.required, this.processDefinitionNameValidator()])
         });
 
@@ -226,7 +224,6 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         const selectedProcess = this.getProcessDefinitionByName(this.processDefinitionName);
         if (selectedProcess) {
             this.processDefinition.setValue(selectedProcess.name);
-            this.processDefinitionSelectionChanged(selectedProcess);
         }
     }
 
@@ -375,15 +372,8 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
         this.formContentClicked.emit(content);
     }
 
-    processDefinitionSelectionChanged(processDefinition: ProcessDefinitionCloud) {
-        if (processDefinition) {
-            const processInstanceDetails = new ProcessInstanceCloud({ processDefinitionName: processDefinition.name });
-            const defaultProcessName = this.processNameCloudPipe.transform(this.name, processInstanceDetails);
-            this.processInstanceName.setValue(defaultProcessName);
-            this.processInstanceName.markAsDirty();
-            this.processInstanceName.markAsTouched();
-            this.processDefinitionSelection.emit(processDefinition);
-        }
+    processDefinitionSelectionChanged(processDefinition) {
+        this.processDefinitionSelection.emit(processDefinition);
     }
 
     ngOnDestroy() {

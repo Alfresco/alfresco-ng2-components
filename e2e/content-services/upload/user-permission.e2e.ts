@@ -16,23 +16,24 @@
  */
 
 import { browser } from 'protractor';
-import { StringUtil, LoginSSOPage, NotificationHistoryPage, ApiService } from '@alfresco/adf-testing';
+import { StringUtil, LoginPage, NotificationHistoryPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import CONSTANTS = require('../../util/constants');
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
+    let acsUser;
+    let acsUserTwo;
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
 
     const emptyFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -49,42 +50,49 @@ describe('Upload - User permission', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_location
     });
 
-    let acsUser, acsUserTwo, consumerSite, managerSite;
-
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-
-        acsUser = await usersActions.createUser(acsUser);
-        acsUserTwo = await usersActions.createUser(acsUserTwo);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
     });
 
     beforeEach(async () => {
-        await loginPage.login(acsUser.email, acsUser.password);
+        acsUser = new AcsUserModel();
+        acsUserTwo = new AcsUserModel();
 
-        consumerSite = await apiService.getInstance().core.sitesApi.createSite({
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUserTwo);
+
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+
+        this.consumerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        managerSite = await apiService.getInstance().core.sitesApi.createSite({
+        this.managerSite = await this.alfrescoJsApi.core.sitesApi.createSite({
             title: StringUtil.generateRandomString(),
             visibility: 'PUBLIC'
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(consumerSite.entry.id, {
-            id: acsUser.email,
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(this.consumerSite.entry.id, {
+            id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.CONSUMER
         });
 
-        await apiService.getInstance().core.sitesApi.addSiteMember(managerSite.entry.id, {
-            id: acsUser.email,
+        await this.alfrescoJsApi.core.sitesApi.addSiteMember(this.managerSite.entry.id, {
+            id: acsUser.id,
             role: CONSTANTS.CS_USER_ROLES.MANAGER
         });
     });
 
     afterEach(async () => {
-        await apiService.getInstance().core.sitesApi.deleteSite(managerSite.entry.id, { permanent: true });
-        await apiService.getInstance().core.sitesApi.deleteSite(consumerSite.entry.id, { permanent: true });
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.managerSite.entry.id, { permanent: true });
+        await this.alfrescoJsApi.core.sitesApi.deleteSite(this.consumerSite.entry.id, { permanent: true });
     });
 
     describe('Consumer permissions', () => {
@@ -94,13 +102,14 @@ describe('Upload - User permission', () => {
         });
 
         it('[C291921] Should display tooltip for uploading files without permissions', async () => {
-            await navigationBarPage.openContentServicesFolder(consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             await contentServicesPage.checkDragAndDropDIsDisplayed();
 
             await contentServicesPage.dragAndDropFile(emptyFile.location);
 
             await uploadDialog.fileIsError(emptyFile.name);
+
             await uploadDialog.displayTooltip();
 
             await expect(await uploadDialog.getTooltip()).toEqual('Insufficient permissions to upload in this location [403]');
@@ -115,7 +124,7 @@ describe('Upload - User permission', () => {
             await uploadDialog.clickOnCloseButton();
             await uploadDialog.dialogIsNotDisplayed();
 
-            await navigationBarPage.openContentServicesFolder(consumerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.consumerSite.entry.guid);
 
             await browser.sleep(3000);
 
@@ -126,8 +135,9 @@ describe('Upload - User permission', () => {
     });
 
     describe('full permissions', () => {
+
         beforeEach(async () => {
-            await navigationBarPage.openContentServicesFolder(managerSite.entry.guid);
+            await navigationBarPage.openContentServicesFolder(this.managerSite.entry.guid);
 
             await contentServicesPage.goToDocumentList();
         });
@@ -140,6 +150,7 @@ describe('Upload - User permission', () => {
     });
 
     describe('multiple users', () => {
+
         beforeEach(async () => {
             await contentServicesPage.goToDocumentList();
         });
@@ -152,7 +163,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(emptyFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUserTwo.email, acsUserTwo.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUserTwo);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(emptyFile.name);
@@ -162,7 +173,7 @@ describe('Upload - User permission', () => {
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
 
             await navigationBarPage.clickLoginButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);

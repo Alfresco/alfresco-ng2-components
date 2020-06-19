@@ -15,26 +15,20 @@
  * limitations under the License.
  */
 
-import {
-    LoginSSOPage,
-    LocalStorageUtil,
-    UploadActions,
-    DataTableComponentPage,
-    ApiService,
-    UserModel
-} from '@alfresco/adf-testing';
+import { LoginPage, LocalStorageUtil, UploadActions, DataTableComponentPage } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { browser, ElementFinder } from 'protractor';
+import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Slider Filter', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
@@ -42,7 +36,7 @@ describe('Search Slider Filter', () => {
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
-    const acsUser = new UserModel();
+    const acsUser = new AcsUserModel();
 
     const file2BytesModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.UNSUPPORTED.file_name,
@@ -50,22 +44,24 @@ describe('Search Slider Filter', () => {
     });
 
     let file2Bytes;
-    const apiService = new ApiService();
-
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await usersActions.createUser(acsUser);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
         await browser.sleep(15000);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServices(acsUser.id, acsUser.password);
 
         await searchDialog.checkSearchIconIsVisible();
         await searchDialog.clickOnSearchIcon();
@@ -74,7 +70,7 @@ describe('Search Slider Filter', () => {
 
     afterAll(async () => {
         try {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             await uploadActions.deleteFileOrFolder(file2Bytes.entry.id);
         } catch (error) {
         }
@@ -124,7 +120,7 @@ describe('Search Slider Filter', () => {
         await searchResults.sortBySize('DESC');
         await searchResults.tableIsLoaded();
 
-        const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const results: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of results) {
             try {
                 const currentSize = await currentResult.getAttribute('title');
@@ -141,7 +137,7 @@ describe('Search Slider Filter', () => {
         await searchResults.sortBySize('DESC');
         await searchResults.tableIsLoaded();
 
-        const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
+        const resultsSize: any = dataTable.geCellElementDetail('Size');
         for (const currentResult of resultsSize) {
             try {
                 const currentSize = await currentResult.getAttribute('title');

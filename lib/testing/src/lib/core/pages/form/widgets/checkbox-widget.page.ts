@@ -17,34 +17,34 @@
 
 import { FormFields } from '../form-fields';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
-import { by, element } from 'protractor';
+import { by, element, Locator, ElementFinder } from 'protractor';
 
 export class CheckboxWidgetPage {
 
-    formFields = new FormFields();
-    checkboxLabel = element(by.css('span[class*="mat-checkbox-label"]'));
-    checkboxLocator = by.css('mat-checkbox');
+    formFields: FormFields = new FormFields();
+    checkboxLabel: ElementFinder = element(by.css('span[class*="mat-checkbox-label"]'));
+    checkboxLocator: Locator = by.css('mat-checkbox');
 
     getCheckboxLabel(): Promise<string> {
         return BrowserActions.getText(this.checkboxLabel);
     }
 
-    async clickCheckboxInput(fieldId: string): Promise<void> {
+    async clickCheckboxInput(fieldId): Promise<void> {
         const checkboxInput = element.all(by.css(`mat-checkbox[id="${fieldId}"] div`)).first();
         await BrowserActions.click(checkboxInput);
     }
 
-    async isCheckboxDisplayed(fieldId: string): Promise<void> {
+    async isCheckboxDisplayed(fieldId): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async isCheckboxHidden(fieldId: string): Promise<void> {
+    async isCheckboxHidden(fieldId): Promise<void> {
         await this.formFields.checkWidgetIsHidden(fieldId);
     }
 
-    async isCheckboxChecked(fieldId: string): Promise<boolean> {
+    async isCheckboxChecked(fieldId): Promise<boolean> {
         let isChecked: boolean = false;
-        const checkboxWidget = await (await this.formFields.getWidget(fieldId)).element(this.checkboxLocator);
+        const checkboxWidget: ElementFinder = await (await this.formFields.getWidget(fieldId)).element(this.checkboxLocator);
         await BrowserVisibility.waitUntilElementIsVisible(checkboxWidget);
         await checkboxWidget.getAttribute('class').then((attributeValue) => {
             isChecked = attributeValue.includes('mat-checkbox-checked');

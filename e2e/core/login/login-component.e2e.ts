@@ -15,32 +15,31 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    BrowserActions,
-    ErrorPage,
-    LocalStorageUtil,
-    UserInfoPage,
-    UserModel
-} from '@alfresco/adf-testing';
+import { BrowserActions, ErrorPage, LoginPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
-import { LoginPage } from '../../pages/adf/demo-shell/login.page';
-import { UsersActions } from '../../actions/users.actions';
+import { Util } from '../../util/util';
 
 describe('Login component', () => {
 
+    const settingsPage = new SettingsPage();
     const processServicesPage = new ProcessServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
     const contentServicesPage = new ContentServicesPage();
     const loginPage = new LoginPage();
     const errorPage = new ErrorPage();
+    const adminUserModel = new AcsUserModel({
+        'id': browser.params.testConfig.adf.adminUser,
+        'password': browser.params.testConfig.adf.adminPassword
+    });
 
-    const userA = new UserModel();
-    const userB = new UserModel();
+    const userA = new AcsUserModel();
+    const userB = new AcsUserModel();
 
     const errorMessages = {
         username: 'Your username needs to be at least 2 characters.',
@@ -51,32 +50,33 @@ describe('Login component', () => {
     const invalidUsername = 'invaliduser';
     const invalidPassword = 'invalidpassword';
 
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ALL',
+            hostEcm: browser.params.testConfig.adf_acs.host,
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
 
-        await usersActions.createUser(userA);
-        await usersActions.createUser(userB);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+        await this.alfrescoJsApi.core.peopleApi.addPerson(userA);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(userB);
    });
 
     it('[C276746] Should display the right information in user-info when a different users logs in', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ECM');
-
-        await loginPage.login(userA.email, userA.password);
+        await loginPage.loginToContentServicesUsingUserModel(userA);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userA.firstName + ' ' + userA.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userA.email);
 
-        await loginPage.login(userB.email, userB.password);
+        await loginPage.loginToContentServicesUsingUserModel(userB);
         await userInfoPage.clickUserProfile();
         await expect(await userInfoPage.getContentHeaderTitle()).toEqual(userB.firstName + ' ' + userB.lastName);
         await expect(await userInfoPage.getContentEmail()).toEqual(userB.email);
     });
 
     it('[C299206] Should redirect the user without the right access role on a forbidden page', async () => {
-        await loginPage.login(userA.email, userA.password);
+        await loginPage.loginToContentServicesUsingUserModel(userA);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await expect(await errorPage.getErrorCode()).toBe('403');
         await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
@@ -120,7 +120,7 @@ describe('Login component', () => {
 
     it('[C260045] Should enable login button after entering a valid username and a password', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.enterUsername(browser.params.testConfig.admin.email);
+        await loginPage.enterUsername(adminUserModel.id);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterPassword('a');
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
@@ -165,11 +165,11 @@ describe('Login component', () => {
     });
 
     it('[C260049] Should be possible to login to Process Services with Content Services disabled', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'BPM');
-
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -177,21 +177,23 @@ describe('Login component', () => {
     });
 
     it('[C260050] Should be possible to login to Content Services with Process Services disabled', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ECM');
-
         await loginPage.goToLoginPage();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcm();
+        await loginPage.login(browser.params.testConfig.adf.adminUser, browser.params.testConfig.adf.adminPassword);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
     });
 
     it('[C260051] Should be able to login to both Content Services and Process Services', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ALL');
-
         await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await navigationBarPage.clickContentServicesButton();
@@ -201,28 +203,30 @@ describe('Login component', () => {
     });
 
     it('[C277754] Should the user be redirect to the login page when the Content Service session expire', async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ECM');
-
         await loginPage.goToLoginPage();
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
         await loginPage.waitForElements();
-
-        await LocalStorageUtil.setStorageItem('providers', 'ALL');
     });
 
     it('[C279932] Should successRoute property change the landing page when the user Login', async () => {
         await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
         await loginPage.enableSuccessRouteSwitch();
         await loginPage.enterSuccessRoute('activiti');
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await processServicesPage.checkApsContainer();
     });
 
     it('[C279931] Should the user be redirect to the login page when the Process Service session expire', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
         await loginPage.waitForElements();
@@ -230,9 +234,11 @@ describe('Login component', () => {
 
     it('[C279930] Should a user still be logged-in when open a new tab', async () => {
         await loginPage.goToLoginPage();
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
 
-        await browser.executeScript("window.open('about: blank', '_blank');");
+        await Util.openNewTabInBrowser();
 
         const handles = await browser.getAllWindowHandles();
         await browser.switchTo().window(handles[1]);
@@ -244,13 +250,16 @@ describe('Login component', () => {
 
     it('[C279933] Should be possible change the login component logo when logoImageUrl is changed', async () => {
         await loginPage.goToLoginPage();
+        await loginPage.clickSettingsIcon();
+        await settingsPage.setProviderEcmBpm();
         await loginPage.enableLogoSwitch();
         await loginPage.enterLogo('https://rawgit.com/Alfresco/alfresco-ng2-components/master/assets/angular2.png');
         await loginPage.checkLoginImgURL();
     });
 
     it('[C291854] Should be possible login in valid credentials', async () => {
-        await loginPage.goToLoginPage();
+        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await loginPage.waitForElements();
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
         await loginPage.enterUsername(invalidUsername);
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(false);
@@ -258,6 +267,6 @@ describe('Login component', () => {
         await expect(await loginPage.getSignInButtonIsEnabled()).toBe(true);
         await loginPage.clickSignInButton();
         await expect(await loginPage.getLoginError()).toEqual(errorMessages.invalid_credentials);
-        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await loginPage.login(adminUserModel.id, adminUserModel.password);
     });
 });

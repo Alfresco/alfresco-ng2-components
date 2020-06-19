@@ -16,26 +16,28 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { LoginPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { FileModel } from '../../models/ACS/file.model';
 import moment from 'moment-es6';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     let uploadedFolder, uploadedFolderExtra;
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
-    const uploadActions = new UploadActions(apiService);
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
     let acsUser = null;
     let testFileNode, pdfBFileNode;
 
     afterEach(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
         if (uploadedFolder) {
             await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
             uploadedFolder = null;
@@ -52,9 +54,11 @@ describe('Document List Component', () => {
             await uploadActions.deleteFileOrFolder(pdfBFileNode.entry.id);
             pdfBFileNode = null;
         }
+
     });
 
     describe('Custom Column', () => {
+
         let folderName;
         const pdfFileModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -76,21 +80,24 @@ describe('Document List Component', () => {
         let pdfUploadedNode, docxUploadedNode, timeAgoUploadedNode, mediumDateUploadedNode;
 
         beforeAll(async () => {
+
+            acsUser = new AcsUserModel();
+
             /* cspell:disable-next-line */
             folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
 
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            acsUser = await usersActions.createUser();
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
             pdfUploadedNode = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
             docxUploadedNode = await uploadActions.uploadFile(docxFileModel.location, docxFileModel.name, '-my-');
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
             if (pdfUploadedNode) {
                 await uploadActions.deleteFileOrFolder(pdfUploadedNode.entry.id);
@@ -104,10 +111,11 @@ describe('Document List Component', () => {
             if (mediumDateUploadedNode) {
                 await uploadActions.deleteFileOrFolder(mediumDateUploadedNode.entry.id);
             }
+
         });
 
         beforeEach(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
         });
 
         it('[C279926] Should only display the user\'s files and folders', async () => {
@@ -127,7 +135,7 @@ describe('Document List Component', () => {
         });
 
         it('[C279928] Should be able to display date with timeAgo', async () => {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             timeAgoUploadedNode = await uploadActions.uploadFile(timeAgoFileModel.location, timeAgoFileModel.name, '-my-');
             await contentServicesPage.goToDocumentList();
             const dateValue = await contentServicesPage.getColumnValueForRow(timeAgoFileModel.name, 'Created');
@@ -135,7 +143,7 @@ describe('Document List Component', () => {
         });
 
         it('[C279929] Should be able to display the date with date type', async () => {
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             mediumDateUploadedNode = await uploadActions.uploadFile(mediumFileModel.location, mediumFileModel.name, '-my-');
             const createdDate = moment(mediumDateUploadedNode.createdAt).format('ll');
             await contentServicesPage.goToDocumentList();
@@ -146,6 +154,7 @@ describe('Document List Component', () => {
     });
 
     describe('Column Sorting', () => {
+
         const fakeFileA = new FileModel({
             name: 'A',
             location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
@@ -164,22 +173,24 @@ describe('Document List Component', () => {
         let fileANode, fileBNode, fileCNode;
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-            const user = await usersActions.createUser();
-            await apiService.getInstance().login(user.email, user.password);
+            const user = new AcsUserModel();
 
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+
+            await this.alfrescoJsApi.core.peopleApi.addPerson(user);
+
+            await this.alfrescoJsApi.login(user.id, user.password);
             fileANode = await uploadActions.uploadFile(fakeFileA.location, fakeFileA.name, '-my-');
             fileBNode = await uploadActions.uploadFile(fakeFileB.location, fakeFileB.name, '-my-');
             fileCNode = await uploadActions.uploadFile(fakeFileC.location, fakeFileC.name, '-my-');
 
-            await loginPage.login(user.email, user.password);
-
+            await loginPage.loginToContentServicesUsingUserModel(user);
             await contentServicesPage.goToDocumentList();
         });
 
         afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
             if (fileANode) {
                 await uploadActions.deleteFileOrFolder(fileANode.entry.id);
             }
@@ -189,6 +200,7 @@ describe('Document List Component', () => {
             if (fileCNode) {
                 await uploadActions.deleteFileOrFolder(fileCNode.entry.id);
             }
+
         });
 
         it('[C260112] Should be able to sort by name (Ascending)', async () => {
@@ -217,10 +229,12 @@ describe('Document List Component', () => {
     });
 
     it('[C279959] Should display empty folder state for new folders', async () => {
+        acsUser = new AcsUserModel();
+
         const folderName = 'BANANA';
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await loginPage.login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.createNewFolder(folderName);
         await contentServicesPage.doubleClickRow(folderName);
@@ -233,13 +247,14 @@ describe('Document List Component', () => {
             name: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_location
         });
+        acsUser = new AcsUserModel();
         /* cspell:disable-next-line */
         const folderName = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
         await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
@@ -248,9 +263,10 @@ describe('Document List Component', () => {
     });
 
     it('[C261997] Should be able to clean Recent Files history', async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        const cleanUser = await usersActions.createUser();
-        await loginPage.login(cleanUser.email, cleanUser.password);
+        acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.clickOnContentServices();
         await contentServicesPage.checkRecentFileToBeShowed();
         const icon = await contentServicesPage.getRecentFileIcon();
@@ -261,14 +277,15 @@ describe('Document List Component', () => {
     });
 
     it('[C279970] Should display Islocked field for folders', async () => {
+        acsUser = new AcsUserModel();
         const folderNameA = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
         const folderNameB = `MEESEEKS_${StringUtil.generateRandomString(5)}_LOOK_AT_ME`;
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         uploadedFolder = await uploadActions.createFolder(folderNameA, '-my-');
         uploadedFolderExtra = await uploadActions.createFolder(folderNameB, '-my-');
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkContentIsDisplayed(folderNameA);
         await contentServicesPage.checkContentIsDisplayed(folderNameB);
@@ -285,12 +302,13 @@ describe('Document List Component', () => {
             name: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
         });
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        acsUser = await usersActions.createUser();
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        acsUser = new AcsUserModel();
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
         testFileNode = await uploadActions.uploadFile(testFileA.location, testFileA.name, '-my-');
         pdfBFileNode = await uploadActions.uploadFile(testFileB.location, testFileB.name, '-my-');
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkContentIsDisplayed(testFileA.name);
         await contentServicesPage.checkContentIsDisplayed(testFileB.name);
@@ -299,13 +317,15 @@ describe('Document List Component', () => {
     });
 
     describe('Once uploaded 20 folders', () => {
+
         let folderCreated;
 
         beforeAll(async () => {
+            acsUser = new AcsUserModel();
             folderCreated = [];
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             let folderName = '';
             let folder = null;
 
@@ -323,13 +343,14 @@ describe('Document List Component', () => {
         });
 
         it('[C277093] Should sort files with Items per page set to default', async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.checkListIsSortedByNameColumn('asc');
         });
     });
 
     describe('Column Template', () => {
+
         const file0BytesModel = new FileModel({
             name: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
             location: browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_path
@@ -339,12 +360,13 @@ describe('Document List Component', () => {
         const viewer = new ViewerPage();
 
         beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            acsUser = await usersActions.createUser();
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+            acsUser = new AcsUserModel();
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+            await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
             file = await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.waitForTableBody();
         });

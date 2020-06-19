@@ -27,7 +27,6 @@ export class ProcessInstanceCloud {
     parentId: string;
     processDefinitionId: string;
     processDefinitionKey: string;
-    processDefinitionName: string;
 
     constructor(obj?: any) {
         this.appName = obj && obj.appName || null;
@@ -41,6 +40,5 @@ export class ProcessInstanceCloud {
         this.parentId = obj && obj.parentId || null;
         this.processDefinitionId = obj && obj.processDefinitionId || null;
         this.processDefinitionKey = obj && obj.processDefinitionKey || null;
-        this.processDefinitionName = obj && obj.processDefinitionName || null;
     }
 }

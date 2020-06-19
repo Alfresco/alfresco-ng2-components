@@ -18,38 +18,46 @@
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { LoginSSOPage, ErrorPage, StringUtil, BrowserActions, ApiService } from '@alfresco/adf-testing';
-import { UsersActions } from '../../actions/users.actions';
+import { AcsUserModel } from '../../models/ACS/acs-user.model';
+import { LoginPage, ErrorPage, StringUtil, BrowserActions } from '@alfresco/adf-testing';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
 
     let privateSite;
     let acsUser = null;
 
+    beforeAll(() => {
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'ECM',
+            hostEcm: browser.params.testConfig.adf_acs.host
+        });
+    });
+
     describe('Permission Message', () => {
+
         beforeAll(async () => {
+            acsUser = new AcsUserModel();
             const siteName = `PRIVATE_TEST_SITE_${StringUtil.generateRandomString(5)}`;
             const privateSiteBody = { visibility: 'PRIVATE', title: siteName };
 
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-            acsUser = await usersActions.createUser();
+            await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-            privateSite = await apiService.getInstance().core.sitesApi.createSite(privateSiteBody);
+            privateSite = await this.alfrescoJsApi.core.sitesApi.createSite(privateSiteBody);
 
-            await loginPage.login(acsUser.email, acsUser.password);
+            await loginPage.loginToContentServicesUsingUserModel(acsUser);
         });
 
         afterAll(async () => {
             await navigationBarPage.clickLogoutButton();
-            await apiService.getInstance().core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
+            await this.alfrescoJsApi.core.sitesApi.deleteSite(privateSite.entry.id, { permanent: true });
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {

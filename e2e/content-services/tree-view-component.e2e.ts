@@ -15,23 +15,25 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
+import { LoginPage, UploadActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TreeViewPage } from '../pages/adf/content-services/tree-view.page';
+import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 
 describe('Tree View Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const treeViewPage = new TreeViewPage();
 
-    let acsUser: UserModel;
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-
-    const uploadActions = new UploadActions(apiService);
+    const acsUser = new AcsUserModel();
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_acs.host
+    });
+    const uploadActions = new UploadActions(this.alfrescoJsApi);
 
     let treeFolder, secondTreeFolder, thirdTreeFolder;
 
@@ -44,30 +46,30 @@ describe('Tree View Component', () => {
     };
 
     beforeAll(async () => {
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
-        acsUser = await usersActions.createUser();
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
+        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
 
-        treeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
+        treeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.folder,
             nodeType: 'cm:folder'
         });
-        secondTreeFolder = await apiService.getInstance().nodes.addNode(nodeNames.parentFolder, {
+        secondTreeFolder = await this.alfrescoJsApi.nodes.addNode(nodeNames.parentFolder, {
             name: nodeNames.secondFolder,
             nodeType: 'cm:folder'
         });
-        thirdTreeFolder = await apiService.getInstance().nodes.addNode(secondTreeFolder.entry.id, {
+        thirdTreeFolder = await this.alfrescoJsApi.nodes.addNode(secondTreeFolder.entry.id, {
             name: nodeNames.thirdFolder,
             nodeType: 'cm:folder'
         });
-        await apiService.getInstance().nodes.addNode(thirdTreeFolder.entry.id, {
+        await this.alfrescoJsApi.nodes.addNode(thirdTreeFolder.entry.id, {
             name: nodeNames.document,
             nodeType: 'cm:content'
         });
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.loginToContentServicesUsingUserModel(acsUser);
 
         await navigationBarPage.clickTreeViewButton();
     });
@@ -75,7 +77,7 @@ describe('Tree View Component', () => {
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
 
         await uploadActions.deleteFileOrFolder(treeFolder.entry.id);
         await uploadActions.deleteFileOrFolder(secondTreeFolder.entry.id);

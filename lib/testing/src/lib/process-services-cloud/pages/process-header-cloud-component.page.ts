@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessHeaderCloudPage {
 
-    idField = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
-    nameField = element.all(by.css('[data-automation-id="card-textitem-value-name"]')).first();
-    statusField = element(by.css('[data-automation-id="card-textitem-value-status"]'));
-    initiatorField = element(by.css('[data-automation-id="card-textitem-value-initiator"]'));
-    startDateField = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
-    lastModifiedField = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
-    parentIdField = element(by.css('[data-automation-id="card-textitem-value-parentId"]'));
-    businessKeyField = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
+    idField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
+    nameField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-name"]')).first();
+    statusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
+    initiatorField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-initiator"]'));
+    startDateField: ElementFinder = element.all(by.css('span[data-automation-id*="startDate"] span')).first();
+    lastModifiedField: ElementFinder = element.all(by.css('span[data-automation-id*="lastModified"] span')).first();
+    parentIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-parentId"]'));
+    businessKeyField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
 
     async getId(): Promise<string> {
         return BrowserActions.getInputValue(this.idField);

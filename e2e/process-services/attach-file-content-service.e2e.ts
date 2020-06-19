@@ -16,45 +16,42 @@
  */
 
 import {
-    ApiService,
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     ExternalNodeSelectorDialogPage,
-    IntegrationService, LocalStorageUtil,
-    LoginSSOPage,
-    UploadActions, UserModel,
+    IntegrationService,
+    LoginPage,
+    UploadActions,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
+import { User } from '../models/APS/user';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach File - Content service', () => {
+    this.alfrescoJsApi = new AlfrescoApi({
+        provider: 'ALL',
+        hostEcm: browser.params.testConfig.adf_acs.host,
+        hostBpm: browser.params.testConfig.adf_aps.host
+    });
+    this.alfrescoJsApiExternal = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: browser.params.testConfig.adf_external_acs.host
+    });
 
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const externalNodeSelector = new ExternalNodeSelectorDialogPage();
 
-    const apiServiceExternal = new ApiService({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_external_acs.host
-    });
-    const usersActionsExternal = new UsersActions(apiServiceExternal);
-
-    const apiService = new ApiService({ provider: 'ALL'});
-    const integrationService = new IntegrationService(apiService);
-    const applicationService = new ApplicationsUtil(apiService);
-    const uploadActions = new UploadActions(apiService);
-    const usersActions = new UsersActions(apiService);
-
-    const { email, password } = browser.params.testConfig.admin;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP;
+    const { adminEmail, adminPassword } = browser.params.testConfig.adf;
 
     const pdfFileOne = {
         name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -68,32 +65,36 @@ describe('Attach File - Content service', () => {
 
     const externalFile = 'Project Overview.ppt';
     const csIntegrations = ['adf dev', 'adf master'];
-    let user: UserModel;
+    let user: User;
 
     beforeAll(async () => {
-        await LocalStorageUtil.setStorageItem('providers', 'ALL');
+        const integrationService = new IntegrationService(this.alfrescoJsApi);
+        const applicationService = new ApplicationsUtil(this.alfrescoJsApi);
+        const uploadActions = new UploadActions(this.alfrescoJsApi);
+        const users = new UsersActions();
 
-        await apiService.getInstance().login(email, password);
-        user = await usersActions.createUser();
+        await this.alfrescoJsApi.login(adminEmail, adminPassword);
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        const acsUser = { ...user, id: user.email }; delete acsUser.type; delete acsUser.tenantId;
+        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await this.alfrescoJsApiExternal.login(adminEmail, adminPassword);
+        await this.alfrescoJsApiExternal.core.peopleApi.addPerson(acsUser);
 
-        await apiServiceExternal.login(email, password);
-        await usersActionsExternal.createUser(user);
-
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.ecmHost });
+        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.adf_acs.host });
         await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
 
-        await apiService.getInstance().login(user.email, user.password);
+        await this.alfrescoJsApi.login(user.email, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
     });
 
     afterAll(async () => {
-        await apiService.getInstance().login(email, password);
-        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await this.alfrescoJsApi.login(adminEmail, adminPassword);
+        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
     beforeEach( async () => {
-        await loginPage.login(user.email, user.password);
+        await loginPage.loginToAllUsingUserModel(user);
     });
 
     afterEach( async () => {
@@ -170,6 +171,9 @@ describe('Attach File - Content service', () => {
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
+
+        await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
+        await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();

@@ -38,8 +38,6 @@ import { TaskListComponent } from './components/task-list.component';
 import { TaskStandaloneComponent } from './components/task-standalone.component';
 import { AttachFormComponent } from './components/attach-form.component';
 import { FormModule } from '../form/form.module';
-import { ClaimTaskDirective } from './components/task-form/claim-task.directive';
-import { UnclaimTaskDirective } from './components/task-form/unclaim-task.directive';
 
 @NgModule({
     imports: [
@@ -65,9 +63,7 @@ import { UnclaimTaskDirective } from './components/task-form/unclaim-task.direct
         TaskHeaderComponent,
         StartTaskComponent,
         TaskStandaloneComponent,
-        AttachFormComponent,
-        ClaimTaskDirective,
-        UnclaimTaskDirective
+        AttachFormComponent
     ],
     exports: [
         NoTaskDetailsTemplateDirective,
@@ -80,9 +76,7 @@ import { UnclaimTaskDirective } from './components/task-form/unclaim-task.direct
         TaskHeaderComponent,
         StartTaskComponent,
         TaskStandaloneComponent,
-        AttachFormComponent,
-        ClaimTaskDirective,
-        UnclaimTaskDirective
+        AttachFormComponent
     ]
 })
 export class TaskListModule {

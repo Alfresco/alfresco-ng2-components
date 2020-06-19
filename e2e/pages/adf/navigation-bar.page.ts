@@ -22,22 +22,22 @@ import { ProcessServicesPage } from './process-services/process-services.page';
 
 export class NavigationBarPage {
 
-    linkListContainer = element(by.css('.app-sidenav-linklist'));
-    linkMenuChildrenContainer = element(by.css('.nestedMenu'));
+    linkListContainer: ElementFinder = element(by.css('.app-sidenav-linklist'));
+    linkMenuChildrenContainer: ElementFinder = element(by.css('.nestedMenu'));
     dataTableNestedButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Datatable"]'));
     dataTableCopyContentButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Copy Content"]'));
     dataTableDragAndDropButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Drag and Drop"]'));
     processServicesNestedButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="App"]'));
     processServicesCloudHomeButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Home"]'));
-    themeButton = element(by.css('button[data-automation-id="theme menu"]'));
-    themeMenuContent = element(by.css('div[class*="mat-menu-panel"]'));
-    languageMenuButton = element(by.css('button[data-automation-id="language-menu-button"]'));
-    appTitle = element(by.css('.adf-app-title'));
-    menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
+    themeButton: ElementFinder = element(by.css('button[data-automation-id="theme menu"]'));
+    themeMenuContent: ElementFinder = element(by.css('div[class*="mat-menu-panel"]'));
+    languageMenuButton: ElementFinder = element(by.css('button[data-automation-id="language-menu-button"]'));
+    appTitle: ElementFinder = element(by.css('.adf-app-title'));
+    menuButton: ElementFinder = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
 
-    async clickNavigationBarItem(title: string): Promise<void> {
+    async clickNavigationBarItem(title): Promise<void> {
         const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(menu);
@@ -185,7 +185,7 @@ export class NavigationBarPage {
     }
 
     async clickOnSpecificThemeButton(themeName): Promise<void> {
-        const themeElement = element(by.css(`button[data-automation-id="${themeName}"]`));
+        const themeElement: ElementFinder = element(by.css(`button[data-automation-id="${themeName}"]`));
         await BrowserActions.click(themeElement);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
@@ -201,7 +201,7 @@ export class NavigationBarPage {
     }
 
     async chooseLanguage(language): Promise<void> {
-        const buttonLanguage = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
+        const buttonLanguage: ElementFinder = element(by.xpath(`//adf-language-menu//button[contains(text(), '${language}')]`));
         await BrowserActions.click(buttonLanguage);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
@@ -214,13 +214,13 @@ export class NavigationBarPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.menuButton);
     }
 
-    async checkToolbarColor(color: string): Promise<void> {
-        const toolbarColor = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
+    async checkToolbarColor(color): Promise<void> {
+        const toolbarColor: ElementFinder = element(by.css(`mat-toolbar[class*="mat-${color}"]`));
         await BrowserVisibility.waitUntilElementIsVisible(toolbarColor);
     }
 
-    async clickAppLogo(logoTitle: string): Promise<void> {
-        const appLogo = element(by.css('a[title="' + logoTitle + '"]'));
+    async clickAppLogo(logoTitle): Promise<void> {
+        const appLogo: ElementFinder = element(by.css('a[title="' + logoTitle + '"]'));
         await BrowserActions.click(appLogo);
     }
 
@@ -228,12 +228,12 @@ export class NavigationBarPage {
         await BrowserActions.click(this.appTitle);
     }
 
-    async checkLogoTooltip(logoTooltipTitle: string): Promise<void> {
-        const logoTooltip = element(by.css('a[title="' + logoTooltipTitle + '"]'));
+    async checkLogoTooltip(logoTooltipTitle): Promise<void> {
+        const logoTooltip: ElementFinder = element(by.css('a[title="' + logoTooltipTitle + '"]'));
         await BrowserVisibility.waitUntilElementIsVisible(logoTooltip);
     }
 
-    async openViewer(nodeId: string): Promise<void> {
+    async openViewer(nodeId): Promise<void> {
         await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/files(overlay:files/${nodeId}/view`);
     }
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, ApplicationsUtil, StartProcessPage } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -23,7 +23,7 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
 
-import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
+import { AlfrescoApiCompatibility as AlfrescoApi, UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
@@ -31,9 +31,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Process Filters Test', () => {
 
-    const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
-
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processListPage = new ProcessListPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
@@ -42,12 +40,9 @@ describe('Process Filters Test', () => {
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processDetailsPage = new ProcessDetailsPage();
-
-    const apiService = new ApiService();
-    const usersActions = new UsersActions(apiService);
-    const applicationsService = new ApplicationsUtil(apiService);
-
     let appModel, user;
+
+    const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
     const processTitle = {
         running: 'Test_running',
@@ -63,12 +58,19 @@ describe('Process Filters Test', () => {
     };
 
     beforeAll(async () => {
+        const users = new UsersActions();
 
-        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-        user = await usersActions.createUser();
-        await apiService.getInstance().login(user.email, user.password);
+        this.alfrescoJsApi = new AlfrescoApi({
+            provider: 'BPM',
+            hostBpm: browser.params.testConfig.adf_aps.host
+        });
+
+        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        user = await users.createTenantAndUser(this.alfrescoJsApi);
+        await this.alfrescoJsApi.login(user.email, user.password);
+        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        await loginPage.login(user.email, user.password);
+        await loginPage.loginToProcessServicesUsingUserModel(user);
     });
 
     beforeEach(async () => {
@@ -79,13 +81,13 @@ describe('Process Filters Test', () => {
     it('[C260387] Should the running process be displayed when clicking on Running filter', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 
-        await startProcessPage.selectFromProcessDropdown(app.process_title);
         await startProcessPage.enterProcessName(processTitle.completed);
+        await startProcessPage.selectFromProcessDropdown(app.process_title);
         await startProcessPage.clickFormStartProcessButton();
 
         await processDetailsPage.clickCancelProcessButton();
@@ -97,8 +99,8 @@ describe('Process Filters Test', () => {
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
 
-        await startProcessPage.selectFromProcessDropdown(app.process_title);
         await startProcessPage.enterProcessName(processTitle.running);
+        await startProcessPage.selectFromProcessDropdown(app.process_title);
         await startProcessPage.clickFormStartProcessButton();
 
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
@@ -110,7 +112,7 @@ describe('Process Filters Test', () => {
     it('[C280063] Should both the new created process and a completed one to be displayed when clicking on All filter', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processFiltersPage.clickAllFilterButton();
         await processFiltersPage.checkFilterIsHighlighted(processFilter.all);
@@ -122,7 +124,7 @@ describe('Process Filters Test', () => {
     it('[C280064] Should the completed process be displayed when clicking on Completed filter', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processFiltersPage.clickCompletedFilterButton();
         await processFiltersPage.checkFilterIsHighlighted(processFilter.completed);
@@ -131,25 +133,26 @@ describe('Process Filters Test', () => {
     });
 
     it('[C280407] Should be able to access the filters with URL', async () => {
+
         const defaultFiltersNumber = 3;
         let deployedApp, processFilterUrl;
 
-        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await this.alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
 
         processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
-        const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
+        const taskAppFilters = await this.alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await expect(taskAppFilters.size).toBe(defaultFiltersNumber);
-        for (const filter of taskAppFilters.data) {
+        for (const filter of taskAppFilters) {
             await BrowserActions.getUrl(processFilterUrl + filter.id);
-            await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+            await processListPage.checkProcessListIsDisplayed();
             await processFiltersPage.checkFilterIsHighlighted(filter.name);
         }
     });
@@ -157,7 +160,7 @@ describe('Process Filters Test', () => {
     it('[C260463] Should Cancel process be displayed in Completed process filters', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
@@ -178,13 +181,13 @@ describe('Process Filters Test', () => {
     it('[C213262] Default process filters', async () => {
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.enterProcessName(processTitle.one);
         await startProcessPage.clickFormStartProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processFiltersPage.checkFilterIsHighlighted(processFilter.running);
@@ -195,7 +198,7 @@ describe('Process Filters Test', () => {
         await processFiltersPage.clickNewProcessDropdown();
         await startProcessPage.enterProcessName(processTitle.two);
         await startProcessPage.clickFormStartProcessButton();
-        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
+        await processListPage.checkProcessListIsDisplayed();
 
         await processListDemoPage.checkProcessIsDisplayed(processTitle.one);
         await processListDemoPage.checkProcessIsDisplayed(processTitle.two);
@@ -215,8 +218,8 @@ describe('Process Filters Test', () => {
     });
 
     it('[C260384] Edit default filter', async () => {
-        const runningFilter =  (await getFilter()).find(filter => filter.name === 'Running');
-        await apiService.getInstance().activiti.userFiltersApi
+        const runningFilter =  (await getFilter(this.alfrescoJsApi)).find(filter => filter.name === 'Running');
+        await this.alfrescoJsApi.activiti.userFiltersApi
             .updateUserProcessInstanceFilter(runningFilter.id, { ...runningFilter, name: 'Edited Running' });
 
         await processServicesPage.goToApp(app.title);
@@ -226,18 +229,18 @@ describe('Process Filters Test', () => {
     });
 
     it('[C260385] Delete default filter', async () => {
-        const allFilter =  (await getFilter()).find(filter => filter.name === 'All');
-        await apiService.getInstance().activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
+        const allFilter =  (await getFilter(this.alfrescoJsApi)).find(filter => filter.name === 'All');
+        await this.alfrescoJsApi.activiti.userFiltersApi.deleteUserProcessInstanceFilter(allFilter.id);
 
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
         await processFiltersPage.checkFilterIsNotDisplayed('All');
     });
 
-    async function getFilter(): Promise<UserProcessInstanceFilterRepresentation[]> {
-        const apps = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+    async function getFilter(alfrescoJsApi): Promise<UserProcessInstanceFilterRepresentation[]> {
+        const apps = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
         const { id: appId = 0 } = apps.data.find((application) => application.name === appModel.name);
-        const filters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
+        const filters = await alfrescoJsApi.activiti.userFiltersApi.getUserProcessInstanceFilters({ appId });
         return filters.data;
     }
 

@@ -24,5 +24,3 @@ export * from './lib/people/public-api';
 export * from './lib/form/public-api';
 export * from './lib/services/public-api';
 export * from './lib/types';
-export * from './lib/pipes/process-name-cloud.pipe';
-export * from './lib/pipes/process-services-cloud-pipe.module';
