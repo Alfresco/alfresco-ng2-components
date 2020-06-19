@@ -42,7 +42,7 @@ Displays the version history of a node with the ability to upload a new version.
 | uploadCancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when an cancelling during upload. |
 | uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when an error occurs during upload. |
 | uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a file is uploaded successfully. |
-| viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version. |
+| viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version. Availability ACS > 7.0.x |
 
 ## Details
 

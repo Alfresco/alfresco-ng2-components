@@ -387,6 +387,7 @@ describe('ViewerComponent', () => {
         component.displayName = null;
         component.blobFile = null;
         component.showViewer = true;
+        component.versionId = null;
 
         component.nodeId = 'id1';
         fixture.detectChanges();
