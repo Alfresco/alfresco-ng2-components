@@ -20,7 +20,7 @@ import {
     Input, OnChanges, Output, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
+import { SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
@@ -43,13 +43,6 @@ import { Version } from '@alfresco/js-api/src/api/content-rest-api/model/version
     encapsulation: ViewEncapsulation.None
 })
 export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
-
-    constructor(private apiService: AlfrescoApiService,
-                private viewUtils: ViewUtilService,
-                private logService: LogService,
-                private extensionService: AppExtensionService,
-                private el: ElementRef) {
-    }
 
     @ContentChild(ViewerToolbarComponent)
     toolbar: ViewerToolbarComponent;
@@ -251,6 +244,13 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/mp3', 'audio/ogg', 'audio/wav']
     };
 
+    constructor(private apiService: AlfrescoApiService,
+                private viewUtils: ViewUtilService,
+                private logService: LogService,
+                private extensionService: AppExtensionService,
+                private el: ElementRef) {
+    }
+
     isSourceDefined(): boolean {
         return (this.urlFile || this.blobFile || this.nodeId || this.sharedLinkId) ? true : false;
     }
@@ -260,6 +260,16 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.apiService.nodeUpdated.pipe(
                 filter((node) => node && node.id === this.nodeId && node.name !== this.fileName)
             ).subscribe((node) => this.onNodeUpdated(node))
+        );
+        this.subscriptions.push(
+            this.viewUtils.viewerTypeChange.subscribe((type: string) => {
+                this.viewerType = type;
+            })
+        );
+        this.subscriptions.push(
+            this.viewUtils.urlFileContentChange.subscribe((content: string) => {
+                this.urlFileContent = content;
+            })
         );
 
         this.loadExtensions();
@@ -393,7 +403,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (this.viewerType === 'unknown') {
-            setupNode = this.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
+            setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
         }
 
         this.extensionChange.emit(this.extension);
@@ -621,26 +631,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    private async displayNodeRendition(nodeId: string, versionId?: string) {
-        try {
-            const rendition = await this.resolveRendition(nodeId, 'pdf', versionId);
-            if (rendition) {
-                const renditionId = rendition.entry.id;
-
-                if (renditionId === 'pdf') {
-                    this.viewerType = 'pdf';
-                } else if (renditionId === 'imgpreview') {
-                    this.viewerType = 'image';
-                }
-
-                this.urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
-                    this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
-            }
-        } catch (err) {
-            this.logService.error(err);
-        }
-    }
-
     private async displaySharedLinkRendition(sharedId: string) {
         try {
             const rendition: RenditionEntry = await this.apiService.renditionsApi.getSharedLinkRendition(sharedId, 'pdf');
@@ -659,91 +649,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             } catch (error) {
                 this.logService.error(error);
             }
-        }
-    }
-
-    private async resolveRendition(nodeId: string, renditionId: string, versionId?: string): Promise<RenditionEntry> {
-        renditionId = renditionId.toLowerCase();
-
-        const supportedRendition: RenditionPaging = versionId ? await this.apiService.versionsApi.listVersionRenditions(nodeId, versionId) :
-            await this.apiService.renditionsApi.getRenditions(nodeId);
-
-        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        if (!rendition) {
-            renditionId = 'imgpreview';
-            rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
-        }
-
-        if (rendition) {
-            const status: string = rendition.entry.status.toString();
-
-            if (status === 'NOT_CREATED') {
-                try {
-                    if (versionId) {
-                        await this.apiService.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId}).then(() => {
-                            this.viewerType = 'in_creation';
-                        });
-                    } else {
-                        await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId}).then(() => {
-                            this.viewerType = 'in_creation';
-                        });
-                    }
-                    rendition = await this.waitRendition(nodeId, renditionId, versionId);
-                } catch (err) {
-                    this.logService.error(err);
-                }
-            }
-        }
-
-        return rendition;
-    }
-
-    private async waitRendition(nodeId: string, renditionId: string, versionId?: string): Promise<RenditionEntry> {
-        let currentRetry: number = 0;
-        return new Promise<RenditionEntry>((resolve, reject) => {
-            const intervalId = setInterval(() => {
-                currentRetry++;
-                if (this.maxRetries >= currentRetry) {
-                    if (!this.versionId) {
-                        this.apiService.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
-                            this.handleRendition(rendition, nodeId, renditionId, versionId);
-                            clearInterval(intervalId);
-                            return resolve(rendition);
-                        }, () => {
-                            this.viewerType = 'error_in_creation';
-                            return reject();
-                        });
-                    } else {
-                        this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
-                            this.handleRendition(rendition, nodeId, renditionId);
-                            clearInterval(intervalId);
-                            return resolve(rendition);
-                        }, () => {
-                            this.viewerType = 'error_in_creation';
-                            return reject();
-                        });
-                    }
-                } else {
-                    this.isLoading = false;
-                    this.viewerType = 'error_in_creation';
-                    clearInterval(intervalId);
-                }
-            }, this.TRY_TIMEOUT);
-        });
-    }
-
-    private async handleRendition(rendition: RenditionEntry, nodeId: string, renditionId: string, versionId?: string) {
-        const status: string = rendition.entry.status.toString();
-        if (status === 'CREATED') {
-
-            if (renditionId === 'pdf') {
-                this.viewerType = 'pdf';
-            } else if (renditionId === 'imgpreview') {
-                this.viewerType = 'image';
-            }
-
-            this.urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
-                this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
         }
     }
 
