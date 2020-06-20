@@ -93,7 +93,7 @@ export class DataTableCellComponent implements OnInit, OnDestroy {
                 if (this.row) {
                     if (this.row['node'].entry.id === node.id) {
                         this.row['node'].entry = node;
-                        this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source[key], node);
+                        this.row['cache'][this.column.key] = this.column.key.split('.').reduce((source, key) => source ? source[key] : '', node);
                         this.updateValue();
                     }
                 }
