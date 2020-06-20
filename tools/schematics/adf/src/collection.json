@@ -1,9 +1,0 @@
-{
-  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "schematics": {
-    "docpage": {
-      "description": "Creates a new documentation file for an ADF component.",
-      "factory": "./adf/index#docpage"
-    }
-  }
-}
