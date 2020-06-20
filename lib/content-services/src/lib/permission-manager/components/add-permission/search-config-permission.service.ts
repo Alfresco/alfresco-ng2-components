@@ -17,15 +17,26 @@
 
 import { QueryBody } from '@alfresco/js-api';
 import { SearchConfigurationInterface } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
+import { Injectable, Optional, Inject, InjectionToken } from '@angular/core';
+
+export const SEARCH_QUERY_TOKEN = new InjectionToken<QueryProvider>('Alfresco Search Query Token');
+export interface QueryProvider {
+    query: string;
+}
 
 @Injectable()
 export class SearchPermissionConfigurationService implements SearchConfigurationInterface {
 
+    constructor(
+        @Optional()
+        @Inject(SEARCH_QUERY_TOKEN)
+        private queryProvider: QueryProvider) {
+    }
+
     public generateQueryBody(searchTerm: string, maxResults: number, skipCount: number): QueryBody {
         const defaultQueryBody: QueryBody = {
             query: {
-                query: searchTerm ? `authorityName:*${searchTerm}* OR userName:*${searchTerm}*` : searchTerm
+                query: this.getQuery(searchTerm)
             },
             include: ['properties', 'aspectNames'],
             paging: {
@@ -38,5 +49,16 @@ export class SearchPermissionConfigurationService implements SearchConfiguration
         };
 
         return defaultQueryBody;
+    }
+
+    private getQuery(searchTerm: string) {
+        let query: string;
+        if (this.queryProvider && this.queryProvider.query) {
+            query = this.queryProvider.query.replace(
+                new RegExp(/\${([^}]+)}/g), searchTerm);
+        } else {
+            query = `authorityName:*${searchTerm}* OR userName:*${searchTerm}*`;
+        }
+        return query;
     }
 }
