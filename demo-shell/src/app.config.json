@@ -348,7 +348,7 @@
       },
       {
         "id": "contentSizeRange",
-        "name": "Content Size (range)",
+        "name": "Content Size",
         "enabled": true,
         "component": {
           "selector": "number-range",
