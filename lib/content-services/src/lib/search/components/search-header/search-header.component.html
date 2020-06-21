@@ -1,6 +1,7 @@
 <div *ngIf="isFilterServiceActive">
     <div *ngIf="!!category" class="adf-filter">
         <button mat-icon-button [matMenuTriggerFor]="filter"
+            id="filter-menu-button"
             #menuTrigger="matMenuTrigger"
             (click)="onMenuButtonClick($event)"
             class="adf-filter-button"
@@ -22,9 +23,13 @@
                 </adf-search-widget-container>
             </div>
             <mat-dialog-actions class="adf-filter-actions">
-                <button mat-button (click)="onClearButtonClick($event)">{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
+                <button mat-button id="clear-filter-button"
+                    (click)="onClearButtonClick($event)">{{ 'SEARCH.SEARCH_HEADER.CLEAR' | translate | uppercase }}
                 </button>
-                <button mat-button color="primary" class="adf-filter-apply-button" (click)="onApplyButtonClick()">{{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
+                <button mat-button color="primary"
+                        id="apply-filter-button"
+                        class="adf-filter-apply-button" (click)="onApplyButtonClick()">
+                        {{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
                 </button>
             </mat-dialog-actions>
         </mat-menu>

@@ -79,13 +79,11 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     setCurrentRootFolderId(currentFolderId: string, previousFolderId: string) {
         if (this.customSources.includes(currentFolderId)) {
             if (currentFolderId !== this.currentParentFolderID) {
-                this.currentParentFolderID = currentFolderId;
                 this.nodeApiService.getNode(currentFolderId).subscribe((nodeEntity: MinimalNode) => {
                     this.updateCurrentParentFilter(nodeEntity.id, previousFolderId);
                 });
             }
         } else {
-            this.currentParentFolderID = currentFolderId;
             this.updateCurrentParentFilter(currentFolderId, previousFolderId);
         }
     }
@@ -94,18 +92,21 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
             filterQueries.query.includes(currentFolderId)
         );
+
         if (!alreadyAddedFilter) {
-            this.removeOldFolderFiltering(previousFolderId);
+            this.removeOldFolderFiltering(previousFolderId, this.currentParentFolderID);
+            this.currentParentFolderID = currentFolderId;
             this.filterQueries.push({
                 query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
             });
         }
     }
 
-    private removeOldFolderFiltering(previousFolderId: string) {
-        if (previousFolderId) {
+    private removeOldFolderFiltering(previousFolderId: string, actualSetFolderId: string) {
+        if (previousFolderId || actualSetFolderId) {
+            const folderIdToRetrieve = previousFolderId ? previousFolderId : actualSetFolderId;
             const oldFilterIndex = this.filterQueries.findIndex(filterQueries =>
-                filterQueries.query.includes(previousFolderId)
+                filterQueries.query.includes(folderIdToRetrieve)
             );
             if (oldFilterIndex) {
                 this.filterQueries.splice(oldFilterIndex, 1);

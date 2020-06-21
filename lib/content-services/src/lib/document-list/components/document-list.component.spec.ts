@@ -25,7 +25,8 @@ import {
     DataColumn,
     DataTableComponent,
     DataTableModule,
-    ObjectDataTableAdapter
+    ObjectDataTableAdapter,
+    ShowHeaderMode
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import {
@@ -33,8 +34,7 @@ import {
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
-    fakeGetSiteMembership,
-    fakeNodePaging
+    fakeGetSiteMembership
 } from '../../mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
@@ -331,7 +331,7 @@ describe('DocumentList', () => {
     });
 
     it('should hide the header if showHeader is false', () => {
-        documentList.showHeader = false;
+        documentList.showHeader = ShowHeaderMode.Data;
 
         fixture.detectChanges();
 
@@ -339,7 +339,7 @@ describe('DocumentList', () => {
     });
 
     it('should show the header if showHeader is true', () => {
-        documentList.showHeader = true;
+        documentList.showHeader = ShowHeaderMode.Data;
 
         fixture.detectChanges();
 
@@ -1486,15 +1486,6 @@ describe('DocumentList', () => {
             rootFolderId: 'folder-id',
             where: undefined
         }, undefined);
-    });
-
-    it('should update the displayed nodes when a new node paging comes from the header filters', () => {
-        const mockNodePaging: NodePaging = <NodePaging> fakeNodePaging;
-        documentList.filterUpdate.emit(mockNodePaging);
-
-        fixture.detectChanges();
-
-        expect(documentList.node).toBe(mockNodePaging);
     });
 });
 
