@@ -4,21 +4,12 @@ Added: v3.9.0
 Status: Active
 Last reviewed: 2020-19-06
 ---
+
 # [SearchHeader component](../../../lib/content-services/src/lib/search/components/search-header/search-header.component.ts "Defined in search-header.component.ts")
 
 Displays a button opening a menu designed to filter a document list.
 
 ![SearchHeader demo](../../docassets/images/search-header-demo.png)
-
-## Contents
-
--   [Basic usage](#basic-usage)
--   [Class members](#class-members)
-    -   [Properties](#properties)
-    -   [Events](#events)
--   [Details](#details)
-    -   [example](#example)
--   [See also](#see-also)
 
 ## Basic usage
 
@@ -45,9 +36,10 @@ Displays a button opening a menu designed to filter a document list.
 **app.config.json**
 
 ```json
+
 ```
 
-This component is designed to be used as transcluded inside the document list component. With the good configurations it will allow the user to filter the data displayed by that component.
+This component is designed to be used as transcluded inside the [document list component](../../content-services/components/document-list.component.md). With the good configurations it will allow the user to filter the data displayed by that component.
 
 ## Class members
 
@@ -55,22 +47,17 @@ This component is designed to be used as transcluded inside the document list co
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| col | `DataColumn` | | The column the filter will be applied on. |
-| currentFolderNodeId | `string` | | The id of the current folder of the document list. |
-| maxItems | `number` | | Pagination parameter coming from the document list. |
-| skipCount | `number` | | An other pagination parameter coming from the document list. |
-| widgetContainer | `SearchWidgetContainerComponent` | | View of the child facet widget generated inside the menu. Used to control that widget through the apply and clear buttons. |
-| isActive | `boolean` | | A boolean telling if the current data displayed in the document list is affected by that filter. |
-| category | `SearchCategory` | | The category of the filter. It contains the information regarding the way the filter is filtering the data. This is get with the column information and the configuration of the search-header inside the config file |
-| isFilterServiceActive | `boolean` | | Boolean to check if the SearchHeaderQueryBuilderService is active |
+| col | [`DataColumn`](../../../lib/core/datatable/data/data-column.model.ts) |  | The column the filter will be applied on. |
+| currentFolderNodeId | `string` |  | The id of the current folder of the document list. |
+| maxItems | `number` |  | Maximum number of search results to show in a page. |
+| skipCount | `number` |  | The offset of the start of the page within the results list. |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| update | `EventEmitter<NodePaging>` | Emitted when the result of the filter is received from the API, should be passed to the `node` member of the document list. |
-| clear | `EventEmitter<any>` | Emitted when the last of all the filters is cleared. This should be used to trigger a `reload()` of the document list with no `node` member. |
-
+| clear | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the last of all the filters is cleared. |
+| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the result of the filter is received from the API. |
 
 ## See also
 

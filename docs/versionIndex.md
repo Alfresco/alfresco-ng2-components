@@ -12,6 +12,8 @@ backend services have been tested with each released version of ADF.
 
 ## Versions
 
+-   [v3.9.0](#v390)
+-   [v3.8.0](#v380)
 -   [v3.7.0](#v370)
 -   [v3.6.0](#v360)
 -   [v3.5.0](#v350)
@@ -29,7 +31,29 @@ backend services have been tested with each released version of ADF.
 -   [v2.1.0](#v210)
 -   [v2.0.0](#v200)
 
-## v3.6.0
+## v3.8.0
+
+<!--v390 start-->
+
+-   [Claim task cloud directive](process-services-cloud/directives/claim-task-cloud.directive.md)
+-   [Claim task directive](process-services/directives/claim-task.directive.md)
+-   [Form custom outcome component](process-services/components/form-custom-outcome.component.md)
+-   [Process name cloud pipe](process-services-cloud/pipes/process-name-cloud.pipe.md)
+-   [Process name pipe](process-services/pipes/process-name.pipe.md)
+-   [Search header component](content-services/components/search-header.component.md)
+-   [Unclaim task cloud directive](process-services-cloud/directives/unclaim-task-cloud.directive.md)
+-   [Unclaim task directive](process-services/directives/unclaim-task.directive.md)
+-   [Version comparison component](content-services/components/version-comparison.component.md)
+
+<!--v390 end-->
+
+## v3.8.0
+
+<!--v380 start-->
+
+<!--v380 end-->
+
+## v3.7.0
 
 **Release:** 2020-02-03<br/>
 
@@ -112,11 +136,9 @@ backend services have been tested with each released version of ADF.
 <!--v310 start-->
 
 -   [Auth guard sso role service](core/services/auth-guard-sso-role.service.md)
--   [Claim task directive](process-services-cloud/directives/claim-task.directive.md)
 -   [Complete task directive](process-services-cloud/directives/complete-task.directive.md)
 -   [Preview extension component](extensions/components/preview-extension.component.md)
 -   [Task cloud service](process-services-cloud/services/task-cloud.service.md)
--   [Unclaim task directive](process-services-cloud/directives/unclaim-task.directive.md)
 
 <!--v310 end-->
 

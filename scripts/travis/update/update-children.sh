@@ -8,7 +8,7 @@ if ([ "$TRAVIS_BRANCH" = "master" ]); then
    JS_VERSION=$(npm view @alfresco/js-api version)
 else
    VERSION=$(npm view @alfresco/adf-core@beta version)
-   JS_VERSION=$(npm view @alfresco/js-api@beta version)
+   JS_VERSION=$(npm view @alfresco/js-api@alpha version)
 fi;
 
 echo "Update Generator"

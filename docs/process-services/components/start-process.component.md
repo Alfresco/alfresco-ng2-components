@@ -22,6 +22,8 @@ Starts a process.
     -   [Starting a process not included in an app](#starting-a-process-not-included-in-an-app)
     -   [Custom data example](#custom-data-example)
     -   [Attaching a File to the start form of the process](#attaching-a-file-to-the-start-form-of-the-process)
+    -   [Starting a process with a selected application](#starting-a-process-with-a-selected-application)
+    -   [Error handling](#error-handling)
 -   [See also](#see-also)
 
 ## Basic Usage
@@ -42,8 +44,8 @@ Starts a process.
 | name | `string` | "" | (optional) Name to assign to the current process. |
 | processDefinitionName | `string` |  | (optional) Definition name of the process to start. |
 | processFilterSelector | `boolean` | true | (optional) Parameter to enable selection of process when filtering. |
+| showSelectApplicationDropdown | `boolean` | false | (optional) Hide or show application selection dropdown. |
 | showSelectProcessDropdown | `boolean` | true | Hide or show the process selection dropdown. |
-| showSelectApplicationDropdown | `boolean` | false | application selection dropdown. |
 | title | `string` |  | (optional) Define the header of the component. |
 | values | [`FormValues`](../../../lib/core/form/components/widgets/core/form-values.ts) |  | Parameter to pass form field values in the start form if one is associated. |
 | variables | [`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]` |  | Variables in the input to the process [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md). |
@@ -52,8 +54,9 @@ Starts a process.
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process is canceled. |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when an error occurs. |
+| applicationSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`AppDefinitionRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>` | Emitted when application selection changes. |
+| cancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<void>` | Emitted when the process is canceled. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
 | processDefinitionSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`>` | Emitted when process definition selection changes. |
 | start | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` | Emitted when the process starts. |
 
@@ -193,7 +196,6 @@ Now you can start process based on selected application from the dropdown. The p
 You can use the `showSelectApplicationDropdown` property to Hide or show application drop down.
 
 ![Start process with selected application](../../docassets/images/start-process-with-selected-application.png)
-
 
 ### Error handling
 

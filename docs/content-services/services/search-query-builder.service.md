@@ -51,6 +51,14 @@ Stores information from all the custom search and faceted search widgets, compil
     Gets the buckets currently added to a field
     -   _field:_ `string`  - The target fields
     -   **Returns** [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)`[]` - Bucket array
+-   **isFilterServiceActive**(): `boolean`<br/>
+
+    -   **Returns** `boolean` - 
+
+-   **loadConfiguration**(): [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts)<br/>
+
+    -   **Returns** [`SearchConfiguration`](../../../lib/content-services/src/lib/search/search-configuration.interface.ts) - 
+
 -   **removeFilterQuery**(query: `string`)<br/>
     Removes an existing filter query.
     -   _query:_ `string`  - The query to remove
@@ -58,8 +66,8 @@ Stores information from all the custom search and faceted search widgets, compil
     Removes an existing bucket from a field.
     -   _field:_ [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
     -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to remove
--   **resetToDefaults**()<br/>
-    Resets the query to the defaults specified in the app config.
+-   **setUpConfiguration**()<br/>
+
 -   **update**()<br/>
     Builds the current query and triggers the `updated` event.
 

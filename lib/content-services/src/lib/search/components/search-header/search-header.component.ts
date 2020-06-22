@@ -32,21 +32,28 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
+
+    /** The column the filter will be applied on. */
     @Input()
     col: DataColumn;
 
+    /** The id of the current folder of the document list. */
     @Input()
     currentFolderNodeId: string;
 
+    /** Maximum number of search results to show in a page. */
     @Input()
     maxItems: number;
 
+    /** The offset of the start of the page within the results list. */
     @Input()
     skipCount: number;
 
+    /** Emitted when the result of the filter is received from the API. */
     @Output()
     update: EventEmitter<NodePaging> = new EventEmitter();
 
+    /** Emitted when the last of all the filters is cleared. */
     @Output()
     clear: EventEmitter<any> = new EventEmitter();
 

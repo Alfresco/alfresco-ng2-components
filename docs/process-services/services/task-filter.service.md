@@ -25,21 +25,25 @@ Manage Task Filters, which are pre-configured Task Instance queries.
     Creates and returns the default filters for a process app.
     -   _appId:_ `number`  - ID of the target app
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`[]>` - Array of default filters just created
--   **getCompletedTasksFilterInstance**(appId: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
+-   **getCompletedTasksFilterInstance**(appId: `number`, index?: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
     Creates and returns a filter for "Completed" task instances.
     -   _appId:_ `number`  - ID of the target app
+    -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) - The newly created filter
--   **getInvolvedTasksFilterInstance**(appId: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
+-   **getInvolvedTasksFilterInstance**(appId: `number`, index?: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
     Creates and returns a filter for "Involved" task instances.
     -   _appId:_ `number`  - ID of the target app
+    -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) - The newly created filter
--   **getMyTasksFilterInstance**(appId: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
+-   **getMyTasksFilterInstance**(appId: `number`, index?: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
     Creates and returns a filter for "My Tasks" task instances.
     -   _appId:_ `number`  - ID of the target app
+    -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) - The newly created filter
--   **getQueuedTasksFilterInstance**(appId: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
+-   **getQueuedTasksFilterInstance**(appId: `number`, index?: `number`): [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)<br/>
     Creates and returns a filter for "Queued Tasks" task instances.
     -   _appId:_ `number`  - ID of the target app
+    -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** [`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts) - The newly created filter
 -   **getTaskFilterById**(filterId: `number`, appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterRepresentationModel`](../../../lib/process-services/src/lib/task-list/models/filter.model.ts)`>`<br/>
     Gets a task filter by ID.

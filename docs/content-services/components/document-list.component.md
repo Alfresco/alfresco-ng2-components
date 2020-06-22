@@ -75,7 +75,7 @@ Displays the documents from a repository.
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showHeader | `ShowHeaderMode` | "data" | Indicate which is the desired behaviour for the header. Can have 3 values `always`, `never` and `data`. `data` won't display the header if the datatable is empty and will display it otherwise. |
+| showHeader | `string` |  | Toggles the header |
 | sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
 | sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
