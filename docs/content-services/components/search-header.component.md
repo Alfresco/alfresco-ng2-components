@@ -1,6 +1,6 @@
 ---
 Title: SearchHeader component
-Added: v8.0.0
+Added: v3.9.0
 Status: Active
 Last reviewed: 2020-19-06
 ---
