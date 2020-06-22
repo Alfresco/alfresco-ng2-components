@@ -47,7 +47,6 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
-import { ErrorModel, TaskActionFailedType } from '../../models/task-action-failed.model';
 
 describe('TaskFormComponent', () => {
     let component: TaskFormComponent;
@@ -59,7 +58,6 @@ describe('TaskFormComponent', () => {
     let element: HTMLElement;
     let authService: AuthenticationService;
     let getBpmLoggedUserSpy: jasmine.Spy;
-    let getTaskFormSpy: jasmine.Spy;
 
     setupTestBed({
         imports: [
@@ -79,7 +77,7 @@ describe('TaskFormComponent', () => {
 
         getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
         completeTaskSpy = spyOn(taskListService, 'completeTask').and.returnValue(of({}));
-        getTaskFormSpy = spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
+        spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
         authService = TestBed.get(AuthenticationService);
@@ -685,9 +683,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.error.subscribe((error: ErrorModel) => {
-                expect(error.type).toEqual(TaskActionFailedType.CLAIM_FAILED);
-                expect(error.error).toEqual(mockError);
+            component.error.subscribe((error: any) => {
+                expect(error).toEqual(mockError);
                 done();
             });
 
@@ -725,9 +722,8 @@ describe('TaskFormComponent', () => {
 
             component.taskId = 'mock-task-id';
 
-            component.error.subscribe((error: ErrorModel) => {
-                expect(error.type).toEqual(TaskActionFailedType.UNCLAIM_FAILED);
-                expect(error.error).toEqual(mockError);
+            component.error.subscribe((error: any) => {
+                expect(error).toEqual(mockError);
                 done();
             });
 

@@ -29,7 +29,6 @@ import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
-import { ErrorModel, TaskActionFailedType } from '../../models/task-action-failed.model';
 
 @Component({
   selector: 'adf-task-form',
@@ -112,14 +111,14 @@ export class TaskFormComponent implements OnInit {
 
   /** Emitted when an error occurs. */
   @Output()
-  error = new EventEmitter<ErrorModel>();
+  error = new EventEmitter<any>();
 
   /** Emitted when the "Cancel" button is clicked. */
   @Output()
   cancel = new EventEmitter<void>();
 
-   /** Emitted when the task is claimed. */
-   @Output()
+  /** Emitted when the task is claimed. */
+  @Output()
   taskClaimed = new EventEmitter<string>();
 
   /** Emitted when the task is unclaimed (ie, requeued).. */
@@ -201,14 +200,13 @@ export class TaskFormComponent implements OnInit {
   }
 
   onError(error: any) {
-    this.error.emit(<ErrorModel> { type: TaskActionFailedType.FORM_ACTION_FAILED, error: error });
+    this.error.emit(error);
   }
 
   onCompleteTask() {
     this.taskListService.completeTask(this.taskDetails.id).subscribe(
       () => this.completed.emit(),
-      (error) => this.error.emit(<ErrorModel> {
-        type: TaskActionFailedType.COMPLETED_FAILED, error: error }));
+      (error) => this.error.emit(error));
   }
 
   onCancel() {
@@ -321,7 +319,7 @@ export class TaskFormComponent implements OnInit {
   }
 
   onClaimTaskError(error: any) {
-    this.error.emit(<ErrorModel> { type: TaskActionFailedType.CLAIM_FAILED, error: error });
+    this.error.emit(error);
   }
 
   onUnclaimTask(taskId: string) {
@@ -329,6 +327,6 @@ export class TaskFormComponent implements OnInit {
   }
 
   onUnclaimTaskError(error: any) {
-    this.error.emit(<ErrorModel> { type: TaskActionFailedType.UNCLAIM_FAILED, error: error });
+    this.error.emit(error);
   }
 }
