@@ -20,6 +20,7 @@ import { AlfrescoApiService } from './alfresco-api.service';
 import { filter } from 'rxjs/operators';
 import { DiscoveryApiService } from './discovery-api.service';
 import { VersionModel, EcmProductVersionModel } from '../models/product-version.model';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,7 @@ export class VersionCompatibilityService {
 
     constructor(
         private alfrescoApiService: AlfrescoApiService,
+        private authService: AuthenticationService,
         private discoveryApiService: DiscoveryApiService
     ) {
         this.alfrescoApiService.alfrescoApiInitialized
@@ -37,10 +39,12 @@ export class VersionCompatibilityService {
     }
 
     private initCompatibilityVersion() {
-        this.discoveryApiService.getEcmProductInfo().toPromise().then(
-            (acsInfo: EcmProductVersionModel) => {
-                this.acsVersion = acsInfo.version;
-            });
+        if (this.authService.isEcmLoggedIn()) {
+            this.discoveryApiService.getEcmProductInfo().toPromise().then(
+                (acsInfo: EcmProductVersionModel) => {
+                    this.acsVersion = acsInfo.version;
+                });
+        }
     }
 
     public getAcsVersion(): VersionModel {

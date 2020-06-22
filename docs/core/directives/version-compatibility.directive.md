@@ -16,7 +16,7 @@ Enables/disables components based on ACS version in use.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| adf-ecm-version | `string` | | The minimum version required for a given component to work propertly. |
+| adf-acs-version | `string` | | The minimum version required for a given component to work propertly. |
 
 ## Details
 
