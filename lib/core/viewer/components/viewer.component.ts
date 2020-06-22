@@ -20,16 +20,15 @@ import {
     Input, OnChanges, Output, TemplateRef,
     ViewEncapsulation, OnInit, OnDestroy
 } from '@angular/core';
-import { RenditionPaging, SharedLinkEntry, Node, RenditionEntry, NodeEntry } from '@alfresco/js-api';
+import {  SharedLinkEntry, Node, RenditionEntry, NodeEntry, VersionEntry, Version } from '@alfresco/js-api';
 import { BaseEvent } from '../../events';
-import { AlfrescoApiService } from '../../services/alfresco-api.service';
-import { LogService } from '../../services/log.service';
+import { LogService, AlfrescoApiService } from '../../services';
 import { ViewerMoreActionsComponent } from './viewer-more-actions.component';
 import { ViewerOpenWithComponent } from './viewer-open-with.component';
 import { ViewerSidebarComponent } from './viewer-sidebar.component';
 import { ViewerToolbarComponent } from './viewer-toolbar.component';
 import { Subscription } from 'rxjs';
-import { ViewUtilService } from '../services/view-util.service';
+import { ViewUtilService } from '..';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { filter } from 'rxjs/operators';
 
@@ -73,6 +72,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     /** Node Id of the file to load. */
     @Input()
     nodeId: string = null;
+
+    /** Version Id of the file to load. */
+    @Input()
+    versionId: string = null;
 
     /** Shared link id (to display shared file). */
     @Input()
@@ -206,6 +209,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
     viewerType = 'unknown';
     isLoading = false;
     nodeEntry: NodeEntry;
+    versionEntry: VersionEntry;
 
     extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
     externalExtensions: string[] = [];
@@ -253,6 +257,17 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
             this.apiService.nodeUpdated.pipe(
                 filter((node) => node && node.id === this.nodeId && node.name !== this.fileName)
             ).subscribe((node) => this.onNodeUpdated(node))
+        );
+
+        this.subscriptions.push(
+            this.viewUtils.viewerTypeChange.subscribe((type: string) => {
+                this.viewerType = type;
+            })
+        );
+        this.subscriptions.push(
+            this.viewUtils.urlFileContentChange.subscribe((content: string) => {
+                this.urlFileContent = content;
+            })
         );
 
         this.loadExtensions();
@@ -388,7 +403,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (this.viewerType === 'unknown') {
-            setupNode = this.displayNodeRendition(data.id);
+            setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
         }
 
         this.extensionChange.emit(this.extension);
@@ -614,25 +629,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
                     container.msRequestFullscreen();
                 }
             }
-        }
-    }
-
-    private async displayNodeRendition(nodeId: string) {
-        try {
-            const rendition = await this.resolveRendition(nodeId, 'pdf');
-            if (rendition) {
-                const renditionId = rendition.entry.id;
-
-                if (renditionId === 'pdf') {
-                    this.viewerType = 'pdf';
-                } else if (renditionId === 'imgpreview') {
-                    this.viewerType = 'image';
-                }
-
-                this.urlFileContent = this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
-            }
-        } catch (err) {
-            this.logService.error(err);
         }
     }
 
