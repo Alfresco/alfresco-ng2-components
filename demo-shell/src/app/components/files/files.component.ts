@@ -28,7 +28,7 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService,
     FileUploadEvent, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
-    PaginationComponent, FormValues, DisplayMode, InfinitePaginationComponent, HighlightDirective,
+    PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent, HighlightDirective,
     SharedLinksApiService
 } from '@alfresco/adf-core';
 
@@ -104,7 +104,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showSettingsPanel = true;
 
     @Input()
-    showHeader = true;
+    showHeader: string = ShowHeaderMode.Always;
 
     @Input()
     selectionMode = 'multiple';
@@ -157,6 +157,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     searchTerm = '';
 
+    @Input()
+    navigationRoute = '/files';
+
+    @Input()
+    enableCustomHeaderFilter = false;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -195,10 +201,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     stickyHeader: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
+
     enableCustomPermissionMessage = false;
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
+    filtersStates: any[] = [];
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
@@ -361,7 +369,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onFolderChange($event) {
-        this.router.navigate(['/files', $event.value.id, 'display', this.displayMode]);
+        this.router.navigate([this.navigationRoute, $event.value.id, 'display', this.displayMode]);
     }
 
     handlePermissionError(event: any) {
@@ -519,22 +527,32 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onChangePageSize(event: Pagination): void {
         this.preference.paginationSize = event.maxItems;
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.changedPageSize.emit(event);
     }
 
     onChangePageNumber(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.changedPageNumber.emit(event);
     }
 
     onNextPage(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.turnedNextPage.emit(event);
     }
 
     loadNextBatch(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.loadNext.emit(event);
     }
 
     onPrevPage(event: Pagination): void {
+        this.pagination.maxItems = event.maxItems;
+        this.pagination.skipCount = event.skipCount;
         this.turnedPreviousPage.emit(event);
     }
 
@@ -630,4 +648,14 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         }
         return '';
     }
+
+    onFilterUpdate(newNodePaging: NodePaging) {
+        this.nodeResult = newNodePaging;
+    }
+
+    onAllFilterCleared() {
+        this.documentList.node = null;
+        this.documentList.reload();
+    }
+
 }

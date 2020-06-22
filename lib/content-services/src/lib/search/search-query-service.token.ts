@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchWidgetSettings } from './search-widget-settings.interface';
+import { InjectionToken } from '@angular/core';
+import { BaseQueryBuilderService } from './base-query-builder.service';
 
-export interface SearchCategory {
-    id: string;
-    name: string;
-    columnKey?: string;
-    enabled: boolean;
-    expanded: boolean;
-    component: {
-        selector: string;
-        settings: SearchWidgetSettings;
-    };
-}
+export const SEARCH_QUERY_SERVICE_TOKEN = new InjectionToken<BaseQueryBuilderService>('QueryService');

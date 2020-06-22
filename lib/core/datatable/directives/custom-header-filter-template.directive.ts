@@ -15,19 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-import { DataColumn } from '@alfresco/adf-core';
+import { Directive, ContentChild, TemplateRef } from '@angular/core';
 
-@Component({
-    selector: 'adf-filter-menu',
-    templateUrl: './filter-menu.component.html'
+@Directive({
+    selector: 'adf-custom-header-filter-template'
 })
-export class FilterMenuComponent {
+export class CustomHeaderFilterTemplateDirective {
 
-    @Input()
-    col: DataColumn;
+    @ContentChild(TemplateRef)
+    template: any;
 
-    onMenuButtonClick(event: Event) {
-        event.stopPropagation();
-    }
 }

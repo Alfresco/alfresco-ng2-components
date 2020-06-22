@@ -25,7 +25,8 @@ import {
     DataColumn,
     DataTableComponent,
     DataTableModule,
-    ObjectDataTableAdapter
+    ObjectDataTableAdapter,
+    ShowHeaderMode
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import {
@@ -330,7 +331,7 @@ describe('DocumentList', () => {
     });
 
     it('should hide the header if showHeader is false', () => {
-        documentList.showHeader = false;
+        documentList.showHeader = ShowHeaderMode.Data;
 
         fixture.detectChanges();
 
@@ -338,7 +339,7 @@ describe('DocumentList', () => {
     });
 
     it('should show the header if showHeader is true', () => {
-        documentList.showHeader = true;
+        documentList.showHeader = ShowHeaderMode.Data;
 
         fixture.detectChanges();
 

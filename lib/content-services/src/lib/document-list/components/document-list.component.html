@@ -11,7 +11,7 @@
     [loading]="loading"
     [display]="display"
     [noPermission]="noPermission"
-    [showHeader]="!isEmpty() && showHeader"
+    [showHeader]="showHeader"
     [rowMenuCacheEnabled]="false"
     [stickyHeader]="stickyHeader"
     [allowFiltering]="allowFiltering"
@@ -24,9 +24,13 @@
     (row-unselect)="onNodeUnselect($event.detail)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
-    <ng-template let-col>
-        <adf-filter-menu class="adf-filter-menu" [col]="col"></adf-filter-menu>
-    </ng-template>
+    <adf-header-filter-template>
+        <ng-template let-col>
+            <ng-template [ngTemplateOutlet]="customHeaderFilterTemplate?.template"
+                [ngTemplateOutletContext]="{$implicit: col}">
+            </ng-template>
+        </ng-template>
+    </adf-header-filter-template>
 
     <adf-no-content-template>
         <ng-template>

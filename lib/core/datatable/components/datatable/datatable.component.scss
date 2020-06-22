@@ -334,6 +334,7 @@
             color: $data-table-header-color;
             padding-bottom: 8px;
             box-sizing: border-box;
+            padding-top: 12px !important;
 
             &.adf-sortable {
                 @include adf-no-select;
@@ -641,6 +642,30 @@
         height: inherit;
 
         .adf-datatable-body {
+            .adf-datatable-row {
+                height: 100%;
+                background-color: mat-color($background, card);
+                border: none !important;
+
+                &:hover, &:focus {
+                    background-color: unset;
+                    cursor: default;
+                }
+            }
+        }
+    }
+
+    .adf-datatable--empty--header-visible {
+
+        .adf-datatable-header {
+            border: $data-table-dividers-wrapper-border;
+        }
+
+        .adf-datatable-body {
+            @include flex-column;
+            justify-content: center;
+            align-items: center;
+
             .adf-datatable-row {
                 height: 100%;
                 background-color: mat-color($background, card);

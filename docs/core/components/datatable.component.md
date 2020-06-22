@@ -360,7 +360,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showHeader | `boolean` | true | Toggles the header. |
+| showHeader | `ShowHeaderMode` | "data" | Indicate which is the desired behaviour for the header. Can have 3 values `always`, `never` and `data`. `data` won't display the header if the datatable is empty and will display it otherwise. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 

@@ -15,16 +15,23 @@
  * limitations under the License.
  */
 
-import { SearchWidgetSettings } from './search-widget-settings.interface';
+import { AfterContentInit, ContentChild, Directive, TemplateRef } from '@angular/core';
+import { DataTableComponent } from '../components/datatable/datatable.component';
 
-export interface SearchCategory {
-    id: string;
-    name: string;
-    columnKey?: string;
-    enabled: boolean;
-    expanded: boolean;
-    component: {
-        selector: string;
-        settings: SearchWidgetSettings;
-    };
+@Directive({
+    selector: 'adf-header-filter-template'
+})
+export class HeaderFilterTemplateDirective implements AfterContentInit {
+
+    @ContentChild(TemplateRef)
+    template: any;
+
+    constructor(private dataTable: DataTableComponent) {
+    }
+
+    ngAfterContentInit() {
+        if (this.dataTable) {
+            this.dataTable.headerFilterTemplate = this.template;
+        }
+    }
 }
