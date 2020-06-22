@@ -638,8 +638,4 @@ export class ViewerPage {
         const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
         return BrowserActions.getText(unknownFormatLabel);
     }
-
-    async expectUrlToContain(text: string): Promise<void> {
-        expect(browser.getCurrentUrl()).toContain(text);
-    }
 }

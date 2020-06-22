@@ -173,12 +173,6 @@ export class VersionManagePage {
         await BrowserActions.click(restoreButton);
     }
 
-    async viewFileVersion(version): Promise<void> {
-        await this.clickActionButton(version);
-        const viewButton: ElementFinder = element(by.id(`adf-version-list-action-view-${version}`));
-        await BrowserActions.click(viewButton);
-    }
-
     async checkActionsArePresent(version): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-download-${version}`)));
         await BrowserVisibility.waitUntilElementIsVisible(element(by.id(`adf-version-list-action-delete-${version}`)));
