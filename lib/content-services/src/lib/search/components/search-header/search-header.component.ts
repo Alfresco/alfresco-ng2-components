@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, OnInit, OnChanges, EventEmitter, SimpleChanges, ViewEncapsulation, ViewChild, Inject, OnDestroy } from '@angular/core';
-import { DataColumn } from '@alfresco/adf-core';
+import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
 import { NodePaging } from '@alfresco/js-api';
@@ -60,7 +60,8 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService) {
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService,
+                private translationService: TranslationService) {
         this.isFilterServiceActive = this.searchHeaderQueryBuilder.isFilterServiceActive();
     }
 
@@ -133,5 +134,12 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.searchHeaderQueryBuilder.execute();
         }
+    }
+
+    getTooltipTranslation(columnTitle: string): string {
+        if (!columnTitle) {
+            columnTitle = 'SEARCH.SEARCH_HEADER.TYPE';
+        }
+        return this.translationService.instant('SEARCH.SEARCH_HEADER.FILTER_BY', {category: this.translationService.instant(columnTitle)});
     }
 }
