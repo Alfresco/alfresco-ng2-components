@@ -5,7 +5,7 @@
             #menuTrigger="matMenuTrigger"
             (click)="onMenuButtonClick($event)"
             class="adf-filter-button"
-            matTooltip="{{ getTooltipTranslation(col?.title) }}">
+            [matTooltip]="getTooltipTranslation(col?.title)">
             <adf-icon value="adf:filter"
                 [ngClass]="{ 'adf-icon-active': isActive || menuTrigger.menuOpen }"
                 matBadge="filter"
