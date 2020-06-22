@@ -24,11 +24,13 @@ import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { VersionCompatibilityService } from './version-compatibility.service';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationService } from './authentication.service';
 
 describe('VersionCompatibilityService', () => {
     let versionCompatibilityService: VersionCompatibilityService;
     let alfrescoApiService: AlfrescoApiServiceMock;
     let discoveryApiService: DiscoveryApiService;
+    let authenticationService: AuthenticationService;
 
     const acsResponceMock = {
         version: {
@@ -48,14 +50,20 @@ describe('VersionCompatibilityService', () => {
 
     beforeEach(() => {
         discoveryApiService = TestBed.get(DiscoveryApiService);
+        authenticationService = TestBed.get(AuthenticationService);
         spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(acsResponceMock));
+        spyOn(authenticationService, 'isEcmLoggedIn').and.returnValue(true);
         versionCompatibilityService = TestBed.get(VersionCompatibilityService);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
 
     });
 
     it('should get ACS running version', (done) => {
-        versionCompatibilityService = new VersionCompatibilityService(alfrescoApiService, discoveryApiService);
+        versionCompatibilityService = new VersionCompatibilityService(
+            alfrescoApiService,
+            authenticationService,
+            discoveryApiService
+        );
         alfrescoApiService.initialize();
         setTimeout(() => {
             const acsVersion = versionCompatibilityService.getAcsVersion();
