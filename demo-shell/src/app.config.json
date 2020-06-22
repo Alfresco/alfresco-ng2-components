@@ -2,7 +2,7 @@
   "$schema": "../../lib/core/app-config/schema.json",
   "ecmHost": "{protocol}//{hostname}{:port}",
   "bpmHost": "{protocol}//{hostname}{:port}",
-  "identityHost": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
+  "identityHost": "{protocol}//{hostname}{:port}/auth/admin/realms/alfresco",
   "loginRoute": "login",
   "providers": "ALL",
   "contextRootBpm": "activiti-app",
@@ -430,6 +430,176 @@
           "field": "description",
           "prefix": "(",
           "postfix": ")"
+        }
+      ]
+    }
+  },
+  "search-headers": {
+    "app:fields": [
+      "cm:name",
+      "cm:title",
+      "cm:description",
+      "ia:whatEvent",
+      "ia:descriptionEvent",
+      "lnk:title",
+      "lnk:description",
+      "TEXT",
+      "TAG"
+    ],
+    "categories": [
+      {
+        "id": "queryName",
+        "name": "Name",
+        "columnKey": "name",
+        "enabled": true,
+        "expanded": true,
+        "component": {
+          "selector": "text",
+          "settings": {
+            "pattern": "cm:name:'(.*?)'",
+            "field": "cm:name",
+            "placeholder": "Enter the name"
+          }
+        }
+      },
+      {
+        "id": "checkList",
+        "name": "Check List",
+        "columnKey":"$thumbnail",
+        "enabled": true,
+        "component": {
+          "selector": "check-list",
+          "settings": {
+            "pageSize": 5,
+            "operator": "OR",
+            "options": [
+              {
+                "name": "Folder",
+                "value": "TYPE:'cm:folder'"
+              },
+              {
+                "name": "Document",
+                "value": "TYPE:'cm:content'"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "contentSizeRange",
+        "name": "Content Size (range)",
+        "enabled": true,
+        "component": {
+          "selector": "number-range",
+          "settings": {
+            "field": "cm:content.size",
+            "format": "[{FROM} TO {TO}]"
+          }
+        }
+      },
+      {
+        "id": "contentSize",
+        "name": "SEARCH.CATEGORIES.SIZE",
+        "columnKey":"content.sizeInBytes",
+        "enabled": true,
+        "component": {
+          "selector": "check-list",
+          "settings": {
+            "options": [
+              {
+                "name": "Small",
+                "value": "content.size:[0 TO 1048576>"
+              },
+              {
+                "name": "Medium",
+                "value": "content.size:[1048576 TO 52428800]"
+              },
+              {
+                "name": "Large",
+                "value": "content.size:<52428800 TO 524288000]"
+              },
+              {
+                "name": "Huge",
+                "value": "content.size:<524288000 TO MAX]"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "createdDateRange",
+        "name": "Created Date (range)",
+        "columnKey": "createdAt",
+        "enabled": true,
+        "component": {
+          "selector": "date-range",
+          "settings": {
+            "field": "cm:created",
+            "dateFormat": "DD-MMM-YY",
+            "maxDate": "today"
+          }
+        }
+      }
+    ],
+    "highlight": {
+      "prefix": " ",
+      "postfix": " ",
+      "mergeContiguous": true,
+      "fields": [
+        {
+          "field": "cm:title"
+        },
+        {
+          "field": "description",
+          "prefix": "(",
+          "postfix": ")"
+        }
+      ]
+    },
+    "sorting": {
+      "options": [
+        {
+          "key": "name",
+          "label": "Name",
+          "type": "FIELD",
+          "field": "cm:name",
+          "ascending": true
+        },
+        {
+          "key": "content.sizeInBytes",
+          "label": "Size",
+          "type": "FIELD",
+          "field": "content.size",
+          "ascending": true
+        },
+        {
+          "key": "createdByUser",
+          "label": "Author",
+          "type": "FIELD",
+          "field": "cm:creator",
+          "ascending": true
+        },
+        {
+          "key": "createdAt",
+          "label": "Created",
+          "type": "FIELD",
+          "field": "cm:created",
+          "ascending": true
+        },
+        {
+          "key": "score",
+          "label": "Relevance",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
+        }
+      ],
+      "defaults": [
+        {
+          "key": "score",
+          "type": "FIELD",
+          "field": "score",
+          "ascending": false
         }
       ]
     }

@@ -22,4 +22,5 @@ export interface SearchWidget {
     id: string;
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
+    reset();
 }

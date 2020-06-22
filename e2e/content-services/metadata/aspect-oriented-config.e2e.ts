@@ -15,27 +15,34 @@
  * limitations under the License.
  */
 
-import { LoginPage, UploadActions, LocalStorageUtil, ViewerPage } from '@alfresco/adf-testing';
+import {
+    CheckboxPage,
+    LoginSSOPage,
+    UploadActions,
+    LocalStorageUtil,
+    ViewerPage,
+    ApiService, UserModel
+} from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { check } from '../../util/material';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Aspect oriented config', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
     const modelOneName = 'modelOne', emptyAspectName = 'emptyAspect';
     const defaultModel = 'cm', defaultEmptyPropertiesAspect = 'taggable', aspectName = 'Taggable';
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const pngFileModel = new FileModel({
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -44,39 +51,35 @@ describe('Aspect oriented config', () => {
     let uploadActions;
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-        uploadActions = new UploadActions(this.alfrescoJsApi);
+        uploadActions = new UploadActions(apiService);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         try {
-            await this.alfrescoJsApi.core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
+            await apiService.getInstance().core.customModelApi.createCustomModel('ACTIVE', modelOneName, modelOneName, modelOneName, modelOneName);
         } catch (e) {
         }
 
         try {
-            await this.alfrescoJsApi.core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
+            await apiService.getInstance().core.customModelApi.createCustomAspect(modelOneName, emptyAspectName, null, emptyAspectName, emptyAspectName);
         } catch (e) {
         }
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        acsUser = await usersActions.createUser();
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const uploadedFile = await uploadActions.uploadFile(pngFileModel.location, pngFileModel.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
-        const aspects = await this.alfrescoJsApi.core.nodesApi.getNode(uploadedFile.entry.id);
+        const aspects = await apiService.getInstance().core.nodesApi.getNode(uploadedFile.entry.id);
 
         aspects.entry.aspectNames.push(modelOneName.concat(':', emptyAspectName));
 
         aspects.entry.aspectNames.push(defaultModel.concat(':', defaultEmptyPropertiesAspect));
 
-        await this.alfrescoJsApi.core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
+        await apiService.getInstance().core.nodesApi.updateNode(uploadedFile.entry.id, { aspectNames: aspects.entry.aspectNames });
    });
 
     afterAll(async () => {
@@ -89,7 +92,6 @@ describe('Aspect oriented config', () => {
    });
 
     it('[C261117] Should be possible restrict the display properties of one an aspect', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: [
@@ -130,7 +132,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260185] Should ignore not existing aspect when present in the configuration', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: {
@@ -157,7 +158,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260183] Should show all the aspect if the content-metadata configuration is NOT provided', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{}');
 
         await navigationBarPage.clickContentServicesButton();
@@ -175,7 +175,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C260182] Should show all the aspects if the default configuration contains the star symbol', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', JSON.stringify({
             presets: {
                 default: '*'
@@ -197,7 +196,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C268899] Should be possible use a Translation key as Title of a metadata group', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '  "presets": {' +
             '    "default": [' +
@@ -241,7 +239,6 @@ describe('Aspect oriented config', () => {
    });
 
     it('[C279968] Should be possible use a custom preset', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": {' +
             '        "custom-preset": {' +
@@ -258,7 +255,7 @@ describe('Aspect oriented config', () => {
         await viewerPage.checkInfoSideBarIsDisplayed();
         await metadataViewPage.clickOnPropertiesTab();
 
-        await check(metadataViewPage.presetSwitch);
+        await CheckboxPage.check(metadataViewPage.presetSwitch);
 
         await metadataViewPage.enterPresetText('custom-preset');
 
@@ -270,7 +267,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C299186] The aspect without properties is not displayed', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + modelOneName +
             '       ": { "' + modelOneName + ':' + emptyAspectName +
@@ -293,7 +289,6 @@ describe('Aspect oriented config', () => {
     });
 
     it('[C299187] The aspect with empty properties is displayed when edit', async () => {
-
         await LocalStorageUtil.setConfigField('content-metadata', '{' +
             '    "presets": { "' + defaultModel +
             '       ": { "' + defaultModel + ':' + defaultEmptyPropertiesAspect +

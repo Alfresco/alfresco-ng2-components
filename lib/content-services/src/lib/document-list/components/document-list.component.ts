@@ -30,6 +30,7 @@ import {
     DataSorting,
     DataTableComponent,
     DisplayMode,
+    ShowHeaderMode,
     ObjectDataColumn,
     PaginatedComponent,
     AppConfigService,
@@ -40,6 +41,7 @@ import {
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
+    CustomHeaderFilterTemplateDirective,
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
@@ -91,6 +93,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @ContentChild(CustomEmptyContentTemplateDirective)
     customNoContentTemplate: CustomEmptyContentTemplateDirective;
 
+    @ContentChild(CustomHeaderFilterTemplateDirective)
+    customHeaderFilterTemplate: CustomHeaderFilterTemplateDirective;
+
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()
     includeFields: string[];
@@ -123,7 +128,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Toggles the header */
     @Input()
-    showHeader: boolean = true;
+    showHeader: string = ShowHeaderMode.Data;
 
     /** User interaction for folder navigation or file preview.
      * Valid values are "click" and "dblclick". Default value: "dblclick"
@@ -854,5 +859,4 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.setLoadingState(false);
         this.error.emit(err);
     }
-
 }

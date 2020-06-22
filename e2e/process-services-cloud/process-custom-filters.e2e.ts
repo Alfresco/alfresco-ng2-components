@@ -26,81 +26,74 @@ import { ProcessListCloudConfiguration } from './config/process-list-cloud.confi
 describe('Process list cloud', () => {
 
     describe('Process List', () => {
+
         const loginSSOPage = new LoginSSOPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();
-        const apiService = new ApiService(
-            browser.params.config.oauth2.clientId,
-            browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-        );
+
+        const apiService = new ApiService();
+        const identityService = new IdentityService(apiService);
+        const groupIdentityService = new GroupIdentityService(apiService);
+        const processDefinitionService = new ProcessDefinitionsService(apiService);
+        const processInstancesService = new ProcessInstancesService(apiService);
+        const queryService = new QueryService(apiService);
+        const tasksService = new TasksService(apiService);
+
         const processListCloudConfiguration = new ProcessListCloudConfiguration();
         const editProcessFilterConfiguration = new EditProcessFilterConfiguration();
         const processListCloudConfigFile = processListCloudConfiguration.getConfiguration();
         const editProcessFilterConfigFile = editProcessFilterConfiguration.getConfiguration();
-
-        let tasksService: TasksService;
-        let identityService: IdentityService;
-        let groupIdentityService: GroupIdentityService;
-        let processDefinitionService: ProcessDefinitionsService;
-        let processInstancesService: ProcessInstancesService;
-        let queryService: QueryService;
 
         let completedProcess, runningProcessInstance, switchProcessInstance, noOfApps, testUser, groupInfo,
             anotherProcessInstance;
         const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
 
         beforeAll(async () => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            identityService = new IdentityService(apiService);
-            groupIdentityService = new GroupIdentityService(apiService);
-            testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
 
-            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
-            await apiService.login(testUser.email, testUser.password);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(testUser.email, testUser.password);
 
-            processDefinitionService = new ProcessDefinitionsService(apiService);
-            const processDefinition = await processDefinitionService
+        const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.candidateGroupProcess, candidateBaseApp);
 
-            const anotherProcessDefinition = await processDefinitionService
+        const anotherProcessDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.anotherCandidateGroupProcess, candidateBaseApp);
 
-            processInstancesService = new ProcessInstancesService(apiService);
-            await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
+        await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp);
 
-            runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+        runningProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
 
-            anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
+        anotherProcessInstance = await processInstancesService.createProcessInstance(anotherProcessDefinition.entry.key, candidateBaseApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
 
-            switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+        switchProcessInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
 
-            completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
+        completedProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
-            queryService = new QueryService(apiService);
 
-            const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
-            tasksService = new TasksService(apiService);
-            const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
-            await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
+        const task = await queryService.getProcessInstanceTasks(completedProcess.entry.id, candidateBaseApp);
+        const claimedTask = await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
+        await tasksService.completeTask(claimedTask.entry.id, candidateBaseApp);
 
-            await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
-            await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
-            await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
+        await loginSSOPage.login(testUser.email, testUser.password);
+        await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
+        await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
         });
 
         afterAll(async () => {
@@ -207,6 +200,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C297697] The value of the filter should be preserved when saving it', async () => {
+            await processCloudDemoPage.processFilterCloudComponent.clickAllProcessesFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessInstanceId(completedProcess.entry.id);
 

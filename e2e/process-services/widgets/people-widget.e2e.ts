@@ -15,46 +15,42 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('People widget', () => {
 
-    const loginPage = new LoginPage();
-    let processUserModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.ADD_PEOPLE;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    let alfrescoJsApi;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.ADD_PEOPLE;
     let deployedApp, process;
+    let processUserModel;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+       processUserModel = await usersActions.createUser();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
-        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
-
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
+       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+       deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessOfApp(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+       process = await new ProcessUtil(apiService).startProcessOfApp(appModel.name, app.processName);
+       await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {
@@ -65,9 +61,9 @@ describe('People widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C260435][C274707] Should be possible to set visibility properties for People Widget', async () => {

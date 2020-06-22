@@ -43,6 +43,12 @@ export enum DisplayMode {
     Gallery = 'gallery'
 }
 
+export enum ShowHeaderMode {
+    Never = 'never',
+    Always = 'always',
+    Data = 'data'
+}
+
 @Component({
     selector: 'adf-datatable',
     styleUrls: ['./datatable.component.scss'],
@@ -119,7 +125,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
 
     /** Toggles the header. */
     @Input()
-    showHeader: boolean = true;
+    showHeader: string = ShowHeaderMode.Data;
 
     /** Toggles the sticky header mode. */
     @Input()
@@ -175,9 +181,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     @Input()
     allowFiltering: boolean = false;
 
-    @ContentChild(TemplateRef)
-    filterTemplateRef: TemplateRef<any>;
-
+    headerFilterTemplate: TemplateRef<any>;
     noContentTemplate: TemplateRef<any>;
     noPermissionTemplate: TemplateRef<any>;
     loadingTemplate: TemplateRef<any>;
@@ -285,7 +289,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isPropertyChanged(property: SimpleChange): boolean {
-        return property && property.currentValue ? true : false;
+        return !!(property && property.currentValue);
     }
 
     convertToRowsData(rows: any []): ObjectDataRow[] {
@@ -375,7 +379,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.rowMenuCache = {};
     }
 
-    isTableEmpty() {
+    isTableEmpty(): boolean {
         return this.data === undefined || this.data === null;
     }
 
@@ -738,7 +742,16 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
     }
 
     isHeaderVisible() {
-        return !this.loading && !this.isEmpty() && !this.noPermission;
+        let headerVisibility: boolean;
+
+        if (this.showHeader === ShowHeaderMode.Data) {
+            headerVisibility = !this.loading && !this.noPermission && !this.isEmpty();
+        } else if (this.showHeader === ShowHeaderMode.Always) {
+            headerVisibility = !this.loading && !this.noPermission;
+        } else if (this.showHeader === ShowHeaderMode.Never) {
+            headerVisibility = false;
+        }
+        return headerVisibility;
     }
 
     isStickyHeaderEnabled() {

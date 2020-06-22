@@ -24,7 +24,7 @@ export class ShareDialogPage {
     togglePage = new TogglePage();
     dateTimePickerPage = new DateTimePickerPage();
     shareDialog = element(by.css('adf-share-dialog'));
-    dialogTitle = element(by.css('[data-automation-id="adf-share-dialog-title"]'));
+    dialogTitle = element.all(by.css('[data-automation-id="adf-share-dialog-title"]')).first();
     shareToggle = element(by.css('[data-automation-id="adf-share-toggle"] label'));
     expireToggle = element(by.css(`[data-automation-id="adf-expire-toggle"] label`));
     shareToggleChecked = element(by.css('mat-dialog-container mat-slide-toggle.mat-checked'));

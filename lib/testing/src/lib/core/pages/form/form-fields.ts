@@ -15,81 +15,76 @@
  * limitations under the License.
  */
 
-import { by, element, Locator, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
-import { DropdownPage } from '../../../material/pages/dropdown.page';
+import { DropdownPage } from '../material/dropdown.page';
 
 export class FormFields {
 
-    formContent: ElementFinder = element(by.css('adf-form-renderer'));
-    refreshButton: ElementFinder = element(by.css('div[class*="form-reload-button"] mat-icon'));
-    saveButton: ElementFinder = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
-    valueLocator: Locator = by.css('input');
-    labelLocator: Locator = by.css('label');
-    noFormMessage: ElementFinder = element(by.css('.adf-empty-content__title'));
-    noFormTemplate: ElementFinder = element(by.css('adf-empty-content'));
-    completedTaskNoFormMessage: ElementFinder = element(by.css('div[id*="completed-form-message"] p'));
-    attachFormButton: ElementFinder = element(by.id('adf-attach-form-attach-button'));
-    completeButton: ElementFinder = element(by.id('adf-form-complete'));
-    cancelButton: ElementFinder = element(by.css('#adf-no-form-cancel-button'));
-    errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
+    formContent = element(by.css('adf-form-renderer'));
+    refreshButton = element(by.css('div[class*="form-reload-button"] mat-icon'));
+    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
+    valueLocator = by.css('input');
+    labelLocator = by.css('label');
+    noFormMessage = element(by.css('.adf-empty-content__title'));
+    noFormTemplate = element(by.css('adf-empty-content'));
+    completedTaskNoFormMessage = element(by.css('div[id*="completed-form-message"] p'));
+    attachFormButton = element(by.id('adf-attach-form-attach-button'));
+    completeButton = element(by.id('adf-form-complete'));
+    cancelButton = element(by.css('#adf-no-form-cancel-button'));
+    errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first());
 
-    async setFieldValue(locator, field, value): Promise<void> {
+    async setFieldValue(locator, field, value: string): Promise<void> {
         const fieldElement = element(locator(field));
         await BrowserActions.clearSendKeys(fieldElement, value);
     }
 
-    async clickField(locator, field, fieldtext?): Promise<void> {
-        const fieldElement = fieldtext ? element(locator(field, fieldtext)) : element(locator(field));
-        await BrowserActions.click(fieldElement);
-    }
-
-    async checkWidgetIsVisible(fieldId): Promise<void> {
+    async checkWidgetIsVisible(fieldId: string): Promise<void> {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
     }
 
-    async checkWidgetIsClickable(fieldId): Promise<void> {
+    async checkWidgetIsClickable(fieldId: string): Promise<void> {
         const fieldElement = element.all(by.css(`adf-form-field div[id='field-${fieldId}-container']`)).first();
         await BrowserVisibility.waitUntilElementIsClickable(fieldElement);
     }
 
-    async checkWidgetIsHidden(fieldId): Promise<void> {
+    async checkWidgetIsHidden(fieldId: string): Promise<void> {
         const hiddenElement = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         await BrowserVisibility.waitUntilElementIsNotVisible(hiddenElement, 6000);
     }
 
-    getWidget(fieldId): ElementFinder {
+    getWidget(fieldId: string): ElementFinder {
         return element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
     }
 
-    async getFieldValue(fieldId, valueLocatorParam?: any): Promise<string> {
-        const valueWidget: ElementFinder = await (await this.getWidget(fieldId)).element(valueLocatorParam || this.valueLocator);
+    async getFieldValue(fieldId: string, valueLocatorParam?: any): Promise<string> {
+        const valueWidget = await (await this.getWidget(fieldId)).element(valueLocatorParam || this.valueLocator);
         await BrowserVisibility.waitUntilElementIsVisible(valueWidget);
 
         return valueWidget.getAttribute('value');
     }
 
-    async getFieldLabel(fieldId, labelLocatorParam?: any) {
+    async getFieldLabel(fieldId: string, labelLocatorParam?: any) {
         const label = await (await this.getWidget(fieldId)).all(labelLocatorParam || this.labelLocator).first();
         return BrowserActions.getText(label);
     }
 
-    async getFieldErrorMessage(fieldId): Promise<string> {
+    async getFieldErrorMessage(fieldId: string): Promise<string> {
         const error = await this.getWidget(fieldId);
         error.element(this.errorMessage);
         return BrowserActions.getText(error);
     }
 
-    async getFieldText(fieldId, labelLocatorParam?: any) {
+    async getFieldText(fieldId: string, labelLocatorParam?: any) {
         const label = await (await this.getWidget(fieldId)).element(labelLocatorParam || this.labelLocator);
         return BrowserActions.getText(label);
     }
 
-    async getFieldPlaceHolder(fieldId, locator = 'input'): Promise<string> {
-        const placeHolderLocator: ElementFinder = element(by.css(`${locator}#${fieldId}`));
+    async getFieldPlaceHolder(fieldId: string, locator = 'input'): Promise<string> {
+        const placeHolderLocator = element(by.css(`${locator}#${fieldId}`));
         await BrowserVisibility.waitUntilElementIsVisible(placeHolderLocator);
         return placeHolderLocator.getAttribute('placeholder');
     }
@@ -137,16 +132,16 @@ export class FormFields {
         await BrowserActions.click(this.attachFormButton);
     }
 
-    async selectForm(formName): Promise<void> {
+    async selectForm(formName: string): Promise<void> {
         await this.selectFormDropdown.selectDropdownOption(formName);
     }
 
-    async selectFormFromDropDown(formName): Promise<void> {
+    async selectFormFromDropDown(formName: string): Promise<void> {
         const formNameElement = element(by.cssContainingText('span', formName));
         await BrowserActions.click(formNameElement);
     }
 
-    async checkWidgetIsReadOnlyMode(fieldId): Promise<ElementFinder> {
+    async checkWidgetIsReadOnlyMode(fieldId: string): Promise<ElementFinder> {
         const widget = element(by.css(`adf-form-field div[id='field-${fieldId}-container']`));
         const widgetReadOnly = widget.element(by.css('div[class*="adf-readonly"]'));
         await BrowserVisibility.waitUntilElementIsVisible(widgetReadOnly);
@@ -157,21 +152,27 @@ export class FormFields {
         await BrowserActions.click(this.completeButton);
     }
 
-    async setValueInInputById(fieldId, value): Promise<void> {
+    async setValueInInputById(fieldId: string, value: string): Promise<void> {
         const input = element(by.id(fieldId));
         await BrowserActions.clearSendKeys(input, value);
     }
 
-    async isCompleteFormButtonDisabled(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
-        return this.completeButton.getAttribute('disabled');
+    async isCompleteButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.completeButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isCompleteFormButtonEnabled(): Promise<boolean> {
+        return this.completeButton.isEnabled();
     }
 
     async isCancelButtonDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(
-                this.cancelButton
-            );
+            await BrowserVisibility.waitUntilElementIsVisible(this.cancelButton);
             return true;
         } catch (error) {
             return false;
@@ -179,12 +180,7 @@ export class FormFields {
     }
 
     async isCancelButtonEnabled(): Promise<boolean> {
-        try {
-            await this.cancelButton.isEnabled();
-            return true;
-        } catch (error) {
-            return false;
-        }
+        return this.cancelButton.isEnabled();
     }
 
     async clickCancelButton(): Promise<void> {

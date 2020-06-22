@@ -16,98 +16,98 @@
  */
 
 import { BrowserActions } from '../utils/browser-actions';
-import { TabsPage } from '../../../lib/material/pages/tabs.page';
-import { TogglePage } from '../../material/pages/toggle.page';
+import { TabsPage } from './material/tabs.page';
+import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { element, by, ElementFinder, browser, protractor } from 'protractor';
+import { element, by, browser, protractor } from 'protractor';
 
 export class ViewerPage {
 
-    tabsPage: TabsPage = new TabsPage();
-    togglePage: TogglePage = new TogglePage();
+    tabsPage = new TabsPage();
+    togglePage = new TogglePage();
 
-    closeButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
-    fileName: ElementFinder = element(by.id('adf-viewer-display-name'));
-    infoButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-sidebar"]'));
-    leftSideBarButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-left-sidebar"]'));
-    previousPageButton: ElementFinder = element(by.id('viewer-previous-page-button'));
-    nextPageButton: ElementFinder = element(by.id('viewer-next-page-button'));
-    zoomInButton: ElementFinder = element(by.id('viewer-zoom-in-button'));
-    zoomOutButton: ElementFinder = element(by.id('viewer-zoom-out-button'));
-    scalePageButton: ElementFinder = element(by.id('viewer-scale-page-button'));
-    fullScreenButton: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-fullscreen"]'));
-    rotateLeft: ElementFinder = element(by.css('button[id="viewer-rotate-left-button"]'));
-    rotateRight: ElementFinder = element(by.css('button[id="viewer-rotate-right-button"]'));
-    scaleImg: ElementFinder = element(by.css('button[id="viewer-reset-button"]'));
-    fileThumbnail: ElementFinder = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
-    pageSelectorInput: ElementFinder = element(by.css('input[data-automation-id="adf-page-selector"]'));
-    imgContainer: ElementFinder = element(by.css('div[data-automation-id="adf-image-container"]'));
-    mediaContainer: ElementFinder = element(by.css('adf-media-player[class="adf-media-player ng-star-inserted"]'));
-    percentage: ElementFinder = element(by.css('div[data-automation-id="adf-page-scale"'));
-    thumbnailsBtn: ElementFinder = element(by.css('button[data-automation-id="adf-thumbnails-button"]'));
-    thumbnailsContent: ElementFinder = element(by.css('div[data-automation-id="adf-thumbnails-content"]'));
-    thumbnailsClose: ElementFinder = element(by.css('button[data-automation-id="adf-thumbnails-close"]'));
-    secondThumbnail: ElementFinder = element(by.css('adf-pdf-thumb > img[title="Page 2"'));
-    lastThumbnailDisplayed: ElementFinder = element.all(by.css('adf-pdf-thumb')).last();
-    passwordDialog: ElementFinder = element(by.css('adf-pdf-viewer-password-dialog'));
-    passwordSubmit: ElementFinder = element(by.css('button[data-automation-id="adf-password-dialog-submit"]'));
-    passwordDialogClose: ElementFinder = element(by.css('button[data-automation-id="adf-password-dialog-close"]'));
-    passwordSubmitDisabled: ElementFinder = element(by.css('button[data-automation-id="adf-password-dialog-submit"][disabled]'));
-    passwordInput: ElementFinder = element(by.css('input[data-automation-id="adf-password-dialog-input"]'));
-    passwordError: ElementFinder = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
-    infoSideBar: ElementFinder = element(by.id('adf-right-sidebar'));
-    leftSideBar: ElementFinder = element(by.id('adf-left-sidebar'));
-    viewer: ElementFinder = element(by.css('adf-viewer'));
-    pdfViewer: ElementFinder = element(by.css('adf-pdf-viewer'));
-    imgViewer: ElementFinder = element(by.css('adf-img-viewer'));
-    activeTab: ElementFinder = element(by.css('div[class*="mat-tab-label-active"]'));
-    toolbarSwitch: ElementFinder = element(by.id('adf-switch-toolbar'));
-    toolbar: ElementFinder = element(by.id('adf-viewer-toolbar'));
-    lastButton: ElementFinder = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
-    goBackSwitch: ElementFinder = element(by.id('adf-switch-goback'));
-    canvasLayer: ElementFinder = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
+    closeButton = element(by.css('button[data-automation-id="adf-toolbar-back"]'));
+    fileName = element(by.id('adf-viewer-display-name'));
+    infoButton = element(by.css('button[data-automation-id="adf-toolbar-sidebar"]'));
+    leftSideBarButton = element(by.css('button[data-automation-id="adf-toolbar-left-sidebar"]'));
+    previousPageButton = element(by.id('viewer-previous-page-button'));
+    nextPageButton = element(by.id('viewer-next-page-button'));
+    zoomInButton = element(by.id('viewer-zoom-in-button'));
+    zoomOutButton = element(by.id('viewer-zoom-out-button'));
+    scalePageButton = element(by.id('viewer-scale-page-button'));
+    fullScreenButton = element(by.css('button[data-automation-id="adf-toolbar-fullscreen"]'));
+    rotateLeft = element(by.css('button[id="viewer-rotate-left-button"]'));
+    rotateRight = element(by.css('button[id="viewer-rotate-right-button"]'));
+    scaleImg = element(by.css('button[id="viewer-reset-button"]'));
+    fileThumbnail = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
+    pageSelectorInput = element(by.css('input[data-automation-id="adf-page-selector"]'));
+    imgContainer = element(by.css('div[data-automation-id="adf-image-container"]'));
+    mediaContainer = element(by.css('adf-media-player[class="adf-media-player ng-star-inserted"]'));
+    percentage = element(by.css('div[data-automation-id="adf-page-scale"'));
+    thumbnailsBtn = element(by.css('button[data-automation-id="adf-thumbnails-button"]'));
+    thumbnailsContent = element(by.css('div[data-automation-id="adf-thumbnails-content"]'));
+    thumbnailsClose = element(by.css('button[data-automation-id="adf-thumbnails-close"]'));
+    secondThumbnail = element(by.css('adf-pdf-thumb > img[title="Page 2"'));
+    lastThumbnailDisplayed = element.all(by.css('adf-pdf-thumb')).last();
+    passwordDialog = element(by.css('adf-pdf-viewer-password-dialog'));
+    passwordSubmit = element(by.css('button[data-automation-id="adf-password-dialog-submit"]'));
+    passwordDialogClose = element(by.css('button[data-automation-id="adf-password-dialog-close"]'));
+    passwordSubmitDisabled = element(by.css('button[data-automation-id="adf-password-dialog-submit"][disabled]'));
+    passwordInput = element(by.css('input[data-automation-id="adf-password-dialog-input"]'));
+    passwordError = element(by.css('mat-error[data-automation-id="adf-password-dialog-error"]'));
+    infoSideBar = element(by.id('adf-right-sidebar'));
+    leftSideBar = element(by.id('adf-left-sidebar'));
+    viewer = element(by.css('adf-viewer'));
+    pdfViewer = element(by.css('adf-pdf-viewer'));
+    imgViewer = element(by.css('adf-img-viewer'));
+    activeTab = element(by.css('div[class*="mat-tab-label-active"]'));
+    toolbarSwitch = element(by.id('adf-switch-toolbar'));
+    toolbar = element(by.id('adf-viewer-toolbar'));
+    lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
+    goBackSwitch = element(by.id('adf-switch-goback'));
+    canvasLayer = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
 
-    openWithSwitch: ElementFinder = element(by.id('adf-switch-openwith'));
-    openWith: ElementFinder = element(by.id('adf-viewer-openwith'));
+    openWithSwitch = element(by.id('adf-switch-openwith'));
+    openWith = element(by.id('adf-viewer-openwith'));
 
-    moreActionsMenuSwitch: ElementFinder = element(by.id('adf-switch-moreactionsmenu'));
-    moreActionsMenu: ElementFinder = element(by.css('button[data-automation-id="adf-toolbar-more-actions"]'));
+    moreActionsMenuSwitch = element(by.id('adf-switch-moreactionsmenu'));
+    moreActionsMenu = element(by.css('button[data-automation-id="adf-toolbar-more-actions"]'));
 
-    customNameSwitch: ElementFinder = element(by.id('adf-switch-custoname'));
-    customToolbarToggle: ElementFinder = element(by.id('adf-toggle-custom-toolbar'));
-    customToolbar: ElementFinder = element(by.css('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]'));
+    customNameSwitch = element(by.id('adf-switch-custoname'));
+    customToolbarToggle = element(by.id('adf-toggle-custom-toolbar'));
+    customToolbar = element(by.css('adf-viewer-toolbar[data-automation-id="adf-viewer-custom-toolbar"]'));
 
-    showRightSidebarSwitch: ElementFinder = element(by.id('adf-switch-showrightsidebar'));
-    showLeftSidebarSwitch: ElementFinder = element(by.id('adf-switch-showleftsidebar'));
+    showRightSidebarSwitch = element(by.id('adf-switch-showrightsidebar'));
+    showLeftSidebarSwitch = element(by.id('adf-switch-showleftsidebar'));
 
-    moreActionsSwitch: ElementFinder = element(by.id('adf-switch-moreactions'));
-    pdfPageLoaded: ElementFinder = element(by.css('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer'));
+    moreActionsSwitch = element(by.id('adf-switch-moreactions'));
+    pdfPageLoaded = element(by.css('[data-page-number="1"][data-loaded="true"], adf-img-viewer, adf-txt-viewer'));
 
-    downloadSwitch: ElementFinder = element(by.id('adf-switch-download'));
-    downloadButton: ElementFinder = element(by.id('adf-viewer-download'));
+    downloadSwitch = element(by.id('adf-switch-download'));
+    downloadButton = element(by.id('adf-viewer-download'));
 
-    printSwitch: ElementFinder = element(by.id('adf-switch-print'));
-    printButton: ElementFinder = element(by.id('adf-viewer-print'));
+    printSwitch = element(by.id('adf-switch-print'));
+    printButton = element(by.id('adf-viewer-print'));
 
-    allowSidebarSwitch: ElementFinder = element(by.id('adf-switch-allowsidebar'));
-    allowLeftSidebarSwitch: ElementFinder = element(by.id('adf-switch-allowLeftSidebar'));
+    allowSidebarSwitch = element(by.id('adf-switch-allowsidebar'));
+    allowLeftSidebarSwitch = element(by.id('adf-switch-allowLeftSidebar'));
 
-    uploadButton: ElementFinder = element(by.id('adf-viewer-upload'));
-    timeButton: ElementFinder = element(by.id('adf-viewer-time'));
-    bugButton: ElementFinder = element(by.id('adf-viewer-bug'));
+    uploadButton = element(by.id('adf-viewer-upload'));
+    timeButton = element(by.id('adf-viewer-time'));
+    bugButton = element(by.id('adf-viewer-bug'));
 
-    codeViewer: ElementFinder = element(by.id('adf-monaco-file-editor'));
+    codeViewer = element(by.id('adf-monaco-file-editor'));
 
-    showTabWithIconSwitch: ElementFinder = element(by.id('adf-tab-with-icon'));
-    showTabWithIconAndLabelSwitch: ElementFinder = element(by.id('adf-icon-and-label-tab'));
-    unknownFormat: ElementFinder = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
+    showTabWithIconSwitch = element(by.id('adf-tab-with-icon'));
+    showTabWithIconAndLabelSwitch = element(by.id('adf-icon-and-label-tab'));
+    unknownFormat = element(by.css(`adf-viewer-unknown-format .adf-viewer__unknown-format-view`));
 
     async checkCodeViewerIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
     }
 
     async viewFile(fileName): Promise<void> {
-        const fileView: ElementFinder = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
+        const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         await BrowserActions.click(fileView);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
@@ -176,7 +176,7 @@ export class ViewerPage {
     }
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
-        const selectedThumbnail: ElementFinder = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
+        const selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
         const pageNumber = await this.pageSelectorInput.getAttribute('value');
 
         await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
@@ -274,9 +274,9 @@ export class ViewerPage {
 
     async checkFileContent(pageNumber: string, text: string): Promise<void> {
         const allPages = this.canvasLayer;
-        const pageLoaded: ElementFinder = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        const textLayerLoaded: ElementFinder = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
-        const specificText: ElementFinder = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
+        const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
+        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
+        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
 
         await BrowserVisibility.waitUntilElementIsVisible(allPages);
         await BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
@@ -346,7 +346,7 @@ export class ViewerPage {
     }
 
     async checkTabIsActive(tabName): Promise<void> {
-        const tab: ElementFinder = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
+        const tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
         await BrowserVisibility.waitUntilElementIsVisible(tab);
     }
 
@@ -593,7 +593,7 @@ export class ViewerPage {
     }
 
     async enterCustomName(text: string): Promise<void> {
-        const textField: ElementFinder = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
+        const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
         // await BrowserVisibility.waitUntilElementIsVisible(textField);
         await BrowserActions.clearSendKeys(textField, text);
     }
@@ -611,22 +611,22 @@ export class ViewerPage {
     }
 
     async checkTabHasNoIcon(index: number): Promise<void> {
-        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
         await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
     async checkTabHasNoLabel(index: number): Promise<void> {
-        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
         await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
     async getTabLabelById(index: number): Promise<string> {
-        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
         return BrowserActions.getText(tab);
     }
 
     async getTabIconById(index: number): Promise<string> {
-        const tab: ElementFinder = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
         return BrowserActions.getText(tab);
     }
 

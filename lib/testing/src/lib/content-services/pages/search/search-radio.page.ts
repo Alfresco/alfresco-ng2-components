@@ -22,8 +22,8 @@ import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 export class SearchRadioPage {
 
     filter: ElementFinder;
-    showMoreButton: ElementFinder = element(by.css('adf-search-radio button[title="Show more"]'));
-    showLessButton: ElementFinder = element(by.css('adf-search-radio button[title="Show less"]'));
+    showMoreButton = element(by.css('adf-search-radio button[title="Show more"]'));
+    showLessButton = element(by.css('adf-search-radio button[title="Show less"]'));
 
     constructor(filter: ElementFinder) {
         this.filter = filter;

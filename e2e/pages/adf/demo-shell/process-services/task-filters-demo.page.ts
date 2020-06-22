@@ -16,16 +16,16 @@
  */
 
 import { BrowserActions } from '@alfresco/adf-testing';
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { TaskFiltersPage } from '../../process-services/task-filters.page';
 
 export class TaskFiltersDemoPage {
 
-    myTasks: ElementFinder = element(by.css('button[data-automation-id="My Tasks_filter"]'));
-    queuedTask: ElementFinder = element(by.css('button[data-automation-id="Queued Tasks_filter"]'));
-    completedTask: ElementFinder = element(by.css('button[data-automation-id="Completed Tasks_filter"]'));
-    involvedTask: ElementFinder = element(by.css('button[data-automation-id="Involved Tasks_filter"]'));
-    activeFilter: ElementFinder = element(by.css('adf-task-filters .adf-active'));
+    myTasks = element(by.css('button[data-automation-id="My Tasks_filter"]'));
+    queuedTask = element(by.css('button[data-automation-id="Queued Tasks_filter"]'));
+    completedTask = element(by.css('button[data-automation-id="Completed Tasks_filter"]'));
+    involvedTask = element(by.css('button[data-automation-id="Involved Tasks_filter"]'));
+    activeFilter = element(by.css('adf-task-filters .adf-active'));
 
     myTasksFilter(): TaskFiltersPage {
         return new TaskFiltersPage(this.myTasks);
@@ -43,7 +43,7 @@ export class TaskFiltersDemoPage {
         return new TaskFiltersPage(this.involvedTask);
     }
 
-    customTaskFilter(filterName): TaskFiltersPage {
+    customTaskFilter(filterName: string): TaskFiltersPage {
         return new TaskFiltersPage(element(by.css(`button[data-automation-id="${filterName}_filter"]`)));
     }
 

@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-import { LoginPage, ApplicationsUtil } from '@alfresco/adf-testing';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
-import { Tenant } from '../models/APS/tenant';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
@@ -29,13 +27,18 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let processUserModel, assigneeUserModel;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const formTextField = app.form_fields.form_fieldId;
     const formFieldValue = 'First value ';
     const taskPage = new TasksPage();
@@ -49,28 +52,16 @@ describe('Start Task - Custom App', () => {
     });
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        assigneeUserModel = await usersActions.createUser();
+        processUserModel = await usersActions.createUser(new UserModel({ tenantId: assigneeUserModel.tenantId }));
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const newTenant = await this.alfrescoJsApi.activiti.adminTenantsApi.createTenant(new Tenant());
-
-        assigneeUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        processUserModel = await users.createApsUser(this.alfrescoJsApi, newTenant.id);
-
-        await this.alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     it('[C263942] Should be possible to modify a task', async () => {

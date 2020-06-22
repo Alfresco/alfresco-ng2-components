@@ -16,22 +16,31 @@
  */
 
 import { by, element, browser } from 'protractor';
-import { LoginPage, UploadActions, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    UploadActions,
+    BrowserVisibility,
+    BrowserActions,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Version Properties', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT_0B.file_name,
@@ -42,19 +51,15 @@ describe('Version Properties', () => {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location
     });
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        acsUser = await usersActions.createUser();
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
 
@@ -62,7 +67,7 @@ describe('Version Properties', () => {
 
         txtFileModel.update(txtUploadedFile.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

@@ -18,23 +18,23 @@
 import { BrowserActions, BrowserVisibility, FileBrowserUtil, LoginPage, UploadActions, ViewerPage } from '@alfresco/adf-testing';
 import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component actions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();
     const viewerPage = new ViewerPage();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const txtFileModel = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
@@ -53,18 +53,14 @@ describe('Version component actions', () => {
     });
 
     beforeAll(async () => {
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-        uploadActions = new UploadActions(this.alfrescoJsApi);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        uploadActions = new UploadActions(apiService);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         const txtUploadedFile = await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, '-my-');
         Object.assign(txtFileModel, txtUploadedFile.entry);
         txtFileModel.update(txtUploadedFile.entry);
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
    });

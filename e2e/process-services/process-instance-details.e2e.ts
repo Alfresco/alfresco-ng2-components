@@ -16,10 +16,9 @@
  */
 
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { LoginPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
@@ -28,50 +27,47 @@ import moment = require('moment');
 
 describe('Process Instance Details', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const processListPage = new ProcessListPage();
     const processDetailsPage = new ProcessDetailsPage();
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let appModel, process, user;
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const PROCESS_DATE_FORMAT = 'll';
 
     beforeAll(async () => {
-        const users = new UsersActions();
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        user = await usersActions.createUser();
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(user.email, user.password);
 
-        user = await users.createTenantAndUser(this.alfrescoJsApi);
-
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
         appModel = await applicationsService.importPublishDeployApp(app.file_path);
-        const processModel = await new ProcessUtil(this.alfrescoJsApi).startProcessOfApp(appModel.name);
+        const processModel = await new ProcessUtil(apiService).startProcessOfApp(appModel.name);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
 
         await navigationBarPage.navigateToProcessServicesPage();
         await processServicesPage.checkApsContainer();
         await processServicesPage.goToApp(app.title);
         await processServiceTabBarPage.clickProcessButton();
-        await processListPage.checkProcessListIsDisplayed();
+        await expect(await processListPage.isProcessListDisplayed()).toEqual(true);
 
-        process = await this.alfrescoJsApi.activiti.processApi.getProcessInstance(processModel.id);
+        process = await apiService.getInstance().activiti.processApi.getProcessInstance(processModel.id);
    });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appModel.id);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(user.tenantId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appModel.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
    });
 
     it('[C307031] Should display the created date in the default format', async () => {

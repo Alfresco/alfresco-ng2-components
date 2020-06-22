@@ -16,33 +16,61 @@
  */
 
 import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
+import { browser } from 'protractor';
 
 export class ApiService {
 
     apiService: AlfrescoApi;
 
-    config: AlfrescoApiConfig;
+    config: AlfrescoApiConfig = new AlfrescoApiConfig({
+        authType: 'OAUTH',
+        oauth2: {
+            scope: 'openid',
+            secret: '',
+            implicitFlow: false,
+            silentLogin: false,
+            redirectUri: '/',
+            redirectUriLogout: '/logout'
+        }
 
-    constructor(clientId: string, host: string, hostSso: string, provider: string) {
-        this.config = {
-            provider,
-            hostBpm: host,
-            hostEcm: host,
-            authType: 'OAUTH',
-            oauth2: {
-                host: hostSso,
-                clientId,
-                scope: 'openid',
-                secret: '',
-                implicitFlow: false,
-                silentLogin: false,
-                redirectUri: '/',
-                redirectUriLogout: '/logout'
-            }
+    });
 
-        };
+    constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
 
+        if (browser.params.testConfig && browser.params.testConfig.appConfig) {
+            this.config = { ...browser.params.testConfig.appConfig };
+            this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
+            this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
+        }
+
+        if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
+            this.config = { ...this.config, ...clientIdOrAppConfig };
+
+            this.config.hostEcm = clientIdOrAppConfig.hostEcm ? clientIdOrAppConfig.hostEcm : this.config.hostEcm;
+            this.config.hostBpm = clientIdOrAppConfig.hostBpm ? clientIdOrAppConfig.hostBpm : this.config.hostBpm;
+        } else if (clientIdOrAppConfig && typeof clientIdOrAppConfig === 'string') {
+            this.config.oauth2.clientId = clientIdOrAppConfig;
+        }
+
+        if (hostSso) {
+            this.config.oauth2.host = hostSso;
+        }
+
+        if (host) {
+            this.config.hostBpm = host;
+            this.config.hostEcm = host;
+        }
+
+        if (provider) {
+            this.config.provider = provider;
+        }
+
+        this.config.oauth2.implicitFlow = false;
         this.apiService = new AlfrescoApi(this.config);
+    }
+
+    getInstance(): AlfrescoApi {
+        return this.apiService;
     }
 
     async login(username: string, password: string): Promise<void> {
@@ -50,37 +78,39 @@ export class ApiService {
     }
 
     async performBpmOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
-        const uri = this.config.hostBpm + path;
-        const pathParams = {}, formParams = {};
-        const contentTypes = ['application/json'];
-        const accepts = ['application/json'];
+        return new Promise((resolve, reject) => {
+            const uri = this.config.hostBpm + path;
+            const pathParams = {}, formParams = {};
+            const contentTypes = ['application/json'];
+            const accepts = ['application/json'];
 
-        const headerParams = {
-            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
-        };
+            const headerParams = {
+                Authorization: 'bearer ' + this.apiService.oauth2Auth.token
+            };
 
-        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            contentTypes, accepts, Object)
-            .catch((error) => {
-                throw (error);
-            });
+            this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+                contentTypes, accepts, Object)
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
+        });
     }
 
     async performIdentityOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
-        const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
-        const pathParams = {}, formParams = {};
-        const contentTypes = ['application/json'];
-        const accepts = ['application/json'];
+        return new Promise((resolve, reject) => {
 
-        const headerParams = {
-            Authorization: 'bearer ' + this.apiService.oauth2Auth.token
-        };
+            const uri = this.config.oauth2.host.replace('/realms', '/admin/realms') + path;
+            const pathParams = {}, formParams = {};
+            const contentTypes = ['application/json'];
+            const accepts = ['application/json'];
 
-        return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
-            contentTypes, accepts, Object)
-            .catch((error) => {
-                throw (error);
-            });
+            const headerParams = {
+                Authorization: 'bearer ' + this.apiService.oauth2Auth.token
+            };
+
+            return this.apiService.processClient.callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody,
+                contentTypes, accepts, Object)
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
+        });
     }
-
 }

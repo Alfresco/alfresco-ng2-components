@@ -15,46 +15,41 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Multi-line Widget', () => {
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
 
-    const loginPage = new LoginPage();
-    let processUserModel;
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    let alfrescoJsApi;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.MULTILINE_TEXT;
+    let processUserModel;
     let deployedApp, process;
 
     beforeAll(async () => {
-        const users = new UsersActions();
+       await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+       processUserModel = await usersActions.createUser();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+       await apiService.getInstance().login(processUserModel.email, processUserModel.password);
+       appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
-        appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
-
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
-        deployedApp = appDefinitions.data.find((currentApp) => {
+       const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
+       deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+       process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+       await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {
@@ -65,36 +60,36 @@ describe('Multi-line Widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C268182] Should be able to set general properties for Multi-line Text Widget', async () => {
         const label = await widget.multilineTextWidget().getFieldLabel(app.FIELD.multiSimple);
         await expect(label).toBe('multiSimple*');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         const placeHolder = await widget.multilineTextWidget().getFieldPlaceHolder(app.FIELD.multiSimple);
         await expect(placeHolder).toBe('Type something...');
         await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268184] Should be able to set advanced properties for Multi-line Text Widget', async () => {
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'A');
         await expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter at least 4 characters');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAAAAAAAAA');
         await expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiMinMax)).toContain('Enter no more than 10 characters');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.multilineTextWidget().setValue(app.FIELD.multiMinMax, 'AAAA');
 
         await widget.multilineTextWidget().setValue(app.FIELD.multiSimple, 'TEST');
         await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, '3');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await expect(await widget.multilineTextWidget().getErrorMessage(app.FIELD.multiRegexp)).toContain('Enter a different value');
         await widget.multilineTextWidget().setValue(app.FIELD.multiRegexp, 'TE');
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C268232] Should be able to set visibility properties for Multi-line Text Widget', async () => {

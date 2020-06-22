@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material';
 import { SearchService, TranslationService } from '@alfresco/adf-core';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
@@ -25,6 +25,7 @@ import { SearchFilterList } from './models/search-filter-list.model';
 import { takeUntil } from 'rxjs/operators';
 import { GenericBucket, GenericFacetResponse, ResultSetContext, ResultSetPaging } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 export interface SelectedBucket {
     field: FacetField;
@@ -58,7 +59,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(public queryBuilder: SearchQueryBuilderService,
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) public queryBuilder: SearchQueryBuilderService,
                 private searchService: SearchService,
                 private translationService: TranslationService) {
         if (queryBuilder.config && queryBuilder.config.facetQueries) {

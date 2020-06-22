@@ -115,4 +115,50 @@ describe('DataTableCellComponent', () => {
         expect(component.row['node'].entry.name).not.toBe('updated-name');
         expect(component.row['cache'].name).not.toBe('updated-name');
     });
+
+    it('not should throw error if key not found', () => {
+        const component = new DateCellComponent(
+            null,
+            alfrescoApiService,
+            new AppConfigService(null)
+        );
+
+        component.column = {
+            key: 'contentSize.sizeInBytes',
+            type: 'text'
+        };
+
+        component.row = <any> {
+            cache: {
+                name: 'some-name'
+            },
+            node: {
+                entry: {
+                    id: 'id',
+                    name: 'some-name',
+                    contentSize: {
+                        sizeInBytes: '12Mb'
+                    }
+                }
+            }
+        };
+
+        component.ngOnInit();
+
+        alfrescoApiService.nodeUpdated.next({
+            id: 'id',
+            contentSize: { sizeInBytes: '11Mb' }
+        } as any);
+
+        expect(component.row['node'].entry.contentSize.sizeInBytes).toBe('11Mb');
+        expect(component.row['cache']['contentSize.sizeInBytes']).toBe('11Mb');
+
+        alfrescoApiService.nodeUpdated.next({
+            id: 'id',
+            name: 'updated-name'
+        } as any);
+
+        expect(component.row['node'].entry.name).toBe('updated-name');
+        expect(component.row['cache']['contentSize.sizeInBytes']).toBe('');
+    });
 });

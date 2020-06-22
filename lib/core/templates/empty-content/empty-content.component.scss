@@ -4,6 +4,7 @@
 
     $config: mat-typography-config();
     $foreground: map-get($theme, foreground);
+    $adf-empty-content-icon-opacity: 0.6;
 
     .adf-empty-content {
         color: mat-color($foreground, text, 0.54);
@@ -12,9 +13,11 @@
         align-items: center;
 
         &__icon {
-            font-size: mat-font-size($config, display-3);
-            height: mat-font-size($config, display-3) !important;
-            width: mat-font-size($config, display-3) !important;
+            .mat-icon {
+                font-size: mat-font-size($config, display-3);
+                height: mat-font-size($config, display-3) !important;
+                width: mat-font-size($config, display-3) !important;
+            }
         }
 
         &__title {
@@ -33,6 +36,10 @@
             line-height: inherit;
             white-space: normal;
             text-align: center;
+        }
+
+        .adf-icon {
+            opacity: $adf-empty-content-icon-opacity;
         }
     }
 }

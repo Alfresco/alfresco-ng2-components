@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { by, element, browser, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
+import { by, element, browser, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialogPage {
-    libraryDialog: ElementFinder = element(by.css('[role="dialog"]'));
-    libraryTitle: ElementFinder = element(by.css('.adf-library-dialog>h2'));
-    libraryNameField: ElementFinder = element(by.css('input[formcontrolname="title"]'));
-    libraryIdField: ElementFinder = element(by.css('input[formcontrolname="id"]'));
-    libraryDescriptionField: ElementFinder = element(by.css('textarea[formcontrolname="description"]'));
-    publicRadioButton: ElementFinder = element(by.css('[data-automation-id="PUBLIC"]>label'));
-    privateRadioButton: ElementFinder = element(by.css('[data-automation-id="PRIVATE"]>label'));
-    moderatedRadioButton: ElementFinder = element(by.css('[data-automation-id="MODERATED"]>label'));
-    cancelButton: ElementFinder = element(by.css('button[data-automation-id="cancel-library-id"]'));
-    createButton: ElementFinder = element(by.css('button[data-automation-id="create-library-id"]'));
-    errorMessage: ElementFinder = element(by.css('.mat-dialog-content .mat-error'));
-    errorMessages: ElementArrayFinder = element.all(by.css('.mat-dialog-content .mat-error'));
-    libraryNameHint: ElementFinder = element(by.css('adf-library-dialog .mat-hint'));
+    libraryDialog = element(by.css('[role="dialog"]'));
+    libraryTitle = element(by.css('.adf-library-dialog>h2'));
+    libraryNameField = element(by.css('input[formcontrolname="title"]'));
+    libraryIdField = element(by.css('input[formcontrolname="id"]'));
+    libraryDescriptionField = element(by.css('textarea[formcontrolname="description"]'));
+    publicRadioButton = element(by.css('[data-automation-id="PUBLIC"]>label'));
+    privateRadioButton = element(by.css('[data-automation-id="PRIVATE"]>label'));
+    moderatedRadioButton = element(by.css('[data-automation-id="MODERATED"]>label'));
+    cancelButton = element(by.css('button[data-automation-id="cancel-library-id"]'));
+    createButton = element(by.css('button[data-automation-id="create-library-id"]'));
+    errorMessage = element(by.css('.mat-dialog-content .mat-error'));
+    errorMessages = element.all(by.css('.mat-dialog-content .mat-error'));
+    libraryNameHint = element(by.css('adf-library-dialog .mat-hint'));
 
     async getSelectedRadio(): Promise<string> {
-        const radio: ElementFinder = element(by.css('.mat-radio-button[class*="checked"]'));
+        const radio = element(by.css('.mat-radio-button[class*="checked"]'));
         return BrowserActions.getText(radio);
     }
 
@@ -66,7 +66,7 @@ export class CreateLibraryDialogPage {
         return BrowserActions.getText(this.errorMessage);
     }
 
-    async getErrorMessages(position): Promise<string> {
+    async getErrorMessages(position: number): Promise<string> {
         return BrowserActions.getText(this.errorMessages.get(position));
     }
 
@@ -122,11 +122,11 @@ export class CreateLibraryDialogPage {
         await BrowserActions.clearSendKeys(this.libraryNameField, libraryName);
     }
 
-    async typeLibraryId(libraryId): Promise<void> {
+    async typeLibraryId(libraryId: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.libraryIdField, libraryId);
     }
 
-    async typeLibraryDescription(libraryDescription): Promise<void> {
+    async typeLibraryDescription(libraryDescription: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.libraryDescriptionField, libraryDescription);
     }
 

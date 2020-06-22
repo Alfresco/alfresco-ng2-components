@@ -17,7 +17,6 @@
 
 import { ApiService } from '../api.service';
 import { UserModel } from '../../models/user.model';
-import { PersonBodyCreate } from '@alfresco/js-api';
 import { RolesService } from './roles.service';
 import { Logger } from '../../utils/logger';
 
@@ -36,8 +35,8 @@ export class IdentityService {
         ACTIVITI_IDENTITY: 'ACTIVITI_IDENTITY'
     };
 
-    async createIdentityUserWithRole(apiService: ApiService, roles: string[]): Promise<any> {
-        const rolesService = new RolesService(apiService);
+    async createIdentityUserWithRole(roles: string[]): Promise<any> {
+        const rolesService = new RolesService(this.api);
         const user = await this.createIdentityUser();
         for (let i = 0; i < roles.length; i++) {
             const roleId = await rolesService.getRoleIdByRoleName(roles[i]);
@@ -53,33 +52,6 @@ export class IdentityService {
         await this.resetPassword(userIdentity.id, user.password);
         user.idIdentityService = userIdentity.id;
         return user;
-    }
-
-    async createIdentityUserAndSyncECMBPM(user: UserModel): Promise<void> {
-        if (this.api.config.provider === 'ECM' || this.api.config.provider === 'ALL') {
-            const createUser: PersonBodyCreate = {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                password: user.password,
-                email: user.email,
-                id: user.email
-            } as PersonBodyCreate;
-            await this.api.apiService.core.peopleApi.addPerson(createUser);
-        }
-
-        if (this.api.config.provider === 'BPM' || this.api.config.provider === 'ALL') {
-            await this.api.apiService.activiti.adminUsersApi.createNewUser({
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                password: user.password,
-                type: 'enterprise',
-                tenantId: 1,
-                company: null
-            });
-        }
-
-        await this.createIdentityUser(user);
     }
 
     async deleteIdentityUser(userId: string): Promise<void> {

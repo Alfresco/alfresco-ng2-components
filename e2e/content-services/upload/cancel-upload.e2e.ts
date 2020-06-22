@@ -16,26 +16,24 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component', async () => {
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
+    const apiService = new ApiService();
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginPage();
-    const acsUser = new AcsUserModel();
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const loginPage = new LoginSSOPage();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
+
+    let acsUser: UserModel;
 
     const pngFile = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name,
@@ -53,11 +51,11 @@ describe('Upload component', async () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
     });
 

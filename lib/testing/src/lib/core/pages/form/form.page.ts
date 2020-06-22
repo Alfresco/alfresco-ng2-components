@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { element, by } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/public-api';
 
 export class FormPage {
 
-    errorLog: ElementFinder = element(by.css('div[class*="console"]'));
-    saveButton: ElementFinder = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
+    errorLog = element(by.css('div[class*="console"]'));
+    saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
 
-    async checkErrorMessageForWidgetIsDisplayed(errorMessage): Promise<void> {
+    async checkErrorMessageForWidgetIsDisplayed(errorMessage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
-    async checkErrorMessageForWidgetIsNotDisplayed(errorMessage): Promise<void> {
+    async checkErrorMessageForWidgetIsNotDisplayed(errorMessage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('.adf-error-text', errorMessage)));
     }
 
-    async checkErrorLogMessage(errorMessage): Promise<void> {
+    async checkErrorLogMessage(errorMessage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
         await BrowserVisibility.waitUntilElementIsVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
     }
 
-    async checkErrorMessageIsNotDisplayed(errorMessage): Promise<void> {
+    async checkErrorMessageIsNotDisplayed(errorMessage: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.errorLog);
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.cssContainingText('div[class*="console"] p', errorMessage)));
     }

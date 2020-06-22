@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder, Locator, browser } from 'protractor';
+import { element, by, browser } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessListCloudComponentPage {
@@ -27,10 +27,10 @@ export class ProcessListCloudComponentPage {
         name: 'Name'
     };
 
-    processList: ElementFinder = element(by.css('adf-cloud-process-list'));
-    noProcessFound: ElementFinder = element.all(by.css("div[class='adf-empty-content__title']")).first();
-    actionMenu: ElementFinder = element(by.css('*[role="menu"]'));
-    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
+    processList = element(by.css('adf-cloud-process-list'));
+    noProcessFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    actionMenu = element(by.css('*[role="menu"]'));
+    optionButton = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable: DataTableComponentPage = new DataTableComponentPage(this.processList);
 
@@ -38,43 +38,43 @@ export class ProcessListCloudComponentPage {
         return this.dataTable;
     }
 
-    selectRow(processName): Promise<void> {
+    selectRow(processName: string): Promise<void> {
         return this.dataTable.selectRow(this.columns.name, processName);
     }
 
-    selectRowById(processId): Promise<void> {
+    selectRowById(processId: string): Promise<void> {
         return this.dataTable.selectRow(this.columns.id, processId);
     }
 
-    checkRowIsSelectedById(processId): Promise<void> {
+    checkRowIsSelectedById(processId: string): Promise<void> {
         return this.dataTable.checkRowIsSelected(this.columns.id, processId);
     }
 
-    checkRowIsNotSelectedById(processId): Promise<void> {
+    checkRowIsNotSelectedById(processId: string): Promise<void> {
         return this.dataTable.checkRowIsNotSelected(this.columns.id, processId);
     }
 
-    checkRowIsCheckedById(processId): Promise<void> {
+    checkRowIsCheckedById(processId: string): Promise<void> {
         return this.dataTable.checkRowIsChecked(this.columns.id, processId);
     }
 
-    checkRowIsNotCheckedById(processId): Promise<void> {
+    checkRowIsNotCheckedById(processId: string): Promise<void> {
         return this.dataTable.checkRowIsNotChecked(this.columns.id, processId);
     }
 
-    checkCheckboxById(processId): Promise<void> {
+    checkCheckboxById(processId: string): Promise<void> {
         return this.dataTable.clickCheckbox(this.columns.id, processId);
     }
 
-    checkContentIsDisplayedByName(processName): Promise<void> {
+    checkContentIsDisplayedByName(processName: string): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(this.columns.name, processName);
     }
 
-    checkContentIsNotDisplayedByName(processName): Promise<void> {
+    checkContentIsNotDisplayedByName(processName: string): Promise<void> {
         return this.dataTable.checkContentIsNotDisplayed(this.columns.name, processName);
     }
 
-    checkContentIsDisplayedById(processId): Promise<void> {
+    checkContentIsDisplayedById(processId: string): Promise<void> {
         return this.dataTable.checkContentIsDisplayed(this.columns.id, processId);
     }
 
@@ -104,7 +104,7 @@ export class ProcessListCloudComponentPage {
 
     async clickOptionsButton(content: string): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        const row: ElementFinder = this.dataTable.getRow('Id', content);
+        const row = this.dataTable.getRow('Id', content);
         await browser.sleep(1000);
         await BrowserActions.click(row.element(this.optionButton));
         await BrowserVisibility.waitUntilElementIsVisible(this.actionMenu);

@@ -25,7 +25,6 @@ import {
     StartTasksCloudPage,
     ApiService,
     IdentityService,
-    SettingsPage,
     GroupIdentityService,
     TaskFormCloudComponent,
     LocalStorageUtil,
@@ -43,9 +42,8 @@ import { StartProcessCloudConfiguration } from './config/start-process-cloud.con
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { FileModel } from '../models/ACS/file.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
+import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {
 
@@ -58,28 +56,23 @@ describe('Start Task Form', () => {
     const contentNodeSelectorDialogPage = new ContentNodeSelectorDialogPage();
     const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
-    const settingsPage = new SettingsPage();
     const widget = new ProcessCloudWidgetPage();
     const startProcessPage = new StartProcessCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const processHeaderCloud = new ProcessHeaderCloudPage();
-    const apiService = new ApiService(
-        browser.params.config.oauth2.clientId,
-        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-    );
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.config.bpmHost
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
 
     const startProcessCloudConfiguration = new StartProcessCloudConfiguration();
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
 
     const standaloneTaskName = StringUtil.generateRandomString(5);
     const startEventFormProcess = StringUtil.generateRandomString(5);
-    let testUser, acsUser, groupInfo;
+    let testUser, groupInfo;
     let processDefinitionService: ProcessDefinitionsService;
     let processInstancesService: ProcessInstancesService;
     let processDefinition, uploadLocalFileProcess, uploadContentFileProcess, uploadDefaultFileProcess,
@@ -95,17 +88,13 @@ describe('Start Task Form', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.TEST.file_path
     });
 
-    let identityService: IdentityService;
-    let groupIdentityService: GroupIdentityService;
     const folderName = StringUtil.generateRandomString(5);
     let uploadedFolder;
 
     beforeAll(async () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        identityService = new IdentityService(apiService);
-        groupIdentityService = new GroupIdentityService(apiService);
-        testUser = await identityService.createIdentityUserWithRole(apiService, [identityService.ROLES.ACTIVITI_USER]);
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
         groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
         await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
@@ -147,30 +136,12 @@ describe('Start Task Form', () => {
             'businessKey': StringUtil.generateRandomString()
         });
 
-        acsUser = await new AcsUserModel({
-            email: testUser.email,
-            password: testUser.password,
-            id: testUser.username,
-            firstName: testUser.firstName,
-            lastName: testUser.lastName
-        });
-        await this.alfrescoJsApi.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(testUser.email, testUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(testFileModel.location, testFileModel.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, uploadedFolder.entry.id);
 
-        await settingsPage.setProviderEcmBpmSso(
-            browser.params.config.bpmHost,
-            browser.params.config.bpmHost,
-            browser.params.config.oauth2.host,
-            browser.params.config.identityHost,
-            browser.params.config.oauth2.clientId,
-            false);
-        await loginSSOPage.clickOnSSOButton();
-
-        await loginSSOPage.loginSSOIdentityService(testUser.email, testUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await LocalStorageUtil.setConfigField('adf-cloud-start-process', JSON.stringify(startProcessCloudConfig));
     });
 
@@ -186,7 +157,6 @@ describe('Start Task Form', () => {
     });
 
     describe('StandaloneTask with form', () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
@@ -238,7 +208,6 @@ describe('Start Task Form', () => {
    });
 
     describe('Start a process with a start event form', async () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
@@ -246,8 +215,8 @@ describe('Start Task Form', () => {
             await appListCloudComponent.goToApp(candidateBaseApp);
             await processCloudDemoPage.openNewProcessForm();
             await startProcessPage.clearField(startProcessPage.processNameInput);
-            await startProcessPage.enterProcessName(startEventFormProcess);
             await startProcessPage.selectFromProcessDropdown(browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.processes.processwithstarteventform);
+            await startProcessPage.enterProcessName(startEventFormProcess);
 
             await startProcessPage.formFields().checkFormIsDisplayed();
         });
@@ -278,7 +247,7 @@ describe('Start Task Form', () => {
             await expect(await startProcessPage.checkStartProcessButtonIsEnabled()).toBe(true);
             await startProcessPage.clickStartProcessButton();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
-            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('Running Processes');
+            await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe(CONSTANTS.PROCESS_FILTERS.RUNNING);
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(startEventFormProcess);
 
@@ -312,7 +281,6 @@ describe('Start Task Form', () => {
    });
 
     describe('Attach content to process-cloud task form using upload widget', async () => {
-
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

@@ -15,25 +15,37 @@
  * limitations under the License.
  */
 
-import { LoginPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    FileBrowserUtil,
+    ViewerPage,
+    ApplicationsUtil,
+    ProcessUtil,
+    ApiService
+} from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 
 describe('Attachment list action menu for processes', () => {
 
-    const loginPage = new LoginPage();
+    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const loginPage = new LoginSSOPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
+
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     const pngFile = new FileModel({
         location: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_location,
         name: browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_name
@@ -50,40 +62,32 @@ describe('Attachment list action menu for processes', () => {
     };
 
     beforeAll(async () => {
-        const users = new UsersActions();
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        const user = await users.createTenantAndUser(this.alfrescoJsApi);
+        const user = await usersActions.createUser();
 
         tenantId = user.tenantId;
 
-        await this.alfrescoJsApi.login(user.email, user.password);
-
-        const applicationsService = new ApplicationsUtil(this.alfrescoJsApi);
+        await apiService.getInstance().login(user.email, user.password);
 
         const importedApp = await applicationsService.importPublishDeployApp(app.file_path);
         appId = importedApp.id;
 
-        const processUtil = new ProcessUtil(this.alfrescoJsApi);
+        const processUtil = new ProcessUtil(apiService);
         await processUtil.startProcessOfApp(importedApp.name, processName.completed);
         await processUtil.startProcessOfApp(importedApp.name, processName.active);
         await processUtil.startProcessOfApp(importedApp.name, processName.taskApp);
         await processUtil.startProcessOfApp(importedApp.name, processName.emptyList);
         await processUtil.startProcessOfApp(importedApp.name, processName.dragDrop);
 
-        await loginPage.loginToProcessServicesUsingUserModel(user);
+        await loginPage.login(user.email, user.password);
     });
 
     afterAll(async () => {
-        await this.alfrescoJsApi.activiti.modelsApi.deleteModel(appId);
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(tenantId);
+        await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
     });
 
     it('[C260228] Should be able to access options of a file attached to an active process', async () => {

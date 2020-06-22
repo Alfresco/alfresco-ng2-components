@@ -16,22 +16,28 @@
  */
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FileModel } from '../../models/ACS/file.model';
-import { LoginPage, UploadActions, BrowserVisibility, FileBrowserUtil } from '@alfresco/adf-testing';
+import {
+    LoginSSOPage,
+    UploadActions,
+    BrowserVisibility,
+    FileBrowserUtil,
+    ApiService,
+    UserModel
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component actions', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();
 
-    const acsUser = new AcsUserModel();
+    let acsUser: UserModel;
 
     const txtFileComma = new FileModel({
         name: 'comma,name',
@@ -58,17 +64,14 @@ describe('Version component actions', () => {
         location: browser.params.resources.Files.ADF_DOCUMENTS.TEXT_FOLDER.folder_location
     });
 
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const apiService = new ApiService();
+    const uploadActions = new UploadActions(apiService);
+    const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
-
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        acsUser = await usersActions.createUser();
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, '-my-');
         await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, '-my-');
@@ -79,7 +82,7 @@ describe('Version component actions', () => {
 
         await uploadActions.createFolder(folderSecond.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();

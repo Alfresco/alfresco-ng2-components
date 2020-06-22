@@ -117,8 +117,12 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public selectFilterAndEmit(newParamFilter: FilterParamsModel) {
-        this.selectFilter(newParamFilter);
-        this.filterClick.emit(this.currentFilter);
+        if (newParamFilter) {
+            this.selectFilter(newParamFilter);
+            this.filterClick.emit(this.currentFilter);
+        } else {
+            this.currentFilter = undefined;
+        }
     }
 
     /**

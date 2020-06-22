@@ -89,4 +89,11 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     changeHandler(event: MatRadioChange) {
         this.setValue(event.value);
     }
+
+    reset() {
+        const initialValue = this.getSelectedValue();
+        if (initialValue !== null) {
+            this.setValue(initialValue);
+        }
+    }
 }

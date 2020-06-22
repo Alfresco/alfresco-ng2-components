@@ -80,7 +80,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
             }
 
             if (field.type === FormFieldTypes.BOOLEAN) {
-                return field.value ? true : false;
+                return !!field.value;
             }
 
             if (field.value === null || field.value === undefined || field.value === '') {

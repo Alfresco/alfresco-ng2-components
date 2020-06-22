@@ -136,6 +136,30 @@ describe('TaskHeaderComponent', () => {
 
     describe('Claiming', () => {
 
+        it('should be able display the claim/release button if showClaimRelease set to true', async(() => {
+            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.showClaimRelease = true;
+            component.refreshData();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            });
+        }));
+
+        it('should not be able display the claim/release button if showClaimRelease set to false', async(() => {
+            component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
+            component.showClaimRelease = false;
+            component.refreshData();
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const claimButton = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+                expect(claimButton).toBeNull();
+            });
+        }));
+
         it('should display the claim button if no assignee', async(() => {
             component.taskDetails = new TaskDetailsModel(claimableTaskDetailsMock);
 
@@ -227,38 +251,37 @@ describe('TaskHeaderComponent', () => {
         });
     }));
 
-    it('should call the service unclaim method on un-claiming', async(() => {
-        spyOn(service, 'unclaimTask').and.returnValue(of(true));
-        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.refreshData();
+    it('should emit claim event when task is claimed', (done) => {
+        spyOn(service, 'claimTask').and.returnValue(of({}));
+        component.taskDetails = claimableTaskDetailsMock;
+
+        component.claim.subscribe((taskId) => {
+            expect(taskId).toEqual(component.taskDetails.id);
+            done();
+        });
+
+        component.ngOnInit();
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            unclaimButton.triggerEventHandler('click', {});
+        const claimBtn = fixture.debugElement.query(By.css('[adf-claim-task]'));
+        claimBtn.nativeElement.click();
+    });
 
-            expect(service.unclaimTask).toHaveBeenCalledWith('91');
+    it('should emit unclaim event when task is unclaimed', (done) => {
+        spyOn(service, 'unclaimTask').and.returnValue(of({}));
+        component.taskDetails = claimedTaskDetailsMock;
+
+        component.unclaim.subscribe((taskId: string) => {
+            expect(taskId).toEqual(component.taskDetails.id);
+            done();
         });
-    }));
 
-    it('should trigger the unclaim event on successful un-claiming', async(() => {
-        let unclaimed: boolean = false;
-        spyOn(service, 'unclaimTask').and.returnValue(of(true));
-        component.taskDetails = new TaskDetailsModel(claimedTaskDetailsMock);
-        component.refreshData();
+        component.ngOnInit();
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-            component.unclaim.subscribe(() => {
-                unclaimed = true;
-            });
-
-            const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="header-unclaim-button"]'));
-            unclaimButton.triggerEventHandler('click', {});
-
-            expect(unclaimed).toBeTruthy();
-        });
-    }));
+        const unclaimBtn = fixture.debugElement.query(By.css('[adf-unclaim-task]'));
+        unclaimBtn.nativeElement.click();
+    });
 
     it('should display due date', async(() => {
         component.taskDetails.dueDate = new Date('2016-11-03');

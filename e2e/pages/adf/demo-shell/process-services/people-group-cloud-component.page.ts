@@ -15,30 +15,30 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class PeopleGroupCloudComponentPage {
 
-    peopleCloudSingleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"][class*="mat-radio-checked"]'));
-    peopleCloudMultipleSelectionChecked: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"][class*="mat-radio-checked"]'));
-    peopleCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"]'));
-    peopleCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"]'));
-    peopleCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-people-filter-role"]'));
-    groupCloudSingleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-group-single-mode"]'));
-    groupCloudMultipleSelection: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-group-multiple-mode"]'));
-    groupCloudFilterRole: ElementFinder = element(by.css('mat-radio-button[data-automation-id="app-group-filter-role"]'));
-    peopleRoleInput: ElementFinder = element(by.css('input[data-automation-id="app-people-roles-input"]'));
-    peopleAppInput: ElementFinder = element(by.css('input[data-automation-id="app-people-app-input"]'));
-    peoplePreselect: ElementFinder = element(by.css('input[data-automation-id="app-people-preselect-input"]'));
-    groupRoleInput: ElementFinder = element(by.css('input[data-automation-id="app-group-roles-input"]'));
-    groupAppInput: ElementFinder = element(by.css('input[data-automation-id="app-group-app-input"]'));
-    peopleCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
-    groupCloudComponentTitle: ElementFinder = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
-    preselectValidation: ElementFinder = element.all(by.css('mat-checkbox.app-preselect-value')).first();
-    preselectValidationStatus: ElementFinder = element.all(by.css('mat-checkbox.app-preselect-value label input')).first();
-    peopleFilterByAppName: ElementFinder = element(by.css('.app-people-control-options mat-radio-button[value="appName"]'));
-    groupFilterByAppName: ElementFinder = element(by.css('.app-groups-control-options mat-radio-button[value="appName"]'));
+    peopleCloudSingleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"][class*="mat-radio-checked"]'));
+    peopleCloudMultipleSelectionChecked = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"][class*="mat-radio-checked"]'));
+    peopleCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="app-people-single-mode"]'));
+    peopleCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="app-people-multiple-mode"]'));
+    peopleCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="app-people-filter-role"]'));
+    groupCloudSingleSelection = element(by.css('mat-radio-button[data-automation-id="app-group-single-mode"]'));
+    groupCloudMultipleSelection = element(by.css('mat-radio-button[data-automation-id="app-group-multiple-mode"]'));
+    groupCloudFilterRole = element(by.css('mat-radio-button[data-automation-id="app-group-filter-role"]'));
+    peopleRoleInput = element(by.css('input[data-automation-id="app-people-roles-input"]'));
+    peopleAppInput = element(by.css('input[data-automation-id="app-people-app-input"]'));
+    peoplePreselect = element(by.css('input[data-automation-id="app-people-preselect-input"]'));
+    groupRoleInput = element(by.css('input[data-automation-id="app-group-roles-input"]'));
+    groupAppInput = element(by.css('input[data-automation-id="app-group-app-input"]'));
+    peopleCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'People Cloud Component'));
+    groupCloudComponentTitle = element(by.cssContainingText('mat-card-title', 'Groups Cloud Component'));
+    preselectValidation = element.all(by.css('mat-checkbox.app-preselect-value')).first();
+    preselectValidationStatus = element.all(by.css('mat-checkbox.app-preselect-value label input')).first();
+    peopleFilterByAppName = element(by.css('.app-people-control-options mat-radio-button[value="appName"]'));
+    groupFilterByAppName = element(by.css('.app-groups-control-options mat-radio-button[value="appName"]'));
 
     async checkPeopleCloudComponentTitleIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.peopleCloudComponentTitle);
@@ -76,11 +76,11 @@ export class PeopleGroupCloudComponentPage {
         await BrowserActions.click(this.groupCloudFilterRole);
     }
 
-    async enterPeopleRoles(roles): Promise<void> {
+    async enterPeopleRoles(roles: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleRoleInput, roles);
     }
 
-    async enterPeoplePreselect(preselect): Promise<void> {
+    async enterPeoplePreselect(preselect: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.peoplePreselect, preselect);
     }
 
@@ -117,11 +117,11 @@ export class PeopleGroupCloudComponentPage {
         await BrowserActions.click(this.groupFilterByAppName);
     }
 
-    async enterPeopleAppName(appName): Promise<void> {
+    async enterPeopleAppName(appName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.peopleAppInput, appName);
     }
 
-    async enterGroupAppName(appName): Promise<void> {
+    async enterGroupAppName(appName: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.groupAppInput, appName);
     }
 

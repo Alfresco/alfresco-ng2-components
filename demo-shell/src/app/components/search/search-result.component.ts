@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, OnDestroy } from '@angular/core';
+import { Component, OnInit, Optional, OnDestroy, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Pagination, ResultSetPaging } from '@alfresco/js-api';
-import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { SearchQueryBuilderService, SEARCH_QUERY_SERVICE_TOKEN } from '@alfresco/adf-content-services';
 import { UserPreferencesService, SearchService, AppConfigService } from '@alfresco/adf-core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -27,7 +27,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'app-search-result-component',
     templateUrl: './search-result.component.html',
     styleUrls: ['./search-result.component.scss'],
-    providers: [SearchService, SearchQueryBuilderService]
+    providers: [SearchService, { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService}]
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
 
@@ -44,7 +44,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     constructor(public router: Router,
                 private config: AppConfigService,
                 private preferences: UserPreferencesService,
-                private queryBuilder: SearchQueryBuilderService,
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilder: SearchQueryBuilderService,
                 @Optional() private route: ActivatedRoute) {
         queryBuilder.paging = {
             maxItems: this.preferences.paginationSize,

@@ -15,38 +15,36 @@
  * limitations under the License.
  */
 
-import { ApiService, IdentityService, LoginSSOPage, SettingsPage, UserInfoPage } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LoginSSOPage,
+    SettingsPage,
+    UserInfoPage
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('User Info - SSO', () => {
 
     const settingsPage = new SettingsPage();
     const loginSSOPage = new LoginSSOPage();
     const userInfoPage = new UserInfoPage();
-    let silentLogin, identityUser;
-    let identityService: IdentityService;
+
+    const apiService = new ApiService({ authType: 'OAUTH', provider: 'ECM' });
+    const usersActions = new UsersActions(apiService);
+
+    let identityUser;
 
     beforeAll(async () => {
-        const apiService = new ApiService(browser.params.config.oauth2.clientId, browser.params.testConfig.adf.url, browser.params.testConfig.adf.hostSso, 'ECM');
-        await apiService.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        identityService = new IdentityService(apiService);
-        identityUser = await identityService.createIdentityUser();
+        identityUser = await usersActions.createUser();
 
-        silentLogin = false;
         await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
-            browser.params.testConfig.adf.hostSso,
-            browser.params.testConfig.adf.hostIdentity, silentLogin, true, browser.params.config.oauth2.clientId);
-
-        await loginSSOPage.clickOnSSOButton();
+            browser.params.testConfig.appConfig.oauth2.host,
+            browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
         await loginSSOPage.loginSSOIdentityService(identityUser.email, identityUser.password);
-   });
-
-    afterAll(async () => {
-        if (identityService) {
-            await identityService.deleteIdentityUser(identityUser.idIdentityService);
-        }
     });
 
     it('[C290066] Should display UserInfo when login using SSO', async () => {

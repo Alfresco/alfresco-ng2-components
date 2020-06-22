@@ -16,55 +16,55 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { browser, by, element, ElementFinder, Key } from 'protractor';
+import { browser, by, element, Key } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
 
     appSettingsTogglesClass = new AppSettingsTogglesPage();
 
-    formContent: ElementFinder = element(by.css('adf-form'));
-    formNameField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
-    formNameButton: ElementFinder = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
-    assigneeField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
-    assigneeButton: ElementFinder = element(by.css('[data-automation-id="card-textitem-toggle-assignee"]'));
-    statusField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-status"]'));
-    categoryField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-category"] '));
-    parentNameField: ElementFinder = element(by.css('span[data-automation-id*="parentName"] span'));
-    parentTaskIdField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-parentTaskId"] '));
-    durationField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-duration"] '));
-    endDateField: ElementFinder = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
-    createdField: ElementFinder = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
-    idField: ElementFinder = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
-    descriptionField: ElementFinder = element(by.css('[data-automation-id="card-textitem-value-description"]'));
-    dueDateField: ElementFinder = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
-    activitiesTitle: ElementFinder = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
-    commentField: ElementFinder = element(by.id('comment-input'));
-    addCommentButton: ElementFinder = element(by.css('[data-automation-id="comments-input-add"]'));
-    involvePeopleButton: ElementFinder = element(by.css('div[class*="add-people"]'));
-    addPeopleField: ElementFinder = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    addInvolvedUserButton: ElementFinder = element(by.css('button[id="add-people"] span'));
+    formContent = element(by.css('adf-form'));
+    formNameField = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
+    formNameButton = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
+    assigneeField = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
+    assigneeButton = element(by.css('[data-automation-id="card-textitem-toggle-assignee"]'));
+    statusField = element(by.css('[data-automation-id="card-textitem-value-status"]'));
+    categoryField = element(by.css('[data-automation-id="card-textitem-value-category"] '));
+    parentNameField = element(by.css('span[data-automation-id*="parentName"] span'));
+    parentTaskIdField = element(by.css('[data-automation-id="card-textitem-value-parentTaskId"] '));
+    durationField = element(by.css('[data-automation-id="card-textitem-value-duration"] '));
+    endDateField = element.all(by.css('span[data-automation-id*="endDate"] span')).first();
+    createdField = element(by.css('span[data-automation-id="card-dateitem-created"] span'));
+    idField = element.all(by.css('[data-automation-id="card-textitem-value-id"]')).first();
+    descriptionField = element(by.css('[data-automation-id="card-textitem-value-description"]'));
+    dueDateField = element.all(by.css('span[data-automation-id*="dueDate"] span')).first();
+    activitiesTitle = element(by.css('div[class*="adf-info-drawer-layout-header-title"] div'));
+    commentField = element(by.id('comment-input'));
+    addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
+    involvePeopleButton = element(by.css('div[class*="add-people"]'));
+    addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
+    addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
     emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
-    taskDetailsInfoDrawer: ElementFinder = element(by.tagName('adf-info-drawer'));
-    taskDetailsSection: ElementFinder = element(by.css('div[data-automation-id="app-tasks-details"]'));
-    taskDetailsEmptySection: ElementFinder = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
-    completeTask: ElementFinder = element(by.css('button[id="adf-no-form-complete-button"]'));
-    completeFormTask: ElementFinder = element(by.css('button[id="adf-form-complete"]'));
-    taskDetailsTitle: ElementFinder = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
-    auditLogButton: ElementFinder = element(by.css('button[adf-task-audit]'));
-    noPeopleInvolved: ElementFinder = element(by.id('no-people-label'));
-    cancelInvolvePeopleButton: ElementFinder = element(by.id('close-people-search'));
-    involvePeopleHeader: ElementFinder = element(by.css('div[class="adf-search-text-header"]'));
-    removeInvolvedPeople: ElementFinder = element(by.css('button[data-automation-id="Remove"]'));
-    peopleTitle: ElementFinder = element(by.id('people-title'));
-    noFormMessage: ElementFinder = element(by.css('span[id*="no-form-message"]'));
-    cancelAttachForm: ElementFinder = element(by.id('adf-no-form-cancel-button'));
-    attachFormButton: ElementFinder = element(by.id('adf-no-form-attach-form-button'));
-    disabledAttachFormButton: ElementFinder = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
-    removeAttachForm: ElementFinder = element(by.id('adf-attach-form-remove-button'));
-    attachFormName: ElementFinder = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
-    emptyTaskDetails: ElementFinder = element(by.css('adf-task-details > div > div'));
-    priority: ElementFinder = element(by.css('[data-automation-id*="card-textitem-value-priority"]'));
+    taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
+    taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
+    taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
+    completeTask = element(by.css('button[id="adf-no-form-complete-button"]'));
+    completeFormTask = element(by.css('button[id="adf-form-complete"]'));
+    taskDetailsTitle = element(by.css('h2[class="adf-activiti-task-details__header"] span'));
+    auditLogButton = element(by.css('button[adf-task-audit]'));
+    noPeopleInvolved = element(by.id('no-people-label'));
+    cancelInvolvePeopleButton = element(by.id('close-people-search'));
+    involvePeopleHeader = element(by.css('div[class="adf-search-text-header"]'));
+    removeInvolvedPeople = element(by.css('button[data-automation-id="Remove"]'));
+    peopleTitle = element(by.id('people-title'));
+    noFormMessage = element(by.css('span[id*="no-form-message"]'));
+    cancelAttachForm = element(by.id('adf-no-form-cancel-button'));
+    attachFormButton = element(by.id('adf-no-form-attach-form-button'));
+    disabledAttachFormButton = element(by.css('button[id="adf-no-form-attach-form-button"][disabled]'));
+    removeAttachForm = element(by.id('adf-attach-form-remove-button'));
+    attachFormName = element(by.css('span[class="adf-form-title ng-star-inserted"]'));
+    emptyTaskDetails = element(by.css('adf-task-details > div > div'));
+    priority = element(by.css('[data-automation-id*="card-textitem-value-priority"]'));
     editableAssignee = element(by.css('[data-automation-id="card-textitem-value-assignee"][class*="clickable"]'));
     claimElement = element(by.css('[data-automation-id="header-claim-button"]'));
     releaseElement = element(by.css('[data-automation-id="header-unclaim-button"]'));
@@ -261,18 +261,18 @@ export class TaskDetailsPage {
         await tabsPage.clickTabByTitle('Details');
     }
 
-    async addComment(comment): Promise<void> {
+    async addComment(comment: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.commentField, comment);
         await BrowserActions.click(this.addCommentButton);
     }
 
-    async checkCommentIsDisplayed(comment): Promise<void> {
-        const row: ElementFinder = element(by.cssContainingText('div[id="comment-message"]', comment));
+    async checkCommentIsDisplayed(comment: string): Promise<void> {
+        const row = element(by.cssContainingText('div[id="comment-message"]', comment));
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
     async checkIsEmptyCommentListDisplayed(): Promise<void> {
-        const emptyList: ElementFinder = element(by.cssContainingText('div[id="comment-header"]', '(0)'));
+        const emptyList = element(by.cssContainingText('div[id="comment-header"]', '(0)'));
         await BrowserVisibility.waitUntilElementIsVisible(emptyList);
     }
 
@@ -283,7 +283,7 @@ export class TaskDetailsPage {
         await BrowserActions.click(this.involvePeopleButton);
     }
 
-    async typeUser(user): Promise<void> {
+    async typeUser(user: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.addPeopleField, user);
     }
 
@@ -292,8 +292,8 @@ export class TaskDetailsPage {
         await BrowserActions.click(row);
     }
 
-    async checkUserIsSelected(user): Promise<void> {
-        const row: ElementFinder = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
+    async checkUserIsSelected(user: string): Promise<void> {
+        const row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
@@ -301,7 +301,7 @@ export class TaskDetailsPage {
         await BrowserActions.click(this.addInvolvedUserButton);
     }
 
-    getRowsUser(user) {
+    getRowsUser(user: string) {
         return element(by.cssContainingText('div[class*="people-full-name"]', user));
     }
 
@@ -408,7 +408,7 @@ export class TaskDetailsPage {
     }
 
     async clickCompleteFormTask(): Promise<void> {
-        await BrowserActions.click(this.completeFormTask);
+        await BrowserActions.clickScript(this.completeFormTask);
     }
 
     async getEmptyTaskDetailsMessage(): Promise<string> {

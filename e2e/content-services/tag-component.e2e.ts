@@ -15,26 +15,24 @@
  * limitations under the License.
  */
 
-import { AcsUserModel } from '../models/ACS/acs-user.model';
 import { FileModel } from '../models/ACS/file.model';
-import { LoginPage, UploadActions, StringUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tag.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { UsersActions } from '../actions/users.actions';
 
 describe('Tag component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const tagPage = new TagPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const acsUser = new AcsUserModel();
-    this.alfrescoJsApi = new AlfrescoApi({
-        provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_acs.host
-    });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    let acsUser: UserModel;
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const uploadActions = new UploadActions(apiService);
     const pdfFileModel = new FileModel({ name: browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name });
     const deleteFile = new FileModel({ name: StringUtil.generateRandomString() });
     const sameTag = StringUtil.generateRandomString().toLowerCase();
@@ -53,12 +51,11 @@ describe('Tag component', () => {
     let pdfUploadedFile, nodeId;
 
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        acsUser = await usersActions.createUser();
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         pdfUploadedFile = await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, '-my-');
 
@@ -70,9 +67,9 @@ describe('Tag component', () => {
 
         Object.assign(deleteFile, uploadedDeleteFile.entry);
 
-        await this.alfrescoJsApi.core.tagsApi.addTag(nodeId, tags);
+        await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {

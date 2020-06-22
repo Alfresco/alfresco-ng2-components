@@ -16,19 +16,18 @@
  */
 
 import { browser } from 'protractor';
-import { LoginPage, UploadActions, DataTableComponentPage, ViewerPage } from '@alfresco/adf-testing';
+import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer - properties', () => {
 
-    const acsUser = new AcsUserModel();
+    const acsUser = new UserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 
@@ -41,18 +40,16 @@ describe('Viewer - properties', () => {
         'name': 'fileForOverlay.png',
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PNG.file_path
     });
-    this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
-    const uploadActions = new UploadActions(this.alfrescoJsApi);
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const uploadActions = new UploadActions(apiService);
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await usersActions.createUser(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         let pngFileUploaded = await uploadActions.uploadFile(pngFile.location, pngFile.name, '-my-');
         Object.assign(pngFile, pngFileUploaded.entry);
@@ -60,7 +57,7 @@ describe('Viewer - properties', () => {
         pngFileUploaded = await uploadActions.uploadFile(fileForOverlay.location, fileForOverlay.name, '-my-');
         Object.assign(fileForOverlay, pngFileUploaded.entry);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
 

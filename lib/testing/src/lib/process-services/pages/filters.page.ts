@@ -21,8 +21,8 @@ import { by, element, ElementFinder } from 'protractor';
 
 export class FiltersPage {
 
-    accordionMenu: ElementFinder = element(by.css('.app-processes-menu mat-accordion'));
-    buttonWindow: ElementFinder = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
+    accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
+    buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
     processIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     async clickFilterButton(filterElement: ElementFinder): Promise<void> {
@@ -33,8 +33,8 @@ export class FiltersPage {
         return filterElement.isEnabled();
     }
 
-    async isFilterHighlighted(filterName): Promise<boolean> {
-        const processNameHighlighted: ElementFinder = element(by.css(`.adf-active button[data-automation-id='${filterName}_filter']`));
+    async isFilterHighlighted(filterName: string): Promise<boolean> {
+        const processNameHighlighted = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
         try {
             await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
             return true;
@@ -43,8 +43,8 @@ export class FiltersPage {
         }
     }
 
-    async isFilterDisplayed(name): Promise<boolean> {
-        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async isFilterDisplayed(name: string): Promise<boolean> {
+        const filterName = element(by.css(`[data-automation-id='${name}_filter']`));
         try {
             await BrowserVisibility.waitUntilElementIsVisible(filterName);
             return true;
@@ -53,14 +53,14 @@ export class FiltersPage {
         }
     }
 
-    async checkFilterHasNoIcon(name): Promise<void> {
-        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async checkFilterHasNoIcon(name: string): Promise<void> {
+        const filterName = element(by.css(`[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         await BrowserVisibility.waitUntilElementIsNotVisible(filterName.element(this.processIcon));
     }
 
-    async getFilterIcon(name): Promise<string> {
-        const filterName: ElementFinder = element(by.css(`button[data-automation-id='${name}_filter']`));
+    async getFilterIcon(name: string): Promise<string> {
+        const filterName = element(by.css(`[data-automation-id='${name}_filter']`));
         await BrowserVisibility.waitUntilElementIsVisible(filterName);
         const icon = filterName.element(this.processIcon);
         return BrowserActions.getText(icon);

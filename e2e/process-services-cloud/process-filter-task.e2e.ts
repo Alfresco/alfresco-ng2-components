@@ -40,6 +40,7 @@ import {
 } from '@alfresco/adf-process-services-cloud';
 
 describe('Process filters cloud', () => {
+
     const loginSSOPage = new LoginSSOPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
@@ -48,17 +49,15 @@ describe('Process filters cloud', () => {
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const taskHeaderCloudPage = new TaskHeaderCloudPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
-    const apiService = new ApiService(
-        browser.params.config.oauth2.clientId,
-        browser.params.config.bpmHost, browser.params.config.oauth2.host, browser.params.config.providers
-    );
+
+    const apiService = new ApiService();
+    const processDefinitionService = new ProcessDefinitionsService(apiService);
+    const processInstancesService = new ProcessInstancesService(apiService);
+    const queryService = new QueryService(apiService);
 
     const processListCloudConfigFile = new ProcessListCloudConfiguration().getConfiguration();
     const editProcessFilterConfigFile = new EditProcessFilterConfiguration().getConfiguration();
 
-    let processDefinitionService: ProcessDefinitionsService;
-    let processInstancesService: ProcessInstancesService;
-    let queryService: QueryService;
     let simpleProcessDefinition: ProcessDefinitionCloud;
     let processInstance: ProcessInstanceCloud;
     let taskAssigned: StartTaskCloudResponseModel[];
@@ -67,9 +66,6 @@ describe('Process filters cloud', () => {
 
     beforeAll(async () => {
         await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-        processDefinitionService = new ProcessDefinitionsService(apiService);
-        processInstancesService = new ProcessInstancesService(apiService);
-        queryService = new QueryService(apiService);
 
         simpleProcessDefinition = (await processDefinitionService
             .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.processstring, simpleApp)).entry;
@@ -77,7 +73,7 @@ describe('Process filters cloud', () => {
         taskAssigned = (await queryService.getProcessInstanceTasks(processInstance.id, simpleApp)).list.entries;
         taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.processstring;
 
-        await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         await LocalStorageUtil.setConfigField('adf-edit-process-filter', JSON.stringify(editProcessFilterConfigFile));
         await LocalStorageUtil.setConfigField('adf-cloud-process-list', JSON.stringify(processListCloudConfigFile));
     });

@@ -1,8 +1,10 @@
+const { LocalStorageUtil } = require('@alfresco/adf-testing');
+
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./e2e/tsconfig.e2e.json');
-const TestConfig = require('./e2e/test.config');
+const testConfig = require('./e2e/test.config');
 const RESOURCES = require('./e2e/util/resources');
 const SmartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
@@ -30,7 +32,6 @@ let HOST = process.env.URL_HOST_ADF;
 let BROWSER_RUN = !!process.env.BROWSER_RUN;
 let FOLDER = process.env.FOLDER || '';
 let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
-let DIRECT_CONNECCT = !SELENIUM_SERVER;
 let MAXINSTANCES = process.env.MAXINSTANCES || 1;
 let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
 let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
@@ -110,17 +111,16 @@ exports.config = {
         }
     },
 
-    directConnect: DIRECT_CONNECCT,
+    directConnect: !SELENIUM_SERVER,
 
     baseUrl: HOST,
 
     params: {
-        testConfig: TestConfig,
+        testConfig: testConfig,
         loginRoute: '/login',
-        config: TestConfig.appConfig,
         groupSuffix: GROUP_SUFFIX,
-        identityAdmin: TestConfig.identityAdmin,
-        identityUser: TestConfig.identityUser,
+        identityAdmin: testConfig.identityAdmin,
+        identityUser: testConfig.identityUser,
         rootPath: __dirname,
         resources: RESOURCES
     },
@@ -132,7 +132,8 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 120000,
-        print: () => {},
+        print: () => {
+        },
         ...SmartRunner.withOptionalExclusions(
             resolve(__dirname, './e2e/protractor.excludes.json')
         )
@@ -159,7 +160,7 @@ exports.config = {
         retry.onCleanUp(results);
     },
 
-    onPrepare() {
+    async onPrepare() {
         retry.onPrepare();
 
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
@@ -190,7 +191,23 @@ exports.config = {
             })
         );
 
-        return browser.driver.executeScript(disableCSSAnimation);
+        await browser.driver.executeScript(disableCSSAnimation);
+
+        await browser.get(`${HOST}/settings`);
+        await LocalStorageUtil.clearStorage();
+
+        await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
+        await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
+        await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
+        await LocalStorageUtil.setStorageItem('baseShareUrl', HOST);
+
+        if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
+            await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+            await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
+            await LocalStorageUtil.setStorageItem('oauth2', JSON.stringify(browser.params.testConfig.appConfig.oauth2));
+        }
+
+        await LocalStorageUtil.apiReset();
 
         function disableCSSAnimation() {
             let css = '* {' +
@@ -209,6 +226,7 @@ exports.config = {
 
     },
 
+
     beforeLaunch: function () {
         if (SAVE_SCREENSHOT) {
             cleanReportFolder();
@@ -217,7 +235,6 @@ exports.config = {
 
     afterLaunch: async function () {
         if (SAVE_SCREENSHOT) {
-
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;

@@ -15,46 +15,42 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { UsersActions } from '../../actions/users.actions';
-import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 
 describe('Checkbox Widget', () => {
 
-    const loginPage = new LoginPage();
-    let processUserModel;
+    const app = browser.params.resources.Files.WIDGET_CHECK_APP.CHECKBOX;
+
+    const loginPage = new LoginSSOPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
-    let alfrescoJsApi;
+
+    let processUserModel;
     let appModel;
-    const app = browser.params.resources.Files.WIDGET_CHECK_APP.CHECKBOX;
     let deployedApp, process;
 
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+    const applicationsService = new ApplicationsUtil(apiService);
+
     beforeAll(async () => {
-        const users = new UsersActions();
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        alfrescoJsApi = new AlfrescoApi({
-            provider: 'BPM',
-            hostBpm: browser.params.testConfig.adf_aps.host
-        });
+        processUserModel = await usersActions.createUser();
 
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-
-        processUserModel = await users.createTenantAndUser(alfrescoJsApi);
-
-        await alfrescoJsApi.login(processUserModel.email, processUserModel.password);
-        const applicationsService = new ApplicationsUtil(alfrescoJsApi);
+        await apiService.getInstance().login(processUserModel.email, processUserModel.password);
         appModel = await applicationsService.importPublishDeployApp(browser.params.resources.Files.WIDGET_CHECK_APP.file_path);
 
-        const appDefinitions = await alfrescoJsApi.activiti.appsApi.getAppDefinitions();
+        const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
         deployedApp = appDefinitions.data.find((currentApp) => {
             return currentApp.modelId === appModel.id;
         });
-        process = await new ProcessUtil(alfrescoJsApi).startProcessByDefinitionName(appModel.name, app.processName);
-        await loginPage.loginToProcessServicesUsingUserModel(processUserModel);
+        process = await new ProcessUtil(apiService).startProcessByDefinitionName(appModel.name, app.processName);
+        await loginPage.login(processUserModel.email, processUserModel.password);
    });
 
     beforeEach(async () => {
@@ -65,22 +61,22 @@ describe('Checkbox Widget', () => {
     });
 
     afterAll(async () => {
-        await alfrescoJsApi.activiti.processApi.deleteProcessInstance(process.id);
-        await alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await alfrescoJsApi.activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+        await apiService.getInstance().activiti.processApi.deleteProcessInstance(process.id);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
    });
 
     it('[C268554] Should be able to set general settings for Checkbox widget ', async () => {
-        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');
         await expect(await widget.checkboxWidget().getCheckboxLabel()).toContain(app.FIELD.checkbox_label);
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeTruthy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(false);
         await widget.checkboxWidget().clickCheckboxInput(app.FIELD.checkbox_input_id);
-        await expect(await taskPage.formFields().isCompleteFormButtonDisabled()).toBeFalsy();
+        await expect(await taskPage.formFields().isCompleteFormButtonEnabled()).toEqual(true);
     });
 
     it('[C272812] Should be able to set visibility settings for Checkbox widget', async () => {
         await widget.checkboxWidget().isCheckboxHidden(app.FIELD.checkbox_field_id);
-        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, 2);
+        await taskPage.formFields().setValueInInputById(app.FIELD.number_input_id, '2');
         await widget.checkboxWidget().isCheckboxDisplayed(app.FIELD.checkbox_field_id);
     });
 });

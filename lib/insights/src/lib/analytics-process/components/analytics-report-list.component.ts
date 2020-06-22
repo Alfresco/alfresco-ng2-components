@@ -171,15 +171,15 @@ export class AnalyticsReportListComponent implements OnInit {
         this.selectFirst = false;
     }
 
-    isSelected(report: any) {
-        return this.currentReport === report ? true : false;
+    isSelected(report: any): boolean {
+        return this.currentReport === report;
     }
 
-    isList() {
+    isList(): boolean {
         return this.layoutType === AnalyticsReportListComponent.LAYOUT_LIST;
     }
 
-    isGrid() {
+    isGrid(): boolean {
         return this.layoutType === AnalyticsReportListComponent.LAYOUT_GRID;
     }
 }

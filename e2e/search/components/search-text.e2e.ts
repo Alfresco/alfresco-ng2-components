@@ -17,57 +17,52 @@
 
 import { browser } from 'protractor';
 
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
 import { FolderModel } from '../../models/ACS/folder.model';
 
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
-
-import { LoginPage, LocalStorageUtil, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, LocalStorageUtil, BrowserActions, ApiService, UserModel } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 import { SearchConfiguration } from '../search.config';
+import { UsersActions } from '../../actions/users.actions';
 
 describe('Search component - Text widget', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
 
-    const acsUser = new AcsUserModel();
-    const newFolderModel = new FolderModel({ 'name': 'newFolder', 'description': 'newDescription' });
+    const apiService = new ApiService();
+    const usersActions = new UsersActions(apiService);
+
+    const acsUser = new UserModel();
+    const newFolderModel = new FolderModel({ 'description': 'newDescription' });
 
     beforeAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        this.alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: browser.params.testConfig.adf_acs.host
-        });
+        await usersActions.createUser(acsUser);
 
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
-
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
-
-        await this.alfrescoJsApi.nodes.addNode('-my-', {
+        await apiService.getInstance().nodes.addNode('-my-', {
             'name': newFolderModel.name,
             'nodeType': 'cm:folder',
             'properties':
                 {
                     'cm:description': newFolderModel.description
                 }
-        }, {}, {});
+        }, {});
 
         await browser.sleep(15000);
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
-   });
+        await loginPage.login(acsUser.email, acsUser.password);
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -82,7 +77,6 @@ describe('Search component - Text widget', () => {
     });
 
     describe('configuration change', () => {
-
         let jsonFile;
 
         beforeAll(async () => {

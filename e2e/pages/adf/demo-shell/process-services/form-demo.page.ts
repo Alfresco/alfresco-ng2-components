@@ -16,12 +16,12 @@
  */
 
 import { BrowserActions, BrowserVisibility, ConfigEditorPage } from '@alfresco/adf-testing';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element } from 'protractor';
 
 export class FormDemoPage {
 
-    formCloudEditor: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
-    formCloudRender: ElementFinder = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
+    formCloudEditor = element.all(by.css('.mat-tab-list .mat-tab-label')).get(1);
+    formCloudRender = element.all(by.css('.mat-tab-list .mat-tab-label')).get(0);
 
     configEditorPage = new ConfigEditorPage();
 
@@ -33,7 +33,7 @@ export class FormDemoPage {
         await BrowserActions.click(this.formCloudRender);
     }
 
-    async setConfigToEditor(text): Promise<void> {
+    async setConfigToEditor(text: string): Promise<void> {
         const configEditor = element(by.id('adf-form-config-editor'));
         const form = element(by.css('adf-form'));
         await this.goToEditor();

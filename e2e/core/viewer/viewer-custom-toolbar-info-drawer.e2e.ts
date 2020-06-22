@@ -19,8 +19,6 @@ import { browser } from 'protractor';
 import {BrowserActions, FileBrowserUtil, LoginPage, UploadActions, ViewerPage,} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { AcsUserModel } from '../../models/ACS/acs-user.model';
-import { AlfrescoApiCompatibility as AlfrescoApi } from '@alfresco/js-api';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import {VersionManagePage} from "../../pages/adf/version-manager.page";
 
@@ -28,7 +26,7 @@ describe('Viewer', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginSSOPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     this.alfrescoJsApi = new AlfrescoApi({
@@ -50,14 +48,14 @@ describe('Viewer', () => {
     });
 
     beforeAll(async () => {
-        await this.alfrescoJsApi.login(browser.params.testConfig.adf.adminEmail, browser.params.testConfig.adf.adminPassword);
-        await this.alfrescoJsApi.core.peopleApi.addPerson(acsUser);
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+        await usersActions.createUser(acsUser);
 
-        await this.alfrescoJsApi.login(acsUser.id, acsUser.password);
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         txtFileUploaded = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
 
-        await loginPage.loginToContentServicesUsingUserModel(acsUser);
+        await loginPage.login(acsUser.email, acsUser.password);
    });
 
     afterAll(async () => {
