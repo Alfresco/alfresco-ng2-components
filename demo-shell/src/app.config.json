@@ -347,8 +347,23 @@
         }
       },
       {
-        "id": "contentSizeRange",
+        "id": "contentSize",
         "name": "Content Size",
+        "enabled": true,
+        "component": {
+          "selector": "slider",
+          "settings": {
+            "field": "cm:content.size",
+            "min": 0,
+            "max": 18,
+            "step": 1,
+            "thumbLabel": true
+          }
+        }
+      },
+      {
+        "id": "contentSizeRange",
+        "name": "Content Size (range)",
         "enabled": true,
         "component": {
           "selector": "number-range",
