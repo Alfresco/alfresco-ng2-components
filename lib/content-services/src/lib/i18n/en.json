@@ -287,6 +287,7 @@
     },
     "SEARCH_HEADER" : {
       "TITLE":"Filter",
+      "TYPE": "Type",
       "FILTER_BY": "Filter by {{ category }}",
       "CLEAR": "Clear",
       "APPLY": "Apply"
