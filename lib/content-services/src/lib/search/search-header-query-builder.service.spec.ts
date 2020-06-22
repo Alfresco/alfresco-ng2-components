@@ -48,7 +48,7 @@ describe('SearchHeaderQueryBuilder', () => {
         expect(builder.categories.length).toBe(0);
         expect(builder.filterQueries.length).toBe(0);
 
-        builder.setUpConfiguration();
+        builder.resetToDefaults();
 
         expect(builder.categories.length).toBe(2);
         expect(builder.filterQueries.length).toBe(2);

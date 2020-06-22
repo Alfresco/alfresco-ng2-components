@@ -71,14 +71,14 @@ export abstract class BaseQueryBuilderService {
     ranges: { [id: string]: SearchRange } = {};
 
     constructor(protected appConfig: AppConfigService, protected alfrescoApiService: AlfrescoApiService) {
-        this.setUpConfiguration();
+        this.resetToDefaults();
     }
 
     public abstract loadConfiguration(): SearchConfiguration;
 
     public abstract isFilterServiceActive(): boolean;
 
-    public setUpConfiguration() {
+    public resetToDefaults() {
         const currentConfig = this.loadConfiguration();
         this.setUpSearchConfiguration(currentConfig);
     }
