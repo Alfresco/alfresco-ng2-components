@@ -351,10 +351,13 @@ export let claimedTaskDetailsMock = new TaskDetailsModel({
     endDate: null,
     duration: null,
     priority: 50,
+    formKey: '4',
     parentTaskId: null,
     parentTaskName: null,
     processInstanceId: '86',
     processInstanceName: null,
+    processInstanceStartUserId: '1002',
+    initiatorCanCompleteTask: false,
     processDefinitionId: 'TranslationProcess:2:8',
     processDefinitionName: 'Translation Process',
     involvedGroups: [
