@@ -35,7 +35,7 @@ const SCREENSHOT_PASSWORD = process.env.SCREENSHOT_PASSWORD || process.env.PASSW
 const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERNAME_ADF;
 
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
-const LOG_LEVEL = process.env.LOG_LEVEL || 'ERROR' ;
+const LOG_LEVEL = process.env.LOG_LEVEL || 'ERROR';
 
 const appConfig = {
     "log": LOG_LEVEL,
@@ -116,5 +116,10 @@ module.exports = {
          */
         host: EXTERNAL_ACS_HOST,
     },
+
+    timeouts: {
+        visible_timeout: 20000,
+        no_visible_timeout: 20000
+    }
 
 };
