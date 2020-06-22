@@ -272,15 +272,26 @@ export class TaskFormComponent implements OnInit {
   }
 
   isReadOnlyForm(): boolean {
-      return this.internalReadOnlyForm || !(this.isAssignedToMe() || this.canInitiatorComplete());
+    let readOnlyForm: boolean;
+    if (this.isCandidateMember()) {
+      readOnlyForm = this.internalReadOnlyForm || !this.isAssignedToMe();
+    } else {
+      readOnlyForm = this.internalReadOnlyForm || !(this.isAssignedToMe() || (this.canInitiatorComplete() && this.isProcessInitiator()));
+    }
+
+    return readOnlyForm;
+  }
+
+  isProcessInitiator(): boolean {
+    return this.currentLoggedUser && ( this.currentLoggedUser.id === +this.taskDetails.processInstanceStartUserId);
   }
 
   isSaveButtonVisible(): boolean {
     return this.showFormSaveButton && (!this.canInitiatorComplete() || this.isAssignedToMe());
   }
 
-  canCompleteTask(): boolean {
-    return !this.isCompletedTask() && this.isAssignedToMe();
+  canCompleteNoFormTask(): boolean {
+    return this.isReadOnlyForm();
   }
 
   getCompletedTaskTranslatedMessage(): Observable<string> {
@@ -307,7 +318,15 @@ export class TaskFormComponent implements OnInit {
     this.taskClaimed.emit(taskId);
   }
 
+  onClaimTaskError(error: any) {
+    this.error.emit(error);
+  }
+
   onUnclaimTask(taskId: string) {
     this.taskUnclaimed.emit(taskId);
+  }
+
+  onUnclaimTaskError(error: any) {
+    this.error.emit(error);
   }
 }

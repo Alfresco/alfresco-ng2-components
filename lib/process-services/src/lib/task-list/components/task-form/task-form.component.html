@@ -5,7 +5,6 @@
     [showValidationIcon]="showFormValidationIcon"
     [showRefreshButton]="showFormRefreshButton"
     [showCompleteButton]="showFormCompleteButton"
-    [disableCompleteButton]="!isCompleteButtonEnabled()"
     [showSaveButton]="isSaveButtonVisible()"
     [readOnly]="isReadOnlyForm()"
     [fieldValidators]="fieldValidators"
@@ -61,10 +60,11 @@
             </mat-card-content>
             <mat-card-actions class="adf-task-form-actions">
                 <ng-template [ngTemplateOutlet]="taskFormButtons"></ng-template>
-                <button id="adf-no-form-cancel-button" mat-button *ngIf="showCancelButton" (click)="onCancel()">
-                    {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
-                </button>
-                <button mat-button *ngIf="!isCompletedTask()" color="primary" (click)="onCompleteTask()" id="adf-no-form-complete-button">
+                <button mat-button
+                    *ngIf="!isCompletedTask()" id="adf-no-form-complete-button"
+                    color="primary"
+                    [disabled]="canCompleteNoFormTask()"
+                    (click)="onCompleteTask()">
                     {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.COMPLETE' | translate}}
                 </button>
             </mat-card-actions>
@@ -73,18 +73,25 @@
   </ng-template>
 
   <ng-template #taskFormButtons>
+        <button mat-button id="adf-no-form-cancel-button" 
+            *ngIf="showCancelButton"
+            (click)="onCancel()">
+            {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
+        </button>
         <button mat-button data-automation-id="adf-task-form-claim-button"
             *ngIf="isTaskClaimable()" 
             adf-claim-task
             [taskId]="taskId"
-            (success)="onClaimTask($event)">
+            (success)="onClaimTask($event)"
+            (error)="onClaimTaskError($event)">
             {{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
         </button>
         <button mat-button data-automation-id="adf-task-form-unclaim-button"
             *ngIf="isTaskClaimedByCandidateMember()"
             adf-unclaim-task
             [taskId]="taskId"
-            (success)="onUnclaimTask($event)">
+            (success)="onUnclaimTask($event)"
+            (error)="onUnclaimTaskError($event)">
             {{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
         </button>
   </ng-template>

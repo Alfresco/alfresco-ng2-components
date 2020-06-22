@@ -206,6 +206,41 @@ export let initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
     taskDefinitionKey: 'sid-DDECD9E4-0299-433F-9193-C3D905C3EEBE',
     executionId: '86',
     involvedGroups: [],
+    involvedPeople: [],
+    memberOfCandidateUsers: false,
+    managerOfCandidateGroup: false,
+    memberOfCandidateGroup: false
+});
+
+export let initiatorWithCandidatesTaskDetailsMock = new TaskDetailsModel({
+    id: '91',
+    name: 'Request translation',
+    description: null,
+    category: null,
+    assignee: null,
+    created: '2016-11-03T15:25:42.749+0000',
+    dueDate: null,
+    endDate: null,
+    duration: null,
+    priority: 50,
+    parentTaskId: null,
+    parentTaskName: null,
+    processInstanceId: '86',
+    processInstanceName: null,
+    processDefinitionId: 'TranslationProcess:2:8',
+    processDefinitionName: 'Translation Process',
+    processDefinitionDescription: null,
+    processDefinitionKey: 'TranslationProcess',
+    processDefinitionCategory: 'http://www.activiti.org/processdef',
+    processDefinitionVersion: 2,
+    processDefinitionDeploymentId: '5',
+    formKey: '4',
+    processInstanceStartUserId: '1001',
+    initiatorCanCompleteTask: true,
+    adhocTaskCanBeReassigned: false,
+    taskDefinitionKey: 'sid-DDECD9E4-0299-433F-9193-C3D905C3EEBE',
+    executionId: '86',
+    involvedGroups: [],
     involvedPeople: [
         {
             id: 1001,
@@ -220,9 +255,9 @@ export let initiatorCanCompleteTaskDetailsMock = new TaskDetailsModel({
             email: 'fake@app.activiti.com'
         }
     ],
-    memberOfCandidateUsers: false,
-    managerOfCandidateGroup: false,
-    memberOfCandidateGroup: false
+    memberOfCandidateUsers: true,
+    managerOfCandidateGroup: true,
+    memberOfCandidateGroup: true
 });
 
 export let taskDetailsWithOutAssigneeMock = new TaskDetailsModel({
@@ -316,10 +351,13 @@ export let claimedTaskDetailsMock = new TaskDetailsModel({
     endDate: null,
     duration: null,
     priority: 50,
+    formKey: '4',
     parentTaskId: null,
     parentTaskName: null,
     processInstanceId: '86',
     processInstanceName: null,
+    processInstanceStartUserId: '1002',
+    initiatorCanCompleteTask: false,
     processDefinitionId: 'TranslationProcess:2:8',
     processDefinitionName: 'Translation Process',
     involvedGroups: [
@@ -507,7 +545,7 @@ export let taskDetailsWithOutFormMock = new TaskDetailsModel({
     'name': 'Request translation',
     'description': 'fake description',
     'category': null,
-    'assignee': {'id': 1001, 'firstName': 'Admin', 'lastName': 'Paul', 'email': 'my@mymail.com' },
+    'assignee': {'id': 1001, 'firstName': 'Admin', 'lastName': 'Paul', 'email': 'fake-email@gmail.com' },
     'created': '2016-11-03T15:25:42.749+0000',
     'dueDate': '2016-11-03T15:25:42.749+0000',
     'endDate': null,
