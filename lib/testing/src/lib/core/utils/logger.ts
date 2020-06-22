@@ -65,10 +65,19 @@ export class Logger {
     }
 
     private static getLogLevelByName(name: string): number {
-        const log = logLevels.find((currentLog) => {
-            return currentLog.name === name;
-        });
+        if (name) {
+            const log = logLevels.find((currentLog) => {
+                return currentLog.name === name;
+            });
 
-        return log.level || 1;
+            if (log && log.level) {
+                return log.level;
+            } else {
+                console.error(errorColor, 'Log level not correctly set, use one of the following values TRACE|DEBUG|INFO|WARN|ERROR|SILENT');
+                return LogLevelsEnum.ERROR;
+            }
+        } else {
+            return LogLevelsEnum.ERROR;
+        }
     }
 }
