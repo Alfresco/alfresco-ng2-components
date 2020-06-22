@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage, LoginPage, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { LoginSSOPage, SettingsPage, BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
 import { LoginPage } from '../../../pages/adf/demo-shell/login.page';
