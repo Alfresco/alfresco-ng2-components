@@ -275,6 +275,7 @@ for more information about installing and using the source code.
 | [Search control component](content-services/components/search-control.component.md) | Displays a input text that shows find-as-you-type suggestions. | [Source](../lib/content-services/src/lib/search/components/search-control.component.ts) |
 | [Search date range component](content-services/components/search-date-range.component.md) | Implements a date range widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-date-range/search-date-range.component.ts) |
 | [Search Filter component](content-services/components/search-filter.component.md) | Represents a main container component for custom search and faceted search settings. | [Source](../lib/content-services/src/lib/search/components/search-filter/search-filter.component.ts) |
+| [SearchHeader component](content-services/components/search-header.component.md) | Displays a button opening a menu designed to filter a document list. | [Source](../lib/content-services/src/lib/search/components/search-header/search-header.component.ts) |
 | [Search number range component](content-services/components/search-number-range.component.md) | Implements a number range widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-number-range/search-number-range.component.ts) |
 | [Search radio component](content-services/components/search-radio.component.md) | Implements a radio button list widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-radio/search-radio.component.ts) |
 | [Search slider component](content-services/components/search-slider.component.md) | Implements a numeric slider widget for the Search Filter component. | [Source](../lib/content-services/src/lib/search/components/search-slider/search-slider.component.ts) |
@@ -371,6 +372,7 @@ for more information about installing and using the source code.
 | [Checklist Component](process-services/components/checklist.component.md) | Shows the checklist task functionality. | [Source](../lib/process-services/src/lib/task-list/components/checklist.component.ts) |
 | [Create Process Attachment component](process-services/components/create-process-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified process instance. | [Source](../lib/process-services/src/lib/attachment/create-process-attachment.component.ts) |
 | [Create Task Attachment Component](process-services/components/create-task-attachment.component.md) | Displays an Upload Component (Drag and Click) to upload the attachment to a specified task. | [Source](../lib/process-services/src/lib/attachment/create-task-attachment.component.ts) |
+| [Form custom outcomes component](process-services/components/form-custom-outcome.component.md) | Supplies custom outcome buttons to be included in Form component. | [Source](../lib/process-services/src/lib/form/form-custom-outcomes.component.ts) |
 | [Form component](process-services/components/form.component.md) | Shows a Form from APS | [Source](../lib/process-services/src/lib/form/form.component.ts) |
 | [People list component](process-services/components/people-list.component.md) | Shows a list of users (people). | [Source](../lib/process-services/src/lib/people/components/people-list/people-list.component.ts) |
 | [People Search component](process-services/components/people-search.component.md) | Searches users/people. | [Source](../lib/process-services/src/lib/people/components/people-search/people-search.component.ts) |
@@ -397,8 +399,16 @@ for more information about installing and using the source code.
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
+| [Claim Task Directive](process-services/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/claim-task.directive.ts) |
 | [Process Audit Directive](process-services/directives/process-audit.directive.md) | Fetches the Process Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/process-list/components/process-audit.directive.ts) |
 | [Task Audit Directive](process-services/directives/task-audit.directive.md) | Fetches the Task Audit information in PDF or JSON format. | [Source](../lib/process-services/src/lib/task-list/components/task-audit.directive.ts) |
+| [Unclaim Task Directive](process-services/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services/src/lib/task-list/components/task-form/unclaim-task.directive.ts) |
+
+### Pipes
+
+| Name | Description | Source link |
+| ---- | ----------- | ----------- |
+| [Process name pipe](process-services/pipes/process-name.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services/src/lib/pipes/process-name.pipe.ts) |
 
 ### Services
 
@@ -440,7 +450,7 @@ for more information about installing and using the source code.
 | [Start Process Cloud Component](process-services-cloud/components/start-process-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Starts a process. | [Source](../lib/process-services-cloud/src/lib/process/start-process/components/start-process-cloud.component.ts) |
 | [Start Task Cloud Component](process-services-cloud/components/start-task-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Creates/starts a new task for the specified app. | [Source](../lib/process-services-cloud/src/lib/task/start-task/components/start-task-cloud.component.ts) |
 | [Task Filters Cloud component](process-services-cloud/components/task-filters-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all available filters. | [Source](../lib/process-services-cloud/src/lib/task/task-filters/components/task-filters-cloud.component.ts) |
-| [Form cloud component](process-services-cloud/components/task-form-cloud.component.md) | Shows a form for a task. | [Source](../lib/testing/src/lib/process-services-cloud/pages/task-form-cloud-component.page.ts) |
+| [Form cloud component](process-services-cloud/components/task-form-cloud.component.md) | Shows a form for a task. | [Source](../lib/process-services-cloud/src/lib/task/task-form/components/task-form-cloud.component.ts) |
 | [Task Header Cloud Component](process-services-cloud/components/task-header-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Shows all the information related to a task. | [Source](../lib/process-services-cloud/src/lib/task/task-header/components/task-header-cloud.component.ts) |
 | [Task List Cloud component](process-services-cloud/components/task-list-cloud.component.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Renders a list containing all the tasks matched by the parameters specified. | [Source](../lib/process-services-cloud/src/lib/task/task-list/components/task-list-cloud.component.ts) |
 
@@ -449,22 +459,23 @@ for more information about installing and using the source code.
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Cancel Process Directive](process-services-cloud/directives/cancel-process.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Cancels a process | [Source](../lib/process-services-cloud/src/lib/process/directives/cancel-process.directive.ts) |
-| [Claim Task Directive](process-services-cloud/directives/claim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/claim-task.directive.ts) |
+| [Claim Task Cloud Directive](process-services-cloud/directives/claim-task-cloud.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Claims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/claim-task-cloud.directive.ts) |
 | [Complete Task Directive](process-services-cloud/directives/complete-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Completes a task. | [Source](../lib/process-services-cloud/src/lib/task/directives/complete-task.directive.ts) |
-| [Unclaim Task Directive](process-services-cloud/directives/unclaim-task.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/unclaim-task.directive.ts) |
+| [Unclaim Task Cloud Directive](process-services-cloud/directives/unclaim-task-cloud.directive.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Unclaims a task | [Source](../lib/process-services-cloud/src/lib/task/directives/unclaim-task-cloud.directive.ts) |
 
 ### Pipes
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Group initial pipe](process-services-cloud/pipes/group-initial.pipe.md) | Extracts the initial character from a group name. | [Source](../lib/process-services-cloud/src/lib/group/pipe/group-initial.pipe.ts) |
+| [Process name cloud pipe](process-services-cloud/pipes/process-name-cloud.pipe.md) | When an identifier is specified, the input will be transformed replacing the identifiers with the values of the selected process definition provided. | [Source](../lib/process-services-cloud/src/lib/pipes/process-name-cloud.pipe.ts) |
 
 ### Services
 
 | Name | Description | Source link |
 | ---- | ----------- | ----------- |
 | [Apps Process Cloud Service](process-services-cloud/services/apps-process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Gets details of deployed apps for the current user. | [Source](../lib/process-services-cloud/src/lib/app/services/apps-process-cloud.service.ts) |
-| [Form cloud service](process-services-cloud/services/form-cloud.service.md) | Implements Process Services form methods | [Source](../lib/testing/src/lib/form-cloud/actions/form-cloud.service.ts) |
+| [Form cloud service](process-services-cloud/services/form-cloud.service.md) | Implements Process Services form methods | [Source](../lib/process-services-cloud/src/lib/form/services/form-cloud.service.ts) |
 | [Group Cloud Service](process-services-cloud/services/group-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Searches and gets information for groups. | [Source](../lib/process-services-cloud/src/lib/group/services/group-cloud.service.ts) |
 | [Local Preference Cloud Service](process-services-cloud/services/local-preference-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages Local Storage preferences. | [Source](../lib/process-services-cloud/src/lib/services/local-preference-cloud.service.ts) |
 | [Process Cloud Service](process-services-cloud/services/process-cloud.service.md) ![Experimental](docassets/images/ExperimentalIcon.png) | Manages cloud process instances. | [Source](../lib/process-services-cloud/src/lib/process/services/process-cloud.service.ts) |

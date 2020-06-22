@@ -346,6 +346,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | ---- | ---- | ------------- | ----------- |
 | actions | `boolean` | false | Toggles the data actions column. |
 | actionsPosition | `string` | "right" | Position of the actions dropdown menu. Can be "left" or "right". |
+| allowFiltering | `boolean` | false | Flag that indicate if the datatable allow the use facet [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) search for filtering. |
 | columns | `any[]` | \[] | The columns that the datatable will show. |
 | contextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | data | [`DataTableAdapter`](../../../lib/core/datatable/data/datatable-adapter.ts) |  | Data source for the table |
@@ -360,7 +361,7 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 | rowStyleClass | `string` | "" | The CSS class to apply to every row. |
 | rows | `any[]` | \[] | The rows that the datatable will show. |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
-| showHeader | `ShowHeaderMode` | "data" | Indicate which is the desired behaviour for the header. Can have 3 values `always`, `never` and `data`. `data` won't display the header if the datatable is empty and will display it otherwise. |
+| showHeader | `string` |  | Toggles the header. |
 | sorting | `any[]` | \[] | Define the sort order of the datatable. Possible values are : [`created`, `desc`], [`created`, `asc`], [`due`, `desc`], [`due`, `asc`] |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
@@ -368,11 +369,11 @@ Learm more about styling your datatable: [Customizing the component's styles](#c
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/datatable/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
+| executeRowAction | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowActionEvent`](../../../lib/core/datatable/components/data-row-action.event.ts)`>` | Emitted when the user executes a row action. |
 | rowClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user clicks a row. |
 | rowDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataRowEvent`](../../../lib/core/datatable/data/data-row-event.model.ts)`>` | Emitted when the user double-clicks a row. |
-| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
-| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/datatable/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
+| showRowActionsMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the actions menu is displayed for a row. |
+| showRowContextMenu | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`DataCellEvent`](../../../lib/core/datatable/components/data-cell.event.ts)`>` | Emitted before the context menu is displayed for a row. |
 
 ## Details
 

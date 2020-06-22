@@ -39,9 +39,10 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     Gets all filters defined for a Process App.
     -   _appId:_ `number`  - ID of the target app
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>` - Array of filter details
--   **getRunningFilterInstance**(appId: `number`): [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)<br/>
+-   **getRunningFilterInstance**(appId: `number`, index?: `number`): [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)<br/>
     Creates and returns a filter that matches "running" process instances.
     -   _appId:_ `number`  - ID of the target app
+    -   _index:_ `number`  - (Optional) of the filter (optional)
     -   **Returns** [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts) - Filter just created
 
 ## Details

@@ -3,7 +3,7 @@
 set -e
 TEMP_GENERATOR_DIR=".tmp-generator";
 VERSION=$(npm view @alfresco/adf-core@beta version)
-JS_VERSION=$(npm view @alfresco/js-api@beta version)
+JS_VERSION=$(npm view @alfresco/js-api@alpha version)
 
 show_help() {
     echo "Usage: update-project.sh"

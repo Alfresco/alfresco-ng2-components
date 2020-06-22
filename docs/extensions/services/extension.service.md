@@ -55,11 +55,11 @@ Manages and runs basic extension functionality.
 -   **load**(): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>`<br/>
     Loads and registers an extension config file and plugins (specified by path properties).
     -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ExtensionConfig`](../../../lib/extensions/src/lib/config/extension.config.ts)`>` - The loaded config data
--   **runExpression**(value: `string`, context?: `any`): `any`<br/>
+-   **runExpression**(value: `string|__type`, context?: `any`): `Function`<br/>
     Runs a lightweight expression stored in a string.
-    -   _value:_ `string`  - String containing the expression or literal value
+    -   _value:_ `string|__type`  - String containing the expression or literal value
     -   _context:_ `any`  - (Optional) Parameter object for the expression with details of app state
-    -   **Returns** `any` - Result of evaluated expression, if found, or the literal value otherwise
+    -   **Returns** `Function` - Result of evaluated expression, if found, or the literal value otherwise
 -   **setAuthGuards**(values: `Function`)<br/>
     Adds one or more new auth guards to the existing set.
     -   _values:_ `Function`  - The new auth guards to add

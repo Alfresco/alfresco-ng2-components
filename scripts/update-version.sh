@@ -77,7 +77,7 @@ next_beta_mode() {
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view @alfresco/js-api@beta version)
+    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
@@ -89,7 +89,7 @@ last_beta_mode() {
     echo "====== version lib ${VERSION} ====="
 
     DIFFERENT_JS_API=true
-    VERSION_JS_API=$(npm view @alfresco/js-api@beta version)
+    VERSION_JS_API=$(npm view @alfresco/js-api@alpha version)
 
     echo "====== version js-api ${DIFFERENT_JS_API} ====="
 }
