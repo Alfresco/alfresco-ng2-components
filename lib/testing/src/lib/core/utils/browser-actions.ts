@@ -31,7 +31,7 @@ export class BrowserActions {
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
-            Logger.error(`click error element ${elementFinder.locator().toString()} consider to use directly clickScript`);
+            Logger.warn(`click error element ${elementFinder.locator().toString()} consider to use directly clickScript`);
             await this.clickScript(elementFinder);
         }
     }
