@@ -37,6 +37,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     static PRESET_KEY = 'adf-cloud-task-list.presets';
+    static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -338,7 +339,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     setSortInput(sorting) {
         this.sortInput = sorting.length ? [
-            'entry.' + sorting[0].orderBy,
+            TaskListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
     }

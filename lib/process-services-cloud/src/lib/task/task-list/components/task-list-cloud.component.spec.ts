@@ -308,7 +308,7 @@ describe('TaskListCloudComponent', () => {
             });
             fixture.detectChanges();
             expect(component.setSortInput).toHaveBeenCalledWith(mockSort);
-            expect(component.sortInput).toEqual(['entry.startDate', 'desc']);
+            expect(component.sortInput).toEqual([TaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
         });
     });
 
