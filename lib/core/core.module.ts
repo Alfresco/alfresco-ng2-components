@@ -57,6 +57,8 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { directionalityConfigFactory } from './services/directionality-config-factory';
 import { DirectionalityConfigService } from './services/directionality-config.service';
 import { SearchTextModule } from './search-text/search-text-input.module';
+import { versionCompatibilityFactory } from './services/version-compatibility-factory';
+import { VersionCompatibilityService } from './services/version-compatibility.service';
 
 @NgModule({
     imports: [
@@ -148,6 +150,12 @@ export class CoreModule {
                     provide: APP_INITIALIZER,
                     useFactory: directionalityConfigFactory,
                     deps: [ DirectionalityConfigService ],
+                    multi: true
+                },
+                {
+                    provide: APP_INITIALIZER,
+                    useFactory: versionCompatibilityFactory,
+                    deps: [ VersionCompatibilityService ],
                     multi: true
                 }
             ]

@@ -29,7 +29,8 @@ import {
     FormOutcomeModel,
     setupTestBed,
     TRANSLATION_PROVIDER,
-    WidgetVisibilityService
+    WidgetVisibilityService,
+    VersionCompatibilityService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -68,7 +69,7 @@ describe('FormCloudComponent', () => {
         exports: [CustomWidget],
         entryComponents: [CustomWidget]
     })
-    class CustomUploadModule {}
+    class CustomUploadModule { }
 
     function buildWidget(type: string, injector: Injector): any {
         const resolver = formRenderingService.getComponentTypeResolver(type);
@@ -97,6 +98,10 @@ describe('FormCloudComponent', () => {
                     name: 'app',
                     source: 'resources'
                 }
+            },
+            {
+                provide: VersionCompatibilityService,
+                useValue: {}
             }
         ]
     });
@@ -116,7 +121,7 @@ describe('FormCloudComponent', () => {
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
         fixture.detectChanges();
-   }));
+    }));
 
     it('should register custom [upload] widget', () => {
         const widget = buildWidget('upload', fixture.componentRef.injector);
@@ -190,7 +195,7 @@ describe('FormCloudComponent', () => {
 
         expect(formComponent.showTitle).toBeTruthy();
         expect(formComponent.isTitleEnabled()).toBeTruthy();
-   });
+    });
 
     it('should not allow title if showTitle is false', () => {
         const formModel = new FormModel();
@@ -370,7 +375,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of(cloudFormMock));
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getProcessStorageFolderTask')
-            .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
+            .and.returnValue(of({ nodeId: '123', path: '/a/path/type', type: 'fakeType' }));
         const taskId = '<task id>';
         const appName = 'test-app';
         formComponent.appName = appName;
@@ -389,7 +394,7 @@ describe('FormCloudComponent', () => {
         spyOn(formCloudService, 'getTaskForm').and.returnValue(of(cloudFormMock));
         spyOn(formCloudService, 'getTaskVariables').and.returnValue(of([]));
         spyOn(formCloudService, 'getProcessStorageFolderTask')
-            .and.returnValue( of({nodeId : '123', path: '/a/path/type', type: 'fakeType'}));
+            .and.returnValue(of({ nodeId: '123', path: '/a/path/type', type: 'fakeType' }));
         const taskId = '<task id>';
         const processInstanceId = 'i-am-the-process-instance-id';
         const appName = 'test-app';
@@ -947,7 +952,7 @@ describe('FormCloudComponent', () => {
         });
 
         formComponent.ngOnChanges({ 'data': change });
-   });
+    });
 
     it('should refresh radio buttons value when id is given to data', () => {
         formComponent.form = new FormModel(JSON.parse(JSON.stringify(cloudFormMock)));
@@ -990,7 +995,7 @@ describe('FormCloudComponent', () => {
     });
 
     describe('Multilingual Form', () => {
-        it('should  translate form labels  on language change',  async () => {
+        it('should  translate form labels  on language change', async () => {
             spyOn(formCloudService, 'getForm').and.returnValue(of(multilingualForm));
             const formId = '123';
             const appName = 'test-app';

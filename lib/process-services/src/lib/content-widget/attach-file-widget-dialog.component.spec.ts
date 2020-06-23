@@ -21,7 +21,7 @@ import { ContentModule, ContentNodeSelectorPanelComponent } from '@alfresco/adf-
 import { EventEmitter } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { setupTestBed, AuthenticationService, SitesService, CoreModule } from '@alfresco/adf-core';
+import { setupTestBed, AuthenticationService, SitesService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -47,7 +47,6 @@ describe('AttachFileWidgetDialogComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreModule.forRoot(),
             ProcessTestingModule,
             ContentModule.forRoot()
         ],
@@ -73,6 +72,7 @@ describe('AttachFileWidgetDialogComponent', () => {
     });
 
     it('should be able to create the widget', () => {
+        fixture.detectChanges();
         expect(widget).not.toBeNull();
     });
 

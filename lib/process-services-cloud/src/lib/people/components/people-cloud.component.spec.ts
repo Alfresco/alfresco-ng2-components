@@ -20,9 +20,9 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import {
     IdentityUserService,
     AlfrescoApiService,
-    CoreModule,
     setupTestBed,
-    IdentityUserModel
+    IdentityUserModel,
+    CoreTestingModule
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { of } from 'rxjs';
@@ -58,7 +58,7 @@ describe('PeopleCloudComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreModule.forRoot(),
+            CoreTestingModule,
             ProcessServiceCloudTestingModule,
             PeopleCloudModule
         ]
