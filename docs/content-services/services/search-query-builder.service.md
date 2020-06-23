@@ -66,7 +66,7 @@ Stores information from all the custom search and faceted search widgets, compil
     Removes an existing bucket from a field.
     -   _field:_ [`FacetField`](../../../lib/content-services/src/lib/search/facet-field.interface.ts)  - The target field
     -   _bucket:_ [`FacetFieldBucket`](../../../lib/content-services/src/lib/search/facet-field-bucket.interface.ts)  - Bucket to remove
--   **setUpConfiguration**()<br/>
+-   **resetToDefaults**()<br/>
 
 -   **update**()<br/>
     Builds the current query and triggers the `updated` event.

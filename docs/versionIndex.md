@@ -44,6 +44,7 @@ backend services have been tested with each released version of ADF.
 -   [Unclaim task cloud directive](process-services-cloud/directives/unclaim-task-cloud.directive.md)
 -   [Unclaim task directive](process-services/directives/unclaim-task.directive.md)
 -   [Version comparison component](content-services/components/version-comparison.component.md)
+-   [Version compatibility directive](core/directives/version-compatibility.directive.md)
 
 <!--v390 end-->
 

@@ -137,6 +137,7 @@ for more information about installing and using the source code.
 | [Node Favorite directive](core/directives/node-favorite.directive.md) | Selectively toggles nodes as favorites. | [Source](../lib/core/directives/node-favorite.directive.ts) |
 | [Node Restore directive](core/directives/node-restore.directive.md) | Restores deleted nodes to their original location. | [Source](../lib/core/directives/node-restore.directive.ts) |
 | [Upload Directive](core/directives/upload.directive.md) | Uploads content in response to file drag and drop. | [Source](../lib/core/directives/upload.directive.ts) |
+| [Version Compatibility Directive](core/directives/version-compatibility.directive.md) | Enables/disables components based on ACS version in use. | [Source](../lib/core/directives/version-compatibility.directive.ts) |
 
 ### Dialogs
 
