@@ -264,7 +264,7 @@ describe('ProcessListCloudComponent', () => {
             ];
             const sortChange = new SimpleChange(undefined, mockSort, true);
             component.ngOnChanges({
-                'sorting': sortChange,
+                'sorting': sortChange
             });
             fixture.detectChanges();
             expect(component.setSortInput).toHaveBeenCalledWith(mockSort);
