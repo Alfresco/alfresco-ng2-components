@@ -29,6 +29,7 @@ import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '.
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 
 @Component({
     template: `
@@ -248,6 +249,26 @@ describe('ProcessListCloudComponent', () => {
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
             expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should set sortInput if sorting input changes', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            spyOn(component, 'setSortInput').and.callThrough();
+
+            component.appName = 'mock-app-name';
+            const mockSort = [
+                new ProcessListCloudSortingModel({
+                    orderBy: 'startDate',
+                    direction: 'DESC'
+                })
+            ];
+            const sortChange = new SimpleChange(undefined, mockSort, true);
+            component.ngOnChanges({
+                'sorting': sortChange,
+            });
+            fixture.detectChanges();
+            expect(component.setSortInput).toHaveBeenCalledWith(mockSort);
+            expect(component.sortInput).toEqual(['entry.startDate', 'desc']);
         });
     });
 
