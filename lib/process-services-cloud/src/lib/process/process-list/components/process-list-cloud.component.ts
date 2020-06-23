@@ -35,6 +35,7 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
 export class ProcessListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-cloud-process-list.presets';
+    static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -301,7 +302,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     setSortInput(sorting) {
         this.sortInput = sorting.length ? [
-            'entry.' + sorting[0].orderBy,
+            ProcessListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
     }
