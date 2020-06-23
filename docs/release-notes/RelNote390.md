@@ -17,7 +17,10 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [TODO](#TODO)
+    -   [DocumentList filtering](#documentlist-filtering)
+    -   [ECM version directive](#ecm-version-directive)
+    -   [SiteService to manage members and requests](#siteservice-to-manage-members-and-requests)
+    -   [Updated JS Renditions API](#updated-js-renditions-api)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [Issues addressed](#issues-addressed)
@@ -36,13 +39,48 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 This is the seventh minor release of ADF since February 2019 when version 3.0.0 was released.
 
-The highlights of this release include [additional support for content and metadata management](https://issues.alfresco.com/jira/browse/ADF-5108) as well as [improved accessibility](https://issues.alfresco.com/jira/browse/ADF-5089) and better support of [Activiti 7](https://www.activiti.org/).
+The highlights of this release include [DocumentList filtering](https://issues.alfresco.com/jira/browse/ADF-5108) for the benfit of the end user as well as technical improvements like the introduction of the ECM version directive, improvements of the SiteService and an updated JS Renditions API.
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
-### TODO
+### DocumentList filtering
 
-TODO
+This enhancement allows an end-user to filter the results in the document list, similarly to Excel/Google sheets (filter in the header), so that the view on the repository can be customized accordingly with her/his needs.
+
+![](images/DocumentListFiltering.png)
+
+Filter components can be disabled, customized or replaced with custom components. You can check [ACA-3206](https://issues.alfresco.com/jira/browse/ACA-3206) for further details.
+
+### ECM version directive
+
+To properly manage the compatibility of the ADF components with a specific range of backend services, it has been introduced a way to enable/disable features through an [Angular Directive](https://angular.io/guide/attribute-directives).
+
+You can check [ADF-5158](https://issues.alfresco.com/jira/browse/ADF-5158) for further details.
+
+### SiteService to manage members and requests
+
+As part of the enhancements of the SiteService, the following capabilites are added.
+
+ - Members(users/groups):
+	 - Add member to site
+	 - Remove member from site
+	 - Update site role of member
+
+ - Membership request:
+	 - Get pending request for site
+	 - Approve request
+	 - Reject request
+
+You can check [ADF-5154](https://issues.alfresco.com/jira/browse/ADF-5154) for further details.
+
+### Updated JS Renditions API
+
+Accordingly with [ADF-5144](https://issues.alfresco.com/jira/browse/ADF-5144), the JS renditions API has been extended to support the following endpoints and capabilities.
+
+    GET /nodes/{nodeId}/versions/{versionId}/renditions - List renditions for a version
+    POST /nodes/{nodeId}/versions/{versionId}/renditions - Create rendition for a version
+    GET /nodes/{nodeId}/versions/{versionId}/renditions/{renditionId} - Get rendition information for a version
+    GET /nodes/{nodeId}/versions/{versionId}/renditions/{renditionId}/content - Get rendition content for a version
 
 ## Localisation
 
