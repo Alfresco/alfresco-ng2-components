@@ -1,6 +1,8 @@
 @import '~@angular/material/theming';
 
 @mixin adf-unknown-viewer-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
     .adf-viewer__unknown-format-view {
         height: 90vh;
         text-align: center;
@@ -13,5 +15,4 @@
             color: mat-color($foreground, text);
         }
     }
-
 }
