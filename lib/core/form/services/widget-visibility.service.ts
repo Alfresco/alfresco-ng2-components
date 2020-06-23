@@ -329,8 +329,6 @@ export class WidgetVisibilityService {
                 if (field.type !== FormFieldTypes.CONTAINER) {
                     if (!field.isVisible) {
                         delete formModel.values[field.id];
-                    } else {
-                        field.updateForm();
                     }
                 }
                 return field;
