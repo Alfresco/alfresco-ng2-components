@@ -253,6 +253,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                     this.resetSelection();
                 } else if (rowChanges) {
                     this.setTableRows(changes['rows'].currentValue);
+                    this.setTableSorting(this.sorting);
                 } else {
                     this.setTableColumns(changes['columns'].currentValue);
                 }

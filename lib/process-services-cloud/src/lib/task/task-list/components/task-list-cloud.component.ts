@@ -176,6 +176,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     currentInstanceId: any;
     isLoading = true;
     selectedInstances: any[];
+    sortInput: any[];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -224,6 +225,9 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             if (changes.hasOwnProperty(property)) {
                 if (changes[property] &&
                     (changes[property].currentValue !== changes[property].previousValue)) {
+                    if (property === 'sorting') {
+                        this.setSortInput(changes['sorting'].currentValue);
+                    }
                     return true;
                 }
             }
@@ -323,5 +327,12 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             standalone: this.standalone
         };
         return new TaskQueryCloudRequestModel(requestNode);
+    }
+
+    setSortInput(sorting) {
+        this.sortInput = sorting.length ? [
+            'entry.' + sorting[0].orderBy,
+            sorting[0].direction.toLocaleLowerCase()
+        ] : null;
     }
 }
