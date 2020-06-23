@@ -202,7 +202,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes)) {
+        if (this.isPropertyChanged(changes, 'sorting')) {
+            this.setSortInput(changes['sorting'].currentValue);
+        }
+        if (this.isAnyPropertyChanged(changes)) {
             this.reload();
         }
     }
@@ -220,16 +223,20 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         return this.currentInstanceId;
     }
 
-    private isPropertyChanged(changes: SimpleChanges): boolean {
+    private isAnyPropertyChanged(changes: SimpleChanges): boolean {
         for (const property in changes) {
-            if (changes.hasOwnProperty(property)) {
-                if (changes[property] &&
-                    (changes[property].currentValue !== changes[property].previousValue)) {
-                    if (property === 'sorting') {
-                        this.setSortInput(changes['sorting'].currentValue);
-                    }
-                    return true;
-                }
+            if (this.isPropertyChanged(changes, property)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
+        if (changes.hasOwnProperty(property)) {
+            if (changes[property] &&
+                (changes[property].currentValue !== changes[property].previousValue)) {
+                return true;
             }
         }
         return false;

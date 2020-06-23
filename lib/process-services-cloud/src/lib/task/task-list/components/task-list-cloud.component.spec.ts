@@ -27,6 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { Person } from '@alfresco/js-api';
 import { TaskListModule } from '@alfresco/adf-process-services';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
 @Component({
     template: `
@@ -288,6 +289,26 @@ describe('TaskListCloudComponent', () => {
             fixture.detectChanges();
             expect(component.isListEmpty()).toBeFalsy();
             expect(getTaskByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should set sortInput if sorting input changes', () => {
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(component, 'setSortInput').and.callThrough();
+
+            component.appName = 'mock-app-name';
+            const mockSort = [
+                new TaskListCloudSortingModel({
+                    orderBy: 'startDate',
+                    direction: 'DESC'
+                })
+            ];
+            const sortChange = new SimpleChange(undefined, mockSort, true);
+            component.ngOnChanges({
+                'sorting': sortChange,
+            });
+            fixture.detectChanges();
+            expect(component.setSortInput).toHaveBeenCalledWith(mockSort);
+            expect(component.sortInput).toEqual(['entry.startDate', 'desc']);
         });
     });
 
