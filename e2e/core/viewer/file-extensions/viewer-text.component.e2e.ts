@@ -73,10 +73,6 @@ describe('Viewer', () => {
             await contentServicesPage.goToDocumentList();
         });
 
-        afterAll(async () => {
-            await uploadActions.deleteFileOrFolder(textFolderUploaded.entry.id);
-        });
-
         it('[C280010] Should be possible to open any Text file', async () => {
             await contentServicesPage.doubleClickRow('text');
             for (const currentFile of uploadedTexts) {

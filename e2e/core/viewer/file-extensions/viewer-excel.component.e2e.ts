@@ -73,10 +73,6 @@ describe('Viewer', () => {
             await contentServicesPage.goToDocumentList();
         });
 
-        afterAll(async () => {
-            await uploadActions.deleteFileOrFolder(excelFolderUploaded.entry.id);
-        });
-
         it('[C280008] Should be possible to open any Excel file', async () => {
             await contentServicesPage.doubleClickRow('excel');
             for (const currentFile of uploadedExcels) {
