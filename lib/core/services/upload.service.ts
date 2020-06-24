@@ -275,7 +275,11 @@ export class UploadService {
             .on('success', (data) => {
                 if (this.abortedFile === file.name) {
                     this.onUploadAborted(file);
-                    this.deleteAbortedNode(data.entry.id);
+                    if (file.id === undefined) {
+                        this.deleteAbortedNode(data.entry.id);
+                    } else {
+                        this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
+                    }
                     if (emitter) {
                         emitter.emit({ value: 'File deleted' });
                     }
@@ -402,6 +406,13 @@ export class UploadService {
         this.apiService
             .getInstance()
             .core.nodesApi.deleteNode(nodeId, { permanent: true })
+            .then(() => (this.abortedFile = undefined));
+    }
+
+    private deleteAbortedNodeVersion(nodeId: string, versionId: string) {
+        this.apiService
+            .getInstance()
+            .core.versionsApi.deleteVersion(nodeId, versionId)
             .then(() => (this.abortedFile = undefined));
     }
 
