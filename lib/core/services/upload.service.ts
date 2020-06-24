@@ -52,25 +52,25 @@ export class UploadService {
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
     fileUploadStarting: Subject<FileUploadEvent> = new Subject<
         FileUploadEvent
-        >();
+    >();
     fileUploadCancelled: Subject<FileUploadEvent> = new Subject<
         FileUploadEvent
-        >();
+    >();
     fileUploadProgress: Subject<FileUploadEvent> = new Subject<
         FileUploadEvent
-        >();
+    >();
     fileUploadAborted: Subject<FileUploadEvent> = new Subject<
         FileUploadEvent
-        >();
+    >();
     fileUploadError: Subject<FileUploadErrorEvent> = new Subject<
         FileUploadErrorEvent
-        >();
+    >();
     fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<
         FileUploadCompleteEvent
-        >();
+    >();
     fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<
         FileUploadDeleteEvent
-        >();
+    >();
     fileDeleted: Subject<string> = new Subject<string>();
 
     constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
@@ -286,7 +286,7 @@ export class UploadService {
                 } else {
                     this.onUploadComplete(file, data);
                     if (emitter) {
-                        emitter.emit({value: data});
+                        emitter.emit( {value: data} );
                     }
                 }
             })
