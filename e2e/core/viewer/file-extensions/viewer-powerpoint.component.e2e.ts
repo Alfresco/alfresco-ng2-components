@@ -75,10 +75,6 @@ describe('Viewer', () => {
             await contentServicesPage.goToDocumentList();
         });
 
-        afterAll(async () => {
-            await uploadActions.deleteFileOrFolder(pptFolderUploaded.entry.id);
-        });
-
         it('[C280009] Should be possible to open any PowerPoint file', async () => {
             await contentServicesPage.doubleClickRow('ppt');
 

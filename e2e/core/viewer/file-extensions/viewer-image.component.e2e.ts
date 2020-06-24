@@ -83,10 +83,6 @@ describe('Viewer', () => {
             await contentServicesPage.goToDocumentList();
         });
 
-        afterAll(async () => {
-            await uploadActions.deleteFileOrFolder(imgFolderUploaded.entry.id);
-        });
-
         it('[C279966] Should be possible to open any Image supported extension', async () => {
             await contentServicesPage.doubleClickRow('images');
             for (const image of uploadedImages) {

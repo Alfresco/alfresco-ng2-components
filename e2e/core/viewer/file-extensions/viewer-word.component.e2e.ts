@@ -76,10 +76,6 @@ describe('Viewer', () => {
             await contentServicesPage.goToDocumentList();
         });
 
-        afterAll(async () => {
-            await uploadActions.deleteFileOrFolder(wordFolderUploaded.entry.id);
-        });
-
         it('[C280011] Should be possible to open any Word file', async () => {
             await contentServicesPage.doubleClickRow('word');
             for (const currentFile of uploadedWords) {

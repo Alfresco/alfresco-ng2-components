@@ -635,7 +635,7 @@ export class ViewerPage {
     }
 
     async getUnknownFormatMessage(): Promise<string> {
-        const unknownFormatLabel = this.unknownFormat.element(by.css(`.label`));
+        const unknownFormatLabel = this.unknownFormat.element(by.css(`.adf-viewer__unknown-label`));
         return BrowserActions.getText(unknownFormatLabel);
     }
 }
