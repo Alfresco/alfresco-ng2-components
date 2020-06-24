@@ -50,13 +50,27 @@ export class UploadService {
 
     queueChanged: Subject<FileModel[]> = new Subject<FileModel[]>();
     fileUpload: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadStarting: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadProgress: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadAborted: Subject<FileUploadEvent> = new Subject<FileUploadEvent>();
-    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<FileUploadErrorEvent>();
-    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<FileUploadCompleteEvent>();
-    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<FileUploadDeleteEvent>();
+    fileUploadStarting: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+        >();
+    fileUploadCancelled: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+        >();
+    fileUploadProgress: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+        >();
+    fileUploadAborted: Subject<FileUploadEvent> = new Subject<
+        FileUploadEvent
+        >();
+    fileUploadError: Subject<FileUploadErrorEvent> = new Subject<
+        FileUploadErrorEvent
+        >();
+    fileUploadComplete: Subject<FileUploadCompleteEvent> = new Subject<
+        FileUploadCompleteEvent
+        >();
+    fileUploadDeleted: Subject<FileUploadDeleteEvent> = new Subject<
+        FileUploadDeleteEvent
+        >();
     fileDeleted: Subject<string> = new Subject<string>();
 
     constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
@@ -249,13 +263,13 @@ export class UploadService {
             .on('abort', () => {
                 this.onUploadAborted(file);
                 if (emitter) {
-                    emitter.emit({value: 'File aborted'});
+                    emitter.emit({ value: 'File aborted' });
                 }
             })
             .on('error', (err) => {
                 this.onUploadError(file, err);
                 if (emitter) {
-                    emitter.emit({value: 'Error file uploaded'});
+                    emitter.emit({ value: 'Error file uploaded' });
                 }
             })
             .on('success', (data) => {
@@ -267,7 +281,7 @@ export class UploadService {
                         this.deleteAbortedNodeVersion(data.entry.id, data.entry.properties['cm:versionLabel']);
                     }
                     if (emitter) {
-                        emitter.emit({value: 'File deleted'});
+                        emitter.emit({ value: 'File deleted' });
                     }
                 } else {
                     this.onUploadComplete(file, data);
@@ -276,8 +290,7 @@ export class UploadService {
                     }
                 }
             })
-            .catch(() => {
-            });
+            .catch(() => {});
 
         return promise;
     }
