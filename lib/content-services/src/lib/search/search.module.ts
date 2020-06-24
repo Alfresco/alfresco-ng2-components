@@ -89,7 +89,7 @@ import { SearchQueryBuilderService } from './search-query-builder.service';
         SearchDateRangeComponent
     ],
     providers: [
-        { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }
+        { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }
     ]
 })
 export class SearchModule {}
