@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Start proces",
       "NO_PROCESS_DEFINITIONS": "Du kan ikke starte en proces, da der ikke er nogen tilgængelige procesdefinitioner",
+      "NO_START_FORM": "Ingen startform",
+      "NO_PROCESS_DEF_SELECTED": "Ingen proces er valgt",
       "FORM": {
         "TITLE": "Start proces",
         "LABEL": {
+          "SELECT_APPLICATION": "Vælg applikation",
           "TYPE": "Vælg proces",
           "NAME": "Procesnavn"
         },

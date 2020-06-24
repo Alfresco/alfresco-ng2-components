@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Visa kommentarer om versioner",
       "ALLOW_DOWNLOAD": "Aktivera version nedladdning",
       "READ_ONLY": "Skrivskyddad",
-      "COMMENTS": "Visa kommentarer"
+      "COMMENTS": "Visa kommentarer",
+      "VERSION_COMPARISON": "Visa versionsjämförelse"
     },
     "PERSONAL-FILES": "Personliga filer",
     "WARN-MULTIPLE-UPLOADS": "Visa varning för flera uppladdningar",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Flerval (med kryssrutor)",
     "THUMBNAILS": "Aktivera miniatyrbilder",
-    "ALLOW_DROP_FILES": "Aktivera släpp filer i en mapp",
+    "ALLOW_DROP_FILES": "Gör det möjligt att dra in filer i en mapp eller en fil",
     "MULTIPLE_FILE_UPLOAD": "Uppladdning av flera filer",
     "FOLDER_UPLOAD": "Mappuppladdning",
     "CUSTOM_FILTER": "Anpassade tilläggsfilter",

@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mina uppgifter",
+    "QUEUED_TASKS": "Köade uppgifter",
     "COMPLETED_TASKS": "Slutförda uppgifter"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Alla processer",
-    "RUNNING_PROCESSES": "Aktiva processer",
-    "COMPLETED_PROCESSES": "Slutförda processer"
+    "ALL_PROCESSES": "Alla",
+    "RUNNING_PROCESSES": "Kör",
+    "COMPLETED_PROCESSES": "Slutförd"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

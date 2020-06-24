@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Starta process",
       "NO_PROCESS_DEFINITIONS": "Du kan inte starta en process eftersom inga processdefinitioner är tillgängliga",
+      "NO_START_FORM": "Inget startformulär",
+      "NO_PROCESS_DEF_SELECTED": "Ingen processdefinition vald",
       "FORM": {
         "TITLE": "Starta process",
         "LABEL": {
+          "SELECT_APPLICATION": "Välj program",
           "TYPE": "Välj process",
           "NAME": "Processnamn"
         },

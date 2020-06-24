@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Iniciar processo",
       "NO_PROCESS_DEFINITIONS": "Você não pode iniciar um processo porque não há definições de processo disponíveis",
+      "NO_START_FORM": "Sem formulário de início",
+      "NO_PROCESS_DEF_SELECTED": "Nenhuma definição de processo selecionada",
       "FORM": {
         "TITLE": "Iniciar processo",
         "LABEL": {
+          "SELECT_APPLICATION": "Selecionar aplicativo",
           "TYPE": "Selecionar Processo",
           "NAME": "Nome de processo"
         },

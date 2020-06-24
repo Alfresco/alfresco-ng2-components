@@ -21,6 +21,14 @@
       "NO_LABEL": "否"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "当前",
+    "NEW_VERSION": "新建",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "项目类型 {{ type }}",
+      "ARROW_ICON": "右箭头图标"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "正在加载..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "查看",
       "REMOVE": "删除",
       "DOWNLOAD": "下载"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "根据 {{ category }} 筛选",
+      "CLEAR": "清除",
+      "APPLY": "应用"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

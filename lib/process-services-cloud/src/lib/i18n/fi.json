@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Omat tehtävät",
+    "QUEUED_TASKS": "Jonossa olevat tehtävät",
     "COMPLETED_TASKS": "Suoritetut tehtävät"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Kaikki prosessit",
-    "RUNNING_PROCESSES": "Käynnissä olevat prosessit",
-    "COMPLETED_PROCESSES": "Suoritetut prosessit"
+    "ALL_PROCESSES": "Kaikki",
+    "RUNNING_PROCESSES": "Käynnissä",
+    "COMPLETED_PROCESSES": "Suoritetut"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

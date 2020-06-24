@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "显示有关版本的注释",
       "ALLOW_DOWNLOAD": "启用版本下载",
       "READ_ONLY": "只读",
-      "COMMENTS": "显示注释"
+      "COMMENTS": "显示注释",
+      "VERSION_COMPARISON": "显示版本对比"
     },
     "PERSONAL-FILES": "个人文件",
     "WARN-MULTIPLE-UPLOADS": "针对多个上传显示警告。",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "多选（含复选框）",
     "THUMBNAILS": "启用缩略图",
-    "ALLOW_DROP_FILES": "在文件夹中启用“文件拖放”",
+    "ALLOW_DROP_FILES": "在文件夹或文件中启用拖动文件",
     "MULTIPLE_FILE_UPLOAD": "上传多个文件",
     "FOLDER_UPLOAD": "文件夹上传",
     "CUSTOM_FILTER": "自定义扩展过滤器",

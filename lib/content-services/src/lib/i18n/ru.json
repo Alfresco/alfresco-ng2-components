@@ -21,6 +21,14 @@
       "NO_LABEL": "Нет"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Текущее",
+    "NEW_VERSION": "Создать",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Тип элемента {{ type }}",
+      "ARROW_ICON": "Значок правой стрелки"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Загрузка..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Посмотреть",
       "REMOVE": "Удалить",
       "DOWNLOAD": "Скачать"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Фильтровать по {{ category }}",
+      "CLEAR": "Очистить",
+      "APPLY": "Применить"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

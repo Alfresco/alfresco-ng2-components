@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Opmerkingen over versies tonen",
       "ALLOW_DOWNLOAD": "Versiedownload inschakelen",
       "READ_ONLY": "Alleen-lezen",
-      "COMMENTS": "Opmerkingen weergeven"
+      "COMMENTS": "Opmerkingen weergeven",
+      "VERSION_COMPARISON": "Versievergelijking tonen"
     },
     "PERSONAL-FILES": "Persoonlijke bestanden",
     "WARN-MULTIPLE-UPLOADS": "Waarschuwing weergeven bij meerdere uploads.",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multiselect (met selectievakjes)",
     "THUMBNAILS": "Miniaturen inschakelen",
-    "ALLOW_DROP_FILES": "Bestanden neerzetten in een map inschakelen",
+    "ALLOW_DROP_FILES": "Bestanden neerzetten in een map of een bestand inschakelen",
     "MULTIPLE_FILE_UPLOAD": "Meerdere bestanden uploaden",
     "FOLDER_UPLOAD": "Map uploaden",
     "CUSTOM_FILTER": "Aangepast extensiefilter",

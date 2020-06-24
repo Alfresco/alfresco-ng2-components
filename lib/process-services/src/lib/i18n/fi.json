@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Käynnistä prosessi",
       "NO_PROCESS_DEFINITIONS": "Et voi käynnistää prosessia, koska prosessimääritelmiä ei ole saatavilla",
+      "NO_START_FORM": "Ei aloituslomaketta",
+      "NO_PROCESS_DEF_SELECTED": "Prosessimääritelmää ei ole valittu",
       "FORM": {
         "TITLE": "Käynnistä prosessi",
         "LABEL": {
+          "SELECT_APPLICATION": "Valitse sovellus",
           "TYPE": "Valitse prosessi",
           "NAME": "Prosessin nimi"
         },

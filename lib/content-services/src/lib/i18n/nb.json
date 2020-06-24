@@ -21,6 +21,14 @@
       "NO_LABEL": "Nei"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Gjeldende",
+    "NEW_VERSION": "Ny",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Elementtype {{ type }}",
+      "ARROW_ICON": "Høyrepil-ikon"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Laster inn..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Vis",
       "REMOVE": "Fjern",
       "DOWNLOAD": "Last ned"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Filtrer etter {{ category }}",
+      "CLEAR": "Fjern",
+      "APPLY": "Bruk"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

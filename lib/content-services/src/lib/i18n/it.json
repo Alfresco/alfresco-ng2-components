@@ -21,6 +21,14 @@
       "NO_LABEL": "No"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Corrente",
+    "NEW_VERSION": "Nuovo",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Tipo di elemento {{ type }}",
+      "ARROW_ICON": "Icona freccia destra"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Caricamento..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Visualizza",
       "REMOVE": "Rimuovi",
       "DOWNLOAD": "Scarica"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Filtra per {{ category }}",
+      "CLEAR": "Cancella",
+      "APPLY": "Applica"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -373,22 +386,22 @@
       "MODERATED": "Moderato"
     },
     "HINTS": {
-      "SITE_TITLE_EXISTS": "Nome raccolta già utilizzato"
+      "SITE_TITLE_EXISTS": "Nome libreria già utilizzato"
     },
     "ERRORS": {
       "GENERIC": "Si è verificato un problema",
-      "EXISTENT_SITE": "L'ID raccolta non è disponibile. Provare con un altro ID raccolta.",
+      "EXISTENT_SITE": "L'ID libreria non è disponibile. Provare con un altro ID libreria.",
       "CONFLICT": "L'ID libreria specificato è già in uso. Verificare il cestino.",
       "ID_TOO_LONG": "Utilizzare 72 caratteri o meno per il nome URL",
       "DESCRIPTION_TOO_LONG": "Utilizzare 512 o meno per la descrizione",
       "TITLE_TOO_LONG": "Utilizzare 256 caratteri o meno per il titolo",
       "TITLE_TOO_SHORT": "Il titolo deve contenere almeno 2 caratteri",
       "ILLEGAL_CHARACTERS": "Utilizzare solo lettere e numeri",
-      "ONLY_SPACES": "Il nome della raccolta non può contenere solo spazi",
-      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore di caricamento delle proprietà della raccolta"
+      "ONLY_SPACES": "Il nome della libreria non può contenere solo spazi",
+      "LIBRARY_UPDATE_ERROR": "Si è verificato un errore di caricamento delle proprietà della libreria"
     },
     "SUCCESS": {
-      "LIBRARY_UPDATED": "Proprietà della raccolta aggiornate"
+      "LIBRARY_UPDATED": "Proprietà della libreria aggiornate"
     }
   },
   "BREADCRUMB": {

@@ -21,6 +21,14 @@
       "NO_LABEL": "Nej"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Aktuell",
+    "NEW_VERSION": "Ny",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Artikeltyp {{ type }}",
+      "ARROW_ICON": "Ikon för högerpil"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Läser in..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Visa",
       "REMOVE": "Ta bort",
       "DOWNLOAD": "Ladda ner"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Filtrera efter {{ category }}",
+      "CLEAR": "Rensa",
+      "APPLY": "Tillämpa"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

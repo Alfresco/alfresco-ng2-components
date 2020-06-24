@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Mine oppgaver",
+    "QUEUED_TASKS": "Oppgaver i kø",
     "COMPLETED_TASKS": "Fullførte oppgaver"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Alle prosesser",
-    "RUNNING_PROCESSES": "Kjørende prosesser",
-    "COMPLETED_PROCESSES": "Fullførte prosesser"
+    "ALL_PROCESSES": "Alle",
+    "RUNNING_PROCESSES": "Kjører",
+    "COMPLETED_PROCESSES": "Fullført"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

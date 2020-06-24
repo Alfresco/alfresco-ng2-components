@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Rozpocznij proces",
       "NO_PROCESS_DEFINITIONS": "Nie można rozpocząć procesu, ponieważ brak dostępnych definicji procesu.",
+      "NO_START_FORM": "Brak formularza początkowego",
+      "NO_PROCESS_DEF_SELECTED": "Nie wybrano definicji procesu",
       "FORM": {
         "TITLE": "Rozpocznij proces",
         "LABEL": {
+          "SELECT_APPLICATION": "Wybierz aplikację",
           "TYPE": "Wybierz proces",
           "NAME": "Nazwa procesu"
         },

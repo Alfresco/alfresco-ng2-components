@@ -21,6 +21,14 @@
       "NO_LABEL": "Nie"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Bieżący",
+    "NEW_VERSION": "Nowy",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Typ elementu {{ type }}",
+      "ARROW_ICON": "Ikona strzałki w prawo"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Wczytywanie..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Widok",
       "REMOVE": "Usuń",
       "DOWNLOAD": "Pobierz"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Filtruj wg {{ category }}",
+      "CLEAR": "Wyczyść",
+      "APPLY": "Zastosuj"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "مهامي",
+    "QUEUED_TASKS": "المهام بقائمة الانتظار",
     "COMPLETED_TASKS": "مهام مكتملة"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "جميع العمليات",
-    "RUNNING_PROCESSES": "عمليات قيد التشغيل",
-    "COMPLETED_PROCESSES": "عمليات مكتملة"
+    "ALL_PROCESSES": "الكل",
+    "RUNNING_PROCESSES": "قيد التشغيل",
+    "COMPLETED_PROCESSES": "المكتملة"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
