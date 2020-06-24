@@ -9,7 +9,7 @@ Last reviewed: 2020-06-04
 
 Displays the side by side comparison between the current target node (type, name, icon) and the new file that should update it's version.
 
-![Version Manager](../../docassets/images/version-comparison.png)
+![Version Comparison](../../docassets/images/version-comparison.png)
 
 ## Basic Usage
 
