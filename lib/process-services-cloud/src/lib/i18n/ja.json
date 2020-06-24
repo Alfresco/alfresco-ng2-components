@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "あなたのタスク",
+    "QUEUED_TASKS": "キューに入っているタスク",
     "COMPLETED_TASKS": "完了済みタスク"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "すべてのプロセス",
-    "RUNNING_PROCESSES": "実行中のプロセス",
-    "COMPLETED_PROCESSES": "完了済みのプロセス"
+    "ALL_PROCESSES": "すべて",
+    "RUNNING_PROCESSES": "進行中",
+    "COMPLETED_PROCESSES": "完了日"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

@@ -21,6 +21,14 @@
       "NO_LABEL": "لا"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "الحالي",
+    "NEW_VERSION": "جديد",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "نوع العنصر {{ type }}",
+      "ARROW_ICON": "أيقونة السهم الأيمن"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "يتم الآن التحميل..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "عرض",
       "REMOVE": "إزالة",
       "DOWNLOAD": "تنزيل"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "تصفية حسب {{ category }}",
+      "CLEAR": "مسح",
+      "APPLY": "تطبيق"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

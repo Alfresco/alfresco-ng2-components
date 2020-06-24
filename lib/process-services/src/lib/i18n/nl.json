@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Proces starten",
       "NO_PROCESS_DEFINITIONS": "U kunt geen proces starten omdat er geen procesdefinities beschikbaar zijn",
+      "NO_START_FORM": "Geen beginformulier",
+      "NO_PROCESS_DEF_SELECTED": "Geen procesdefinitie geselecteerd",
       "FORM": {
         "TITLE": "Proces starten",
         "LABEL": {
+          "SELECT_APPLICATION": "Toepassing selecteren",
           "TYPE": "Proces selecteren",
           "NAME": "Procesnaam"
         },

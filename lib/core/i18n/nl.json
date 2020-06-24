@@ -16,7 +16,7 @@
       "TITLE": "Beginformulier"
     },
     "PREVIEW": {
-      "IMAGE_NOT_AVAILABLE": "Voorbeeld niet beschikbaar"
+      "IMAGE_NOT_AVAILABLE": "Preview niet beschikbaar"
     },
     "FIELD": {
       "LOCALSTORAGE": "Lokale opslag",
@@ -353,7 +353,7 @@
       "OF": "van"
     },
     "LOADING": "Wordt geladen",
-    "UNKNOWN_FORMAT": "Kan voorbeeld niet laden. Onbekende indeling.",
+    "UNKNOWN_FORMAT": "Kan preview niet laden. Onbekende indeling.",
     "SIDEBAR": {
       "THUMBNAILS": {
         "PAGE": "Pagina {{ pageNum }}"

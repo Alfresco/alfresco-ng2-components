@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "بدء العملية",
       "NO_PROCESS_DEFINITIONS": "لا يمكنك بدء عملية حيث لا توجد تعريفات عملية متاحة",
+      "NO_START_FORM": "لا نموذج بدء",
+      "NO_PROCESS_DEF_SELECTED": "لم يتم تحديد تعريف عملية",
       "FORM": {
         "TITLE": "بدء العملية",
         "LABEL": {
+          "SELECT_APPLICATION": "تحديد التطبيق",
           "TYPE": "تحديد عملية",
           "NAME": "اسم العملية"
         },

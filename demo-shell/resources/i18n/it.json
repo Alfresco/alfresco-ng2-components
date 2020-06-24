@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Mostra commenti sulle versioni",
       "ALLOW_DOWNLOAD": "Abilita scaricamento versioni",
       "READ_ONLY": "Sola lettura",
-      "COMMENTS": "Mostra commenti"
+      "COMMENTS": "Mostra commenti",
+      "VERSION_COMPARISON": "Mostra confronto versioni"
     },
     "PERSONAL-FILES": "File personali",
     "WARN-MULTIPLE-UPLOADS": "Mostra avviso per caricamenti multipli.",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Selezione multipla (con caselle di spunta)",
     "THUMBNAILS": "Abilita miniature",
-    "ALLOW_DROP_FILES": "Abilita trascinamento di file in una cartella",
+    "ALLOW_DROP_FILES": "Abilita Rilascio file in una cartella o file",
     "MULTIPLE_FILE_UPLOAD": "Caricamento di file multipli",
     "FOLDER_UPLOAD": "Caricamento cartelle",
     "CUSTOM_FILTER": "Filtro estensioni personalizzato",

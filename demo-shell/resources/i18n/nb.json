@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Vis kommentarer om versjoner",
       "ALLOW_DOWNLOAD": "Aktiver versjonsnedlasting",
       "READ_ONLY": "Skrivebeskyttet",
-      "COMMENTS": "Vis kommentarer"
+      "COMMENTS": "Vis kommentarer",
+      "VERSION_COMPARISON": "Vis sammenligning av versjoner"
     },
     "PERSONAL-FILES": "Personlige filer",
     "WARN-MULTIPLE-UPLOADS": "Vis advarsel for flere opplastinger.",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Multivalg (med avskrysningsbokser)",
     "THUMBNAILS": "Aktiver miniatyrbilder",
-    "ALLOW_DROP_FILES": "Aktiver Slipp filer i en mappe",
+    "ALLOW_DROP_FILES": "Aktiver Slipp filer i en mappe eller en fil",
     "MULTIPLE_FILE_UPLOAD": "Opplasting av flere filer",
     "FOLDER_UPLOAD": "Opplasting av mappe",
     "CUSTOM_FILTER": "Tilpasset utvidelsesfilter",

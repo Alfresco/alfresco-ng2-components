@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Start prosess",
       "NO_PROCESS_DEFINITIONS": "Du kan ikke starte en prosess fordi det ikke finnes noen tilgjengelige prosessdefinisjoner",
+      "NO_START_FORM": "Startskjema mangler",
+      "NO_PROCESS_DEF_SELECTED": "Ingen prosessdefinisjon valgt",
       "FORM": {
         "TITLE": "Start prosess",
         "LABEL": {
+          "SELECT_APPLICATION": "Velg program",
           "TYPE": "Velg prosess",
           "NAME": "Prosessnavn"
         },

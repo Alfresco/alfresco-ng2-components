@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "إظهار التعليقات على الإصدارات",
       "ALLOW_DOWNLOAD": "تمكين تنزيل الإصدار",
       "READ_ONLY": "للقراءة فقط",
-      "COMMENTS": "إظهار التعليقات"
+      "COMMENTS": "إظهار التعليقات",
+      "VERSION_COMPARISON": "إظهار مقارنة الإصدار"
     },
     "PERSONAL-FILES": "الملفات الشخصية",
     "WARN-MULTIPLE-UPLOADS": "عرض تحذير للتحميلات المتعددة.",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "تحديد متعدد (مع خانات اختيارات)",
     "THUMBNAILS": "تمكين الصور المصغرة",
-    "ALLOW_DROP_FILES": "تمكين إسقاط ملفات في مجلد",
+    "ALLOW_DROP_FILES": "تمكين إسقاط الملفات في مجلد أو ملف",
     "MULTIPLE_FILE_UPLOAD": "تحميل ملفات متعددة",
     "FOLDER_UPLOAD": "تحميل مجلد",
     "CUSTOM_FILTER": "عامل تصفية امتدادات مخصص",

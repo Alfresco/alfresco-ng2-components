@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "我的任务",
+    "QUEUED_TASKS": "排队列的任务",
     "COMPLETED_TASKS": "完成的任务"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "所有流程",
-    "RUNNING_PROCESSES": "正在运行的流程",
-    "COMPLETED_PROCESSES": "已完成流程"
+    "ALL_PROCESSES": "全部",
+    "RUNNING_PROCESSES": "运行",
+    "COMPLETED_PROCESSES": "已完成"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

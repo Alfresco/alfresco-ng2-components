@@ -21,6 +21,14 @@
       "NO_LABEL": "Nej"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Nuværende",
+    "NEW_VERSION": "Ny(t)",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Elementtype {{ type }}",
+      "ARROW_ICON": "Pil højre ikon"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Indlæser ..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Vis",
       "REMOVE": "Fjern",
       "DOWNLOAD": "Download"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Sorter efter {{ category }}",
+      "CLEAR": "Ryd",
+      "APPLY": "Anvend"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

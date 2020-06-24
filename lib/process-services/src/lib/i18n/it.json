@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "Avvia processo",
       "NO_PROCESS_DEFINITIONS": "Impossibile avviare un processo poiché non vi sono definizioni di processo disponibili",
+      "NO_START_FORM": "Nessun modulo di inizio",
+      "NO_PROCESS_DEF_SELECTED": "Nessuna definizione di processo selezionata",
       "FORM": {
         "TITLE": "Avvia processo",
         "LABEL": {
+          "SELECT_APPLICATION": "Selezionare applicazione",
           "TYPE": "Seleziona processo",
           "NAME": "Nome processo"
         },

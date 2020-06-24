@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "バージョンに関するコメントを表示",
       "ALLOW_DOWNLOAD": "バージョンのダウンロードを許可",
       "READ_ONLY": "読取り専用",
-      "COMMENTS": "コメントを表示する"
+      "COMMENTS": "コメントを表示する",
+      "VERSION_COMPARISON": "バージョンの比較を表示"
     },
     "PERSONAL-FILES": "個人的なファイル",
     "WARN-MULTIPLE-UPLOADS": "複数のアップロードの警告を表示します。",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "複数選択 (チェックボックスを使用)",
     "THUMBNAILS": "サムネイルを有効にする",
-    "ALLOW_DROP_FILES": "フォルダへのドラッグ&ドロップを許可",
+    "ALLOW_DROP_FILES": "ファイルのドロップを許可",
     "MULTIPLE_FILE_UPLOAD": "複数ファイルのアップロード",
     "FOLDER_UPLOAD": "フォルダのアップロード",
     "CUSTOM_FILTER": "カスタム拡張子フィルタ",

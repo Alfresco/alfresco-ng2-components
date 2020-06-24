@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Anmerkungen zu Versionen einblenden",
       "ALLOW_DOWNLOAD": "Herunterladen von Version aktivieren",
       "READ_ONLY": "Schreibgeschützt",
-      "COMMENTS": "Kommentare anzeigen"
+      "COMMENTS": "Kommentare anzeigen",
+      "VERSION_COMPARISON": "Versionsvergleich anzeigen"
     },
     "PERSONAL-FILES": "Persönliche Dateien",
     "WARN-MULTIPLE-UPLOADS": "Warnung bei Mehrfach-Uploads anzeigen.",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Mehrfachauswahl (mit Kontrollkästchen)",
     "THUMBNAILS": "Miniaturansichten aktivieren",
-    "ALLOW_DROP_FILES": "Ablegen von Dateien in Ordner aktivieren",
+    "ALLOW_DROP_FILES": "Ablegen von Dateien in einem Ordner oder einer Datei aktivieren",
     "MULTIPLE_FILE_UPLOAD": "Mehrere Dateien hochladen",
     "FOLDER_UPLOAD": "Ordner hochladen",
     "CUSTOM_FILTER": "Filter für benutzerdefinierte Erweiterungen",

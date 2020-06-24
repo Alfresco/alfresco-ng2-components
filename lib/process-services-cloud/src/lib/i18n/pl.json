@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Moje zadania",
+    "QUEUED_TASKS": "Oczekujące zadania",
     "COMPLETED_TASKS": "Ukończone zadania"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Wszystkie procesy",
-    "RUNNING_PROCESSES": "Uruchomione procesy",
-    "COMPLETED_PROCESSES": "Zakończone procesy"
+    "ALL_PROCESSES": "Wszystkie",
+    "RUNNING_PROCESSES": "Uruchomione",
+    "COMPLETED_PROCESSES": "Zakończone"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

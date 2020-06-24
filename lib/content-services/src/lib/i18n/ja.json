@@ -21,6 +21,14 @@
       "NO_LABEL": "いいえ"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "現在",
+    "NEW_VERSION": "新規",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "アイテムタイプ {{ type }}",
+      "ARROW_ICON": "右矢印アイコン"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "読み込んでいます..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "表示",
       "REMOVE": "削除",
       "DOWNLOAD": "ダウンロード"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "{{ category }} でフィルタ",
+      "CLEAR": "消去",
+      "APPLY": "適用"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {

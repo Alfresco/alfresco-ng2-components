@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Мои задачи",
+    "QUEUED_TASKS": "Задачи в очереди",
     "COMPLETED_TASKS": "Завершенные задачи"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Все процессы",
-    "RUNNING_PROCESSES": "Запущенные процессы",
-    "COMPLETED_PROCESSES": "Завершенные процессы"
+    "ALL_PROCESSES": "Все",
+    "RUNNING_PROCESSES": "Выполняются",
+    "COMPLETED_PROCESSES": "Завершенные"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

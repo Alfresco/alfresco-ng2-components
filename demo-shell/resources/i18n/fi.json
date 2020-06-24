@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Näytä kommentit versioissa",
       "ALLOW_DOWNLOAD": "Ota version lataaminen käyttöön",
       "READ_ONLY": "Vain luku",
-      "COMMENTS": "Näytä kommentit"
+      "COMMENTS": "Näytä kommentit",
+      "VERSION_COMPARISON": "Näytä versiovertailu"
     },
     "PERSONAL-FILES": "Omat tiedostot",
     "WARN-MULTIPLE-UPLOADS": "Näytä varoitus useille latauksille.",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Monivalinta (valintaruuduilla)",
     "THUMBNAILS": "Ota pikkukuvat käyttöön",
-    "ALLOW_DROP_FILES": "Ota tiedostojen kansioon pudottaminen käyttöön",
+    "ALLOW_DROP_FILES": "Ota tiedostojen kansioon tai tiedostoon pudottaminen käyttöön",
     "MULTIPLE_FILE_UPLOAD": "Useiden tiedostojen lataaminen",
     "FOLDER_UPLOAD": "Kansion lataaminen",
     "CUSTOM_FILTER": "Mukautettu tiedostomuotosuodatin",

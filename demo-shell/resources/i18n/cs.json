@@ -21,7 +21,8 @@
       "SHOW_COMMENTS": "Zobrazit komentáře k verzím",
       "ALLOW_DOWNLOAD": "Povolit stažení verze",
       "READ_ONLY": "Pouze ke čtení",
-      "COMMENTS": "Zobrazit komentáře"
+      "COMMENTS": "Zobrazit komentáře",
+      "VERSION_COMPARISON": "Zobrazit porovnání verzí"
     },
     "PERSONAL-FILES": "Osobní soubory",
     "WARN-MULTIPLE-UPLOADS": "Zobrazit upozornění v případě hromadného odesílání",
@@ -119,7 +120,7 @@
   "DOCUMENT_LIST": {
     "MULTISELECT_CHECKBOXES": "Hromadný výběr (pomocí zaškrtávacích polí)",
     "THUMBNAILS": "Povolit miniatury",
-    "ALLOW_DROP_FILES": "Povolit přetažení souborů do složky",
+    "ALLOW_DROP_FILES": "Povolit přetahování souborů do složky nebo souboru",
     "MULTIPLE_FILE_UPLOAD": "Odeslání více souborů",
     "FOLDER_UPLOAD": "Odeslat složku",
     "CUSTOM_FILTER": "Vlastní filtr rozšíření",

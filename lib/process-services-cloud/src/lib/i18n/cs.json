@@ -98,12 +98,13 @@
   },
   "ADF_CLOUD_TASK_FILTERS": {
     "MY_TASKS": "Moje úkoly",
+    "QUEUED_TASKS": "Úkoly ve frontě",
     "COMPLETED_TASKS": "Dokončené úkoly"
   },
   "ADF_CLOUD_PROCESS_FILTERS": {
-    "ALL_PROCESSES": "Všechny procesy",
-    "RUNNING_PROCESSES": "Spuštěné procesy",
-    "COMPLETED_PROCESSES": "Dokončené procesy"
+    "ALL_PROCESSES": "Vše",
+    "RUNNING_PROCESSES": "Spuštěno",
+    "COMPLETED_PROCESSES": "Dokončeno"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {

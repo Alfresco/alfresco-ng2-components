@@ -273,9 +273,12 @@
     "START_PROCESS": {
       "BUTTON": "启动流程",
       "NO_PROCESS_DEFINITIONS": "无法启动流程，因为没有可用的流程定义",
+      "NO_START_FORM": "没有开始表单",
+      "NO_PROCESS_DEF_SELECTED": "没有选择进程定义",
       "FORM": {
         "TITLE": "启动流程",
         "LABEL": {
+          "SELECT_APPLICATION": "选择应用程序",
           "TYPE": "选择流程",
           "NAME": "流程名称"
         },

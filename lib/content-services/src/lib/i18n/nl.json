@@ -21,6 +21,14 @@
       "NO_LABEL": "Nee"
     }
   },
+  "ADF_VERSION_COMPARISON": {
+    "CURRENT_VERSION": "Huidige",
+    "NEW_VERSION": "Nieuw",
+    "ACCESSIBILITY": {
+      "ICON_TEXT": "Itemtype {{ type }}",
+      "ARROW_ICON": "Pictogram pijl-rechts"
+    }
+  },
   "ADF_DROPDOWN": {
     "LOADING": "Laden..."
   },
@@ -54,6 +62,11 @@
       "VIEW": "Weergeven",
       "REMOVE": "Verwijderen",
       "DOWNLOAD": "Downloaden"
+    },
+    "FILTER_MENU": {
+      "FILTER_BY": "Filteren op {{ category }}",
+      "CLEAR": "Wissen",
+      "APPLY": "Toepassen"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
