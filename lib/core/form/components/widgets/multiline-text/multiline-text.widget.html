@@ -11,7 +11,7 @@
                   [(ngModel)]="field.value"
                   (ngModelChange)="onFieldChanged(field)"
                   [disabled]="field.readOnly || readOnly"
-                  placeholder="{{field.placeholder}}">
+                  [placeholder]="field.placeholder">
         </textarea>
     </mat-form-field>
     <div *ngIf="field.maxLength > 0" class="adf-multiline-word-counter">
