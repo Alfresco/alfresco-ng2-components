@@ -216,6 +216,50 @@ describe('UploadService', () => {
         });
     });
 
+    it('should let file\'s version complete and then delete node version if it\'s not safe to abort', (done) => {
+        const emitter = new EventEmitter();
+
+        const emitterDisposable = emitter.subscribe((event) => {
+            expect(event.value).toEqual('File deleted');
+            emitterDisposable.unsubscribe();
+
+            const deleteRequest = jasmine.Ajax.requests.mostRecent();
+            expect(deleteRequest.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/myNodeId/versions/1.1');
+            expect(deleteRequest.method).toBe('DELETE');
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'text/plain',
+                responseText: 'File deleted'
+            });
+            done();
+        });
+
+        const fileFake = new FileModel(<File> {name: 'fake-name', size: 10}, null, 'fakeId');
+        service.addToQueue(fileFake);
+        service.uploadFilesInTheQueue(emitter);
+
+        const file = service.getQueue();
+        service.cancelUpload(...file);
+
+        const request = jasmine.Ajax.requests.mostRecent();
+        expect(request.url).toBe('http://localhost:9876/ecm/alfresco/api/-default-/public/alfresco/versions/1/nodes/fakeId/content?include=allowableOperations');
+        expect(request.method).toBe('PUT');
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'json',
+            responseText: {
+                entry: {
+                    id: 'myNodeId',
+                    properties: {
+                        'cm:versionLabel': '1.1'
+                    }
+                }
+            }
+        });
+    });
+
     it('If newVersion is set, name should be a param', () => {
         const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
 
