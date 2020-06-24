@@ -10,9 +10,6 @@
         flex: 1;
         flex-direction: column;
         justify-content: center;
-
-        .adf-viewer__unknown-label {
-            color: mat-color($foreground, text);
-        }
+        color: mat-color($foreground, text);
     }
 }

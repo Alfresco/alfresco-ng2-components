@@ -51,8 +51,8 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 |npm-publish    | publish on npm |
 | update-commit-sha   | his command allows you to update the commit sha as part of the `package.json`. Your `package.json` must to have an existing property called "commit" |
 |update-version     |This command allows you to update the adf dependencies and js-api with different versions Update adf libs and js-api with latest alpha|
-|adf-license   |Create a 3th party license file |
-|adf-audit     |Check the security risk dependency in your package.json |
+|licenses   |Create a 3th party license file |
+|audit     |Check the security risk dependency in your package.json |
 
 ## Examples
 
@@ -63,7 +63,7 @@ Move in the folder where you have your `package.json` and run the command:
 ```bash
 npm install
 
-adf-license
+adf-cli license
 ```
 
 ### Audit Check
@@ -73,7 +73,7 @@ Move in the folder where you have your `package.json` and run the command:
 ```bash
 npm install
 
-adf-audit
+adf-cli audit
 ```
 
 ### Docker publish
