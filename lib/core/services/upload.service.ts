@@ -286,7 +286,7 @@ export class UploadService {
                 } else {
                     this.onUploadComplete(file, data);
                     if (emitter) {
-                        emitter.emit( {value: data} );
+                        emitter.emit({ value: data });
                     }
                 }
             })
@@ -405,7 +405,7 @@ export class UploadService {
     private deleteAbortedNode(nodeId: string) {
         this.apiService
             .getInstance()
-            .core.nodesApi.deleteNode(nodeId, {permanent: true})
+            .core.nodesApi.deleteNode(nodeId, { permanent: true })
             .then(() => (this.abortedFile = undefined));
     }
 
