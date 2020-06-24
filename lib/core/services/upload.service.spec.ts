@@ -216,7 +216,7 @@ describe('UploadService', () => {
         });
     });
 
-    it('should let file\'s version complete and then delete node version if it\'s not safe to abort', (done) => {
+    it('should delete node\'s version when cancelling the upload of the new file version', (done) => {
         const emitter = new EventEmitter();
 
         const emitterDisposable = emitter.subscribe((event) => {
