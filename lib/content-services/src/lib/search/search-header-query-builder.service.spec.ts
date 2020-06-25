@@ -175,4 +175,30 @@ describe('SearchHeaderQueryBuilder', () => {
             'Filters are not as expected'
         );
     });
+
+    it('should not add duplicate column names in activeFilters', () => {
+        const activeFilter = 'FakeColumn';
+
+        const config: SearchConfiguration = {
+            categories: [
+                <any> { id: 'cat1', enabled: true }
+            ],
+            filterQueries: [
+                { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }
+            ]
+        };
+
+        const searchHeaderService = new SearchHeaderQueryBuilderService(
+            buildConfig(config),
+            null,
+            null
+        );
+
+        expect(searchHeaderService.activeFilters.length).toBe(0);
+
+        searchHeaderService.setActiveFilter(activeFilter);
+        searchHeaderService.setActiveFilter(activeFilter);
+
+        expect(searchHeaderService.activeFilters.length).toBe(1);
+    });
 });

@@ -54,7 +54,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setActiveFilter(columnActivated: string) {
-        this.activeFilters.push(columnActivated);
+        if (!this.activeFilters.includes(columnActivated)) {
+            this.activeFilters.push(columnActivated);
+        }
     }
 
     isNoFilterActive(): boolean {
