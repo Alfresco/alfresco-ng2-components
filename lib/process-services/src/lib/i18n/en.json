@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "No forms to be added",
       "BUTTONS": {
         "COMPLETE": "COMPLETE",
-        "CANCEL": "CANCEL"
+        "CANCEL": "CANCEL",
+        "CLAIM": "ClAIM",
+        "UNCLAIM": "RELEASE"
       }
     },
     "COMPLETED_TASK": {
