@@ -148,10 +148,10 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['appName'] && changes['appName'].currentValue !== changes['appName'].previousValue) {
             this.appName = changes['appName'].currentValue;
-        }
 
-        if (this.appName || this.appName === '') {
-            this.loadProcessDefinitions();
+            if (this.appName || this.appName === '') {
+                this.loadProcessDefinitions();
+            }
         }
     }
 

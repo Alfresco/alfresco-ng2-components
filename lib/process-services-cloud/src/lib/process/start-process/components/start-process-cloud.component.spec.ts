@@ -57,6 +57,8 @@ describe('StartProcessCloudComponent', () => {
     let createProcessSpy: jasmine.Spy;
     let formDefinitionSpy: jasmine.Spy;
 
+    const firstChange = new SimpleChange(undefined, 'myApp', true);
+
     const selectOptionByName = (name: string) => {
 
         const selectElement = fixture.nativeElement.querySelector('button#adf-select-process-dropdown');
@@ -540,7 +542,7 @@ describe('StartProcessCloudComponent', () => {
 
     describe('input changes', () => {
 
-        const change = new SimpleChange('myApp', 'myApp1', true);
+        const change = new SimpleChange('myApp', 'myApp1', false);
 
         beforeEach(async(() => {
             component.appName = 'myApp';
@@ -554,7 +556,7 @@ describe('StartProcessCloudComponent', () => {
         it('should have labels for process name and type', async(() => {
             component.appName = 'myApp';
             component.processDefinitionName = 'NewProcess 2';
-            component.ngOnChanges({});
+            component.ngOnChanges({ appName: firstChange });
             fixture.detectChanges();
             const inputLabelsNodes = document.querySelectorAll('.adf-start-process .adf-process-input-container mat-label');
             expect(inputLabelsNodes.length).toBe(2);
@@ -572,10 +574,21 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should reload processes when appName input changed', async(() => {
+            component.ngOnChanges({ appName: firstChange });
             component.ngOnChanges({ appName: change });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(getDefinitionsSpy).toHaveBeenCalledWith('myApp1');
+            });
+        }));
+
+        it('should reload processes ONLY when appName input changed', async(() => {
+            component.ngOnChanges({ appName: firstChange });
+            fixture.detectChanges();
+            component.ngOnChanges({ maxNameLength: new SimpleChange(0, 2, false) });
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(getDefinitionsSpy).toHaveBeenCalledTimes(1);
             });
         }));
 
@@ -724,7 +737,7 @@ describe('StartProcessCloudComponent', () => {
         it('should have start button disabled process name has a space as the first or last character.', async(() => {
             component.appName = 'myApp';
             component.processDefinitionName = ' Space in the beginning';
-            component.ngOnChanges({});
+            component.ngOnChanges({ appName: firstChange });
             fixture.detectChanges();
             const startBtn = fixture.nativeElement.querySelector('#button-start');
             expect(startBtn.disabled).toBe(true);
@@ -734,6 +747,9 @@ describe('StartProcessCloudComponent', () => {
         }));
 
         it('should emit processDefinitionSelection event when a process definition is selected', (done) => {
+            component.appName = 'myApp';
+            component.ngOnChanges({ appName: firstChange });
+
             component.processDefinitionSelection.subscribe((processDefinition) => {
                 expect(processDefinition).toEqual(fakeProcessDefinitions[0]);
                 done();
