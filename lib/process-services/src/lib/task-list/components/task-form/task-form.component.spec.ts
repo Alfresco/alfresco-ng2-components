@@ -585,7 +585,7 @@ describe('TaskFormComponent', () => {
             await fixture.whenStable();
 
             const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
         });
 
         it('should not display the claim/requeue button if the task is not claimable ', async() => {
@@ -614,7 +614,7 @@ describe('TaskFormComponent', () => {
             const claimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-claim-button"]'));
 
             expect(component.isTaskClaimable()).toBe(true);
-            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.CLAIM');
+            expect(claimButton.nativeElement.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM');
         });
 
         it('should display the release button if task is claimed by the current logged-in user', async() => {
@@ -628,7 +628,7 @@ describe('TaskFormComponent', () => {
             const unclaimButton = fixture.debugElement.query(By.css('[data-automation-id="adf-task-form-unclaim-button"]'));
 
             expect(component.isTaskClaimedByCandidateMember()).toBe(true);
-            expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM');
+            expect(unclaimButton.nativeElement.innerText).toBe('ADF_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM');
         });
 
         it('should not display the release button to logged in user if task is claimed by other candidate member', async() => {
