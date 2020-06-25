@@ -73,18 +73,18 @@
   </ng-template>
 
   <ng-template #taskFormButtons>
-        <button mat-button id="adf-no-form-cancel-button" 
+        <button mat-button id="adf-no-form-cancel-button"
             *ngIf="showCancelButton"
             (click)="onCancel()">
             {{'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CANCEL' | translate}}
         </button>
         <button mat-button data-automation-id="adf-task-form-claim-button"
-            *ngIf="isTaskClaimable()" 
+            *ngIf="isTaskClaimable()"
             adf-claim-task
             [taskId]="taskId"
             (success)="onClaimTask($event)"
             (error)="onClaimTaskError($event)">
-            {{ 'ADF_TASK_LIST.DETAILS.BUTTON.CLAIM' | translate }}
+            {{ 'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.CLAIM' | translate }}
         </button>
         <button mat-button data-automation-id="adf-task-form-unclaim-button"
             *ngIf="isTaskClaimedByCandidateMember()"
@@ -92,7 +92,7 @@
             [taskId]="taskId"
             (success)="onUnclaimTask($event)"
             (error)="onUnclaimTaskError($event)">
-            {{ 'ADF_TASK_LIST.DETAILS.BUTTON.UNCLAIM' | translate }}
+            {{ 'ADF_TASK_FORM.EMPTY_FORM.BUTTONS.UNCLAIM' | translate }}
         </button>
   </ng-template>
 </ng-container>
