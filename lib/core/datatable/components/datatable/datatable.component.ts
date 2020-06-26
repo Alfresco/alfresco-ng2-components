@@ -545,6 +545,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             if (current && column.key === current.key) {
                 newDirection = current.direction === 'asc' ? 'desc' : 'asc';
             }
+            this.sorting = [column.key, newDirection];
             this.data.setSorting(new DataSorting(column.key, newDirection));
             this.emitSortingChangedEvent(column.key, newDirection);
         }
