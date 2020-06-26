@@ -33,7 +33,6 @@ export class CoreAutomationService {
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
                 private userPreferencesService: UserPreferencesService,
-                private searchQueryBuilderService: SearchQueryBuilderService,
                 private storageService: StorageService) {
     }
 
@@ -78,10 +77,6 @@ export class CoreAutomationService {
 
         adfProxy.apiReset = () => {
             this.alfrescoApiService.reset();
-        };
-
-        adfProxy.loadConfigurationSearch = () => {
-            this.searchQueryBuilderService.resetToDefaults();
         };
 
         window['adf'] = adfProxy;

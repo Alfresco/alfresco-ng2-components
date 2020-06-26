@@ -67,9 +67,4 @@ export class LocalStorageUtil {
         );
     }
 
-    static async loadConfiguration(): Promise<void> {
-        await browser.executeScript(
-            `window.adf.loadConfigurationSearch();`
-        );
-    }
 }

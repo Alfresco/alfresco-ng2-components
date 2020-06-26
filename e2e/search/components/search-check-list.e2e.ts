@@ -151,7 +151,6 @@ describe('Search Checklist Component', () => {
             }
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-            await LocalStorageUtil.loadConfiguration();
             await searchDialog.clickOnSearchIcon();
             await searchDialog.checkSearchBarIsVisible();
             await searchDialog.enterTextAndPressEnter(randomName);
