@@ -81,7 +81,7 @@ export class CoreAutomationService {
         };
 
         adfProxy.loadConfigurationSearch = () => {
-            this.searchQueryBuilderService.loadConfiguration();
+            this.searchQueryBuilderService.resetToDefaults();
         };
 
         window['adf'] = adfProxy;
