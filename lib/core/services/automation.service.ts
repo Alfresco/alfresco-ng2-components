@@ -21,6 +21,7 @@ import { AlfrescoApiService } from '../services/alfresco-api.service';
 import { StorageService } from './storage.service';
 import { UserPreferencesService } from './user-preferences.service';
 import { DemoForm } from '../mock/form/demo-form.mock';
+import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +33,7 @@ export class CoreAutomationService {
     constructor(private appConfigService: AppConfigService,
                 private alfrescoApiService: AlfrescoApiService,
                 private userPreferencesService: UserPreferencesService,
+                private searchQueryBuilderService: SearchQueryBuilderService,
                 private storageService: StorageService) {
     }
 
@@ -76,6 +78,10 @@ export class CoreAutomationService {
 
         adfProxy.apiReset = () => {
             this.alfrescoApiService.reset();
+        };
+
+        adfProxy.loadConfigurationSearch = () => {
+            this.searchQueryBuilderService.loadConfiguration();
         };
 
         window['adf'] = adfProxy;
