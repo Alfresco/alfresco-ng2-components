@@ -53,6 +53,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.queryBuilder.resetToDefaults();
 
         this.sorting = this.getSorting();
 

@@ -17,6 +17,7 @@
 
 import { AlfrescoApiCompatibility as AlfrescoApi, AlfrescoApiConfig } from '@alfresco/js-api';
 import { browser } from 'protractor';
+import { Logger } from '../utils/logger';
 
 export class ApiService {
 
@@ -66,6 +67,8 @@ export class ApiService {
         }
 
         this.config.oauth2.implicitFlow = false;
+
+        Logger.log('Api Service configuration' + JSON.stringify(this.config));
         this.apiService = new AlfrescoApi(this.config);
     }
 
