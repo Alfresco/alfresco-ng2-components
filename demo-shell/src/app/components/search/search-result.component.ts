@@ -27,7 +27,7 @@ import { takeUntil } from 'rxjs/operators';
     selector: 'app-search-result-component',
     templateUrl: './search-result.component.html',
     styleUrls: ['./search-result.component.scss'],
-    providers: [SearchService, SearchQueryBuilderService]
+    providers: [SearchService]
 })
 export class SearchResultComponent implements OnInit, OnDestroy {
 
@@ -53,6 +53,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.queryBuilder.resetToDefaults();
 
         this.sorting = this.getSorting();
 
