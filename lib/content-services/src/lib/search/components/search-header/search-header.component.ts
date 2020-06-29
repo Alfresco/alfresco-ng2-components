@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, OnChanges, EventEmitter, SimpleChanges, ViewEncapsulation, ViewChild, Inject, OnDestroy } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    OnInit,
+    OnChanges,
+    EventEmitter,
+    SimpleChanges,
+    ViewEncapsulation,
+    ViewChild,
+    Inject,
+    OnDestroy
+} from '@angular/core';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
@@ -60,8 +72,6 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
 
-    public isActive: boolean;
-
     category: SearchCategory;
     isFilterServiceActive: boolean;
 
@@ -81,19 +91,13 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((newNodePaging: NodePaging) => {
                 this.update.emit(newNodePaging);
-        });
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
-            const currentIdValue = changes['currentFolderNodeId'].currentValue;
-            const previousIdValue = changes['currentFolderNodeId'].previousValue;
-            this.searchHeaderQueryBuilder.setCurrentRootFolderId(
-                currentIdValue,
-                previousIdValue
-            );
-
-            this.isActive = false;
+        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue !== changes['currentFolderNodeId'].previousValue) {
+            this.searchHeaderQueryBuilder.setCurrentRootFolderId(changes['currentFolderNodeId'].currentValue);
+            this.clearHeader();
         }
 
         if (changes['maxItems'] || changes['skipCount']) {
@@ -125,7 +129,12 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onApplyButtonClick() {
-        this.isActive = true;
+        // TODO Move this piece of code in the search text widget
+        if (this.widgetContainer.selector === 'text' && this.widgetContainer.componentRef.instance.value === '') {
+            this.clearHeader();
+            return;
+        }
+
         this.widgetContainer.applyInnerWidget();
         this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey);
         this.searchHeaderQueryBuilder.execute();
@@ -133,13 +142,14 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     onClearButtonClick(event: Event) {
         event.stopPropagation();
-        this.widgetContainer.resetInnerWidget();
-        this.isActive = false;
-        this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
-        if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
+        this.clearHeader();
+    }
+
+    clearHeader() {
+        if (this.widgetContainer) {
+            this.widgetContainer.resetInnerWidget();
+            this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
             this.clear.emit();
-        } else {
-            this.searchHeaderQueryBuilder.execute();
         }
     }
 
@@ -147,6 +157,10 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         if (!columnTitle) {
             columnTitle = 'SEARCH.SEARCH_HEADER.TYPE';
         }
-        return this.translationService.instant('SEARCH.SEARCH_HEADER.FILTER_BY', {category: this.translationService.instant(columnTitle)});
+        return this.translationService.instant('SEARCH.SEARCH_HEADER.FILTER_BY', { category: this.translationService.instant(columnTitle) });
+    }
+
+    isActive(): boolean {
+        return this.widgetContainer && this.widgetContainer.componentRef && this.widgetContainer.componentRef.instance.isActive;
     }
 }

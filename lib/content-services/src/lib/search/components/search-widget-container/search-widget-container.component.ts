@@ -41,7 +41,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
     @Input()
     config: any;
 
-    private componentRef: ComponentRef<any>;
+    componentRef: ComponentRef<any>;
 
     constructor(
         private searchFilterService: SearchFilterService,

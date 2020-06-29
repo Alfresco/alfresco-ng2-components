@@ -44,6 +44,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     field: string;
     format = '[{FROM} TO {TO}]';
 
+    isActive = false;
+
     validators: Validators;
 
     ngOnInit(): void {
@@ -74,6 +76,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
 
     apply(model: { from: string, to: string }, isValid: boolean) {
         if (isValid && this.id && this.context && this.field) {
+            this.isActive = true;
+
             const map = new Map<string, string>();
             map.set('FROM', model.from);
             map.set('TO', model.to);
@@ -97,6 +101,8 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     }
 
     reset() {
+        this.isActive = false;
+
         this.form.reset({
             from: '',
             to: ''

@@ -25,6 +25,8 @@ Implements a text input [widget](../../../lib/testing/src/lib/core/pages/form/wi
                 "component": {
                     "selector": "text",
                     "settings": {
+                        "searchPrefix": "",
+                        "searchSuffix": "",
                         "pattern": "cm:name:'(.*?)'",
                         "field": "cm:name",
                         "placeholder": "Enter the name"
@@ -43,6 +45,8 @@ Implements a text input [widget](../../../lib/testing/src/lib/core/pages/form/wi
 | field | string | Field to apply the query fragment to. Required value |
 | pattern | string | Regular expression pattern to restrict the format of the input text |
 | placeholder | string | Text displayed in the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) when the input string is empty |
+| searchSuffix | string | Text to append always in the search of a string|
+| searchPrefix | string | Text to prepend always in the search of a string|
 
 ## Details
 
