@@ -95,6 +95,7 @@ describe('SearchHeaderComponent', () => {
         menuButton.click();
         fixture.detectChanges();
         await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'searchText';
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
         applyButton.triggerEventHandler('click', {});
         fixture.detectChanges();
