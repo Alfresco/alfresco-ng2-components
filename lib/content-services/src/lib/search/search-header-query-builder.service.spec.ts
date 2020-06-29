@@ -105,7 +105,7 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
-        searchHeaderService.setCurrentRootFolderId('fake-node-id', undefined);
+        searchHeaderService.setCurrentRootFolderId('fake-node-id');
 
         expect(searchHeaderService.filterQueries).toEqual(expectedResult, 'Filters are not as expected');
     });
@@ -132,7 +132,7 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
-        searchHeaderService.setCurrentRootFolderId('fake-node-id', undefined);
+        searchHeaderService.setCurrentRootFolderId('fake-node-id');
 
         expect(searchHeaderService.filterQueries).toEqual(
             expectedResult,
@@ -165,9 +165,10 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
+        searchHeaderService. currentParentFolderId = 'fake-node-id';
+
         searchHeaderService.setCurrentRootFolderId(
-            'fake-next-node-id',
-            'fake-node-id'
+            'fake-next-node-id'
         );
 
         expect(searchHeaderService.filterQueries).toEqual(
