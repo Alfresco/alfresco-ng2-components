@@ -251,9 +251,9 @@ describe('ProcessListCloudComponent', () => {
             expect(getProcessByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should set sortInput if sorting input changes', () => {
+        it('should set formattedSorting if sorting input changes', () => {
             spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
-            spyOn(component, 'setSortInput').and.callThrough();
+            spyOn(component, 'formatSorting').and.callThrough();
 
             component.appName = 'mock-app-name';
             const mockSort = [
@@ -267,8 +267,8 @@ describe('ProcessListCloudComponent', () => {
                 'sorting': sortChange
             });
             fixture.detectChanges();
-            expect(component.setSortInput).toHaveBeenCalledWith(mockSort);
-            expect(component.sortInput).toEqual([ProcessListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+            expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
+            expect(component.formattedSorting).toEqual([ProcessListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
         });
     });
 
