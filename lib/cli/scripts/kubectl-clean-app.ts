@@ -30,7 +30,6 @@ export interface ConfigArgs {
     rancherToken?: string;
     clusterEnv?: string;
     clusterUrl?: string;
-    label?: string;
     apps?: string;
     devopsUsername: string;
     devopsPassword: string;
@@ -236,7 +235,7 @@ async function main(args) {
         process.exit(1);
     });
 
-    if (args.label !== undefined || args.apps !== undefined) {
+    if (args.apps !== undefined) {
         setCluster(args);
         setCredentials(args);
         setContext(args);
