@@ -30,7 +30,6 @@ export interface ConfigArgs {
     rancherToken?: string;
     clusterEnv?: string;
     clusterUrl?: string;
-    label?: string;
     apps?: string;
     devopsUsername: string;
     devopsPassword: string;
@@ -72,7 +71,6 @@ async function login(username: string, password: string, alfrescoJsApi: any) {
         process.exit(1);
     }
     logger.info(`Perform done...`);
-    return alfrescoJsApi;
 }
 
 async function deleteDescriptor(args: ConfigArgs, apiService: any, name: string) {
@@ -133,6 +131,24 @@ async function deleteProjectByName(args: ConfigArgs, apiService: any, name: stri
     }
 }
 
+async function getApplicationsByName(args: ConfigArgs, apiService: any, name: string) {
+    logger.warn(`Get the applications by name ${name}`);
+    const url = `${args.host}/deployment-service/v1/applications?name=${name}`;
+
+    const pathParams = {}, queryParams = {},
+        headerParams = {}, formParams = {}, bodyParam = {},
+        contentTypes = ['application/json'], accepts = ['application/json'];
+
+    try {
+        const apps =  await apiService.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
+            contentTypes, accepts);
+        return apps ? apps.list.entries : [];
+    } catch (error) {
+        logger.error(`Not possible to get the applications with name ${name} ` + JSON.stringify(error));
+        process.exit(1);
+    }
+}
+
 async function undeployApplication(args: ConfigArgs, apiService: any, name: string) {
     logger.warn(`Undeploy the application ${name}`);
 
@@ -175,86 +191,6 @@ function useContext(args: ConfigArgs) {
     logger.info(response);
 }
 
-function createTmpTable(podName: string, appName: string, enableLike: boolean = false, intervalTime: string = '20 min') {
-    logger.info('Perform create tmp table...');
-    let whereCondition = `where name = '${appName}'`;
-    let query = `select project_id into query_table from release `;
-    if (enableLike) {
-        whereCondition = `where name like '${appName}%' and creation_date < NOW() - '${intervalTime}'::INTERVAL `;
-    }
-    query = query + whereCondition;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`, `${query}` ], {});
-    logger.info(response);
-}
-
-function dropTmpTable(podName: string) {
-    logger.info('Perform drop tmp table...');
-    const query = `drop table IF EXISTS query_table`;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`, `${query}` ], {});
-    logger.info(response);
-}
-
-function deleteLatestRelease(podName: string) {
-    logger.info('Perform delete latest release...');
-    const query = `delete from latest_release where latest_release.project_id in (select query_table.project_id from query_table)`;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`,  `${query}` ], {});
-    logger.info(response);
-}
-
-function deleteRelease(podName: string) {
-    logger.info('Perform delete release...');
-    const query = `delete from release where release.project_id in (select query_table.project_id from query_table)`;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`,  `${query}` ], {});
-    logger.info(response);
-}
-
-function deleteInvolvedGroupsRelease(podName: string) {
-    logger.info('Perform delete release involved groups...');
-    const query = `delete from release_involved_groups where release_entity_id in (select id from release where release.project_id in (select query_table.project_id from query_table))`;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`,  `${query}` ], {});
-    logger.info(response);
-}
-
-function deleteInvolvedUsersRelease(podName: string) {
-    logger.info('Perform delete release involved users...');
-    const query = `delete from release_involved_users where release_entity_id in (select id from release where release.project_id in (select query_table.project_id from query_table))`;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`,  `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`,  `${query}` ], {});
-    logger.info(response);
-}
-
-function deleteAllReleases(podName: string, appName: string, enableLike: boolean = false, intervalTime: string = '20 min') {
-    logger.info(podName, appName);
-    dropTmpTable(podName);
-    createTmpTable(podName, appName, enableLike, intervalTime);
-    deleteLatestRelease(podName);
-    deleteInvolvedGroupsRelease(podName);
-    deleteInvolvedUsersRelease(podName);
-    deleteRelease(podName);
-    dropTmpTable(podName);
-}
-
-function getProjectWithLike(podName, appName, intervalTime = '20 min') {
-    logger.info('Perform get project with like...');
-    let query = `select name from release `;
-    const whereCondition = `where name like '${appName}%' and creation_date < NOW() - '${intervalTime}'::INTERVAL `;
-    query = query + whereCondition;
-    const response = exec('kubectl', [`exec`, `${podName}`, `--`, `psql`, `-U`, `alfresco`, `-d`, `postgres`, `-c`, `${query}`], {});
-    const responseToArray = convertSQLStringIntoArray(response);
-    logger.info(response);
-    return responseToArray;
-}
-
-function convertSQLStringIntoArray(response: string): string [] {
-    return response.split('\n').filter( (text) => (!text.includes(' name ') && !text.includes('------') && !text.includes('rows)') && !text.includes('row)') && text !== '')).map( (value) => value.trim());
-}
-
-function getPodName(args: ConfigArgs): string {
-    logger.info('Perform get pod name...');
-    const response = exec('kubectl', [`get`, `pod`, `-l`, `app=${args.label}`, `-o`, `jsonpath={.items[0].metadata.name}`], {});
-    logger.info(response);
-    return response;
-}
-
 export default async function (args: ConfigArgs) {
     await main(args);
 }
@@ -283,43 +219,41 @@ async function main(args) {
         return;
     }
 
-    const configModeler = getAlfrescoJsApiInstance(args);
-    const alfrescoJsApiModeler = await login(args.modelerUsername, args.modelerPassword, configModeler).then(() => {
+    const alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
+    await login(args.modelerUsername, args.modelerPassword, alfrescoJsApiModeler).then(() => {
         logger.info('login SSO ok');
     }, (error) => {
         logger.info(`login SSO error ${JSON.stringify(error)}`);
         process.exit(1);
     });
 
-    const configDevops = getAlfrescoJsApiInstance(args);
-    const alfrescoJsApiDevops = await login(args.devopsUsername, args.devopsPassword, configDevops).then(() => {
+    const alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
+    await login(args.devopsUsername, args.devopsPassword, alfrescoJsApiDevops).then(() => {
         logger.info('login SSO ok');
     }, (error) => {
         logger.info(`login SSO error ${JSON.stringify(error)}`);
         process.exit(1);
     });
 
-    if (args.label !== undefined || args.apps !== undefined) {
+    if (args.apps !== undefined) {
         setCluster(args);
         setCredentials(args);
         setContext(args);
         useContext(args);
-        const podName: string = getPodName(args);
 
         const applications = args.apps.includes(',') ? args.apps.split(',') : [args.apps];
 
         for (let i = 0; i < applications.length;  i++ ) {
             logger.info(`Perform action on app: ${applications[i]}`);
             if (args.enableLike) {
-                const projectWithLike = getProjectWithLike(podName, applications[i], args.intervalTime);
-                deleteAllReleases(podName, applications[i], args.enableLike, args.intervalTime);
-                for (let y = 0; y < projectWithLike.length;  y++ ) {
-                    await undeployApplication(args, alfrescoJsApiDevops, projectWithLike[y]);
-                    await deleteDescriptor(args, alfrescoJsApiDevops, projectWithLike[y]);
-                    await deleteProjectByName(args, alfrescoJsApiModeler, projectWithLike[y]);
+                const applicationsByName = await getApplicationsByName(args, alfrescoJsApiDevops, applications[i]);
+                for (let y = 0; y < applicationsByName.length;  y++ ) {
+                    const application = applicationsByName[y].entry;
+                    await undeployApplication(args, alfrescoJsApiDevops, application.name);
+                    await deleteDescriptor(args, alfrescoJsApiDevops, application.name);
+                    await deleteProjectByName(args, alfrescoJsApiModeler, application.name);
                 }
             } else {
-                deleteAllReleases(podName, applications[i]);
                 await undeployApplication(args, alfrescoJsApiDevops, applications[i]);
                 await deleteDescriptor(args, alfrescoJsApiDevops, applications[i]);
                 await deleteProjectByName(args, alfrescoJsApiModeler, applications[i]);
