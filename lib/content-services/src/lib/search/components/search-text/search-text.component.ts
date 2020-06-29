@@ -36,6 +36,7 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     id: string;
     settings: SearchWidgetSettings;
     context: SearchQueryBuilderService;
+    isActive = false;
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
@@ -49,6 +50,8 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     }
 
     reset() {
+        this.isActive = false;
+
         this.value = '';
         this.updateQuery(null);
     }
@@ -59,10 +62,21 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     }
 
     private updateQuery(value: string) {
+        this.isActive = !!value;
+
         if (this.context && this.settings && this.settings.field) {
-            this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${value}'` : '';
+            this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
             this.context.update();
         }
+
+    }
+
+    private getSearchPrefix(): string {
+        return this.settings.searchPrefix ? this.settings.searchPrefix : '';
+    }
+
+    private getSearchSuffix(): string {
+        return this.settings.searchSuffix ? this.settings.searchSuffix : '';
     }
 
 }

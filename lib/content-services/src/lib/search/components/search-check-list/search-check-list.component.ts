@@ -43,6 +43,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
     pageSize = 5;
+    isActive = false;
 
     constructor() {
         this.options = new SearchFilterList<SearchListOption>();
@@ -60,6 +61,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     }
 
     reset() {
+        this.isActive = false;
         this.options.items.forEach((opt) => {
             opt.checked = false;
         });
@@ -79,6 +81,8 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         const checkedValues = this.options.items
             .filter((option) => option.checked)
             .map((option) => option.value);
+
+        this.isActive = !!checkedValues.length;
 
         const query = checkedValues.join(` ${this.operator} `);
 

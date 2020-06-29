@@ -56,6 +56,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     context?: SearchQueryBuilderService;
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
     maxDate: any;
+    isActive = false;
+
     private onDestroy$ = new Subject<boolean>();
 
     constructor(private dateAdapter: DateAdapter<Moment>,
@@ -117,6 +119,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
 
     apply(model: { from: string, to: string }, isValid: boolean) {
         if (isValid && this.id && this.context && this.settings && this.settings.field) {
+            this.isActive = true;
+
             const start = moment(model.from).startOf('day').format();
             const end = moment(model.to).endOf('day').format();
 
@@ -130,6 +134,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     reset() {
+        this.isActive = false;
         this.form.reset({
             from: '',
             to: ''

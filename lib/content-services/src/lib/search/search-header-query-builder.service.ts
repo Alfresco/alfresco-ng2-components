@@ -30,7 +30,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
     activeFilters: string[] = [];
-    currentParentFolderID: string;
+    currentParentFolderId: string;
 
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
@@ -78,41 +78,31 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         return foundCategory;
     }
 
-    setCurrentRootFolderId(currentFolderId: string, previousFolderId: string) {
-        if (this.customSources.includes(currentFolderId)) {
-            if (currentFolderId !== this.currentParentFolderID) {
+    setCurrentRootFolderId(currentFolderId: string) {
+        if (currentFolderId !== this.currentParentFolderId) {
+            if (this.customSources.includes(currentFolderId)) {
                 this.nodeApiService.getNode(currentFolderId).subscribe((nodeEntity: MinimalNode) => {
-                    this.updateCurrentParentFilter(nodeEntity.id, previousFolderId);
+                    this.updateCurrentParentFilter(nodeEntity.id);
                 });
+            } else {
+                this.currentParentFolderId = currentFolderId;
+                this.updateCurrentParentFilter(currentFolderId);
             }
-        } else {
-            this.updateCurrentParentFilter(currentFolderId, previousFolderId);
         }
     }
 
-    private updateCurrentParentFilter(currentFolderId: string, previousFolderId: string) {
+    private updateCurrentParentFilter(currentFolderId: string) {
         const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
             filterQueries.query.includes(currentFolderId)
         );
 
-        if (!alreadyAddedFilter) {
-            this.removeOldFolderFiltering(previousFolderId, this.currentParentFolderID);
-            this.currentParentFolderID = currentFolderId;
-            this.filterQueries.push({
-                query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
-            });
+        if (alreadyAddedFilter !== undefined) {
+            this.filterQueries = [];
         }
+
+        this.filterQueries = [{
+            query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
+        }];
     }
 
-    private removeOldFolderFiltering(previousFolderId: string, actualSetFolderId: string) {
-        if (previousFolderId || actualSetFolderId) {
-            const folderIdToRetrieve = previousFolderId ? previousFolderId : actualSetFolderId;
-            const oldFilterIndex = this.filterQueries.findIndex(filterQueries =>
-                filterQueries.query.includes(folderIdToRetrieve)
-            );
-            if (oldFilterIndex) {
-                this.filterQueries.splice(oldFilterIndex, 1);
-            }
-        }
-    }
 }

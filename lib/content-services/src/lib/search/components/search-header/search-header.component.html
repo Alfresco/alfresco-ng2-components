@@ -7,10 +7,10 @@
             class="adf-filter-button"
             [matTooltip]="getTooltipTranslation(col?.title)">
             <adf-icon value="adf:filter"
-                [ngClass]="{ 'adf-icon-active': isActive || menuTrigger.menuOpen }"
+                [ngClass]="{ 'adf-icon-active': isActive()|| menuTrigger.menuOpen }"
                 matBadge="filter"
                 matBadgeColor="warn"
-                [matBadgeHidden]="!isActive"></adf-icon>
+                [matBadgeHidden]="!isActive()"></adf-icon>
         </button>
 
         <mat-menu #filter="matMenu" class="adf-filter-menu">

@@ -46,6 +46,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     context: SearchQueryBuilderService;
     options: SearchFilterList<SearchRadioOption>;
     pageSize = 5;
+    isActive = false;
 
     constructor() {
         this.options = new SearchFilterList<SearchRadioOption>();
@@ -71,6 +72,8 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     private getSelectedValue(): string {
         const options: any[] = this.settings['options'] || [];
         if (options && options.length > 0) {
+            this.isActive = true;
+
             let selected = options.find((opt) => opt.default);
             if (!selected) {
                 selected = options[0];
@@ -91,6 +94,8 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     }
 
     reset() {
+        this.isActive = false;
+
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
             this.setValue(initialValue);

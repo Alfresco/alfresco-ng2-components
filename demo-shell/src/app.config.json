@@ -459,7 +459,8 @@
           "settings": {
             "pattern": "cm:name:'(.*?)'",
             "field": "cm:name",
-            "placeholder": "Enter the name"
+            "placeholder": "Enter the name",
+            "searchSuffix" : "*"
           }
         }
       },

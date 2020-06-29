@@ -94,8 +94,6 @@ describe('SearchHeaderQueryBuilder', () => {
         };
 
         const expectedResult = [
-            { query: 'query1' },
-            { query: 'query2' },
             { query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }
         ];
 
@@ -105,7 +103,7 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
-        searchHeaderService.setCurrentRootFolderId('fake-node-id', undefined);
+        searchHeaderService.setCurrentRootFolderId('fake-node-id');
 
         expect(searchHeaderService.filterQueries).toEqual(expectedResult, 'Filters are not as expected');
     });
@@ -113,9 +111,7 @@ describe('SearchHeaderQueryBuilder', () => {
     it('should not add again the parent filter if that node is already added', () => {
 
         const expectedResult = [
-            { query: 'query1' },
-            { query: 'query2' },
-            { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }
+            { query: 'PARENT:"workspace://SpacesStore/fake-node-id"' }
         ];
 
         const config: SearchConfiguration = {
@@ -132,7 +128,7 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
-        searchHeaderService.setCurrentRootFolderId('fake-node-id', undefined);
+        searchHeaderService.setCurrentRootFolderId('fake-node-id');
 
         expect(searchHeaderService.filterQueries).toEqual(
             expectedResult,
@@ -142,8 +138,6 @@ describe('SearchHeaderQueryBuilder', () => {
 
     it('should replace the new query filter for the old parent node with the new one', () => {
         const expectedResult = [
-            { query: 'query1' },
-            { query: 'query2' },
             { query: 'PARENT:"workspace://SpacesStore/fake-next-node-id"' }
         ];
 
@@ -153,8 +147,6 @@ describe('SearchHeaderQueryBuilder', () => {
                 <any> { id: 'cat2', enabled: true }
             ],
             filterQueries: [
-                { query: 'query1' },
-                { query: 'query2' },
                 { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }
             ]
         };
@@ -165,9 +157,10 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
+        searchHeaderService.currentParentFolderId = 'fake-node-id';
+
         searchHeaderService.setCurrentRootFolderId(
-            'fake-next-node-id',
-            'fake-node-id'
+            'fake-next-node-id'
         );
 
         expect(searchHeaderService.filterQueries).toEqual(
