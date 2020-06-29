@@ -177,7 +177,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     currentInstanceId: any;
     isLoading = true;
     selectedInstances: any[];
-    sortInput: any[];
+    formattedSorting: any[];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -204,7 +204,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
-            this.setSortInput(changes['sorting'].currentValue);
+            this.formatSorting(changes['sorting'].currentValue);
         }
         if (this.isAnyPropertyChanged(changes)) {
             this.reload();
@@ -234,13 +234,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
-        if (changes.hasOwnProperty(property)) {
-            if (changes[property] &&
-                (changes[property].currentValue !== changes[property].previousValue)) {
-                return true;
-            }
-        }
-        return false;
+        return changes.hasOwnProperty(property);
     }
 
     reload() {
@@ -337,8 +331,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         return new TaskQueryCloudRequestModel(requestNode);
     }
 
-    setSortInput(sorting) {
-        this.sortInput = sorting.length ? [
+    formatSorting(sorting: TaskListCloudSortingModel[]) {
+        this.formattedSorting = sorting.length ? [
             TaskListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
