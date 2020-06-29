@@ -291,9 +291,9 @@ describe('TaskListCloudComponent', () => {
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });
 
-        it('should set sortInput if sorting input changes', () => {
+        it('should set formattedSorting if sorting input changes', () => {
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
-            spyOn(component, 'setSortInput').and.callThrough();
+            spyOn(component, 'formatSorting').and.callThrough();
 
             component.appName = 'mock-app-name';
             const mockSort = [
@@ -307,8 +307,8 @@ describe('TaskListCloudComponent', () => {
                 'sorting': sortChange
             });
             fixture.detectChanges();
-            expect(component.setSortInput).toHaveBeenCalledWith(mockSort);
-            expect(component.sortInput).toEqual([TaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+            expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
+            expect(component.formattedSorting).toEqual([TaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
         });
     });
 
