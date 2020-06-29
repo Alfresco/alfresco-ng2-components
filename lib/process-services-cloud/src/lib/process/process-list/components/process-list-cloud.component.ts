@@ -157,7 +157,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     selectedInstances: any[];
     isLoading = true;
     rows: any[] = [];
-    sortInput: any[];
+    formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
 
     constructor(private processListCloudService: ProcessListCloudService,
@@ -181,7 +181,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
 
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes, 'sorting')) {
-            this.setSortInput(changes['sorting'].currentValue);
+            this.formatSorting(changes['sorting'].currentValue);
         }
         if (this.isAnyPropertyChanged(changes)) {
             this.reload();
@@ -225,13 +225,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
-        if (changes.hasOwnProperty(property)) {
-            if (changes[property] &&
-                (changes[property].currentValue !== changes[property].previousValue)) {
-                return true;
-            }
-        }
-        return false;
+        return changes.hasOwnProperty(property);
     }
 
     isListEmpty(): boolean {
@@ -300,8 +294,8 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         return new ProcessQueryCloudRequestModel(requestNode);
     }
 
-    setSortInput(sorting) {
-        this.sortInput = sorting.length ? [
+    formatSorting(sorting: ProcessListCloudSortingModel[]) {
+        this.formattedSorting = sorting.length ? [
             ProcessListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
