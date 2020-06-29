@@ -100,9 +100,9 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
             this.filterQueries = [];
         }
 
-        this.filterQueries.push({
+        this.filterQueries = [{
             query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
-        });
+        }];
     }
 
 }
