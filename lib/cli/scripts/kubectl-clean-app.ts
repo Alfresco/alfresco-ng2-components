@@ -18,6 +18,7 @@
  */
 
 import * as program from 'commander';
+import moment from 'moment-es6';
 import { exec } from './exec';
 /* tslint:disable */
 import { AlfrescoApi } from '@alfresco/js-api';
@@ -248,10 +249,17 @@ async function main(args) {
             if (args.enableLike) {
                 const applicationsByName = await getApplicationsByName(args, alfrescoJsApiDevops, applications[i]);
                 for (let y = 0; y < applicationsByName.length;  y++ ) {
+                    const extractTimeRange = args.intervalTime.split(' ')[0];
                     const application = applicationsByName[y].entry;
-                    await undeployApplication(args, alfrescoJsApiDevops, application.name);
-                    await deleteDescriptor(args, alfrescoJsApiDevops, application.name);
-                    await deleteProjectByName(args, alfrescoJsApiModeler, application.name);
+                    const diffAsMinutes = moment.duration(moment().diff(moment(application.createdAt))).asMinutes();
+                    if (diffAsMinutes > extractTimeRange) {
+                        logger.info(`The app: ${application} is older than ${args.intervalTime}. Can delete it`);
+                        await undeployApplication(args, alfrescoJsApiDevops, application.name);
+                        await deleteDescriptor(args, alfrescoJsApiDevops, application.name);
+                        await deleteProjectByName(args, alfrescoJsApiModeler, application.name);
+                    } else {
+                        logger.info(`The app: ${application} is recent than ${args.intervalTime}. Skip delete`);
+                    }
                 }
             } else {
                 await undeployApplication(args, alfrescoJsApiDevops, applications[i]);
