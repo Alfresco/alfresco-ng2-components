@@ -35,8 +35,8 @@ stages:
   - name: e2e Test
     if: (branch != master AND type != cron AND tag IS blank) OR type = api
   - name: Update Children Projects
-    if: branch = master AND type = push OR (tag =~ .*beta.*)
-  - name: Release beta tag
+    if: type = push OR (tag =~ .*beta.*)
+  - name: Release tag
     if: type = cron OR branch = master
   - name: Trigger ADF child build
     if: (branch = develop AND type = push) OR type = api
@@ -82,7 +82,7 @@ jobs:
         - stage: Update Children Projects
           script: ./scripts/travis/update/update-children.sh
 
-        - stage: Release beta tag
+        - stage: Release tag
           script: ./scripts/travis/release/git-tag.sh
 
 
