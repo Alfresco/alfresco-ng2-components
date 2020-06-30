@@ -28,7 +28,7 @@ export class PermissionsPage {
     addPermissionsDialog: AddPermissionsDialogPage = new AddPermissionsDialogPage();
 
     addPermissionButton = element(by.css('button[data-automation-id="adf-add-permission-button"]'));
-    
+
     async checkAddPermissionButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.addPermissionButton);
     }
