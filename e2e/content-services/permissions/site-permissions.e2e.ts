@@ -172,25 +172,25 @@ describe('Permissions Component', () => {
 
             await contentServicesPage.pressContextMenuActionNamed('Permission');
 
-            await permissionsPage.checkPermissionInheritedButtonIsDisplayed();
+            await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
             await permissionsPage.checkAddPermissionButtonIsDisplayed();
 
             await browser.sleep(5000);
 
-            await permissionsPage.clickAddPermissionButton();
-            await permissionsPage.checkAddPermissionDialogIsDisplayed();
-            await permissionsPage.checkSearchUserInputIsDisplayed();
+            await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
+            await permissionsPage.addPermissionsDialog.checkAddPermissionDialogIsDisplayed();
+            await permissionsPage.addPermissionsDialog.checkSearchUserInputIsDisplayed();
 
-            await permissionsPage.searchUserOrGroup(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.searchUserOrGroup(consumerUser.email);
 
-            await permissionsPage.clickUserOrGroup(consumerUser.firstName);
-            await permissionsPage.checkUserOrGroupIsAdded(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.clickUserOrGroup(consumerUser.firstName);
+            await permissionsPage.addPermissionsDialog.checkUserOrGroupIsAdded(consumerUser.email);
 
-            await expect(await permissionsPage.getRoleCellValue(consumerUser.email)).toEqual('SiteCollaborator');
+            await expect(await permissionsPage.addPermissionsDialog.getRoleCellValue(consumerUser.email)).toEqual('SiteCollaborator');
 
-            await permissionsPage.clickRoleDropdownByUserOrGroupName(consumerUser.email);
+            await permissionsPage.addPermissionsDialog.clickRoleDropdownByUserOrGroupName(consumerUser.email);
 
-            const roleDropdownOptions = permissionsPage.getRoleDropdownOptions();
+            const roleDropdownOptions = permissionsPage.addPermissionsDialog.getRoleDropdownOptions();
 
             await expect(await roleDropdownOptions.count()).toBe(4);
             await expect(await BrowserActions.getText(roleDropdownOptions.get(0))).toBe(CONSTANTS.CS_USER_ROLES.COLLABORATOR);
