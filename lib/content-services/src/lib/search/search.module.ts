@@ -80,7 +80,7 @@ import { SearchQueryBuilderService } from './search-query-builder.service';
         SearchHeaderComponent
     ],
     providers: [
-        { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService }
+        { provide: SEARCH_QUERY_SERVICE_TOKEN, useExisting: SearchQueryBuilderService },
         SearchSortingPickerComponent
     ]
 })

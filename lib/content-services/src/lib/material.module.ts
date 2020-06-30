@@ -35,7 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTreeModule } from '@angular/material/tree';
-import { MatBadgeModule } from '@angular/material/badge'
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
     imports: [
@@ -58,7 +58,8 @@ import { MatBadgeModule } from '@angular/material/badge'
         MatSlideToggleModule,
         MatRadioModule,
         MatSliderModule,
-        MatTreeModule
+        MatTreeModule,
+        MatBadgeModule
     ],
     exports: [
         MatButtonModule,
@@ -80,7 +81,8 @@ import { MatBadgeModule } from '@angular/material/badge'
         MatSlideToggleModule,
         MatRadioModule,
         MatSliderModule,
-        MatTreeModule
+        MatTreeModule,
+        MatBadgeModule
     ]
 })
 export class MaterialModule {
