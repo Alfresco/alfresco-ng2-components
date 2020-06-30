@@ -18,7 +18,8 @@
 import {
     DataTableComponentPage,
     AddPermissionsDialogPage,
-    BrowserVisibility
+    BrowserVisibility,
+    BrowserActions
 } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
