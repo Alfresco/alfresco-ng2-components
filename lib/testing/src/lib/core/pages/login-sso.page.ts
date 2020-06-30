@@ -69,7 +69,7 @@ export class LoginSSOPage {
 
         const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
 
-        await browser.get(loginURL);
+        await BrowserActions.getUrl(loginURL);
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
 
         if (oauth2 && oauth2.silentLogin === false) {
