@@ -73,13 +73,6 @@
     "process services-cloud"
   ],
   "dependencies": {
-    "@alfresco/adf-content-services": "3.9.0",
-    "@alfresco/adf-core": "3.9.0",
-    "@alfresco/adf-extensions": "3.9.0",
-    "@alfresco/adf-insights": "3.9.0",
-    "@alfresco/adf-process-services": "3.9.0",
-    "@alfresco/adf-process-services-cloud": "3.9.0",
-    "@alfresco/js-api": "3.9.0",
     "@angular/animations": "^9.1.9",
     "@angular/cdk": "9.2.4",
     "@angular/common": "^9.1.9",
@@ -184,7 +177,6 @@
     "sass-loader": "7.1.0",
     "scss-bundle": "2.3.2",
     "selenium-webdriver": "4.0.0-alpha.5",
-    "spdx-license-list": "^5.0.0",
     "stylelint": "^9.7.1",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
