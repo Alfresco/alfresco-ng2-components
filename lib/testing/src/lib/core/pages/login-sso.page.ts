@@ -135,19 +135,9 @@ export class LoginSSOPage {
     }
 
     async displayPassword(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.visibilityLabelImg);
-        await BrowserVisibility.waitUntilElementIsVisible(this.passwordField);
-        let imageSource = await this.visibilityLabelImg.getAttribute('src');
-        await expect(imageSource.split('/').pop()).toBe('eye-off.png',
-            'Password visibility image should be disabled');
-        await expect(await this.passwordField.getAttribute('type')).toBe('password',
-            'Password input should be password type');
         await BrowserActions.click(this.visibilityLabel);
-        imageSource = imageSource.replace('eye-off.png', 'eye.png');
-        const visibilityLabelImgEnabled = element(by.css(`img[src="${imageSource}"]`));
-        await BrowserVisibility.waitUntilElementIsVisible(visibilityLabelImgEnabled);
-        await expect(await this.passwordField.getAttribute('type')).toBe('text',
-            'Password input should be text type');
+        const passwordInputTypeText = element(by.css(`"input[name='password'][type='text']"`));
+        await BrowserVisibility.waitUntilElementIsVisible(passwordInputTypeText);
     }
 
 }
