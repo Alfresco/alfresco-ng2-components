@@ -639,6 +639,6 @@ export class ViewerPage {
     }
 
     async expectUrlToContain(text: string): Promise<void> {
-        expect(browser.getCurrentUrl()).toContain(text);
+        await expect(browser.getCurrentUrl()).toContain(text);
     }
 }
