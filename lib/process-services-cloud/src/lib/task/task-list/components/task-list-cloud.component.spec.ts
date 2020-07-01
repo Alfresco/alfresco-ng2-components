@@ -310,6 +310,27 @@ describe('TaskListCloudComponent', () => {
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
             expect(component.formattedSorting).toEqual([TaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
         });
+
+        it('should reload task list when sorting on a column changes', () => {
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            component.onSortingChanged(new CustomEvent('sorting-changed', {
+                detail: {
+                    key: 'fakeName',
+                    direction: 'asc'
+                },
+                bubbles: true
+            }));
+            fixture.detectChanges();
+            expect(component.sorting).toEqual([
+                new TaskListCloudSortingModel({
+                    orderBy: 'fakeName',
+                    direction: 'ASC'
+                })
+            ]);
+            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getTaskByRequestSpy).toHaveBeenCalled();
+        });
     });
 
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {

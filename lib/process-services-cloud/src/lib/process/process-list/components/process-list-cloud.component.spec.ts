@@ -270,6 +270,27 @@ describe('ProcessListCloudComponent', () => {
             expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
             expect(component.formattedSorting).toEqual([ProcessListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
         });
+
+        it('should reload process list when sorting on a column changes', () => {
+            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.onSortingChanged(new CustomEvent('sorting-changed', {
+                detail: {
+                    key: 'fakeName',
+                    direction: 'asc'
+                },
+                bubbles: true
+            }));
+            fixture.detectChanges();
+            expect(component.sorting).toEqual([
+                new ProcessListCloudSortingModel({
+                    orderBy: 'fakeName',
+                    direction: 'ASC'
+                })
+            ]);
+            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
     });
 
     describe('Injecting custom colums for tasklist - CustomTaskListComponent', () => {
