@@ -15,13 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, EventEmitter, Output, ViewChild, Input } from '@angular/core';
 import { SearchPermissionConfigurationService } from './search-config-permission.service';
 import { SearchService, SearchConfigurationService } from '@alfresco/adf-core';
 import { SearchComponent } from '../../../search/components/search.component';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { NodeEntry } from '@alfresco/js-api';
+
+export interface MemberList {
+    key: string;
+    items: string[];
+}
 
 @Component({
     selector: 'adf-add-permission-panel',
@@ -38,6 +43,14 @@ export class AddPermissionPanelComponent {
     @ViewChild('search')
     search: SearchComponent;
 
+    /** List of groups that will be hidden in the search result */
+    @Input()
+    hiddenGroups: MemberList;
+
+    /** List of users that will be hidden in the search result */
+    @Input()
+    hiddenUsers: MemberList;
+
     /** Emitted when a permission list item is selected. */
     @Output()
     select: EventEmitter<any> = new EventEmitter();
@@ -48,19 +61,19 @@ export class AddPermissionPanelComponent {
 
     selectedItems: NodeEntry[] = [];
 
-    EVERYONE: NodeEntry = new NodeEntry({ entry: { properties: {'cm:authorityName': 'GROUP_EVERYONE'}}});
+    EVERYONE: NodeEntry = new NodeEntry({ entry: { properties: { 'cm:authorityName': 'GROUP_EVERYONE' } } });
 
     constructor() {
         this.searchInput.valueChanges
-        .pipe(
-            debounceTime(this.debounceSearch)
-        )
-        .subscribe((searchValue) => {
-            this.searchedWord = searchValue;
-            if (!searchValue) {
-                this.search.resetResults();
-            }
-        });
+            .pipe(
+                debounceTime(this.debounceSearch)
+            )
+            .subscribe((searchValue) => {
+                this.searchedWord = searchValue;
+                if (!searchValue) {
+                    this.search.resetResults();
+                }
+            });
     }
 
     elementClicked(item: NodeEntry) {
@@ -80,6 +93,16 @@ export class AddPermissionPanelComponent {
         this.searchedWord = '';
         this.selectedItems.splice(0, this.selectedItems.length);
         this.search.resetResults();
+    }
+
+    isElementVisible(item: NodeEntry) {
+        let visible = true;
+        if (item && item.entry.nodeType === 'cm:authorityContainer' && this.hiddenGroups) {
+            visible = !this.hiddenGroups.items.includes(item.entry.properties[this.hiddenGroups.key]);
+        } else if (item && this.hiddenUsers) {
+            visible = !this.hiddenUsers.items.includes(item.entry.properties[this.hiddenUsers.key]);
+        }
+        return visible;
     }
 
 }

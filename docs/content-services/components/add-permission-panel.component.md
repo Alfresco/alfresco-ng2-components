@@ -14,20 +14,23 @@ Searches for people or groups to add to the current node permissions.
 ## Basic Usage
 
 ```html
-<adf-add-permission
-    [nodeId]="nodeId"
-    (success)="onSuccess($event)"
-    (error)="onError($event)">
-</adf-add-permission>
+<adf-add-permission-panel
+    [hiddenGroups]="hiddenGroups"
+    [hiddenUsers]="hiddenUsers"
+    (select)="onSelect($event)"
+>
+</adf-add-permission-panel>
 ```
 
 ## Class members
 
 ### Events
 
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| select | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission list item is selected. |
+| Name         | Type                                                              | Description                                              |
+| ------------ | ----------------------------------------------------------------- | -------------------------------------------------------- |
+| hiddenGroups | MemberList                                                        | List of groups that will be hidden in the search result. |
+| hiddenUsers  | MemberList                                                        | List of users that will be hidden in the search result.  |
+| select       | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when a permission list item is selected.         |
 
 ## Details
 
@@ -38,6 +41,20 @@ The `select` event is emitted when a result is clicked from the list.
 The [Add permission dialog component](add-permission-dialog.component.md)
 and [Add permission component](add-permission.component.md) extend this behavior by applying the chosen
 permissions to the node once the selection has been made.
+
+#### Hidding groups and users
+
+If you want to hide specific groups or users from the search results you will need to bind the `hiddenUsers` and `hiddenGroups` properties for this component.
+
+```ts
+hiddenUsers = {
+    key: "cm:email",
+    items: [
+        "john-doe@example.com",
+        "james-lone@example.com"
+        ]
+};
+```
 
 ## See also
 

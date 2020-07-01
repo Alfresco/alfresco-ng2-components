@@ -207,4 +207,56 @@ describe('AddPermissionPanelComponent', () => {
             expect(element.querySelector('#result_option_0 .mat-list-text').innerHTML).not.toEqual(element.querySelector('#result_option_1 .mat-list-text').innerHTML);
         });
     }));
+
+    it('should hide group included in hiddenGroups', async(async () => {
+        searchApiService = fixture.componentRef.injector.get(SearchService);
+        spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
+
+        typeWordIntoSearchInput('a');
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(element.querySelectorAll('.mat-list-text').length).toBe(4);
+        expect(element.querySelector('#result_option_2 .mat-list-text')).not.toBeNull();
+        expect(element.querySelector('#result_option_2 .mat-list-text')).toBeDefined();
+
+        component.hiddenGroups = {
+            key: 'cm:authorityName',
+            items: [
+                'GROUP_ALFRESCO_ADMINISTRATORS'
+            ]
+        };
+        typeWordIntoSearchInput('a');
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(element.querySelectorAll('.mat-list-text').length).toBe(3);
+        expect(element.querySelector('#result_option_2 .mat-list-text')).toBeNull();
+    }));
+
+    it('should hide user included in hiddenUsers', async(async () => {
+        searchApiService = fixture.componentRef.injector.get(SearchService);
+        spyOn(searchApiService, 'search').and.returnValue(of(fakeAuthorityListResult));
+
+        typeWordIntoSearchInput('a');
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(element.querySelectorAll('.mat-list-text').length).toBe(4);
+        expect(element.querySelector('#result_option_1 .mat-list-text')).not.toBeNull();
+        expect(element.querySelector('#result_option_1 .mat-list-text')).toBeDefined();
+
+        component.hiddenGroups = {
+            key: 'cm:email',
+            items: [
+                'admin@alfresco.com'
+            ]
+        };
+        typeWordIntoSearchInput('a');
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+        expect(element.querySelectorAll('.mat-list-text').length).toBe(3);
+        expect(element.querySelector('#result_option_1 .mat-list-text')).toBeNull();
+    }));
 });
