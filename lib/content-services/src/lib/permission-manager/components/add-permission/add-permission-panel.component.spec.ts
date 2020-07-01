@@ -246,7 +246,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#result_option_1 .mat-list-text')).not.toBeNull();
         expect(element.querySelector('#result_option_1 .mat-list-text')).toBeDefined();
 
-        component.hiddenGroups = {
+        component.hiddenUsers = {
             key: 'cm:email',
             items: [
                 'admin@alfresco.com'
