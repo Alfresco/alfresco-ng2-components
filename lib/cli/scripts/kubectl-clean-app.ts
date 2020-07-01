@@ -246,7 +246,6 @@ async function main(args) {
         const interval = args.intervalTime ? args.intervalTime : '30 min';
         const extractTimeRange = interval.split(' ')[0];
         logger.info(`Extract time ${extractTimeRange} from interval: ${interval}`);
-        
         for (let i = 0; i < applications.length;  i++ ) {
             logger.info(`Perform action on app: ${applications[i]}`);
             if (args.enableLike) {
