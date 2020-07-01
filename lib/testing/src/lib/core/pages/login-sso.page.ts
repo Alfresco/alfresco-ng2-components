@@ -29,6 +29,8 @@ export class LoginSSOPage {
     loginButton = element(by.css('input[type="submit"]'));
     header = element(by.tagName('adf-layout-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
+    visibilityLabel = element(by.id('v'));
+    visibilityLabelImg = element(by.id('vi'));
 
     txtUsernameBasicAuth = element(by.css('input[id="username"]'));
     txtPasswordBasicAuth = element(by.css('input[id="password"]'));
@@ -77,6 +79,7 @@ export class LoginSSOPage {
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
+        await this.displayPassword();
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
@@ -129,6 +132,22 @@ export class LoginSSOPage {
 
     async getLoginErrorMessage() {
         return BrowserActions.getText(this.loginError);
+    }
+
+    async displayPassword(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.visibilityLabelImg);
+        await BrowserVisibility.waitUntilElementIsVisible(this.passwordField);
+        let imageSource = await this.visibilityLabelImg.getAttribute('src');
+        await expect(imageSource.split('/').pop()).toBe('eye-off.png',
+            'Password visibility image should be disabled');
+        await expect(await this.passwordField.getAttribute('type')).toBe('password',
+            'Password input should be password type');
+        await BrowserActions.click(this.visibilityLabel);
+        imageSource = imageSource.replace('eye-off.png', 'eye.png');
+        const visibilityLabelImgEnabled = element(by.css(`img[src="${imageSource}"]`));
+        await BrowserVisibility.waitUntilElementIsVisible(visibilityLabelImgEnabled);
+        await expect(await this.passwordField.getAttribute('type')).toBe('text',
+            'Password input should be text type');
     }
 
 }
