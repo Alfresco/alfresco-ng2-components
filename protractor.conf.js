@@ -37,11 +37,13 @@ let arraySpecs = [];
 
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
+    console.log('HOST: ', HOST);
     console.log('BROWSER_RUN : ' + BROWSER_RUN);
     console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('FOLDER : ' + FOLDER);
     console.log('MAXINSTANCES : ' + MAXINSTANCES);
     console.log('LIST_SPECS : ' + LIST_SPECS);
+    console.log('MAX_RETRIES: ', MAX_RETRIES);
     console.log('SELENIUM_SERVER : ' + SELENIUM_SERVER);
 }
 
