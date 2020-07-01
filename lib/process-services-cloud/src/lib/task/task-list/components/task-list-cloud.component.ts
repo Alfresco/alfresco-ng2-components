@@ -178,6 +178,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     isLoading = true;
     selectedInstances: any[];
     formattedSorting: any[];
+    private defaultSorting = { key: 'startDate', direction: 'desc' };
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -271,6 +272,12 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         this.reload();
     }
 
+    onSortingChanged(event: CustomEvent) {
+        this.setSorting(event.detail);
+        this.formatSorting(this.sorting);
+        this.reload();
+    }
+
     onRowClick(item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('entry.id');
         this.rowClick.emit(this.currentInstanceId);
@@ -329,6 +336,14 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             standalone: this.standalone
         };
         return new TaskQueryCloudRequestModel(requestNode);
+    }
+
+    setSorting(sortDetail) {
+        const sorting = sortDetail ? {
+            orderBy: sortDetail.key.replace(TaskListCloudComponent.ENTRY_PREFIX, ''),
+            direction: sortDetail.direction.toUpperCase()
+        } : { ... this.defaultSorting };
+        this.sorting = [new TaskListCloudSortingModel(sorting)];
     }
 
     formatSorting(sorting: TaskListCloudSortingModel[]) {

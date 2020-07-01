@@ -159,6 +159,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     rows: any[] = [];
     formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
+    private defaultSorting = { key: 'startDate', direction: 'desc' };
 
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
@@ -239,6 +240,12 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.reload();
     }
 
+    onSortingChanged(event: CustomEvent) {
+        this.setSorting(event.detail);
+        this.formatSorting(this.sorting);
+        this.reload();
+    }
+
     onRowClick(item: DataRowEvent) {
         this.currentInstanceId = item.value.getValue('entry.id');
         this.rowClick.emit(this.currentInstanceId);
@@ -292,6 +299,14 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);
+    }
+
+    setSorting(sortDetail) {
+        const sorting = sortDetail ? {
+            orderBy: sortDetail.key.replace(ProcessListCloudComponent.ENTRY_PREFIX, ''),
+            direction: sortDetail.direction.toUpperCase()
+        } : { ... this.defaultSorting };
+        this.sorting = [new ProcessListCloudSortingModel(sorting)];
     }
 
     formatSorting(sorting: ProcessListCloudSortingModel[]) {
