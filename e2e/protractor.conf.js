@@ -1,14 +1,14 @@
-const { LocalStorageUtil, ACTIVITI_CLOUD_APPS } = require('./lib/dist/testing');
+const { LocalStorageUtil, ACTIVITI_CLOUD_APPS } = require('../lib/dist/testing');
 const path = require('path');
 const { SpecReporter } = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
-const tsConfig = require('./e2e/tsconfig.e2e.json');
-const testConfig = require('./e2e/test.config');
-const RESOURCES = require('./e2e/util/resources');
+const tsConfig = require('./tsconfig.e2e.json');
+const testConfig = require('./test.config');
+const RESOURCES = require('./util/resources');
 const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
 
-const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
+const { uploadScreenshot, cleanReportFolder } = require('./protractor/save-remote');
 const argv = require('yargs').argv;
 
 const projectRoot = path.resolve(__dirname);
@@ -49,16 +49,24 @@ if (LOG) {
 
 const downloadFolder = path.join(__dirname, 'e2e/downloads');
 
-const specs = () => {
-    const specsToRun = FOLDER ? './**/e2e/' + FOLDER + '/**/*.e2e.ts' : './**/e2e/**/*.e2e.ts';
+let specs = function () {
+    let LIST_SPECS;
 
-    if (LIST_SPECS.length === 0) {
-        arraySpecs = [specsToRun];
-    } else {
-        // @ts-ignore
+    if (process.env.LIST_SPECS) {
+        LIST_SPECS = process.env.LIST_SPECS;
+    }
+
+    if (LIST_SPECS && LIST_SPECS !== '') {
         arraySpecs = LIST_SPECS.split(',');
         arraySpecs = arraySpecs.map((el) => './' + el);
+    } else {
+        const FOLDER = process.env.FOLDER || '';
+        const specsToRun = FOLDER ? `./${FOLDER}/**/*.e2e.ts` : './**/*.ts';
+        arraySpecs = [specsToRun];
+
     }
+
+    console.log('aaaa'  + arraySpecs);
 
     return arraySpecs;
 };
@@ -85,7 +93,6 @@ exports.config = {
         shardTestFiles: true,
 
         chromeOptions: {
-            binary: require('puppeteer').executablePath(),
             prefs: {
                 'credentials_enable_service': false,
                 'download': {
@@ -133,7 +140,7 @@ exports.config = {
         defaultTimeoutInterval: 120000,
         print: () => {},
         ...smartRunner.withOptionalExclusions(
-            resolve(__dirname, './e2e/protractor.excludes.json')
+            resolve(__dirname, './protractor.excludes.json')
         )
     },
 
@@ -164,12 +171,12 @@ exports.config = {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
 
         require('ts-node').register({
-            project: require('path').join(__dirname, './e2e/tsconfig.e2e.json')
+            project: require('path').join(__dirname, './tsconfig.e2e.json')
         });
 
         require('tsconfig-paths').register({
-            project: 'e2e/tsconfig.e2e.json',
-            baseUrl: 'e2e/',
+            project: './e2e/tsconfig.e2e.json',
+            baseUrl: './e2e/',
             paths: tsConfig.compilerOptions.paths
         });
 
