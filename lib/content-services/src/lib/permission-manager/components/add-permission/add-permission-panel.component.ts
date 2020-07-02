@@ -94,7 +94,7 @@ export class AddPermissionPanelComponent {
         if (item && item.entry.nodeType === 'cm:authorityContainer' && this.hiddenGroups.length) {
             visible = !this.hiddenGroups.includes(item.entry.properties['cm:authorityName']);
         } else if (item && this.hiddenUsers.length) {
-            visible = !this.hiddenUsers.includes(item.entry.properties['cm:owner'].id);
+            visible = !this.hiddenUsers.includes(item.entry.properties['cm:userName']);
         }
         return visible;
     }
