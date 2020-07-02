@@ -46,7 +46,7 @@ the dialog for you.
 ### Usage example
 
 ```ts
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponentData, LoginDialogComponent} from '@adf/core'
 import { Subject } from 'rxjs/Subject';
  ...

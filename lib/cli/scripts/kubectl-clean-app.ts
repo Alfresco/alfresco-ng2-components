@@ -243,22 +243,25 @@ async function main(args) {
         useContext(args);
 
         const applications = args.apps.includes(',') ? args.apps.split(',') : [args.apps];
-
+        const interval = args.intervalTime ? args.intervalTime : '30 min';
+        const extractTimeRange = interval.split(' ')[0];
+        logger.info(`Extract time ${extractTimeRange} from interval: ${interval}`);
         for (let i = 0; i < applications.length;  i++ ) {
             logger.info(`Perform action on app: ${applications[i]}`);
             if (args.enableLike) {
                 const applicationsByName = await getApplicationsByName(args, alfrescoJsApiDevops, applications[i]);
+                logger.info(`Found  ${applicationsByName.length} apps`);
                 for (let y = 0; y < applicationsByName.length;  y++ ) {
-                    const extractTimeRange = args.intervalTime.split(' ')[0];
                     const application = applicationsByName[y].entry;
+                    logger.info(`Analyze app:  ${application.name} `);
                     const diffAsMinutes = moment.duration(moment().diff(moment(application.createdAt))).asMinutes();
                     if (diffAsMinutes > extractTimeRange) {
-                        logger.info(`The app: ${application} is older than ${args.intervalTime}. Can delete it`);
+                        logger.info(`The app: ${application} is older than ${interval}. Can delete it`);
                         await undeployApplication(args, alfrescoJsApiDevops, application.name);
                         await deleteDescriptor(args, alfrescoJsApiDevops, application.name);
                         await deleteProjectByName(args, alfrescoJsApiModeler, application.name);
                     } else {
-                        logger.info(`The app: ${application} is recent than ${args.intervalTime}. Skip delete`);
+                        logger.info(`The app: ${application} is recent than ${interval}. Skip delete`);
                     }
                 }
             } else {

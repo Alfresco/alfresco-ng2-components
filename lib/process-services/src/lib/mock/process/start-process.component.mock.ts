@@ -42,7 +42,7 @@ export let testMultipleProcessDefs = [new ProcessDefinitionRepresentation({
 }), new ProcessDefinitionRepresentation({
     id: 'my:process2',
     name: 'My Process 2',
-    hasStartForm: false
+    hasStartForm: true
 })];
 
 export let testProcessDefWithForm = [new ProcessDefinitionRepresentation({

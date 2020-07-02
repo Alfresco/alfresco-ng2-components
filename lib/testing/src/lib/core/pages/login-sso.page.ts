@@ -29,6 +29,7 @@ export class LoginSSOPage {
     loginButton = element(by.css('input[type="submit"]'));
     header = element(by.id('adf-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
+    visibilityLabel = element(by.id('v'));
 
     txtUsernameBasicAuth = element(by.css('input[id="username"]'));
     txtPasswordBasicAuth = element(by.css('input[id="password"]'));
@@ -77,6 +78,7 @@ export class LoginSSOPage {
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.usernameField);
+        await this.displayPassword();
         await this.enterUsername(username);
         await this.enterPassword(password);
         await this.clickLoginButton();
@@ -129,6 +131,12 @@ export class LoginSSOPage {
 
     async getLoginErrorMessage() {
         return BrowserActions.getText(this.loginError);
+    }
+
+    async displayPassword(): Promise<void> {
+        await BrowserActions.click(this.visibilityLabel);
+        const passwordInputTypeText = element(by.css(`input[name="password"][type="text"]`));
+        await BrowserVisibility.waitUntilElementIsVisible(passwordInputTypeText);
     }
 
 }

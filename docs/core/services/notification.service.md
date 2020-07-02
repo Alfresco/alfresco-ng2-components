@@ -94,7 +94,7 @@ export class MyComponent implements OnInit {
 
 ```ts
 import { NotificationService } from '@alfresco/adf-core';
-import { MatSnackBarConfig } from '@angular/material';
+import { MatSnackBarConfig } from '@angular/material/snackbar';
 
 export class MyComponent implements OnInit {
 

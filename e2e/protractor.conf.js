@@ -90,7 +90,7 @@ let setProvider = function (folder) {
 let specExists = function (listSpecs) {
     listSpecs.forEach((path) => {
         if (!fs.existsSync(resolve(__dirname, path))) {
-            Logger.error('E2E File not present' + path);
+            Logger.error(`Not valid spec path : ${resolve(__dirname, path)} valid path should be for example /search/search-component.e2e.ts`);
         }
     });
 };
