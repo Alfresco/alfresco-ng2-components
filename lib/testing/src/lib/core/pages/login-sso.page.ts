@@ -30,7 +30,6 @@ export class LoginSSOPage {
     header = element(by.tagName('adf-layout-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
     visibilityLabel = element(by.id('v'));
-    visibilityLabelImg = element(by.id('vi'));
 
     txtUsernameBasicAuth = element(by.css('input[id="username"]'));
     txtPasswordBasicAuth = element(by.css('input[id="password"]'));
@@ -136,7 +135,7 @@ export class LoginSSOPage {
 
     async displayPassword(): Promise<void> {
         await BrowserActions.click(this.visibilityLabel);
-        const passwordInputTypeText = element(by.css(`"input[name='password'][type='text']"`));
+        const passwordInputTypeText = element(by.css(`input[name="password"][type="text"]`));
         await BrowserVisibility.waitUntilElementIsVisible(passwordInputTypeText);
     }
 
