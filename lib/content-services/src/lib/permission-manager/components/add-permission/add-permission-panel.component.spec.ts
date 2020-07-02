@@ -241,7 +241,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#result_option_1 .mat-list-text')).not.toBeNull();
         expect(element.querySelector('#result_option_1 .mat-list-text')).toBeDefined();
 
-        component.hiddenUsers = ['admin@alfresco.com'];
+        component.hiddenUsers = ['admin'];
         typeWordIntoSearchInput('a');
         fixture.detectChanges();
         await fixture.whenStable();
