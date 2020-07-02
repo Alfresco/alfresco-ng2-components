@@ -31,8 +31,6 @@ import { Subscription } from 'rxjs';
 import { ViewUtilService } from '..';
 import { AppExtensionService, ViewerExtensionRef } from '@alfresco/adf-extensions';
 import { filter } from 'rxjs/operators';
-import { VersionEntry } from '@alfresco/js-api/src/api/content-rest-api/model/versionEntry';
-import { Version } from '@alfresco/js-api/src/api/content-rest-api/model/version';
 
 @Component({
     selector: 'adf-viewer',
@@ -422,37 +420,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
         this.sidebarRightTemplateContext.node = nodeData;
         this.sidebarLeftTemplateContext.node = nodeData;
-        this.scrollTop();
-
-        return setupNode;
-    }
-
-    private async setUpNodeVersionFile(data: Version) {
-        let setupNode;
-
-        if (data.content) {
-            this.mimeType = data.content.mimeType;
-        }
-
-        this.fileTitle = this.getDisplayName(data.name);
-        this.urlFileContent = this.apiService.contentApi.getVersionContentUrl(this.nodeId, data.id);
-        this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
-        this.extension = this.getFileExtension(data.name);
-
-        this.fileName = data.name;
-
-        this.viewerType = this.getViewerTypeByExtension(this.extension);
-        if (this.viewerType === 'unknown') {
-            this.viewerType = this.getViewerTypeByMimeType(this.mimeType);
-        }
-
-        if (this.viewerType === 'unknown') {
-            setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
-        }
-
-        this.extensionChange.emit(this.extension);
-        this.sidebarRightTemplateContext.node = this.nodeEntry.entry;
-        this.sidebarLeftTemplateContext.node = this.nodeEntry.entry;
         this.scrollTop();
 
         return setupNode;
