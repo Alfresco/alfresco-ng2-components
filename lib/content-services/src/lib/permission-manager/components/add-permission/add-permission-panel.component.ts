@@ -22,12 +22,6 @@ import { SearchComponent } from '../../../search/components/search.component';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { NodeEntry } from '@alfresco/js-api';
-
-export interface MemberList {
-    key: string;
-    items: string[];
-}
-
 @Component({
     selector: 'adf-add-permission-panel',
     templateUrl: './add-permission-panel.component.html',
@@ -43,13 +37,13 @@ export class AddPermissionPanelComponent {
     @ViewChild('search')
     search: SearchComponent;
 
-    /** List of groups that will be hidden in the search result */
+    /** List of group ids to hide in the search result */
     @Input()
-    hiddenGroups: MemberList;
+    hiddenGroups: string[];
 
-    /** List of users that will be hidden in the search result */
+    /** List of users ids to hide in the search result */
     @Input()
-    hiddenUsers: MemberList;
+    hiddenUsers: string[];
 
     /** Emitted when a permission list item is selected. */
     @Output()
@@ -97,10 +91,10 @@ export class AddPermissionPanelComponent {
 
     isElementVisible(item: NodeEntry) {
         let visible = true;
-        if (item && item.entry.nodeType === 'cm:authorityContainer' && this.hiddenGroups) {
-            visible = !this.hiddenGroups.items.includes(item.entry.properties[this.hiddenGroups.key]);
-        } else if (item && this.hiddenUsers) {
-            visible = !this.hiddenUsers.items.includes(item.entry.properties[this.hiddenUsers.key]);
+        if (item && item.entry.nodeType === 'cm:authorityContainer' && this.hiddenGroups.length) {
+            visible = !this.hiddenGroups.includes(item.entry.properties['cm:authorityName']);
+        } else if (item && this.hiddenUsers.length) {
+            visible = !this.hiddenUsers.includes(item.entry.properties['cm:owner'].id);
         }
         return visible;
     }

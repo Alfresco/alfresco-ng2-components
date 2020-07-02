@@ -220,12 +220,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#result_option_2 .mat-list-text')).not.toBeNull();
         expect(element.querySelector('#result_option_2 .mat-list-text')).toBeDefined();
 
-        component.hiddenGroups = {
-            key: 'cm:authorityName',
-            items: [
-                'GROUP_ALFRESCO_ADMINISTRATORS'
-            ]
-        };
+        component.hiddenGroups = ['GROUP_ALFRESCO_ADMINISTRATORS'];
         typeWordIntoSearchInput('a');
         fixture.detectChanges();
         await fixture.whenStable();
@@ -246,12 +241,7 @@ describe('AddPermissionPanelComponent', () => {
         expect(element.querySelector('#result_option_1 .mat-list-text')).not.toBeNull();
         expect(element.querySelector('#result_option_1 .mat-list-text')).toBeDefined();
 
-        component.hiddenUsers = {
-            key: 'cm:email',
-            items: [
-                'admin@alfresco.com'
-            ]
-        };
+        component.hiddenUsers = ['admin@alfresco.com'];
         typeWordIntoSearchInput('a');
         fixture.detectChanges();
         await fixture.whenStable();

@@ -46,14 +46,22 @@ permissions to the node once the selection has been made.
 
 If you want to hide specific groups or users from the search results you will need to bind the `hiddenUsers` and `hiddenGroups` properties for this component.
 
+It will hide users by the id present in the `cm:owner` property.
+
 ```ts
-hiddenUsers = {
-    key: "cm:email",
-    items: [
-        "john-doe@example.com",
-        "james-lone@example.com"
-        ]
-};
+hiddenUsers = [
+    "john-doe@example.com",
+    "james-lone@example.com"
+];
+```
+
+In the case of groups, it will hide them by their `cm:authorityName` property.
+
+
+```ts
+hiddenGroups = [
+    "HR_GROUP"
+];
 ```
 
 ## See also
