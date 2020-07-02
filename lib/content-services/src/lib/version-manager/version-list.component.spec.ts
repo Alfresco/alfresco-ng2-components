@@ -228,6 +228,13 @@ describe('VersionListComponent', () => {
             expect(alfrescoApiService.contentApi.getContentUrl).toHaveBeenCalledWith(nodeId, true);
         });
 
+        it('should be able to view a version', () => {
+            spyOn(component.viewVersion, 'emit');
+            component.onViewVersion('1.0');
+            fixture.detectChanges();
+            expect(component.viewVersion.emit).toHaveBeenCalledWith('1.0');
+        });
+
         it('should NOT be able to download a version if configured so', () => {
             const versionEntry = {
                 entry: {

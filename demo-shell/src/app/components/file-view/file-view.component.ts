@@ -30,6 +30,7 @@ import { PreviewService } from '../../services/preview.service';
 export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
+    versionId: string = null;
     displayEmptyMetadata = false;
     expanded: boolean;
     multi = false;
@@ -72,6 +73,7 @@ export class FileViewComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params) => {
             const id = params.nodeId;
+            this.versionId = params.versionId;
             if (id) {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
@@ -92,13 +94,17 @@ export class FileViewComponent implements OnInit {
         });
     }
 
+    onViewVersion(versionId: string) {
+        this.preview.showResource(this.nodeId, versionId);
+    }
+
     onViewerVisibilityChanged() {
         const primaryUrl = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].toString();
         this.router.navigateByUrl(primaryUrl);
     }
 
     onUploadError(errorMessage: string) {
-        this.snackBar.open(errorMessage, '', { duration: 4000 });
+        this.snackBar.open(errorMessage, '', {duration: 4000});
     }
 
     toggleEmptyMetadata() {

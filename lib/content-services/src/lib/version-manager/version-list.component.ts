@@ -48,6 +48,10 @@ export class VersionListComponent implements OnChanges {
     @Input()
     allowDownload = true;
 
+    /** Enable/disable viewing a version of the current node. */
+    @Input()
+    allowViewVersions = true;
+
     /** Toggles showing/hiding of version actions */
     @Input()
     showActions = true;
@@ -59,6 +63,10 @@ export class VersionListComponent implements OnChanges {
     /** Emitted when a version is deleted */
     @Output()
     deleted: EventEmitter<Node> = new EventEmitter<Node>();
+
+    /** Emitted when viewing a version */
+    @Output()
+    viewVersion: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private alfrescoApi: AlfrescoApiService,
                 private contentService: ContentService,
@@ -90,6 +98,10 @@ export class VersionListComponent implements OnChanges {
                 )
                 .then((node) => this.onVersionRestored(node));
         }
+    }
+
+    onViewVersion(versionId) {
+        this.viewVersion.emit(versionId);
     }
 
     loadVersionHistory() {

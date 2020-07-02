@@ -26,10 +26,11 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    template: '<div [adfNodeDownload]="selection"></div>'
+    template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
 })
 class TestComponent {
     selection;
+    version;
 }
 
 describe('NodeDownloadDirective', () => {
@@ -82,7 +83,7 @@ describe('NodeDownloadDirective', () => {
 
     it('should download selected node as file', () => {
         spyOn(contentService, 'getContentUrl');
-        const node = { entry: { id: 'node-id', isFile: true } };
+        const node = {entry: {id: 'node-id', isFile: true}};
         component.selection = [node];
 
         fixture.detectChanges();
@@ -91,9 +92,25 @@ describe('NodeDownloadDirective', () => {
         expect(contentService.getContentUrl).toHaveBeenCalledWith(node.entry.id, true);
     });
 
+    it('should download selected node version as file', () => {
+        component.version = {
+            entry: {
+                id: '1.0'
+            }
+        };
+        spyOn(contentService, 'getVersionContentUrl');
+        const node = {entry: {id: 'node-id', isFile: true}};
+        component.selection = [node];
+
+        fixture.detectChanges();
+        element.triggerEventHandler('click', null);
+
+        expect(contentService.getVersionContentUrl).toHaveBeenCalledWith(node.entry.id, '1.0', true);
+    });
+
     it('should download selected shared node as file', () => {
         spyOn(contentService, 'getContentUrl');
-        const node = { entry: { nodeId: 'shared-node-id', isFile: true } };
+        const node = {entry: {nodeId: 'shared-node-id', isFile: true}};
         component.selection = [node];
 
         fixture.detectChanges();
@@ -103,35 +120,35 @@ describe('NodeDownloadDirective', () => {
     });
 
     it('should download selected files nodes as zip', () => {
-        const node1 = { entry: { id: 'node-1' } };
-        const node2 = { entry: { id: 'node-2' } };
+        const node1 = {entry: {id: 'node-1'}};
+        const node2 = {entry: {id: 'node-2'}};
         component.selection = [node1, node2];
 
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'node-1', 'node-2' ] });
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({nodeIds: ['node-1', 'node-2']});
     });
 
     it('should download selected shared files nodes as zip', () => {
-        const node1 = { entry: { nodeId: 'shared-node-1' } };
-        const node2 = { entry: { nodeId: 'shared-node-2' } };
+        const node1 = {entry: {nodeId: 'shared-node-1'}};
+        const node2 = {entry: {nodeId: 'shared-node-2'}};
         component.selection = [node1, node2];
 
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'shared-node-1', 'shared-node-2' ] });
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({nodeIds: ['shared-node-1', 'shared-node-2']});
     });
 
     it('should download selected folder node as zip', () => {
-        const node = { entry: { isFolder: true, id: 'node-id' } };
+        const node = {entry: {isFolder: true, id: 'node-id'}};
         component.selection = [node];
 
         fixture.detectChanges();
         element.triggerEventHandler('click', null);
 
-        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({ nodeIds: [ 'node-id' ] });
+        expect(dialogSpy.calls.argsFor(0)[1].data).toEqual({nodeIds: ['node-id']});
     });
 
     it('should create link element to download file node', () => {
@@ -144,7 +161,7 @@ describe('NodeDownloadDirective', () => {
             }
         };
 
-        const node = { entry: { name: 'dummy', isFile: true, id: 'node-id' } };
+        const node = {entry: {name: 'dummy', isFile: true, id: 'node-id'}};
 
         spyOn(contentService, 'getContentUrl').and.returnValue('somewhere-over-the-rainbow');
         spyOn(document, 'createElement').and.returnValue(dummyLinkElement);
