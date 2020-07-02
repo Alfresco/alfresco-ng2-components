@@ -32,5 +32,6 @@ export * from './lib/content-metadata/index';
 export * from './lib/permission-manager/index';
 export * from './lib/content-node-share/index';
 export * from './lib/tree-view/index';
+export * from './lib/group/index';
 
 export * from './lib/content.module';
