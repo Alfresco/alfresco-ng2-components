@@ -1,17 +1,17 @@
-const { LocalStorageUtil, ACTIVITI_CLOUD_APPS } = require('../lib/dist/testing');
+const {LocalStorageUtil, ACTIVITI_CLOUD_APPS, Logger} = require('../lib/dist/testing');
 const path = require('path');
-const { SpecReporter } = require('jasmine-spec-reporter');
+const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
 const tsConfig = require('./tsconfig.e2e.json');
 const testConfig = require('./test.config');
 const RESOURCES = require('./util/resources');
 const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
+const fs = require('fs');
 
-const { uploadScreenshot, cleanReportFolder } = require('./protractor/save-remote');
+const {uploadScreenshot, cleanReportFolder} = require('./protractor/save-remote');
 const argv = require('yargs').argv;
 
-const projectRoot = path.resolve(__dirname);
 const width = 1657, height = 1657;
 
 const ENV_FILE = process.env.ENV_FILE;
@@ -19,7 +19,7 @@ const GROUP_SUFFIX = process.env.PREFIX || 'adf';
 
 RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
-    require('dotenv').config({ path: ENV_FILE });
+    require('dotenv').config({path: ENV_FILE});
 }
 
 const HOST = process.env.URL_HOST_ADF;
@@ -47,7 +47,7 @@ if (LOG) {
     console.log('SELENIUM_SERVER : ' + SELENIUM_SERVER);
 }
 
-const downloadFolder = path.join(__dirname, 'e2e/downloads');
+const downloadFolder = path.join(__dirname, '/downloads');
 
 let specs = function () {
     let LIST_SPECS;
@@ -59,16 +59,40 @@ let specs = function () {
     if (LIST_SPECS && LIST_SPECS !== '') {
         arraySpecs = LIST_SPECS.split(',');
         arraySpecs = arraySpecs.map((el) => './' + el);
+
+        specExists(arraySpecs);
     } else {
         const FOLDER = process.env.FOLDER || '';
+        setProvider(FOLDER);
         const specsToRun = FOLDER ? `./${FOLDER}/**/*.e2e.ts` : './**/*.ts';
         arraySpecs = [specsToRun];
-
     }
 
-    console.log('aaaa'  + arraySpecs);
-
     return arraySpecs;
+};
+
+let setProvider = function (folder) {
+    if (folder === 'core') {
+        testConfig.appConfig.provider = 'ALL';
+    } else if (folder === 'content-services') {
+        testConfig.appConfig.provider = 'ECM';
+    } else if (folder === 'process-services') {
+        testConfig.appConfig.provider = 'BPM';
+    } else if (folder === 'insights') {
+        testConfig.appConfig.provider = 'BPM';
+    } else if (folder === 'search') {
+        testConfig.appConfig.provider = 'ECM';
+    } else if (folder === 'process-services-cloud') {
+        testConfig.appConfig.provider = 'BPM';
+    }
+};
+
+let specExists = function (listSpecs) {
+    listSpecs.forEach((path) => {
+        if (!fs.existsSync(resolve(__dirname, path))) {
+            Logger.error('E2E File not present' + path);
+        }
+    });
 };
 
 specs();
@@ -127,7 +151,6 @@ exports.config = {
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: testConfig.identityAdmin,
         identityUser: testConfig.identityUser,
-        rootPath: __dirname,
         resources: RESOURCES
     },
 
@@ -138,7 +161,8 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 120000,
-        print: () => {},
+        print: () => {
+        },
         ...smartRunner.withOptionalExclusions(
             resolve(__dirname, './protractor.excludes.json')
         )
@@ -158,7 +182,7 @@ exports.config = {
         screenshotOnExpectFailure: true,
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
-        screenshotPath: `${projectRoot}/e2e-output/screenshots/`
+        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
     }],
 
     onCleanUp(results) {

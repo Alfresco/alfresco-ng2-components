@@ -6,14 +6,14 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangePeopleMode($event)">
-            <mat-radio-button checked="true" class="app-people-single-mode" data-automation-id="app-people-single-mode" value="single">{{
+            <mat-radio-button [checked]="true" class="app-people-single-mode" data-automation-id="app-people-single-mode" value="single">{{
                 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
             <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-people-multiple-mode" value="multiple">{{
                 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
         </mat-radio-group>
         <div class="app-people-control-options">
             <mat-radio-group (change)="onChangePeopleFilterMode($event)">
-                <mat-radio-button checked="true" class="app-people-single-mode" value="appName">{{
+                <mat-radio-button [checked]="true" class="app-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
                 <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-people-filter-role" value="role">{{
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>
@@ -77,14 +77,14 @@
     <mat-card-content>
         <br>
         <mat-radio-group (change)="onChangeGroupsMode($event)">
-            <mat-radio-button checked="true" class="app-people-single-mode" data-automation-id="app-group-single-mode" value="single">{{
+            <mat-radio-button [checked]="true" class="app-people-single-mode" data-automation-id="app-group-single-mode" value="single">{{
                 'PEOPLE_GROUPS_CLOUD.SINGLE' | translate }}</mat-radio-button>
             <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-group-multiple-mode" value="multiple">{{
                 'PEOPLE_GROUPS_CLOUD.MULTI' | translate }}</mat-radio-button>
         </mat-radio-group>
         <div class="app-groups-control-options">
             <mat-radio-group (change)="onChangeGroupsFilterMode($event)">
-                <mat-radio-button checked="true" class="app-people-single-mode" value="appName">{{
+                <mat-radio-button [checked]="true" class="app-people-single-mode" value="appName">{{
                     'PEOPLE_GROUPS_CLOUD.APP_FILTER_MODE' | translate }}</mat-radio-button>
                 <mat-radio-button class="app-people-multiple-mode" data-automation-id="app-group-filter-role" value="role">{{
                     'PEOPLE_GROUPS_CLOUD.ROLE_FILTER_MODE' | translate }}</mat-radio-button>

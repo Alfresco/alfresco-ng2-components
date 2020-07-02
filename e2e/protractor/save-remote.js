@@ -1,7 +1,6 @@
 const fs = require('fs');
 const rimraf = require('rimraf');
 const path = require('path');
-const projectRoot = path.resolve(__dirname, '../../');
 const TestConfig = require('../test.config');
 const AlfrescoApi = require('@alfresco/js-api').AlfrescoApiCompatibility;
 
@@ -15,7 +14,7 @@ function buildNumber() {
 }
 
 async function uploadScreenshot(retryCount) {
-    let files = fs.readdirSync(path.join(__dirname, '../../e2e-output/screenshots'));
+    let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
 
     if (files && files.length > 0) {
 
@@ -46,7 +45,7 @@ async function uploadScreenshot(retryCount) {
         }
 
         for (const fileName of files) {
-            let pathFile = path.join(__dirname, '../../e2e-output/screenshots', fileName);
+            let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
             let file = fs.createReadStream(pathFile);
 
             let safeFileName = fileName.match(/\[(.*?)\]/);
@@ -74,7 +73,7 @@ async function uploadScreenshot(retryCount) {
 }
 
 async function cleanReportFolder() {
-    let reportsFolder = `${projectRoot}/e2e-output/junit-report/`;
+    const reportsFolder = path.resolve(__dirname, '../e2e-output/junit-report/');
 
     fs.exists(reportsFolder, function (exists, error) {
         if (exists) {

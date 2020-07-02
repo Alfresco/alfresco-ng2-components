@@ -85,7 +85,6 @@ describe('Version Properties', () => {
         await versionManagePage.enableDownload();
         await versionManagePage.clickActionButton('1.0');
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`[id="adf-version-list-action-download-1.0"]`)));
-        await versionManagePage.closeActionsMenu();
     });
 
     it('[C269085] Should show/hide comments when showComments true/false', async () => {

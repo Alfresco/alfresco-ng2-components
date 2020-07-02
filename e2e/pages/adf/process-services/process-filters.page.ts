@@ -26,7 +26,7 @@ export class ProcessFiltersPage {
     allFilter = element(by.css('button[data-automation-id="All_filter"]'));
     createProcessButton = element(by.css('.app-processes-menu button[data-automation-id="create-button"] > span'));
     newProcessButton = element(by.css('div > button[data-automation-id="btn-start-process"]'));
-    processesPage = element(by.css('.app-grid > .app-grid-item app-processes-menu'));
+    processesPage = element(by.id('app-processes-menu'));
     accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
     noContentMessage = element.all(by.css('.adf-empty-content__title')).first();

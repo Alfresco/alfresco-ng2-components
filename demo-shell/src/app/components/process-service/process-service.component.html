@@ -118,7 +118,7 @@
              label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="app-page-content" *ngIf="showProcessTab">
             <div class="app-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="app-grid-item app-processes-menu" fxFlex.gt-md="225px">
+                <div id="app-processes-menu"  class="app-grid-item app-processes-menu" fxFlex.gt-md="225px">
                     <div class="app-list-buttons">
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
