@@ -51,9 +51,9 @@ describe('StartFormComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(StartFormComponent);
         component = fixture.componentInstance;
-        formService = TestBed.get(FormService);
-        visibilityService = TestBed.get(WidgetVisibilityService);
-        translate = TestBed.get(TranslateService);
+        formService = TestBed.inject(FormService);
+        visibilityService = TestBed.inject(WidgetVisibilityService);
+        translate = TestBed.inject(TranslateService);
 
         getStartFormSpy = spyOn(formService, 'getStartFormDefinition').and.returnValue(of({
             processDefinitionName: 'my:process'

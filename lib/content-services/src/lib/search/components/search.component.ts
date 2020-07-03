@@ -47,7 +47,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 })
 export class SearchComponent implements SearchComponentInterface, AfterContentInit, OnChanges, OnDestroy {
 
-    @ViewChild('panel')
+    @ViewChild('panel', { static: true })
     panel: ElementRef;
 
     @ContentChild(TemplateRef)

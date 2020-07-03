@@ -37,7 +37,7 @@ describe('RenditionsService', () => {
 
     beforeEach(() => {
         jasmine.Ajax.install();
-        service = TestBed.get(RenditionsService);
+        service = TestBed.inject(RenditionsService);
     });
 
     afterEach(() => {

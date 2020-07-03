@@ -44,9 +44,9 @@ describe('ContentService', () => {
     });
 
     beforeEach(() => {
-        authService = TestBed.get(AuthenticationService);
-        contentService = TestBed.get(ContentService);
-        storage = TestBed.get(StorageService);
+        authService = TestBed.inject(AuthenticationService);
+        contentService = TestBed.inject(ContentService);
+        storage = TestBed.inject(StorageService);
         storage.clear();
 
         node = {
@@ -57,7 +57,7 @@ describe('ContentService', () => {
 
         jasmine.Ajax.install();
 
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             provider: 'ECM'

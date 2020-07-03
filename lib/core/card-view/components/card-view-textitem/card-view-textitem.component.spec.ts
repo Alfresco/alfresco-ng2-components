@@ -23,7 +23,7 @@ import { CardViewTextItemComponent } from './card-view-textitem.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { CardViewItemFloatValidator, CardViewItemIntValidator, CardViewIntItemModel, CardViewFloatItemModel } from '@alfresco/adf-core';
-import { MatChipsModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { DebugElement } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -323,7 +323,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should click event to the event stream when clickable property enabled', async () => {
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'clicked').and.stub();
 
             component.property.clickable = true;
@@ -340,7 +340,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should update input the value on input updated', async (done) => {
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
 
             component.property.clickable = true;
             component.property.editable = true;
@@ -369,7 +369,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should copy value to clipboard on double click', async () => {
-            const clipboardService = TestBed.get(ClipboardService);
+            const clipboardService = TestBed.inject(ClipboardService);
             spyOn(clipboardService, 'copyContentToClipboard');
 
             component.property.value = 'myValueToCopy';
@@ -419,7 +419,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const property = { ...component.property };
 
             spyOn(cardViewUpdateService, 'update');
@@ -433,7 +433,7 @@ describe('CardViewTextItemComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             fixture.detectChanges();
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
 
             spyOn(cardViewUpdateService, 'update');
             updateTextField(component.property.key, 'updated-value');
@@ -486,7 +486,7 @@ describe('CardViewTextItemComponent', () => {
 
         it('should trigger an update event on the CardViewUpdateService [integration]', async (done) => {
             component.property.isValid = () => true;
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const expectedText = 'changed text';
             component.ngOnChanges();
             fixture.detectChanges();
@@ -506,7 +506,7 @@ describe('CardViewTextItemComponent', () => {
 
         it('should update the value using the updateItem$ subject', async(async () => {
             component.property.isValid = () => true;
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             const expectedText = 'changed text';
             component.ngOnChanges();
             fixture.detectChanges();
@@ -516,7 +516,7 @@ describe('CardViewTextItemComponent', () => {
             expect(value).toEqual('Lorem ipsum');
             expect(component.property.value).toBe('Lorem ipsum');
 
-            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText });
+            cardViewUpdateService.updateElement({ key: component.property.key, value: expectedText } as any);
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -531,7 +531,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.multiline = true;
             const expectedText = 'changed text';
             spyOn(component, 'update').and.callThrough();
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -557,7 +557,7 @@ describe('CardViewTextItemComponent', () => {
         let cardViewUpdateService: CardViewUpdateService;
 
         beforeEach(() => {
-            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.property = new CardViewIntItemModel({
                 label: 'Text label',
                 value: 10,
@@ -669,7 +669,7 @@ describe('CardViewTextItemComponent', () => {
         const floatValue = 77.33;
 
         beforeEach(() => {
-            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.property = new CardViewFloatItemModel({
                 label: 'Text label',
                 value: floatValue,

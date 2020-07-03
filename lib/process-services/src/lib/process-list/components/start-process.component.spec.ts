@@ -19,8 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-import { MatSelectChange } from '@angular/material';
-
+import { MatSelectChange } from '@angular/material/select';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
 import {
@@ -72,13 +71,13 @@ describe('StartFormComponent', () => {
     };
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        activitiContentService = TestBed.get(ActivitiContentService);
+        appConfig = TestBed.inject(AppConfigService);
+        activitiContentService = TestBed.inject(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
-        processService = TestBed.get(ProcessService);
-        formService = TestBed.get(FormService);
-        appsProcessService = TestBed.get(AppsProcessService);
+        processService = TestBed.inject(ProcessService);
+        formService = TestBed.inject(FormService);
+        appsProcessService = TestBed.inject(AppsProcessService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));

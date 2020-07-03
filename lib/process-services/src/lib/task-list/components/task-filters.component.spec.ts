@@ -80,15 +80,15 @@ describe('TaskFiltersComponent', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskFiltersComponent);
         component = fixture.componentInstance;
 
-        taskListService = TestBed.get(TaskListService);
-        taskFilterService = TestBed.get(TaskFilterService);
-        appsProcessService = TestBed.get(AppsProcessService);
+        taskListService = TestBed.inject(TaskListService);
+        taskFilterService = TestBed.inject(TaskFilterService);
+        appsProcessService = TestBed.inject(AppsProcessService);
     });
 
     it('should emit an error with a bad response', (done) => {

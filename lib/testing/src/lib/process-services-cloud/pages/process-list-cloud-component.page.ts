@@ -28,11 +28,11 @@ export class ProcessListCloudComponentPage {
     };
 
     processList = element(by.css('adf-cloud-process-list'));
-    noProcessFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    noProcessFound = element.all(by.css('.adf-empty-content__title')).first();
     actionMenu = element(by.css('*[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
 
-    dataTable: DataTableComponentPage = new DataTableComponentPage(this.processList);
+    dataTable = new DataTableComponentPage(this.processList);
 
     getDataTable(): DataTableComponentPage {
         return this.dataTable;

@@ -51,7 +51,7 @@ describe('UnclaimTaskDirective', () => {
     });
 
     beforeEach(() => {
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.inject(TaskListService);
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();
     });

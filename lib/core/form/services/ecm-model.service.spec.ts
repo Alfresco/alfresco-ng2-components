@@ -37,7 +37,7 @@ describe('EcmModelService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(EcmModelService);
+        service = TestBed.inject(EcmModelService);
         jasmine.Ajax.install();
     });
 

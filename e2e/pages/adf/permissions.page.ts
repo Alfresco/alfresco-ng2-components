@@ -18,16 +18,30 @@
 import {
     DataTableComponentPage,
     AddPermissionsDialogPage,
-    BrowserVisibility
+    BrowserVisibility,
+    BrowserActions
 } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
 
 export class PermissionsPage {
 
-    dataTableComponentPage: DataTableComponentPage = new DataTableComponentPage();
-    addPermissionsDialog: AddPermissionsDialogPage = new AddPermissionsDialogPage();
+    dataTableComponentPage = new DataTableComponentPage();
+    addPermissionsDialog = new AddPermissionsDialogPage();
 
-    addPermissionButton = element(by.css('button[data-automation-id="adf-add-permission-button"]'));
+    addPermissionButton = element(by.css("button[data-automation-id='adf-add-permission-button']"));
+    addPermissionDialog = element(by.css('adf-add-permission-dialog'));
+    searchUserInput = element(by.id('searchInput'));
+    searchResults = element(by.css('#adf-add-permission-authority-results #adf-search-results-content'));
+    addButton = element(by.id('add-permission-dialog-confirm-button'));
+    permissionInheritedButton = element.all(by.css('.app-inherit_permission_button button')).first();
+    noPermissions = element(by.id('adf-no-permissions-template'));
+    deletePermissionButton = element(by.css(`button[data-automation-id='adf-delete-permission-button']`));
+    permissionDisplayContainer = element(by.id('adf-permission-display-container'));
+    closeButton = element(by.id('add-permission-dialog-close-button'));
+
+    async clickCloseButton(): Promise<void> {
+        await BrowserActions.click(this.closeButton);
+    }
 
     async checkAddPermissionButtonIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.addPermissionButton);

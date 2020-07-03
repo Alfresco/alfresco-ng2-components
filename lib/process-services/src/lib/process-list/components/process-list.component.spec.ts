@@ -60,8 +60,8 @@ describe('ProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         fixture = TestBed.createComponent(ProcessInstanceListComponent);
         component = fixture.componentInstance;
-        appConfig = TestBed.get(AppConfigService);
-        service = TestBed.get(ProcessService);
+        appConfig = TestBed.inject(AppConfigService);
+        service = TestBed.inject(ProcessService);
 
         getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(of(fakeProcessInstance));
         appConfig.config['adf-process-list'] = {
@@ -527,7 +527,7 @@ describe('Process List: Custom EmptyTemplateComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(EmptyTemplateComponent);
-        processService = TestBed.get(ProcessService);
+        processService = TestBed.inject(ProcessService);
         spyOn(processService, 'getProcessInstances').and.returnValue(of(fakeProcessInstancesEmpty));
         fixture.detectChanges();
     });
@@ -631,7 +631,7 @@ describe('ProcessListContextMenuComponent', () => {
         fixture = TestBed.createComponent(ProcessListContextMenuComponent);
         customComponent = fixture.componentInstance;
         element = fixture.nativeElement;
-        processService = TestBed.get(ProcessService);
+        processService = TestBed.inject(ProcessService);
         customComponent.appId = 12345;
         spyOn(processService, 'getProcesses').and.returnValue(of(fakeProcessInstance));
         fixture.detectChanges();

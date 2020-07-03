@@ -58,7 +58,7 @@ export class CardViewItemDispatcherComponent implements OnChanges {
     @Input()
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
-    @ViewChild(CardViewContentProxyDirective)
+    @ViewChild(CardViewContentProxyDirective, { static: true })
     private content: CardViewContentProxyDirective;
 
     private loaded: boolean = false;

@@ -25,7 +25,7 @@ export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
     header = this.dialog.element(by.css(`header[data-automation-id='content-node-selector-title']`));
     searchInputElement = this.dialog.element(by.css(`input[data-automation-id='content-node-selector-search-input']`));
-    searchLabel = this.searchInputElement.element(by.xpath("ancestor::div[@class='mat-form-field-infix']/span/label"));
+    searchLabel = this.dialog.element(by.css('.adf-content-node-selector-content-input .mat-form-field-label'));
     selectedRow = this.dialog.element(by.css(`adf-datatable-row[class*="adf-is-selected"]`));
     cancelButton = element(by.css(`button[data-automation-id='content-node-selector-actions-cancel']`));
     moveCopyButton = element(by.css(`button[data-automation-id='content-node-selector-actions-choose']`));

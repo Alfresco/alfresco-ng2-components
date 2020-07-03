@@ -17,7 +17,7 @@
 
 import { SimpleChange, NO_ERRORS_SCHEMA, QueryList, Component, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DataColumn } from '../../data/data-column.model';
 import { DataRow } from '../../data/data-row.model';
 import { DataSorting } from '../../data/data-sorting.model';
@@ -34,7 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
     <ng-template #tmplRef></ng-template>
 `})
 class CustomColumnTemplateComponent {
-    @ViewChild('tmplRef') templateRef: TemplateRef<any>;
+    @ViewChild('tmplRef', { static: true }) templateRef: TemplateRef<any>;
 }
 
 class FakeDataRow implements DataRow {

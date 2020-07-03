@@ -40,9 +40,9 @@ describe('EcmUserService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(EcmUserService);
-        authService = TestBed.get(AuthenticationService);
-        contentService = TestBed.get(ContentService);
+        service = TestBed.inject(EcmUserService);
+        authService = TestBed.inject(AuthenticationService);
+        contentService = TestBed.inject(ContentService);
     });
 
     beforeEach(() => {

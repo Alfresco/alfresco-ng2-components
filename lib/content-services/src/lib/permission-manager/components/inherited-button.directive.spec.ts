@@ -47,7 +47,7 @@ describe('InheritPermissionDirective', () => {
         fixture = TestBed.createComponent(SimpleInheritedPermissionTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        nodeService = TestBed.get(NodesApiService);
+        nodeService = TestBed.inject(NodesApiService);
     }));
 
     it('should be able to render the simple component', async(() => {

@@ -76,11 +76,11 @@ describe('LoginComponent', () => {
         component.showRememberMe = true;
         component.showLoginActions = true;
 
-        authService = TestBed.get(AuthenticationService);
-        router = TestBed.get(Router);
-        userPreferences = TestBed.get(UserPreferencesService);
-        appConfigService = TestBed.get(AppConfigService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        authService = TestBed.inject(AuthenticationService);
+        router = TestBed.inject(Router);
+        userPreferences = TestBed.inject(UserPreferencesService);
+        appConfigService = TestBed.inject(AppConfigService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
         fixture.detectChanges();
 
@@ -279,18 +279,6 @@ describe('LoginComponent', () => {
 
         expect(element.querySelector('#login-action-help')).toBe(null);
         expect(element.querySelector('#login-action-register')).toBe(null);
-    });
-
-    it('should not render a validation min-length as default', () => {
-        usernameInput.value = '1';
-        usernameInput.dispatchEvent(new Event('input'));
-
-        fixture.detectChanges();
-
-        expect(component.formError).toBeDefined();
-        expect(component.formError.username).toBeDefined();
-        expect(component.formError.username).toBe('');
-        expect(element.querySelector('#username-error')).toBeNull();
     });
 
     describe('Error', () => {

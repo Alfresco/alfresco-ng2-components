@@ -32,7 +32,6 @@ import {
     CardViewArrayItem
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
-import { Router } from '@angular/router';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 
@@ -80,7 +79,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
-        private router: Router,
         private cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
@@ -323,15 +321,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
         return filteredProperties ? filteredProperties.indexOf(cardItem.key) >= 0 : true;
-    }
-
-    goBack() {
-        this.router.navigate([`/cloud/${this.appName}/`]);
-    }
-
-    // @deprecated: not used anymore
-    onCompletedTask() {
-        this.goBack();
     }
 
     ngOnDestroy() {

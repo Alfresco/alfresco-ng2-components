@@ -30,7 +30,7 @@ export class PeopleListComponent implements AfterContentInit {
     @ContentChild(DataColumnListComponent)
     columnList: DataColumnListComponent;
 
-    @ViewChild('dataTable')
+    @ViewChild('dataTable', { static: true })
     peopleDataTable: DataTableComponent;
 
     /** The array of user data used to populate the people list. */

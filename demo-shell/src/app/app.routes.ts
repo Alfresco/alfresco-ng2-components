@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {
-    AuthGuard,
-    AuthGuardEcm,
-    ErrorContentComponent,
-    AuthGuardBpm,
-    AuthGuardSsoRoleService
-} from '@alfresco/adf-core';
+import { Routes } from '@angular/router';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -60,12 +53,13 @@ import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confi
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
+
 export const appRoutes: Routes = [
-    { path: 'login', loadChildren: 'app/components/login/login.module#AppLoginModule' },
+    { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
     { path: 'logout', component: LogoutComponent },
     {
         path: 'settings',
-        loadChildren: 'app/components/settings/settings.module#AppSettingsModule'
+        loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
     },
     {
         path: 'files/:nodeId/view',
@@ -76,7 +70,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
+                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
             }
         ]
     },
@@ -88,7 +82,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
+                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
             }
         ]
     },
@@ -101,14 +95,14 @@ export const appRoutes: Routes = [
             {
                 path: 'breadcrumb',
                 canActivate: [AuthGuardEcm],
-                loadChildren: 'app/components/breadcrumb-demo/breadcrumb-demo.module#AppBreadcrumbModule'
+                loadChildren: () => import('./components/breadcrumb-demo/breadcrumb-demo.module').then(m => m.AppBreadcrumbModule)
             },
             {
                 path: 'notifications',
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/notifications/notifications.module#AppNotificationsModule'
+                        loadChildren: () => import('./components/notifications/notifications.module').then(m => m.AppNotificationsModule)
                     }
                 ]
             },
@@ -117,7 +111,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/config-editor/config-editor.module#AppConfigEditorModule'
+                        loadChildren: () => import('./components/config-editor/config-editor.module').then(m => m.AppConfigEditorModule)
                     }
                 ]
             },
@@ -126,7 +120,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/pipes/pipes.module#AppPipesModule'
+                        loadChildren: () => import('./components/pipes/pipes.module').then(m => m.AppPipesModule)
                     }
                 ]
             },
@@ -135,7 +129,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/card-view/card-view.module#AppCardViewModule'
+                        loadChildren: () => import('./components/card-view/card-view.module').then(m => m.AppCardViewModule)
                     }
                 ]
             },
@@ -144,7 +138,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/sites/sites.module#SitesModule'
+                        loadChildren: () => import('./components/sites/sites.module').then(m => m.SitesModule)
                     }
                 ]
             },
@@ -153,7 +147,7 @@ export const appRoutes: Routes = [
                 children: [
                     {
                         path: '',
-                        loadChildren: 'app/components/header-data/header-data.module#AppHeaderDataModule'
+                        loadChildren: () => import('./components/header-data/header-data.module').then(m => m.AppHeaderDataModule)
                     }
                 ]
             },
@@ -184,7 +178,7 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: 'community',
-                        loadChildren: 'app/components/cloud/community/community.module#AppCommunityModule'
+                        loadChildren: () => import('./components/cloud/community/community.module').then(m => m.AppCommunityModule)
                     },
                     {
                         path: ':appName',
@@ -232,7 +226,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'node-selector',
-                loadChildren: 'app/components/content-node-selector/content-node-selector.module#AppContentNodeSelectorModule'
+                loadChildren: () => import('./components/content-node-selector/content-node-selector.module').then(m => m.AppContentNodeSelectorModule)
             },
             {
                 path: 'confirm-dialog',
@@ -240,12 +234,12 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'settings-layout',
-                loadChildren: 'app/components/settings/settings.module#AppSettingsModule'
+                loadChildren: () => import('./components/settings/settings.module').then(m => m.AppSettingsModule)
             },
             {
                 path: 'trashcan',
                 canActivate: [AuthGuardEcm],
-                loadChildren: 'app/components/trashcan/trashcan.module#AppTrashcanModule'
+                loadChildren: () => import('./components/trashcan/trashcan.module').then(m => m.AppTrashcanModule)
             },
             {
                 path: 'files',
@@ -270,7 +264,7 @@ export const appRoutes: Routes = [
             {
                 path: 'extensions/document-list/presets',
                 canActivate: [AuthGuardEcm],
-                loadChildren: './components/document-list/extension-presets/extension-presets.module#ExtensionPresetsModule'
+                loadChildren: () => import('./components/document-list/extension-presets/extension-presets.module').then(m => m.ExtensionPresetsModule)
             },
             {
                 path: 'files/:id',
@@ -285,16 +279,16 @@ export const appRoutes: Routes = [
             {
                 path: 'dl-custom-sources',
                 canActivate: [AuthGuardEcm],
-                loadChildren: 'app/components/files/custom-sources.module#AppCustomSourcesModule'
+                loadChildren: () => import('./components/files/custom-sources.module').then(m => m.AppCustomSourcesModule)
 
             },
             {
                 path: 'datatable',
-                loadChildren: 'app/components/datatable/datatable.module#AppDataTableModule'
+                loadChildren: () => import('./components/datatable/datatable.module').then(m => m.AppDataTableModule)
             },
             {
                 path: 'datatable/dnd',
-                loadChildren: './components/datatable/drag-and-drop/datatable-dnd.module#AppDataTableDndModule'
+                loadChildren: () => import('./components/datatable/drag-and-drop/datatable-dnd.module').then(m => m.AppDataTableDndModule)
             },
             {
                 path: 'search',
@@ -368,17 +362,17 @@ export const appRoutes: Routes = [
             {
                 path: 'webscript',
                 canActivate: [AuthGuardEcm],
-                loadChildren: 'app/components/webscript/webscript.module#AppWebScriptModule'
+                loadChildren: () => import('./components/webscript/webscript.module').then(m => m.AppWebScriptModule)
             },
             {
                 path: 'tag',
                 canActivate: [AuthGuardEcm],
-                loadChildren: 'app/components/tag/tag.module#AppTagModule'
+                loadChildren: () => import('./components/tag/tag.module').then(m => m.AppTagModule)
             },
             {
                 path: 'social',
                 canActivate: [AuthGuardEcm],
-                loadChildren: 'app/components/social/social.module#AppSocialModule'
+                loadChildren: () => import('./components/social/social.module').then(m => m.AppSocialModule)
             },
             {
                 path: 'permissions/:id',
@@ -392,11 +386,11 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'about',
-                loadChildren: 'app/components/about/about.module#AppAboutModule'
+                loadChildren: () => import('./components/about/about.module').then(m => m.AppAboutModule)
             },
             {
                 path: 'icons',
-                loadChildren: './components/icons/icons.module#AppIconsModule'
+                loadChildren: () => import('./components/icons/icons.module').then(m => m.AppIconsModule)
             },
             { path: 'form-cloud', component: FormCloudDemoComponent },
             { path: 'form', component: FormComponent },
@@ -413,11 +407,11 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'datatable-lazy',
-                loadChildren: 'app/components/lazy-loading/lazy-loading.module#LazyLoadingModule'
+                loadChildren: () => import('./components/lazy-loading/lazy-loading.module').then(m => m.LazyLoadingModule)
             },
             {
                 path: 'copy-content',
-                loadChildren: 'app/components/datatable/copy-content/datatable.module#AppDataTableCopyModule'
+                loadChildren: () => import('./components/datatable/copy-content/datatable.module').then(m => m.AppDataTableCopyModule)
             },
             {
                 path: 'template-list',
@@ -426,12 +420,12 @@ export const appRoutes: Routes = [
             {
                 path: 'task-list',
                 canActivate: [AuthGuardBpm],
-                loadChildren: 'app/components/task-list-demo/task-list.module#AppTaskListModule'
+                loadChildren: () => import('./components/task-list-demo/task-list.module').then(m => m.AppTaskListModule)
             },
             {
                 path: 'process-list',
                 canActivate: [AuthGuardBpm],
-                loadChildren: 'app/components/process-list-demo/process-list.module#AppProcessListModule'
+                loadChildren: () => import('./components/process-list-demo/process-list.module').then(m => m.AppProcessListModule)
             },
             {
                 path: 'error/no-authorization',
@@ -459,5 +453,3 @@ export const appRoutes: Routes = [
         redirectTo: 'error/404'
     }
 ];
-
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { initialNavigation: true });

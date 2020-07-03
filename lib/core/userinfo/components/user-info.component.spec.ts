@@ -97,11 +97,11 @@ describe('User info component', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        authService = TestBed.get(AuthenticationService);
-        ecmUserService = TestBed.get(EcmUserService);
-        bpmUserService = TestBed.get(BpmUserService);
-        contentService = TestBed.get(ContentService);
-        identityUserService = TestBed.get(IdentityUserService);
+        authService = TestBed.inject(AuthenticationService);
+        ecmUserService = TestBed.inject(EcmUserService);
+        bpmUserService = TestBed.inject(BpmUserService);
+        contentService = TestBed.inject(ContentService);
+        identityUserService = TestBed.inject(IdentityUserService);
 
         spyOn(bpmUserService, 'getCurrentUserProfileImage').and.returnValue('');
         spyOn(contentService, 'getContentUrl').and.returnValue('alfresco-logo.svg');

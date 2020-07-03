@@ -41,7 +41,7 @@ describe('CardViewKeyValuePairsItemComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewKeyValuePairsItemComponent);
-        cardViewUpdateService = TestBed.get(CardViewUpdateService);
+        cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
         component.property = new CardViewKeyValuePairsItemModel({
             label: 'Key Value Pairs',

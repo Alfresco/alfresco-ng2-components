@@ -118,7 +118,7 @@
              label="{{'PS-TAB.PROCESSES-TAB' | translate}}">
         <div class="app-page-content" *ngIf="showProcessTab">
             <div class="app-grid" fxLayout="row" fxLayout.lt-lg="column" fxLayoutAlign="stretch">
-                <div class="app-grid-item app-processes-menu" fxFlex.gt-md="225px">
+                <div id="app-processes-menu"  class="app-grid-item app-processes-menu" fxFlex.gt-md="225px">
                     <div class="app-list-buttons">
                         <adf-sidebar-action-menu [expanded]="true" [width]="205"
                                                  title="{{'ADF_SIDEBAR_ACTION_MENU.BUTTON.CREATE' | translate}}">
@@ -237,12 +237,12 @@
             <div class="app-grid-item app-reports-menu" fxFlex.gt-md="300px">
                 <span><h5>Report List</h5></span>
                 <mat-divider></mat-divider>
-                <adf-analytics-report-list
+                <!-- <adf-analytics-report-list
                     [appId]="appId"
                     [selectFirst]="selectFirstReport"
                     (reportClick)="onReportClick($event)"
                     #analyticsReportList>
-                </adf-analytics-report-list>
+                </adf-analytics-report-list> -->
             </div>
             <div class="app-grid-item app-reports-details" fxFlex.gt-md="1 1 auto">
                 <adf-analytics

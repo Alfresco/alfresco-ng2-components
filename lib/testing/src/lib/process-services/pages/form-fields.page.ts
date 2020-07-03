@@ -34,7 +34,7 @@ export class FormFieldsPage {
     completeButton = element(by.id('adf-form-complete'));
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
-    selectFormDropdown = new DropdownPage(element.all(by.css('adf-attach-form div[class*="mat-select-arrow"]')).first());
+    selectFormDropdown = new DropdownPage(element.all(by.css('.adf-attach-form .mat-select-arrow')).first());
 
     async setFieldValue(locator: (id: string) => By, field: string, value: string): Promise<void> {
         const fieldElement = element(locator(field));

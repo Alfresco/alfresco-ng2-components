@@ -24,7 +24,7 @@ import { AppConfigService } from './app-config.service';
 export class AppConfigPipe implements PipeTransform {
     constructor(private config: AppConfigService) {}
 
-    transform(value: string, fallback: any): any {
+    transform(value: string, fallback?: any): any {
         return this.config.get(value, fallback);
     }
 }

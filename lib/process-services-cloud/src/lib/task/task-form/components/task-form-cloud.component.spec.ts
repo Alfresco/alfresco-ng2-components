@@ -61,9 +61,9 @@ describe('TaskFormCloudComponent', () => {
 
     beforeEach(() => {
         taskDetails.status = 'ASSIGNED';
-        identityUserService = TestBed.get(IdentityUserService);
+        identityUserService = TestBed.inject(IdentityUserService);
         getCurrentUserSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({ username: 'admin.adf' });
-        taskCloudService = TestBed.get(TaskCloudService);
+        taskCloudService = TestBed.inject(TaskCloudService);
         getTaskSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(taskDetails));
         spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of([]));
         spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of([]));

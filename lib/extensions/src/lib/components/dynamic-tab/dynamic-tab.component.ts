@@ -35,7 +35,7 @@ import { ExtensionService } from '../../services/extension.service';
     template: `<div #content></div>`
 })
 export class DynamicTabComponent implements OnInit, OnChanges, OnDestroy {
-    @ViewChild('content', { read: ViewContainerRef })
+    @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
     /** Unique ID string for the component to show. */

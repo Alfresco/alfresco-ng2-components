@@ -44,10 +44,6 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         NameLocationCellComponent,
         ContentNodeSelectorComponent
     ],
-    entryComponents: [
-        ContentNodeSelectorPanelComponent,
-        ContentNodeSelectorComponent
-    ],
     declarations: [
         ContentNodeSelectorPanelComponent,
         NameLocationCellComponent,

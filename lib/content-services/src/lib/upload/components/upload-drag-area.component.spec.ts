@@ -103,7 +103,7 @@ describe('UploadDragAreaComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadDragAreaComponent);
-        uploadService = TestBed.get(UploadService);
+        uploadService = TestBed.inject(UploadService);
 
         component = fixture.componentInstance;
         fixture.detectChanges();

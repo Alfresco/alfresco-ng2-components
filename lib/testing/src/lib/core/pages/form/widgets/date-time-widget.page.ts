@@ -24,20 +24,20 @@ export class DateTimeWidgetPage {
     formFields = new FormFields();
     outsideLayer = element(by.css('div[class*="cdk-overlay-container"]'));
 
-    async checkWidgetIsVisible(fieldId): Promise<void> {
+    async checkWidgetIsVisible(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async getDateTimeLabel(fieldId): Promise<string> {
+    async getDateTimeLabel(fieldId: string): Promise<string> {
         const label = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`));
         return BrowserActions.getText(label);
     }
 
-    async setDateTimeInput(fieldId, value): Promise<void> {
+    async setDateTimeInput(fieldId: string, value: string): Promise<void> {
         await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async clickOutsideWidget(fieldId): Promise<void> {
+    async clickOutsideWidget(fieldId: string): Promise<void> {
         const form = await this.formFields.getWidget(fieldId);
         await BrowserActions.click(form);
     }
@@ -47,7 +47,7 @@ export class DateTimeWidgetPage {
     }
 
     async getErrorMessage(fieldId: string): Promise<string> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
         return BrowserActions.getText(errorMessage);
     }
 
@@ -77,7 +77,7 @@ export class DateTimeWidgetPage {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 
-    async removeFromDatetimeWidget(fieldId): Promise<void> {
+    async removeFromDatetimeWidget(fieldId: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(await this.formFields.getWidget(fieldId));
         const amountWidgetInput = element(by.id(fieldId));
         await BrowserActions.clearWithBackSpace(amountWidgetInput);

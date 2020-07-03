@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoginDialogComponentData } from './login-dialog-component-data.interface';
 import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 @Component({
@@ -27,7 +27,7 @@ import { LoginDialogPanelComponent } from './login-dialog-panel.component';
 })
 export class LoginDialogComponent {
 
-    @ViewChild('adfLoginPanel')
+    @ViewChild('adfLoginPanel', { static: true })
     loginPanel: LoginDialogPanelComponent;
 
     buttonActionName = '';

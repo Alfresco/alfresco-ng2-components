@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../dist/core/",
   "lib": {
     "entryFile": "./public-api.ts",
@@ -8,20 +8,12 @@
       "@alfresco/js-api": "@alfresco/js-api",
       "@alfresco/adf-extensions": "@alfresco/adf-extensions",
       "minimatch": "minimatch-browser",
-      "@angular/platform-browser/animations": "@angular/platform-browser/animations",
-      "@angular/material": "@angular/material",
       "@mat-datetimepicker/core": "@mat-datetimepicker/core",
       "@mat-datetimepicker/moment": "@mat-datetimepicker/moment",
-      "@angular/flex-layout": "@angular/flex-layout",
-      "@angular/material-moment-adapter": "@angular/material-moment-adapter",
-      "@angular/animations": "@angular/animations",
-      "@angular/cdk/platform": "@angular/cdk/platform",
-      "@angular/material/core": "@angular/material/core",
       "moment": "moment",
       "moment-es6": "moment-es6",
       "moment/src/moment": "moment/src/moment",
-      "@ngx-translate/core": "@ngx-translate/core",
-      "rxjs": "rxjs"
+      "@ngx-translate/core": "@ngx-translate/core"
     }
   }
 }

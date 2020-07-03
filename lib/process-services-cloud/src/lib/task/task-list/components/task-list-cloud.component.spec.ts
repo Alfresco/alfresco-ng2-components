@@ -71,7 +71,7 @@ class EmptyTemplateComponent {
     </adf-cloud-task-list>`
 })
 class CustomCopyContentTaskListComponent {
-    @ViewChild(TaskListCloudComponent)
+    @ViewChild(TaskListCloudComponent, { static: true })
     taskList: TaskListCloudComponent;
 }
 
@@ -93,8 +93,8 @@ describe('TaskListCloudComponent', () => {
     });
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        taskListCloudService = TestBed.get(TaskListCloudService);
+        appConfig = TestBed.inject(AppConfigService);
+        taskListCloudService = TestBed.inject(TaskListCloudService);
         fixture = TestBed.createComponent(TaskListCloudComponent);
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {
@@ -348,7 +348,7 @@ describe('TaskListCloudComponent', () => {
             copyFixture.detectChanges();
         }));
 
-        it('it should not show copy tooltip when key is not present in data-colunn', async(() => {
+        it('it should not show copy tooltip when key is not present in data-column', (done) => {
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
             customCopyComponent.taskList.success.subscribe( () => {
                 copyFixture.whenStable().then(() => {
@@ -357,12 +357,13 @@ describe('TaskListCloudComponent', () => {
                     spanHTMLElement.dispatchEvent(new Event('mouseenter'));
                     copyFixture.detectChanges();
                     expect(copyFixture.debugElement.nativeElement.querySelector('.adf-copy-tooltip')).toBeNull();
+                    done();
                 });
             });
             customCopyComponent.taskList.appName = appName.currentValue;
             customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
             copyFixture.detectChanges();
-        }));
+        });
    });
 
     describe('Creating an empty custom template - EmptyTemplateComponent', () => {
@@ -406,8 +407,8 @@ describe('TaskListCloudComponent', () => {
         });
 
         beforeEach( () => {
-            appConfig = TestBed.get(AppConfigService);
-            taskListCloudService = TestBed.get(TaskListCloudService);
+            appConfig = TestBed.inject(AppConfigService);
+            taskListCloudService = TestBed.inject(TaskListCloudService);
             appConfig.config = Object.assign(appConfig.config, {
                 'adf-cloud-task-list': {
                     'presets': {

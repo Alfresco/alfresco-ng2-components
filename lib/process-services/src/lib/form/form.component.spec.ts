@@ -47,8 +47,7 @@ describe('FormComponent', () => {
 
     @NgModule({
         declarations: [CustomWidget],
-        exports: [CustomWidget],
-        entryComponents: [CustomWidget]
+        exports: [CustomWidget]
     })
     class CustomUploadModule {}
 
@@ -64,7 +63,7 @@ describe('FormComponent', () => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
         const widgetType = resolver(null);
 
-        const factoryResolver: ComponentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+        const factoryResolver: ComponentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
         const factory = factoryResolver.resolveComponentFactory(widgetType);
         const componentRef = factory.create(injector);
 
@@ -72,12 +71,12 @@ describe('FormComponent', () => {
     }
 
     beforeEach(() => {
-        visibilityService = TestBed.get(WidgetVisibilityService);
+        visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
 
-        formService = TestBed.get(FormService);
-        nodeService = TestBed.get(NodeService);
-        formRenderingService = TestBed.get(ProcessFormRenderingService);
+        formService = TestBed.inject(FormService);
+        nodeService = TestBed.inject(NodeService);
+        formRenderingService = TestBed.inject(ProcessFormRenderingService);
 
         fixture = TestBed.createComponent(FormComponent);
         formComponent = fixture.componentInstance;
@@ -1032,7 +1031,7 @@ describe('FormComponent', () => {
 
 class FormWithCustomOutComesComponent {
 
-    @ViewChild('adfForm')
+    @ViewChild('adfForm', { static: true })
     adfForm: FormComponent;
 
     onCustomButtonOneClick() { }

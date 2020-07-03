@@ -56,7 +56,7 @@ describe('IdentityRoleService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(IdentityRoleService);
+        service = TestBed.inject(IdentityRoleService);
     });
 
     it('Should fetch roles', () => {

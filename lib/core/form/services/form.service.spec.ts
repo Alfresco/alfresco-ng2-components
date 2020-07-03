@@ -63,8 +63,8 @@ describe('Form service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(FormService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(FormService);
+        apiService = TestBed.inject(AlfrescoApiService);
         jasmine.Ajax.install();
     });
 

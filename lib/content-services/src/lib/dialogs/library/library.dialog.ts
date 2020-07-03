@@ -31,7 +31,7 @@ import {
   FormControl,
   AbstractControl
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { SiteBodyCreate, SiteEntry, SitePaging } from '@alfresco/js-api';
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { debounceTime, mergeMap, takeUntil } from 'rxjs/operators';

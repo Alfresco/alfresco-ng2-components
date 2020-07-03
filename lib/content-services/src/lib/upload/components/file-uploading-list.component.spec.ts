@@ -42,12 +42,12 @@ describe('FileUploadingListComponent', () => {
     });
 
     beforeEach(() => {
-        nodesApiService = TestBed.get(NodesApiService);
+        nodesApiService = TestBed.inject(NodesApiService);
 
-        uploadService = TestBed.get(UploadService);
+        uploadService = TestBed.inject(UploadService);
         uploadService.clearQueue();
 
-        translateService = TestBed.get(TranslationService);
+        translateService = TestBed.inject(TranslationService);
         fixture = TestBed.createComponent(FileUploadingListComponent);
         component = fixture.componentInstance;
 

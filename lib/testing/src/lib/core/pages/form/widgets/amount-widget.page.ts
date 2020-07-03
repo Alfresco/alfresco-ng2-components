@@ -21,44 +21,44 @@ import { FormFields } from '../form-fields';
 
 export class AmountWidgetPage {
 
-    currency: Locator = by.css('span[class="adf-amount-widget__prefix-spacing"]');
+    currency: Locator = by.css('.adf-amount-widget__prefix-spacing');
     formFields: FormFields = new FormFields();
 
-    async getAmountFieldLabel(fieldId): Promise<string> {
+    async getAmountFieldLabel(fieldId: string): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    async getAmountFieldCurrency(fieldId): Promise<string> {
+    async getAmountFieldCurrency(fieldId: string): Promise<string> {
         const widget = await this.formFields.getWidget(fieldId);
         return BrowserActions.getText(widget.element(this.currency));
     }
 
-    async setFieldValue(fieldId, value): Promise<void> {
+    async setFieldValue(fieldId: string, value: any): Promise<void> {
         await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async removeFromAmountWidget(fieldId) {
+    async removeFromAmountWidget(fieldId: string) {
         const amountWidgetInput = element(by.id(fieldId));
         await BrowserActions.clearWithBackSpace(amountWidgetInput);
     }
 
-    async clearFieldValue(fieldId): Promise<void> {
+    async clearFieldValue(fieldId: string): Promise<void> {
         const numberField = element(by.id(fieldId));
         await BrowserVisibility.waitUntilElementIsVisible(numberField);
         await numberField.clear();
     }
 
-    async checkWidgetIsVisible(fieldId): Promise<void> {
+    async checkWidgetIsVisible(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async getErrorMessage(fieldId): Promise<string> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+    async getErrorMessage(fieldId: string): Promise<string> {
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
         return BrowserActions.getText(errorMessage);
     }
 
-    async getPlaceholder(fieldId): Promise<string> {
+    async getPlaceholder(fieldId: string): Promise<string> {
         return this.formFields.getFieldPlaceHolder(fieldId);
     }
 }

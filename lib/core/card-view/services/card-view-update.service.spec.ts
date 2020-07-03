@@ -59,7 +59,7 @@ describe('CardViewUpdateService', () => {
         };
 
         beforeEach(() => {
-            cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            cardViewUpdateService = TestBed.inject(CardViewUpdateService);
         });
 
         it('should send updated message with proper parameters', async(() => {

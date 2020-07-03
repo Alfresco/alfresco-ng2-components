@@ -34,7 +34,7 @@ export class DiagramTooltipComponent implements AfterViewInit, OnDestroy {
     private boundMouseEnterHandler: EventListenerObject;
     private boundMouseLeaveAndScrollHandler: EventListenerObject;
 
-    @ViewChild('tooltipContent') tooltipContent: ElementRef;
+    @ViewChild('tooltipContent', { static: true }) tooltipContent: ElementRef;
 
     @Input()
     data: any;

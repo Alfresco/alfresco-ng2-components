@@ -17,7 +17,7 @@
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, DebugElement } from '@angular/core';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { AlfrescoApiService } from '../services/alfresco-api.service';
@@ -55,8 +55,8 @@ describe('NodeDownloadDirective', () => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.query(By.directive(NodeDownloadDirective));
-        dialog = TestBed.get(MatDialog);
-        apiService = TestBed.get(AlfrescoApiService);
+        dialog = TestBed.inject(MatDialog);
+        apiService = TestBed.inject(AlfrescoApiService);
         contentService = apiService.getInstance().content;
         dialogSpy = spyOn(dialog, 'open');
     });

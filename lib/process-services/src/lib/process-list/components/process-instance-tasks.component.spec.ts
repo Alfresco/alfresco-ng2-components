@@ -50,7 +50,7 @@ describe('ProcessInstanceTasksComponent', () => {
 
         fixture = TestBed.createComponent(ProcessInstanceTasksComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessService);
+        service = TestBed.inject(ProcessService);
 
         spyOn(service, 'getProcessTasks').and.returnValue(of([new TaskDetailsModel(taskDetailsMock)]));
     });

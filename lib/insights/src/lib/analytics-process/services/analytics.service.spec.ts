@@ -36,7 +36,7 @@ describe('AnalyticsService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(AnalyticsService);
+        service = TestBed.inject(AnalyticsService);
     });
 
     beforeEach(() => {

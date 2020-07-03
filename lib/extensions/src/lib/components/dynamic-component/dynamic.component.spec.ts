@@ -26,7 +26,6 @@ import {
 } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { DynamicExtensionComponent } from './dynamic.component';
 import { ComponentRegisterService } from '../../services/component-register.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -61,10 +60,6 @@ describe('DynamicExtensionComponent', () => {
             providers: [{ provide: ComponentRegisterService, useValue: componentRegister }]
         });
 
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [TestComponent] }
-        });
-
         TestBed.compileComponents();
     }));
 
@@ -72,7 +67,7 @@ describe('DynamicExtensionComponent', () => {
 
         beforeEach(() => {
             fixture = TestBed.createComponent(DynamicExtensionComponent);
-            componentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+            componentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
             spyOn(componentFactoryResolver, 'resolveComponentFactory').and.callThrough();
             component = fixture.componentInstance;
             component.id = 'test-component';

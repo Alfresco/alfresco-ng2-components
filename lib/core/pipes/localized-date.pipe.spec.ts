@@ -40,7 +40,7 @@ describe('LocalizedDatePipe', () => {
     });
 
     beforeEach(async(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
+        userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new LocalizedDatePipe(userPreferences, new AppConfigService(null));
     }));

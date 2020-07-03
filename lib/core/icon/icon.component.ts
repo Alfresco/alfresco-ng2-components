@@ -21,7 +21,7 @@ import {
     ViewEncapsulation,
     ChangeDetectionStrategy
 } from '@angular/core';
-import { ThemePalette } from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
     selector: 'adf-icon',

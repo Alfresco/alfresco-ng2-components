@@ -16,39 +16,48 @@
  */
 
 import { NgModule } from '@angular/core';
-import {
-    MatDialogModule,
-    MatInputModule,
-    MatProgressBarModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    MatListModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSnackBarModule,
-    MatExpansionModule
-} from '@angular/material';
-
-const MATERIAL_MODULES = [
-    MatSlideToggleModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatSidenavModule,
-    MatProgressBarModule,
-    MatCardModule,
-    MatListModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatSnackBarModule,
-    MatExpansionModule
-];
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-    imports: MATERIAL_MODULES,
-    exports: MATERIAL_MODULES
+    imports: [
+        MatSlideToggleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatProgressBarModule,
+        MatCardModule,
+        MatListModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatExpansionModule
+    ],
+    exports: [
+        MatSlideToggleModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatProgressBarModule,
+        MatCardModule,
+        MatListModule,
+        MatMenuModule,
+        MatToolbarModule,
+        MatSnackBarModule,
+        MatExpansionModule
+    ]
 })
 export class MaterialModule {
 }

@@ -46,7 +46,7 @@ export class TreeViewDataSource {
     }
 
     connect(collectionViewer: CollectionViewer): Observable<TreeBaseNode[]> {
-        this.changeSubscription = this.treeControl.expansionModel.onChange.subscribe((change) => {
+        this.changeSubscription = this.treeControl.expansionModel.changed.subscribe((change) => {
             if ((change as SelectionChange<TreeBaseNode>).added &&
                 (change as SelectionChange<TreeBaseNode>).added.length > 0) {
                 this.expandTreeNodes(change as SelectionChange<TreeBaseNode>);

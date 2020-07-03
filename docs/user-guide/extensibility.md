@@ -134,13 +134,12 @@ import { CustomEditorComponent } from './custom-editor.component';
 
 @NgModule({
     declarations: [ CustomEditorComponent ],
-    exports: [ CustomEditorComponent ],
-    entryComponents: [ CustomEditorComponent ]
+    exports: [ CustomEditorComponent ]
 })
 export class CustomEditorsModule {}
 ```
 
-Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into all three module collections: `declarations`, `exports` and `entryComponents`.
+Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into the following collections: `declarations`, `exports`.
 
 If you decided to store custom widgets in a separate dedicated module (and optionally as separate redistributable library)
 don't forget to import it into your main application one:
@@ -231,8 +230,7 @@ import { CustomStencil01 } from './custom-stencil-01.component';
 
 @NgModule({
     declarations: [ CustomStencil01 ],
-    exports: [ CustomStencil01 ],
-    entryComponents: [ CustomStencil01 ]
+    exports: [ CustomStencil01 ]
 })
 export class CustomEditorsModule {}
 ```

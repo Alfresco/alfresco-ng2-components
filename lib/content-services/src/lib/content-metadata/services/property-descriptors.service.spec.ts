@@ -37,8 +37,8 @@ describe('PropertyDescriptorLoaderService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(PropertyDescriptorsService);
-        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(PropertyDescriptorsService);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         classesApi = alfrescoApiService.classesApi;
     });
 

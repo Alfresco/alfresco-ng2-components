@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild, OnInit, OnDestroy, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { sidenavAnimation, contentAnimation } from '../../helpers/animations';
 import { Direction } from '@angular/cdk/bidi';
 
@@ -43,7 +43,7 @@ export class LayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
     /** Layout text orientation 'ltr' | 'rtl' */
     @Input() direction: Direction = 'ltr';
 
-    @ViewChild(MatSidenav) sidenav: MatSidenav;
+    @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
     sidenavAnimationState: any;
     contentAnimationState: any;

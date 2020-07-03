@@ -39,8 +39,8 @@ describe('AboutProductVersionComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AboutProductVersionComponent);
-        authenticationService = TestBed.get(AuthenticationService);
-        discoveryApiService = TestBed.get(DiscoveryApiService);
+        authenticationService = TestBed.inject(AuthenticationService);
+        discoveryApiService = TestBed.inject(DiscoveryApiService);
         spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(mockModules));
         spyOn(authenticationService, 'isBpmLoggedIn').and.returnValue(true);
         spyOn(authenticationService, 'isEcmLoggedIn').and.returnValue(true);

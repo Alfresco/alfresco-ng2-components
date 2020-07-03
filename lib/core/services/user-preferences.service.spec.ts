@@ -43,7 +43,7 @@ describe('UserPreferencesService', () => {
     });
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
+        appConfig = TestBed.inject(AppConfigService);
         appConfig.config = {
             pagination: {
                 'size': 10,
@@ -51,8 +51,8 @@ describe('UserPreferencesService', () => {
             }
         };
 
-        storage = TestBed.get(StorageService);
-        translate = TestBed.get(TranslateService);
+        storage = TestBed.inject(StorageService);
+        translate = TestBed.inject(TranslateService);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
     });
 

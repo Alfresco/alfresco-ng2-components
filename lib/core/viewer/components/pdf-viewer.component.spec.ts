@@ -21,7 +21,7 @@ import { EventMock } from '../../mock/event.mock';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { PdfViewerComponent } from './pdf-viewer.component';
 import { RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { take } from 'rxjs/operators';
@@ -48,7 +48,7 @@ class TestDialogComponent {
 })
 class UrlTestComponent {
 
-    @ViewChild(PdfViewerComponent)
+    @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
@@ -68,7 +68,7 @@ class UrlTestComponent {
 })
 class UrlTestPasswordComponent {
 
-    @ViewChild(PdfViewerComponent)
+    @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
     urlFile: any;
@@ -88,7 +88,7 @@ class UrlTestPasswordComponent {
 })
 class BlobTestComponent {
 
-    @ViewChild(PdfViewerComponent)
+    @ViewChild(PdfViewerComponent, { static: true })
     pdfViewerComponent: PdfViewerComponent;
 
     blobFile: any;
@@ -149,7 +149,7 @@ describe('Test PdfViewer component', () => {
 
     beforeEach((done) => {
         fixture = TestBed.createComponent(PdfViewerComponent);
-        dialog = TestBed.get(MatDialog);
+        dialog = TestBed.inject(MatDialog);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;
@@ -720,7 +720,7 @@ describe('Test PdfViewer component', () => {
             let elementUrlTestComponent: HTMLElement;
 
             beforeEach((done) => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 80;
 
                 fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
@@ -759,7 +759,7 @@ describe('Test PdfViewer component', () => {
             let elementUrlTestComponent: HTMLElement;
 
             beforeEach((done) => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 10;
 
                 fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);
@@ -800,7 +800,7 @@ describe('Test PdfViewer component', () => {
             let elementUrlTestComponent: HTMLElement;
 
             beforeEach((done) => {
-                const appConfig: AppConfigService = TestBed.get(AppConfigService);
+                const appConfig: AppConfigService = TestBed.inject(AppConfigService);
                 appConfig.config['adf-viewer.pdf-viewer-scaling'] = 55555;
 
                 fixtureUrlTestComponent = TestBed.createComponent(UrlTestComponent);

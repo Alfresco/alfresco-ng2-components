@@ -24,7 +24,7 @@ import { BpmUserService } from '../../services/bpm-user.service';
 import { EcmUserService } from '../../services/ecm-user.service';
 import { IdentityUserService } from '../../services/identity-user.service';
 import { of, Observable } from 'rxjs';
-import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material';
+import { MatMenuTrigger, MenuPositionX, MenuPositionY } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-userinfo',

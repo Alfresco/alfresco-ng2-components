@@ -21,7 +21,6 @@ import { TogglePage, BrowserActions, BrowserVisibility, LoginSSOPage } from '@al
 export class LoginPage {
 
     loginURL = browser.baseUrl + '/login';
-
     loginSSOPage = new LoginSSOPage();
 
     togglePage = new TogglePage();
@@ -30,20 +29,21 @@ export class LoginPage {
     logoImg = element(by.css('img[id="adf-login-img-logo"]'));
     successRouteTxt = element(by.css('input[data-automation-id="adf-success-route"]'));
     logoTxt = element(by.css('input[data-automation-id="adf-url-logo"]'));
-    usernameTooltip = element(by.css('span[data-automation-id="username-error"]'));
-    passwordTooltip = element(by.css('span[data-automation-id="password-required"]'));
-    loginTooltip = element(by.css('span[class="adf-login-error-message"]'));
+    usernameError = element(by.css('span[data-automation-id="username-error"]'));
+    passwordError = element(by.css('span[data-automation-id="password-required"]'));
+    loginError = element(by.css('.adf-login-error-message'));
     usernameInactive = element(by.css('input[id="username"][aria-invalid="false"]'));
     passwordInactive = element(by.css('input[id="password"][aria-invalid="false"]'));
-    adfLogo = element(by.css('img[class="adf-img-logo ng-star-inserted"]'));
+    adfLogo = element(by.css('.adf-img-logo'));
+
     usernameHighlighted = element(by.css('input[id="username"][aria-invalid="true"]'));
     passwordHighlighted = element(by.css('input[id="password"][aria-invalid="true"]'));
     signInButton = element(by.id('login-button'));
     showPasswordElement = element(by.css('button[data-automation-id="show_password"]'));
     hidePasswordElement = element(by.css('button[data-automation-id="hide_password"]'));
     rememberMe = element(by.css('mat-checkbox[id="adf-login-remember"]'));
-    needHelp = element(by.css('div[id="adf-login-action-left"]'));
-    register = element(by.css('div[id="adf-login-action-right"]'));
+    needHelp = element(by.id('adf-login-action-left'));
+    register = element(by.id('adf-login-action-right'));
     footerSwitch = element(by.id('switch4'));
     rememberMeSwitch = element(by.id('adf-toggle-show-rememberme'));
     successRouteSwitch = element(by.id('adf-toggle-show-successRoute'));
@@ -81,15 +81,15 @@ export class LoginPage {
     }
 
     async getUsernameTooltip(): Promise<string> {
-        return BrowserActions.getText(this.usernameTooltip);
+        return BrowserActions.getText(this.usernameError);
     }
 
     async getPasswordTooltip(): Promise<string> {
-        return BrowserActions.getText(this.passwordTooltip);
+        return BrowserActions.getText(this.passwordError);
     }
 
     async getLoginError(): Promise<string> {
-        return BrowserActions.getText(this.loginTooltip);
+        return BrowserActions.getText(this.loginError);
     }
 
     async checkLoginImgURL(): Promise<string> {
@@ -116,11 +116,11 @@ export class LoginPage {
     }
 
     async checkUsernameTooltipIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameTooltip);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.usernameError);
     }
 
     async checkPasswordTooltipIsNotVisible(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsNotVisible(this.passwordTooltip);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.passwordError);
     }
 
     async getSignInButtonIsEnabled(): Promise<boolean> {

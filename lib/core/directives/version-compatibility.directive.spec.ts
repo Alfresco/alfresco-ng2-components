@@ -69,7 +69,7 @@ describe('VersionCompatibilityDirective', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
-        versionCompatibilityService = TestBed.get(VersionCompatibilityService);
+        versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
         spyOn(versionCompatibilityService, 'getAcsVersion').and.returnValue(acsResponceMock);
     });
 

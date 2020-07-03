@@ -51,7 +51,7 @@ export class AnalyticsComponent implements OnChanges {
     @Output()
     reportDeleted = new EventEmitter();
 
-    @ViewChild('analyticsGenerator')
+    @ViewChild('analyticsGenerator', { static: true })
     analyticsGenerator: AnalyticsGeneratorComponent;
 
     reportParamQuery: ReportQuery;

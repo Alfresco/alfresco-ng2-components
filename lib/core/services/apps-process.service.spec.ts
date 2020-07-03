@@ -38,7 +38,7 @@ describe('AppsProcessService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(AppsProcessService);
+        service = TestBed.inject(AppsProcessService);
     });
 
     beforeEach(() => {

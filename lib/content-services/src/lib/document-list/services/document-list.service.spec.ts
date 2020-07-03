@@ -73,7 +73,7 @@ describe('DocumentListService', () => {
 
     beforeEach(() => {
         const logService = new LogService(new AppConfigServiceMock(null));
-        const contentService = TestBed.get(ContentService);
+        const contentService = TestBed.inject(ContentService);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
         const customActionService = new CustomResourcesService(alfrescoApiService, logService);
         service = new DocumentListService(contentService, alfrescoApiService, logService, customActionService);

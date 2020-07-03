@@ -40,7 +40,7 @@ describe('Rating component', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(RatingComponent);
-        service = TestBed.get(RatingService);
+        service = TestBed.inject(RatingService);
 
         element = fixture.nativeElement;
         component = fixture.componentInstance;

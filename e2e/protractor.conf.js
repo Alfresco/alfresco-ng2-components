@@ -1,67 +1,98 @@
-const { LocalStorageUtil } = require('@alfresco/adf-testing');
-
+const {LocalStorageUtil, ACTIVITI_CLOUD_APPS, Logger} = require('../lib/dist/testing');
 const path = require('path');
-const { SpecReporter } = require('jasmine-spec-reporter');
+const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
-const tsConfig = require('./e2e/tsconfig.e2e.json');
-const testConfig = require('./e2e/test.config');
-const RESOURCES = require('./e2e/util/resources');
-const SmartRunner = require('protractor-smartrunner');
+const tsConfig = require('./tsconfig.e2e.json');
+const testConfig = require('./test.config');
+const RESOURCES = require('./util/resources');
+const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
+const fs = require('fs');
 
-require('ts-node').register({
-    project: './lib/testing/tsconfig.lib.json'
-});
-const ACTIVITI_CLOUD_APPS = require('./lib/testing').ACTIVITI_CLOUD_APPS;
-
-const { uploadScreenshot, cleanReportFolder } = require('./e2e/protractor/save-remote');
+const {uploadScreenshot, cleanReportFolder} = require('./protractor/save-remote');
 const argv = require('yargs').argv;
 
-const projectRoot = path.resolve(__dirname);
 const width = 1657, height = 1657;
 
-let ENV_FILE = process.env.ENV_FILE;
-let GROUP_SUFFIX = process.env.PREFIX || 'adf';
+const ENV_FILE = process.env.ENV_FILE;
+const GROUP_SUFFIX = process.env.PREFIX || 'adf';
 
 RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
-    require('dotenv').config({ path: ENV_FILE });
+    require('dotenv').config({path: ENV_FILE});
 }
 
-let HOST = process.env.URL_HOST_ADF;
-let BROWSER_RUN = !!process.env.BROWSER_RUN;
-let FOLDER = process.env.FOLDER || '';
-let SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
-let MAXINSTANCES = process.env.MAXINSTANCES || 1;
-let TIMEOUT = parseInt(process.env.TIMEOUT, 10);
-let SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT == 'true');
-let LIST_SPECS = process.env.LIST_SPECS || [];
-let LOG = !!process.env.LOG;
+const HOST = process.env.URL_HOST_ADF;
+const BROWSER_RUN = !!process.env.BROWSER_RUN;
+const FOLDER = process.env.FOLDER || '';
+const SELENIUM_SERVER = process.env.SELENIUM_SERVER || '';
+const MAXINSTANCES = process.env.MAXINSTANCES || 1;
+const MAX_RETRIES = process.env.MAX_RETRIES || 4;
+const TIMEOUT = parseInt(process.env.TIMEOUT, 10);
+const SAVE_SCREENSHOT = (process.env.SAVE_SCREENSHOT === 'true');
+const LIST_SPECS = process.env.LIST_SPECS || [];
+const LOG = !!process.env.LOG;
+
 let arraySpecs = [];
 
 if (LOG) {
     console.log('======= PROTRACTOR CONFIGURATION ====== ');
+    console.log('HOST: ', HOST);
     console.log('BROWSER_RUN : ' + BROWSER_RUN);
     console.log('SAVE_SCREENSHOT : ' + SAVE_SCREENSHOT);
     console.log('FOLDER : ' + FOLDER);
     console.log('MAXINSTANCES : ' + MAXINSTANCES);
     console.log('LIST_SPECS : ' + LIST_SPECS);
+    console.log('MAX_RETRIES: ', MAX_RETRIES);
     console.log('SELENIUM_SERVER : ' + SELENIUM_SERVER);
 }
 
-let downloadFolder = path.join(__dirname, 'e2e/downloads');
+const downloadFolder = path.join(__dirname, '/downloads');
 
-let specs = () => {
-    let specsToRun = FOLDER ? './**/e2e/' + FOLDER + '/**/*.e2e.ts' : './**/e2e/**/*.e2e.ts';
+let specs = function () {
+    let LIST_SPECS;
 
-    if (LIST_SPECS.length === 0) {
-        arraySpecs = [specsToRun];
-    } else {
+    if (process.env.LIST_SPECS) {
+        LIST_SPECS = process.env.LIST_SPECS;
+    }
+
+    if (LIST_SPECS && LIST_SPECS !== '') {
         arraySpecs = LIST_SPECS.split(',');
         arraySpecs = arraySpecs.map((el) => './' + el);
+
+        specExists(arraySpecs);
+    } else {
+        const FOLDER = process.env.FOLDER || '';
+        setProvider(FOLDER);
+        const specsToRun = FOLDER ? `./${FOLDER}/**/*.e2e.ts` : './**/*.ts';
+        arraySpecs = [specsToRun];
     }
 
     return arraySpecs;
+};
+
+let setProvider = function (folder) {
+    if (folder === 'core') {
+        testConfig.appConfig.provider = 'ALL';
+    } else if (folder === 'content-services') {
+        testConfig.appConfig.provider = 'ECM';
+    } else if (folder === 'process-services') {
+        testConfig.appConfig.provider = 'BPM';
+    } else if (folder === 'insights') {
+        testConfig.appConfig.provider = 'BPM';
+    } else if (folder === 'search') {
+        testConfig.appConfig.provider = 'ECM';
+    } else if (folder === 'process-services-cloud') {
+        testConfig.appConfig.provider = 'BPM';
+    }
+};
+
+let specExists = function (listSpecs) {
+    listSpecs.forEach((path) => {
+        if (!fs.existsSync(resolve(__dirname, path))) {
+            Logger.error(`Not valid spec path : ${resolve(__dirname, path)} valid path should be for example /search/search-component.e2e.ts`);
+        }
+    });
 };
 
 specs();
@@ -86,18 +117,17 @@ exports.config = {
         shardTestFiles: true,
 
         chromeOptions: {
-            binary: require('puppeteer').executablePath(),
             prefs: {
                 'credentials_enable_service': false,
                 'download': {
                     'prompt_for_download': false,
-                    "directory_upgrade": true,
+                    'directory_upgrade': true,
                     'default_directory': downloadFolder
                 },
-                "browser": {
-                    "setDownloadBehavior": {
-                        "behavior": "allow",
-                        "downloadPath": downloadFolder
+                'browser': {
+                    'setDownloadBehavior': {
+                        'behavior': 'allow',
+                        'downloadPath': downloadFolder
                     }
                 }
             },
@@ -121,7 +151,6 @@ exports.config = {
         groupSuffix: GROUP_SUFFIX,
         identityAdmin: testConfig.identityAdmin,
         identityUser: testConfig.identityUser,
-        rootPath: __dirname,
         resources: RESOURCES
     },
 
@@ -134,8 +163,8 @@ exports.config = {
         defaultTimeoutInterval: 120000,
         print: () => {
         },
-        ...SmartRunner.withOptionalExclusions(
-            resolve(__dirname, './e2e/protractor.excludes.json')
+        ...smartRunner.withOptionalExclusions(
+            resolve(__dirname, './protractor.excludes.json')
         )
     },
 
@@ -153,7 +182,7 @@ exports.config = {
         screenshotOnExpectFailure: true,
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
-        screenshotPath: `${projectRoot}/e2e-output/screenshots/`
+        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
     }],
 
     onCleanUp(results) {
@@ -166,20 +195,22 @@ exports.config = {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
 
         require('ts-node').register({
-            project: 'e2e/tsconfig.e2e.json'
+            project: require('path').join(__dirname, './tsconfig.e2e.json')
         });
 
-        require("tsconfig-paths").register({
-            project: 'e2e/tsconfig.e2e.json',
-            baseUrl: 'e2e/',
+        require('tsconfig-paths').register({
+            project: './e2e/tsconfig.e2e.json',
+            baseUrl: './e2e/',
             paths: tsConfig.compilerOptions.paths
         });
 
+        // @ts-ignore
         browser.driver.sendChromiumCommand('Page.setDownloadBehavior', {
             behavior: 'allow',
             downloadPath: downloadFolder
         });
 
+        // @ts-ignore
         browser.manage().window().setSize(width, height);
 
         jasmine.getEnv().addReporter(
@@ -191,33 +222,41 @@ exports.config = {
             })
         );
 
+        // @ts-ignore
         await browser.driver.executeScript(disableCSSAnimation);
 
+        // @ts-ignore
         await browser.get(`${HOST}/settings`);
         await LocalStorageUtil.clearStorage();
-
+        // @ts-ignore
         await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);
+        // @ts-ignore
         await LocalStorageUtil.setStorageItem('bpmHost', browser.params.testConfig.appConfig.bpmHost);
+        // @ts-ignore
         await LocalStorageUtil.setStorageItem('providers', browser.params.testConfig.appConfig.provider);
         await LocalStorageUtil.setStorageItem('baseShareUrl', HOST);
 
+        // @ts-ignore
         if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
+            // @ts-ignore
             await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+            // @ts-ignore
             await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
+            // @ts-ignore
             await LocalStorageUtil.setStorageItem('oauth2', JSON.stringify(browser.params.testConfig.appConfig.oauth2));
         }
 
         await LocalStorageUtil.apiReset();
 
         function disableCSSAnimation() {
-            let css = '* {' +
+            const css = '* {' +
                 '-webkit-transition-duration: 0s !important;' +
                 'transition-duration: 0s !important;' +
                 '-webkit-animation-duration: 0s !important;' +
                 'animation-duration: 0s !important;' +
-                '}',
-                head = document.head || document.getElementsByTagName('head')[0],
-                style = document.createElement('style');
+                '}';
+            const head = document.head || document.getElementsByTagName('head')[0];
+            const style = document.createElement('style');
 
             style.type = 'text/css';
             style.appendChild(document.createTextNode(css));
@@ -246,7 +285,7 @@ exports.config = {
             }
         }
 
-        return retry.afterLaunch(4);
+        return retry.afterLaunch(MAX_RETRIES);
     }
 
 };

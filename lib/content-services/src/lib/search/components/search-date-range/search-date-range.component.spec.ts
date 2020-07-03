@@ -42,7 +42,7 @@ describe('SearchDateRangeComponent', () => {
 
         beforeEach(() => {
             fixture = TestBed.createComponent(SearchDateRangeComponent);
-            adapter = fixture.debugElement.injector.get(DateAdapter);
+            adapter = fixture.debugElement.injector.get(DateAdapter) as MomentDateAdapter;
             component = fixture.componentInstance;
         });
 

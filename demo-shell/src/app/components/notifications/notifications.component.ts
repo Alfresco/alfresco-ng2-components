@@ -17,7 +17,7 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from '@alfresco/adf-core';
-import { MatSnackBarConfig } from '@angular/material';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

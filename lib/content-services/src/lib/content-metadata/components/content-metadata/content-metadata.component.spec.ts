@@ -51,9 +51,9 @@ describe('ContentMetadataComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ContentMetadataComponent);
         component = fixture.componentInstance;
-        contentMetadataService = TestBed.get(ContentMetadataService);
-        updateService = TestBed.get(CardViewUpdateService);
-        nodesApiService = TestBed.get(NodesApiService);
+        contentMetadataService = TestBed.inject(ContentMetadataService);
+        updateService = TestBed.inject(CardViewUpdateService);
+        nodesApiService = TestBed.inject(NodesApiService);
 
         node = <Node> {
             id: 'node-id',
@@ -145,7 +145,7 @@ describe('ContentMetadataComponent', () => {
         }));
 
         it('should throw error on unsuccessful save', fakeAsync(async (done) => {
-            const logService: LogService = TestBed.get(LogService);
+            const logService: LogService = TestBed.inject(LogService);
             component.editable = true;
             const property = <CardViewBaseItemModel> { key: 'properties.property-key', value: 'original-value' };
             updateService.update(property, 'updated-value');

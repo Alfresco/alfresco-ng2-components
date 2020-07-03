@@ -36,7 +36,7 @@ import { Node } from '@alfresco/js-api';
   `
 })
 export class PreviewExtensionComponent implements OnInit, OnChanges, OnDestroy {
-    @ViewChild('content', { read: ViewContainerRef })
+    @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
 
     /** ID string of the component to preview. */

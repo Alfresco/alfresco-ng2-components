@@ -83,7 +83,7 @@ describe('ProcessAuditDirective', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessService);
+        service = TestBed.inject(ProcessService);
     });
 
     afterEach(() => fixture.destroy());
@@ -109,7 +109,7 @@ describe('ProcessAuditDirective', () => {
     it('should download the audit in PDF format (default mode)', fakeAsync(() => {
         component.fileName = 'FakeAuditName';
         component.download = true;
-        const downloadService = TestBed.get(DownloadService);
+        const downloadService = TestBed.inject(DownloadService);
         spyOn(service, 'fetchProcessAuditPdfById').and.returnValue(of(blob));
         spyOn(downloadService, 'downloadBlob').and.stub();
 

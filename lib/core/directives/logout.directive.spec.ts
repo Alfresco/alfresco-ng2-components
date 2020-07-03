@@ -53,8 +53,8 @@ describe('LogoutDirective', () => {
         });
 
         beforeEach(() => {
-            router = TestBed.get(Router);
-            authService = TestBed.get(AuthenticationService);
+            router = TestBed.inject(Router);
+            authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);
             fixture.detectChanges();
         });
@@ -108,8 +108,8 @@ describe('LogoutDirective', () => {
         });
 
         beforeEach(() => {
-            router = TestBed.get(Router);
-            authService = TestBed.get(AuthenticationService);
+            router = TestBed.inject(Router);
+            authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);
             fixture.detectChanges();
         });
@@ -152,8 +152,8 @@ describe('LogoutDirective', () => {
         });
 
         beforeEach(() => {
-            router = TestBed.get(Router);
-            authService = TestBed.get(AuthenticationService);
+            router = TestBed.inject(Router);
+            authService = TestBed.inject(AuthenticationService);
             fixture = TestBed.createComponent(TestComponent);
             fixture.detectChanges();
         });

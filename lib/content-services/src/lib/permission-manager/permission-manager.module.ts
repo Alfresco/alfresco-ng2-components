@@ -45,11 +45,6 @@ import { SearchModule } from '../search/search.module';
         AddPermissionComponent,
         AddPermissionDialogComponent
     ],
-    entryComponents: [
-        AddPermissionPanelComponent,
-        AddPermissionComponent,
-        AddPermissionDialogComponent
-    ],
     exports: [
         PermissionListComponent,
         NoPermissionTemplateComponent,

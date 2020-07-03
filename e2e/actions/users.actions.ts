@@ -18,6 +18,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as remote from 'selenium-webdriver/remote';
+
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';

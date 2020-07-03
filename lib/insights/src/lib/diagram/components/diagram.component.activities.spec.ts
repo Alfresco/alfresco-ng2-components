@@ -79,7 +79,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake User task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake User task');
 
                     const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
@@ -104,7 +104,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Manual task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Manual task');
 
                     const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
@@ -123,13 +123,11 @@ describe('Diagrams activities', () => {
             component.success.subscribe((res) => {
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
-                    expect(res).not.toBeNull();
-                    const task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
+                    const task = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
-                    expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Service task');
+                    const taskText = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Service task');
 
                     const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
@@ -154,7 +152,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Camel task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Camel task');
 
                     const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
@@ -179,7 +177,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Mule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Mule task');
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
@@ -200,7 +198,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
                     const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
@@ -226,7 +224,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
                     const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
@@ -252,7 +250,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
                     const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
@@ -278,7 +276,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
                     const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
@@ -304,7 +302,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Receive task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Receive task');
 
                     const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
@@ -329,7 +327,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Script task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Script task');
 
                     const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
@@ -354,7 +352,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
                     const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
@@ -382,7 +380,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake User task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake User task');
 
                     const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
@@ -407,7 +405,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake User task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake User task');
 
                     const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
@@ -432,7 +430,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake User task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake User task');
 
                     const iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
@@ -457,7 +455,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Manual task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Manual task');
 
                     const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
@@ -482,7 +480,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Manual task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Manual task');
 
                     const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
@@ -507,7 +505,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Manual task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Manual task');
 
                     const iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
@@ -532,7 +530,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Service task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Service task');
 
                     const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
@@ -557,7 +555,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Service task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Service task');
 
                     const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
@@ -582,7 +580,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Service task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Service task');
 
                     const iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
@@ -607,7 +605,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Camel task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Camel task');
 
                     const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
@@ -632,7 +630,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Camel task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Camel task');
 
                     const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
@@ -657,7 +655,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Camel task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Camel task');
 
                     const iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
@@ -682,7 +680,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Mule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Mule task');
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
@@ -703,7 +701,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Mule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Mule task');
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
@@ -724,7 +722,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Mule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Mule task');
 
                     const iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
                     expect(iconTask).not.toBeNull();
@@ -745,7 +743,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
                     const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
@@ -771,7 +769,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
                     const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
@@ -797,7 +795,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('adf-diagram-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Alfresco Publish task');
 
                     const iconTask: any = element.querySelector('adf-diagram-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
@@ -823,7 +821,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
                     const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
@@ -849,7 +847,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
                     const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
@@ -875,7 +873,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Google Drive Publish task');
 
                     const iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
@@ -901,7 +899,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
                     const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
@@ -927,7 +925,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
                     const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
@@ -953,7 +951,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Rest Call task');
 
                     const iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
@@ -979,7 +977,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
                     const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
@@ -1005,7 +1003,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
                     const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
@@ -1031,7 +1029,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Box Publish task');
 
                     const iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
@@ -1057,7 +1055,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Receive task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Receive task');
 
                     const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
@@ -1082,7 +1080,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Receive task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Receive task');
 
                     const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
@@ -1107,7 +1105,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Receive task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Receive task');
 
                     const iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
@@ -1132,7 +1130,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Script task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Script task');
 
                     const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
@@ -1157,7 +1155,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Script task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Script task');
 
                     const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
@@ -1182,7 +1180,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake Script task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake Script task');
 
                     const iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
@@ -1207,7 +1205,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
                     const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
@@ -1232,7 +1230,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
                     const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
@@ -1257,7 +1255,7 @@ describe('Diagrams activities', () => {
 
                     const taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
-                    expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
+                    expect(taskText.attributes.getNamedItem('ng-reflect-text').value).toEqual('Fake BusinessRule task');
 
                     const iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();

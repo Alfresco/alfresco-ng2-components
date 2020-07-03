@@ -68,7 +68,7 @@ describe('TaskFiltersCloudComponent', () => {
         fixture = TestBed.createComponent(TaskFiltersCloudComponent);
         component = fixture.componentInstance;
 
-        taskFilterService = TestBed.get(TaskFilterCloudService);
+        taskFilterService = TestBed.inject(TaskFilterCloudService);
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {

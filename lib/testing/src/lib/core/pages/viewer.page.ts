@@ -42,7 +42,7 @@ export class ViewerPage {
     fileThumbnail = element(by.css('img[data-automation-id="adf-file-thumbnail"]'));
     pageSelectorInput = element(by.css('input[data-automation-id="adf-page-selector"]'));
     imgContainer = element(by.css('div[data-automation-id="adf-image-container"]'));
-    mediaContainer = element(by.css('adf-media-player[class="adf-media-player ng-star-inserted"]'));
+    mediaContainer = element(by.css('.adf-media-player'));
     percentage = element(by.css('div[data-automation-id="adf-page-scale"'));
     thumbnailsBtn = element(by.css('button[data-automation-id="adf-thumbnails-button"]'));
     thumbnailsContent = element(by.css('div[data-automation-id="adf-thumbnails-content"]'));
@@ -65,7 +65,7 @@ export class ViewerPage {
     toolbar = element(by.id('adf-viewer-toolbar'));
     lastButton = element.all(by.css('#adf-viewer-toolbar mat-toolbar > button[data-automation-id*="adf-toolbar-"]')).last();
     goBackSwitch = element(by.id('adf-switch-goback'));
-    canvasLayer = element.all(by.css('div[class="canvasWrapper"] > canvas')).first();
+    canvasLayer = element.all(by.css('.canvasWrapper > canvas')).first();
 
     openWithSwitch = element(by.id('adf-switch-openwith'));
     openWith = element(by.id('adf-viewer-openwith'));
@@ -106,7 +106,7 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.codeViewer);
     }
 
-    async viewFile(fileName): Promise<void> {
+    async viewFile(fileName: string): Promise<void> {
         const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         await BrowserActions.click(fileView);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -138,7 +138,7 @@ export class ViewerPage {
         await browser.executeScript(jsCode);
     }
 
-    async enterPassword(password): Promise<void> {
+    async enterPassword(password: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.passwordInput, password);
     }
 
@@ -176,7 +176,7 @@ export class ViewerPage {
     }
 
     async checkCurrentThumbnailIsSelected(): Promise<void> {
-        const selectedThumbnail = element(by.css('adf-pdf-thumb[class="adf-pdf-thumbnails__thumb ng-star-inserted adf-pdf-thumbnails__thumb--selected"] > img'));
+        const selectedThumbnail = element(by.css('adf-pdf-thumb.adf-pdf-thumbnails__thumb.adf-pdf-thumbnails__thumb--selected > img'));
         const pageNumber = await this.pageSelectorInput.getAttribute('value');
 
         await expect('Page ' + pageNumber).toEqual(await selectedThumbnail.getAttribute('title'));
@@ -275,8 +275,8 @@ export class ViewerPage {
     async checkFileContent(pageNumber: string, text: string): Promise<void> {
         const allPages = this.canvasLayer;
         const pageLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"][data-loaded="true"]')).first();
-        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]')).first();
-        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] div[class="textLayer"]', text)).first();
+        const textLayerLoaded = element.all(by.css('div[data-page-number="' + pageNumber + '"] .textLayer')).first();
+        const specificText = element.all(by.cssContainingText('div[data-page-number="' + pageNumber + '"] .textLayer', text)).first();
 
         await BrowserVisibility.waitUntilElementIsVisible(allPages);
         await BrowserVisibility.waitUntilElementIsVisible(pageLoaded);
@@ -341,11 +341,11 @@ export class ViewerPage {
         await BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
     }
 
-    async clickOnTab(tabName): Promise<void> {
+    async clickOnTab(tabName: string): Promise<void> {
         await this.tabsPage.clickTabByTitle(tabName);
     }
 
-    async checkTabIsActive(tabName): Promise<void> {
+    async checkTabIsActive(tabName: string): Promise<void> {
         const tab = element(by.cssContainingText('.adf-info-drawer-layout-content div.mat-tab-labels div.mat-tab-label-active .mat-tab-label-content', tabName));
         await BrowserVisibility.waitUntilElementIsVisible(tab);
     }
@@ -594,7 +594,6 @@ export class ViewerPage {
 
     async enterCustomName(text: string): Promise<void> {
         const textField = element(by.css('input[data-automation-id="adf-text-custom-name"]'));
-        // await BrowserVisibility.waitUntilElementIsVisible(textField);
         await BrowserActions.clearSendKeys(textField, text);
     }
 
@@ -611,22 +610,22 @@ export class ViewerPage {
     }
 
     async checkTabHasNoIcon(index: number): Promise<void> {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content mat-icon`));
         await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
     async checkTabHasNoLabel(index: number): Promise<void> {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content span`));
         await BrowserVisibility.waitUntilElementIsNotVisible(tab);
     }
 
     async getTabLabelById(index: number): Promise<string> {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] span`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content span`));
         return BrowserActions.getText(tab);
     }
 
     async getTabIconById(index: number): Promise<string> {
-        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] div[class="mat-tab-label-content"] mat-icon`));
+        const tab = element(by.css(`div[id="mat-tab-label-1-${index}"] .mat-tab-label-content mat-icon`));
         return BrowserActions.getText(tab);
     }
 

@@ -22,7 +22,7 @@ import { DocumentListService } from './document-list.service';
 import { NodeActionsService } from './node-actions.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
 import { of, throwError } from 'rxjs';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -50,12 +50,12 @@ describe('NodeActionsService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        service = TestBed.get(NodeActionsService);
-        documentListService = TestBed.get(DocumentListService);
-        contentDialogService = TestBed.get(ContentNodeDialogService);
+        service = TestBed.inject(NodeActionsService);
+        documentListService = TestBed.inject(DocumentListService);
+        contentDialogService = TestBed.inject(ContentNodeDialogService);
     });
 
     it('should be able to copy content', async(() => {

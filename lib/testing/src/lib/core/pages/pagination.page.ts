@@ -23,12 +23,12 @@ export class PaginationPage {
 
     pageSelectorDropDown = element(by.css('div[class*="adf-pagination__page-selector"]'));
     pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
-    itemsPerPage = element(by.css('span[class="adf-pagination__max-items"]'));
+    itemsPerPage = element(by.css('.adf-pagination__max-items'));
     itemsPerPageOpenDropdown = element(by.css('.adf-pagination__perpage-block button'));
     itemsPerPageOptions = by.css('.adf-pagination__page-selector .mat-menu-item');
-    currentPage = element(by.css('span[class="adf-pagination__current-page"]'));
-    totalPages = element(by.css('span[class="adf-pagination__total-pages"]'));
-    paginationRange = element(by.css('span[class="adf-pagination__range"]'));
+    currentPage = element(by.css('.adf-pagination__current-page'));
+    totalPages = element(by.css('.adf-pagination__total-pages'));
+    paginationRange = element(by.css('.adf-pagination__range'));
     nextPageButton = element(by.css('button[class*="adf-pagination__next-button"]'));
     nextButtonDisabled = element(by.css('button[class*="adf-pagination__next-button"][disabled]'));
     previousButtonDisabled = element(by.css('button[class*="adf-pagination__previous-button"][disabled]'));
@@ -36,7 +36,7 @@ export class PaginationPage {
     pageDropDownOptions = by.css('div[class*="mat-menu-content"] button');
     paginationSection = element(by.css('adf-pagination'));
     paginationSectionEmpty = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
-    totalFiles = element(by.css('span[class="adf-pagination__range"]'));
+    totalFiles = element(by.css('.adf-pagination__range'));
 
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
         await browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);

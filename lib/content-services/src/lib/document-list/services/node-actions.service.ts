@@ -19,7 +19,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Node, NodeEntry } from '@alfresco/js-api';
 import { Subject } from 'rxjs';
 import { AlfrescoApiService, ContentService, NodeDownloadDirective, DownloadService } from '@alfresco/adf-core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DocumentListService } from './document-list.service';
 import { ContentNodeDialogService } from '../../content-node-selector/content-node-dialog.service';
@@ -27,6 +27,7 @@ import { ContentNodeDialogService } from '../../content-node-selector/content-no
 @Injectable({
     providedIn: 'root'
 })
+// tslint:disable-next-line: directive-class-suffix
 export class NodeActionsService {
 
     @Output()

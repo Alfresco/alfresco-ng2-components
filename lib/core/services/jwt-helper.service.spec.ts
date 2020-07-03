@@ -29,7 +29,7 @@ describe('JwtHelperService', () => {
     });
 
     beforeEach(() => {
-        jwtHelperService = TestBed.get(JwtHelperService);
+        jwtHelperService = TestBed.inject(JwtHelperService);
     });
 
     it('should be able to create the service', () => {

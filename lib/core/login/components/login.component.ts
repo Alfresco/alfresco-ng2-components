@@ -131,12 +131,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _message: { [id: string]: { [id: string]: ValidationMessage } };
     private onDestroy$ = new Subject<boolean>();
 
-    /**
-     * Constructor
-     * @param _fb
-     * @param authService
-     * @param translate
-     */
     constructor(
         private _fb: FormBuilder,
         private authService: AuthenticationService,
@@ -148,12 +142,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         private location: Location,
         private route: ActivatedRoute,
         private sanitizer: DomSanitizer
-    ) {
-        this.initFormError();
-        this.initFormFieldsMessages();
-    }
+    ) {}
 
     ngOnInit() {
+        this.initFormError();
+        this.initFormFieldsDefault();
+        this.initFormFieldsMessages();
+
         if (this.authService.isOauth()) {
             const oauth: OauthConfigModel = this.appConfig.get<OauthConfigModel>(AppConfigValues.OAUTHCONFIG, null);
             if (oauth && oauth.implicitFlow) {
@@ -172,12 +167,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
         }
 
-        if (this.hasCustomFieldsValidation()) {
+        if (this.fieldsValidation) {
             this.form = this._fb.group(this.fieldsValidation);
-        } else {
-            this.initFormFieldsDefault();
-            this.initFormFieldsMessagesDefault();
         }
+
         this.form.valueChanges
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(data => this.onValueChanged(data));
@@ -369,26 +362,14 @@ export class LoginComponent implements OnInit, OnDestroy {
      */
     private initFormFieldsMessages() {
         this._message = {
-            username: {},
-            password: {}
-        };
-    }
-
-    /**
-     * Default form fields messages
-     */
-    private initFormFieldsMessagesDefault() {
-        this._message = {
             username: {
                 required: {
                     value: 'LOGIN.MESSAGES.USERNAME-REQUIRED'
                 },
-                minLength: {
+                minlength: {
                     value: 'LOGIN.MESSAGES.USERNAME-MIN',
                     params: {
-                        get minLength() {
-                            return this.minLength;
-                        }
+                        minLength: this.minLength
                     }
                 }
 
@@ -403,7 +384,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.required],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
             password: ['', Validators.required]
         });
     }
@@ -414,9 +395,5 @@ export class LoginComponent implements OnInit, OnDestroy {
     private disableError() {
         this.isError = false;
         this.initFormError();
-    }
-
-    private hasCustomFieldsValidation(): boolean {
-        return this.fieldsValidation !== undefined;
     }
 }

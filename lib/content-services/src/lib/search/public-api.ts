@@ -38,6 +38,7 @@ export * from './components/search-chip-list/search-chip-list.component';
 export * from './components/search-date-range/search-date-range.component';
 export * from './components/search-filter/search-filter.component';
 export * from './components/search-filter/search-filter.service';
+export * from './components/search-header/search-header.component';
 export * from './components/search-number-range/search-number-range.component';
 export * from './components/search-radio/search-radio.component';
 export * from './components/search-slider/search-slider.component';

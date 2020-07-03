@@ -41,10 +41,10 @@ describe('AuthGuardService', () => {
     beforeEach(() => {
         localStorage.clear();
         state = { url: '' };
-        authService = TestBed.get(AuthenticationService);
-        router = TestBed.get(Router);
-        authGuard = TestBed.get(AuthGuard);
-        appConfigService = TestBed.get(AppConfigService);
+        authService = TestBed.inject(AuthenticationService);
+        router = TestBed.inject(Router);
+        authGuard = TestBed.inject(AuthGuard);
+        appConfigService = TestBed.inject(AppConfigService);
 
         appConfigService.config.auth = {};
         appConfigService.config.oauth2 = {};

@@ -70,8 +70,8 @@ describe('ContentWidgetComponent', () => {
     });
 
     beforeEach(async(() => {
-        serviceContent = TestBed.get(ContentService);
-        processContentService = TestBed.get(ProcessContentService);
+        serviceContent = TestBed.inject(ContentService);
+        processContentService = TestBed.inject(ProcessContentService);
     }));
 
     beforeEach(() => {

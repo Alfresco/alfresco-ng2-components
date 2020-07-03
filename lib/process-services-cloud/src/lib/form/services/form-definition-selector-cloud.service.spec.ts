@@ -68,8 +68,8 @@ describe('Form Definition Selector Cloud Service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(FormDefinitionSelectorCloudService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(FormDefinitionSelectorCloudService);
+        apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue({ oauth2Auth: oauth2Auth });
     });
 

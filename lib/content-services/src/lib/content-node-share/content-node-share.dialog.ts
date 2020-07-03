@@ -23,7 +23,8 @@ import {
     ViewChild,
     OnDestroy
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatSlideToggleChange } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import {
@@ -63,10 +64,10 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
     type: DatePickerType = 'datetime';
     maxDebounceTime = 500;
 
-    @ViewChild('slideToggleExpirationDate')
+    @ViewChild('slideToggleExpirationDate', { static: true })
     slideToggleExpirationDate;
 
-    @ViewChild('dateTimePickerInput')
+    @ViewChild('dateTimePickerInput', { static: true })
     dateTimePickerInput;
 
     private onDestroy$ = new Subject<boolean>();
@@ -172,7 +173,7 @@ export class ShareDialogComponent implements OnInit, OnDestroy {
                 minWidth: '250px',
                 closeOnNavigation: true
             })
-            .beforeClose()
+            .beforeClosed()
             .subscribe((deleteSharedLink) => {
                 if (deleteSharedLink) {
                     this.deleteSharedLink(this.sharedId);

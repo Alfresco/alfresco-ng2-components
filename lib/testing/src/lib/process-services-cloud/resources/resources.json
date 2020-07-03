@@ -1,0 +1,201 @@
+{
+  "CANDIDATE_BASE_APP": {
+    "name": "candidatebaseapp",
+    "file_location": "https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/candidatebaseapp.zip?raw=true",
+    "processes": {
+      "candidateUserProcess": "candidateuserprocess",
+      "candidateGroupProcess": "candidategroupprocess",
+      "anotherCandidateGroupProcess": "anothercandidategroup",
+      "uploadFileProcess": "uploadfileprocess",
+      "processwithstarteventform": "processwithstarteventform",
+      "processwithjsonfilemapping": "processwithjsonfilemapping",
+      "assigneeProcess": "assigneeprocess",
+      "errorStartEventProcess": {
+        "process_name": "errorstartevent",
+        "error_id": "Error_END_EVENT",
+        "error_code": "123"
+      },
+      "errorBoundaryEventProcess": {
+        "process_name": "errorboundaryevent",
+        "error_id": "Error_END_EVENT",
+        "error_code": "567"
+      },
+      "errorExclusiveGateProcess": {
+        "process_name": "errorexclusivegate",
+        "error_id": "Error_OK",
+        "error_code": "200"
+      }
+    },
+    "forms": {
+      "starteventform": "starteventform",
+      "formtotestvalidations": "formtotestvalidations",
+      "uploadfileform": "uploadfileform",
+      "inputform": "inputform",
+      "outputform": "outputform"
+    },
+    "security": [
+      {
+        "role": "ACTIVITI_ADMIN",
+        "groups": [],
+        "users": ["superadminuser", "processadminuser"]
+      },
+      {
+        "role": "ACTIVITI_USER",
+        "groups": ["hr", "testgroup"],
+        "users": ["hruser", "salesuser"]
+      }
+    ],
+    "tasks": {
+      "uploadFileTask": "UploadFileTask",
+      "candidateUserTask": "candidateUserTask"
+    }
+  },
+  "SIMPLE_APP": {
+    "name": "simpleapp",
+    "file_location": "https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/simpleapp.zip?raw=true",
+    "processes": {
+      "processwithvariables": "processwithvariables",
+      "simpleProcess": "simpleprocess",
+      "dropdownrestprocess": "dropdownrestprocess",
+      "multilingualprocess": "multilingualprocess",
+      "processWithTabVisibility": "processwithtabvisibility",
+      "startmessageevent": "start-message-event",
+      "intermediatemessageevent": "intermediate-message-event",
+      "intboundaryevent": "int-boundary-event",
+      "nonintboundaryevent": "nonint-boundary-event",
+      "intboundarysubprocess": "int-boundary-subprocess",
+      "intstartmessageevent": "int-start-message-event",
+      "nonintstartmessageevent": "nonint-start-message-event",
+      "siblingtaskprocess": "siblingtaskprocess",
+      "startTaskVisibilityForm": "start-task-visibility-form",
+      "startVisibilityForm": "start-visibility-form",
+      "processstring": "processstring",
+      "processinteger": "processinteger",
+      "processboolean": "processboolean",
+      "processdate": "processdate",
+      "multiprocess": "multiprocess",
+      "terminateexclusive": "terminate-exclusive",
+      "terminatesubprocess": "terminate-subprocess",
+      "multiinstancedmnparallel": "multiinstance-dmnparallel",
+      "multiinstancecallactivity": "multiinstance-callactivity",
+      "multiinstancecollection": "multiinstance-collection",
+      "multiinstancecompletion": "multiinstance-completion",
+      "multiinstancesequential": "multiinstance-sequential",
+      "multiinstanceservicetask": "multiinstance-servicetask",
+      "multiinstanceusertask": "multiinstance-usertask",
+      "multiinstancedmnsequence": "multiinstance-dmnsequence",
+      "multiinstancemanualtask": "multiinstance-manualtask",
+      "multiinstancesubprocess": "multiinstance-subprocess",
+      "calledprocess": "calledprocess",
+      "booleanvisibilityprocess": "booleanvisibilityprocess",
+      "numbervisibilityprocess": "numbervisibilityprocess",
+      "processformoutcome": "outcomebuttons",
+      "uploadSingleMultipleFiles": "upload-single-multiple-pro",
+      "processDisplayRestJson": "process-display-rest-json",
+      "poolStartEndMessageThrow": "pool-start-end-mess-throw",
+      "poolStartEndMessageCatch": "pool-start-end-mess-catch",
+      "poolProcessCalled": "pool-process-called",
+      "poolProcessCalling": "pool-process-calling",
+      "poolNonIntBoundaryThrown": "pool-nonint-boundary-throw",
+      "poolNonIntBoundaryCatch": "pool-nonint-boundary-catch",
+      "poolIntermediateMessageThrow": "pool-interm-message-throw",
+      "poolIntermediateMessageCatch": "pool-interm-message-catch",
+      "poolInterruptingBoundarySubprocessThrow": "pool-int-bound-subpr-throw",
+      "poolInterruptingBoundarySubprocessCatch": "pool-int-bound-subpr-catch",
+      "poolInterruptingBoundaryThrow": "pool-int-boundary-throw",
+      "poolInterruptingBoundaryCatch": "pool-int-boundary-catch"
+    },
+    "forms": {
+      "tabVisibilityFields": {
+        "name": "tabvisibilitywithfields"
+      },
+      "tabVisibilityVars": {
+        "name": "tabvisibilitywithvars"
+      },
+      "usertaskform": {
+        "name": "usertaskform"
+      },
+      "dropdownform": {
+        "name": "dropdownform"
+      },
+      "formVisibility": {
+        "name": "form-visibility"
+      },
+      "multilingualform": {
+        "name": "multilingualform"
+      },
+      "inputform": {
+        "name": "inputform"
+      },
+      "outputform": {
+        "name": "outputform"
+      },
+      "exclusiveconditionform": {
+        "name": "exclusive-condition-form"
+      },
+      "uploadlocalfileform": {
+        "name": "upload-localfile-form"
+      },
+      "booleanvisibility": {
+        "name": "booleanvisibility"
+      },
+      "requirednumbervisibility": {
+        "name": "requirednumbervisibility"
+      },
+      "mealform": {
+        "name": "mealform"
+      },
+      "resultcollectionform": {
+        "name": "resultcollectionform"
+      },
+      "uploadSingleMultiple": {
+        "name": "upload-single-multiple",
+        "widgets": {
+          "contentMultipleAttachFileId": "UploadMultipleFileFromContentId"
+        }
+      },
+      "formWithJsonWidget": {
+        "name": "form-with-json-widget"
+      },
+      "formWithAllWidgets": {
+        "name": "form-with-all-widgets"
+      },
+      "poolForm": {
+        "name": "pool-usertaskform"
+      }
+    },
+    "tasks": {
+      "processstring": "inputtask",
+      "uploadSingleMultipleFiles": "UploadSingleMultipleFiles"
+    },
+    "security": [
+      {
+        "role": "ACTIVITI_ADMIN",
+        "groups": [],
+        "users": ["superadminuser", "processadminuser"]
+      },
+      {
+        "role": "ACTIVITI_USER",
+        "groups": ["hr", "sales", "testgroup"],
+        "users": ["hruser"]
+      }
+    ],
+    "infrastructure": { "connectors": { "restconnector": {} }, "bridges": {} }
+  },
+  "SUB_PROCESS_APP": {
+    "name": "subprocessapp",
+    "file_location": "https://github.com/Alfresco/alfresco-ng2-components/blob/develop/e2e/resources/activiti7/subprocessapp.zip?raw=true",
+    "processes": {
+      "processchild": "processchild",
+      "processparent": "processparent"
+    },
+    "security": [
+      { "role": "ACTIVITI_ADMIN", "groups": [], "users": ["superadminuser"] },
+      {
+        "role": "ACTIVITI_USER",
+        "groups": ["hr", "testgroup"],
+        "users": ["hruser"]
+      }
+    ]
+  }
+}

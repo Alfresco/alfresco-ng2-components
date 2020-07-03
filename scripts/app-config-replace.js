@@ -4,7 +4,7 @@
 require('dotenv').config({path: process.env.ENV_FILE});
 const fs = require('fs');
 
-const configPath = './demo-shell/dist/app.config.json';
+const configPath = './dist/demo-shell/app.config.json';
 
 fs.readFile(configPath, (err, appConfigString) => {
     if (err) throw err;
@@ -17,7 +17,7 @@ fs.readFile(configPath, (err, appConfigString) => {
     appConfig.notificationDefaultDuration = process.env.NOTIFICATION_LAST || 8000;
     appConfig.authType = process.env.AUTH_TYPE || 'BASIC';
 
-    let appConfigReplacedJson = JSON.stringify(appConfig);
+    let appConfigReplacedJson = JSON.stringify(appConfig,null,4);
 
 
     fs.writeFileSync(configPath, appConfigReplacedJson);

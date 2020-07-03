@@ -63,10 +63,10 @@ describe('ContentMetaDataService', () => {
     }
 
     beforeEach(() => {
-        service = TestBed.get(ContentMetadataService);
-        const alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(ContentMetadataService);
+        const alfrescoApiService = TestBed.inject(AlfrescoApiService);
         classesApi = alfrescoApiService.classesApi;
-        appConfig = TestBed.get(AppConfigService);
+        appConfig = TestBed.inject(AppConfigService);
     });
 
     it('should return all the properties of the node', () => {

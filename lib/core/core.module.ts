@@ -131,7 +131,7 @@ import { VersionCompatibilityService } from './services/version-compatibility.se
     ]
 })
 export class CoreModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule,
             providers: [
@@ -162,7 +162,7 @@ export class CoreModule {
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<CoreModule> {
         return {
             ngModule: CoreModule
         };

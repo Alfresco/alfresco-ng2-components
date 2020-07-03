@@ -20,5 +20,6 @@ import { Directive } from '@angular/core';
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0
  */
+// tslint:disable-next-line: directive-selector
 @Directive({ selector: '[adf-people-search-title]' })
 export class PeopleSearchTitleDirective { }

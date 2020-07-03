@@ -33,8 +33,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/internal/operators/debounceTime';
-import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap, mergeMap, filter, tap, map, takeUntil, debounceTime } from 'rxjs/operators';
 import { IdentityGroupModel, IdentityGroupService, LogService } from '@alfresco/adf-core';
 import { ComponentSelectionMode } from '../../types';
 

@@ -45,8 +45,8 @@ describe('FileUploadingDialogComponent', () => {
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
         component = fixture.componentInstance;
 
-        uploadService = TestBed.get(UploadService);
-        userPreferenceService = TestBed.get(UserPreferencesService);
+        uploadService = TestBed.inject(UploadService);
+        userPreferenceService = TestBed.inject(UserPreferencesService);
         uploadService.clearQueue();
 
         spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});

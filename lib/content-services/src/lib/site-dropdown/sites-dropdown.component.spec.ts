@@ -69,7 +69,7 @@ describe('DropdownSitesComponent', () => {
         describe('Infinite Loading', () => {
 
             beforeEach(async(() => {
-                siteService = TestBed.get(SitesService);
+                siteService = TestBed.inject(SitesService);
                 fixture = TestBed.createComponent(DropdownSitesComponent);
                 debug = fixture.debugElement;
                 element = fixture.nativeElement;
@@ -98,7 +98,7 @@ describe('DropdownSitesComponent', () => {
         describe('Sites', () => {
 
             beforeEach(async(() => {
-                siteService = TestBed.get(SitesService);
+                siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingNoMoreItems()));
 
                 fixture = TestBed.createComponent(DropdownSitesComponent);
@@ -240,7 +240,7 @@ describe('DropdownSitesComponent', () => {
         describe('Default value', () => {
 
             beforeEach(async(() => {
-                siteService = TestBed.get(SitesService);
+                siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValues(of(getFakeSitePagingFirstPage()), of(getFakeSitePagingLastPage()));
 
                 fixture = TestBed.createComponent(DropdownSitesComponent);
@@ -272,7 +272,7 @@ describe('DropdownSitesComponent', () => {
         describe('Sites with members', () => {
 
             beforeEach(async(() => {
-                siteService = TestBed.get(SitesService);
+                siteService = TestBed.inject(SitesService);
                 spyOn(siteService, 'getSites').and.returnValue(of(getFakeSitePagingWithMembers()));
 
                 fixture = TestBed.createComponent(DropdownSitesComponent);

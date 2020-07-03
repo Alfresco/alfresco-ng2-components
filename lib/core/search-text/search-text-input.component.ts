@@ -99,7 +99,7 @@ export class SearchTextInputComponent implements OnInit, OnDestroy {
     @Output()
     reset: EventEmitter<boolean> = new EventEmitter();
 
-    @ViewChild('searchInput')
+    @ViewChild('searchInput', { static: true })
     searchInput: ElementRef;
 
     subscriptAnimationState: any;

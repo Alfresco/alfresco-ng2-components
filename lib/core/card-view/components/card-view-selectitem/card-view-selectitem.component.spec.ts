@@ -49,7 +49,7 @@ describe('CardViewSelectItemComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
-        overlayContainer = TestBed.get(OverlayContainer);
+        overlayContainer = TestBed.inject(OverlayContainer);
         component.property = new CardViewSelectItemModel(mockDefaultProps);
     });
 

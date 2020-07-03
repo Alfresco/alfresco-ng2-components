@@ -103,7 +103,7 @@ export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit
     @ViewChild('activitiStartProcess')
     activitiStartProcess: StartProcessInstanceComponent;
 
-    @ViewChild('analyticsReportList')
+    @ViewChild('analyticsReportList', { static: true })
     analyticsReportList: AnalyticsReportListComponent;
 
     @Input()

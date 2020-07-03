@@ -24,7 +24,7 @@ export class SearchDialogPage {
     searchBar = element(by.css(`adf-search-control input`));
     searchBarExpanded = element(by.css(`adf-search-control mat-form-field[class*="mat-focused"] input`));
     noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
-    rowsAuthor = by.css(`div[class='mat-list-text'] p[class*='adf-search-fixed-text']`);
+    rowsAuthor = by.css(`.mat-list-text p[class*='adf-search-fixed-text']`);
     completeName = by.css(`h4[class*='adf-search-fixed-text']`);
     highlightName = by.css(`.adf-highlight`);
     searchDialog = element(by.css(`mat-list[id='autocomplete-search-result-list']`));

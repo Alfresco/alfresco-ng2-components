@@ -38,9 +38,6 @@ import { ContextMenuListComponent } from './context-menu-list.component';
     exports: [
         ContextMenuHolderComponent,
         ContextMenuDirective
-    ],
-    entryComponents: [
-        ContextMenuListComponent
     ]
 })
 export class ContextMenuModule {}

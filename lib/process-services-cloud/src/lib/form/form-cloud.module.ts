@@ -59,14 +59,6 @@ import { GroupCloudModule } from '../group/group-cloud.module';
         PeopleCloudWidgetComponent,
         GroupCloudWidgetComponent
     ],
-    entryComponents: [
-        UploadCloudWidgetComponent,
-        DropdownCloudWidgetComponent,
-        AttachFileCloudWidgetComponent,
-        DateCloudWidgetComponent,
-        PeopleCloudWidgetComponent,
-        GroupCloudWidgetComponent
-    ],
     exports: [
         FormCloudComponent,
         UploadCloudWidgetComponent,

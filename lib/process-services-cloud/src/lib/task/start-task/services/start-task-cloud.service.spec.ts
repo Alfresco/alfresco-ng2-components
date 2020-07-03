@@ -17,13 +17,14 @@
 
 import { TestBed } from '@angular/core/testing';
 
-import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
 import { TaskDetailsCloudModel } from '../models/task-details-cloud.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { setupTestBed } from '@alfresco/adf-core';
 import { TaskCloudService } from '../../services/task-cloud.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
 
 describe('StartTaskCloudService', () => {
 
@@ -31,11 +32,14 @@ describe('StartTaskCloudService', () => {
     const fakeAppName: string = 'fake-app';
 
     setupTestBed({
-        imports: [StartTaskCloudTestingModule]
+        imports: [
+            TranslateModule.forRoot(),
+            ProcessServiceCloudTestingModule
+        ]
     });
 
     beforeEach(() => {
-        service = TestBed.get(TaskCloudService);
+        service = TestBed.inject(TaskCloudService);
     });
 
     it('should able to create a new task ', (done) => {

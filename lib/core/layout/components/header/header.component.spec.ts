@@ -20,7 +20,7 @@ import { HeaderLayoutComponent } from './header.component';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { By } from '@angular/platform-browser';
-import { LayoutModule } from '../..';
+import { SidenavLayoutModule } from '../../layout.module';
 import { Component } from '@angular/core';
 import { MaterialModule } from './../../../material.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -189,7 +189,7 @@ describe('HeaderLayoutComponent', () => {
             imports: [
                 TranslateModule.forRoot(),
                 CoreTestingModule,
-                LayoutModule,
+                SidenavLayoutModule,
                 MaterialModule
             ],
             declarations: [HeaderLayoutTesterComponent]

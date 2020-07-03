@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { ContentService, AllowableOperationsEnum, PermissionsEnum, NodesApiService } from '@alfresco/adf-core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PreviewService } from '../../services/preview.service';
 
 @Component({

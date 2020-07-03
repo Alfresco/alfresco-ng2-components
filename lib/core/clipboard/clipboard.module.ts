@@ -31,8 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
     exports: [
         ClipboardDirective
-    ],
-    entryComponents: [ClipboardComponent]
+    ]
 })
 
 export class ClipboardModule {}

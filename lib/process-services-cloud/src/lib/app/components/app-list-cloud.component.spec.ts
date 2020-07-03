@@ -64,8 +64,8 @@ describe('AppListCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AppListCloudComponent);
         component = fixture.componentInstance;
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
-        appsProcessCloudService = TestBed.get(AppsProcessCloudService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        appsProcessCloudService = TestBed.inject(AppsProcessCloudService);
 
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         getAppsSpy = spyOn(appsProcessCloudService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));

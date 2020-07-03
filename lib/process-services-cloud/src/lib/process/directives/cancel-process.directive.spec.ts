@@ -52,7 +52,7 @@ describe('CancelProcessDirective', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
-        identityUserService = TestBed.get(IdentityUserService);
+        identityUserService = TestBed.inject(IdentityUserService);
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue({username: 'usermock'});
         fixture.detectChanges();
     });

@@ -48,7 +48,7 @@ describe('ExtensionViewerDirective', () => {
     });
 
     beforeEach(async(() => {
-        extensionViewerDirective = TestBed.get(ViewerExtensionDirective);
+        extensionViewerDirective = TestBed.inject(ViewerExtensionDirective);
         extensionViewerDirective.templateModel = {template: '', isVisible: false};
     }));
 

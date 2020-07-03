@@ -88,7 +88,7 @@ describe('Select app dialog', () => {
         fixture = TestBed.createComponent(DialogSelectAppTestComponent);
         component = fixture.componentInstance;
 
-        service = TestBed.get(AppsProcessService);
+        service = TestBed.inject(AppsProcessService);
 
         spyOn(service, 'getDeployedApplications').and.returnValue(
             of(deployedApps)

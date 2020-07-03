@@ -37,7 +37,7 @@ describe('DecimalNumberPipe', () => {
     });
 
     beforeEach(async(() => {
-        userPreferences = TestBed.get(UserPreferencesService);
+        userPreferences = TestBed.inject(UserPreferencesService);
         spyOn(userPreferences, 'select').and.returnValue(of(''));
         pipe = new DecimalNumberPipe(userPreferences, new AppConfigService(null));
     }));

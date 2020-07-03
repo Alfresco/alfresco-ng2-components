@@ -46,8 +46,8 @@ describe('StartProcessCloudService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(StartProcessCloudService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(StartProcessCloudService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
     });
 
     it('should be able to create a new process', (done) => {

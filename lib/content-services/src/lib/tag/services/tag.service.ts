@@ -24,6 +24,7 @@ import { TagBody,  TagPaging, TagEntry } from '@alfresco/js-api';
 @Injectable({
     providedIn: 'root'
 })
+// tslint:disable-next-line: directive-class-suffix
 export class TagService {
 
     /** Emitted when tag information is updated. */

@@ -55,7 +55,7 @@ describe('EmptyContentComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
-        translateService = TestBed.get(TranslateService);
+        translateService = TestBed.inject(TranslateService);
     });
 
     it('should render custom title', async(() => {

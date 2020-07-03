@@ -16,7 +16,7 @@
  */
 
 import { Component, OnChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatSelect } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
 import { PathElementEntity, Node } from '@alfresco/js-api';
 import { BreadcrumbComponent } from './breadcrumb.component';
 

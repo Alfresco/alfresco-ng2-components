@@ -52,7 +52,7 @@ import {
 })
 export class PeopleWidgetComponent extends WidgetComponent implements OnInit {
 
-    @ViewChild('inputValue')
+    @ViewChild('inputValue', { static: true })
     input: ElementRef;
 
     @Output()

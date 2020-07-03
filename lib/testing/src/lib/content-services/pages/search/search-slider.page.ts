@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { browser, by, ElementFinder, Locator } from 'protractor';
+import { browser, by, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class SearchSliderPage {
 
     filter: ElementFinder;
-    slider: Locator = by.css('mat-slider[data-automation-id="slider-range"]');
-    clearButton: Locator = by.css('button[data-automation-id="slider-btn-clear"]');
-    sliderWithThumbLabel: Locator = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
+    slider = by.css('mat-slider[data-automation-id="slider-range"]');
+    clearButton = by.css('button[data-automation-id="slider-btn-clear"]');
+    sliderWithThumbLabel = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
@@ -43,7 +43,7 @@ export class SearchSliderPage {
     }
 
     async setValue(value: number): Promise<void> {
-        const elem = this.filter.element(this.slider).element(by.css('div[class="mat-slider-wrapper"]'));
+        const elem = this.filter.element(this.slider).element(by.css('.mat-slider-wrapper'));
         await browser.actions().mouseMove(elem, { x: 0, y: 0 }).perform();
         await browser.actions().mouseDown().mouseMove({x: value * 10, y: 0}).mouseUp().perform();
     }

@@ -18,9 +18,8 @@
 import { AlfrescoApiService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { RatingEntry, RatingBody } from '@alfresco/js-api';
-import { from, throwError } from 'rxjs';
+import { from, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
     providedIn: 'root'

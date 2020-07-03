@@ -75,9 +75,6 @@ import { A11yModule } from '@angular/cdk/a11y';
         ViewerMoreActionsComponent,
         ViewerToolbarActionsComponent
     ],
-    entryComponents: [
-        PdfPasswordDialogComponent
-    ],
     exports: [
         ViewerComponent,
         ImgViewerComponent,

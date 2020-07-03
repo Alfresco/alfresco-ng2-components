@@ -64,8 +64,8 @@ describe('GroupCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        identityGroupService = TestBed.get(IdentityGroupService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        identityGroupService = TestBed.inject(IdentityGroupService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
 
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
     });

@@ -42,11 +42,11 @@ describe('AddPermissionComponent', () => {
     });
 
     beforeEach(() => {
-        nodeApiService  = TestBed.get(NodesApiService);
+        nodeApiService  = TestBed.inject(NodesApiService);
         spyOn(nodeApiService, 'getNode').and.returnValue(of({ id: 'fake-node', allowableOperations: ['updatePermissions']}));
         fixture = TestBed.createComponent(AddPermissionComponent);
         element = fixture.nativeElement;
-        nodePermissionService = TestBed.get(NodePermissionService);
+        nodePermissionService = TestBed.inject(NodePermissionService);
         fixture.detectChanges();
     });
 

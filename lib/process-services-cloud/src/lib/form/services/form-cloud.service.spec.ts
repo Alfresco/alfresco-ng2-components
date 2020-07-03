@@ -47,8 +47,8 @@ describe('Form Cloud service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(FormCloudService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(FormCloudService);
+        apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue({ oauth2Auth: oauth2Auth });
     });
 
