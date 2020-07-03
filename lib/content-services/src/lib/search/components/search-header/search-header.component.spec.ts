@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
@@ -47,6 +47,7 @@ describe('SearchHeaderComponent', () => {
     let component: SearchHeaderComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
     let alfrescoApiService: AlfrescoApiService;
+    let eventSub: Subscription;
 
     const searchMock: any = {
         dataLoaded: new Subject()
@@ -74,6 +75,7 @@ describe('SearchHeaderComponent', () => {
     });
 
     afterEach(() => {
+        eventSub.unsubscribe();
         fixture.destroy();
     });
 
@@ -87,7 +89,7 @@ describe('SearchHeaderComponent', () => {
     it('should emit the node paging received from the queryBuilder after the filter gets applied', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
+        eventSub = component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
@@ -105,10 +107,11 @@ describe('SearchHeaderComponent', () => {
     it('should execute a new query when the page size is changed', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
+        eventSub = component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
+
         const maxItem = new SimpleChange(10, 20, false);
         component.ngOnChanges({ 'maxItems': maxItem });
         fixture.detectChanges();
@@ -118,10 +121,11 @@ describe('SearchHeaderComponent', () => {
     it('should execute a new query when a new page is requested', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        component.update.subscribe((newNodePaging) => {
+        eventSub = component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
+
         const skipCount = new SimpleChange(0, 10, false);
         component.ngOnChanges({ 'skipCount': skipCount });
         fixture.detectChanges();
@@ -134,9 +138,10 @@ describe('SearchHeaderComponent', () => {
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
         spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
         const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        component.clear.subscribe(() => {
+        eventSub = component.clear.subscribe(() => {
             done();
         });
+
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
         menuButton.click();
         fixture.detectChanges();
@@ -144,5 +149,27 @@ describe('SearchHeaderComponent', () => {
         const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
         clearButton.triggerEventHandler('click', fakeEvent);
         fixture.detectChanges();
+        await fixture.whenStable();
+    });
+
+    it('should execute the query again if there are more filter actives after a clear', async (done) => {
+        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(false);
+        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
+        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        eventSub = component.update.subscribe((newNodePaging) => {
+            expect(newNodePaging).toBe(fakeNodePaging);
+            done();
+        });
+
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
+        clearButton.triggerEventHandler('click', fakeEvent);
+        fixture.detectChanges();
+        await fixture.whenStable();
     });
 });
