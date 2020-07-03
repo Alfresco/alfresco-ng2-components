@@ -67,7 +67,7 @@ describe('SearchHeaderComponent', () => {
         fixture = TestBed.createComponent(SearchHeaderComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchHeaderQueryBuilder'];
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.col = {key: '123', type: 'text'};
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
         fixture.detectChanges();
