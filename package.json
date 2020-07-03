@@ -102,7 +102,7 @@
     "pdfjs-dist": "2.3.200",
     "raphael": "2.2.7",
     "remark-validate-links": "^8.0.0",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.0",
     "snyk": "^1.316.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
