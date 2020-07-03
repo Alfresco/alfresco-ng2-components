@@ -24,5 +24,8 @@ fi
 
 test ! -d $OUTPUT && mkdir -p $OUTPUT
 aws s3 cp $ARTIFACT ./s3-artifact.tmp
-tar -xvf ./s3-artifact.tmp -C $OUTPUT
+echo 'artifact download done'
+tar -xvf ./s3-artifact.tmp -C $OUTPUT >&/dev/null
+echo 'tar the artifact done'
 rm ./s3-artifact.tmp
+echo 'remove tmp file'
