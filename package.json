@@ -74,21 +74,21 @@
   ],
   "dependencies": {
     "@alfresco/js-api": "3.9.0",
-    "@angular/animations": "^9.1.9",
-    "@angular/cdk": "9.2.4",
-    "@angular/common": "^9.1.9",
-    "@angular/compiler": "^9.1.9",
-    "@angular/core": "^9.1.9",
-    "@angular/flex-layout": "^9.0.0-beta.31",
-    "@angular/forms": "^9.1.9",
-    "@angular/material": "^9.2.4",
-    "@angular/material-moment-adapter": "^9.2.4",
-    "@angular/platform-browser": "^9.1.9",
-    "@angular/platform-browser-dynamic": "^9.1.9",
-    "@angular/router": "^9.1.9",
+    "@angular/animations": "^10.0.2",
+    "@angular/cdk": "10.0.1",
+    "@angular/common": "^10.0.2",
+    "@angular/compiler": "^10.0.2",
+    "@angular/core": "^10.0.2",
+    "@angular/flex-layout": "^10.0.0-beta.32",
+    "@angular/forms": "^10.0.2",
+    "@angular/material": "^10.0.1",
+    "@angular/material-moment-adapter": "^10.0.1",
+    "@angular/platform-browser": "^10.0.2",
+    "@angular/platform-browser-dynamic": "^10.0.2",
+    "@angular/router": "^10.0.2",
     "@mat-datetimepicker/core": "^4.1.0",
     "@mat-datetimepicker/moment": "^4.1.0",
-    "@ngx-translate/core": "^12.1.2",
+    "@ngx-translate/core": "^13.0.0",
     "@types/request": "^2.48.3",
     "adf-tslint-rules": "0.0.6",
     "chart.js": "2.9.3",
@@ -107,16 +107,16 @@
     "rxjs": "^6.5.5",
     "snyk": "^1.316.1",
     "systemjs": "0.19.27",
-    "tslib": "^1.10.0",
+    "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@alfresco/adf-cli": "3.9.0",
-    "@angular-devkit/build-angular": "~0.901.7",
-    "@angular-devkit/build-ng-packagr": "~0.901.7",
+    "@angular-devkit/build-angular": "~0.1000.1",
+    "@angular-devkit/build-ng-packagr": "~0.1000.1",
     "@angular/cli": "^10.0.1",
-    "@angular/compiler-cli": "^9.1.9",
+    "@angular/compiler-cli": "^10.0.2",
     "@nrwl/schematics": "8.12.11",
     "@nrwl/workspace": "9.3.0",
     "@paperist/types-remark": "^0.1.3",
@@ -164,7 +164,7 @@
     "mdast-zone": "^3.0.1",
     "mini-css-extract-plugin": "^0.9.0",
     "nconf": "^0.10.0",
-    "ng-packagr": "^9.0.0",
+    "ng-packagr": "^10.0.0",
     "node-sass": "4.13.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "protractor": "^5.4.2",
@@ -183,7 +183,7 @@
     "tslint": "5.20.0",
     "tslint-consistent-codestyle": "^1.15.1",
     "typedoc": "^0.15.0",
-    "typescript": "3.8.3",
+    "typescript": "3.9.6",
     "unist-util-select": "^2.0.0",
     "url-join": "^4.0.0",
     "webpack-cli": "^3.1.0"
@@ -192,11 +192,11 @@
   "bundlesize": [
     {
       "path": "./lib/dist/content-services/bundles/adf-content-services.umd.min.js",
-      "maxSize": "83 kb"
+      "maxSize": "85 kb"
     },
     {
       "path": "./lib/dist/process-services/bundles/adf-process-services.umd.min.js",
-      "maxSize": "60 kb"
+      "maxSize": "62 kb"
     },
     {
       "path": "./lib/dist/insights/bundles/adf-insights.umd.min.js",

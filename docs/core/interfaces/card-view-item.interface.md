@@ -106,26 +106,7 @@ Picard's birthday (47457.1):
     [Card View Date Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) for examples of how to make the field
     editable.
 
-3.  Add your custom component to your module's `entryComponents` list.
-
-    You must register your component in your module's `entryComponents` array
-    to enable Angular to load it dynamically:
-
-    ```js
-    @NgModule({
-        imports: [...],
-        declarations: [
-            CardViewStarDateItemComponent
-        ],
-        entryComponents: [
-            CardViewStarDateItemComponent
-        ],
-        exports: [...]
-    })
-    export class MyModule {}
-    ```
-
-4.  Bind your custom component to the [custom model](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/customModel.api.ts) type so that Angular's dynamic component
+3.  Bind your custom component to the [custom model](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/customModel.api.ts) type so that Angular's dynamic component
     loader can find it.
 
     ```ts
