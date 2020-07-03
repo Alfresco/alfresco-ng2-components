@@ -5,5 +5,10 @@
     "baseUrl": "src",
     "paths": {
     }
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   }
 }

@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Process Services ======"
 echo "====== Build ======"
-npm run ng -- build process-services || exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building process-services for production"
+    npm run ng -- build process-services --prod || exit 1
+else
+    echo "Building process-services for development"
+    npm run ng -- build process-services || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-process-services-scss.js || exit 1

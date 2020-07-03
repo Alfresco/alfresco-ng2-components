@@ -8,5 +8,10 @@
       "@alfresco/adf-extensions": ["../dist/extensions"],
       "@alfresco/adf-extensions/*": ["../dist/extensions/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   }
 }

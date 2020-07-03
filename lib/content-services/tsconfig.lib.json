@@ -10,5 +10,10 @@
       "@alfresco/adf-core": ["../../dist/core"],
       "@alfresco/adf-core/*": ["../../dist/core/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   }
 }

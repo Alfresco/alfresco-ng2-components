@@ -12,5 +12,10 @@
       "@alfresco/adf-content-services": ["../../dist/content-services"],
       "@alfresco/adf-content-services/*": ["../../dist/content-services/*"]
     }
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   }
 }

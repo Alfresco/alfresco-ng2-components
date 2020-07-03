@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Core ======"
 echo "====== Build ======"
-npm run ng -- build core|| exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building core for production"
+    npm run ng -- build core --prod || exit 1
+else
+    echo "Building core for development"
+    npm run ng -- build core || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-core-scss.js || exit 1

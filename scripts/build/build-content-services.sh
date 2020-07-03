@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Content Services ======"
 echo "====== Build ======"
-npm run ng -- build content-services || exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building content-services for production"
+    npm run ng -- build content-services --prod || exit 1
+else
+    echo "Building content-services for development"
+    npm run ng -- build content-services || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-content-services-scss.js || exit 1

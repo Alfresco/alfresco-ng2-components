@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Insights ======"
 echo "====== Build ======"
-npm run ng -- build insights || exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building insights for production"
+    npm run ng -- build insights --prod || exit 1
+else
+    echo "Building insights for development"
+    npm run ng -- build insights || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-insights-scss.js || exit 1
