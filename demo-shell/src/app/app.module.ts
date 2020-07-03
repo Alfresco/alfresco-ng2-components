@@ -47,10 +47,8 @@ import { AppsViewComponent } from './components/process-service/apps-view.compon
 import { FilesComponent } from './components/files/files.component';
 import { VersionManagerDialogAdapterComponent } from './components/files/version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './components/files/metadata-dialog-adapter.component';
-
 import { ThemePickerModule } from './components/theme-picker/theme-picker';
-
-import { routing } from './app.routes';
+import { appRoutes } from './app.routes';
 import { TaskAttachmentsComponent } from './components/process-service/task-attachments.component';
 import { ProcessAttachmentsComponent } from './components/process-service/process-attachments.component';
 import { SharedLinkViewComponent } from './components/shared-link-view/shared-link-view.component';
@@ -80,9 +78,9 @@ import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { DemoErrorComponent } from './components/error/demo-error.component';
-import {
-    ProcessServicesCloudModule
-} from '@alfresco/adf-process-services-cloud';
+import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
+import { FilteredSearchComponent } from './components/files/filtered-search.component';
+import { RouterModule } from '@angular/router';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -101,7 +99,6 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
-import { FilteredSearchComponent } from './components/files/filtered-search.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -125,7 +122,7 @@ registerLocaleData(localeSv);
         BrowserModule,
         environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
         ReactiveFormsModule,
-        routing,
+        RouterModule.forRoot(appRoutes, { initialNavigation: true }),
         FormsModule,
         HttpClientModule,
         MaterialModule,

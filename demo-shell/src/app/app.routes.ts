@@ -15,15 +15,8 @@
  * limitations under the License.
  */
 
-import { ModuleWithProviders } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {
-    AuthGuard,
-    AuthGuardEcm,
-    ErrorContentComponent,
-    AuthGuardBpm,
-    AuthGuardSsoRoleService
-} from '@alfresco/adf-core';
+import { Routes } from '@angular/router';
+import { AuthGuard, AuthGuardEcm, ErrorContentComponent, AuthGuardBpm, AuthGuardSsoRoleService } from '@alfresco/adf-core';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -60,6 +53,7 @@ import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confi
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
+
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
     { path: 'logout', component: LogoutComponent },
@@ -459,5 +453,3 @@ export const appRoutes: Routes = [
         redirectTo: 'error/404'
     }
 ];
-
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { initialNavigation: true });
