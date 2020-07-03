@@ -115,7 +115,7 @@
     "@alfresco/adf-cli": "3.9.0",
     "@angular-devkit/build-angular": "~0.901.7",
     "@angular-devkit/build-ng-packagr": "~0.901.7",
-    "@angular/cli": "^9.1.7",
+    "@angular/cli": "^10.0.1",
     "@angular/compiler-cli": "^9.1.9",
     "@nrwl/schematics": "8.12.11",
     "@nrwl/workspace": "9.3.0",
