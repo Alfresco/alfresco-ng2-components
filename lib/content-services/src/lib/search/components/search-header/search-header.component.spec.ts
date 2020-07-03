@@ -47,7 +47,6 @@ describe('SearchHeaderComponent', () => {
     let component: SearchHeaderComponent;
     let queryBuilder: SearchHeaderQueryBuilderService;
     let alfrescoApiService: AlfrescoApiService;
-    let eventSub: Subscription;
 
     const searchMock: any = {
         dataLoaded: new Subject()
@@ -75,7 +74,6 @@ describe('SearchHeaderComponent', () => {
     });
 
     afterEach(() => {
-        eventSub.unsubscribe();
         fixture.destroy();
     });
 
@@ -89,7 +87,7 @@ describe('SearchHeaderComponent', () => {
     it('should emit the node paging received from the queryBuilder after the filter gets applied', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        eventSub = component.update.subscribe((newNodePaging) => {
+        component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
@@ -107,7 +105,7 @@ describe('SearchHeaderComponent', () => {
     it('should execute a new query when the page size is changed', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        eventSub = component.update.subscribe((newNodePaging) => {
+        component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
@@ -121,7 +119,7 @@ describe('SearchHeaderComponent', () => {
     it('should execute a new query when a new page is requested', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        eventSub = component.update.subscribe((newNodePaging) => {
+        component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
@@ -138,7 +136,7 @@ describe('SearchHeaderComponent', () => {
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
         spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
         const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-        eventSub = component.clear.subscribe(() => {
+        component.clear.subscribe(() => {
             done();
         });
 
@@ -159,7 +157,7 @@ describe('SearchHeaderComponent', () => {
         spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
         const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-        eventSub = component.update.subscribe((newNodePaging) => {
+        component.update.subscribe((newNodePaging) => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
