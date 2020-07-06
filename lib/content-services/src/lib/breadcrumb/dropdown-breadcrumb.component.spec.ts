@@ -46,7 +46,7 @@ describe('DropdownBreadcrumb', () => {
         fixture = TestBed.createComponent(DropdownBreadcrumbComponent);
         component = fixture.componentInstance;
         documentList = TestBed.createComponent<DocumentListComponent>(DocumentListComponent).componentInstance;
-        documentListService = TestBed.get(DocumentListService);
+        documentListService = TestBed.inject(DocumentListService);
     }));
 
     afterEach(async(() => {

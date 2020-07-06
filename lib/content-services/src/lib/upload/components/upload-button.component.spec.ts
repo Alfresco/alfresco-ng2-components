@@ -60,8 +60,8 @@ describe('UploadButtonComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadButtonComponent);
-        uploadService = TestBed.get(UploadService);
-        contentService = TestBed.get(ContentService);
+        uploadService = TestBed.inject(UploadService);
+        contentService = TestBed.inject(ContentService);
 
         component = fixture.componentInstance;
         fixture.detectChanges();

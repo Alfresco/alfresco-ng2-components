@@ -304,7 +304,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Output()
     error: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('dataTable')
+    @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
 
     actions: ContentActionModel[] = [];

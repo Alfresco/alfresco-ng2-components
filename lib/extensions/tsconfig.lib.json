@@ -3,5 +3,10 @@
   "compilerOptions": {
     "outDir": "../dist/extensions/",
     "baseUrl": "src"
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   }
 }

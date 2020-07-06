@@ -100,7 +100,7 @@ describe('UploadWidgetComponent', () => {
             uploadWidgetComponent = fixture.componentInstance;
             element = fixture.nativeElement;
             debugElement = fixture.debugElement;
-            contentService = TestBed.get(ProcessContentService);
+            contentService = TestBed.inject(ProcessContentService);
         }));
 
         it('should setup with field data', () => {
@@ -147,7 +147,7 @@ describe('UploadWidgetComponent', () => {
                 type: FormFieldTypes.UPLOAD,
                 readOnly: false
             });
-            formServiceInstance = TestBed.get(FormService);
+            formServiceInstance = TestBed.inject(FormService);
             uploadWidgetComponent.field.value = [];
         });
 

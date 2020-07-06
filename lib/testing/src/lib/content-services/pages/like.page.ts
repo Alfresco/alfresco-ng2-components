@@ -21,8 +21,8 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class LikePage {
 
     likeCounter = element(by.css(`div[id="adf-like-counter"]`));
-    likeButton = element(by.css(`span[class="adf-like-grey"]`));
-    unlikeButton = element(by.css(`span[class="adf-like-select"]`));
+    likeButton = element(by.css(`.adf-like-grey`));
+    unlikeButton = element(by.css(`.adf-like-select`));
 
     async getLikeCounter(): Promise<string> {
         return BrowserActions.getText(this.likeCounter);

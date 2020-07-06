@@ -53,7 +53,7 @@ describe('UnClaimTaskCloudDirective', () => {
     });
 
     beforeEach(() => {
-        taskCloudService = TestBed.get(TaskCloudService);
+        taskCloudService = TestBed.inject(TaskCloudService);
         fixture = TestBed.createComponent(TestComponent);
         fixture.detectChanges();
     });
@@ -116,7 +116,7 @@ describe('UnClaim Task Directive validation errors', () => {
         appNameNull = null;
         taskMock = 'test1234';
 
-        @ViewChild(UnClaimTaskCloudDirective)
+        @ViewChild(UnClaimTaskCloudDirective, { static: false })
         claimTaskValidationDirective: UnClaimTaskCloudDirective;
     }
 

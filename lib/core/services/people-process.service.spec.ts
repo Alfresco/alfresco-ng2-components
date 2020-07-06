@@ -52,7 +52,7 @@ describe('PeopleProcessService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(PeopleProcessService);
+        service = TestBed.inject(PeopleProcessService);
     });
 
     describe('when user is logged in', () => {

@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 
 @Directive({
+    // tslint:disable-next-line: directive-selector
     selector: '[adf-cloud-cancel-process]'
 })
 export class CancelProcessDirective implements OnInit, OnDestroy {

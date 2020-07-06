@@ -44,7 +44,7 @@ describe('ProcessCommentsComponent', () => {
 
         fixture = TestBed.createComponent(ProcessCommentsComponent);
         component = fixture.componentInstance;
-        commentProcessService = TestBed.get(CommentProcessService);
+        commentProcessService = TestBed.inject(CommentProcessService);
 
         getCommentsSpy = spyOn(commentProcessService, 'getProcessInstanceComments').and.returnValue(of(mockProcessInstanceComments));
     });

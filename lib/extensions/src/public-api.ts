@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-export * from './lib/extensions.module';
-
 export * from './lib/config/action.extensions';
 export * from './lib/config/document-list.extensions';
 export * from './lib/config/extension-element';

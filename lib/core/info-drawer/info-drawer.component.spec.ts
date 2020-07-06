@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
 import { InfoDrawerComponent } from './info-drawer.component';
 import { setupTestBed } from '../testing/setup-test-bed';
@@ -39,7 +39,7 @@ describe('InfoDrawerComponent', () => {
     });
 
     beforeEach(() => {
-        translateService = TestBed.get(TranslateService);
+        translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(InfoDrawerComponent);
@@ -70,8 +70,7 @@ describe('InfoDrawerComponent', () => {
 
 @Component({
     template: `
-    <adf-info-drawer [selectedIndex]="tabIndex">
-        <div info-drawer-title>Fake Title Custom</div>
+    <adf-info-drawer [selectedIndex]="tabIndex" title="Fake Title Custom">
         <adf-info-drawer-tab label="Tab1">
         </adf-info-drawer-tab>
         <adf-info-drawer-tab label="Tab2">
@@ -101,7 +100,7 @@ describe('Custom InfoDrawer', () => {
     });
 
     beforeEach(() => {
-        translateService = TestBed.get(TranslateService);
+        translateService = TestBed.inject(TranslateService);
         spyOn(translateService, 'get').and.callFake((key) => of(key));
 
         fixture = TestBed.createComponent(CustomInfoDrawerComponent);

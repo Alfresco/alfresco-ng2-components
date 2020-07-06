@@ -46,8 +46,7 @@ export class CustomStencil01 extends WidgetComponent {
 
 @NgModule({
     declarations: [ CustomEditorComponent, CustomStencil01 ],
-    exports: [ CustomEditorComponent, CustomStencil01 ],
-    entryComponents: [ CustomEditorComponent, CustomStencil01 ]
+    exports: [ CustomEditorComponent, CustomStencil01 ]
 })
 export class CustomEditorsModule {
 

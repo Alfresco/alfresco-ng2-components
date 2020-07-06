@@ -30,11 +30,6 @@ import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.com
         ContentNodeSelectorModule,
         MaterialModule
     ],
-    entryComponents: [
-        AttachFileWidgetComponent,
-        AttachFolderWidgetComponent,
-        AttachFileWidgetDialogComponent
-    ],
     declarations: [
         AttachFileWidgetComponent,
         AttachFolderWidgetComponent,

@@ -17,7 +17,7 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { CardViewBoolItemComponent } from './card-view-boolitem.component';
@@ -180,7 +180,7 @@ describe('CardViewBoolItemComponent', () => {
         });
 
         it('should trigger the update event when changing the checkbox', () => {
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             spyOn(cardViewUpdateService, 'update');
             const property = { ... component.property };
 
@@ -200,7 +200,7 @@ describe('CardViewBoolItemComponent', () => {
         }));
 
         it('should trigger an update event on the CardViewUpdateService [integration]', (done) => {
-            const cardViewUpdateService = TestBed.get(CardViewUpdateService);
+            const cardViewUpdateService = TestBed.inject(CardViewUpdateService);
             component.property.value = false;
             fixture.detectChanges();
             const property = { ...component.property };

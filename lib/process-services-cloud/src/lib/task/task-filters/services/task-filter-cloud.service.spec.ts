@@ -62,7 +62,7 @@ describe('TaskFilterCloudService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(TaskFilterCloudService);
+        service = TestBed.inject(TaskFilterCloudService);
 
         const preferenceCloudService = service.preferenceService;
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeTaskCloudFilters));
@@ -70,7 +70,7 @@ describe('TaskFilterCloudService', () => {
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of(fakeTaskCloudPreferenceList));
         getPreferenceByKeySpy = spyOn(preferenceCloudService, 'getPreferenceByKey').and.returnValue(of(fakeTaskCloudFilters));
 
-        const identityUserService = TestBed.get(IdentityUserService);
+        const identityUserService = TestBed.inject(IdentityUserService);
         getCurrentUserInfoSpy = spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });
 
@@ -240,9 +240,9 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
     });
 
     beforeEach(() => {
-        service = TestBed.get(TaskFilterCloudService);
+        service = TestBed.inject(TaskFilterCloudService);
         preferenceCloudService = service.preferenceService;
-        identityUserService = TestBed.get(IdentityUserService);
+        identityUserService = TestBed.inject(IdentityUserService);
         getPreferencesSpy = spyOn(preferenceCloudService, 'getPreferences').and.returnValue(of([]));
         spyOn(identityUserService, 'getCurrentUserInfo').and.returnValue(identityUserMock);
     });

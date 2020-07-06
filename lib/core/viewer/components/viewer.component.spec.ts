@@ -158,7 +158,7 @@ describe('ViewerComponent', () => {
         element = fixture.nativeElement;
         component = fixture.componentInstance;
 
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
     });
 
     describe('Extension Type Test', () => {

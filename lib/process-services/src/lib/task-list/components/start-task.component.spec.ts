@@ -61,8 +61,8 @@ describe('StartTaskComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        service = TestBed.get(TaskListService);
-        logService = TestBed.get(LogService);
+        service = TestBed.inject(TaskListService);
+        logService = TestBed.inject(LogService);
 
         getFormListSpy = spyOn(service, 'getFormList').and.returnValue(new Observable((observer) => {
             observer.next(fakeForms$);

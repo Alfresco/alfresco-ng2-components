@@ -92,7 +92,7 @@ describe('ProcessFiltersCloudComponent', () => {
         fixture = TestBed.createComponent(ProcessFiltersCloudComponent);
         component = fixture.componentInstance;
 
-        processFilterService = TestBed.get(ProcessFilterCloudService);
+        processFilterService = TestBed.inject(ProcessFilterCloudService);
     });
 
     it('should attach specific icon for each filter if hasIcon is true', async(() => {

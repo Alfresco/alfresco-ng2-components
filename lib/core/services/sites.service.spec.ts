@@ -36,7 +36,7 @@ describe('Sites service', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm',
             files: {
@@ -44,7 +44,7 @@ describe('Sites service', () => {
             }
         };
 
-        service = TestBed.get(SitesService);
+        service = TestBed.inject(SitesService);
         jasmine.Ajax.install();
     });
 

@@ -65,8 +65,8 @@ describe('AttachFolderWidgetComponent', () => {
         fixture = TestBed.createComponent(AttachFolderWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        contentNodeDialogService = TestBed.get(ContentNodeDialogService);
-        nodeService = TestBed.get(NodesApiService);
+        contentNodeDialogService = TestBed.inject(ContentNodeDialogService);
+        nodeService = TestBed.inject(NodesApiService);
     }));
 
     afterEach(() => {

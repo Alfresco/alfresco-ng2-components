@@ -26,7 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditTaskFilterCloudComponent } from './components/edit-task-filter-cloud.component';
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-cloud.component';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @NgModule({
     imports: [
@@ -44,9 +44,6 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS }
-    ],
-    entryComponents: [
-        TaskFilterDialogCloudComponent
     ]
 })
 export class TaskFiltersCloudModule { }

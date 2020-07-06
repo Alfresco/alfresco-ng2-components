@@ -50,8 +50,8 @@ describe('Notification History Component', () => {
         fixture = TestBed.createComponent(NotificationHistoryComponent);
         element = fixture.nativeElement;
 
-        storage = TestBed.get(StorageService);
-        notificationService = TestBed.get(NotificationService);
+        storage = TestBed.inject(StorageService);
+        notificationService = TestBed.inject(NotificationService);
     }));
 
     beforeEach(inject([OverlayContainer], (oc: OverlayContainer) => {

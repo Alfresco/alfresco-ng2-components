@@ -20,7 +20,7 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TagPage {
 
-    addTagButton = element(by.css('button[id="add-tag"]'));
+    addTagButton = element(by.id('add-tag'));
     insertNodeIdElement = element(by.css('input[id="nodeId"]'));
     newTagInput = element(by.css('input[id="new-tag-text"]'));
     tagListRow = element(by.css('adf-tag-node-actions-list mat-list-item'));
@@ -50,11 +50,11 @@ export class TagPage {
         await this.clickConfirmTag();
     }
 
-    async addNewTagInput(tag) {
+    async addNewTagInput(tag: string) {
         await BrowserActions.clearSendKeys(this.newTagInput, tag);
     }
 
-    async addTag(tag): Promise<void> {
+    async addTag(tag: string): Promise<void> {
         await this.addNewTagInput(tag);
         await BrowserActions.click(this.addTagButton);
     }
@@ -94,12 +94,12 @@ export class TagPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
-    async checkTagIsNotDisplayedInTagListByNodeId(tagName): Promise<void> {
+    async checkTagIsNotDisplayedInTagListByNodeId(tagName: string): Promise<void> {
         const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
         await BrowserVisibility.waitUntilElementIsNotVisible(tag);
     }
 
-    async checkTagIsDisplayedInTagListByNodeId(tagName): Promise<void> {
+    async checkTagIsDisplayedInTagListByNodeId(tagName: string): Promise<void> {
         const tag = element(by.cssContainingText('span[id*="tag_name"]', tagName));
         await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
@@ -112,8 +112,8 @@ export class TagPage {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.tagListByNodeIdRow);
     }
 
-    async checkTagIsDisplayedInTagListContentServices(tagName): Promise<void> {
-        const tag = element(by.cssContainingText('div[class="adf-list-tag"][id*="tag_name"]', tagName));
+    async checkTagIsDisplayedInTagListContentServices(tagName: string): Promise<void> {
+        const tag = element(by.cssContainingText('.adf-list-tag[id*="tag_name"]', tagName));
         await BrowserVisibility.waitUntilElementIsVisible(tag);
     }
 

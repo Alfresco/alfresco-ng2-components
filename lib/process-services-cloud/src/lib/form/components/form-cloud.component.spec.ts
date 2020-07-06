@@ -66,8 +66,7 @@ describe('FormCloudComponent', () => {
 
     @NgModule({
         declarations: [CustomWidget],
-        exports: [CustomWidget],
-        entryComponents: [CustomWidget]
+        exports: [CustomWidget]
     })
     class CustomUploadModule { }
 
@@ -75,7 +74,7 @@ describe('FormCloudComponent', () => {
         const resolver = formRenderingService.getComponentTypeResolver(type);
         const widgetType = resolver(null);
 
-        const factoryResolver: ComponentFactoryResolver = TestBed.get(ComponentFactoryResolver);
+        const factoryResolver: ComponentFactoryResolver = TestBed.inject(ComponentFactoryResolver);
         const factory = factoryResolver.resolveComponentFactory(widgetType);
         const componentRef = factory.create(injector);
 
@@ -107,15 +106,15 @@ describe('FormCloudComponent', () => {
     });
 
     beforeEach(async(() => {
-        formRenderingService = TestBed.get(CloudFormRenderingService);
-        formCloudService = TestBed.get(FormCloudService);
+        formRenderingService = TestBed.inject(CloudFormRenderingService);
+        formCloudService = TestBed.inject(FormCloudService);
 
-        translateService = TestBed.get(TranslateService);
+        translateService = TestBed.inject(TranslateService);
 
-        visibilityService = TestBed.get(WidgetVisibilityService);
+        visibilityService = TestBed.inject(WidgetVisibilityService);
         spyOn(visibilityService, 'refreshVisibility').and.callThrough();
 
-        const appConfigService = TestBed.get(AppConfigService);
+        const appConfigService = TestBed.inject(AppConfigService);
         spyOn(appConfigService, 'get').and.returnValue([]);
 
         fixture = TestBed.createComponent(FormCloudComponent);
@@ -1048,7 +1047,7 @@ describe('FormCloudComponent', () => {
 
 class FormCloudWithCustomOutComesComponent {
 
-    @ViewChild('adfCloudForm')
+    @ViewChild('adfCloudForm', { static: true })
     adfCloudForm: FormCloudComponent;
 
     onCustomButtonOneClick() { }
@@ -1091,7 +1090,9 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         fixture.destroy();
     });
 
-    it('should be able to inject custom outcomes and click on custom outcomes', () => {
+    it('should be able to inject custom outcomes and click on custom outcomes', async(() => {
+        fixture.detectChanges();
+
         const onCustomButtonOneSpy = spyOn(customComponent, 'onCustomButtonOneClick').and.callThrough();
         const buttonOneBtn = debugElement.query(By.css('#adf-custom-outcome-1'));
         const buttonTwoBtn = debugElement.query(By.css('#adf-custom-outcome-2'));
@@ -1099,8 +1100,10 @@ describe('FormCloudWithCustomOutComesComponent', () => {
         expect(buttonTwoBtn).not.toBeNull();
 
         buttonOneBtn.nativeElement.click();
+        fixture.detectChanges();
+
         expect(onCustomButtonOneSpy).toHaveBeenCalled();
         expect(buttonOneBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-1');
         expect(buttonTwoBtn.nativeElement.innerText).toBe('CUSTOM-BUTTON-2');
-    });
+    }));
 });

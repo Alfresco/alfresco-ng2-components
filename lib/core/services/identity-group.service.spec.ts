@@ -56,9 +56,9 @@ describe('IdentityGroupService', () => {
     });
 
     beforeEach(async(() => {
-        service = TestBed.get(IdentityGroupService);
-        apiService = TestBed.get(AlfrescoApiService);
-        logService = TestBed.get(LogService);
+        service = TestBed.inject(IdentityGroupService);
+        apiService = TestBed.inject(AlfrescoApiService);
+        logService = TestBed.inject(LogService);
     }));
 
     it('should be able to fetch groups based on group name', (done) => {

@@ -43,14 +43,14 @@ describe('AuthenticationService', () => {
     beforeEach(() => {
         sessionStorage.clear();
         localStorage.clear();
-        apiService = TestBed.get(AlfrescoApiService);
-        authService = TestBed.get(AuthenticationService);
+        apiService = TestBed.inject(AlfrescoApiService);
+        authService = TestBed.inject(AuthenticationService);
 
-        cookie = TestBed.get(CookieService);
+        cookie = TestBed.inject(CookieService);
         cookie.clear();
 
         jasmine.Ajax.install();
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
         appConfigService.config.pagination = {
             supportedPageSizes: []
         };

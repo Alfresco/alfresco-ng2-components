@@ -35,7 +35,7 @@ const column = {
 export class TaskListCloudComponentPage {
 
     taskList = element(by.css('adf-cloud-task-list'));
-    noTasksFound = element.all(by.css("div[class='adf-empty-content__title']")).first();
+    noTasksFound = element.all(by.css('.adf-empty-content__title')).first();
     actionMenu = element(by.css('*[role="menu"]'));
     optionButton = by.css('button[data-automation-id*="action_menu_"]');
 

@@ -19,7 +19,7 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivitiContentService, AppConfigService, FormService, setupTestBed, AppsProcessService } from '@alfresco/adf-core';
 import { of, throwError } from 'rxjs';
-
+import { MatSelectChange } from '@angular/material/select';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ProcessService } from '../services/process.service';
 import {
@@ -71,13 +71,13 @@ describe('StartFormComponent', () => {
     };
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        activitiContentService = TestBed.get(ActivitiContentService);
+        appConfig = TestBed.inject(AppConfigService);
+        activitiContentService = TestBed.inject(ActivitiContentService);
         fixture = TestBed.createComponent(StartProcessInstanceComponent);
         component = fixture.componentInstance;
-        processService = TestBed.get(ProcessService);
-        formService = TestBed.get(FormService);
-        appsProcessService = TestBed.get(AppsProcessService);
+        processService = TestBed.inject(ProcessService);
+        formService = TestBed.inject(FormService);
+        appsProcessService = TestBed.inject(AppsProcessService);
 
         getDefinitionsSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of(testMultipleProcessDefs));
         startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(of(newProcess));
@@ -560,11 +560,12 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             component.name = 'My new process';
             component.showSelectApplicationDropdown = true;
-            getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of(deployedApps));
         });
 
-        it('Should be able to show application drop-down and respective process definitions if showSelectApplicationDropdown set to true', () => {
+        it('Should be able to show application drop-down if showSelectApplicationDropdown set to true', () => {
+            getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
+
             const change = new SimpleChange(null, 3, true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
@@ -580,21 +581,25 @@ describe('StartFormComponent', () => {
             expect(component.selectedApplication).toEqual(deployedApps[2]);
             expect(component.selectedApplication.id).toEqual(component.appId);
             expect(component.selectedApplication.name).toEqual('App3');
+        });
 
-            expect(getDefinitionsSpy).toHaveBeenCalledWith(mockAppId);
-            expect(component.processDefinitions.length).toEqual(2);
-            expect(component.processDefinitions[0].name).toEqual('My Process 1');
-            expect(component.processDefinitions[1].name).toEqual('My Process 2');
+        it('Should not be able to show application drop-down if showSelectApplicationDropdown set to false', () => {
+            component.showSelectApplicationDropdown = false;
+            fixture.detectChanges();
+            const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            expect(appsSelector).toBeNull();
         });
 
         it('Should be able to list process-definition based on selected application', () => {
+            getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
+
             const change = new SimpleChange(null, 3, true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
+
             expect(component.appId).toBe(component.selectedApplication.id);
             expect(component.selectedApplication).toEqual(deployedApps[2]);
             expect(component.selectedApplication.name).toEqual('App3');
-
             expect(getDefinitionsSpy).toHaveBeenCalledWith(mockAppId);
             expect(component.processDefinitions.length).toEqual(2);
             expect(component.processDefinitions[0].name).toEqual('My Process 1');
@@ -604,7 +609,7 @@ describe('StartFormComponent', () => {
             getDefinitionsSpy.and.returnValue(of([ { id: 'my:process 3', name: 'My Process 3', hasStartForm: true } ]));
             fixture.detectChanges();
 
-            const newApplication = {value: deployedApps[1]};
+            const newApplication = <MatSelectChange> { value: deployedApps[1] };
             component.onAppSelectionChange(newApplication);
             fixture.detectChanges();
 
@@ -616,8 +621,10 @@ describe('StartFormComponent', () => {
             expect(component.processDefinitions[0].name).toEqual('My Process 3');
         });
 
-        it('Should be able to select an application if the list has one application', () => {
+        it('Should be able to pre-select an application if the list has one application', () => {
             getDeployedApplicationsSpy.and.returnValues(of([deployedApps[0]]));
+            getDefinitionsSpy.and.returnValue(of(testMultipleProcessDefs));
+
             const change = new SimpleChange(null, 123, true);
             component.ngOnChanges({ 'appId': change });
             fixture.detectChanges();
@@ -626,7 +633,74 @@ describe('StartFormComponent', () => {
             expect(component.selectedApplication.name).toEqual('App1');
         });
 
-        it('Should be able to select an application from the apps as default application when given appId is defined', () => {
+        it('[C333511] Should be able to preselect single app deployed with single process and start event Form', async() => {
+            getDeployedApplicationsSpy.and.returnValues(of([deployedApps[0]]));
+            getDefinitionsSpy.and.returnValues(of(testProcessDefWithForm));
+
+            const change = new SimpleChange(null, 123, true);
+            component.appId = 123;
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const appsSelectElement = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+            const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+            const startBtn = fixture.nativeElement.querySelector('[data-automation-id="adf-form-start process"]');
+            const adfStartForm = fixture.nativeElement.querySelector('adf-start-form');
+
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(getDefinitionsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toEqual(1);
+            expect(component.processDefinitions.length).toEqual(1);
+            expect(component.selectedApplication.name).toEqual('App1');
+            expect(component.selectedProcessDef.name).toEqual('My Process 1');
+
+            expect(appsSelectElement).not.toBeNull();
+            expect(processDefinitionSelectInput).not.toBeNull();
+            expect(processNameInput).not.toBeNull();
+
+            expect(adfStartForm).not.toBeNull();
+            expect(startBtn).not.toBeNull();
+            expect(cancelButton).not.toBeNull();
+        });
+
+        it('[C333511] Should be able to preselect single app deployed with single process and no form', async() => {
+            getDeployedApplicationsSpy.and.returnValues(of([deployedApps[0]]));
+            getDefinitionsSpy.and.returnValues(of(testProcessDefinitions));
+
+            const change = new SimpleChange(null, 123, true);
+            component.appId = 123;
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const appsSelectElement = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+            const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+            const startBtn = fixture.nativeElement.querySelector('#button-start');
+            const adfStartForm = fixture.nativeElement.querySelector('adf-start-form');
+
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(getDefinitionsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toEqual(1);
+            expect(component.processDefinitions.length).toEqual(1);
+
+            expect(component.selectedApplication.name).toEqual('App1');
+            expect(component.selectedProcessDef.name).toEqual('My Process 1');
+
+            expect(appsSelectElement).not.toBeNull();
+            expect(processDefinitionSelectInput).not.toBeNull();
+            expect(processNameInput).not.toBeNull();
+
+            expect(adfStartForm).toBeNull();
+            expect(startBtn).not.toBeNull();
+            expect(cancelButton).not.toBeNull();
+        });
+
+        it('Should be able to pre-select an application from the apps based given appId', () => {
             component.appId = 2;
             const change = new SimpleChange(null, 2, true);
             component.ngOnChanges({ 'appId': change });
@@ -636,13 +710,6 @@ describe('StartFormComponent', () => {
             expect(component.selectedApplication.id).toEqual(component.appId);
             expect(component.selectedApplication.id).toEqual(2);
             expect(component.selectedApplication.name).toEqual('App2');
-        });
-
-        it('Should not be able to show application drop-down if showSelectApplicationDropdown set to false', () => {
-            component.showSelectApplicationDropdown = false;
-            fixture.detectChanges();
-            const appsSelector = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
-            expect(appsSelector).toBeNull();
         });
 
         it('Should be able to disable process name and definitions inputs if there is no application selected by default', () => {
@@ -704,13 +771,98 @@ describe('StartFormComponent', () => {
             expect(processDefinitionSelectInput.disabled).toEqual(false);
             expect(processNameInput.disabled).toEqual(false);
         });
+
+        it('[C333521] Should be able to pre-select single deployed application with multiple processes', () => {
+            const singleDeployedApp = deployedApps[0];
+            const mockAppid = 1;
+            getDeployedApplicationsSpy.and.returnValues(of([singleDeployedApp]));
+
+            const change = new SimpleChange(null, mockAppid, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+
+            expect(getDeployedApplicationsSpy).toHaveBeenCalled();
+            expect(component.applications.length).toBe(1);
+            expect(component.selectedApplication).toEqual(singleDeployedApp);
+
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(mockAppid);
+            expect(component.processDefinitions.length).toEqual(2);
+
+            const processDefWithStartForm = testMultipleProcessDefs[1];
+            component.processDefinitionSelectionChanged(processDefWithStartForm);
+            fixture.detectChanges();
+            const processWithStartForm = fixture.nativeElement.querySelector('adf-start-form');
+
+            expect(processWithStartForm).not.toBeNull();
+            expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithStartForm.hasStartForm);
+
+            const processDefWithNoStartForm = testMultipleProcessDefs[0];
+            component.processDefinitionSelectionChanged(processDefWithNoStartForm);
+            fixture.detectChanges();
+            const processWithNoStartForm = fixture.nativeElement.querySelector('adf-start-form');
+
+            expect(processWithNoStartForm).toBeNull();
+            expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithNoStartForm.hasStartForm);
+        });
+
+        it('[C333522] Should be able to list multiple deployed apps with multiple process', async() => {
+
+            const change = new SimpleChange(null, 123, true);
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+
+            const application1 =  deployedApps[0];
+            const application2 =  deployedApps[1];
+            const application3 =  deployedApps[2];
+
+            expect(component.applications.length).toBe(6);
+
+            const processDefWithStartForm = testProcessDefWithForm[0];
+            getDefinitionsSpy.and.returnValues(of([processDefWithStartForm]));
+            component.onAppSelectionChange(<MatSelectChange> { value: application1 });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const processWithStartForm = fixture.nativeElement.querySelector('adf-start-form');
+
+            expect(processWithStartForm).not.toBeNull();
+            expect(component.selectedApplication).toEqual(application1);
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(application1.id);
+            expect(component.processDefinitions.length).toEqual(1);
+            expect(component.selectedProcessDef.name).toEqual(processDefWithStartForm.name);
+            expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithStartForm.hasStartForm);
+
+            getDefinitionsSpy.and.returnValues(of(testMultipleProcessDefs));
+            component.onAppSelectionChange(<MatSelectChange> { value: application2 });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(component.selectedApplication).toEqual(application2);
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(application2.id);
+            expect(component.processDefinitions.length).toEqual(2);
+
+            const processDefWithNoStartForm = testMultipleProcessDefs[0];
+            getDefinitionsSpy.and.returnValues(of([processDefWithNoStartForm]));
+            component.onAppSelectionChange(<MatSelectChange> { value: application3 });
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const processWithNoStartForm = fixture.nativeElement.querySelector('adf-start-form');
+
+            expect(processWithNoStartForm).toBeNull();
+            expect(component.selectedApplication).toEqual(application3);
+
+            expect(getDefinitionsSpy).toHaveBeenCalledWith(application3.id);
+            expect(component.processDefinitions.length).toEqual(1);
+            expect(component.selectedProcessDef.name).toEqual(processDefWithNoStartForm.name);
+            expect(component.selectedProcessDef.hasStartForm).toEqual(processDefWithNoStartForm.hasStartForm);
+        });
    });
 
     describe('Empty Template', () => {
 
-        it('should show no process definition available template when application/process definitions are empty', async() => {
+        it('[333510] Should be able to show empty template when no applications deployed', async() => {
             getDeployedApplicationsSpy = spyOn(appsProcessService, 'getDeployedApplications').and.returnValue(of([]));
-            getDefinitionsSpy.and.returnValue(of([]));
 
             component.showSelectApplicationDropdown = true;
             component.appId = 3;
@@ -718,20 +870,38 @@ describe('StartFormComponent', () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+            const appsSelectElement = fixture.nativeElement.querySelector('[data-automation-id="adf-start-process-apps-drop-down"]');
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+            const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+            const startBtn = fixture.nativeElement.querySelector('#button-start');
 
+            expect(appsSelectElement).toBeNull();
+            expect(processDefinitionSelectInput).toBeNull();
+            expect(processNameInput).toBeNull();
+            expect(startBtn).toBeNull();
+            expect(cancelButton).toBeNull();
             expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
         });
 
-        it('should show no process definition available template if processDefinitions are empty', async() => {
+        it('Should be able to show empty template if processDefinitions are empty', async() => {
             getDefinitionsSpy.and.returnValue(of([]));
 
-            component.appId = 3;
+            component.appId = 1;
             component.ngOnInit();
             fixture.detectChanges();
             await fixture.whenStable();
             const noProcessElement = fixture.nativeElement.querySelector('.adf-empty-content__title');
+            const processDefinitionSelectInput = fixture.nativeElement.querySelector('#processDefinitionName');
+            const processNameInput = fixture.nativeElement.querySelector('#processName');
+            const cancelButton = fixture.nativeElement.querySelector('#cancel_process');
+            const startBtn = fixture.nativeElement.querySelector('#button-start');
 
+            expect(processDefinitionSelectInput).toBeNull();
+            expect(processNameInput).toBeNull();
+            expect(startBtn).toBeNull();
+            expect(cancelButton).toBeNull();
             expect(noProcessElement).not.toBeNull('Expected no available process message to be present');
             expect(noProcessElement.innerText.trim()).toBe('ADF_PROCESS_LIST.START_PROCESS.NO_PROCESS_DEFINITIONS');
         });

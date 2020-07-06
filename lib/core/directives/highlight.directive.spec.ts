@@ -93,7 +93,7 @@ describe('HighlightDirective', () => {
     });
 
     it('should NOT reinsert the same text to the innerText if there was no change at all (search string is not found)', () => {
-        const highlighter = TestBed.get(HighlightTransformService);
+        const highlighter = TestBed.inject(HighlightTransformService);
         spyOn(highlighter, 'highlight').and.returnValue({ changed: false, text: 'Modified text' });
         component.highlightDirectives.first.highlight('salana-eyong-aysis');
         fixture.detectChanges();
@@ -104,7 +104,7 @@ describe('HighlightDirective', () => {
     });
 
     it('should do the search only if there is a search string presented', () => {
-        const highlighter = TestBed.get(HighlightTransformService);
+        const highlighter = TestBed.inject(HighlightTransformService);
         spyOn(highlighter, 'highlight').and.callThrough();
         component.highlightDirectives.first.highlight('');
         fixture.detectChanges();
@@ -113,7 +113,7 @@ describe('HighlightDirective', () => {
     });
 
     it('should do the search only if there is a node selector string presented', () => {
-        const highlighter = TestBed.get(HighlightTransformService);
+        const highlighter = TestBed.inject(HighlightTransformService);
         spyOn(highlighter, 'highlight').and.callThrough();
 
         const callback = function() {

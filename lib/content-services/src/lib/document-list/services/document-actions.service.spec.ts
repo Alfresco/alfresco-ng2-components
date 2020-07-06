@@ -47,7 +47,7 @@ describe('DocumentActionsService', () => {
 
     beforeEach(() => {
         const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        const contentService = TestBed.get(ContentService);
+        const contentService = TestBed.inject(ContentService);
 
         documentListService = new DocumentListService(contentService, alfrescoApiService, null, null);
         service = new DocumentActionsService(null, null, new TranslationMock(), documentListService, contentService);

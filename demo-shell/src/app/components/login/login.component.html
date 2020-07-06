@@ -4,7 +4,7 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="switch3"
-            [color]="'primary'"
+            color="primary"
             (change)="toggleCSRF()"
             [checked]="!disableCsrf">
             CSRF
@@ -13,7 +13,7 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="switch4"
-            [color]="'primary'"
+            color="primary"
             (change)="toggleFooter()"
             [checked]="showFooter">
             {{ 'LOGIN.LOGIN_FOOTER'| translate }}
@@ -22,7 +22,7 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="adf-toggle-show-rememberme"
-            [color]="'primary'"
+            color="primary"
             (change)="toggleRememberMe()"
             [checked]="showRememberMe">
             {{ 'LOGIN.SHOW_REMEMBERME'| translate }}
@@ -31,7 +31,7 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="adf-toggle-show-successRoute"
-            [color]="'primary'"
+            color="primary"
             (change)="toggleSuccessRoute()"
             [checked]="customSuccessRoute">
             {{ 'LOGIN.SHOW_SUCCESS_ROUTE'| translate }}
@@ -51,7 +51,7 @@
     <p class="app-toggle">
         <mat-slide-toggle
             id="adf-toggle-logo"
-            [color]="'primary'"
+            color="primary"
             (change)="toggleLogo()"
             [checked]="customLogoImage">
             {{ 'LOGIN.CUSTOM_LOGO'| translate }}
@@ -77,13 +77,10 @@
 </a>
 
 <adf-login
-    #alfrescoLogin
     [successRoute]="customSuccessRouteURI"
     [logoImageUrl]="customLogoImageURL"
-    [fieldsValidation]="customValidation"
     [showLoginActions]="showFooter"
     [showRememberMe]="showFooter && showRememberMe"
-    (executeSubmit)="checkForm($event)"
     copyrightText="{{ 'application.copyright' | adfAppConfig }}"
     (success)="onLogin()"
     (error)="onError($event)">
@@ -91,7 +88,7 @@
         <p>
             <mat-slide-toggle
                 id="switch3-mobile"
-                [color]="'primary'"
+                color="primary"
                 (change)="toggleCSRF()"
                 [checked]="!disableCsrf">
                 CSRF
@@ -100,14 +97,19 @@
         <p>
             <mat-slide-toggle
                 id="switch4-mobile"
-                [color]="'primary'"
+                color="primary"
                 (change)="toggleFooter()"
                 [checked]="showFooter">
                 {{ 'LOGIN.LOGIN_FOOTER'| translate }}
             </mat-slide-toggle>
         </p>
-        <button type="button" mat-raised-button color="accent" class="app-mobile-setting-button" routerLink="/settings"
-                data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}
+        <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            class="app-mobile-setting-button"
+            routerLink="/settings"
+            data-automation-id="settings">{{ 'APP_LAYOUT.SETTINGS'| translate }}
         </button>
 
     </div>

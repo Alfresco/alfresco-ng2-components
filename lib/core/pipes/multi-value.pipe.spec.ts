@@ -33,7 +33,7 @@ describe('FullNamePipe', () => {
     });
 
     beforeEach(() => {
-        pipe = TestBed.get(MultiValuePipe);
+        pipe = TestBed.inject(MultiValuePipe);
    });
 
     it('should add the separator when a list is provided', () => {

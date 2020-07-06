@@ -40,7 +40,7 @@ describe('SearchComponent', () => {
         fixture = TestBed.createComponent(SimpleSearchTestComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        searchService = TestBed.get(SearchService);
+        searchService = TestBed.inject(SearchService);
     });
 
     describe('search results', () => {

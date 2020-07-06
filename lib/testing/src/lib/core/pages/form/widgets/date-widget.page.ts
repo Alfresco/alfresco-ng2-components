@@ -21,51 +21,51 @@ import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DateWidgetPage {
 
-    formFields: FormFields = new FormFields();
+    formFields = new FormFields();
 
-    async checkWidgetIsVisible(fieldId): Promise<void> {
+    async checkWidgetIsVisible(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async checkLabelIsVisible(fieldId): Promise<void> {
+    async checkLabelIsVisible(fieldId: string): Promise<void> {
         await this.formFields.checkWidgetIsVisible(fieldId);
     }
 
-    async getDateLabel(fieldId): Promise<string> {
+    async getDateLabel(fieldId: string): Promise<string> {
         const label = element.all(by.css(`adf-form-field div[id="field-${fieldId}-container"] label`)).first();
         return BrowserActions.getText(label);
     }
 
-    async setDateInput(fieldId, value): Promise<void> {
+    async setDateInput(fieldId: string, value: string): Promise<void> {
         await this.removeFromDatetimeWidget(fieldId);
         await this.formFields.setValueInInputById(fieldId, value);
     }
 
-    async getDateInput(fieldId): Promise<string> {
+    async getDateInput(fieldId: string): Promise<string> {
         return this.formFields.getFieldValue(fieldId);
     }
 
-    async clearDateInput(fieldId): Promise<void> {
+    async clearDateInput(fieldId: string): Promise<void> {
         const dateInput = element(by.id(fieldId));
         await BrowserActions.clearWithBackSpace(dateInput);
     }
 
-    async clickOutsideWidget(fieldId): Promise<void> {
+    async clickOutsideWidget(fieldId: string): Promise<void> {
         const form = await this.formFields.getWidget(fieldId);
         await BrowserActions.click(form);
     }
 
-    async checkErrorMessageIsNotDisplayed(fieldId): Promise<void> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+    async checkErrorMessageIsNotDisplayed(fieldId: string): Promise<void> {
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
         await BrowserVisibility.waitUntilElementIsNotVisible(errorMessage);
     }
 
-    async getErrorMessage(fieldId): Promise<string> {
-        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] div[class="adf-error-text"]`));
+    async getErrorMessage(fieldId: string): Promise<string> {
+        const errorMessage = element(by.css(`adf-form-field div[id="field-${fieldId}-container"] .adf-error-text`));
         return BrowserActions.getText(errorMessage);
     }
 
-    async removeFromDatetimeWidget(fieldId): Promise<void> {
+    async removeFromDatetimeWidget(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
         await BrowserVisibility.waitUntilElementIsVisible(widget);
         await BrowserActions.clearSendKeys(element(by.id(fieldId)), '');

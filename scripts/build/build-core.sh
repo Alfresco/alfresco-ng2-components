@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Core ======"
 echo "====== Build ======"
-npm run ng-packagr -- -p ./lib/core/ || exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building core for production"
+    npm run ng -- build core --prod || exit 1
+else
+    echo "Building core for development"
+    npm run ng -- build core || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-core-scss.js || exit 1
@@ -20,8 +27,3 @@ cp -R ./lib/core/assets/* ./lib/dist/core/bundles/assets
 
 npm run webpack -- --config ./lib/config/webpack.style.js --progress --profile --bail
 rm ./lib/dist/core/prebuilt-themes/*.js
-
-echo "====== Move to node_modules ======"
-rm -rf ./node_modules/@alfresco/adf-core/ && \
-mkdir -p ./node_modules/@alfresco/adf-core/ && \
-cp -R ./lib/dist/core/* ./node_modules/@alfresco/adf-core/

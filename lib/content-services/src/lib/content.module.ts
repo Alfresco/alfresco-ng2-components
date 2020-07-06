@@ -96,7 +96,7 @@ import { TreeViewModule } from './tree-view/tree-view.module';
     ]
 })
 export class ContentModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<ContentModule> {
         return {
             ngModule: ContentModule,
             providers: [
@@ -112,7 +112,7 @@ export class ContentModule {
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<ContentModule> {
         return {
             ngModule: ContentModule
         };

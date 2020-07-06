@@ -60,5 +60,4 @@ import { TranslateModule } from '@ngx-translate/core';
         HeaderLayoutComponent
     ]
 })
-export class LayoutModule {}
-export { LayoutModule as SidenavLayoutModule };
+export class SidenavLayoutModule {}

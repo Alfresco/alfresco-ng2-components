@@ -21,7 +21,7 @@ import { TasksListPage } from '../../process-services/tasks-list.page';
 
 export class TaskListDemoPage {
 
-    taskListPage: TasksListPage = new TasksListPage();
+    taskListPage = new TasksListPage();
     appId = element(by.css("input[data-automation-id='appId input']"));
     itemsPerPage = element(by.css("input[data-automation-id='items per page']"));
     itemsPerPageForm = element(by.css("mat-form-field[data-automation-id='items per page']"));
@@ -30,7 +30,7 @@ export class TaskListDemoPage {
     page = element(by.css("input[data-automation-id='page']"));
     pageForm = element(by.css("mat-form-field[data-automation-id='page']"));
     taskName = element(by.css("input[data-automation-id='task name']"));
-    resetButton = element(by.css("div[class='app-reset-button'] button"));
+    resetButton = element(by.css('.app-reset-button button'));
     dueBefore = element(by.css("input[data-automation-id='due before']"));
     dueAfter = element(by.css("input[data-automation-id='due after']"));
     taskId = element(by.css("input[data-automation-id='task id']"));

@@ -16,7 +16,7 @@
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ContentModule, ContentNodeSelectorPanelComponent } from '@alfresco/adf-content-services';
 import { EventEmitter } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';

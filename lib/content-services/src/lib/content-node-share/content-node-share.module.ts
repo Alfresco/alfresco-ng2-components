@@ -35,19 +35,16 @@ import { NodeSharedDirective } from './content-node-share.directive';
     exports: [
         ShareDialogComponent,
         NodeSharedDirective
-    ],
-    entryComponents: [
-        ShareDialogComponent
     ]
 })
 export class ContentNodeShareModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<ContentNodeShareModule> {
         return {
             ngModule: ContentNodeShareModule
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<ContentNodeShareModule> {
         return {
             ngModule: ContentNodeShareModule
         };

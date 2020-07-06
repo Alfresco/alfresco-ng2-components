@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';

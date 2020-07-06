@@ -42,7 +42,7 @@ describe('TaskAttachmentList', () => {
         fixture = TestBed.createComponent(FormListComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-        service = TestBed.get(FormService);
+        service = TestBed.inject(FormService);
 
     }));
 

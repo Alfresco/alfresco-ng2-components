@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
 import {
@@ -184,13 +184,13 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     deleteElementSuccess: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('documentList')
+    @ViewChild('documentList', { static: true })
     documentList: DocumentListComponent;
 
     @ViewChild('standardPagination')
     standardPagination: PaginationComponent;
 
-    @ViewChild(InfinitePaginationComponent)
+    @ViewChild(InfinitePaginationComponent, { static: true })
     infinitePaginationComponent: InfinitePaginationComponent;
 
     @ViewChild(HighlightDirective)

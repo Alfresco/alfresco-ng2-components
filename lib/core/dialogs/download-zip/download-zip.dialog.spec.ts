@@ -16,7 +16,7 @@
  */
 
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DownloadZipDialogComponent } from './download-zip.dialog';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -54,7 +54,7 @@ describe('DownloadZipDialogComponent', () => {
     beforeEach(() => {
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(DownloadZipDialogComponent);
-        downloadZipService = TestBed.get(DownloadZipService);
+        downloadZipService = TestBed.inject(DownloadZipService);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
     });

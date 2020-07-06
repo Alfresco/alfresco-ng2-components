@@ -51,9 +51,9 @@ describe('PermissionDisplayComponent', () => {
         fixture = TestBed.createComponent(PermissionListComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        nodeService = TestBed.get(NodesApiService);
-        nodePermissionService = TestBed.get(NodePermissionService);
-        searchApiService = TestBed.get(SearchService);
+        nodeService = TestBed.inject(NodesApiService);
+        nodePermissionService = TestBed.inject(NodePermissionService);
+        searchApiService = TestBed.inject(SearchService);
     });
 
     afterEach(() => {

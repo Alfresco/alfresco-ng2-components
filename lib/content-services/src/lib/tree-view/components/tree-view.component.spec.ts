@@ -83,7 +83,7 @@ describe('TreeViewComponent', () => {
     describe('When there is a nodeId', () => {
 
         beforeEach(async(() => {
-            treeService = TestBed.get(TreeViewService);
+            treeService = TestBed.inject(TreeViewService);
             fixture = TestBed.createComponent(TreeViewComponent);
             element = fixture.nativeElement;
             component = fixture.componentInstance;
@@ -229,7 +229,7 @@ describe('TreeViewComponent', () => {
 
         beforeEach(async(() => {
             fixture = TestBed.createComponent(TreeViewComponent);
-            treeService = TestBed.get(TreeViewService);
+            treeService = TestBed.inject(TreeViewService);
             spyOn(treeService, 'getTreeNodes').and.callFake(() => throwError('Invalid Node Id'));
             fixture.componentInstance.nodeId = 'Poopoovic';
         }));

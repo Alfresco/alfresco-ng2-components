@@ -34,7 +34,7 @@ describe('DirectionalityConfigService', () => {
     });
 
     beforeEach(() => {
-        userPreferencesService = TestBed.get(UserPreferencesService);
+        userPreferencesService = TestBed.inject(UserPreferencesService);
     });
 
     it('should set document direction on textOrientation event to `rtl`', () => {

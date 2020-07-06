@@ -20,7 +20,7 @@
 import { MOMENT_DATE_FORMATS, MomentDateAdapter, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 import { Subject } from 'rxjs';

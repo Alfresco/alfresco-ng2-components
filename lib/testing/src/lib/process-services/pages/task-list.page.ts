@@ -31,7 +31,7 @@ export class TaskListPage {
         this.rootElement = rootElement;
         this.dataTable = new DataTableComponentPage(this.rootElement);
         this.noTasksFound = this.rootElement.element(
-            by.css('div[class="adf-empty-content__title"]')
+            by.css('.adf-empty-content__title')
         );
     }
 
@@ -39,7 +39,7 @@ export class TaskListPage {
         return this.dataTable;
     }
 
-    getRowsDisplayedWithSameName(taskName): Promise<string> {
+    getRowsDisplayedWithSameName(taskName: string): Promise<string> {
         return this.dataTable.getRowsWithSameColumnValues('Name', taskName);
     }
 
@@ -59,7 +59,7 @@ export class TaskListPage {
         return BrowserActions.getText(this.noTasksFound);
     }
 
-    checkRowIsSelected(taskName): Promise<void> {
+    checkRowIsSelected(taskName: string): Promise<void> {
         return this.dataTable.checkRowIsSelected('Name', taskName);
     }
 

@@ -207,12 +207,12 @@ else
     if [[  $LITESERVER == "true" ]]; then
         echo "====== Run dist in lite-server ====="
 
-        ls demo-shell/dist/ || exit 1
+        ls dist/demo-shell/ || exit 1
 
         npm run postbuild:ci
 
-        npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+        npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
      else
-        $DEBUG_OPTION  ./node_modules/protractor/bin/protractor protractor.conf.ts || exit 1
+        $DEBUG_OPTION  ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
     fi
 fi

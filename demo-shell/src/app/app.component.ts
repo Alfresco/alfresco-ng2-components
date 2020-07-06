@@ -22,7 +22,7 @@ import {
     PageTitleService
 } from '@alfresco/adf-core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-root',

@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Content Services ======"
 echo "====== Build ======"
-npm run ng-packagr -- -p ./lib/content-services/ || exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building content-services for production"
+    npm run ng -- build content-services --prod || exit 1
+else
+    echo "Building content-services for development"
+    npm run ng -- build content-services || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-content-services-scss.js || exit 1
@@ -17,8 +24,3 @@ cp -R ./lib/content-services/src/lib/i18n/* ./lib/dist/content-services/bundles/
 
 echo "====== Copy assets ======"
 cp -R ./lib/content-services/src/lib/assets/* ./lib/dist/content-services/bundles/assets
-
-echo "====== Move to node_modules ======"
-rm -rf ./node_modules/@alfresco/adf-content-services/ && \
-mkdir -p ./node_modules/@alfresco/adf-content-services/ && \
-cp -R ./lib/dist/content-services/* ./node_modules/@alfresco/adf-content-services/

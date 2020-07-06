@@ -72,15 +72,15 @@ describe('TaskFormComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        taskListService = TestBed.get(TaskListService);
-        formService = TestBed.get(FormService);
+        taskListService = TestBed.inject(TaskListService);
+        formService = TestBed.inject(FormService);
 
         getTaskDetailsSpy = spyOn(taskListService, 'getTaskDetails').and.returnValue(of(taskDetailsMock));
         completeTaskSpy = spyOn(taskListService, 'completeTask').and.returnValue(of({}));
         spyOn(formService, 'getTaskForm').and.returnValue(of(taskFormMock));
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
-        authService = TestBed.get(AuthenticationService);
+        authService = TestBed.inject(AuthenticationService);
         getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ id: 1001, email: 'fake-email@gmail.com' }));
     });
 

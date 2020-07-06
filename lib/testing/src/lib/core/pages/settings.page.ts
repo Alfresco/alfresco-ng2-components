@@ -22,7 +22,7 @@ import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class SettingsPage {
 
-    settingsURL = browser.baseUrl + '/settings';
+    settingsURL: string = browser.baseUrl + '/settings';
     ecmText = element(by.css('input[data-automation-id*="ecmHost"]'));
     bpmText = element(by.css('input[data-automation-id*="bpmHost"]'));
     clientIdText = element(by.css('input[id="clientId"]'));
@@ -36,7 +36,7 @@ export class SettingsPage {
     implicitFlowLabel = element(by.css('mat-slide-toggle[name="implicitFlow"] label'));
     implicitFlowElement = element(by.css('mat-slide-toggle[name="implicitFlow"]'));
     applyButton = element(by.css('button[data-automation-id*="host-button"]'));
-    backButton = element(by.cssContainingText('button span[class="mat-button-wrapper"]', 'Back'));
+    backButton = element(by.cssContainingText('button .mat-button-wrapper', 'Back'));
     validationMessage = element(by.cssContainingText('mat-error', 'This field is required'));
 
     providerDropdown = new DropdownPage(element(by.css('mat-select[id="adf-provider-selector"]')));

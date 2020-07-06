@@ -40,10 +40,10 @@ describe('PageTitleService', () => {
     });
 
     beforeEach(() => {
-        titleService = TestBed.get(Title);
-        pageTitleService = TestBed.get(PageTitleService);
-        translationService = TestBed.get(TranslationService);
-        appConfigService = TestBed.get(AppConfigService);
+        titleService = TestBed.inject(Title);
+        pageTitleService = TestBed.inject(PageTitleService);
+        translationService = TestBed.inject(TranslationService);
+        appConfigService = TestBed.inject(AppConfigService);
 
         titleServiceSpy = spyOn(titleService, 'setTitle').and.callThrough();
 

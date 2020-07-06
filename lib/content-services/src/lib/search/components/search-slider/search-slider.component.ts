@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { SearchWidget } from '../../search-widget.interface';
 import { SearchWidgetSettings } from '../../search-widget-settings.interface';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
     selector: 'adf-search-slider',

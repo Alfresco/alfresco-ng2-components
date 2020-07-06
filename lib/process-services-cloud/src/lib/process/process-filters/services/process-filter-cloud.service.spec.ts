@@ -52,10 +52,10 @@ describe('ProcessFilterCloudService', () => {
     });
 
     beforeEach(async(() => {
-        service = TestBed.get(ProcessFilterCloudService);
+        service = TestBed.inject(ProcessFilterCloudService);
 
         const preferenceCloudService = service.preferenceService;
-        const identityUserService = TestBed.get(IdentityUserService);
+        const identityUserService = TestBed.inject(IdentityUserService);
 
         createPreferenceSpy = spyOn(preferenceCloudService, 'createPreference').and.returnValue(of(fakeProcessCloudFilters));
         updatePreferenceSpy = spyOn(preferenceCloudService, 'updatePreference').and.returnValue(of(fakeProcessCloudFilters));

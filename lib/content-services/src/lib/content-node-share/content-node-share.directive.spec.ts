@@ -64,7 +64,7 @@ describe('NodeSharedDirective', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NodeShareTestComponent);
-        document = TestBed.get(DOCUMENT);
+        document = TestBed.inject(DOCUMENT);
         component = fixture.componentInstance;
 
         fixture.detectChanges();

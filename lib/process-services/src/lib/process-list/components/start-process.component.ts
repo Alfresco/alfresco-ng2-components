@@ -33,7 +33,8 @@ import { ProcessService } from './../services/process.service';
 import { FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Observable, Subject, forkJoin } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatSelectChange } from '@angular/material/select';
 import { StartFormComponent } from '../../form';
 import { MinimalNode, RelatedContentRepresentation } from '@alfresco/js-api';
 import { AppDefinitionRepresentationModel } from '../../task-list';
@@ -311,7 +312,7 @@ export class StartProcessInstanceComponent implements OnChanges, OnInit, OnDestr
         }
     }
 
-    onAppSelectionChange(selectedApplication: any) {
+    onAppSelectionChange(selectedApplication: MatSelectChange) {
         this.resetProcessDefinitions();
         this.selectedApplication = selectedApplication.value;
         this.applicationSelection.emit(this.selectedApplication);

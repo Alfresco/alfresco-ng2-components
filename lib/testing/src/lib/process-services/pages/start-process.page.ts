@@ -35,7 +35,7 @@ export class StartProcessPage {
     processDefinitionOptionsPanel = element(by.css('div[class*="mat-autocomplete-panel"]'));
 
     processDefinitionDropdown = new DropdownPage(element(by.id('adf-select-process-dropdown')));
-    applicationDropdown = new DropdownPage(element(by.css('[data-automation-id*="start-process-app"] div[class="mat-select-arrow"]')));
+    applicationDropdown = new DropdownPage(element(by.css('[data-automation-id*="start-process-app"] .mat-select-arrow')));
 
     async checkNoProcessMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noProcess);

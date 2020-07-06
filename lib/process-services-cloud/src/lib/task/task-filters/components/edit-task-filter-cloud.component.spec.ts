@@ -20,7 +20,7 @@ import { SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { setupTestBed } from '@alfresco/adf-core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
@@ -60,9 +60,9 @@ describe('EditTaskFilterCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EditTaskFilterCloudComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(TaskFilterCloudService);
-        appsService = TestBed.get(AppsProcessCloudService);
-        dialog = TestBed.get(MatDialog);
+        service = TestBed.inject(TaskFilterCloudService);
+        appsService = TestBed.inject(AppsProcessCloudService);
+        dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ afterClosed: of({
             action: TaskFilterDialogCloudComponent.ACTION_SAVE,
             icon: 'icon',

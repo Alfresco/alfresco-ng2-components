@@ -73,7 +73,7 @@ import { ProcessServicesPipeModule } from './pipes/process-services-pipe.module'
     ]
 })
 export class ProcessModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<ProcessModule> {
         return {
             ngModule: ProcessModule,
             providers: [
@@ -91,7 +91,7 @@ export class ProcessModule {
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<ProcessModule> {
         return {
             ngModule: ProcessModule
         };

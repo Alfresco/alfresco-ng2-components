@@ -20,6 +20,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
+// tslint:disable-next-line: directive-class-suffix
 export class HeaderDataService {
 
     show = true;

@@ -66,8 +66,8 @@ describe('IdentityUserService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(IdentityUserService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(IdentityUserService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
     });
 
     beforeEach(() => {

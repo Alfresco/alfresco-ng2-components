@@ -42,7 +42,7 @@ describe('CardViewMapItemComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(CardViewMapItemComponent);
-        service = TestBed.get(CardViewUpdateService);
+        service = TestBed.inject(CardViewUpdateService);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;

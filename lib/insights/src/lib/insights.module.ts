@@ -41,7 +41,7 @@ import { MaterialModule } from './material.module';
     ]
 })
 export class InsightsModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<InsightsModule> {
         return {
             ngModule: InsightsModule,
             providers: [
@@ -57,7 +57,7 @@ export class InsightsModule {
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<InsightsModule> {
         return {
             ngModule: InsightsModule
         };

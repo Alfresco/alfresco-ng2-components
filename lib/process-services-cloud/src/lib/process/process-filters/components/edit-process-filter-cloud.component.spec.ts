@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 
 import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.component';
@@ -72,9 +72,9 @@ describe('EditProcessFilterCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(EditProcessFilterCloudComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessFilterCloudService);
-        appsService = TestBed.get(AppsProcessCloudService);
-        dialog = TestBed.get(MatDialog);
+        service = TestBed.inject(ProcessFilterCloudService);
+        appsService = TestBed.inject(AppsProcessCloudService);
+        dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
                 return of({

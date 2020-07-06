@@ -20,7 +20,7 @@ import { NodeEntry, Node, SitePaging, Site } from '@alfresco/js-api';
 import { AppConfigService, SitesService, setupTestBed } from '@alfresco/adf-core';
 import { DocumentListService } from '../document-list/services/document-list.service';
 import { ContentNodeDialogService } from './content-node-dialog.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, of } from 'rxjs';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -75,13 +75,13 @@ describe('ContentNodeDialogService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
-        service = TestBed.get(ContentNodeDialogService);
-        documentListService = TestBed.get(DocumentListService);
-        materialDialog = TestBed.get(MatDialog);
-        sitesService = TestBed.get(SitesService);
+        service = TestBed.inject(ContentNodeDialogService);
+        documentListService = TestBed.inject(DocumentListService);
+        materialDialog = TestBed.inject(MatDialog);
+        sitesService = TestBed.inject(SitesService);
         afterOpenObservable = new Subject<any>();
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => afterOpenObservable,

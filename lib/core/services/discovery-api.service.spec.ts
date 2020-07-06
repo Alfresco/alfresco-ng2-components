@@ -113,11 +113,11 @@ describe('Discovery Api Service', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config = {
             ecmHost: 'http://localhost:9876/ecm'
         };
-        service = TestBed.get(DiscoveryApiService);
+        service = TestBed.inject(DiscoveryApiService);
         jasmine.Ajax.install();
     });
 

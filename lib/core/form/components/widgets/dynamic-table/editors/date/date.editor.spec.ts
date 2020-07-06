@@ -23,7 +23,7 @@ import { DynamicTableModel } from './../../dynamic-table.widget.model';
 import { DateEditorComponent } from './date.editor';
 import { setupTestBed } from '../../../../../../testing/setup-test-bed';
 import { By } from '@angular/platform-browser';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { CoreTestingModule } from '../../../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 

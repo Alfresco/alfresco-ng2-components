@@ -22,7 +22,8 @@ import { FormModel } from '../core/form.model';
 import { TextWidgetComponent } from './text.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule, MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -145,29 +146,32 @@ describe('TextWidgetComponent', () => {
                 });
                 fixture.detectChanges();
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT');
-                await fixture.whenStable();
                 fixture.detectChanges();
-                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
+
+                await fixture.whenStable();
+                errorWidget = element.querySelector('.adf-error-text');
                 expect(errorWidget).toBeDefined();
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.AT_LEAST_LONG');
 
                 expect(widget.field.isValid).toBe(false);
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE');
+
                 await fixture.whenStable();
                 fixture.detectChanges();
-                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
-                expect(errorWidget).toBeNull();
+
+                errorWidget = element.querySelector('.adf-error-text');
 
                 expect(widget.field.isValid).toBe(true);
 
                 enterValueInTextField(element.querySelector('#text-id'), 'TEXT VALUE TOO LONG');
-                await fixture.whenStable();
+
                 fixture.detectChanges();
+                await fixture.whenStable();
 
                 expect(widget.field.isValid).toBe(false);
-                errorWidget = element.querySelector('error-widget div[class="adf-error-text"]');
-                expect(errorWidget).toBeDefined();
+
+                errorWidget = element.querySelector('.adf-error-text');
                 expect(errorWidget.innerHTML).toBe('FORM.FIELD.VALIDATOR.NO_LONGER_THAN');
             });
 

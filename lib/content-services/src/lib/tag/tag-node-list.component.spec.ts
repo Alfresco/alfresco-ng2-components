@@ -55,12 +55,12 @@ describe('TagNodeList', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
 
         fixture = TestBed.createComponent(TagNodeListComponent);
 
-        tagService = TestBed.get(TagService);
+        tagService = TestBed.inject(TagService);
         spyOn(tagService, 'getTagsByNodeId').and.returnValue(of(dataTag));
 
         element = fixture.nativeElement;

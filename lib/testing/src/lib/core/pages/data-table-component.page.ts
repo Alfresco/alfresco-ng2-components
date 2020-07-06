@@ -35,8 +35,8 @@ export class DataTableComponentPage {
     constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
         this.list = this.rootElement.all(by.css(`div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`));
-        this.contents = this.rootElement.all(by.css('div[class="adf-datatable-body"] span'));
-        this.tableBody = this.rootElement.all(by.css(`div[class='adf-datatable-body']`)).first();
+        this.contents = this.rootElement.all(by.css('.adf-datatable-body span'));
+        this.tableBody = this.rootElement.all(by.css(`.adf-datatable-body`)).first();
         this.allColumns = this.rootElement.all(by.css('div[data-automation-id*="auto_id_entry."]'));
         this.selectedRowNumber = this.rootElement.element(by.css(`adf-datatable-row[class*='is-selected'] div[data-automation-id*='text_']`));
         this.allSelectedRows = this.rootElement.all(by.css(`adf-datatable-row[class*='is-selected']`));

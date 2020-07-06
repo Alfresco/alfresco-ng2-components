@@ -82,9 +82,9 @@ describe('DocumentList', () => {
 
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
-        documentListService = TestBed.get(DocumentListService);
-        apiService = TestBed.get(AlfrescoApiService);
-        customResourcesService = TestBed.get(CustomResourcesService);
+        documentListService = TestBed.inject(DocumentListService);
+        apiService = TestBed.inject(AlfrescoApiService);
+        customResourcesService = TestBed.inject(CustomResourcesService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.callFake(() => {
             return Promise.resolve({ list: {} });
@@ -1573,7 +1573,7 @@ describe('DocumentListComponent rendering', () => {
 
         component.customDocumentList.dataTable.data = data;
         fixture.detectChanges();
-        const rows = fixture.nativeElement.querySelectorAll('div[class="adf-datatable-body"] adf-datatable-row');
+        const rows = fixture.nativeElement.querySelectorAll('.adf-datatable-body adf-datatable-row');
         expect(rows).toBeDefined();
         expect(rows.length).toBe(3);
         const cell1 = fixture.nativeElement.querySelector('div[title="Name"][data-automation-id="Name 1"]');

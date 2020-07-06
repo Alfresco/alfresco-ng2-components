@@ -39,7 +39,7 @@ describe('HostSettingsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HostSettingsComponent);
         component = fixture.componentInstance;
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
         element = fixture.nativeElement;
     });
 

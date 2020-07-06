@@ -47,12 +47,12 @@ describe('TaskListComponent', () => {
     });
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
+        appConfig = TestBed.inject(AppConfigService);
         appConfig.config.bpmHost = 'http://localhost:9876/bpm';
 
         fixture = TestBed.createComponent(TaskListComponent);
         component = fixture.componentInstance;
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.inject(TaskListService);
 
         appConfig.config = Object.assign(appConfig.config, {
             'adf-task-list': {
@@ -584,7 +584,7 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] div[class="mat-checkbox-inner-container"]');
+        const selectAllCheckbox = fixture.nativeElement.querySelector('div[class*="adf-datatable-cell-header adf-datatable-checkbox"] .mat-checkbox-inner-container');
         selectAllCheckbox.click();
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -607,8 +607,8 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] div[class="mat-checkbox-inner-container"]');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] div[class="mat-checkbox-inner-container"]');
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();
@@ -641,8 +641,8 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] div[class="mat-checkbox-inner-container"]');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] div[class="mat-checkbox-inner-container"]');
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();
@@ -683,8 +683,8 @@ describe('TaskListComponent', () => {
         component.ngOnChanges({ 'sort': state });
         fixture.detectChanges();
 
-        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] div[class="mat-checkbox-inner-container"]');
-        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] div[class="mat-checkbox-inner-container"]');
+        const selectTask1 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-0"] .mat-checkbox-inner-container');
+        const selectTask2 = fixture.nativeElement.querySelector('[data-automation-id="datatable-row-1"] .mat-checkbox-inner-container');
         selectTask1.click();
         selectTask1.click();
         selectTask2.click();
@@ -809,8 +809,8 @@ describe('Task List: Custom EmptyTemplateComponent', () => {
     });
 
     beforeEach(() => {
-        translateService = TestBed.get(TranslateService);
-        taskListService = TestBed.get(TaskListService);
+        translateService = TestBed.inject(TranslateService);
+        taskListService = TestBed.inject(TaskListService);
         spyOn(translateService, 'get').and.callFake((key) => {
             return of(key);
         });
@@ -916,7 +916,7 @@ describe('TaskListContextMenuComponent', () => {
         fixture = TestBed.createComponent(TaskListContextMenuComponent);
         customComponent = fixture.componentInstance;
         element = fixture.nativeElement;
-        taskListService = TestBed.get(TaskListService);
+        taskListService = TestBed.inject(TaskListService);
         spyOn(taskListService, 'findTasksByState').and.returnValues(of(fakeGlobalTask));
         fixture.detectChanges();
     });

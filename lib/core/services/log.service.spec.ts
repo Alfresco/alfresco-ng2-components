@@ -67,7 +67,7 @@ describe('LogService', () => {
     });
 
     beforeEach(() => {
-        appConfigService = TestBed.get(AppConfigService);
+        appConfigService = TestBed.inject(AppConfigService);
         providesLogComponent = TestBed.createComponent(ProvidesLogComponent);
     });
 

@@ -35,8 +35,8 @@ describe('ThumbnailService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(ThumbnailService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(ThumbnailService);
+        apiService = TestBed.inject(AlfrescoApiService);
     });
 
     it('should return the correct icon for a plain text file', () => {

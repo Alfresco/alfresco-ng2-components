@@ -38,7 +38,7 @@ import { setupExtensions } from './services/startup-extension-factory';
     ]
 })
 export class ExtensionsModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<ExtensionsModule> {
         return {
             ngModule: ExtensionsModule,
             providers: [
@@ -52,7 +52,7 @@ export class ExtensionsModule {
         };
     }
 
-    static forChild(): ModuleWithProviders {
+    static forChild(): ModuleWithProviders<ExtensionsModule> {
         return {
             ngModule: ExtensionsModule
         };

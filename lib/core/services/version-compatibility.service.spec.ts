@@ -49,11 +49,11 @@ describe('VersionCompatibilityService', () => {
     });
 
     beforeEach(() => {
-        discoveryApiService = TestBed.get(DiscoveryApiService);
-        authenticationService = TestBed.get(AuthenticationService);
+        discoveryApiService = TestBed.inject(DiscoveryApiService);
+        authenticationService = TestBed.inject(AuthenticationService);
         spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(acsResponceMock));
         spyOn(authenticationService, 'isEcmLoggedIn').and.returnValue(true);
-        versionCompatibilityService = TestBed.get(VersionCompatibilityService);
+        versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
 
     });

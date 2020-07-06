@@ -6,7 +6,14 @@ cd $DIR/../..
 
 echo "====== Process Services Cloud ======"
 echo "====== Build ======"
-npm run ng-packagr -- -p ./lib/process-services-cloud/ || exit 1
+
+if [ "$CI" = "true" ]; then
+    echo "Building process-services-cloud  for production"
+    npm run ng -- build process-services-cloud --prod || exit 1
+else
+    echo "Building process-services-cloud  for development"
+    npm run ng -- build process-services-cloud || exit 1
+fi
 
 echo "====== Build style ======"
 node ./lib/config/bundle-process-services-cloud-scss.js || exit 1
@@ -17,8 +24,3 @@ cp -R ./lib/process-services-cloud/src/lib/i18n/* ./lib/dist/process-services-cl
 
 echo "====== Copy assets ======"
 cp -R ./lib/process-services-cloud/src/lib/assets/* ./lib/dist/process-services-cloud/bundles/assets
-
-echo "====== Move to node_modules ======"
-rm -rf ./node_modules/@alfresco/adf-process-services-cloud/ && \
-mkdir -p ./node_modules/@alfresco/adf-process-services-cloud/ && \
-cp -R ./lib/dist/process-services-cloud/* ./node_modules/@alfresco/adf-process-services-cloud/

@@ -45,9 +45,9 @@ describe('PeopleWidgetComponent', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PeopleWidgetComponent);
-        formService = TestBed.get(FormService);
+        formService = TestBed.inject(FormService);
 
-        translationService = TestBed.get(TranslateService);
+        translationService = TestBed.inject(TranslateService);
         spyOn(translationService, 'instant').and.callFake((key) => {
             return key;
         });

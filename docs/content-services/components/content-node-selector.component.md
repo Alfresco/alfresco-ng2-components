@@ -73,7 +73,7 @@ the dialog for you.
 ### Usage example
 
 ```ts
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponentData, ContentNodeSelectorComponent} from '@adf/content-services'
 import { Subject } from 'rxjs/Subject';
  ...

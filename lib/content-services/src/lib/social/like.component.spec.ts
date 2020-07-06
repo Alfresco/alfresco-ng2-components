@@ -39,7 +39,7 @@ describe('Like component', () => {
     });
 
     beforeEach(async(() => {
-        service = TestBed.get(RatingService);
+        service = TestBed.inject(RatingService);
 
         spyOn(service, 'getRating').and.returnValue(of({
             entry: {

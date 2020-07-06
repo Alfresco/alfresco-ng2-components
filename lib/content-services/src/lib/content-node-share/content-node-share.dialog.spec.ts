@@ -16,7 +16,7 @@
  */
 
 import { TestBed, fakeAsync, ComponentFixture, tick } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { of, empty } from 'rxjs';
 import {
     setupTestBed,
@@ -61,11 +61,11 @@ describe('ShareDialogComponent', () => {
         component = fixture.componentInstance;
         component.maxDebounceTime = 0;
 
-        matDialog = TestBed.get(MatDialog);
-        sharedLinksApiService = TestBed.get(SharedLinksApiService);
-        renditionService = TestBed.get(RenditionsService);
-        nodesApiService = TestBed.get(NodesApiService);
-        appConfigService = TestBed.get(AppConfigService);
+        matDialog = TestBed.inject(MatDialog);
+        sharedLinksApiService = TestBed.inject(SharedLinksApiService);
+        renditionService = TestBed.inject(RenditionsService);
+        nodesApiService = TestBed.inject(NodesApiService);
+        appConfigService = TestBed.inject(AppConfigService);
 
         node = {
             entry: {
@@ -158,7 +158,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should open a confirmation dialog when unshare button is triggered', () => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) });
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
 
         node.entry.properties['qshare:sharedId'] = 'sharedId';
@@ -179,7 +179,7 @@ describe('ShareDialogComponent', () => {
     });
 
     it('should unshare file when confirmation dialog returns true', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(true) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(true) });
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.returnValue(of({}));
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 
@@ -199,7 +199,7 @@ describe('ShareDialogComponent', () => {
     }));
 
     it('should not unshare file when confirmation dialog returns false', fakeAsync(() => {
-        spyOn(matDialog, 'open').and.returnValue({ beforeClose: () => of(false) });
+        spyOn(matDialog, 'open').and.returnValue({ beforeClosed: () => of(false) });
         spyOn(sharedLinksApiService, 'deleteSharedLink').and.callThrough();
         node.entry.properties['qshare:sharedId'] = 'sharedId';
 

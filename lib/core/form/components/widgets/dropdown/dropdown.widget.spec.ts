@@ -38,9 +38,8 @@ describe('DropdownWidgetComponent', () => {
     let element: HTMLElement;
 
     function openSelect() {
-        const dropdown = fixture.debugElement.query(By.css('[class="mat-select-trigger"]'));
-        dropdown.triggerEventHandler('click', null);
-        fixture.detectChanges();
+        const dropdown = fixture.debugElement.nativeElement.querySelector('.mat-select-trigger');
+        dropdown.click();
     }
 
     const fakeOptionList: FormFieldOption[] = [
@@ -59,8 +58,8 @@ describe('DropdownWidgetComponent', () => {
         fixture = TestBed.createComponent(DropdownWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        formService = TestBed.get(FormService);
-        visibilityService = TestBed.get(WidgetVisibilityService);
+        formService = TestBed.inject(FormService);
+        visibilityService = TestBed.inject(WidgetVisibilityService);
         widget.field = new FormFieldModel(new FormModel());
     }));
 
@@ -315,12 +314,15 @@ describe('DropdownWidgetComponent', () => {
 
                 openSelect();
 
+                fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('#dropdown-id')).not.toBeNull();
-                        const option = fixture.debugElement.query(By.css('.mat-option')).nativeElement;
-                        expect(option.innerText.trim()).toEqual('FakeValue');
+                        const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                        expect(options.length).toBe(1);
+
+                        const option = options[0].nativeElement;
+                        expect(option.innerText).toEqual('FakeValue');
                     });
             }));
         });

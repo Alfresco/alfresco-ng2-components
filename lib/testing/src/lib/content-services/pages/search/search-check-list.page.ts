@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator, browser } from 'protractor';
+import { element, by, ElementFinder, browser } from 'protractor';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 
 export class SearchCheckListPage {
 
     filter: ElementFinder;
-    inputBy: Locator = by.css('div[class*="mat-expansion-panel-content"] input');
-    showMoreBy: Locator = by.css('button[title="Show more"]');
-    showLessBy: Locator = by.css('button[title="Show less"]');
-    clearAllButton: Locator = by.css('button');
+    inputBy = by.css('div[class*="mat-expansion-panel-content"] input');
+    showMoreBy = by.css('button[title="Show more"]');
+    showLessBy = by.css('button[title="Show less"]');
+    clearAllButton = by.css('button');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;
@@ -142,7 +142,7 @@ export class SearchCheckListPage {
 
     async getCheckListOptionsNumberOnPage(): Promise<number> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        const checkListOptions = this.filter.all(by.css('div[class="checklist"] mat-checkbox'));
+        const checkListOptions = this.filter.all(by.css('.checklist mat-checkbox'));
         return checkListOptions.count();
     }
 

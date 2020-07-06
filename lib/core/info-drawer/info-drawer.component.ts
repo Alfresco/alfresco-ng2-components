@@ -16,7 +16,7 @@
  */
 
 import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 @Component({
     selector: 'adf-info-drawer-tab',
     template: '<ng-template><ng-content></ng-content></ng-template>'
@@ -30,7 +30,7 @@ export class InfoDrawerTabComponent {
     @Input()
     icon: string = null;
 
-    @ViewChild(TemplateRef)
+    @ViewChild(TemplateRef, { static: true })
     content: TemplateRef<any>;
 }
 

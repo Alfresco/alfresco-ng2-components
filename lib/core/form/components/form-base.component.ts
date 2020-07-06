@@ -16,8 +16,10 @@
  */
 
 import { FormOutcomeModel, FormFieldValidator, FormFieldModel, FormOutcomeEvent, FormModel } from './widgets';
-import { EventEmitter, Input, Output } from '@angular/core';
+import { EventEmitter, Input, Output, Directive } from '@angular/core';
 
+@Directive()
+// tslint:disable-next-line: directive-class-suffix
 export abstract class FormBaseComponent {
 
     static SAVE_OUTCOME_ID: string = '$save';

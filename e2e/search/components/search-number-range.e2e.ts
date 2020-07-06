@@ -175,18 +175,16 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
         }
     });
 
     it('[C276944] Should be able to filter by name when size range filter is applied', async () => {
-        const nameFilter = await searchFilters.textFiltersPage();
+        const nameFilter = searchFilters.textFiltersPage();
         const toSize = 40;
         const fromSize = 0;
         await searchFilters.checkNameFilterIsDisplayed();
@@ -204,12 +202,9 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
         }
 
@@ -220,23 +215,17 @@ describe('Search Number Range Filter', () => {
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) <= toSize).toBe(true);
             }
         }
 
         const resultsDisplay = await dataTable.geCellElementDetail('Display name') as ElementFinder[];
         for (const currentResult of resultsDisplay) {
-            try {
-                const name = await currentResult.getAttribute('title');
-                if (name && name.trim() !== '') {
-                    await expect(/z*/i.test(name)).toBe(true);
-                }
-            } catch (e) {
+            const name = await currentResult.getAttribute('title');
+            if (name && name.trim() !== '') {
+                await expect(/z*/i.test(name)).toBe(true);
             }
         }
     });
@@ -271,12 +260,9 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(currentSize === '0').toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(currentSize === '0').toBe(true);
             }
         }
     });
@@ -313,12 +299,9 @@ describe('Search Number Range Filter', () => {
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) <= 1000).toBe(true);
             }
         }
 
@@ -329,12 +312,9 @@ describe('Search Number Range Filter', () => {
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
-            try {
-                const currentSize = await currentResult.getAttribute('title');
-                if (currentSize && currentSize.trim() !== '') {
-                    await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
-                }
-            } catch (e) {
+            const currentSize = await currentResult.getAttribute('title');
+            if (currentSize && currentSize.trim() !== '') {
+                await expect(parseInt(currentSize, 10) >= 1000).toBe(true);
             }
         }
     });

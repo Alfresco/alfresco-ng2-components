@@ -39,8 +39,8 @@ describe('Comment ProcessService Service', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(CommentProcessService);
-        alfrescoApi = TestBed.get(AlfrescoApiService).getInstance();
+        service = TestBed.inject(CommentProcessService);
+        alfrescoApi = TestBed.inject(AlfrescoApiService).getInstance();
     });
 
     beforeEach(() => {

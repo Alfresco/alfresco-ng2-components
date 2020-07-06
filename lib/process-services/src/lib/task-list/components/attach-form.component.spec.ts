@@ -41,7 +41,7 @@ describe('AttachFormComponent', () => {
         fixture = TestBed.createComponent(AttachFormComponent);
         component = fixture.componentInstance;
         element = fixture.nativeElement;
-        taskService = TestBed.get(TaskListService);
+        taskService = TestBed.inject(TaskListService);
         fixture.detectChanges();
     }));
 

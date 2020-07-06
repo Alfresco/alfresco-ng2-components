@@ -16,7 +16,7 @@
  */
 
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { NodesApiService, setupTestBed } from '@alfresco/adf-core';
 import { FolderDialogComponent } from './folder.dialog';
 import { of, throwError } from 'rxjs';
@@ -47,7 +47,7 @@ describe('FolderDialogComponent', () => {
         dialogRef.close.calls.reset();
         fixture = TestBed.createComponent(FolderDialogComponent);
         component = fixture.componentInstance;
-        nodesApi = TestBed.get(NodesApiService);
+        nodesApi = TestBed.inject(NodesApiService);
     });
 
     afterEach(() => {

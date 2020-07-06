@@ -86,7 +86,7 @@ describe('TaskAuditDirective', () => {
     beforeEach(async(() => {
         fixture = TestBed.createComponent(BasicButtonComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(TaskListService);
+        service = TestBed.inject(TaskListService);
 
         jasmine.Ajax.install();
     }));

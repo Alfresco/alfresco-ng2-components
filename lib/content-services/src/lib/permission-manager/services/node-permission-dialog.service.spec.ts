@@ -18,7 +18,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppConfigService, setupTestBed, ContentService } from '@alfresco/adf-core';
 import { NodePermissionDialogService } from './node-permission-dialog.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, of, throwError } from 'rxjs';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { NodePermissionService } from './node-permission.service';
@@ -42,13 +42,13 @@ describe('NodePermissionDialogService', () => {
     });
 
     beforeEach(() => {
-        const appConfig: AppConfigService = TestBed.get(AppConfigService);
+        const appConfig: AppConfigService = TestBed.inject(AppConfigService);
         appConfig.config.ecmHost = 'http://localhost:9876/ecm';
-        service = TestBed.get(NodePermissionDialogService);
-        materialDialog = TestBed.get(MatDialog);
+        service = TestBed.inject(NodePermissionDialogService);
+        materialDialog = TestBed.inject(MatDialog);
         afterOpenObservable = new Subject<any>();
-        nodePermissionService = TestBed.get(NodePermissionService);
-        contentService = TestBed.get(ContentService);
+        nodePermissionService = TestBed.inject(NodePermissionService);
+        contentService = TestBed.inject(ContentService);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => afterOpenObservable,
             afterClosed: () => of({}),

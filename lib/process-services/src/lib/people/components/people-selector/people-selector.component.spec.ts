@@ -54,7 +54,7 @@ describe('PeopleSelectorComponent', () => {
     });
 
     it('should call the PeopleProcessService\'s getWorkflowUsers method on search', () => {
-        const peopleProcessService = TestBed.get(PeopleProcessService);
+        const peopleProcessService = TestBed.inject(PeopleProcessService);
         spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(of([]));
 
         component.performSearch('Chloe Price');
@@ -63,8 +63,8 @@ describe('PeopleSelectorComponent', () => {
     });
 
     it('should log error on getWorkflowUsers error', () => {
-        const peopleProcessService = TestBed.get(PeopleProcessService);
-        const logService = TestBed.get(LogService);
+        const peopleProcessService = TestBed.inject(PeopleProcessService);
+        const logService = TestBed.inject(LogService);
         spyOn(peopleProcessService, 'getWorkflowUsers').and.returnValue(throwError(new Error()));
         spyOn(logService, 'error');
 

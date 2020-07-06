@@ -119,15 +119,15 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     beforeEach(async(() => {
-        downloadService = TestBed.get(DownloadService);
+        downloadService = TestBed.inject(DownloadService);
         fixture = TestBed.createComponent(AttachFileCloudWidgetComponent);
         widget = fixture.componentInstance;
         element = fixture.nativeElement;
-        processCloudContentService = TestBed.get(ProcessCloudContentService);
-        contentCloudNodeSelectorService = TestBed.get(
+        processCloudContentService = TestBed.inject(ProcessCloudContentService);
+        contentCloudNodeSelectorService = TestBed.inject(
             ContentCloudNodeSelectorService
         );
-        formService = TestBed.get(FormService);
+        formService = TestBed.inject(FormService);
     }));
 
     afterEach(() => {

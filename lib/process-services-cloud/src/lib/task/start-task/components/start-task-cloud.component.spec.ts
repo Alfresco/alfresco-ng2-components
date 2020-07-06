@@ -22,7 +22,6 @@ import { of, throwError } from 'rxjs';
 import { taskDetailsMock } from '../mock/task-details.mock';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessServiceCloudTestingModule } from './../../../testing/process-service-cloud.testing.module';
-import { StartTaskCloudTestingModule } from '../testing/start-task-cloud.testing.module';
 import { FormDefinitionSelectorCloudService } from '../../../form/services/form-definition-selector-cloud.service';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { StartTaskCloudRequestModel } from '../models/start-task-cloud-request.model';
@@ -50,8 +49,7 @@ describe('StartTaskCloudComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            StartTaskCloudTestingModule
+            ProcessServiceCloudTestingModule
         ],
         schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
@@ -61,10 +59,10 @@ describe('StartTaskCloudComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        service = TestBed.get(TaskCloudService);
-        identityService = TestBed.get(IdentityUserService);
-        alfrescoApiService = TestBed.get(AlfrescoApiService);
-        formDefinitionSelectorCloudService = TestBed.get(FormDefinitionSelectorCloudService);
+        service = TestBed.inject(TaskCloudService);
+        identityService = TestBed.inject(IdentityUserService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
+        formDefinitionSelectorCloudService = TestBed.inject(FormDefinitionSelectorCloudService);
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         createNewTaskSpy = spyOn(service, 'createNewTask').and.returnValue(of(taskDetailsMock));
         spyOn(identityService, 'getCurrentUserInfo').and.returnValue(mockUser);

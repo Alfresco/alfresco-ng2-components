@@ -36,8 +36,8 @@ describe('SearchService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(SearchService);
-        apiService = TestBed.get(AlfrescoApiService);
+        service = TestBed.inject(SearchService);
+        apiService = TestBed.inject(AlfrescoApiService);
         spyOn(apiService, 'getInstance').and.returnValue(searchMockApi);
     });
 

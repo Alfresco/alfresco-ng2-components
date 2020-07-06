@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { SitesService, LogService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
-import { MatSelect } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -71,7 +71,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
     @Output()
     change: EventEmitter<SiteEntry> = new EventEmitter();
 
-    @ViewChild('siteSelect')
+    @ViewChild('siteSelect', { static: true })
     siteSelect: MatSelect;
 
     private loading = true;

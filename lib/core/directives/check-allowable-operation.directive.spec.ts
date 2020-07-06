@@ -101,7 +101,7 @@ describe('CheckAllowableOperationDirective', () => {
         });
 
         it('enables element when all nodes have expected permission', () => {
-            const contentService = TestBed.get(ContentService);
+            const contentService = TestBed.inject(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
 
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
@@ -114,7 +114,7 @@ describe('CheckAllowableOperationDirective', () => {
         });
 
         it('disables element when one of the nodes have no permission', () => {
-            const contentService = TestBed.get(ContentService);
+            const contentService = TestBed.inject(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
 
             const directive = new CheckAllowableOperationDirective(null, null, contentService, changeDetectorMock);
@@ -130,7 +130,7 @@ describe('CheckAllowableOperationDirective', () => {
     describe('Angular component as subject', () => {
 
         it('disables decorated component', () => {
-            const contentService = TestBed.get(ContentService);
+            const contentService = TestBed.inject(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(false);
             spyOn(changeDetectorMock, 'detectChanges');
 
@@ -146,7 +146,7 @@ describe('CheckAllowableOperationDirective', () => {
         });
 
         it('enables decorated component', () => {
-            const contentService = TestBed.get(ContentService);
+            const contentService = TestBed.inject(ContentService);
             spyOn(contentService, 'hasAllowableOperations').and.returnValue(true);
             spyOn(changeDetectorMock, 'detectChanges');
 

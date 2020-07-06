@@ -88,10 +88,10 @@ describe('ContentNodeSelectorComponent', () => {
             component = fixture.componentInstance;
             component.debounceSearch = 0;
 
-            searchService = TestBed.get(SearchService);
-            nodeService = TestBed.get(NodesApiService);
-            contentNodeSelectorService = TestBed.get(ContentNodeSelectorService);
-            sitesService = TestBed.get(SitesService);
+            searchService = TestBed.inject(SearchService);
+            nodeService = TestBed.inject(NodesApiService);
+            contentNodeSelectorService = TestBed.inject(ContentNodeSelectorService);
+            sitesService = TestBed.inject(SitesService);
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
             cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
@@ -113,7 +113,7 @@ describe('ContentNodeSelectorComponent', () => {
             let documentListService: DocumentListService;
 
             beforeEach(() => {
-                documentListService = TestBed.get(DocumentListService);
+                documentListService = TestBed.inject(DocumentListService);
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -218,7 +218,7 @@ describe('ContentNodeSelectorComponent', () => {
             let documentListService: DocumentListService;
 
             beforeEach(() => {
-                documentListService = TestBed.get(DocumentListService);
+                documentListService = TestBed.inject(DocumentListService);
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
                 spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
@@ -423,7 +423,7 @@ describe('ContentNodeSelectorComponent', () => {
             };
 
             beforeEach(() => {
-                const documentListService = TestBed.get(DocumentListService);
+                const documentListService = TestBed.inject(DocumentListService);
                 const expectedDefaultFolderNode = <NodeEntry> { entry: { path: { elements: [] } } };
 
                 spyOn(documentListService, 'getFolderNode').and.returnValue(of(expectedDefaultFolderNode));
@@ -437,7 +437,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
 
-                const customResourcesService = TestBed.get(CustomResourcesService);
+                const customResourcesService = TestBed.inject(CustomResourcesService);
                 getCorrespondingNodeIdsSpy = spyOn(customResourcesService, 'getCorrespondingNodeIds').and
                     .callFake((id) => {
                         if (id === '-sites-') {

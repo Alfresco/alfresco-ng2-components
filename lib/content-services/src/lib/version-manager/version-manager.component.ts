@@ -79,7 +79,7 @@ export class VersionManagerComponent implements OnInit {
     @Output()
     viewVersion: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('versionList')
+    @ViewChild('versionList', { static: true })
     versionListComponent: VersionListComponent;
 
     uploadState: string = 'close';

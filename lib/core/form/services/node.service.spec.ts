@@ -37,7 +37,7 @@ describe('NodeService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(NodeService);
+        service = TestBed.inject(NodeService);
     });
 
     beforeEach(() => {

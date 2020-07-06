@@ -44,8 +44,8 @@ describe('ContentMetadataConfigFactory', () => {
     });
 
     beforeEach(async(() => {
-        factory = TestBed.get(ContentMetadataConfigFactory);
-        appConfig = TestBed.get(AppConfigService);
+        factory = TestBed.inject(ContentMetadataConfigFactory);
+        appConfig = TestBed.inject(AppConfigService);
     }));
 
     describe('get', () => {
@@ -53,7 +53,7 @@ describe('ContentMetadataConfigFactory', () => {
         let logService: LogService;
 
         beforeEach(async(() => {
-            logService = TestBed.get(LogService);
+            logService = TestBed.inject(LogService);
             spyOn(logService, 'error').and.stub();
         }));
 

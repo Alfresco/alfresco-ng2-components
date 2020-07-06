@@ -22,7 +22,7 @@ import {
 import { trigger } from '@angular/animations';
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { MatMenuItem } from '@angular/material';
+import { MatMenuItem } from '@angular/material/menu';
 import { ContextMenuOverlayRef } from './context-menu-overlay';
 import { contextMenuAnimation } from './animations';
 import { CONTEXT_MENU_DATA } from './context-menu.tokens';

@@ -17,7 +17,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { setupTestBed } from '../testing/setup-test-bed';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogService } from './login-dialog.service';
 import { Subject, of } from 'rxjs';
 import { CoreTestingModule } from '../testing/core.testing.module';
@@ -37,8 +37,8 @@ describe('LoginDialogService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(LoginDialogService);
-        materialDialog = TestBed.get(MatDialog);
+        service = TestBed.inject(LoginDialogService);
+        materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => of({}),
             afterClosed: () => of({}),

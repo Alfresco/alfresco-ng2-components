@@ -54,8 +54,8 @@ describe('ProcessHeaderCloudComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ProcessHeaderCloudComponent);
         component = fixture.componentInstance;
-        service = TestBed.get(ProcessCloudService);
-        appConfigService = TestBed.get(AppConfigService);
+        service = TestBed.inject(ProcessCloudService);
+        appConfigService = TestBed.inject(AppConfigService);
         spyOn(service, 'getProcessInstanceById').and.returnValue(of(processInstanceDetailsCloudMock));
         component.appName = 'myApp';
         component.processInstanceId = 'sdfsdf-323';

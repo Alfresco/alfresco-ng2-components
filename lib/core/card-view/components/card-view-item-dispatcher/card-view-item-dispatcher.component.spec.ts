@@ -20,7 +20,6 @@
 import { Component, Input, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CardViewItem } from '../../interfaces/card-view-item.interface';
 import { CardItemTypeService } from '../../services/card-item-types.service';
 import { CardViewContentProxyDirective } from '../../directives/card-view-content-proxy.directive';
@@ -52,12 +51,6 @@ describe('CardViewItemDispatcherComponent', () => {
                 CardViewContentProxyDirective
             ],
             providers: [ { provide: CardItemTypeService, useValue: cardItemTypeService } ]
-        });
-
-        // entryComponents are not supported yet on TestBed, that is why this ugly workaround:
-        // https://github.com/angular/angular/issues/10760
-        TestBed.overrideModule(BrowserDynamicTestingModule, {
-            set: { entryComponents: [ CardViewShinyCustomElementItemComponent ] }
         });
 
         TestBed.compileComponents();

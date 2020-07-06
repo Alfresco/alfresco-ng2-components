@@ -25,6 +25,7 @@ const JSON_FORMAT: string = 'json';
 const PDF_FORMAT: string = 'pdf';
 
 @Directive({
+    // tslint:disable-next-line: directive-selector
     selector: 'button[adf-task-audit]',
     host: {
         'role': 'button',

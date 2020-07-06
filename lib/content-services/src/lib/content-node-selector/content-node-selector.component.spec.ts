@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
@@ -55,8 +55,8 @@ describe('ContentNodeSelectorDialogComponent', () => {
     });
 
     beforeEach(() => {
-        const documentListService: DocumentListService = TestBed.get(DocumentListService);
-        const sitesService: SitesService = TestBed.get(SitesService);
+        const documentListService: DocumentListService = TestBed.inject(DocumentListService);
+        const sitesService: SitesService = TestBed.inject(SitesService);
         spyOn(documentListService, 'getFolder').and.returnValue(of({ list: [] }));
         spyOn(documentListService, 'getFolderNode').and.returnValue(of({ entry: {} }));
         spyOn(sitesService, 'getSites').and.returnValue(of({ list: { entries: [] } }));

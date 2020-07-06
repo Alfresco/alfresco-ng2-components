@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { TranslationService } from '@alfresco/adf-core';
 import { Subject, Observable } from 'rxjs';
@@ -26,6 +26,7 @@ import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.com
 @Injectable({
     providedIn: 'root'
 })
+// tslint:disable-next-line: directive-class-suffix
 export class AttachFileWidgetDialogService {
 
     /** Emitted when an error occurs. */

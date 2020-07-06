@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 
@@ -55,7 +55,7 @@ export class ChecklistComponent implements OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('dialog')
+    @ViewChild('dialog', { static: true })
     addNewDialog: any;
 
     taskName: string;

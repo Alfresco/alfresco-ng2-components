@@ -76,8 +76,8 @@ describe('ProcessListCloudComponent', () => {
     });
 
     beforeEach(() => {
-        appConfig = TestBed.get(AppConfigService);
-        processListCloudService = TestBed.get(ProcessListCloudService);
+        appConfig = TestBed.inject(AppConfigService);
+        processListCloudService = TestBed.inject(ProcessListCloudService);
         fixture = TestBed.createComponent(ProcessListCloudComponent);
         component = fixture.componentInstance;
         appConfig.config = Object.assign(appConfig.config, {

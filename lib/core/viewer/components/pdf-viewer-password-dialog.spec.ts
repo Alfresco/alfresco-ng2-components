@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PdfPasswordDialogComponent } from './pdf-viewer-password-dialog';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
@@ -53,7 +53,7 @@ describe('PdfPasswordDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PdfPasswordDialogComponent);
         component = fixture.componentInstance;
-        dialogRef = TestBed.get(MatDialogRef);
+        dialogRef = TestBed.inject(MatDialogRef);
     });
 
     it('should have empty default value', () => {

@@ -75,7 +75,7 @@ describe('ProcessContentService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(ProcessContentService);
+        service = TestBed.inject(ProcessContentService);
     });
 
     beforeEach(() => {

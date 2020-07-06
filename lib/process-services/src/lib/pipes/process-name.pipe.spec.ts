@@ -45,7 +45,7 @@ describe('ProcessNamePipe', () => {
     });
 
     beforeEach(async(() => {
-        const localizedDatePipe = TestBed.get(LocalizedDatePipe);
+        const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNamePipe(localizedDatePipe);
     }));
 

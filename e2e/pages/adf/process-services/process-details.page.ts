@@ -19,8 +19,8 @@ import { by, element, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
-    processTitle = element(by.css('mat-card-title[class="mat-card-title"]'));
-    processDetailsMessage = element(by.css('adf-process-instance-details div[class="ng-star-inserted"]'));
+    processTitle = element(by.css('.mat-card-title'));
+    processDetailsMessage = element(by.css('adf-process-instance-details div'));
     processStatusField = element(by.css('[data-automation-id="card-textitem-value-status"]'));
     processEndDateField = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
     processCategoryField = element(by.css('[data-automation-id="card-textitem-value-category"]'));
@@ -30,17 +30,17 @@ export class ProcessDetailsPage {
     processIdField = element(by.css('[data-automation-id="card-textitem-value-id"]'));
     processDescription = element(by.css('[data-automation-id="card-textitem-value-description"]'));
     showDiagramButtonDisabled = element(by.css('button[id="show-diagram-button"][disabled]'));
-    propertiesList = element(by.css('div[class="adf-property-list"]'));
+    propertiesList = element(by.css('.adf-property-list'));
     showDiagramButton = element(by.id('show-diagram-button'));
     diagramCanvas = element(by.css('svg[xmlns="http://www.w3.org/2000/svg"]'));
-    backButton = element(by.css('app-show-diagram button[class="mat-mini-fab mat-accent"]'));
+    backButton = element(by.css('app-show-diagram button.mat-mini-fab.mat-accent'));
     commentInput = element(by.id('comment-input'));
     auditLogButton = element(by.css('button[adf-process-audit]'));
     auditLogEmptyListMessage = element(by.css('.app-empty-list-header'));
     cancelProcessButton = element(by.css('div[data-automation-id="header-status"] > button'));
     activeTask = element(by.css('div[data-automation-id="active-tasks"]'));
     completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
-    taskTitle = element(by.css('h2[class="adf-activiti-task-details__header"]'));
+    taskTitle = element(by.css('.adf-activiti-task-details__header'));
 
     async checkDetailsAreDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
@@ -109,7 +109,7 @@ export class ProcessDetailsPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButtonDisabled);
     }
 
-    async addComment(comment): Promise<void> {
+    async addComment(comment: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
         await this.commentInput.sendKeys(comment);
         await this.commentInput.sendKeys(protractor.Key.ENTER);

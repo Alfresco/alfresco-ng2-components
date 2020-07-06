@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AttachFileWidgetDialogService } from './attach-file-widget-dialog.service';
 import { Subject, of } from 'rxjs';
 import { setupTestBed } from '@alfresco/adf-core';
@@ -37,8 +37,8 @@ describe('AttachFileWidgetDialogService', () => {
     });
 
     beforeEach(() => {
-        service = TestBed.get(AttachFileWidgetDialogService);
-        materialDialog = TestBed.get(MatDialog);
+        service = TestBed.inject(AttachFileWidgetDialogService);
+        materialDialog = TestBed.inject(MatDialog);
         spyOnDialogOpen = spyOn(materialDialog, 'open').and.returnValue({
             afterOpen: () => of({}),
             afterClosed: () => of({}),

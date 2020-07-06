@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { ErrorContentComponent } from './error-content.component';
 import { TranslationService } from '../../services/translation.service';
@@ -26,7 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 describe('ErrorContentComponent', () => {
 
-    let fixture;
+    let fixture: ComponentFixture<ErrorContentComponent>;
     let errorContentComponent: ErrorContentComponent;
     let element: HTMLElement;
     let translateService: TranslationService;
@@ -34,8 +34,8 @@ describe('ErrorContentComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ErrorContentComponent);
         element = fixture.nativeElement;
-        errorContentComponent = <ErrorContentComponent> fixture.debugElement.componentInstance;
-        translateService = TestBed.get(TranslationService);
+        errorContentComponent = fixture.debugElement.componentInstance;
+        translateService = TestBed.inject(TranslationService);
     });
 
     afterEach(() => {

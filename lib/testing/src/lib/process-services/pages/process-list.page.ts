@@ -22,7 +22,7 @@ import { element, by } from 'protractor';
 
 export class ProcessListPage {
 
-    processListEmptyTitle = element(by.css('div[class="adf-empty-content__title"]'));
+    processListEmptyTitle = element(by.css('.adf-empty-content__title'));
     processInstanceList = element(by.css('adf-process-instance-list'));
     dataTable = new DataTableComponentPage(this.processInstanceList);
 
