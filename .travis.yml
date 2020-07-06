@@ -35,7 +35,7 @@ stages:
   - name: e2e Test
     if: (branch != master AND type != cron AND tag IS blank) OR type = api
   - name: Update Children Projects
-    if: type = push OR (tag =~ .*beta.*)
+    if: tag =~ .*beta.*
   - name: Release tag
     if: type = cron OR branch = master
   - name: Trigger ADF child build
