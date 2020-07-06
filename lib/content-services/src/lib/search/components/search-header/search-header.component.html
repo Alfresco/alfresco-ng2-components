@@ -17,6 +17,7 @@
             <div (click)="onMenuClick($event)" class="adf-filter-container">
                 <div class="adf-filter-title">{{ 'SEARCH.SEARCH_HEADER.TITLE' | translate }}</div>
                 <adf-search-widget-container
+                    (keydown.enter)="onApply()"
                     [id]="category?.id"
                     [selector]="category?.component?.selector"
                     [settings]="category?.component?.settings">
@@ -28,7 +29,7 @@
                 </button>
                 <button mat-button color="primary"
                         id="apply-filter-button"
-                        class="adf-filter-apply-button" (click)="onApplyButtonClick()">
+                        class="adf-filter-apply-button" (click)="onApply()">
                         {{ 'SEARCH.SEARCH_HEADER.APPLY' | translate | uppercase }}
                 </button>
             </mat-dialog-actions>

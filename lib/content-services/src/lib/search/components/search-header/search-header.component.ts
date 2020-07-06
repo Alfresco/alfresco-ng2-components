@@ -128,7 +128,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         event.stopPropagation();
     }
 
-    onApplyButtonClick() {
+    onApply() {
         // TODO Move this piece of code in the search text widget
         if (this.widgetContainer.selector === 'text' && this.widgetContainer.componentRef.instance.value === '') {
             this.clearHeader();
