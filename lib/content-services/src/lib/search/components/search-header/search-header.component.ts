@@ -149,7 +149,11 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         if (this.widgetContainer) {
             this.widgetContainer.resetInnerWidget();
             this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
-            this.clear.emit();
+            if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
+                this.clear.emit();
+            } else {
+                this.searchHeaderQueryBuilder.execute();
+            }
         }
     }
 

@@ -109,6 +109,7 @@ describe('SearchHeaderComponent', () => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
+
         const maxItem = new SimpleChange(10, 20, false);
         component.ngOnChanges({ 'maxItems': maxItem });
         fixture.detectChanges();
@@ -122,6 +123,7 @@ describe('SearchHeaderComponent', () => {
             expect(newNodePaging).toBe(fakeNodePaging);
             done();
         });
+
         const skipCount = new SimpleChange(0, 10, false);
         component.ngOnChanges({ 'skipCount': skipCount });
         fixture.detectChanges();
@@ -137,6 +139,7 @@ describe('SearchHeaderComponent', () => {
         component.clear.subscribe(() => {
             done();
         });
+
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
         menuButton.click();
         fixture.detectChanges();
@@ -144,5 +147,27 @@ describe('SearchHeaderComponent', () => {
         const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
         clearButton.triggerEventHandler('click', fakeEvent);
         fixture.detectChanges();
+        await fixture.whenStable();
+    });
+
+    it('should execute the query again if there are more filter actives after a clear', async (done) => {
+        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(false);
+        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
+        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        component.update.subscribe((newNodePaging) => {
+            expect(newNodePaging).toBe(fakeNodePaging);
+            done();
+        });
+
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const clearButton = fixture.debugElement.query(By.css('#clear-filter-button'));
+        clearButton.triggerEventHandler('click', fakeEvent);
+        fixture.detectChanges();
+        await fixture.whenStable();
     });
 });
