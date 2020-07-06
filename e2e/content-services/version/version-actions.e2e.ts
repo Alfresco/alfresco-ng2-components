@@ -21,9 +21,7 @@ import {
     BrowserVisibility,
     FileBrowserUtil,
     LoginSSOPage,
-    UploadActions,
-    UserModel,
-    ViewerPage
+    UploadActions, UserModel
 } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
@@ -42,8 +40,6 @@ describe('Version component actions', () => {
     const uploadDialog = new UploadDialogPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-
-    const viewerPage = new ViewerPage();
 
     let acsUser: UserModel;
 
@@ -152,18 +148,6 @@ describe('Version component actions', () => {
         await versionManagePage.closeVersionDialog();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(txtFileModel.name);
-    });
-
-    it('[C362240] Should be possible to view a previous document version', async () => {
-        await contentServicesPage.versionManagerContent(fileModelVersionTwo.name);
-        await versionManagePage.viewFileVersion('1.0');
-        await viewerPage.expectUrlToContain('1.0');
-    });
-
-    it('[C362241] Should be possible to download a previous document version', async () => {
-        await viewerPage.clickDownloadButton();
-        await FileBrowserUtil.isFileDownloaded(fileModelVersionTwo.name);
-        await viewerPage.clickCloseButton();
     });
 
     it('[C307033] Should be possible to cancel the upload of a new version', async () => {
