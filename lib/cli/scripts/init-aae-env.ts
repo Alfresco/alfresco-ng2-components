@@ -155,13 +155,16 @@ async function importAndReleaseProject(absoluteFilePath: string) {
 
     try {
         const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
-
-        await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
+        logger.info(`Project imported`);
+        logger.info(`Create release`);
+        const release = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
             ['application/json'], ['application/json']);
+        return release;
 
     } catch (error) {
-        logger.error('Import Projects' + error.status);
+        logger.error(`Not able to import the project/create the release ${absoluteFilePath} with status: ${error}`);
         isValid = false;
+        throw(error);
     }
 }
 
@@ -392,7 +395,6 @@ async function main(configArgs: ConfigArgs) {
     }
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
-    alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
     await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
         logger.info('login SSO ok');
     }, (error) => {
@@ -406,6 +408,7 @@ async function main(configArgs: ConfigArgs) {
 
     if (isValid) {
         logger.error('The environment is up and running');
+        alfrescoJsApiDevops = getAlfrescoJsApiInstance(args);
         await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword).then(() => {
             logger.info('login SSO ok devopsUsername');
         }, (error) => {
