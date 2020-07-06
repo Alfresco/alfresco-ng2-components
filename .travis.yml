@@ -111,6 +111,7 @@ jobs:
 
         - stage: Update Rancher
           name: Update Rancher
+          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
           script: ./scripts/travis/deploy/deploy.sh
 
         - stage: Deploy PR
