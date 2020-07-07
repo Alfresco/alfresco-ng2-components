@@ -3,6 +3,7 @@
         [columns]="columns"
         [stickyHeader]="stickyHeader"
         [loading]="isLoading"
+        [sorting]="formattedSorting"
         [selectionMode]="selectionMode"
         [multiselect]="multiselect"
         [actions]="showActions"
@@ -14,7 +15,8 @@
         (rowClick)="onRowClick($event)"
         (row-select)="onRowSelect($event)"
         (row-unselect)="onRowUnselect($event)"
-        (row-keyup)="onRowKeyUp($event)">
+        (row-keyup)="onRowKeyUp($event)"
+        (sorting-changed)="onSortingChanged($event)">
         <adf-loading-content-template>
             <ng-template>
                 <mat-progress-spinner

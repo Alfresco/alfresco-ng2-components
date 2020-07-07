@@ -27,6 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { Person } from '@alfresco/js-api';
 import { TaskListModule } from '@alfresco/adf-process-services';
 import { TranslateModule } from '@ngx-translate/core';
+import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
 @Component({
     template: `
@@ -286,6 +287,47 @@ describe('TaskListCloudComponent', () => {
                 'owner': ownerChange
             });
             fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getTaskByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should set formattedSorting if sorting input changes', () => {
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(component, 'formatSorting').and.callThrough();
+
+            component.appName = 'mock-app-name';
+            const mockSort = [
+                new TaskListCloudSortingModel({
+                    orderBy: 'startDate',
+                    direction: 'DESC'
+                })
+            ];
+            const sortChange = new SimpleChange(undefined, mockSort, true);
+            component.ngOnChanges({
+                'sorting': sortChange
+            });
+            fixture.detectChanges();
+            expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
+            expect(component.formattedSorting).toEqual([TaskListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+        });
+
+        it('should reload task list when sorting on a column changes', () => {
+            const getTaskByRequestSpy = spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            component.onSortingChanged(new CustomEvent('sorting-changed', {
+                detail: {
+                    key: 'fakeName',
+                    direction: 'asc'
+                },
+                bubbles: true
+            }));
+            fixture.detectChanges();
+            expect(component.sorting).toEqual([
+                new TaskListCloudSortingModel({
+                    orderBy: 'fakeName',
+                    direction: 'ASC'
+                })
+            ]);
+            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getTaskByRequestSpy).toHaveBeenCalled();
         });

@@ -253,6 +253,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
                     this.resetSelection();
                 } else if (rowChanges) {
                     this.setTableRows(changes['rows'].currentValue);
+                    this.setTableSorting(this.sorting);
                 } else {
                     this.setTableColumns(changes['columns'].currentValue);
                 }
@@ -544,6 +545,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
             if (current && column.key === current.key) {
                 newDirection = current.direction === 'asc' ? 'desc' : 'asc';
             }
+            this.sorting = [column.key, newDirection];
             this.data.setSorting(new DataSorting(column.key, newDirection));
             this.emitSortingChangedEvent(column.key, newDirection);
         }

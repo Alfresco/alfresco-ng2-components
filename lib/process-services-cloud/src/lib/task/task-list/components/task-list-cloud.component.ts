@@ -37,6 +37,7 @@ import { takeUntil } from 'rxjs/operators';
 export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
     static PRESET_KEY = 'adf-cloud-task-list.presets';
+    static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -176,6 +177,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     currentInstanceId: any;
     isLoading = true;
     selectedInstances: any[];
+    formattedSorting: any[];
+    private defaultSorting = { key: 'startDate', direction: 'desc' };
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -201,7 +204,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes)) {
+        if (this.isPropertyChanged(changes, 'sorting')) {
+            this.formatSorting(changes['sorting'].currentValue);
+        }
+        if (this.isAnyPropertyChanged(changes)) {
             this.reload();
         }
     }
@@ -219,16 +225,17 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         return this.currentInstanceId;
     }
 
-    private isPropertyChanged(changes: SimpleChanges): boolean {
+    private isAnyPropertyChanged(changes: SimpleChanges): boolean {
         for (const property in changes) {
-            if (changes.hasOwnProperty(property)) {
-                if (changes[property] &&
-                    (changes[property].currentValue !== changes[property].previousValue)) {
-                    return true;
-                }
+            if (this.isPropertyChanged(changes, property)) {
+                return true;
             }
         }
         return false;
+    }
+
+    private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
+        return changes.hasOwnProperty(property);
     }
 
     reload() {
@@ -262,6 +269,12 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
+        this.reload();
+    }
+
+    onSortingChanged(event: CustomEvent) {
+        this.setSorting(event.detail);
+        this.formatSorting(this.sorting);
         this.reload();
     }
 
@@ -323,5 +336,20 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             standalone: this.standalone
         };
         return new TaskQueryCloudRequestModel(requestNode);
+    }
+
+    setSorting(sortDetail) {
+        const sorting = sortDetail ? {
+            orderBy: sortDetail.key.replace(TaskListCloudComponent.ENTRY_PREFIX, ''),
+            direction: sortDetail.direction.toUpperCase()
+        } : { ... this.defaultSorting };
+        this.sorting = [new TaskListCloudSortingModel(sorting)];
+    }
+
+    formatSorting(sorting: TaskListCloudSortingModel[]) {
+        this.formattedSorting = sorting.length ? [
+            TaskListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
+            sorting[0].direction.toLocaleLowerCase()
+        ] : null;
     }
 }

@@ -29,6 +29,7 @@ import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '.
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
 
 @Component({
     template: `
@@ -246,6 +247,47 @@ describe('ProcessListCloudComponent', () => {
                 'status': statusChange
             });
             fixture.detectChanges();
+            expect(component.isListEmpty()).toBeFalsy();
+            expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should set formattedSorting if sorting input changes', () => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            spyOn(component, 'formatSorting').and.callThrough();
+
+            component.appName = 'mock-app-name';
+            const mockSort = [
+                new ProcessListCloudSortingModel({
+                    orderBy: 'startDate',
+                    direction: 'DESC'
+                })
+            ];
+            const sortChange = new SimpleChange(undefined, mockSort, true);
+            component.ngOnChanges({
+                'sorting': sortChange
+            });
+            fixture.detectChanges();
+            expect(component.formatSorting).toHaveBeenCalledWith(mockSort);
+            expect(component.formattedSorting).toEqual([ProcessListCloudComponent.ENTRY_PREFIX + 'startDate', 'desc']);
+        });
+
+        it('should reload process list when sorting on a column changes', () => {
+            const getProcessByRequestSpy = spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            component.onSortingChanged(new CustomEvent('sorting-changed', {
+                detail: {
+                    key: 'fakeName',
+                    direction: 'asc'
+                },
+                bubbles: true
+            }));
+            fixture.detectChanges();
+            expect(component.sorting).toEqual([
+                new ProcessListCloudSortingModel({
+                    orderBy: 'fakeName',
+                    direction: 'ASC'
+                })
+            ]);
+            expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getProcessByRequestSpy).toHaveBeenCalled();
         });

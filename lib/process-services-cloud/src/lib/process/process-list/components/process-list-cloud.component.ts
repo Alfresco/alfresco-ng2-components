@@ -35,6 +35,7 @@ import { ProcessListCloudSortingModel } from '../models/process-list-sorting.mod
 export class ProcessListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent {
 
     static PRESET_KEY = 'adf-cloud-process-list.presets';
+    static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     emptyCustomContent: CustomEmptyContentTemplateDirective;
@@ -156,7 +157,9 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     selectedInstances: any[];
     isLoading = true;
     rows: any[] = [];
+    formattedSorting: any[];
     requestNode: ProcessQueryCloudRequestModel;
+    private defaultSorting = { key: 'startDate', direction: 'desc' };
 
     constructor(private processListCloudService: ProcessListCloudService,
                 appConfigService: AppConfigService,
@@ -178,7 +181,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.isPropertyChanged(changes)) {
+        if (this.isPropertyChanged(changes, 'sorting')) {
+            this.formatSorting(changes['sorting'].currentValue);
+        }
+        if (this.isAnyPropertyChanged(changes)) {
             this.reload();
         }
     }
@@ -210,16 +216,17 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             });
     }
 
-    private isPropertyChanged(changes: SimpleChanges): boolean {
+    private isAnyPropertyChanged(changes: SimpleChanges): boolean {
         for (const property in changes) {
-            if (changes.hasOwnProperty(property)) {
-                if (changes[property] &&
-                    (changes[property].currentValue !== changes[property].previousValue)) {
-                    return true;
-                }
+            if (this.isPropertyChanged(changes, property)) {
+                return true;
             }
         }
         return false;
+    }
+
+    private isPropertyChanged(changes: SimpleChanges, property: string): boolean {
+        return changes.hasOwnProperty(property);
     }
 
     isListEmpty(): boolean {
@@ -230,6 +237,12 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;
         this.pagination.next(pagination);
+        this.reload();
+    }
+
+    onSortingChanged(event: CustomEvent) {
+        this.setSorting(event.detail);
+        this.formatSorting(this.sorting);
         this.reload();
     }
 
@@ -288,4 +301,18 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         return new ProcessQueryCloudRequestModel(requestNode);
     }
 
+    setSorting(sortDetail) {
+        const sorting = sortDetail ? {
+            orderBy: sortDetail.key.replace(ProcessListCloudComponent.ENTRY_PREFIX, ''),
+            direction: sortDetail.direction.toUpperCase()
+        } : { ... this.defaultSorting };
+        this.sorting = [new ProcessListCloudSortingModel(sorting)];
+    }
+
+    formatSorting(sorting: ProcessListCloudSortingModel[]) {
+        this.formattedSorting = sorting.length ? [
+            ProcessListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
+            sorting[0].direction.toLocaleLowerCase()
+        ] : null;
+    }
 }
