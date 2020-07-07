@@ -77,9 +77,11 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
     }
 
     applyInnerWidget() {
-        if (this.selector === 'date-range' && this.componentRef && this.componentRef.instance) {
-            this.componentRef.instance.applyCurrentForm();
-        }
+        this.componentRef.instance.submitValues();
+    }
+
+    hasValueSelected() {
+        return this.componentRef.instance.hasValidValue();
     }
 
     resetInnerWidget() {

@@ -31,7 +31,7 @@ import {
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
-import { NodePaging } from '@alfresco/js-api';
+import { NodePaging, QueryBody } from '@alfresco/js-api';
 import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
@@ -129,15 +129,13 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onApply() {
-        // TODO Move this piece of code in the search text widget
-        if (this.widgetContainer.selector === 'text' && this.widgetContainer.componentRef.instance.value === '') {
+        if (this.widgetContainer.hasValueSelected()) {
+            this.widgetContainer.applyInnerWidget();
+            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey);
+            this.searchHeaderQueryBuilder.execute();
+        } else {
             this.clearHeader();
-            return;
         }
-
-        this.widgetContainer.applyInnerWidget();
-        this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey);
-        this.searchHeaderQueryBuilder.execute();
     }
 
     onClearButtonClick(event: Event) {

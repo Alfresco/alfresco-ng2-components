@@ -71,6 +71,14 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     }
 
+    submitValues() {
+        this.updateQuery(this.value);
+    }
+
+    hasValidValue() {
+        return !!this.value;
+    }
+
     private getSearchPrefix(): string {
         return this.settings.searchPrefix ? this.settings.searchPrefix : '';
     }

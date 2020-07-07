@@ -74,13 +74,22 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     changeHandler(event: MatCheckboxChange, option: any) {
         option.checked = event.checked;
-        this.flush();
+        this.submitValues();
     }
 
-    flush() {
-        const checkedValues = this.options.items
+    hasValidValue() {
+        const checkedValues = this.getCheckedValues();
+        return !!checkedValues.length;
+    }
+
+    private getCheckedValues() {
+        return this.options.items
             .filter((option) => option.checked)
             .map((option) => option.value);
+    }
+
+    submitValues() {
+        const checkedValues = this.getCheckedValues();
 
         this.isActive = !!checkedValues.length;
 

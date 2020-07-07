@@ -178,14 +178,14 @@ describe('SearchCheckListComponent', () => {
             update: () => {}
         };
         component.settings = <any> { options: sizeOptions };
-        spyOn(component, 'flush').and.stub();
+        spyOn(component, 'submitValues').and.stub();
         component.ngOnInit();
         fixture.detectChanges();
 
         const optionElements = fixture.debugElement.query(By.css('mat-checkbox'));
         optionElements.triggerEventHandler('change', { checked: true });
 
-        expect(component.flush).toHaveBeenCalled();
+        expect(component.submitValues).toHaveBeenCalled();
 
         const clearAllElement = fixture.debugElement.query(By.css('button[title="SEARCH.FILTER.ACTIONS.CLEAR-ALL"]'));
         clearAllElement.triggerEventHandler('click', {} );

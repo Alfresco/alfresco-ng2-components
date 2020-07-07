@@ -100,6 +100,14 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         return result;
     }
 
+    submitValues() {
+        this.apply(this.form.value, this.form.valid);
+    }
+
+    hasValidValue() {
+        return this.form.valid;
+    }
+
     reset() {
         this.isActive = false;
 
