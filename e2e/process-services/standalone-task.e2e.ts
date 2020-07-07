@@ -17,14 +17,13 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
-import Task = require('../models/APS/Task');
-import { UsersActions } from '../actions/users.actions';
 import * as fs from 'fs';
 import * as path from 'path';
+import CONSTANTS = require('../util/constants');
+import Task = require('../models/APS/Task');
 
 describe('Start Task - Task App', () => {
 

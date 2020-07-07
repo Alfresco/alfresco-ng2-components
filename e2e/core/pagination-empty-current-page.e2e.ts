@@ -16,20 +16,20 @@
  */
 
 import {
+    ApiService,
     ArrayUtil,
-    StringUtil,
     LoginSSOPage,
     PaginationPage,
+    StringUtil,
     UploadActions,
-    ViewerPage,
-    ApiService,
-    UserModel
+    UserModel,
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 

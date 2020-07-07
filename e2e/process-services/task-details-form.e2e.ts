@@ -15,18 +15,25 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, StringUtil, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginSSOPage,
+    ProcessUtil,
+    StringUtil,
+    UsersActions,
+    Widget
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FormModelActions } from '../actions/APS/form-model.actions';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { FiltersPage } from '../pages/adf/process-services/filters.page';
 import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
 import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
-import CONSTANTS = require('../util/constants');
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
 import { TaskRepresentation } from '@alfresco/js-api';
+import CONSTANTS = require('../util/constants');
 
 describe('Task Details - Form', () => {
     const loginPage = new LoginSSOPage();

@@ -17,22 +17,24 @@
 
 import { PermissionsPage } from '../../pages/adf/permissions.page';
 import {
-    LoginSSOPage,
+    ApiService,
     BrowserActions,
-    UploadActions,
-    StringUtil,
+    LoginSSOPage,
     NotificationHistoryPage,
-    ViewerPage, ApiService, UserModel
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import CONSTANTS = require('../../util/constants');
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
-import { UsersActions } from '../../actions/users.actions';
+import CONSTANTS = require('../../util/constants');
 
 describe('Permissions Component', () => {
 

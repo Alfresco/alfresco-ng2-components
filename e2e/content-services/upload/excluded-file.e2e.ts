@@ -15,15 +15,21 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
-import { DropActions, LoginSSOPage, LocalStorageUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { browser, by, element } from 'protractor';
+import {
+    ApiService,
+    DropActions,
+    LocalStorageUtil,
+    LoginSSOPage,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component - Excluded Files', () => {
 

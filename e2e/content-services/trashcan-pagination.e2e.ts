@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LoginSSOPage,
+    PaginationPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../models/ACS/folder.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../pages/adf/trashcan.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Trashcan - Pagination', () => {
     const pagination = {

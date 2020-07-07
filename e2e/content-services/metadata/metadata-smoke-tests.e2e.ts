@@ -16,20 +16,22 @@
  */
 
 import {
-    LoginSSOPage,
-    LocalStorageUtil,
+    ApiService,
     BrowserActions,
+    LocalStorageUtil,
+    LoginSSOPage,
+    StringUtil,
     UploadActions,
-    ViewerPage,
-    StringUtil, ApiService, UserModel
+    UserModel,
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import moment = require('moment');
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
+import moment = require('moment');
 
 describe('Metadata component', () => {
 

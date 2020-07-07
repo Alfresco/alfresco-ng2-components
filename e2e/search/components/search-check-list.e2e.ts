@@ -16,13 +16,14 @@
  */
 
 import {
-    LoginSSOPage,
-    BrowserActions,
-    UploadActions,
-    StringUtil,
-    LocalStorageUtil,
     ApiService,
-    UserModel
+    BrowserActions,
+    LocalStorageUtil,
+    LoginSSOPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
@@ -30,7 +31,6 @@ import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Checklist Component', () => {
 

@@ -17,17 +17,20 @@
 
 import { browser } from 'protractor';
 import {
-    LoginSSOPage,
-    UploadActions,
-    StringUtil,
+    ApiService,
+    BrowserActions,
     ContentNodeSelectorDialogPage,
-    NotificationHistoryPage, BrowserActions, ApiService, UserModel
+    LoginSSOPage,
+    NotificationHistoryPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 

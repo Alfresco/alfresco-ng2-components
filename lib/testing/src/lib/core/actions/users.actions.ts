@@ -22,7 +22,7 @@ import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
 import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
-import { Tenant } from '../models/APS/tenant';
+import { Tenant } from './tenant';
 
 export class UsersActions {
 

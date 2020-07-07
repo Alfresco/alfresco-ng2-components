@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -25,7 +25,6 @@ import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { FolderModel } from '../models/ACS/folder.model';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Search component - Search Page', () => {
     const search = {

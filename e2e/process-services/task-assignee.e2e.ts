@@ -16,12 +16,13 @@
  */
 
 import {
-    LoginSSOPage,
+    ApiService,
     ApplicationsUtil,
+    LoginSSOPage,
     ProcessUtil,
     StartProcessPage,
-    ApiService,
-    UserModel
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -29,7 +30,6 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');

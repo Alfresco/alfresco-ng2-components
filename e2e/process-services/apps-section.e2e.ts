@@ -16,12 +16,11 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
-import { UsersActions } from '../actions/users.actions';
 import { ModelsActions } from '../actions/APS/models.actions';
+import CONSTANTS = require('../util/constants');
 
 describe('Modify applications', () => {
 

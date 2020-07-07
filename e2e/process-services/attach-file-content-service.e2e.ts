@@ -20,15 +20,17 @@ import {
     ApplicationsUtil,
     ContentNodeSelectorDialogPage,
     ExternalNodeSelectorDialogPage,
-    IntegrationService, LocalStorageUtil,
+    IntegrationService,
+    LocalStorageUtil,
     LoginSSOPage,
-    UploadActions, UserModel,
+    UploadActions,
+    UserModel,
+    UsersActions,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
 import CONSTANTS = require('../util/constants');
 
 describe('Attach File - Content service', () => {

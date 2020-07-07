@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { TaskRepresentation } from '@alfresco/js-api';
 
 describe('Task Audit', () => {

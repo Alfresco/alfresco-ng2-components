@@ -17,19 +17,21 @@
 
 import CONSTANTS = require('../../util/constants');
 import {
-    StringUtil,
+    ApiService,
     BrowserActions,
-    NotificationHistoryPage,
-    LoginSSOPage,
     ErrorPage,
-    UploadActions, ApiService, UserModel
+    LoginSSOPage,
+    NotificationHistoryPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Unshare file', () => {
 

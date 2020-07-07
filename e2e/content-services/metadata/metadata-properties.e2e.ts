@@ -15,13 +15,20 @@
  * limitations under the License.
  */
 
-import { ApiService, CheckboxPage, LoginSSOPage, UploadActions, UserModel, ViewerPage } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    CheckboxPage,
+    LoginSSOPage,
+    UploadActions,
+    UserModel,
+    UsersActions,
+    ViewerPage
+} from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('CardView Component - properties', () => {
 

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { LockFilePage } from '../pages/adf/lock-file.page';
 import { FileModel } from '../models/ACS/file.model';
-import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
+import CONSTANTS = require('../util/constants');
 
 describe('Lock File', () => {
 

@@ -17,13 +17,18 @@
 
 import CONSTANTS = require('../util/constants');
 import {
-    FileBrowserUtil,
-    LoginSSOPage, SelectAppsDialog,
-    ProcessInstanceTasksPage,
-    StringUtil,
-    Widget,
+    ApiService,
     ApplicationsUtil,
-    StartProcessPage, ApiService, UserModel, LocalStorageUtil
+    FileBrowserUtil,
+    LocalStorageUtil,
+    LoginSSOPage,
+    ProcessInstanceTasksPage,
+    SelectAppsDialog,
+    StartProcessPage,
+    StringUtil,
+    UserModel,
+    UsersActions,
+    Widget
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
@@ -34,7 +39,6 @@ import { ProcessFiltersPage } from '../pages/adf/process-services/process-filter
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { UsersActions } from '../actions/users.actions';
 import { UploadDialogPage } from '../pages/adf/dialog/upload-dialog.page';
 
 describe('Start Process Component', () => {

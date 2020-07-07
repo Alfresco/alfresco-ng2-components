@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginSSOPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../util/constants');
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
+import CONSTANTS = require('../util/constants');
 
 describe('Task Details - No form', () => {
 

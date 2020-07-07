@@ -16,12 +16,13 @@
  */
 
 import {
-    LoginSSOPage,
+    ApiService,
     LocalStorageUtil,
+    LoginSSOPage,
     SearchSortingPickerPage,
     UploadActions,
-    ApiService,
-    UserModel
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
@@ -30,7 +31,6 @@ import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Sorting Picker', () => {
 

@@ -17,13 +17,19 @@
 
 import { browser } from 'protractor';
 
-import { SettingsPage, UploadActions, StringUtil, ApiService, LocalStorageUtil } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LocalStorageUtil,
+    SettingsPage,
+    StringUtil,
+    UploadActions,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
 import { LoginPage } from '../../pages/adf/demo-shell/login.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Login component - Redirect', () => {
 

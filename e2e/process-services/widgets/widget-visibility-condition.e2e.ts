@@ -15,11 +15,18 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, BrowserActions, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    BrowserActions,
+    LoginSSOPage,
+    ProcessUtil,
+    UsersActions,
+    Widget
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
-import CONSTANTS = require('../../util/constants');
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
+import CONSTANTS = require('../../util/constants');
 
 const widgets = {
     textOneId: 'text1',

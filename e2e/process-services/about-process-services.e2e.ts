@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LoginSSOPage, AboutPage, ApiService } from '@alfresco/adf-testing';
+import { AboutPage, ApiService, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('About Process Services', () => {

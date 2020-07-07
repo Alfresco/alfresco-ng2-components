@@ -18,17 +18,18 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
+    ApiService,
     BrowserActions,
     LoginSSOPage,
-    UploadActions,
     PaginationPage,
-    StringUtil,
     PermissionActions,
-    ApiService, UserModel
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Delete Directive', () => {
 

@@ -17,10 +17,9 @@
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import moment from 'moment-es6';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component', () => {
 

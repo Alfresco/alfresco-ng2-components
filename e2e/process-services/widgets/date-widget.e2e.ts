@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { UsersActions } from '../../actions/users.actions';
 import {
-    LoginSSOPage,
-    BrowserActions,
-    Widget,
-    FormPage,
+    ApiService,
     ApplicationsUtil,
+    BrowserActions,
+    FormPage,
+    LoginSSOPage,
     ProcessUtil,
-    ApiService
+    UsersActions,
+    Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 import { FormDemoPage } from '../../pages/adf/demo-shell/process-services/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
+import CONSTANTS = require('../../util/constants');
 
 describe('Date widget', () => {
 

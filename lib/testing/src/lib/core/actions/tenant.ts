@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { StringUtil } from '@alfresco/adf-testing';
+import { StringUtil } from '../utils/string.util';
 
 /**
  * Create tenant JSON Object

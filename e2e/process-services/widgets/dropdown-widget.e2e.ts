@@ -15,11 +15,18 @@
  * limitations under the License.
  */
 
-import { UsersActions } from '../../actions/users.actions';
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    BrowserActions,
+    LoginSSOPage,
+    ProcessUtil,
+    UsersActions,
+    Widget
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
+import CONSTANTS = require('../../util/constants');
 
 describe('Dropdown widget', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.DROPDOWN;

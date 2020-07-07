@@ -15,16 +15,23 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, FileBrowserUtil, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    FileBrowserUtil,
+    LoginSSOPage,
+    UsersActions,
+    ViewerPage,
+    Widget
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../../util/constants');
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
 import { TaskDetailsPage } from '../../pages/adf/process-services/task-details.page';
 import { TasksListPage } from '../../pages/adf/process-services/tasks-list.page';
 import { FiltersPage } from '../../pages/adf/process-services/filters.page';
+import CONSTANTS = require('../../util/constants');
 
 describe('Attach widget - File', () => {
 

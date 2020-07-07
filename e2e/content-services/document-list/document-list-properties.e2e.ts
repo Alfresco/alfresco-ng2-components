@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, UploadActions } from '@alfresco/adf-testing';
+import { ApiService, DropActions, LoginSSOPage, UploadActions, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List Component - Properties', () => {
 

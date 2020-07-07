@@ -16,13 +16,12 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginSSOPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Empty Process List Test', () => {
 

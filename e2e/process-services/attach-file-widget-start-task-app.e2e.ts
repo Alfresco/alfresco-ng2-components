@@ -15,13 +15,20 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, Widget, ViewerPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginSSOPage,
+    UserModel,
+    UsersActions,
+    ViewerPage,
+    Widget
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../util/constants');
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
+import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Task App', () => {
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;

@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    ApiService,
-    LoginSSOPage,
-    SettingsPage,
-    UserInfoPage
-} from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, SettingsPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 
 describe('User Info - SSO', () => {
 

@@ -15,12 +15,18 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, NotificationHistoryPage, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    DropActions,
+    LoginSSOPage,
+    NotificationHistoryPage,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Datatable component', () => {
 

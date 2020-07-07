@@ -15,15 +15,14 @@
  * limitations under the License.
  */
 
-import { StringUtil, UploadActions, LoginSSOPage, ApiService, UserModel } from '@alfresco/adf-testing';
-import CONSTANTS = require('../util/constants');
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../pages/adf/search-filters.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
+import CONSTANTS = require('../util/constants');
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginSSOPage();

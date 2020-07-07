@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Analytics Smoke Test', () => {
 
