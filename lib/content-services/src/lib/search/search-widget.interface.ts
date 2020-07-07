@@ -24,4 +24,6 @@ export interface SearchWidget {
     context?: SearchQueryBuilderService;
     isActive?: boolean;
     reset();
+    submitValues();
+    hasValidValue();
 }

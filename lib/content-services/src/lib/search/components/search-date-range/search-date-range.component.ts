@@ -129,8 +129,12 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         }
     }
 
-    applyCurrentForm() {
+    submitValues() {
         this.apply(this.form.value, this.form.valid);
+    }
+
+    hasValidValue() {
+        return this.form.valid;
     }
 
     reset() {
