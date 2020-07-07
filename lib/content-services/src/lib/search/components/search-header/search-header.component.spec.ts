@@ -188,4 +188,25 @@ describe('SearchHeaderComponent', () => {
         fixture.detectChanges();
         await fixture.whenStable();
     });
+
+    it('should emit the clear event when no filter has valued applied', async (done) => {
+        spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(true);
+        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
+        component.widgetContainer.componentRef.instance.value = '';
+        const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
+        component.clear.subscribe(() => {
+            done();
+        });
+
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
+        applyButton.triggerEventHandler('click', fakeEvent);
+        fixture.detectChanges();
+        await fixture.whenStable();
+    });
 });
