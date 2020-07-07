@@ -84,7 +84,7 @@ describe('SearchHeaderComponent', () => {
         expect(element).not.toBeUndefined();
     });
 
-    it('should emit the node paging received from the queryBuilder after the filter gets applied', async (done) => {
+    it('should emit the node paging received from the queryBuilder after the Apply button is clicked', async (done) => {
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
         component.update.subscribe((newNodePaging) => {
@@ -98,6 +98,24 @@ describe('SearchHeaderComponent', () => {
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
         applyButton.triggerEventHandler('click', {});
+        fixture.detectChanges();
+        await fixture.whenStable();
+    });
+
+    it('should emit the node paging received from the queryBuilder after the Enter key is pressed', async (done) => {
+        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        component.update.subscribe((newNodePaging) => {
+            expect(newNodePaging).toBe(fakeNodePaging);
+            done();
+        });
+        const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+        menuButton.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        component.widgetContainer.componentRef.instance.value = 'searchText';
+        const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
+        widgetContainer.triggerEventHandler('keydown.enter', {});
         fixture.detectChanges();
         await fixture.whenStable();
     });
