@@ -21,8 +21,11 @@ import * as remote from 'selenium-webdriver/remote';
 
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
-import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
-import { Tenant } from './tenant';
+import { IdentityService } from './identity/identity.service';
+import { UserModel } from '../models/user.model';
+import { ApiService } from './api.service';
+import { Logger } from '../utils/logger';
+import { Tenant } from '../models/tenant';
 
 export class UsersActions {
 
@@ -36,8 +39,8 @@ export class UsersActions {
         }
     }
 
-    async createUser(userModel:  UserModel): Promise<UserModel> {
-        let user = new UserModel({ ...(userModel  ? userModel : {}) });
+    async createUser(userModel?: UserModel): Promise<UserModel> {
+        const user = new UserModel({ ...(userModel ? userModel : {}) });
 
         try {
             if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
@@ -55,7 +58,7 @@ export class UsersActions {
                 Logger.log('Create user BPM');
                 if (user.tenantId) {
                     const apsUser = await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
-                   user.id = apsUser.id;
+                    user.id = apsUser.id;
                 } else {
                     const apsUser = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
                     user.tenantId = apsUser.tenantId;
