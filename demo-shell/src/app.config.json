@@ -451,7 +451,7 @@
     "categories": [
       {
         "id": "queryName",
-        "name": "Name",
+        "name": "SEARCH.SEARCH_HEADER.FILTERS.NAME.TITLE",
         "columnKey": "name",
         "enabled": true,
         "component": {
@@ -459,14 +459,14 @@
           "settings": {
             "pattern": "cm:name:'(.*?)'",
             "field": "cm:name",
-            "placeholder": "Enter the name",
+            "placeholder": "SEARCH.SEARCH_HEADER.FILTERS.NAME.PLACEHOLDER",
             "searchSuffix" : "*"
           }
         }
       },
       {
         "id": "checkList",
-        "name": "Check List",
+        "name": "SEARCH.SEARCH_HEADER.FILTERS.TYPE.TITLE",
         "columnKey":"$thumbnail",
         "enabled": true,
         "component": {
@@ -476,11 +476,11 @@
             "operator": "OR",
             "options": [
               {
-                "name": "Folder",
+                "name": "SEARCH.SEARCH_HEADER.FILTERS.TYPE.FOLDER",
                 "value": "TYPE:'cm:folder'"
               },
               {
-                "name": "Document",
+                "name": "SEARCH.SEARCH_HEADER.FILTERS.TYPE.DOCUMENT",
                 "value": "TYPE:'cm:content'"
               }
             ]
@@ -488,20 +488,8 @@
         }
       },
       {
-        "id": "contentSizeRange",
-        "name": "Content Size (range)",
-        "enabled": true,
-        "component": {
-          "selector": "number-range",
-          "settings": {
-            "field": "cm:content.size",
-            "format": "[{FROM} TO {TO}]"
-          }
-        }
-      },
-      {
         "id": "contentSize",
-        "name": "SEARCH.CATEGORIES.SIZE",
+        "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.TITLE",
         "columnKey":"content.sizeInBytes",
         "enabled": true,
         "component": {
@@ -509,19 +497,19 @@
           "settings": {
             "options": [
               {
-                "name": "Small",
+                "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.SMALL",
                 "value": "content.size:[0 TO 1048576>"
               },
               {
-                "name": "Medium",
+                "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.MEDIUM",
                 "value": "content.size:[1048576 TO 52428800]"
               },
               {
-                "name": "Large",
+                "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.LARGE",
                 "value": "content.size:<52428800 TO 524288000]"
               },
               {
-                "name": "Huge",
+                "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.HUGE",
                 "value": "content.size:<524288000 TO MAX]"
               }
             ]
@@ -530,7 +518,7 @@
       },
       {
         "id": "createdDateRange",
-        "name": "Created Date (range)",
+        "name": "SEARCH.SEARCH_HEADER.FILTERS.DATE.TITLE",
         "columnKey": "createdAt",
         "enabled": true,
         "component": {

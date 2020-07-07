@@ -1,7 +1,7 @@
 <mat-form-field>
     <input
         matInput
-        [placeholder]="settings?.placeholder"
+        placeholder="{{ settings?.placeholder | translate }}"
         [(ngModel)]="value"
         (change)="onChangedHandler($event)">
     <button mat-button *ngIf="value" matSuffix mat-icon-button (click)="reset()">
