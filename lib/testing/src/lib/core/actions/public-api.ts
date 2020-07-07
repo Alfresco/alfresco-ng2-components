@@ -19,6 +19,7 @@ export * from './identity/public-api';
 export * from './api.service';
 export * from './drop.actions';
 export * from './users.actions';
+export * from './tenant';
 export * from './api';
 export * from './api.util';
 export * from './e2e-request-api.helper';
