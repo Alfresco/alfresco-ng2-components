@@ -28,8 +28,8 @@ export class UserModel {
     username?: string;
     idIdentityService?: string;
     type = 'enterprise';
-    tenantId;
-    company;
+    tenantId?: number;
+    company?: string;
     id: number;
 
     constructor(details: any = {}) {
