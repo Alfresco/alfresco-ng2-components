@@ -26,7 +26,7 @@ The tabs are added using one or more `<adf-info-drawer-tab>` elements, which can
 have any content you like:
 
 ```html
-<adf-info-drawer title="Activities" (currentTab)="getActiveTab($event)">
+<adf-info-drawer [showHeader]="true" title="Activities" (currentTab)="getActiveTab($event)">
     <div info-drawer-buttons>
         <mat-icon (click)="close()">clear</mat-icon>
     </div>
@@ -51,6 +51,7 @@ have any content you like:
 | ---- | ---- | ------------- | ----------- |
 | selectedIndex | `number` | 0 | The selected index tab. |
 | title | `string \| null` | null | The title of the info drawer (string or translation key). |
+| showHeader | `boolean` | true | The visibility of the header. |
 
 ### Events
 

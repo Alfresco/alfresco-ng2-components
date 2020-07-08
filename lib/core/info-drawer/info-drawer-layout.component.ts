@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Directive, ViewEncapsulation } from '@angular/core';
+import { Component, Directive, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'adf-info-drawer-layout',
@@ -24,7 +24,11 @@ import { Component, Directive, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
     host: { 'class': 'adf-info-drawer-layout' }
 })
-export class InfoDrawerLayoutComponent {}
+export class InfoDrawerLayoutComponent {
+    /** The visibility of the header. */
+    @Input()
+    showHeader: boolean = true;
+}
 
 /**
  * Directive selectors without adf- prefix will be deprecated on 3.0.0

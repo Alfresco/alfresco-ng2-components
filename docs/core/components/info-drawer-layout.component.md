@@ -23,7 +23,7 @@ with the following names:
 -   info-drawer-content
 
 ```html
-<adf-info-drawer-layout>
+<adf-info-drawer-layout [showHeader]="true">
     <div info-drawer-title>File info</div>
 
     <div info-drawer-buttons>
@@ -37,6 +37,13 @@ with the following names:
     </div>
 </adf-info-drawer-layout>
 ```
+## Class members
+
+### Properties
+
+| Name | Type | Default value | Description |
+| ---- | ---- | ------------- | ----------- |
+| showHeader | `boolean` | true | The visibility of the header. |
 
 ## Details
 
