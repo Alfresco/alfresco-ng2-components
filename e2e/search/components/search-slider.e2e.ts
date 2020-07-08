@@ -16,12 +16,13 @@
  */
 
 import {
-    LoginSSOPage,
-    LocalStorageUtil,
-    UploadActions,
-    DataTableComponentPage,
     ApiService,
-    UserModel
+    DataTableComponentPage,
+    LocalStorageUtil,
+    LoginSSOPage,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
@@ -30,7 +31,6 @@ import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser, ElementFinder } from 'protractor';
 import { SearchConfiguration } from '../search.config';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search Slider Filter', () => {
 

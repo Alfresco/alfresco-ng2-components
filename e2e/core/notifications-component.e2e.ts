@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NotificationDemoPage } from '../pages/adf/demo-shell/notification.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Notifications Component', () => {
 

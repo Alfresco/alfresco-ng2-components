@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, LikePage, RatePage, UploadActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    LikePage,
+    LoginSSOPage,
+    RatePage,
+    UploadActions,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { SocialPage } from '../../pages/adf/demo-shell/social.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Social component', () => {
 

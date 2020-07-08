@@ -16,18 +16,18 @@
  */
 
 import {
-    LoginSSOPage,
-    FileBrowserUtil,
-    ViewerPage,
+    ApiService,
     ApplicationsUtil,
+    FileBrowserUtil,
+    LoginSSOPage,
     ProcessUtil,
-    ApiService
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 

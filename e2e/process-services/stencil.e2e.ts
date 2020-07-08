@@ -15,8 +15,14 @@
  * limitations under the License.
  */
 
-import { UsersActions } from '../actions/users.actions';
-import { LoginSSOPage, ApplicationsUtil, StartProcessPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginSSOPage,
+    StartProcessPage,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';

@@ -16,21 +16,21 @@
  */
 
 import {
+    ApiService,
+    ApplicationsUtil,
     ArrayUtil,
     DateUtil,
     LoginSSOPage,
     PaginationPage,
-    ApplicationsUtil,
     ProcessUtil,
-    ApiService
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
-import { UsersActions } from '../actions/users.actions';
 import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import moment = require('moment');
 import { TaskRepresentation } from '@alfresco/js-api';
+import moment = require('moment');
 
 describe('Start Task - Custom App', () => {
 

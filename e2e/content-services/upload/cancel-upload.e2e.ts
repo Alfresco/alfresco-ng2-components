@@ -16,12 +16,11 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Upload component', async () => {
 

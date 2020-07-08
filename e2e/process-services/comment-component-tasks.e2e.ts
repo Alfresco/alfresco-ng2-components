@@ -17,13 +17,13 @@
 
 import { browser } from 'protractor';
 
-import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { CommentsPage } from '../pages/adf/comments.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import CONSTANTS = require('../util/constants');
-import { UsersActions } from '../actions/users.actions';
+
 import { TaskRepresentation } from '@alfresco/js-api';
+import CONSTANTS = require('../util/constants');
 
 describe('Comment component for Processes', () => {
 

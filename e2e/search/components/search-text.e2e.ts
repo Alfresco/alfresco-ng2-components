@@ -19,14 +19,20 @@ import { browser } from 'protractor';
 
 import { FolderModel } from '../../models/ACS/folder.model';
 
-import { LoginSSOPage, LocalStorageUtil, BrowserActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    BrowserActions,
+    LocalStorageUtil,
+    LoginSSOPage,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../../pages/adf/search-results.page';
 import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 import { SearchConfiguration } from '../search.config';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Search component - Text widget', () => {
 

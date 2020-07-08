@@ -16,16 +16,22 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, FileBrowserUtil, ViewerPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    FileBrowserUtil,
+    LoginSSOPage,
+    UsersActions,
+    ViewerPage
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
-import CONSTANTS = require('../util/constants');
 import * as fs from 'fs';
 import * as path from 'path';
-import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { TaskRepresentation } from '@alfresco/js-api';
+import CONSTANTS = require('../util/constants');
 
 describe('Attachment list action menu for tasks', () => {
 

@@ -18,17 +18,17 @@
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
-    LoginSSOPage,
-    UploadActions,
+    ApiService,
     BrowserVisibility,
     FileBrowserUtil,
-    ApiService,
-    UserModel
+    LoginSSOPage,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component actions', () => {
 

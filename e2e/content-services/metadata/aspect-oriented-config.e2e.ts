@@ -16,19 +16,20 @@
  */
 
 import {
+    ApiService,
     CheckboxPage,
+    LocalStorageUtil,
     LoginSSOPage,
     UploadActions,
-    LocalStorageUtil,
-    ViewerPage,
-    ApiService, UserModel
+    UserModel,
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Aspect oriented config', () => {
 

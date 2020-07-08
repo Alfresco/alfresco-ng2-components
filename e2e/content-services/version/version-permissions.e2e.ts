@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import { element, by, browser } from 'protractor';
+import { browser, by, element } from 'protractor';
 import {
-    LoginSSOPage,
+    ApiService,
     BrowserActions,
-    UploadActions,
-    StringUtil,
+    LoginSSOPage,
     NotificationHistoryPage,
-    ApiService, UserModel
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
@@ -30,7 +32,6 @@ import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component permissions', () => {
 

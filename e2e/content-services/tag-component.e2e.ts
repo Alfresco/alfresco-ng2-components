@@ -16,11 +16,10 @@
  */
 
 import { FileModel } from '../models/ACS/file.model';
-import { LoginSSOPage, UploadActions, StringUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tag.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Tag component', () => {
 

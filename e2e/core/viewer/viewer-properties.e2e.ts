@@ -16,11 +16,18 @@
  */
 
 import { browser } from 'protractor';
-import { LoginSSOPage, UploadActions, DataTableComponentPage, ViewerPage, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    DataTableComponentPage,
+    LoginSSOPage,
+    UploadActions,
+    UserModel,
+    UsersActions,
+    ViewerPage
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Viewer - properties', () => {
 

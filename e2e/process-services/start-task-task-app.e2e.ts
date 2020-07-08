@@ -15,19 +15,18 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, StringUtil, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
 import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../util/constants');
 import * as fs from 'fs';
 import * as path from 'path';
 import { TaskRepresentation } from '@alfresco/js-api';
+import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Task App', () => {
 

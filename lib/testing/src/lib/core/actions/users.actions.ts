@@ -21,8 +21,11 @@ import * as remote from 'selenium-webdriver/remote';
 
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
-import { ApiService, IdentityService, UserModel, Logger } from '@alfresco/adf-testing';
-import { Tenant } from '../models/APS/tenant';
+import { IdentityService } from './identity/identity.service';
+import { UserModel } from '../models/user.model';
+import { ApiService } from './api.service';
+import { Logger } from '../utils/logger';
+import { Tenant } from '../models/tenant';
 
 export class UsersActions {
 
@@ -36,17 +39,10 @@ export class UsersActions {
         }
     }
 
-    async createUser(emailOrUserModel?: string | UserModel, firstName?: string, lastName?: string, tenantId?: number, password?: string): Promise<UserModel> {
-        let user;
-
-        if (typeof emailOrUserModel !== 'string') {
-            user = new UserModel(emailOrUserModel);
-        } else {
-            user = new UserModel({ emailOrUserModel, firstName, lastName, tenantId, password });
-        }
+    async createUser(userModel?: UserModel): Promise<UserModel> {
+        const user = new UserModel({ ...(userModel ? userModel : {}) });
 
         try {
-
             if (this.api.apiService.isEcmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
                 Logger.log('Create user ECM');
                 await this.api.apiService.core.peopleApi.addPerson({
@@ -60,25 +56,14 @@ export class UsersActions {
 
             if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
                 Logger.log('Create user BPM');
-
-                if (tenantId || (emailOrUserModel && typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId)) {
-                    let tenantIdUser = 1;
-
-                    if (typeof emailOrUserModel !== 'string' && emailOrUserModel.tenantId) {
-                        tenantIdUser = emailOrUserModel.tenantId;
-                    } else if (tenantIdUser) {
-                        tenantIdUser = tenantId;
-                    }
-
-                    const apsUser = await this.createApsUser(tenantIdUser, user.email, user.firstName, user.lastName, user.password);
+                if (user.tenantId) {
+                    const apsUser = await this.createApsUser(user.tenantId, user.email, user.firstName, user.lastName, user.password);
                     user.id = apsUser.id;
-
                 } else {
                     const apsUser = await this.createTenantAndUser(user.email, user.firstName, user.lastName, user.password);
                     user.tenantId = apsUser.tenantId;
                     user.id = apsUser.id;
                 }
-
             }
 
             if (this.api.apiService.isOauthConfiguration()) {

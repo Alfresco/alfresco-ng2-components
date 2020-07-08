@@ -21,14 +21,14 @@ import {
     ErrorPage,
     LocalStorageUtil,
     UserInfoPage,
-    UserModel
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { LoginPage } from '../../pages/adf/demo-shell/login.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Login component', () => {
 

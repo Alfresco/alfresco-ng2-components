@@ -20,16 +20,16 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import {
     ApiService,
-    LoginSSOPage,
-    UploadActions,
+    FileBrowserUtil,
     IdentityService,
+    LoginSSOPage,
     SettingsPage,
     StringUtil,
-    FileBrowserUtil,
+    UploadActions,
+    UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList, implicitFlow true', () => {
 

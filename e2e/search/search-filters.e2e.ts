@@ -21,19 +21,19 @@ import { SearchResultsPage } from '../pages/adf/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import {
-    StringUtil,
-    DocumentListPage,
-    PaginationPage,
-    LoginSSOPage,
-    LocalStorageUtil,
-    UploadActions,
-    BrowserActions,
     ApiService,
-    UserModel
+    BrowserActions,
+    DocumentListPage,
+    LocalStorageUtil,
+    LoginSSOPage,
+    PaginationPage,
+    StringUtil,
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchConfiguration } from './search.config';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Search Filters', () => {
 

@@ -21,14 +21,15 @@ import {
     LoginSSOPage,
     NotificationHistoryPage,
     StringUtil,
-    UploadActions, UserModel
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
 import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Edit folder directive', () => {
 

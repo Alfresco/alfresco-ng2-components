@@ -16,12 +16,16 @@
  */
 
 import {
-    LoginSSOPage,
+    ApiService,
+    ApiUtil,
     BrowserActions,
     LocalStorageUtil,
+    LoginSSOPage,
     NotificationHistoryPage,
     UploadActions,
-    ViewerPage, ApiUtil, ApiService, UserModel
+    UserModel,
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -30,7 +34,6 @@ import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
 import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Share file', () => {
 

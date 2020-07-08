@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, PaginationPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, PaginationPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Document List - Selection', () => {
     const loginPage = new LoginSSOPage();

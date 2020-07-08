@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ApplicationsUtil, StartProcessPage, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    BrowserActions,
+    LoginSSOPage,
+    StartProcessPage,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
 import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import CONSTANTS = require('../util/constants');

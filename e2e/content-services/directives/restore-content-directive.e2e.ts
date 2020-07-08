@@ -22,15 +22,16 @@ import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TrashcanPage } from '../../pages/adf/trashcan.page';
 import {
+    ApiService,
+    BreadcrumbPage,
+    BrowserActions,
     LoginSSOPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
-    BrowserActions,
-    BreadcrumbPage,
-    ApiService, UserModel
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Restore content directive', () => {
 

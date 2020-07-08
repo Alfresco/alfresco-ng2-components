@@ -16,24 +16,25 @@
  */
 
 import {
+    ApiService,
+    ApplicationsUtil,
     BrowserActions,
     BrowserVisibility,
     LocalStorageUtil,
     LoginSSOPage,
     StringUtil,
-    ApplicationsUtil,
-    ApiService, UserModel
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../util/constants');
-import moment = require('moment');
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
 import { infoDrawerConfiguration } from './config/task.config';
+import CONSTANTS = require('../util/constants');
+import moment = require('moment');
 
 describe('Info Drawer', () => {
 

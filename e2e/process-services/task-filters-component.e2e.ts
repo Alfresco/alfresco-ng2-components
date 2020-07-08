@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ApplicationsUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -25,7 +25,6 @@ import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-
 import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
 import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
-import { UsersActions } from '../actions/users.actions';
 import { browser } from 'protractor';
 
 describe('Task', () => {

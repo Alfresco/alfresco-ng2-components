@@ -15,13 +15,19 @@
  * limitations under the License.
  */
 
-import { StringUtil, LoginSSOPage, PaginationPage, ApplicationsUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginSSOPage,
+    PaginationPage,
+    StringUtil,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../util/constants');
 import { TaskRepresentation } from '@alfresco/js-api';
+import CONSTANTS = require('../util/constants');
 
 describe('Task List Pagination - Sorting', () => {
 

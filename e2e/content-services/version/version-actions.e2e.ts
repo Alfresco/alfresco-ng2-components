@@ -21,7 +21,9 @@ import {
     BrowserVisibility,
     FileBrowserUtil,
     LoginSSOPage,
-    UploadActions, UserModel
+    UploadActions,
+    UserModel,
+    UsersActions
 } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
@@ -29,7 +31,6 @@ import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { VersionManagePage } from '../../pages/adf/version-manager.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Version component actions', () => {
 

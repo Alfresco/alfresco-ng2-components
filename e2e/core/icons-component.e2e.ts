@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UserModel } from '@alfresco/adf-testing';
+import { ApiService, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { IconsPage } from '../pages/adf/icons.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Universal Icon component', () => {
 

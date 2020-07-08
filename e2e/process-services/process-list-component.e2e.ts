@@ -15,10 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, ProcessUtil, ApiService, ApplicationsUtil } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    BrowserActions,
+    LoginSSOPage,
+    ProcessUtil,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Process List Test', () => {
 

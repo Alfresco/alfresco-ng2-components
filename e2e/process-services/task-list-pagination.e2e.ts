@@ -15,9 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, PaginationPage, ApplicationsUtil, ProcessUtil, ApiService, UserModel } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    LoginSSOPage,
+    PaginationPage,
+    ProcessUtil,
+    UserModel,
+    UsersActions
+} from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import CONSTANTS = require('../util/constants');

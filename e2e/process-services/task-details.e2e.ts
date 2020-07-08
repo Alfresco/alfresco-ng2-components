@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-import { UsersActions } from '../actions/users.actions';
-import Task = require('../models/APS/Task');
-import TaskModel = require('../models/APS/TaskModel');
-import FormModel = require('../models/APS/FormModel');
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import CONSTANTS = require('../util/constants');
-import moment = require('moment');
 import {
-    LoginSSOPage,
-    BrowserActions,
-    StringUtil,
+    ApiService,
     ApplicationsUtil,
+    BrowserActions,
+    LoginSSOPage,
     ProcessUtil,
-    ApiService
+    StringUtil,
+    UsersActions
 } from '@alfresco/adf-testing';
+import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
 import { TaskRepresentation } from '@alfresco/js-api';
+import Task = require('../models/APS/Task');
+import TaskModel = require('../models/APS/TaskModel');
+import FormModel = require('../models/APS/FormModel');
+import CONSTANTS = require('../util/constants');
+import moment = require('moment');
 
 describe('Task Details component', () => {
 

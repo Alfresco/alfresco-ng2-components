@@ -15,13 +15,20 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService } from '@alfresco/adf-testing';
+import {
+    ApiService,
+    ApplicationsUtil,
+    BrowserActions,
+    LoginSSOPage,
+    ProcessUtil,
+    UsersActions,
+    Widget
+} from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import CONSTANTS = require('../util/constants');
-import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
-import { UsersActions } from '../actions/users.actions';
+import CONSTANTS = require('../util/constants');
+import FormDefinitionModel = require('../models/APS/FormDefinitionModel');
 
 const formInstance = new FormDefinitionModel();
 

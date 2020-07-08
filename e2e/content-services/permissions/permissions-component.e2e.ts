@@ -19,20 +19,21 @@ import { PermissionsPage } from '../../pages/adf/permissions.page';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
-    StringUtil,
+    ApiService,
     BrowserActions,
-    NotificationHistoryPage,
     LoginSSOPage,
+    NotificationHistoryPage,
+    StringUtil,
     UploadActions,
-    ViewerPage,
-    ApiService, UserModel
+    UserModel,
+    UsersActions,
+    ViewerPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
 import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
-import { UsersActions } from '../../actions/users.actions';
 
 describe('Permissions Component', () => {
 

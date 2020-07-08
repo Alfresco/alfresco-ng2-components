@@ -17,7 +17,7 @@
 
 import { BrowserActions } from '../utils/browser-actions';
 import { element, by } from 'protractor';
-import { BrowserVisibility } from '../public-api';
+import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class ContextMenuPage {
     contextMenu = element(by.id('adf-context-menu-content'));

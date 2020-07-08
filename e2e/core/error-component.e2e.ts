@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, ErrorPage, BrowserActions, ApiService, UserModel } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, ErrorPage, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { UsersActions } from '../actions/users.actions';
 
 describe('Error Component', () => {
 
