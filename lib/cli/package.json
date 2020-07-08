@@ -22,7 +22,7 @@
   "dependencies": {
     "commander": "^4.0.0",
     "license-checker": "^25.0.1",
-    "npm-registry-fetch": "^3.9.0",
+    "npm-registry-fetch": "^4.0.5",
     "@angular-devkit/core": "^9.1.7",
     "rxjs": "^6.5.5",
     "shelljs": "^0.8.3",
