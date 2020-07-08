@@ -15,7 +15,7 @@
 
         <mat-menu #filter="matMenu" class="adf-filter-menu">
             <div (click)="onMenuClick($event)" class="adf-filter-container">
-                <div class="adf-filter-title">{{ 'SEARCH.SEARCH_HEADER.TITLE' | translate }}</div>
+                <div class="adf-filter-title">{{ category?.name | translate }}</div>
                 <adf-search-widget-container
                     (keydown.enter)="onApply()"
                     [id]="category?.id"

@@ -290,7 +290,28 @@
       "TYPE": "Type",
       "FILTER_BY": "Filter by {{ category }}",
       "CLEAR": "Clear",
-      "APPLY": "Apply"
+      "APPLY": "Apply",
+      "FILTERS" : {
+        "NAME" : {
+          "TITLE": "Name",
+          "PLACEHOLDER": "Enter the name"
+        },
+        "TYPE": {
+          "TITLE": "Check type",
+          "FOLDER": "Folder",
+          "DOCUMENT": "Document"
+        },
+        "SIZE": {
+          "TITLE" : "Content Size (range)",
+          "SMALL": "Small",
+          "MEDIUM": "Medium",
+          "LARGE": "Large",
+          "HUGE": "Huge"
+        },
+        "DATE" :{
+          "TITLE" : "Created Date (range)"
+        }
+      }
     }
   },
   "PERMISSION": {
