@@ -27,7 +27,7 @@ export class LoginSSOPage {
     usernameField = element(by.id('username'));
     passwordField = element(by.id('password'));
     loginButton = element(by.css('input[type="submit"]'));
-    header = element(by.id('adf-header'));
+    header = element(by.tagName('adf-layout-header'));
     loginError = element(by.css(`div[data-automation-id="login-error"]`));
     visibilityLabel = element(by.id('v'));
 
