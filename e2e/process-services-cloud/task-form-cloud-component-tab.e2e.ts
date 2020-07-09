@@ -97,9 +97,9 @@ describe('Task form cloud component', () => {
 
         const formCloudService = new FormCloudService(apiServiceHrUser);
 
-        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
+        const tabVisibilityFieldsId = await formCloudService.getIdByFormName(simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityFields.name);
 
-        const tabVisibilityVarsId = await formCloudService.getIdByFormName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
+        const tabVisibilityVarsId = await formCloudService.getIdByFormName(simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
 
         for (let i = 0; i < 3; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
@@ -107,7 +107,7 @@ describe('Task form cloud component', () => {
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
-        for (let i = 3; i < 6; i++) {
+        for (let i = 3; i < 7; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
                 simpleApp, tabVisibilityVarsId);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
@@ -328,6 +328,33 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
+        });
+
+        it('[C315180] Should be able to complete a standalone task with tab when has multiple visibility conditions and next condition operators', async () => {
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[6].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[6].entry.name);
+            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+
+            await widget.tab().clickTabByLabel(tab.tabVarVar);
+            await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
+
+            await taskFormCloudComponent.clickCompleteButton();
+
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[6].entry.name);
+
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[6].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[6].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
         });
