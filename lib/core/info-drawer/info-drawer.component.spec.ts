@@ -138,3 +138,50 @@ describe('Custom InfoDrawer', () => {
         expect(tab[0].nativeElement.innerText).toContain('tab-icon');
     });
 });
+
+@Component({
+    template: `
+    <adf-info-drawer [showHeader]="showHeader" title="Fake Visibility Info Drawer Title">
+    </adf-info-drawer>
+       `
+})
+class VisibilityInfoDrawerComponent extends InfoDrawerComponent {
+    showHeader: boolean;
+}
+
+describe('Header visibility InfoDrawer', () => {
+    let fixture: ComponentFixture<VisibilityInfoDrawerComponent>;
+    let component: VisibilityInfoDrawerComponent;
+
+    setupTestBed({
+        imports: [
+            TranslateModule.forRoot(),
+            CoreTestingModule
+        ],
+        declarations: [
+            VisibilityInfoDrawerComponent
+        ]
+    });
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(VisibilityInfoDrawerComponent);
+        fixture.detectChanges();
+        component = fixture.componentInstance;
+    });
+
+    it('should show info drawer header by default', () => {
+        fixture.detectChanges();
+        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        expect(title.length).toBe(1);
+        expect(title[0].nativeElement.innerText).toBe('Fake Visibility Info Drawer Title');
+        expect(component.showHeader).toEqual(true);
+    });
+
+    it('should not show info drawer header when showHeader is false', () => {
+        fixture.detectChanges();
+        component.showHeader = false;
+        fixture.detectChanges();
+        const title: any = fixture.debugElement.queryAll(By.css('[info-drawer-title]'));
+        expect(title.length).toBe(0);
+    });
+});

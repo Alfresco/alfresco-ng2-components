@@ -50,6 +50,10 @@ export class InfoDrawerComponent {
     @Input()
     selectedIndex: number = 0;
 
+    /** The visibility of the header. */
+    @Input()
+    showHeader: boolean = true;
+
     /** Emitted when the currently active tab changes. */
     @Output()
     currentTab: EventEmitter<number> = new EventEmitter<number>();
