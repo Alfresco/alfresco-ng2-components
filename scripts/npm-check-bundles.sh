@@ -93,8 +93,8 @@ do
      echo "js.map ok!"
  fi
 
- if [ ! -f package/esm5/$PACKAGE'.js' ]; then
-    error_out '31;1' "esm5/$PACKAGE.js not found!" >&2
+ if [ ! -f package/fesm2015/$PACKAGE'.js' ]; then
+    error_out '31;1' "fesm2015/$PACKAGE.js not found!" >&2
     exit 1
  else
      echo "esm5 ok!"
