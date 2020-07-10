@@ -26,8 +26,9 @@ then
 
     ./scripts/npm-build-all.sh || exit 1;
 else
-    npm install;
+    echo "====== Update the package.json with latest ADW deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
+    npm install;
 
     ./scripts/smart-build.sh -gnu || exit 1;
 fi;
