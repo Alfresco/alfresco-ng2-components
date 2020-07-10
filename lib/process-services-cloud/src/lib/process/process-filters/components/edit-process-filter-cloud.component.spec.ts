@@ -35,6 +35,7 @@ import { AbstractControl } from '@angular/forms';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessCloudService } from '../../services/process-cloud.service';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -42,6 +43,7 @@ describe('EditProcessFilterCloudComponent', () => {
     let fixture: ComponentFixture<EditProcessFilterCloudComponent>;
     let dialog: MatDialog;
     let appsService: AppsProcessCloudService;
+    let processService: ProcessCloudService;
     let getRunningApplicationsSpy: jasmine.Spy;
     let getProcessFilterByIdSpy: jasmine.Spy;
 
@@ -74,6 +76,7 @@ describe('EditProcessFilterCloudComponent', () => {
         component = fixture.componentInstance;
         service = TestBed.inject(ProcessFilterCloudService);
         appsService = TestBed.inject(AppsProcessCloudService);
+        processService = TestBed.inject(ProcessCloudService);
         dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({
             afterClosed() {
@@ -411,6 +414,22 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(appController.value).toEqual('mock-app-name');
             expect(appVersionController).toBeDefined();
             expect(appVersionController.value).toEqual(1);
+        });
+    }));
+
+    it('should fetch process definitions when processDefinitionName filter property is set', async(() => {
+        const processSpy = spyOn(processService, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));
+        fixture.detectChanges();
+        component.filterProperties = ['processDefinitionName'];
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const controller = component.editProcessFilterForm.get('processDefinitionName');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(processSpy).toHaveBeenCalled();
+            expect(controller).toBeDefined();
         });
     }));
 

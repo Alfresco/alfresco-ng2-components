@@ -30,6 +30,7 @@ export class ProcessFilterCloudModel {
     sort: string;
     order: string;
     processDefinitionId: string;
+    processDefinitionName: string;
     processDefinitionKey: string;
     lastModified: Date;
     lastModifiedTo: Date;
@@ -51,6 +52,7 @@ export class ProcessFilterCloudModel {
             this.sort = obj.sort || null;
             this.order = obj.order || null;
             this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionName = obj.processDefinitionName || null;
             this.processDefinitionKey = obj.processDefinitionKey || null;
             this.lastModified = obj.lastModified || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;

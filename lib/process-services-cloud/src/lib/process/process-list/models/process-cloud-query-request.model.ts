@@ -24,6 +24,7 @@ export class ProcessQueryCloudRequestModel {
    id?: string;
    name?: string;
    processDefinitionId?: string;
+   processDefinitionName?: string;
    processDefinitionKey?: string;
    status?: string;
    startDate?: string;
@@ -42,6 +43,7 @@ export class ProcessQueryCloudRequestModel {
            this.id = obj.id;
            this.name = obj.name;
            this.processDefinitionId = obj.processDefinitionId;
+           this.processDefinitionName = obj.processDefinitionName;
            this.processDefinitionKey = obj.processDefinitionKey;
            this.status = obj.status;
            this.startDate = obj.startDate;

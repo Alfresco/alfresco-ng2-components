@@ -27,7 +27,7 @@ import { FormModel, ContentLinkModel } from '@alfresco/adf-core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { debounceTime, takeUntil, switchMap, filter, distinctUntilChanged, tap } from 'rxjs/operators';
-import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';

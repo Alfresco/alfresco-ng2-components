@@ -21,6 +21,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
+import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 
 @Injectable({
     providedIn: 'root'
@@ -54,6 +55,26 @@ export class ProcessCloudService extends BaseCloudService {
         } else {
             this.logService.error('AppName and ProcessInstanceId are mandatory for querying a process');
             return throwError('AppName/ProcessInstanceId not configured');
+        }
+    }
+
+    /**
+     * Gets the process definitions associated with an app.
+     * @param appName Name of the target app
+     * @returns Array of process definitions
+     */
+    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+        if (appName || appName === '') {
+            const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
+
+            return this.get(url).pipe(
+                map((res: any) => {
+                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
+                })
+            );
+        } else {
+            this.logService.error('AppName is mandatory for querying task');
+            return throwError('AppName not configured');
         }
     }
 

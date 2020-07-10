@@ -17,7 +17,7 @@
 
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 
 export const fakeProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
