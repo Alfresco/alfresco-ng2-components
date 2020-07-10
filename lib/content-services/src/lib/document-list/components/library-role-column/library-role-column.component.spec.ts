@@ -22,7 +22,7 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('LibraryNameColumnComponent', () => {
+describe('LibraryRoleColumnComponent', () => {
     let fixture: ComponentFixture<LibraryRoleColumnComponent>;
     let component: LibraryRoleColumnComponent;
 
@@ -96,6 +96,6 @@ describe('LibraryNameColumnComponent', () => {
         component.displayText$.subscribe((val) => value = val);
 
         fixture.detectChanges();
-        expect(value).toBe('');
+        expect(value).toBe('LIBRARY.ROLE.NONE');
     });
 });
