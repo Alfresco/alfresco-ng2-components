@@ -402,7 +402,7 @@
       "COLLABORATOR": "Collaborator",
       "CONTRIBUTOR": "Contributor",
       "CONSUMER": "Consumer",
-      "NONE": "None"
+      "NONE": "Not a member"
     },
     "VISIBILITY": {
       "PRIVATE": "Private",
