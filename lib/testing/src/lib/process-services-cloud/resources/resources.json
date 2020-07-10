@@ -110,7 +110,8 @@
       "attachLocalFile": "attach-local-file",
       "attachSingleMultiple": "attach-single-multiple",
       "attachMultipleSingle": "attach-multiple-single",
-      "attachMultipleMultiple": "attach-multiple-multiple"
+      "attachMultipleMultiple": "attach-multiple-multiple",
+      "intermediateDateProcessVarTimer": "interm-date-provar-timer"
     },
     "forms": {
       "tabVisibilityFields": {
@@ -206,6 +207,30 @@
         "name": "attach-multiple-multiple",
         "attachFileWidget1": "Attachfile07sqao",
         "attachFileWidget2": "Attachfile018wvc"
+      },
+      "dateTimerForm": {
+        "name": "date-timer-form"
+      },
+      "dropdownWithOptions": {
+        "name": "dropdown-options",
+        "options": [
+          {
+            "id": "empty",
+            "name": "Choose one..."
+          },
+          {
+            "id": "option_1",
+            "name": "option1"
+          },
+          {
+            "id": "option_2",
+            "name": "option2"
+          },
+          {
+            "id": "option_3",
+            "name": "option3"
+          }
+        ]
       }
     },
     "tasks": {
