@@ -87,7 +87,7 @@ export class ProcessInstanceHeaderComponent implements OnChanges {
                 {
                     label: 'ADF_PROCESS_LIST.PROPERTIES.CREATED_BY',
                     value: this.getStartedByFullName(),
-                    key: 'assignee',
+                    key: 'createdBy',
                     default: this.translationService.instant('ADF_PROCESS_LIST.PROPERTIES.CREATED_BY_DEFAULT')
                 }),
             new CardViewDateItemModel(
