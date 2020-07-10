@@ -401,7 +401,8 @@
       "MANAGER": "Manager",
       "COLLABORATOR": "Collaborator",
       "CONTRIBUTOR": "Contributor",
-      "CONSUMER": "Consumer"
+      "CONSUMER": "Consumer",
+      "NONE": "None"
     },
     "VISIBILITY": {
       "PRIVATE": "Private",

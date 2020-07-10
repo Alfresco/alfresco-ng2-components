@@ -86,7 +86,7 @@ export class LibraryRoleColumnComponent implements OnInit, OnDestroy {
                     this.displayText$.next('LIBRARY.ROLE.CONSUMER');
                     break;
                 default:
-                    this.displayText$.next('');
+                    this.displayText$.next('LIBRARY.ROLE.NONE');
                     break;
             }
         }
