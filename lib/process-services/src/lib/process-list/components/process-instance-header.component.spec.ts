@@ -117,7 +117,7 @@ describe('ProcessInstanceHeaderComponent', () => {
         component.ngOnChanges();
         fixture.detectChanges();
         await fixture.whenStable();
-        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-assignee"]');
+        const valueEl = fixture.nativeElement.querySelector('[data-automation-id="card-textitem-value-createdBy"]');
         expect(valueEl.value).toBe('Admin User');
     });
 
