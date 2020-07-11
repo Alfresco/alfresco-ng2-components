@@ -42,7 +42,7 @@ when the process list is empty:
     <adf-custom-empty-content>
         Your Content
     </adf-custom-empty-content>
-<adf-process-instance-list>
+</adf-process-instance-list>
 ```
 
 ## Class members
