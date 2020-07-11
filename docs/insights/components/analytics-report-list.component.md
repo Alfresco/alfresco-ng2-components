@@ -11,9 +11,9 @@ Shows a list of all available reports
 ## Basic Usage
 
 ```html
-<analytics-report-list
+<adf-analytics-report-list
     [layoutType]="'LIST'">
-</analytics-report-list>
+</adf-analytics-report-list>
 ```
 
 ## Class members
