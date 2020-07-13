@@ -29,7 +29,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
-    activeFilters: string[] = [];
+    activeFilters: Map<string, string> = new Map();
     currentParentFolderId: string;
 
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
@@ -53,18 +53,22 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         }
     }
 
-    setActiveFilter(columnActivated: string) {
-        if (!this.activeFilters.includes(columnActivated)) {
-            this.activeFilters.push(columnActivated);
-        }
+    setActiveFilter(columnActivated: string, filterValue: string) {
+        this.activeFilters.set(columnActivated, filterValue);
+    }
+
+    getActiveFilters(): Map<string, string> {
+        return this.activeFilters;
     }
 
     isNoFilterActive(): boolean {
-        return this.activeFilters.length === 0;
+        return this.activeFilters.size === 0;
     }
 
     removeActiveFilter(columnRemoved: string) {
-        this.activeFilters = this.activeFilters.filter((column) => column !== columnRemoved);
+        if (this.activeFilters.get(columnRemoved) !== null) {
+            this.activeFilters.delete(columnRemoved);
+        }
     }
 
     getCategoryForColumn(columnKey: string): SearchCategory {

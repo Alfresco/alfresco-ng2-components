@@ -52,6 +52,9 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     col: DataColumn;
 
+    @Input()
+    value: any;
+
     /** The id of the current folder of the document list. */
     @Input()
     currentFolderNodeId: string;
@@ -71,6 +74,10 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     /** Emitted when the last of all the filters is cleared. */
     @Output()
     clear: EventEmitter<any> = new EventEmitter();
+
+    /** Emitted when a filter value is selected */
+    @Output()
+    selection: EventEmitter<Map<string, string>> = new EventEmitter();
 
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
@@ -138,7 +145,8 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
             this.widgetContainer.applyInnerWidget();
-            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey);
+            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
+            this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
             this.searchHeaderQueryBuilder.execute();
         } else {
             this.clearHeader();

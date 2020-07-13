@@ -29,12 +29,18 @@ export class FilteredSearchComponent {
     navigationRoute = '/filtered-search';
     currentFolderId = '-my-';
 
+    queryParams = null;
+
     constructor(@Optional() private route: ActivatedRoute) {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id'] && this.currentFolderId !== params['id']) {
                     this.currentFolderId = params['id'];
                 }
+            });
+
+            this.route.queryParamMap.subscribe((queryMap: Params) => {
+                this.queryParams = queryMap.params;
             });
         }
     }

@@ -78,6 +78,15 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
         return !!this.value;
     }
 
+    getCurrentValue() {
+        return this.value;
+    }
+
+    setValue(value: any) {
+        this.value = value;
+        this.submitValues();
+    }
+
     private updateQuery(value: number | null) {
         if (this.id && this.context && this.settings && this.settings.field) {
             if (value === null) {

@@ -108,6 +108,15 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
         return this.form.valid;
     }
 
+    getCurrentValue() {
+        return this.form.value;
+    }
+
+    setValue(value: any) {
+        this.form['from'].setValue(value);
+        this.form['to'].setValue(value);
+    }
+
     reset() {
         this.isActive = false;
 

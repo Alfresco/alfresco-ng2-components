@@ -26,4 +26,6 @@ export interface SearchWidget {
     reset();
     submitValues();
     hasValidValue();
+    getCurrentValue();
+    setValue(value: any);
 }

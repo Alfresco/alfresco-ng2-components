@@ -85,7 +85,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
 
     submitValues() {
         const currentValue = this.getSelectedValue();
-        this.setValue(currentValue);
+        this.applyValue(currentValue);
     }
 
     hasValidValue() {
@@ -93,14 +93,22 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         return !!currentValue;
     }
 
-    private setValue(newValue: string) {
+    getCurrentValue() {
+        return this.getSelectedValue();
+    }
+
+    setValue(value: any) {
+        this.applyValue(value);
+    }
+
+    private applyValue(newValue: string) {
         this.value = newValue;
         this.context.queryFragments[this.id] = newValue;
         this.context.update();
     }
 
     changeHandler(event: MatRadioChange) {
-        this.setValue(event.value);
+        this.applyValue(event.value);
     }
 
     reset() {
@@ -108,7 +116,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
 
         const initialValue = this.getSelectedValue();
         if (initialValue !== null) {
-            this.setValue(initialValue);
+            this.applyValue(initialValue);
         }
     }
 }

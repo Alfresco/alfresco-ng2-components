@@ -23,7 +23,8 @@
                         (keypress)="onKeyPressed($event, menuTrigger)"
                         [id]="category?.id"
                         [selector]="category?.component?.selector"
-                        [settings]="category?.component?.settings">
+                        [settings]="category?.component?.settings"
+                        [value]="value">
                     </adf-search-widget-container>
                 </div>
                 <mat-dialog-actions class="adf-filter-actions">

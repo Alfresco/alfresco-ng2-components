@@ -163,6 +163,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     enableCustomHeaderFilter = false;
 
+    @Input()
+    paramValues: Map <any, any> = null;
+
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
 
@@ -656,6 +659,16 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     onAllFilterCleared() {
         this.documentList.node = null;
         this.documentList.reload();
+    }
+
+    onFilterSelected(currentActiveFilters: Map<string, string>) {
+        const objectFromMap = {};
+        currentActiveFilters.forEach((value, key) => {
+            objectFromMap[key] = value;
+        });
+
+        this.router.navigate([this.navigationRoute, this.currentFolderId
+            , 'display', this.displayMode], { queryParams: objectFromMap});
     }
 
 }

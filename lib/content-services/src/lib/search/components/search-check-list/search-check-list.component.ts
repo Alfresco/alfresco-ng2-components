@@ -82,6 +82,15 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         return !!checkedValues.length;
     }
 
+    getCurrentValue() {
+        return this.getCheckedValues();
+    }
+
+    setValue(value: any) {
+        this.options.items.filter((item) => item.value === value)
+            .map((item) => item.checked = true);
+    }
+
     private getCheckedValues() {
         return this.options.items
             .filter((option) => option.checked)
