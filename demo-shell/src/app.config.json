@@ -498,7 +498,7 @@
             "options": [
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.SMALL",
-                "value": "content.size:[0 TO 1048576> OR TYPE:'cm:folder'"
+                "value": "content.size:[0 TO 1048576] OR TYPE:'cm:folder'"
               },
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.MEDIUM",
