@@ -43,11 +43,11 @@ import { ProcessFormRenderingService } from './process-form-rendering.service';
 })
 export class StartFormComponent extends FormComponent implements OnChanges, OnInit, OnDestroy {
 
-    /** Definition ID of the process to start. */
+    /** Definition ID of the process to start, this parameter can not be use in combination with processId */
     @Input()
     processDefinitionId: string;
 
-    /** Process ID of the process to start. */
+    /** Process ID of the process to start, this parameter can not be use in combination with processDefinitionId */
     @Input()
     processId: string;
 
