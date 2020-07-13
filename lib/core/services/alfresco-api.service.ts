@@ -22,6 +22,7 @@ import {
     Activiti,
     SearchApi,
     Node,
+    GroupsApi,
     AlfrescoApiCompatibility, AlfrescoApiConfig
 } from '@alfresco/js-api';
 import { AppConfigService, AppConfigValues } from '../app-config/app-config.service';
@@ -95,8 +96,8 @@ export class AlfrescoApiService {
         return this.getInstance().core.classesApi;
     }
 
-    get groupsApi(): Core.GroupsApi {
-        return this.getInstance().core.groupsApi;
+    get groupsApi(): GroupsApi {
+        return new GroupsApi(this.getInstance());
     }
 
     constructor(
