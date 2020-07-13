@@ -22,7 +22,3 @@ fi
 
 echo "BASE_HASH: $BASE_HASH"
 echo "S3 DBP destination: $S3_DBP_FOLDER"
-
-export DISPLAY=:99.0
-sh -e /etc/init.d/xvfb start
-sleep 3 # give xvfb some time to start

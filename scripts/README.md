@@ -3,7 +3,6 @@
 
 - [Quick examples](#quick-examples)
 - [start.sh Demo shell script](#start.sh)
-- [Ng2 components framework alfresco build](#npm-build-all.sh)
 
 The Alfresco application development framework comes with a demo project that you can run to get a
 feel of what's available.
@@ -21,18 +20,6 @@ feel of what's available.
 
 ```sh
 ./start.sh -dev -gitjsapi development
-```
-
-* Build the lib folder using the JS-API from the development branch 
-
-```sh
-./npm-build-all.sh -gitjsapi development
-```
-
-* Build the lib folder using the JS-API from the development branch and run the tests on it
-
-```sh
-./npm-build-all.sh -t -gitjsapi development
 ```
 
 # start.sh
@@ -130,82 +117,6 @@ All the commands before can be used in combination
 ./start.sh -t
 
 ```
-
-# npm-build-all.sh
-
-***npm-build-all.sh*** this script provides an easy way to deal with the npm command and the correct sequence to build the lib
-
-## Options
-
-The default behaviour of the ***npm-build-all.sh*** install node_modules and build all the components
-
-
-| Option | Description |
-| --- | --- |
-| -h or --help    | show the help  |
-| -t or --test    | Run the tests, this parameter accepts also a wildcard to execute tests for example -t "core" |
-| -d or --debug    | Run the tests **in browser**, this parameter accepts also a wildcard to execute tests for example -d "core" |
-| -c or --clean   | clean the ng2_components folders before start from all the temp builds files as node_modules  |
-| -gitjsapi   | start the demo shell using an alfresco-js-api referenced by commit-ish version of the JS-API |
-| -si or --skipinstall    | skip the installation of the node_modules  |
-| -sb or --skipbuild    | skip the creation of the bundles files and skip the errors and lint checks inside the components |
-
-      
-* Build all your local components:
-
-```sh
-./npm-build-all.sh
-```
-
-* Build all your local components and run the tests:
-
-```sh
-./npm-build-all.sh -t
-```
-
-* Build all your local components and run the tests **in BROWSER**:
-
-```sh
-./npm-build-all.sh -d
-```
-
-* Build only a part of the component and run the tests only for a specific folder **in BROWSER**:
-(you can change core with, any other lib in the lib folder) 
-
-```sh
-./npm-build-all.sh -si -sb -d "core"
-```
-
-* Clean the lib folder node_modules before build
-
-```sh
-./npm-build-all.sh -c
-```
-
-* Build all the components against a commit-ish version of the JS-API
-
-```sh
- ./npm-build-all.sh -gitjsapi commit-ish
-
- ./npm-build-all.sh -gitjsapi development
- 
- ./npm-build-all.sh -gitjsapi de92be966e2ce7eca642ca9e9d7647ba4f849356
-```
-
-* Skip initial build and run only all the test
-
-```sh
-./npm-build-all.sh -s -t
-```
-
-* Skip initial installation of node_modules
-
-```sh
-./npm-build-all.sh -si
-```
-
-
-For development environment configuration please refer to [project docs](../demo-shell/README.md).
 
 ***npm-check-bundles.sh*** check the bundles in the package npm are present
 

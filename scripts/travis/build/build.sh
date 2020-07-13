@@ -24,11 +24,11 @@ then
 
     npm install
 
-    ./scripts/npm-build-all.sh || exit 1;
+    nx affected --exclude=cli --target=build --all
+    ./scripts/build/build-cli.sh || exit 1;
 else
-    echo "====== Update the package.json with latest ADW deps ====="
+    echo "====== Update the package.json with latest JS-API/CLI deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
     npm install;
+    nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude=cli --prod --with-deps
 fi;
-
-nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude=cli --prod --with-deps
