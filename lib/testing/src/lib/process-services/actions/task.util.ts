@@ -17,6 +17,7 @@
 
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
+import { TaskRepresentation } from '@alfresco/js-api';
 
 export class TaskUtil {
 
@@ -24,6 +25,14 @@ export class TaskUtil {
 
     constructor(api: ApiService) {
         this.api = api;
+    }
+
+    async createStandaloneTask(taskName: string): Promise<any> {
+        try {
+            await this.api.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName }));
+        } catch (error) {
+            Logger.error('Create Standalone Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
     }
 
     async completeTask(taskInstance: string): Promise<any> {
@@ -39,6 +48,14 @@ export class TaskUtil {
             await this.api.getInstance().activiti.taskApi.completeTaskForm(taskInstance, { values: { label: null } });
         } catch (error) {
             Logger.error('Complete Task Form - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
+    }
+
+    async deleteTask(taskInstance: string): Promise<any> {
+        try {
+            await this.api.apiService.activiti.taskApi.deleteTask(taskInstance);
+        } catch (error) {
+            Logger.error('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
 }
