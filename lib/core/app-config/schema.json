@@ -959,7 +959,7 @@
                   "ended",
                   "category",
                   "businessKey",
-                  "assignee",
+                  "createdBy",
                   "created",
                   "id",
                   "description"
