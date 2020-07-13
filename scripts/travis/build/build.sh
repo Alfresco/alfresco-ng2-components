@@ -25,6 +25,10 @@ then
     npm install
 
     ./scripts/build/build-all-lib.sh
+
+    echo "====== Build Demo shell for production ====="
+    npm run build:prod || exit 1;
+
 else
     echo "====== Update the package.json with latest JS-API/CLI deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
