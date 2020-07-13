@@ -83,7 +83,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: 'app/components/file-view/file-view.module#FileViewModule'
+                loadChildren: () => import('./components/file-view/file-view.module').then(m => m.FileViewModule)
             }
         ]
     },
