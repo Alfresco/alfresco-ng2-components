@@ -24,8 +24,7 @@ then
 
     npm install
 
-    nx affected --exclude=cli --target=build --all  || exit 1;
-    ./scripts/build/build-cli.sh || exit 1;
+    ./scripts/build/build-all-lib.sh
 else
     echo "====== Update the package.json with latest JS-API/CLI deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"

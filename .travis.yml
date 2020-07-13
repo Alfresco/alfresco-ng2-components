@@ -21,9 +21,7 @@ branches:
   - /.*greenkeeper.*/
 
 stages:
-  - name: Lint & Build Dist
-  - name: Npm Release
-    if: (type = push OR type = cron) AND tag IS blank
+  - name: Lint & Build Dist & Release
   - name: Update Rancher
     if: (type = push AND tag IS blank)  OR type = api
   - name: Deploy PR
@@ -53,21 +51,15 @@ services:
 jobs:
     include:
         # Run Only for any PR
-        - stage: Lint & Build Dist
+        - stage: Lint & Build Dist & Release
           name:  Build
           script:
             - ./scripts/travis/build/build.sh
             - ./scripts/lint.sh
+            - ./scripts/travis/release/release-npm.sh
           after_success:
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
-
-        # Run Only on develop and master
-        - stage: Npm Release
-          name: Npm Release
-          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
-          script:
-            - ./scripts/travis/release/release-npm.sh
 
         - stage: Unit test
           name: Unit test content

@@ -21,7 +21,6 @@
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "01s": "",
     "unit-test": "concurrently \"ng test content-services --watch=false\" \"ng test process-services --watch=false\" \"ng test core --watch=false\" \"ng test extensions --watch=false\" \"ng test insights --watch=false\" \"ng test process-services-cloud --watch=false\" ",
-    "prepublishOnly": "npm run build-lib",
     "build-lib": "./scripts/build/build-all-lib.sh",
     "affected:libs": "nx affected:libs",
     "inspect.bundle": "ng build demoshell --prod --stats-json && npx webpack-bundle-analyzer dist/demo-shell/stats-es2015.json",
