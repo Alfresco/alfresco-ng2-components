@@ -136,6 +136,21 @@ describe('DropdownSitesComponent', () => {
                 });
             }));
 
+            it('should be able to emit default selected option', async(() => {
+                const changeSpy = spyOn(component.change, 'emit');
+                component.hideMyFiles = false;
+                fixture.detectChanges();
+
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    debug.query(By.css('.mat-select-trigger')).triggerEventHandler('click', null);
+                    fixture.detectChanges();
+                    const options: any = debug.queryAll(By.css('mat-option'));
+                    expect(options[0].nativeElement.innerText).toContain('DROPDOWN.MY_FILES_OPTION');
+                    expect(changeSpy).toHaveBeenCalledWith(component.selected);
+                });
+            }));
+
             it('should hide the "My files" option if the developer desires that way', async(() => {
                 component.hideMyFiles = true;
                 fixture.detectChanges();
