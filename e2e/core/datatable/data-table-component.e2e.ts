@@ -18,7 +18,7 @@
 import {
     ApiService,
     DropActions,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     UserModel,
     UsersActions
@@ -33,7 +33,7 @@ describe('Datatable component', () => {
     const dataTablePage = new DataTablePage('defaultTable');
     const copyContentDataTablePage = new DataTablePage('copyClipboardDataTable');
     const dragAndDropDataTablePage = new DataTablePage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();

@@ -20,7 +20,7 @@ import {
     AppListCloudPage,
     StringUtil,
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     TasksService,
     IdentityService,
     GroupIdentityService
@@ -32,7 +32,7 @@ describe('Edit task filters cloud', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

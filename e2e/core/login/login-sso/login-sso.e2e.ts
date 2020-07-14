@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, SettingsPage, BrowserVisibility } from '@alfresco/adf-testing';
+import { LoginPage, SettingsPage, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../../../pages/adf/navigation-bar.page';
-import { LoginPage } from '../../../pages/adf/demo-shell/login.page';
+import { LoginShellPage } from '../../../pages/adf/demo-shell/login-shell.page';
 
 describe('Login component - SSO', () => {
 
     const settingsPage = new SettingsPage();
-    const loginSSOPage = new LoginSSOPage();
-    const loginPage = new LoginPage();
+    const loginSSOPage = new LoginPage();
+    const loginPage = new LoginShellPage();
     const navigationBarPage = new NavigationBarPage();
 
     describe('Login component - SSO implicit Flow', () => {

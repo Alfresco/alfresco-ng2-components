@@ -18,7 +18,7 @@
 import {
     ApiService,
     ArrayUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     StringUtil,
     UploadActions,
@@ -33,7 +33,7 @@ import { ContentServicesPage } from '../pages/adf/content-services.page';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
 

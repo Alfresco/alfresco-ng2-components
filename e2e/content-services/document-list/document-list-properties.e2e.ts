@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, DropActions, LoginSSOPage, UploadActions, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, DropActions, LoginPage, UploadActions, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
@@ -23,7 +23,7 @@ import { FileModel } from '../../models/ACS/file.model';
 
 describe('Document List Component - Properties', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBar = new NavigationBarPage();
 

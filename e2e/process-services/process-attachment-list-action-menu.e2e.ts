@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     FileBrowserUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     UsersActions,
     ViewerPage
@@ -35,7 +35,7 @@ describe('Attachment list action menu for processes', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processDetailsPage = new ProcessDetailsPage();
     const attachmentListPage = new AttachmentListPage();

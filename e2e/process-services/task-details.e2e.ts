@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     StringUtil,
     UsersActions
@@ -39,7 +39,7 @@ describe('Task Details component', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
     const processServices = new ProcessServicesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
 
     const apiService = new ApiService();
@@ -74,7 +74,7 @@ describe('Task Details component', () => {
     });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/activiti');
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {

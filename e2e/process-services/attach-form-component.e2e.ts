@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, FormFields, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, FormFields, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
@@ -27,7 +27,7 @@ import CONSTANTS = require('../util/constants');
 describe('Attach Form Component', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();

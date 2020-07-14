@@ -20,7 +20,7 @@ import {
     ApiService,
     BrowserActions,
     ErrorPage,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
@@ -36,7 +36,7 @@ import { browser } from 'protractor';
 describe('Unshare file', () => {
 
     const apiService = new ApiService();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const navBar = new NavigationBarPage();
@@ -160,7 +160,7 @@ describe('Unshare file', () => {
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, browser.params.testConfig.adf.host));
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, browser.baseUrl ));
             await errorPage.checkErrorCode();
         });
     });

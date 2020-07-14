@@ -17,13 +17,13 @@
 
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, StringUtil, UploadActions, UsersActions } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);

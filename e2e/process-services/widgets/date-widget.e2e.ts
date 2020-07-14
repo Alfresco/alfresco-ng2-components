@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     BrowserActions,
     FormPage,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     UsersActions,
     Widget
@@ -35,7 +35,7 @@ describe('Date widget', () => {
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.DATE;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
 
@@ -72,7 +72,7 @@ describe('Date widget', () => {
 
     describe('Simple App', () => {
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
@@ -103,7 +103,7 @@ describe('Date widget', () => {
         const formPage = new FormPage();
 
         beforeAll(async () => {
-            const urlFormDemoPage = `${browser.params.testConfig.adf.url}/form`;
+            const urlFormDemoPage = `${browser.baseUrl}/form`;
             await BrowserActions.getUrl(urlFormDemoPage);
         });
 

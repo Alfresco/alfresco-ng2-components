@@ -16,7 +16,7 @@
  */
 
 import { PeopleApi } from '@alfresco/js-api';
-import { ApiService, LocalStorageUtil, LoginSSOPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LocalStorageUtil, LoginPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -25,7 +25,7 @@ import * as fs from 'fs';
 
 describe('User Info component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const userInfoPage = new UserInfoPage();
     const navigationBarPage = new NavigationBarPage();
 

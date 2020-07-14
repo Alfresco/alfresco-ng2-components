@@ -20,7 +20,7 @@ import { browser, by, element } from 'protractor';
 import {
     ApiService,
     DropActions,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -37,7 +37,7 @@ describe('Upload component', () => {
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
 
     const apiService = new ApiService();

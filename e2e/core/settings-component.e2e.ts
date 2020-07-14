@@ -20,11 +20,11 @@ import { browser, protractor } from 'protractor';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { LoginPage } from '../pages/adf/demo-shell/login.page';
+import { LoginShellPage } from '../pages/adf/demo-shell/login-shell.page';
 
 describe('Settings component', () => {
 
-    const loginPage = new LoginPage();
+    const loginPage = new LoginShellPage();
     const settingsPage = new SettingsPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
@@ -143,7 +143,7 @@ describe('Settings component', () => {
             await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await BrowserActions.getUrl(browser.baseUrl + '/activiti');
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
         });
@@ -171,7 +171,7 @@ describe('Settings component', () => {
             await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await BrowserActions.getUrl(browser.baseUrl + '/files');
             await contentServicesPage.checkAcsContainer();
         });
 
@@ -202,9 +202,9 @@ describe('Settings component', () => {
             await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await BrowserActions.getUrl(browser.baseUrl + '/files');
             await contentServicesPage.checkAcsContainer();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await BrowserActions.getUrl(browser.baseUrl + '/activiti');
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
         });

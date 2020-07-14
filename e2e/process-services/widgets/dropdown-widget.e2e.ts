@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     UsersActions,
     Widget
@@ -31,7 +31,7 @@ import CONSTANTS = require('../../util/constants');
 describe('Dropdown widget', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP.DROPDOWN;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
 
@@ -60,7 +60,7 @@ describe('Dropdown widget', () => {
    });
 
     beforeEach(async () => {
-        const urlToNavigateTo = `${browser.params.testConfig.adf.url}/activiti/apps/${deployedApp.id}/tasks/`;
+        const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
         await BrowserActions.getUrl(urlToNavigateTo);
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.formFields().checkFormIsDisplayed();

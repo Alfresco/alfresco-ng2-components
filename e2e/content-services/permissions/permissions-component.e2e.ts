@@ -21,7 +21,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
@@ -38,7 +38,7 @@ import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 describe('Permissions Component', () => {
 
     const apiService = new ApiService();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
     const navigationBarPage = new NavigationBarPage();

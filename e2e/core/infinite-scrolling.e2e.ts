@@ -18,7 +18,7 @@
 import {
     ApiService,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -32,7 +32,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Enable infinite scrolling', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const infinitePaginationPage = new InfinitePaginationPage();
     const navigationBarPage = new NavigationBarPage();

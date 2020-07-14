@@ -18,7 +18,7 @@
 import {
     ApiService,
     ContentNodeSelectorDialogPage,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -34,7 +34,7 @@ import { TrashcanPage } from '../../pages/adf/trashcan.page';
 
 describe('Favorite directive', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     let acsUser: UserModel;

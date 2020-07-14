@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormCloudComponentPage, LoginSSOPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
+import { FormCloudComponentPage, LoginPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -26,7 +26,7 @@ import { dropdownVisibilityFormFieldJson, dropdownVisibilityFormVariableJson } f
 
 describe('Visibility conditions - cloud', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudDemoPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();

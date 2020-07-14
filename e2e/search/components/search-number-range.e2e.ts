@@ -20,7 +20,7 @@ import {
     DataTableComponentPage,
     DateUtil,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions
@@ -35,7 +35,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Number Range Filter', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeRangeFilter = searchFilters.sizeRangeFilterPage();

@@ -19,7 +19,7 @@ import {
     ApiService,
     BrowserActions,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -48,7 +48,7 @@ describe('Metadata component', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
@@ -264,7 +264,7 @@ describe('Metadata component', () => {
     it('[C279960] Should show the last username modifier when modify a File', async () => {
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/(overlay:files/${pngFileModel.id}/view)`);
 
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();

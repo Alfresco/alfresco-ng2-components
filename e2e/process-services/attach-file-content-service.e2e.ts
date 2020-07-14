@@ -22,7 +22,7 @@ import {
     ExternalNodeSelectorDialogPage,
     IntegrationService,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions,
@@ -37,7 +37,7 @@ describe('Attach File - Content service', () => {
 
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();

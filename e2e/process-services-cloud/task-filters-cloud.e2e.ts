@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 import {
-    LoginSSOPage,
+    LoginPage,
     TasksService,
     ApiService,
     AppListCloudPage,
@@ -35,7 +35,7 @@ describe('Task filters cloud', () => {
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-        const loginSSOPage = new LoginSSOPage();
+        const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const tasksCloudDemoPage = new TasksCloudDemoPage();

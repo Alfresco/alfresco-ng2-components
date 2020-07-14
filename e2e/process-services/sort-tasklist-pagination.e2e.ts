@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     StringUtil,
     UsersActions
@@ -33,7 +33,7 @@ describe('Task List Pagination - Sorting', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 

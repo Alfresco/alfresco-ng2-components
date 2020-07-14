@@ -17,7 +17,7 @@
 
 import {
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     StringUtil,
     UploadActions,
@@ -47,7 +47,7 @@ describe('Trashcan - Pagination', () => {
         default: '25'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const trashcanPage = new TrashcanPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();

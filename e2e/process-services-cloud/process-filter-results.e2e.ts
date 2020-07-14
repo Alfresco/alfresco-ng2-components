@@ -22,7 +22,7 @@ import {
     GroupIdentityService,
     IdentityService,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
     QueryService,
@@ -40,7 +40,7 @@ import moment = require('moment');
 
 describe('Process filters cloud', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();

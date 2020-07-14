@@ -22,7 +22,7 @@ import {
     ApiService,
     FileBrowserUtil,
     IdentityService,
-    LoginSSOPage,
+    LoginPage,
     SettingsPage,
     StringUtil,
     UploadActions,
@@ -37,7 +37,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
-    const loginSsoPage = new LoginSSOPage();
+    const loginSsoPage = new LoginPage();
     const viewerPage = new ViewerPage();
 
     const apiService = new ApiService({ authType: 'OAUTH' });

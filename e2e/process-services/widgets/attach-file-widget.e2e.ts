@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     FileBrowserUtil,
-    LoginSSOPage,
+    LoginPage,
     UsersActions,
     ViewerPage,
     Widget
@@ -37,7 +37,7 @@ describe('Attach widget - File', () => {
 
     const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
