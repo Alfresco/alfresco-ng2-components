@@ -26,8 +26,10 @@ import {
     ViewEncapsulation,
     ViewChild,
     Inject,
-    OnDestroy
+    OnDestroy,
+    ElementRef
 } from '@angular/core';
+import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
@@ -72,13 +74,18 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
 
+    @ViewChild('filterContainer')
+    filterContainer: ElementRef;
+
     category: SearchCategory;
     isFilterServiceActive: boolean;
+    focusTrap: ConfigurableFocusTrap;
 
     private onDestroy$ = new Subject<boolean>();
 
     constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService,
-                private translationService: TranslationService) {
+                private translationService: TranslationService,
+                private focusTrapFactory: ConfigurableFocusTrapFactory) {
         this.isFilterServiceActive = this.searchHeaderQueryBuilder.isFilterServiceActive();
     }
 
@@ -120,12 +127,10 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    onMenuButtonClick(event: Event) {
-        event.stopPropagation();
-    }
-
-    onMenuClick(event: Event) {
-        event.stopPropagation();
+    onEnterPressed() {
+        if (this.widgetContainer.selector !== 'check-list') {
+            this.onApply();
+        }
     }
 
     onApply() {
@@ -164,5 +169,17 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     isActive(): boolean {
         return this.widgetContainer && this.widgetContainer.componentRef && this.widgetContainer.componentRef.instance.isActive;
+    }
+
+    onMenuOpen() {
+        if (this.filterContainer && !this.focusTrap) {
+            this.focusTrap = this.focusTrapFactory.create(this.filterContainer.nativeElement);
+            this.focusTrap.focusInitialElement();
+        }
+    }
+
+    onClosed() {
+        this.focusTrap.destroy();
+        this.focusTrap = null;
     }
 }

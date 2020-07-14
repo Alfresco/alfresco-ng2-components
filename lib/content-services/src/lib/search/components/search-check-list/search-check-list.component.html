@@ -2,6 +2,7 @@
     <mat-checkbox
         *ngFor="let option of options"
         [checked]="option.checked"
+        (keydown.enter)="option.checked = !option.checked"
         [attr.data-automation-id]="'checkbox-' + (option.name)"
         (change)="changeHandler($event, option)"
         class="adf-facet-filter">
