@@ -58,7 +58,7 @@ describe('Task Audit', () => {
     });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
     });
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', async () => {

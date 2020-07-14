@@ -97,7 +97,7 @@ describe('Process List Test', () => {
    });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/process-list');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/process-list');
    });
 
     it('[C286638] Should display all process by default', async () => {

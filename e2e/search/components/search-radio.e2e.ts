@@ -81,7 +81,7 @@ describe('Search Radio Component', () => {
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=' + randomName);
+        await BrowserActions.getUrl(browser.baseUrl + '/#/search;q=' + randomName);
    });
 
     afterAll(async () => {

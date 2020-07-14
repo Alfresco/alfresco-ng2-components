@@ -20,7 +20,7 @@ import { TogglePage, BrowserActions, BrowserVisibility, LoginSSOPage } from '@al
 
 export class LoginPage {
 
-    loginURL = browser.baseUrl + '/login';
+    loginURL = browser.baseUrl + '/#/login';
     loginSSOPage = new LoginSSOPage();
 
     togglePage = new TogglePage();

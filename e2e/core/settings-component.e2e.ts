@@ -143,7 +143,7 @@ describe('Settings component', () => {
             await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
         });
@@ -171,7 +171,7 @@ describe('Settings component', () => {
             await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await BrowserActions.getUrl(browser.baseUrl + '/#/files');
             await contentServicesPage.checkAcsContainer();
         });
 
@@ -202,9 +202,9 @@ describe('Settings component', () => {
             await expect(await settingsPage.getApplyButton().isEnabled()).toBe(true);
             await settingsPage.clickBackButton();
             await loginPage.waitForElements();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+            await BrowserActions.getUrl(browser.baseUrl + '/#/files');
             await contentServicesPage.checkAcsContainer();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+            await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
             await processServicesPage.checkApsContainer();
             await processServicesPage.checkAppIsDisplayed('Task App');
         });

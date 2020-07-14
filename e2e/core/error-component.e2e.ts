@@ -40,21 +40,21 @@ describe('Error Component', () => {
     });
 
     it('[C277302] Should display the error 403 when access to unauthorized page - My Change', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/403');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/error/403');
         await expect(await errorPage.getErrorCode()).toBe('403');
         await expect(await errorPage.getErrorTitle()).toBe('You don\'t have permission to access this server.');
         await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
     });
 
     it('[C277304] Should display the error 404 when access to not found page', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/404');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/error/404');
         await expect(await errorPage.getErrorCode()).toBe('404');
         await expect(await errorPage.getErrorTitle()).toBe('An error occurred.');
         await expect(await errorPage.getErrorDescription()).toBe('We couldn’t find the page you were looking for.');
     });
 
     it('[C307029] Should display Unknown message when error is undefined', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/error/501');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/error/501');
         await expect(await errorPage.getErrorCode()).toBe('UNKNOWN');
         await expect(await errorPage.getErrorTitle()).toBe('We hit a problem.');
         await expect(await errorPage.getErrorDescription()).toBe('Looks like something went wrong.');

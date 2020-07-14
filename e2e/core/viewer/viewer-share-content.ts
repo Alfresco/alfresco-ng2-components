@@ -97,11 +97,11 @@ describe('Viewer', () => {
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        await BrowserActions.getUrl(browser.baseUrl + '/#/preview/s/' + pngFileShared.entry.id);
         await viewerPage.checkImgContainerIsDisplayed();
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(browser.baseUrl);
         await navigationBarPage.clickLogoutButton();
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/preview/s/' + pngFileShared.entry.id);
+        await BrowserActions.getUrl(browser.baseUrl + '/#/preview/s/' + pngFileShared.entry.id);
         await viewerPage.checkImgContainerIsDisplayed();
     });
 
@@ -119,7 +119,7 @@ describe('Viewer', () => {
         await viewerPage.checkFileIsLoaded();
         await viewerPage.checkFileNameIsDisplayed(wordFileInfo.name);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(browser.baseUrl);
         await navigationBarPage.clickLogoutButton();
         await BrowserActions.getUrl(sharedLink);
         await viewerPage.checkFileIsLoaded();

@@ -264,7 +264,7 @@ describe('Metadata component', () => {
     it('[C279960] Should show the last username modifier when modify a File', async () => {
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + `/(overlay:files/${pngFileModel.id}/view)`);
+        await BrowserActions.getUrl(browser.baseUrl + `/#/(overlay:files/${pngFileModel.id}/view)`);
 
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();

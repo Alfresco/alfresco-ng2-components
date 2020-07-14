@@ -226,7 +226,7 @@ exports.config = {
         await browser.driver.executeScript(disableCSSAnimation);
 
         // @ts-ignore
-        await browser.get(`${HOST}/settings`);
+        await browser.get(`${HOST}/#/settings`);
         await LocalStorageUtil.clearStorage();
         // @ts-ignore
         await LocalStorageUtil.setStorageItem('ecmHost', browser.params.testConfig.appConfig.ecmHost);

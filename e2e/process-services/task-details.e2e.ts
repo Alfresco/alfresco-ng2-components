@@ -74,7 +74,7 @@ describe('Task Details component', () => {
     });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
     });
 
     it('[C260506] Should display task details for standalone task - Task App', async () => {

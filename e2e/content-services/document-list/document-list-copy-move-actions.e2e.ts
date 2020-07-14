@@ -208,7 +208,7 @@ describe('Document List Component', () => {
     describe('Document List actionns - Move, Copy on no permission folder', () => {
         beforeAll(async () => {
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
-            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/#/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 
@@ -269,7 +269,7 @@ describe('Document List Component', () => {
             await contentServicesPage.checkDeleteIsDisabled(pdfFileModel.name);
 
             await loginPage.login(acsUser.email, acsUser.password);
-            await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/files/${sourceFolder.entry.id}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/#/files/${sourceFolder.entry.id}`);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
 
             await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);

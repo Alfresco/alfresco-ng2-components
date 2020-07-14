@@ -83,7 +83,7 @@ describe('Search Checklist Component', () => {
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=${randomName}`);
+        await BrowserActions.getUrl(`${browser.baseUrl}/#/search;q=${randomName}`);
     });
 
     afterAll(async () => {

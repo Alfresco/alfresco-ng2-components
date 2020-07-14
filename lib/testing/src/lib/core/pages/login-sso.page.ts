@@ -43,8 +43,8 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (!currentUrl || currentUrl.indexOf(`${browser.baseUrl}/login`) === -1) {
-            await BrowserActions.getUrl(browser.baseUrl + '/login');
+        if (!currentUrl || currentUrl.indexOf(`${browser.baseUrl}/#/login`) === -1) {
+            await BrowserActions.getUrl(browser.baseUrl + '/#/login');
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsernameBasicAuth);

@@ -192,7 +192,7 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/files');
         await loginPage.waitForElements();
 
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
@@ -210,7 +210,7 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
         await loginPage.waitForElements();
     });
 
@@ -222,9 +222,9 @@ describe('Login component', () => {
 
         const handles = await browser.getAllWindowHandles();
         await browser.switchTo().window(handles[1]);
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
         await processServicesPage.checkApsContainer();
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/files');
         await contentServicesPage.checkAcsContainer();
     });
 

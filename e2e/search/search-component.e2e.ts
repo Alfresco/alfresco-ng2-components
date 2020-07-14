@@ -122,7 +122,7 @@ describe('Search component - Search Bar', () => {
     });
 
     afterEach(async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url);
+        await BrowserActions.getUrl(browser.baseUrl);
    });
 
     it('[C272798] Search bar should be visible', async () => {

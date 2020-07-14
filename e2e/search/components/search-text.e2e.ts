@@ -75,7 +75,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl(browser.baseUrl + '/#/search;q=*');
         await searchResultPage.tableIsLoaded();
 
         await searchFiltersPage.checkNameFilterIsDisplayed();
@@ -90,7 +90,7 @@ describe('Search component - Text widget', () => {
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+            await BrowserActions.getUrl(browser.baseUrl + '/#/search;q=*');
             await searchResultPage.tableIsLoaded();
 
             await searchFiltersPage.checkCheckListFilterIsDisplayed();

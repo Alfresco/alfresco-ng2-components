@@ -144,7 +144,7 @@ describe('Process Filters Test', () => {
             return currentApp.modelId === appModel.id;
         });
 
-        processFilterUrl = browser.params.testConfig.adf.url + '/activiti/apps/' + deployedApp.id + '/processes/';
+        processFilterUrl = browser.baseUrl + '/#/activiti/apps/' + deployedApp.id + '/processes/';
         const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);

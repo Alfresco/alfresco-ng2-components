@@ -52,7 +52,7 @@ describe('Document List Component', () => {
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.baseUrl + '/#/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
             await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
@@ -60,7 +60,7 @@ describe('Document List Component', () => {
         it('[C279924] Should display custom message when accessing a file without permissions', async () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableCustomPermissionMessage();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.baseUrl + '/#/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
         });
    });

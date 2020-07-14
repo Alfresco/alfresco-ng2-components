@@ -26,7 +26,7 @@ describe('Logout component - SSO', () => {
     const navigationBarPage = new NavigationBarPage();
 
     it('[C280665] Should be possible change the logout redirect URL', async () => {
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+        await settingsPage.setProviderEcmSso(browser.params.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId, '/login');
         await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -35,6 +35,6 @@ describe('Logout component - SSO', () => {
         await browser.sleep(2000);
 
         const actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.params.testConfig.adf.url + '/login');
+        await expect(actualUrl).toEqual(browser.baseUrl + '/#/login');
     });
 });

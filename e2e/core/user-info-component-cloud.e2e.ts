@@ -34,7 +34,7 @@ describe('User Info - SSO', () => {
 
         identityUser = await usersActions.createUser();
 
-        await settingsPage.setProviderEcmSso(browser.params.testConfig.adf.url,
+        await settingsPage.setProviderEcmSso(browser.params.appConfig.ecmHost,
             browser.params.testConfig.appConfig.oauth2.host,
             browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
 
