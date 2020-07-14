@@ -498,19 +498,19 @@
             "options": [
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.SMALL",
-                "value": "content.size:[0 TO 1048576>"
+                "value": "content.size:[0 TO 1048576] OR TYPE:'cm:folder'"
               },
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.MEDIUM",
-                "value": "content.size:[1048576 TO 52428800]"
+                "value": "content.size:[1048576 TO 52428800] OR TYPE:'cm:folder'"
               },
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.LARGE",
-                "value": "content.size:<52428800 TO 524288000]"
+                "value": "content.size:<52428800 TO 524288000] OR TYPE:'cm:folder'"
               },
               {
                 "name": "SEARCH.SEARCH_HEADER.FILTERS.SIZE.HUGE",
-                "value": "content.size:<524288000 TO MAX]"
+                "value": "content.size:<524288000 TO MAX] OR TYPE:'cm:folder'"
               }
             ]
           }
