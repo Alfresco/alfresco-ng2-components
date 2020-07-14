@@ -90,6 +90,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     parentTaskId: string = '';
 
+    /** Filter the tasks. Display only tasks with processDefinitionName equal to the supplied value. */
+    @Input()
+    processDefinitionName: string = '';
+
     /** Filter the tasks. Display only tasks with processDefinitionId equal to the supplied value. */
     @Input()
     processDefinitionId: string = '';
@@ -346,6 +350,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             id: this.id,
             name: this.name,
             parentTaskId: this.parentTaskId,
+            processDefinitionName: this.processDefinitionName,
             processDefinitionId: this.processDefinitionId,
             processInstanceId: this.processInstanceId,
             owner: this.owner,
