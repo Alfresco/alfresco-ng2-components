@@ -31,6 +31,7 @@ import { fakeApplicationInstance } from '../../../app/mock/app-model.mock';
 import { TaskFiltersCloudModule } from '../task-filters-cloud.module';
 import { EditTaskFilterCloudComponent } from './edit-task-filter-cloud.component';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
+import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
 import { fakeFilter } from '../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
@@ -45,6 +46,7 @@ describe('EditTaskFilterCloudComponent', () => {
     let dialog: MatDialog;
     let getTaskFilterSpy: jasmine.Spy;
     let getRunningApplicationsSpy: jasmine.Spy;
+    let taskService: TaskCloudService;
 
     setupTestBed({
         imports: [
@@ -63,6 +65,7 @@ describe('EditTaskFilterCloudComponent', () => {
         component = fixture.componentInstance;
         service = TestBed.inject(TaskFilterCloudService);
         appsService = TestBed.inject(AppsProcessCloudService);
+        taskService = TestBed.inject(TaskCloudService);
         dialog = TestBed.inject(MatDialog);
         spyOn(dialog, 'open').and.returnValue({ afterClosed: of({
             action: TaskFilterDialogCloudComponent.ACTION_SAVE,
@@ -89,6 +92,22 @@ describe('EditTaskFilterCloudComponent', () => {
             expect(component.taskFilter.sort).toEqual('id');
         });
     });
+
+    it('should fetch process definitions when processDefinitionName filter property is set', async(() => {
+        const processSpy = spyOn(taskService, 'getProcessDefinitions').and.returnValue(of([{ id: 'fake-id', name: 'fake-name' }]));
+        fixture.detectChanges();
+        component.filterProperties = ['processDefinitionName'];
+        fixture.detectChanges();
+        const taskFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': taskFilterIdChange });
+        fixture.detectChanges();
+        const controller = component.editTaskFilterForm.get('processDefinitionName');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            expect(processSpy).toHaveBeenCalled();
+            expect(controller).toBeDefined();
+        });
+    }));
 
     it('should display filter name as title', async(() => {
         const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
