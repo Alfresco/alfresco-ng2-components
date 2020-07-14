@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
@@ -40,7 +40,7 @@ describe('Search component - Search Page', () => {
         }
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();

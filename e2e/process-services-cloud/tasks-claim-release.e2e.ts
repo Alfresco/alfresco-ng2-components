@@ -22,7 +22,7 @@ import {
     GroupIdentityService,
     IdentityService,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
     TaskFormCloudComponent,
@@ -37,7 +37,7 @@ describe('Task claim/release', () => {
 
     const candidateApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP;
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

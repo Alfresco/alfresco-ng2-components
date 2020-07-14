@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
@@ -29,7 +29,7 @@ describe('People component', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();

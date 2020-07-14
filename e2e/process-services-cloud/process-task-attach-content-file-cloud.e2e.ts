@@ -20,7 +20,7 @@ import {
     ApiService,
     AppListCloudPage,
     ContentNodeSelectorDialogPage,
-    LoginSSOPage,
+    LoginPage,
     ProcessCloudWidgetPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
@@ -36,7 +36,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Process Task - Attach content file', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();

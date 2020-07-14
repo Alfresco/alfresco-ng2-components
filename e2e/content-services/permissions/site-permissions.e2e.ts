@@ -19,7 +19,7 @@ import { PermissionsPage } from '../../pages/adf/permissions.page';
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
@@ -39,7 +39,7 @@ import CONSTANTS = require('../../util/constants');
 describe('Permissions Component', () => {
 
     const apiService = new ApiService();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const permissionsPage = new PermissionsPage();
     const uploadActions = new UploadActions(apiService);
@@ -164,7 +164,7 @@ describe('Permissions Component', () => {
         beforeAll(async () => {
             await loginPage.login(folderOwnerUser.email, folderOwnerUser.password);
 
-            await BrowserActions.getUrl(browser.baseUrl + '/#/files/' + publicSite.entry.guid);
+            await BrowserActions.getUrl(browser.baseUrl + '/files/' + publicSite.entry.guid);
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {

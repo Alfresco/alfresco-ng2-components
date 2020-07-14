@@ -19,7 +19,7 @@ import { browser, protractor } from 'protractor';
 import {
     ApiService,
     AppListCloudPage,
-    LoginSSOPage,
+    LoginPage,
     ProcessCloudWidgetPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
@@ -38,7 +38,7 @@ describe('Task form cloud component', () => {
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

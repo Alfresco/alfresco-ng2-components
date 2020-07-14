@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, ApplicationsUtil, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ModelsActions } from '../actions/APS/models.actions';
@@ -28,7 +28,7 @@ describe('Modify applications', () => {
     const appToBeDeleted = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const replacingApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
 

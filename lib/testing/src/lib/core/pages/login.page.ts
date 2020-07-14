@@ -21,7 +21,9 @@ import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';
 import { Logger } from '../utils/logger';
 
-export class LoginSSOPage {
+export class LoginPage {
+
+    loginUrl = `${browser.baseUrl}/login`;
 
     ssoButton = element(by.css(`[data-automation-id="login-button-sso"]`));
     usernameField = element(by.id('username'));
@@ -43,8 +45,8 @@ export class LoginSSOPage {
         } catch (e) {
         }
 
-        if (!currentUrl || currentUrl.indexOf(`${browser.baseUrl}/#/login`) === -1) {
-            await BrowserActions.getUrl(browser.baseUrl + '/#/login');
+        if (!currentUrl || currentUrl.indexOf(this.loginUrl) === -1) {
+            await BrowserActions.getUrl(this.loginUrl);
         }
 
         await BrowserVisibility.waitUntilElementIsVisible(this.txtUsernameBasicAuth);

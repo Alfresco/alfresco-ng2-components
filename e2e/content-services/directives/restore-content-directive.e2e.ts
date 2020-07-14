@@ -25,7 +25,7 @@ import {
     ApiService,
     BreadcrumbPage,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
@@ -35,7 +35,7 @@ import {
 
 describe('Restore content directive', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const acsUser = new UserModel();

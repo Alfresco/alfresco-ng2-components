@@ -18,7 +18,7 @@
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -36,7 +36,7 @@ describe('Viewer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const shareDialog = new ShareDialogPage();
 
@@ -97,11 +97,11 @@ describe('Viewer', () => {
     });
 
     it('[C260105] Should be able to open an image file shared via API', async () => {
-        await BrowserActions.getUrl(browser.baseUrl + '/#/preview/s/' + pngFileShared.entry.id);
+        await BrowserActions.getUrl(browser.baseUrl + '/preview/s/' + pngFileShared.entry.id);
         await viewerPage.checkImgContainerIsDisplayed();
         await BrowserActions.getUrl(browser.baseUrl);
         await navigationBarPage.clickLogoutButton();
-        await BrowserActions.getUrl(browser.baseUrl + '/#/preview/s/' + pngFileShared.entry.id);
+        await BrowserActions.getUrl(browser.baseUrl + '/preview/s/' + pngFileShared.entry.id);
         await viewerPage.checkImgContainerIsDisplayed();
     });
 

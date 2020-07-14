@@ -18,7 +18,7 @@
 import {
     ApiService,
     CheckboxPage,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions,
@@ -45,7 +45,7 @@ describe('CardView Component - properties', () => {
         EDIT_BUTTON_TOOLTIP: 'Edit'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();

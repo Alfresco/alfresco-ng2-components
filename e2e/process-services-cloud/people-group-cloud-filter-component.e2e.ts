@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginSSOPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
+import { ApiService, GroupCloudComponentPage, GroupIdentityService, IdentityService, LoginPage, PeopleCloudComponentPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/people-group-cloud-component.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -24,7 +24,7 @@ describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
 
-        const loginSSOPage = new LoginSSOPage();
+        const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();

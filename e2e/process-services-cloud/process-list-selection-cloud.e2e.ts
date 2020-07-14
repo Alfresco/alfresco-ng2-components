@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginSSOPage, ProcessDefinitionsService, ProcessInstancesService, LocalStorageUtil } from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, GroupIdentityService, IdentityService, LoginPage, ProcessDefinitionsService, ProcessInstancesService, LocalStorageUtil } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
@@ -30,7 +30,7 @@ describe('Process list cloud', () => {
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-        const loginSSOPage = new LoginSSOPage();
+        const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();

@@ -17,7 +17,7 @@
 
 import {
     ApiService, AppListCloudPage, GroupIdentityService, IdentityService,
-    LoginSSOPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
+    LoginPage, NotificationHistoryPage, ProcessCloudWidgetPage, ProcessDefinitionsService,
     ProcessInstancesService, QueryService, TaskFormCloudComponent, TaskHeaderCloudPage,
     TasksService
 } from '@alfresco/adf-testing';
@@ -27,7 +27,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Form Field Component - Dropdown Widget', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

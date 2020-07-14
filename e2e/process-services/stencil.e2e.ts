@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     StartProcessPage,
     UserModel,
     UsersActions
@@ -37,7 +37,7 @@ describe('Stencil', () => {
 
     const app = browser.params.resources.Files.STENCIL_PROCESS;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();

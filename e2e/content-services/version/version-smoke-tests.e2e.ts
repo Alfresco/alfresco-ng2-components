@@ -20,7 +20,7 @@ import {
     ApiService,
     BrowserActions,
     BrowserVisibility,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions
@@ -33,7 +33,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 describe('Version component', () => {
 
     let txtUploadedFile;
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const versionManagePage = new VersionManagePage();

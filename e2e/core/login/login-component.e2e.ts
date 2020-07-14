@@ -28,7 +28,7 @@ import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
-import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { LoginShellPage } from '../../pages/adf/demo-shell/login-shell.page';
 
 describe('Login component', () => {
 
@@ -36,7 +36,7 @@ describe('Login component', () => {
     const navigationBarPage = new NavigationBarPage();
     const userInfoPage = new UserInfoPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginShellPage();
     const errorPage = new ErrorPage();
 
     const userA = new UserModel();
@@ -192,7 +192,7 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-ECM");');
-        await BrowserActions.getUrl(browser.baseUrl + '/#/files');
+        await BrowserActions.getUrl(browser.baseUrl + '/files');
         await loginPage.waitForElements();
 
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
@@ -210,7 +210,7 @@ describe('Login component', () => {
         await loginPage.goToLoginPage();
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await browser.executeScript('window.localStorage.removeItem("ADF_ticket-BPM");');
-        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/activiti');
         await loginPage.waitForElements();
     });
 
@@ -222,9 +222,9 @@ describe('Login component', () => {
 
         const handles = await browser.getAllWindowHandles();
         await browser.switchTo().window(handles[1]);
-        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/activiti');
         await processServicesPage.checkApsContainer();
-        await BrowserActions.getUrl(browser.baseUrl + '/#/files');
+        await BrowserActions.getUrl(browser.baseUrl + '/files');
         await contentServicesPage.checkAcsContainer();
     });
 

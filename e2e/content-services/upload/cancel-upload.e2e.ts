@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { UploadTogglesPage } from '../../pages/adf/dialog/upload-toggles.page';
@@ -28,7 +28,7 @@ describe('Upload component', async () => {
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 

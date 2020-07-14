@@ -17,7 +17,7 @@
 
 import {
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -33,7 +33,7 @@ import CONSTANTS = require('../../util/constants');
 
 describe('Comment Component', () => {
 
-    const loginPage: LoginSSOPage = new LoginSSOPage();
+    const loginPage: LoginPage = new LoginPage();
     const contentServicesPage: ContentServicesPage = new ContentServicesPage();
     const viewerPage: ViewerPage = new ViewerPage();
     const commentsPage: CommentsPage = new CommentsPage();

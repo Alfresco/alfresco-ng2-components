@@ -17,7 +17,7 @@
 
 import {
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UserModel,
@@ -31,7 +31,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('Create folder directive', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const createFolderDialog = new FolderDialogPage();
     const notificationHistoryPage = new NotificationHistoryPage();

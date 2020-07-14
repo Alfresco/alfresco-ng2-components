@@ -21,7 +21,7 @@ import {
     ApiService,
     BrowserActions,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -47,7 +47,7 @@ describe('Search component - Search Bar', () => {
         }
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 

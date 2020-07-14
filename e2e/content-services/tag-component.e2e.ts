@@ -16,14 +16,14 @@
  */
 
 import { FileModel } from '../models/ACS/file.model';
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { TagPage } from '../pages/adf/tag.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 
 describe('Tag component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const tagPage = new TagPage();
     const navigationBarPage = new NavigationBarPage();
 

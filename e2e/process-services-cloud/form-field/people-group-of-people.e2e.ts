@@ -18,7 +18,7 @@
 import {
     FormCloudComponentPage,
     FormPage,
-    LoginSSOPage,
+    LoginPage,
     ProcessCloudWidgetPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
@@ -36,7 +36,7 @@ import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 
 describe('People and Group of people Widgets', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const formCloudComponentPage = new FormCloudComponentPage();
     const widget = new ProcessCloudWidgetPage();

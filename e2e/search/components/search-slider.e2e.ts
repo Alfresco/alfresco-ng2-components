@@ -19,7 +19,7 @@ import {
     ApiService,
     DataTableComponentPage,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions
@@ -34,7 +34,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Slider Filter', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();

@@ -20,7 +20,7 @@ import {
     GroupCloudComponentPage,
     GroupIdentityService,
     IdentityService,
-    LoginSSOPage,
+    LoginPage,
     PeopleCloudComponentPage,
     RolesService
 } from '@alfresco/adf-testing';
@@ -32,7 +32,7 @@ describe('People Groups Cloud Component', () => {
 
     describe('People Groups Cloud Component', () => {
 
-        const loginSSOPage = new LoginSSOPage();
+        const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const peopleGroupCloudComponentPage = new PeopleGroupCloudComponentPage();
         const peopleCloudComponent = new PeopleCloudComponentPage();

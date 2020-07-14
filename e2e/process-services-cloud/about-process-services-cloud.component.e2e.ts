@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { ApiService, IdentityService, AboutPage, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, IdentityService, AboutPage, LoginPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('About Process Services Cloud', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
 

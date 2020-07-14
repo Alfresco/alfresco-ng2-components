@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -32,7 +32,7 @@ describe('Start Task - Task App', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const attachmentListPage = new AttachmentListPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const navigationBarPage = new NavigationBarPage();

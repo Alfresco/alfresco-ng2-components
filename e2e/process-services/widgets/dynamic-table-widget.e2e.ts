@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     UsersActions,
     Widget
@@ -31,7 +31,7 @@ import CONSTANTS = require('../../util/constants');
 
 describe('Dynamic Table widget ', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const widget = new Widget();
     const navigationBarPage = new NavigationBarPage();
@@ -62,7 +62,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/#/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
@@ -118,7 +118,7 @@ describe('Dynamic Table widget ', () => {
         });
 
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/#/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();
@@ -172,7 +172,7 @@ describe('Dynamic Table widget ', () => {
 
         beforeEach(async () => {
             await loginPage.login(processUserModel.email, processUserModel.password);
-            const urlToNavigateTo = `${browser.baseUrl}/#/activiti/apps/${deployedApp.id}/tasks`;
+            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.tasksListPage().checkTaskListIsLoaded();

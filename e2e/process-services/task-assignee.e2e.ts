@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     StartProcessPage,
     UserModel,
@@ -38,7 +38,7 @@ describe('Task Assignee', () => {
 
     const app = browser.params.resources.Files.TEST_ASSIGNEE;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processListPage = new ProcessListPage();

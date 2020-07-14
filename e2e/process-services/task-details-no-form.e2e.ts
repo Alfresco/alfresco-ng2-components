@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginSSOPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { browser } from 'protractor';
@@ -25,7 +25,7 @@ describe('Task Details - No form', () => {
 
     const app = browser.params.resources.Files.NO_FORM_APP;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
 

@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import {
-    LoginSSOPage,
+    LoginPage,
     AppListCloudPage,
     StringUtil,
     GroupCloudComponentPage,
@@ -35,7 +35,7 @@ describe('Start Task - Group Cloud Component', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

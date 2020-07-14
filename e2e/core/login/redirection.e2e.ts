@@ -29,7 +29,7 @@ import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
-import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { LoginShellPage } from '../../pages/adf/demo-shell/login-shell.page';
 
 describe('Login component - Redirect', () => {
 
@@ -37,7 +37,7 @@ describe('Login component - Redirect', () => {
     const processServicesPage = new ProcessServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginShellPage();
     const logoutPage = new LogoutPage();
 
     let user;
@@ -118,7 +118,7 @@ describe('Login component - Redirect', () => {
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         let actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.baseUrl + '/#/files/' + uploadedFolder.entry.id);
+        await expect(actualUrl).toEqual(browser.baseUrl + '/files/' + uploadedFolder.entry.id);
 
         await contentServicesPage.waitForTableBody();
 
@@ -133,7 +133,7 @@ describe('Login component - Redirect', () => {
         await loginPage.login(user.email, user.password);
 
         actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.baseUrl + '/#/files/' + uploadedFolder.entry.id);
+        await expect(actualUrl).toEqual(browser.baseUrl + '/files/' + uploadedFolder.entry.id);
     });
 
     it('[C299161] Should redirect user to requested URL after reloading login page', async () => {
@@ -145,7 +145,7 @@ describe('Login component - Redirect', () => {
         await navigationBarPage.openContentServicesFolder(uploadedFolder.entry.id);
 
         const currentUrl = await browser.getCurrentUrl();
-        await expect(currentUrl).toEqual(browser.baseUrl + '/#/files/' + uploadedFolder.entry.id);
+        await expect(currentUrl).toEqual(browser.baseUrl + '/files/' + uploadedFolder.entry.id);
 
         await contentServicesPage.waitForTableBody();
 
@@ -165,6 +165,6 @@ describe('Login component - Redirect', () => {
         await navigationBarPage.checkMenuButtonIsDisplayed();
 
         const actualUrl = await browser.getCurrentUrl();
-        await expect(actualUrl).toEqual(browser.baseUrl + '/#/files/' + uploadedFolder.entry.id);
+        await expect(actualUrl).toEqual(browser.baseUrl + '/files/' + uploadedFolder.entry.id);
     });
 });

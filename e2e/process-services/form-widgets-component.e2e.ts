@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     UsersActions,
     Widget
@@ -35,7 +35,7 @@ const formInstance = new FormDefinitionModel();
 describe('Form widgets', () => {
 
     const taskPage = new TasksPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const widget = new Widget();
 
     const apiService = new ApiService();
@@ -214,7 +214,7 @@ describe('Form widgets', () => {
         });
 
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/#/activiti/apps/${deployedApp.id}/tasks/`;
+            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
             await BrowserActions.getUrl(urlToNavigateTo);
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();

@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import {
     ApiService,
     DataTableComponentPage,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions,
@@ -34,7 +34,7 @@ describe('Viewer - properties', () => {
     const acsUser = new UserModel();
     const viewerPage = new ViewerPage();
     const contentServicesPage = new ContentServicesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const dataTable = new DataTableComponentPage();
 

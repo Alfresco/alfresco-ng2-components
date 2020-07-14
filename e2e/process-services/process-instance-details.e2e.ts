@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, ApplicationsUtil, LoginSSOPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
@@ -28,7 +28,7 @@ describe('Process Instance Details', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();

@@ -20,7 +20,7 @@ import {
     ApiService,
     DropActions,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
@@ -36,7 +36,7 @@ describe('Upload component - Excluded Files', () => {
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);

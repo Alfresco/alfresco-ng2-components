@@ -18,7 +18,7 @@
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
@@ -33,7 +33,7 @@ import { FileModel } from '../../models/ACS/file.model';
 
 describe('Edit folder directive', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const editFolderDialog = new FolderDialogPage();
     const acsUser = new UserModel();
@@ -229,7 +229,7 @@ describe('Edit folder directive', () => {
     describe('Edit Folder - no permission', () => {
         beforeEach(async () => {
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
-            await BrowserActions.getUrl(browser.baseUrl + '/#/files/' + editFolder.entry.id);
+            await BrowserActions.getUrl(browser.baseUrl + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
         });
 

@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     UsersActions
 } from '@alfresco/adf-testing';
@@ -31,7 +31,7 @@ describe('Process List Test', () => {
     const appWithDateField = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const appWithUserWidget = browser.params.resources.Files.APP_WITH_USER_WIDGET;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processListDemoPage = new ProcessListDemoPage();
 
     const apiService = new ApiService();
@@ -97,7 +97,7 @@ describe('Process List Test', () => {
    });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.baseUrl + '/#/process-list');
+        await BrowserActions.getUrl(browser.baseUrl + '/process-list');
    });
 
     it('[C286638] Should display all process by default', async () => {

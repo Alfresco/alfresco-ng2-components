@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -25,7 +25,7 @@ describe('Viewer', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
 
     const apiService = new ApiService();

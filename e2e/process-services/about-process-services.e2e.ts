@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { AboutPage, ApiService, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
+import { AboutPage, ApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('About Process Services', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const aboutPage = new AboutPage();
 

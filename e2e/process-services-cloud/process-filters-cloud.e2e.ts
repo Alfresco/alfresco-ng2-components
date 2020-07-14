@@ -20,7 +20,7 @@ import {
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     ProcessDefinitionsService,
     ProcessInstancesService,
@@ -37,7 +37,7 @@ import CONSTANTS = require('../util/constants');
 describe('Process filters cloud', () => {
 
     describe('Process Filters', () => {
-        const loginSSOPage = new LoginSSOPage();
+        const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();

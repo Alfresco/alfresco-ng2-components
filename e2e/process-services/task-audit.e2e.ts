@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { LoginSSOPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
+import { LoginPage, BrowserActions, FileBrowserUtil, ApplicationsUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import CONSTANTS = require('../util/constants');
@@ -26,7 +26,7 @@ describe('Task Audit', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const processServices = new ProcessServicesPage();
 
@@ -58,7 +58,7 @@ describe('Task Audit', () => {
     });
 
     beforeEach(async () => {
-        await BrowserActions.getUrl(browser.baseUrl + '/#/activiti');
+        await BrowserActions.getUrl(browser.baseUrl + '/activiti');
     });
 
     it('[C260386] Should Audit file be downloaded when clicking on Task Audit log icon on a standalone running task', async () => {

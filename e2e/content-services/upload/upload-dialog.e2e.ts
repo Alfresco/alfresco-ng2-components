@@ -18,7 +18,7 @@
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions
@@ -36,7 +36,7 @@ describe('Upload component', () => {
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
     const uploadToggles = new UploadTogglesPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
     const apiService = new ApiService();
 

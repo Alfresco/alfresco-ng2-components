@@ -19,7 +19,7 @@ import {
     ApiService,
     AppListCloudPage,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
     QueryService,
@@ -41,7 +41,7 @@ import {
 
 describe('Process filters cloud', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();

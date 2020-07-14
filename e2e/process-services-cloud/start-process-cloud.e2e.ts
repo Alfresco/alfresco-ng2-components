@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginSSOPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
+import { ApiService, AppListCloudPage, BrowserActions, GroupIdentityService, IdentityService, LoginPage, StartProcessCloudPage, StringUtil } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -23,7 +23,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Process', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const processCloudDemoPage = new ProcessCloudDemoPage();

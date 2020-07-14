@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, DataTableComponentPage, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, DataTableComponentPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -26,7 +26,7 @@ describe('Datatable component - selection', () => {
     const usersActions = new UsersActions(apiService);
 
     const dataTablePage = new DataTablePage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const acsUser = new UserModel();
     const navigationBarPage = new NavigationBarPage();
     const dataTableComponent = new DataTableComponentPage();

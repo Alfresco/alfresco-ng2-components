@@ -19,7 +19,7 @@ import {
     ApiService,
     ApplicationsUtil,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     StartProcessPage,
     UsersActions
 } from '@alfresco/adf-testing';
@@ -38,7 +38,7 @@ describe('Process Filters Test', () => {
 
     const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processListPage = new ProcessListPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
@@ -144,7 +144,7 @@ describe('Process Filters Test', () => {
             return currentApp.modelId === appModel.id;
         });
 
-        processFilterUrl = browser.baseUrl + '/#/activiti/apps/' + deployedApp.id + '/processes/';
+        processFilterUrl = browser.baseUrl + '/activiti/apps/' + deployedApp.id + '/processes/';
         const taskAppFilters = await apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters({ appId: deployedApp.id });
 
         await processServicesPage.goToApp(app.title);

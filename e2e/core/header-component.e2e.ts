@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ApiService, HeaderPage, LoginSSOPage, SettingsPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, HeaderPage, LoginPage, SettingsPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Header Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const headerPage = new HeaderPage();
     const settingsPage = new SettingsPage();

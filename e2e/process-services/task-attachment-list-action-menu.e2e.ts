@@ -20,7 +20,7 @@ import {
     ApiService,
     ApplicationsUtil,
     FileBrowserUtil,
-    LoginSSOPage,
+    LoginPage,
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
@@ -37,7 +37,7 @@ describe('Attachment list action menu for tasks', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const attachmentListPage = new AttachmentListPage();

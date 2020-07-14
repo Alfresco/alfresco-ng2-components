@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 
-import { ApiService, LoginSSOPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import * as fs from 'fs';
@@ -29,7 +29,7 @@ describe('Start Task - Task App', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
 

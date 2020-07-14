@@ -20,7 +20,7 @@ import {
     ArrayUtil,
     FileBrowserUtil,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     StringUtil,
     UploadActions,
@@ -55,7 +55,7 @@ describe('Document List - Pagination', () => {
         default: '25'
     };
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const navigationBarPage = new NavigationBarPage();

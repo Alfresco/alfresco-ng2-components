@@ -21,7 +21,7 @@ import {
     ApiService,
     BrowserVisibility,
     FileBrowserUtil,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions
@@ -32,7 +32,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Version component actions', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();

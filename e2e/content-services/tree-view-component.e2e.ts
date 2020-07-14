@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TreeViewPage } from '../pages/adf/content-services/tree-view.page';
 import { browser } from 'protractor';
 
 describe('Tree View Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const treeViewPage = new TreeViewPage();
 

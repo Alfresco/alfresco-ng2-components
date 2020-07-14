@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginSSOPage } from '@alfresco/adf-testing';
+import { ApiService, Application, AppListCloudPage, IdentityService, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
@@ -23,7 +23,7 @@ describe('Applications list', () => {
 
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudPage = new AppListCloudPage();
 

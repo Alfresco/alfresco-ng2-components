@@ -20,7 +20,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     PermissionActions,
     StringUtil,
@@ -34,7 +34,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 describe('Delete Directive', () => {
 
     const apiService = new ApiService();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();
@@ -118,7 +118,7 @@ describe('Delete Directive', () => {
             await uploadActions.createFolder(folderSecond.name, baseFolderUploaded.entry.id);
 
             await loginPage.login(acsUser.email, acsUser.password);
-            await BrowserActions.getUrl(`${browser.baseUrl}/#/files/${baseFolderUploaded.entry.id}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
 
@@ -191,7 +191,7 @@ describe('Delete Directive', () => {
             await uploadActions.uploadFile(secondPngFileModel.location, secondPngFileModel.name, baseFolderUploaded.entry.id);
 
             await loginPage.login(acsUser.email, acsUser.password);
-            await BrowserActions.getUrl(`${browser.baseUrl}/#/files/${baseFolderUploaded.entry.id}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/files/${baseFolderUploaded.entry.id}`);
             await contentServicesPage.waitForTableBody();
         });
 
@@ -241,7 +241,7 @@ describe('Delete Directive', () => {
             await permissionActions.disableInheritedPermissionsForNode(filePdf.entry.id);
 
             await loginPage.login(secondAcsUser.email, secondAcsUser.password);
-            await BrowserActions.getUrl(`${browser.baseUrl}/#/files/${createdSite.entry.guid}`);
+            await BrowserActions.getUrl(`${browser.baseUrl}/files/${createdSite.entry.guid}`);
             await contentServicesPage.waitForTableBody();
         });
 
