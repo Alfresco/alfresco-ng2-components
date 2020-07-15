@@ -84,7 +84,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
         option.checked = event.checked;
         const checkedValues = this.getCheckedValues();
         this.isActive = !!checkedValues.length;
-        if(this.enableChangeUpdate) {
+        if (this.enableChangeUpdate) {
             this.submitValues();
         }
     }

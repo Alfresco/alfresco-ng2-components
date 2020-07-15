@@ -58,7 +58,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     maxDate: any;
     isActive = false;
     startValue: any = null;
-    
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -140,7 +139,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     getCurrentValue() {
-        return { from : this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat), 
+        return { from : this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat),
                 to: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat) };
     }
 

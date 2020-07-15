@@ -69,7 +69,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
             ref.instance.id = this.id;
             ref.instance.settings = { ...this.settings };
             ref.instance.context = this.queryBuilder;
-            if(this.value) {
+            if (this.value) {
                 ref.instance.isActive = true;
                 ref.instance.startValue = this.value;
             }
