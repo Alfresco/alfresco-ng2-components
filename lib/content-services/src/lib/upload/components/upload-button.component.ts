@@ -105,12 +105,14 @@ export class UploadButtonComponent extends UploadBase implements OnInit, OnChang
     }
 
     onClickUploadButton(): void {
-        const files: File[] = [this.file];
+        if (this.file) {
+            const files: File[] = [this.file];
 
-        if (this.hasAllowableOperations) {
-            this.uploadFiles(files);
-        } else {
-            this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
+            if (this.hasAllowableOperations) {
+                this.uploadFiles(files);
+            } else {
+                this.permissionEvent.emit(new PermissionModel({ type: 'content', action: 'upload', permission: 'create' }));
+            }
         }
     }
 
