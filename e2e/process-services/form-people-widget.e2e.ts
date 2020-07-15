@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     StartProcessPage,
     UsersActions,
     Widget
@@ -34,7 +34,7 @@ describe('Form widgets - People ', () => {
 
     const app = browser.params.resources.Files.APP_WITH_USER_WIDGET;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const startProcess = new StartProcessPage();
     const processDetailsPage = new ProcessDetailsPage();

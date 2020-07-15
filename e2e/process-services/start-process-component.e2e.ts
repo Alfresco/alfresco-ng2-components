@@ -21,7 +21,7 @@ import {
     ApplicationsUtil,
     FileBrowserUtil,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessInstanceTasksPage,
     SelectAppsDialog,
     StartProcessPage,
@@ -48,7 +48,7 @@ describe('Start Process Component', () => {
     const dateFormApp = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
     const startProcessAttachFileApp = browser.params.resources.Files.START_PROCESS_ATTACH_FILE;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const startProcessPage = new StartProcessPage();

@@ -51,6 +51,24 @@ describe('SearchCheckListComponent', () => {
         expect(component.options.items).toEqual(options);
     });
 
+    it('should handle enter key as click on checkboxes', () => {
+        component.options = new SearchFilterList<SearchListOption>([
+            { name: 'Folder', value: "TYPE:'cm:folder'", checked: false },
+            { name: 'Document', value: "TYPE:'cm:content'", checked: false }
+        ]);
+
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        const optionElements = fixture.debugElement.queryAll(By.css('mat-checkbox'));
+
+        optionElements[0].triggerEventHandler('keydown.enter', {});
+        expect(component.options.items[0].checked).toBeTruthy();
+
+        optionElements[0].triggerEventHandler('keydown.enter', {});
+        expect(component.options.items[0].checked).toBeFalsy();
+    });
+
     it('should setup operator from the settings', () => {
         component.settings = <any> { operator: 'AND' };
         component.ngOnInit();

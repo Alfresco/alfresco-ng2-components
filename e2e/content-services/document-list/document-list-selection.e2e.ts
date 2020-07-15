@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, PaginationPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, PaginationPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -24,7 +24,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 
 describe('Document List - Selection', () => {
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();

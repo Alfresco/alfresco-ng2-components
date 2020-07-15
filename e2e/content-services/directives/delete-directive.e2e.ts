@@ -20,7 +20,7 @@ import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     PermissionActions,
     StringUtil,
@@ -34,7 +34,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 describe('Delete Directive', () => {
 
     const apiService = new ApiService();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const paginationPage = new PaginationPage();
     const contentListPage = contentServicesPage.getDocumentList();

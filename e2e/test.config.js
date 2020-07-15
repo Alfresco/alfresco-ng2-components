@@ -103,13 +103,6 @@ module.exports = {
         username: SCREENSHOT_USERNAME
     },
 
-    adf: {
-        /**
-         * base
-         */
-        url: HOST
-    },
-
     adf_external_acs: {
         /**
          * @config main.protocol {String}

@@ -18,7 +18,7 @@
 import {
     ApiService,
     LikePage,
-    LoginSSOPage,
+    LoginPage,
     RatePage,
     UploadActions,
     UserModel,
@@ -31,7 +31,7 @@ import { browser } from 'protractor';
 
 describe('Social component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const likePage = new LikePage();
     const ratePage = new RatePage();
     const socialPage = new SocialPage();

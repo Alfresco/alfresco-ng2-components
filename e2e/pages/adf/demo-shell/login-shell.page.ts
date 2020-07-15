@@ -16,12 +16,12 @@
  */
 
 import { browser, by, element } from 'protractor';
-import { TogglePage, BrowserActions, BrowserVisibility, LoginSSOPage } from '@alfresco/adf-testing';
+import { TogglePage, BrowserActions, BrowserVisibility, LoginPage } from '@alfresco/adf-testing';
 
-export class LoginPage {
+export class LoginShellPage {
 
     loginURL = browser.baseUrl + '/login';
-    loginSSOPage = new LoginSSOPage();
+    loginSSOPage = new LoginPage();
 
     togglePage = new TogglePage();
     txtUsername = element(by.css('input[id="username"]'));

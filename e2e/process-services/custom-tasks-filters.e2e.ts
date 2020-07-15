@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     ArrayUtil,
     DateUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     ProcessUtil,
     UsersActions
@@ -37,7 +37,7 @@ describe('Start Task - Custom App', () => {
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
     const secondApp = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskListSinglePage = new TaskListDemoPage();
     const paginationPage = new PaginationPage();

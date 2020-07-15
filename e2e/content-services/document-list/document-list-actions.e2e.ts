@@ -20,7 +20,7 @@ import {
     ApiService,
     BreadcrumbPage,
     ContentNodeSelectorDialogPage,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     StringUtil,
     UploadActions,
@@ -37,7 +37,7 @@ import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Document List Component - Actions', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
     const contentListPage = contentServicesPage.getDocumentList();

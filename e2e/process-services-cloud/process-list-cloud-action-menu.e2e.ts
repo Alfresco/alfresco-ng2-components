@@ -20,7 +20,7 @@ import {
     AppListCloudPage,
     GroupIdentityService,
     IdentityService,
-    LoginSSOPage,
+    LoginPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
     StringUtil
@@ -37,7 +37,7 @@ describe('Process list cloud', () => {
 
         const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
 
-        const loginSSOPage = new LoginSSOPage();
+        const loginSSOPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const appListCloudComponent = new AppListCloudPage();
         const processCloudDemoPage = new ProcessCloudDemoPage();

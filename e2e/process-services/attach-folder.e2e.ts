@@ -21,7 +21,7 @@ import {
     ContentNodeSelectorDialogPage,
     IntegrationService,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UserModel,
     UsersActions,
     Widget
@@ -39,7 +39,7 @@ describe('Attach Folder', () => {
     const applicationService = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const widget = new Widget();
     const taskPage = new TasksPage();
     const navigationBarPage = new NavigationBarPage();

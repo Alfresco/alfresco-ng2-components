@@ -20,7 +20,7 @@ import {
     ApiUtil,
     BrowserActions,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     UploadActions,
     UserModel,
@@ -39,7 +39,7 @@ describe('Share file', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const contentListPage = contentServicesPage.getDocumentList();
     const shareDialog = new ShareDialogPage();

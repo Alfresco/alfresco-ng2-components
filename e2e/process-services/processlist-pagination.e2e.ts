@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     ProcessUtil,
     UsersActions
@@ -32,7 +32,7 @@ describe('Process List - Pagination', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const paginationPage = new PaginationPage();
     const processFiltersPage = new ProcessFiltersPage();

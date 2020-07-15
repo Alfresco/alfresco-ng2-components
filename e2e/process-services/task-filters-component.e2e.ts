@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, ApplicationsUtil, LoginSSOPage, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { TasksPage } from '../pages/adf/process-services/tasks.page';
@@ -33,7 +33,7 @@ describe('Task', () => {
 
         const app = browser.params.resources.Files.APP_WITH_DATE_FIELD_FORM;
 
-        const loginPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
         const tasksPage = new TasksPage();
@@ -170,7 +170,7 @@ describe('Task', () => {
     });
 
     describe('Custom Filters', () => {
-        const loginPage = new LoginSSOPage();
+        const loginPage = new LoginPage();
         const navigationBarPage = new NavigationBarPage();
         const processServicesPage = new ProcessServicesPage();
         const processServiceTabBarPage = new ProcessServiceTabBarPage();

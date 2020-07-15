@@ -20,7 +20,7 @@ import {
     ApplicationsUtil,
     DatePickerCalendarPage,
     DateUtil,
-    LoginSSOPage,
+    LoginPage,
     UsersActions,
     Widget
 } from '@alfresco/adf-testing';
@@ -31,7 +31,7 @@ import { browser } from 'protractor';
 
 describe('Dynamic Table', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const processFiltersPage = new ProcessFiltersPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();
     const datePicker = new DatePickerCalendarPage();

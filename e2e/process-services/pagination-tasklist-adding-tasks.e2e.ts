@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     ProcessUtil,
     UsersActions
@@ -32,7 +32,7 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();
 

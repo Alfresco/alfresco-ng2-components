@@ -16,12 +16,12 @@
  */
 
 import { SettingsPage } from '@alfresco/adf-testing';
-import { LoginPage } from '../../pages/adf/demo-shell/login.page';
+import { LoginShellPage } from '../../pages/adf/demo-shell/login-shell.page';
 
 describe('Login component - Remember Me', () => {
 
     const settingsPage = new SettingsPage();
-    const loginPage = new LoginPage();
+    const loginPage = new LoginShellPage();
 
     beforeAll(async () => {
         await loginPage.goToLoginPage();

@@ -20,7 +20,7 @@ import {
     AppListCloudPage,
     StringUtil,
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     TasksService,
     ProcessDefinitionsService,
     ProcessInstancesService,
@@ -33,7 +33,7 @@ import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tas
 
 describe('Task form cloud component', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

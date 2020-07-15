@@ -21,7 +21,7 @@ import {
     BrowserActions,
     BrowserVisibility,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UserModel,
     UsersActions
@@ -40,7 +40,7 @@ describe('Info Drawer', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const processServiceTabBarPage = new ProcessServiceTabBarPage();

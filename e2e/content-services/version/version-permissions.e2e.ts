@@ -19,7 +19,7 @@ import { browser, by, element } from 'protractor';
 import {
     ApiService,
     BrowserActions,
-    LoginSSOPage,
+    LoginPage,
     NotificationHistoryPage,
     StringUtil,
     UploadActions,
@@ -35,7 +35,7 @@ import CONSTANTS = require('../../util/constants');
 
 describe('Version component permissions', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();
     const uploadDialog = new UploadDialogPage();

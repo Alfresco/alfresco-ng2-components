@@ -40,10 +40,6 @@ export interface TestConfiguration {
         rootPath: string;
     };
 
-    adf: {
-        url: string;
-    };
-
     adf_external_acs: {
         host: string;
     };

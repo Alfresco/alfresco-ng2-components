@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     ProcessUtil,
     StringUtil,
     UsersActions,
@@ -36,7 +36,7 @@ import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../util/constants');
 
 describe('Task Details - Form', () => {
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const tasksListPage = new TasksListPage();
     const taskDetailsPage = new TaskDetailsPage();
     const attachFormPage = new AttachFormPage();

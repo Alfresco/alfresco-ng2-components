@@ -25,7 +25,7 @@ import { VersionManagePage } from '../../pages/adf/version-manager.page';
 
 describe('Version component actions', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const versionManagePage = new VersionManagePage();
     const navigationBarPage = new NavigationBarPage();

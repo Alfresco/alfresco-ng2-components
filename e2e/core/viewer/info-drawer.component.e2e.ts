@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 import {
     ApiService,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -34,7 +34,7 @@ describe('Info Drawer', () => {
 
     const viewerPage = new ViewerPage();
     const navigationBarPage = new NavigationBarPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
 
     const apiService = new ApiService();

@@ -18,11 +18,11 @@
 import { browser } from 'protractor';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { ApiService, BrowserActions, ErrorPage, LoginSSOPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
 
 describe('Document List Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const errorPage = new ErrorPage();
     const navigationBarPage = new NavigationBarPage();
@@ -52,7 +52,7 @@ describe('Document List Component', () => {
         });
 
         it('[C217334] Should display a message when accessing file without permissions', async () => {
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.baseUrl + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
             await expect(await errorPage.getErrorDescription()).toBe('You\'re not allowed access to this resource on the server.');
         });
@@ -60,7 +60,7 @@ describe('Document List Component', () => {
         it('[C279924] Should display custom message when accessing a file without permissions', async () => {
             await contentServicesPage.goToDocumentList();
             await contentServicesPage.enableCustomPermissionMessage();
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/files/' + privateSite.entry.guid);
+            await BrowserActions.getUrl(browser.baseUrl + '/files/' + privateSite.entry.guid);
             await expect(await errorPage.getErrorCode()).toBe('403');
         });
    });

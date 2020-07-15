@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
     ProcessDefinitionsService, ProcessInstancesService,
-    LoginSSOPage, ApiService,
+    LoginPage, ApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService, DateUtil
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -33,7 +33,7 @@ describe('Edit task filters and task list properties', () => {
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const candidateBaseApp = browser.params.resources.ACTIVITI_CLOUD_APPS.CANDIDATE_BASE_APP.name;
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

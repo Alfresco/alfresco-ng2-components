@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ApiService, LoginSSOPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
 import { SearchResultsPage } from '../pages/adf/search-results.page';
@@ -25,7 +25,7 @@ import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Search Component - Multi-Select Facet', () => {
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchResultsPage = new SearchResultsPage();
     const searchFiltersPage = new SearchFiltersPage();

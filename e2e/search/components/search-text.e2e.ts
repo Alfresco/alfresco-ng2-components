@@ -23,7 +23,7 @@ import {
     ApiService,
     BrowserActions,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
@@ -39,7 +39,7 @@ describe('Search component - Text widget', () => {
     const navigationBarPage = new NavigationBarPage();
     const searchFiltersPage = new SearchFiltersPage();
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchResultPage = new SearchResultsPage();
 
@@ -75,7 +75,7 @@ describe('Search component - Text widget', () => {
     });
 
     it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {
-        await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+        await BrowserActions.getUrl(browser.baseUrl + '/search;q=*');
         await searchResultPage.tableIsLoaded();
 
         await searchFiltersPage.checkNameFilterIsDisplayed();
@@ -90,7 +90,7 @@ describe('Search component - Text widget', () => {
         });
 
         it('[C289330] Should be able to change the Field setting', async () => {
-            await BrowserActions.getUrl(browser.params.testConfig.adf.url + '/search;q=*');
+            await BrowserActions.getUrl(browser.baseUrl + '/search;q=*');
             await searchResultPage.tableIsLoaded();
 
             await searchFiltersPage.checkCheckListFilterIsDisplayed();

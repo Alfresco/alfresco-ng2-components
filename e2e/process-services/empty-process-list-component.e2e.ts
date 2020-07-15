@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, ApplicationsUtil, LoginSSOPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, ApplicationsUtil, LoginPage, StartProcessPage, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
 import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
@@ -28,7 +28,7 @@ describe('Empty Process List Test', () => {
     const appWithProcess = browser.params.resources.Files.APP_WITH_PROCESSES;
     const simpleAppWithUserForm = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const processServicesPage = new ProcessServicesPage();
     const processFiltersPage = new ProcessFiltersPage();

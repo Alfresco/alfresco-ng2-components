@@ -18,7 +18,7 @@
 import {
     ApiService,
     ApplicationsUtil,
-    LoginSSOPage,
+    LoginPage,
     PaginationPage,
     ProcessUtil,
     UserModel,
@@ -31,7 +31,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Task List Pagination', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
     const paginationPage = new PaginationPage();

@@ -18,7 +18,7 @@
 import { browser } from 'protractor';
 import {
     StringUtil, TasksService,
-    LoginSSOPage, ApiService,
+    LoginPage, ApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
@@ -27,7 +27,7 @@ import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 
 describe('Edit task filters and task list properties', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();
     const tasksCloudDemoPage = new TasksCloudDemoPage();

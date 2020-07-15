@@ -19,7 +19,7 @@ import { browser, protractor } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
 import {
-    LoginSSOPage,
+    LoginPage,
     AppListCloudPage,
     StringUtil,
     StartTasksCloudPage,
@@ -47,7 +47,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {
 
-    const loginSSOPage = new LoginSSOPage();
+    const loginSSOPage = new LoginPage();
     const taskFormCloudComponent = new TaskFormCloudComponent();
     const navigationBarPage = new NavigationBarPage();
     const appListCloudComponent = new AppListCloudPage();

@@ -16,7 +16,7 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginSSOPage, NotificationHistoryPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
+import { ApiService, LoginPage, NotificationHistoryPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
 import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
@@ -27,7 +27,7 @@ describe('Upload - User permission', () => {
 
     const contentServicesPage = new ContentServicesPage();
     const uploadDialog = new UploadDialogPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const notificationHistoryPage = new NotificationHistoryPage();
     const apiService = new ApiService();

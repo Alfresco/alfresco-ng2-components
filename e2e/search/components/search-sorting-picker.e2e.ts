@@ -18,7 +18,7 @@
 import {
     ApiService,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     SearchSortingPickerPage,
     UploadActions,
     UserModel,
@@ -34,7 +34,7 @@ import { SearchConfiguration } from '../search.config';
 
 describe('Search Sorting Picker', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchDialog = new SearchDialogPage();
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();

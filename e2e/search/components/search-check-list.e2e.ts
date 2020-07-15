@@ -19,7 +19,7 @@ import {
     ApiService,
     BrowserActions,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     StringUtil,
     UploadActions,
     UserModel,
@@ -34,7 +34,7 @@ import { browser } from 'protractor';
 
 describe('Search Checklist Component', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const searchDialog = new SearchDialogPage();
     const searchResults = new SearchResultsPage();
@@ -83,7 +83,7 @@ describe('Search Checklist Component', () => {
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
-        await BrowserActions.getUrl(`${browser.params.testConfig.adf.url}/search;q=${randomName}`);
+        await BrowserActions.getUrl(`${browser.baseUrl}/search;q=${randomName}`);
     });
 
     afterAll(async () => {

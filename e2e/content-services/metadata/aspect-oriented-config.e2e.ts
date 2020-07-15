@@ -19,7 +19,7 @@ import {
     ApiService,
     CheckboxPage,
     LocalStorageUtil,
-    LoginSSOPage,
+    LoginPage,
     UploadActions,
     UserModel,
     UsersActions,
@@ -33,7 +33,7 @@ import { ContentServicesPage } from '../../pages/adf/content-services.page';
 
 describe('Aspect oriented config', () => {
 
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const viewerPage = new ViewerPage();
     const metadataViewPage = new MetadataViewPage();
     const navigationBarPage = new NavigationBarPage();

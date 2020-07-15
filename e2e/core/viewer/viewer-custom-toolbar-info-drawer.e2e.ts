@@ -25,7 +25,7 @@ describe('Viewer', () => {
 
     const navigationBarPage = new NavigationBarPage();
     const viewerPage = new ViewerPage();
-    const loginPage = new LoginSSOPage();
+    const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
 
     const apiService = new ApiService();
