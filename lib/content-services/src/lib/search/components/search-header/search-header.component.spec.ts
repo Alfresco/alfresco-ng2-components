@@ -25,6 +25,7 @@ import { fakeNodePaging } from '../../../mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SimpleChange } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 const mockCategory: any = {
     'id': 'queryName',
@@ -208,5 +209,48 @@ describe('SearchHeaderComponent', () => {
         applyButton.triggerEventHandler('click', fakeEvent);
         fixture.detectChanges();
         await fixture.whenStable();
+    });
+
+    describe('Accessibility', () => {
+
+        it('should set up a focus trap on the filter when the menu is opened', async () => {
+            expect(component.focusTrap).toBeUndefined();
+
+            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+            menuButton.click();
+            fixture.detectChanges();
+
+            expect(component.focusTrap).toBeDefined();
+            expect(component.focusTrap._element).toBe(component.filterContainer.nativeElement);
+        });
+
+        it('should focus the input element when the menu is opened', async () => {
+            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+            menuButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const inputElement = fixture.debugElement.query(By.css('.mat-input-element'));
+            expect(document.activeElement).toBe(inputElement.nativeElement);
+
+        });
+
+        it('should focus the menu trigger when the menu is closed', async () => {
+            const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
+            menuButton.click();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const matMenuTrigger = fixture.debugElement.query(By.directive(MatMenuTrigger)).injector.get(MatMenuTrigger);
+            matMenuTrigger.closeMenu();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const matMenuButton = fixture.debugElement.query(By.css('#filter-menu-button'));
+            expect(document.activeElement).toBe(matMenuButton.nativeElement);
+        });
     });
 });
