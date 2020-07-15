@@ -24,8 +24,8 @@ import {
     UsersActions,
     Widget
 } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { browser } from 'protractor';
 

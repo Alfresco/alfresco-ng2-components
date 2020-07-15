@@ -27,7 +27,7 @@ import {
 import { browser } from 'protractor';
 import { FolderModel } from '../models/ACS/folder.model';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { InfinitePaginationPage } from '../pages/adf/core/infinite-pagination.page';
+import { InfinitePaginationPage } from './pages/infinite-pagination.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 
 describe('Enable infinite scrolling', () => {

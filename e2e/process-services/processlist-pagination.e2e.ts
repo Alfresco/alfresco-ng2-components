@@ -25,8 +25,8 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
 
 describe('Process List - Pagination', () => {
 

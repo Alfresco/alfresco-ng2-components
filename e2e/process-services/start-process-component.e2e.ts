@@ -33,11 +33,11 @@ import {
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { AttachmentListPage } from './pages/attachment-list.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessServicesPage } from './pages/process-services.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { UploadDialogPage } from '../pages/adf/dialog/upload-dialog.page';
 

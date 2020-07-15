@@ -25,8 +25,8 @@ import {
     ViewerPage
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
+import { TasksPage } from './pages/tasks.page';
+import { AttachmentListPage } from './pages/attachment-list.page';
 import * as fs from 'fs';
 import * as path from 'path';
 import { FileModel } from '../models/ACS/file.model';

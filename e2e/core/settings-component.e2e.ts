@@ -19,7 +19,7 @@ import { BrowserActions, SettingsPage } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ContentServicesPage } from '../pages/adf/content-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { ProcessServicesPage } from '../process-services/pages/process-services.page';
 import { LoginShellPage } from '../pages/adf/demo-shell/login-shell.page';
 
 describe('Settings component', () => {

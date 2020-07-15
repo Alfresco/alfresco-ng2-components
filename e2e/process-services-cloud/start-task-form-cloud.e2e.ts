@@ -42,7 +42,7 @@ import { StartProcessCloudConfiguration } from './config/start-process-cloud.con
 import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from '../pages/adf/demo-shell/process-services-cloud/process-details-cloud-demo.page';
 import { FileModel } from '../models/ACS/file.model';
-import { BreadCrumbDropdownPage } from '../pages/adf/content-services/breadcrumb/bread-crumb-dropdown.page';
+import { BreadCrumbDropdownPage } from '../content-services/pages/breadcrumb/bread-crumb-dropdown.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {

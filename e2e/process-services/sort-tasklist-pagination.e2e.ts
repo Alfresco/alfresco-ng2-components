@@ -25,7 +25,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { TasksPage } from './pages/tasks.page';
 import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../util/constants');
 

@@ -20,9 +20,9 @@ import { browser, by } from 'protractor';
 
 import { FileModel } from '../models/ACS/file.model';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { AttachmentListPage } from './pages/attachment-list.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
+import { TasksPage } from './pages/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Custom App', () => {

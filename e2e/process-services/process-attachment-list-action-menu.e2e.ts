@@ -24,9 +24,9 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
-import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
+import { AttachmentListPage } from './pages/attachment-list.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';

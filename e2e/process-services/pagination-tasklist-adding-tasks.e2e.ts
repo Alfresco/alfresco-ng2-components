@@ -25,7 +25,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { TasksPage } from './pages/tasks.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Items per page set to 15 and adding of tasks', () => {

@@ -26,7 +26,7 @@ import {
     UsersActions
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { ProcessServicesPage } from '../../pages/adf/process-services/process-services.page';
+import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
 import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
 import { LoginShellPage } from '../../pages/adf/demo-shell/login-shell.page';

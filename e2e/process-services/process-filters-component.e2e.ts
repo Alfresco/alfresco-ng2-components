@@ -24,11 +24,11 @@ import {
     UsersActions
 } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
-import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
+import { ProcessServicesPage } from './pages/process-services.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
+import { ProcessListPage } from './pages/process-list.page';
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { browser } from 'protractor';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';

@@ -17,9 +17,9 @@
 
 import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AnalyticsPage } from '../pages/adf/process-services/analytics.page';
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { AnalyticsPage } from '../process-services/pages/analytics.page';
+import { ProcessServicesPage } from '../process-services/pages/process-services.page';
+import { ProcessServiceTabBarPage } from '../process-services/pages/process-service-tab-bar.page';
 import { browser } from 'protractor';
 
 describe('Analytics Smoke Test', () => {

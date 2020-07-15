@@ -17,11 +17,11 @@
 
 import { browser } from 'protractor';
 import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
+import { ProcessServicesPage } from './pages/process-services.page';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
+import { ProcessListPage } from './pages/process-list.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
 import moment = require('moment');
 
 describe('Process Instance Details', () => {

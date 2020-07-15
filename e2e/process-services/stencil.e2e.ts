@@ -23,14 +23,14 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { TasksPage } from './pages/tasks.page';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
 import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
-import { ProcessListPage } from '../pages/adf/process-services/process-list.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
+import { ProcessListPage } from './pages/process-list.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Stencil', () => {

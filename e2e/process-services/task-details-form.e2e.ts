@@ -27,11 +27,11 @@ import {
 import { browser } from 'protractor';
 import { FormModelActions } from '../actions/APS/form-model.actions';
 import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { FiltersPage } from '../pages/adf/process-services/filters.page';
-import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
-import { TasksListPage } from '../pages/adf/process-services/tasks-list.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
+import { FiltersPage } from './pages/filters.page';
+import { TaskDetailsPage } from './pages/task-details.page';
+import { TasksListPage } from './pages/tasks-list.page';
+import { TasksPage } from './pages/tasks.page';
+import { AttachFormPage } from './pages/attach-form.page';
 import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../util/constants');
 

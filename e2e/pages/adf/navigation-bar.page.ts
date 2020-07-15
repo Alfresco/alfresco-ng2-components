@@ -18,7 +18,7 @@
 import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/people-group-cloud-component.page';
-import { ProcessServicesPage } from './process-services/process-services.page';
+import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
 export class NavigationBarPage {
 
