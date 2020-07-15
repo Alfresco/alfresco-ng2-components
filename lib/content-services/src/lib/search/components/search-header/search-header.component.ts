@@ -33,7 +33,7 @@ import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cd
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
-import { NodePaging } from '@alfresco/js-api';
+import { NodePaging, MinimalNode } from '@alfresco/js-api';
 import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
@@ -87,6 +87,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     category: SearchCategory;
     isFilterServiceActive: boolean;
+    initialValue: any;
     focusTrap: ConfigurableFocusTrap;
 
     private onDestroy$ = new Subject<boolean>();
@@ -107,11 +108,18 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((newNodePaging: NodePaging) => {
                 this.update.emit(newNodePaging);
             });
+
+        if (this.searchHeaderQueryBuilder.isCustomSourceNode(this.currentFolderNodeId)) {
+            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(this.currentFolderNodeId).subscribe((node: MinimalNode) => {
+                this.initSearchHeader(node.id);
+            });
+        } else {
+            this.initSearchHeader(this.currentFolderNodeId);
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue !== changes['currentFolderNodeId'].previousValue) {
-            this.searchHeaderQueryBuilder.setCurrentRootFolderId(changes['currentFolderNodeId'].currentValue);
+        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
             this.clearHeader();
         }
 
@@ -147,7 +155,6 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
             this.widgetContainer.applyInnerWidget();
             this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
             this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
-            this.searchHeaderQueryBuilder.execute();
         } else {
             this.clearHeader();
         }
@@ -162,10 +169,9 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         if (this.widgetContainer) {
             this.widgetContainer.resetInnerWidget();
             this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
+            this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
             if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
                 this.clear.emit();
-            } else {
-                this.searchHeaderQueryBuilder.execute();
             }
         }
     }
@@ -179,6 +185,14 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     isActive(): boolean {
         return this.widgetContainer && this.widgetContainer.componentRef && this.widgetContainer.componentRef.instance.isActive;
+    }
+
+    private initSearchHeader(currentFolderId: string) {
+        this.searchHeaderQueryBuilder.setCurrentRootFolderId(currentFolderId);
+        if (this.value) {
+            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.initialValue);
+            this.widgetContainer.setValue(this.value);
+        }
     }
 
     onMenuOpen() {

@@ -45,6 +45,7 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
     format = '[{FROM} TO {TO}]';
 
     isActive = false;
+    startValue: any;
 
     validators: Validators;
 
@@ -68,6 +69,10 @@ export class SearchNumberRangeComponent implements SearchWidget, OnInit {
             from: this.from,
             to: this.to
         }, this.formValidator);
+
+        if (this.startValue) {
+            this.setValue(this.startValue);
+        }
     }
 
     formValidator(formGroup: FormGroup) {

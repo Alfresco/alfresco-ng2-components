@@ -658,17 +658,27 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     onAllFilterCleared() {
         this.documentList.node = null;
+        if (this.currentFolderId === '-my-') {
+            this.router.navigate([this.navigationRoute, '']);
+        } else {
+            this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
+        }
         this.documentList.reload();
     }
 
     onFilterSelected(currentActiveFilters: Map<string, string>) {
         const objectFromMap = {};
-        currentActiveFilters.forEach((value, key) => {
-            objectFromMap[key] = value;
+        currentActiveFilters.forEach((value: any, key) => {
+            let paramValue = null;
+            if (value && value.from && value.to) {
+                paramValue = `${value.from}||${value.to}`;
+            } else {
+                paramValue = value;
+            }
+            objectFromMap[key] = paramValue;
         });
 
-        this.router.navigate([this.navigationRoute, this.currentFolderId
-            , 'display', this.displayMode], { queryParams: objectFromMap});
+        this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
     }
 
 }

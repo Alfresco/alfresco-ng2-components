@@ -240,7 +240,7 @@
                 <adf-custom-header-filter-template *ngIf="enableCustomHeaderFilter">
                     <ng-template let-col>
                         <adf-search-header [col]="col"
-                                           [value]="paramValues? paramValues[col.key] : 'SANDRO'"
+                                           [value]="paramValues? paramValues[col.key] : null"
                                            [currentFolderNodeId]="currentFolderId"
                                            [maxItems]="pagination?.maxItems"
                                            [skipCount]="pagination?.skipCount"

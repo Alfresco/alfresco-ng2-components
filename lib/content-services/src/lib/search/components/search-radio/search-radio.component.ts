@@ -47,6 +47,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     options: SearchFilterList<SearchRadioOption>;
     pageSize = 5;
     isActive = false;
+    startValue: SearchRadioOption[];
 
     constructor() {
         this.options = new SearchFilterList<SearchRadioOption>();
@@ -61,11 +62,6 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
                     this.settings.options, this.pageSize
                 );
             }
-        }
-
-        const initialValue = this.getSelectedValue();
-        if (initialValue !== null) {
-            this.setValue(initialValue);
         }
     }
 

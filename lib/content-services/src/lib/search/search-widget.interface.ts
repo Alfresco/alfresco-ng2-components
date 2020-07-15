@@ -23,6 +23,7 @@ export interface SearchWidget {
     settings?: SearchWidgetSettings;
     context?: SearchQueryBuilderService;
     isActive?: boolean;
+    startValue: any;
     reset();
     submitValues();
     hasValidValue();

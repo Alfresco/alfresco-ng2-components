@@ -57,6 +57,8 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
     maxDate: any;
     isActive = false;
+    startValue: any = null;
+    
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -95,14 +97,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             Validators.required
         ]);
 
-        this.from = new FormControl('', validators);
-        this.to = new FormControl('', validators);
-
-        this.form = new FormGroup({
-            from: this.from,
-            to: this.to
-        });
-
         if (this.settings && this.settings.maxDate) {
             if (this.settings.maxDate === 'today') {
                 this.maxDate = this.dateAdapter.today().endOf('day');
@@ -110,6 +104,14 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
                 this.maxDate = moment(this.settings.maxDate).endOf('day');
             }
         }
+
+        this.from = new FormControl('', validators);
+        this.to = new FormControl('', validators);
+
+        this.form = new FormGroup({
+            from: this.from,
+            to: this.to
+        });
     }
 
     ngOnDestroy() {
@@ -138,12 +140,21 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     getCurrentValue() {
-        return this.form.value;
+        return { from : this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat), 
+                to: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat) };
     }
 
-    setValue(value: any) {
-        this.form['from'].setValue(value);
-        this.form['to'].setValue(value);
+    setValue(parsedDate: string) {
+        const splittedValue = parsedDate.split('||');
+        const fromValue = this.dateAdapter.parse(splittedValue[0], this.datePickerDateFormat);
+        const toValue = this.dateAdapter.parse(splittedValue[1], this.datePickerDateFormat);
+        this.from.setValue(fromValue);
+        this.from.markAsDirty();
+        this.from.markAsTouched();
+        this.to.setValue(toValue);
+        this.to.markAsDirty();
+        this.to.markAsTouched();
+        this.submitValues();
     }
 
     reset() {
@@ -159,6 +170,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     onChangedHandler(event: any, formControl: FormControl) {
+
         const inputValue = event.srcElement.value;
 
         const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);

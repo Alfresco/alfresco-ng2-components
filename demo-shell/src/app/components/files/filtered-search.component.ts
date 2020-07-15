@@ -32,6 +32,7 @@ export class FilteredSearchComponent {
     queryParams = null;
 
     constructor(@Optional() private route: ActivatedRoute) {
+
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 if (params['id'] && this.currentFolderId !== params['id']) {
