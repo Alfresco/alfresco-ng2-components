@@ -27,10 +27,13 @@ export class FormFields {
     valueLocator = by.css('input');
     labelLocator = by.css('label');
     noFormMessage = element(by.css('.adf-empty-content__title'));
+    noFormMessageStandaloneTask = element(by.css('adf-task-standalone #adf-no-form-message'));
     noFormTemplate = element(by.css('adf-empty-content'));
     completedTaskNoFormMessage = element(by.css('div[id*="completed-form-message"] p'));
+    completedStandaloneTaskNoFormMessage = element(by.css('adf-task-standalone #adf-completed-form-message'));
     attachFormButton = element(by.id('adf-attach-form-attach-button'));
     completeButton = element(by.id('adf-form-complete'));
+    completeNoFormButton = element(by.id('adf-no-form-complete-button'));
     cancelButton = element(by.css('#adf-no-form-cancel-button'));
     errorMessage = by.css('.adf-error-text-container .adf-error-text');
 
@@ -124,8 +127,34 @@ export class FormFields {
         return BrowserActions.getText(this.noFormMessage);
     }
 
+    async getNoFormMessageStandaloneTask(): Promise<string> {
+        return BrowserActions.getText(this.noFormMessageStandaloneTask);
+    }
+
     async getCompletedTaskNoFormMessage(): Promise<string> {
         return BrowserActions.getText(this.completedTaskNoFormMessage);
+    }
+
+    async getCompletedStandaloneTaskNoFormMessage(): Promise<string> {
+        return BrowserActions.getText(this.completedStandaloneTaskNoFormMessage);
+    }
+
+    async isStandaloneTaskNoFormMessageDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.noFormMessageStandaloneTask);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isAttachFormButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.attachFormButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     async clickOnAttachFormButton(): Promise<void> {
@@ -152,6 +181,10 @@ export class FormFields {
         await BrowserActions.click(this.completeButton);
     }
 
+    async completeNoFormTask(): Promise<void> {
+        await BrowserActions.click(this.completeNoFormButton);
+    }
+
     async setValueInInputById(fieldId: string, value: string): Promise<void> {
         const input = element(by.id(fieldId));
         await BrowserActions.clearSendKeys(input, value);
@@ -166,8 +199,21 @@ export class FormFields {
         }
     }
 
+    async isCompleteNoFormButtonDisplayed(): Promise<boolean> {
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.completeNoFormButton);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async isCompleteFormButtonEnabled(): Promise<boolean> {
         return this.completeButton.isEnabled();
+    }
+
+    async isCompleteNoFormButtonEnabled(): Promise<boolean> {
+        return this.completeNoFormButton.isEnabled();
     }
 
     async isCancelButtonDisplayed(): Promise<boolean> {

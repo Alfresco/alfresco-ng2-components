@@ -29,7 +29,7 @@ export class TaskUtil {
 
     async createStandaloneTask(taskName: string): Promise<any> {
         try {
-            await this.api.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName }));
+            return this.api.getInstance().activiti.taskApi.createNewTask(new TaskRepresentation({ name: taskName }));
         } catch (error) {
             Logger.error('Create Standalone Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -37,7 +37,7 @@ export class TaskUtil {
 
     async completeTask(taskInstance: string): Promise<any> {
         try {
-            await this.api.apiService.activiti.taskActionsApi.completeTask(taskInstance);
+            return this.api.apiService.activiti.taskActionsApi.completeTask(taskInstance);
         } catch (error) {
             Logger.error('Complete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -45,7 +45,7 @@ export class TaskUtil {
 
     async completeTaskForm(taskInstance: string): Promise<any> {
         try {
-            await this.api.getInstance().activiti.taskApi.completeTaskForm(taskInstance, { values: { label: null } });
+            return this.api.getInstance().activiti.taskApi.completeTaskForm(taskInstance, { values: { label: null } });
         } catch (error) {
             Logger.error('Complete Task Form - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
@@ -53,7 +53,7 @@ export class TaskUtil {
 
     async deleteTask(taskInstance: string): Promise<any> {
         try {
-            await this.api.apiService.activiti.taskApi.deleteTask(taskInstance);
+            return this.api.apiService.activiti.taskApi.deleteTask(taskInstance);
         } catch (error) {
             Logger.error('Delete Task - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
