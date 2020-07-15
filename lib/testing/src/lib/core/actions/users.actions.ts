@@ -53,9 +53,8 @@ export class UsersActions {
                     password: user.password
                 });
             }
-        } catch(e) {
-            if(e.status===409)
-            {
+        } catch (e) {
+            if (e.status === 409) {
                 Logger.error('ACS user already created');
             } else {
                 Logger.error('Not able to create ACS user: ' + JSON.stringify(e));
@@ -74,9 +73,8 @@ export class UsersActions {
                     user.id = apsUser.id;
                 }
             }
-        } catch(e) {
-            if(e.status===409)
-            {
+        } catch (e) {
+            if (e.status === 409) {
                 Logger.error('BPM user already created');
             } else {
                 Logger.error('Not able to create BPM user: ' + JSON.stringify(e));
@@ -91,8 +89,7 @@ export class UsersActions {
                 user.idIdentityService = identityUser.idIdentityService;
             }
         } catch (e) {
-            if(e.status===409)
-            {
+            if (e.status === 409) {
                 Logger.error('Identity user already created');
             } else {
                 Logger.error('Not able to create identity user: ' + JSON.stringify(e));
