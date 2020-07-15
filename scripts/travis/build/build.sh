@@ -26,12 +26,12 @@ then
 
     ./scripts/build/build-all-lib.sh
 
-    echo "====== Build Demo shell for production ====="
-    npm run build:prod || exit 1;
-
 else
     echo "====== Update the package.json with latest JS-API/CLI deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
     npm install;
-    nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude=cli --prod --with-deps  || exit 1;
+    nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude="cli,demoshell" --prod --with-deps  || exit 1;
 fi;
+
+echo "====== Build Demo shell for production ====="
+nx build demoshell --prod
