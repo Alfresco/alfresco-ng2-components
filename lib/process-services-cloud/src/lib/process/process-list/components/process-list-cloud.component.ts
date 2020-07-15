@@ -310,9 +310,13 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     }
 
     formatSorting(sorting: ProcessListCloudSortingModel[]) {
-        this.formattedSorting = sorting.length ? [
+        this.formattedSorting = this.isValidSorting(sorting) ? [
             ProcessListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
+    }
+
+    isValidSorting(sorting: ProcessListCloudSortingModel[]) {
+        return sorting.length && sorting[0].orderBy && sorting[0].direction;
     }
 }
