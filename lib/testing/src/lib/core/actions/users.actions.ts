@@ -53,7 +53,15 @@ export class UsersActions {
                     password: user.password
                 });
             }
+        } catch (e) {
+            if (e.status === 409) {
+                Logger.error('ACS user already created');
+            } else {
+                Logger.error('Not able to create ACS user: ' + JSON.stringify(e));
+            }
+        }
 
+        try {
             if (this.api.apiService.isBpmConfiguration() || (this.api.apiService.isEcmBpmConfiguration())) {
                 Logger.log('Create user BPM');
                 if (user.tenantId) {
@@ -65,16 +73,27 @@ export class UsersActions {
                     user.id = apsUser.id;
                 }
             }
+        } catch (e) {
+            if (e.status === 409) {
+                Logger.error('BPM user already created');
+            } else {
+                Logger.error('Not able to create BPM user: ' + JSON.stringify(e));
+            }
+        }
 
+        try {
             if (this.api.apiService.isOauthConfiguration()) {
                 Logger.log('Create user identity');
 
                 const identityUser = await this.identityService.createIdentityUser(user);
                 user.idIdentityService = identityUser.idIdentityService;
             }
-
         } catch (e) {
-            Logger.error('Error create user' + JSON.stringify(e));
+            if (e.status === 409) {
+                Logger.error('Identity user already created');
+            } else {
+                Logger.error('Not able to create identity user: ' + JSON.stringify(e));
+            }
         }
 
         return user;
