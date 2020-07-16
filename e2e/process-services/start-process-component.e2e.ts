@@ -32,14 +32,14 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { AttachmentListPage } from './pages/attachment-list.page';
 import { ProcessDetailsPage } from './pages/process-details.page';
 import { ProcessFiltersPage } from './pages/process-filters.page';
 import { ProcessServicesPage } from './pages/process-services.page';
 import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
-import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { UploadDialogPage } from '../pages/adf/dialog/upload-dialog.page';
+import { ContentServicesPage } from '../core/pages/content-services.page';
+import { UploadDialogPage } from '../core/pages/dialog/upload-dialog.page';
 
 describe('Start Process Component', () => {
 

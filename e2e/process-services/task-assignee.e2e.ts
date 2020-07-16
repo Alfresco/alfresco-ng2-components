@@ -24,7 +24,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './pages/process-services.page';
 import { ProcessFiltersPage } from './pages/process-filters.page';
 import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';

@@ -26,7 +26,7 @@ import {
 import { ProcessFiltersPage } from './pages/process-filters.page';
 import { ProcessDetailsPage } from './pages/process-details.page';
 import { TaskDetailsPage } from './pages/task-details.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
 

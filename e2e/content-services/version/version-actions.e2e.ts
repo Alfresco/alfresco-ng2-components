@@ -27,10 +27,10 @@ import {
 } from '@alfresco/adf-testing';
 import { browser, by, element } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { VersionManagePage } from '../../core/pages/version-manager.page';
 
 describe('Version component actions', () => {
 

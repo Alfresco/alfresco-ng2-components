@@ -16,7 +16,7 @@
  */
 
 import { ApiService, ApplicationsUtil, LoginPage, ProcessUtil, UsersActions } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { TasksPage } from './pages/tasks.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../util/constants');

@@ -16,7 +16,7 @@
  */
 
 import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { AnalyticsPage } from '../process-services/pages/analytics.page';
 import { ProcessServicesPage } from '../process-services/pages/process-services.page';
 import { ProcessServiceTabBarPage } from '../process-services/pages/process-service-tab-bar.page';

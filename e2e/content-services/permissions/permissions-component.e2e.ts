@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { PermissionsPage } from '../../pages/adf/permissions.page';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { PermissionsPage } from '../../content-services/pages/permissions.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,
@@ -31,9 +31,9 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
-import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
+import { MetadataViewPage } from '../../core/pages/metadata-view.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
 
 describe('Permissions Component', () => {
 

@@ -24,13 +24,13 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
-import { TrashcanPage } from '../../pages/adf/trashcan.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
+import { TrashcanPage } from '../../core/pages/trashcan.page';
 
 describe('Favorite directive', () => {
 

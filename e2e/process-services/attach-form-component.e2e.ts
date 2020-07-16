@@ -17,7 +17,7 @@
 
 import { ApiService, ApplicationsUtil, FormFields, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { AttachFormPage } from './pages/attach-form.page';
 import { TasksPage } from './pages/tasks.page';
 import { TaskDetailsPage } from './pages/task-details.page';

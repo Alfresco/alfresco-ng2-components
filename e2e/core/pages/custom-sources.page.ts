@@ -17,7 +17,7 @@
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, DropdownPage } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
-import { NavigationBarPage } from '../navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 const source = {
     favorites: 'Favorites',

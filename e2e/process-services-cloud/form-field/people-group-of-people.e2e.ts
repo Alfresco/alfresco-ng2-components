@@ -32,7 +32,7 @@ import {
     peopleReadOnlyFormMock,
     groupReadOnlyFormMock
 } from '../../resources/forms/people-group-formwidget-mocks';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('People and Group of people Widgets', () => {
 

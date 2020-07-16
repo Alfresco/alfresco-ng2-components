@@ -24,7 +24,7 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { TasksPage } from './pages/tasks.page';
 import { AttachmentListPage } from './pages/attachment-list.page';
 import * as fs from 'fs';

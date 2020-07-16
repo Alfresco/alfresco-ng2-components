@@ -28,9 +28,9 @@ import {
 } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
-import { ProcessCloudDemoPage } from '../../pages/adf/demo-shell/process-services/process-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
+import { ProcessCloudDemoPage } from '.././pages/process-cloud-demo.page';
 
 describe('Task cloud visibility', async () => {
 

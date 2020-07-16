@@ -26,10 +26,10 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { VersionManagePage } from '../../pages/adf/version-manager.page';
-import { UploadDialogPage } from '../../pages/adf/dialog/upload-dialog.page';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { VersionManagePage } from '../../core/pages/version-manager.page';
+import { UploadDialogPage } from '../../core/pages/dialog/upload-dialog.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import CONSTANTS = require('../../util/constants');
 

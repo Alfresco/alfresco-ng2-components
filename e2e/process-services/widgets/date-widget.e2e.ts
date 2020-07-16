@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-testing';
 import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
-import { FormDemoPage } from '../../pages/adf/demo-shell/process-services/form-demo.page';
+import { FormDemoPage } from '.././pages/form-demo.page';
 import { customDateFormAPS1 } from '../../resources/forms/custom-date-form';
 import CONSTANTS = require('../../util/constants');
 

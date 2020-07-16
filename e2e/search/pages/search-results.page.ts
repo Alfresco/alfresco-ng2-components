@@ -17,7 +17,7 @@
 
 import { BrowserVisibility, DataTableComponentPage, SearchSortingPickerPage } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
-import { ContentServicesPage } from './content-services.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 export class SearchResultsPage {
 

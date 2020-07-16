@@ -29,7 +29,7 @@ import {
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
-import { ContentServicesPage } from '../pages/adf/content-services.page';
+import { ContentServicesPage } from '../core/pages/content-services.page';
 
 describe('Pagination - returns to previous page when current is empty', () => {
 

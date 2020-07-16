@@ -16,12 +16,12 @@
  */
 
 import { ApiService, ApplicationsUtil, LoginPage, UsersActions } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { ProcessServicesPage } from './pages/process-services.page';
 import { TasksPage } from './pages/tasks.page';
 import { TasksListPage } from './pages/tasks-list.page';
 import { TaskDetailsPage } from './pages/task-details.page';
-import { TaskFiltersDemoPage } from '../pages/adf/demo-shell/process-services/task-filters-demo.page';
+import { TaskFiltersDemoPage } from './pages/task-filters-demo.page';
 import { UserProcessInstanceFilterRepresentation } from '@alfresco/js-api';
 import { browser } from 'protractor';
 

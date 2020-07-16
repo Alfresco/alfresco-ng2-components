@@ -27,13 +27,13 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { SharedLinkEntry, SharedLinkPaging } from '@alfresco/js-api';
-import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
+import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
 
 describe('Share file', () => {
 

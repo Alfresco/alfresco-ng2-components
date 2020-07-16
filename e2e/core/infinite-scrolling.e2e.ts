@@ -26,9 +26,9 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../models/ACS/folder.model';
-import { ContentServicesPage } from '../pages/adf/content-services.page';
+import { ContentServicesPage } from '../core/pages/content-services.page';
 import { InfinitePaginationPage } from './pages/infinite-pagination.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('Enable infinite scrolling', () => {
 

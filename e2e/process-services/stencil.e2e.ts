@@ -25,9 +25,9 @@ import {
 } from '@alfresco/adf-testing';
 import { TasksPage } from './pages/tasks.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
-import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
+import { ProcessListDemoPage } from './pages/process-list-demo.page';
 import { ProcessFiltersPage } from './pages/process-filters.page';
 import { ProcessDetailsPage } from './pages/process-details.page';
 import { ProcessListPage } from './pages/process-list.page';

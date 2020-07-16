@@ -25,7 +25,7 @@ import {
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from './pages/tasks.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import CONSTANTS = require('../util/constants');
 import FormDefinitionModel = require('../models/APS/FormDefinitionModel');

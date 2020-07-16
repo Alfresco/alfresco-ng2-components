@@ -17,8 +17,8 @@
 
 import { ApiService, DataTableComponentPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { DataTablePage } from '../../pages/adf/demo-shell/data-table.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { DataTablePage } from '../../core/pages/data-table.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Datatable component - selection', () => {
 

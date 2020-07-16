@@ -26,8 +26,8 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../models/ACS/folder.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { TrashcanPage } from '../pages/adf/trashcan.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { TrashcanPage } from '../core/pages/trashcan.page';
 
 describe('Trashcan - Pagination', () => {
     const pagination = {

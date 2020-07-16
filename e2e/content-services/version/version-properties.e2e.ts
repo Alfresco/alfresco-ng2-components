@@ -25,10 +25,10 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { VersionManagePage } from '../../pages/adf/version-manager.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { VersionManagePage } from '../../core/pages/version-manager.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Version Properties', () => {
 

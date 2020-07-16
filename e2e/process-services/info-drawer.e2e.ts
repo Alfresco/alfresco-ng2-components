@@ -28,7 +28,7 @@ import {
 } from '@alfresco/adf-testing';
 import { AppDefinitionRepresentation } from '@alfresco/js-api';
 import { browser, by, element } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { TasksPage } from './pages/tasks.page';
 import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
 import { ProcessFiltersPage } from './pages/process-filters.page';

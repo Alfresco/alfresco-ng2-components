@@ -27,7 +27,7 @@ import {
 import { TasksPage } from './pages/tasks.page';
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task - Task App', () => {

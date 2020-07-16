@@ -29,9 +29,9 @@ import {
     EditProcessFilterCloudComponentPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { ProcessCloudDemoPage } from '../pages/adf/demo-shell/process-services/process-cloud-demo.page';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
+import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Process filters cloud', () => {

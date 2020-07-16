@@ -27,7 +27,7 @@ import {
 import { ProcessFiltersPage } from './pages/process-filters.page';
 import { ProcessDetailsPage } from './pages/process-details.page';
 import { AttachmentListPage } from './pages/attachment-list.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { FileModel } from '../models/ACS/file.model';
 import { browser } from 'protractor';
 

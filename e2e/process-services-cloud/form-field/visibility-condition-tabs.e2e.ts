@@ -18,7 +18,7 @@
 import { FormCloudComponentPage, LoginPage, ProcessCloudWidgetPage } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { tabFieldValueVisibilityJson, tabVarValueVisibilityJson, tabVarFieldVisibilityJson,
     tabFieldFieldVisibilityJson, tabFieldVarVisibilityJson, tabVarVarVisibilityJson,
     tabNextOperatorsVisibilityJson } from '../../resources/forms/tab-visibility-conditions';

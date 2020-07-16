@@ -25,11 +25,11 @@ import {
     UploadActions,
     UsersActions
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { LogoutPage } from '../../pages/adf/demo-shell/logout.page';
-import { LoginShellPage } from '../../pages/adf/demo-shell/login-shell.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { LogoutPage } from '../../core/pages/logout.page';
+import { LoginShellPage } from '../../core/pages/login-shell.page';
 
 describe('Login component - Redirect', () => {
 

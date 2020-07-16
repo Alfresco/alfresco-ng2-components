@@ -26,7 +26,7 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FormModelActions } from '../actions/APS/form-model.actions';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { FiltersPage } from './pages/filters.page';
 import { TaskDetailsPage } from './pages/task-details.page';
 import { TasksListPage } from './pages/tasks-list.page';
