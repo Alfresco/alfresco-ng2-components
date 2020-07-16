@@ -15,12 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,
-    ChangeDetectorRef, OnDestroy, HostBinding
-} from '@angular/core';
-
-import { Pagination } from '@alfresco/js-api';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, OnDestroy, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { PaginatedComponent } from './paginated-component.interface';
 import { PaginationComponentInterface } from './pagination-component.interface';
 import { Subject } from 'rxjs';
@@ -44,13 +39,15 @@ export type PaginationAction =
     encapsulation: ViewEncapsulation.None
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
-    static DEFAULT_PAGINATION = new Pagination({
+    static DEFAULT_PAGINATION: PaginationModel = {
         skipCount: 0,
         maxItems: 25,
-        totalItems: 0
-    });
+        totalItems: 0,
+        count: 0,
+        hasMoreItems: false
+    };
 
-    private _pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
+    private _pagination: PaginationModel;
     private _isEmpty = true;
     private _hasItems = false;
 
@@ -69,9 +66,18 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     /** Pagination object. */
     @Input()
     set pagination(value: PaginationModel) {
+        value = value || PaginationComponent.DEFAULT_PAGINATION;
+
         this._pagination = value;
         this._hasItems = value && value.count > 0;
         this._isEmpty = !this.hasItems;
+
+        // TODO: Angular 10 workaround for HostBinding bug
+        if (this._isEmpty) {
+            this.renderer.addClass(this.elementRef.nativeElement, 'adf-pagination__empty');
+        } else {
+            this.renderer.removeClass(this.elementRef.nativeElement, 'adf-pagination__empty');
+        }
 
         this.cdr.detectChanges();
     }
@@ -99,6 +105,8 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
+        private elementRef: ElementRef,
+        private renderer: Renderer2,
         private cdr: ChangeDetectorRef,
         private userPreferencesService: UserPreferencesService,
         private translate: TranslateService) {
@@ -108,7 +116,13 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(pagSize => this.pagination.maxItems = pagSize);
+            .subscribe(maxItems => {
+                this.pagination = {
+                    ...PaginationComponent.DEFAULT_PAGINATION,
+                    ...this.pagination,
+                    maxItems
+                };
+            });
 
         if (!this.supportedPageSizes) {
             this.supportedPageSizes = this.userPreferencesService.supportedPageSizes;
@@ -122,12 +136,16 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
                         this.goPrevious();
                     }
 
-                    this.pagination = pagination;
+                    this.pagination = {
+                        ...pagination
+                    };
                 });
         }
 
         if (!this.pagination) {
-            this.pagination = PaginationComponent.DEFAULT_PAGINATION;
+            this.pagination = {
+                ...PaginationComponent.DEFAULT_PAGINATION
+            };
         }
     }
 
@@ -170,21 +188,21 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         return this._hasItems;
     }
 
-    @HostBinding('class.adf-pagination__empty')
+    // TODO: not working correctly in Angular 10
+    // @HostBinding('class.adf-pagination__empty')
     get isEmpty(): boolean {
         return this._isEmpty;
     }
 
     get range(): number[] {
         const { skipCount, maxItems, totalItems } = this.pagination;
-        const { isLastPage } = this;
 
         let start = 0;
         if (totalItems || totalItems !== 0) {
             start = skipCount + 1;
         }
 
-        const end = isLastPage ? totalItems : skipCount + maxItems;
+        const end = this.isLastPage ? totalItems : skipCount + maxItems;
 
         return [start, end];
     }

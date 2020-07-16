@@ -26,11 +26,11 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 class FakePaginationInput implements Pagination {
-    count: number = 25;
-    hasMoreItems: boolean;
-    totalItems: number = null;
-    skipCount: number = null;
-    maxItems: number = 25;
+    count = 25;
+    hasMoreItems = false;
+    totalItems = 0;
+    skipCount = 0;
+    maxItems = 25;
 
     constructor(pagesCount: number, currentPage: number, lastPageItems: number) {
         this.totalItems = ((pagesCount - 1) * this.maxItems) + lastPageItems;
@@ -54,19 +54,23 @@ describe('PaginationComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(PaginationComponent);
         component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
     afterEach(() => {
         fixture.destroy();
     });
 
-    it('should have an "empty" class if no items present', () => {
+    it('should have an "empty" class if no items present', async (done) => {
         fixture.detectChanges();
+        await fixture.whenStable();
+
         expect(fixture.nativeElement.classList.contains('adf-pagination__empty')).toBeTruthy();
+        done();
     });
 
     describe('Single page', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             component.pagination = new FakePaginationInput(1, 1, 10);
         });
 
@@ -238,21 +242,19 @@ describe('PaginationComponent', () => {
         it('has defaults', () => {
             component.ngOnInit();
 
-            const {
-                current, lastPage, isFirstPage, isLastPage,
-                next, previous, range, pages
-            } = component;
+            expect(component.lastPage).toBe(1, 'lastPage');
+            expect(component.previous).toBe(1, 'previous');
+            expect(component.current).toBe(1, 'current');
+            expect(component.next).toBe(1, 'next');
 
-            expect(lastPage).toBe(1, 'lastPage');
-            expect(previous).toBe(1, 'previous');
-            expect(current).toBe(1, 'current');
-            expect(next).toBe(1, 'next');
+            expect(component.isFirstPage).toBe(true, 'isFirstPage');
+            expect(component.isLastPage).toBe(true, 'isLastPage');
 
-            expect(isFirstPage).toBe(true, 'isFirstPage');
-            expect(isLastPage).toBe(true, 'isLastPage');
+            // tslint:disable-next-line: no-console
+            console.log(JSON.stringify(component.pagination));
 
-            expect(range).toEqual([ 0, 0 ], 'range');
-            expect(pages).toEqual([ 1 ], 'pages');
+            expect(component.range).toEqual([ 0, 0 ], 'range');
+            expect(component.pages).toEqual([ 1 ], 'pages');
         });
     });
 
