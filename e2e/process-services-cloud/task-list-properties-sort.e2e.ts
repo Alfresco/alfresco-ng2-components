@@ -21,8 +21,8 @@ import {
     LoginPage, ApiService,
     AppListCloudPage, LocalStorageUtil, IdentityService, GroupIdentityService
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
 import { TaskListCloudConfiguration } from './config/task-list-cloud.config';
 
 describe('Edit task filters and task list properties', () => {

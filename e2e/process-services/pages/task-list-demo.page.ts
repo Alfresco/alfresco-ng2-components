@@ -17,7 +17,7 @@
 
 import { BrowserActions, BrowserVisibility, DropdownPage, PaginationPage } from '@alfresco/adf-testing';
 import { by, element } from 'protractor';
-import { TasksListPage } from '../../process-services/tasks-list.page';
+import { TasksListPage } from './tasks-list.page';
 
 export class TaskListDemoPage {
 

@@ -16,9 +16,9 @@
  */
 
 import { ApiService, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { NotificationDemoPage } from '../pages/adf/demo-shell/notification.page';
+import { NotificationDemoPage } from '../core/pages/notification.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('Notifications Component', () => {
 

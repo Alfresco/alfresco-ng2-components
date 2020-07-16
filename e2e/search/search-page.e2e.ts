@@ -19,12 +19,12 @@ import { browser } from 'protractor';
 
 import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 
-import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
-import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { SearchResultsPage } from '../pages/adf/search-results.page';
+import { SearchDialogPage } from './pages/search-dialog.page';
+import { ContentServicesPage } from '../core/pages/content-services.page';
+import { SearchResultsPage } from './pages/search-results.page';
 import { FolderModel } from '../models/ACS/folder.model';
 import { FileModel } from '../models/ACS/file.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('Search component - Search Page', () => {
     const search = {

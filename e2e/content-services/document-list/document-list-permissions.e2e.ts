@@ -16,8 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { ApiService, BrowserActions, ErrorPage, LoginPage, StringUtil, UsersActions } from '@alfresco/adf-testing';
 
 describe('Document List Component', () => {

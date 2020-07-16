@@ -18,11 +18,11 @@
 import { ApiService, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AttachmentListPage } from '../pages/adf/process-services/attachment-list.page';
-import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { AttachmentListPage } from './pages/attachment-list.page';
+import { ChecklistDialog } from './pages/dialog/create-checklist-dialog.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
+import { TasksPage } from './pages/tasks.page';
 import * as fs from 'fs';
 import * as path from 'path';
 import { TaskRepresentation } from '@alfresco/js-api';

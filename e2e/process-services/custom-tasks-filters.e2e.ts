@@ -27,8 +27,8 @@ import {
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { AppsRuntimeActions } from '../actions/APS/apps-runtime.actions';
-import { TaskListDemoPage } from '../pages/adf/demo-shell/process-services/task-list-demo.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TaskListDemoPage } from './pages/task-list-demo.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { TaskRepresentation } from '@alfresco/js-api';
 import moment = require('moment');
 

@@ -1,4 +1,4 @@
-const {LocalStorageUtil, ACTIVITI_CLOUD_APPS, Logger} = require('../lib/dist/testing');
+const { LocalStorageUtil, Logger } = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
@@ -9,7 +9,7 @@ const smartRunner = require('protractor-smartrunner');
 const resolve = require('path').resolve;
 const fs = require('fs');
 
-const {uploadScreenshot, cleanReportFolder} = require('./protractor/save-remote');
+const {uploadScreenshot} = require('./protractor/save-remote');
 const argv = require('yargs').argv;
 
 const width = 1657, height = 1657;
@@ -17,7 +17,6 @@ const width = 1657, height = 1657;
 const ENV_FILE = process.env.ENV_FILE;
 const GROUP_SUFFIX = process.env.PREFIX || 'adf';
 
-RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
     require('dotenv').config({path: ENV_FILE});
 }
@@ -265,15 +264,10 @@ exports.config = {
 
     },
 
-
-    beforeLaunch: function () {
-        if (SAVE_SCREENSHOT) {
-            cleanReportFolder();
-        }
-    },
-
     afterLaunch: async function () {
         if (SAVE_SCREENSHOT) {
+            console.log(`Save screenshot failures enabled`);
+
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;
@@ -283,6 +277,8 @@ exports.config = {
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
+        }else{
+            console.log(`Save screenshot failures disabled`);
         }
 
         return retry.afterLaunch(MAX_RETRIES);

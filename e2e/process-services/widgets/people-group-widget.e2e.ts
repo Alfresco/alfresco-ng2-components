@@ -16,9 +16,9 @@
  */
 
 import { ApiService, ApplicationsUtil, LoginPage, UserModel, UsersActions, Widget } from '@alfresco/adf-testing';
-import { TasksPage } from '../../pages/adf/process-services/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import CONSTANTS = require('../../util/constants');
 
 describe('People and Group widget', () => {

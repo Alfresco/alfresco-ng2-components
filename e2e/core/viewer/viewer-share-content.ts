@@ -25,9 +25,9 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { ShareDialogPage } from '../../pages/adf/dialog/share-dialog.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { ShareDialogPage } from '../../core/pages/dialog/share-dialog.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import CONSTANTS = require('../../util/constants');

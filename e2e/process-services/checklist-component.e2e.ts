@@ -16,10 +16,10 @@
  */
 
 import { ApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { ProcessServicesPage } from '../pages/adf/process-services/process-services.page';
-import { ChecklistDialog } from '../pages/adf/process-services/dialog/create-checklist-dialog.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TasksPage } from './pages/tasks.page';
+import { ProcessServicesPage } from './pages/process-services.page';
+import { ChecklistDialog } from './pages/dialog/create-checklist-dialog.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import * as fs from 'fs';
 import * as path from 'path';

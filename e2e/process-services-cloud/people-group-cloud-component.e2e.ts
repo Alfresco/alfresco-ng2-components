@@ -25,8 +25,8 @@ import {
     RolesService
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { PeopleGroupCloudComponentPage } from '../pages/adf/demo-shell/process-services/people-group-cloud-component.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { PeopleGroupCloudComponentPage } from './pages/people-group-cloud-component.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('People Groups Cloud Component', () => {
 

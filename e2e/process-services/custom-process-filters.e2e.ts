@@ -18,10 +18,10 @@
 import { browser } from 'protractor';
 
 import { ApiService, LoginPage, UsersActions } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
-import { AppSettingsTogglesPage } from '../pages/adf/process-services/dialog/app-settings-toggles.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
+import { AppSettingsTogglesPage } from './pages/dialog/app-settings-toggles.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 
 describe('New Process Filters', () => {
 

@@ -23,7 +23,7 @@ import {
     ProcessUtil,
     UsersActions
 } from '@alfresco/adf-testing';
-import { ProcessListDemoPage } from '../pages/adf/demo-shell/process-services/process-list-demo.page';
+import { ProcessListDemoPage } from './pages/process-list-demo.page';
 import { browser } from 'protractor';
 
 describe('Process List Test', () => {

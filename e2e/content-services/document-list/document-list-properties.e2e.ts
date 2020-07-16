@@ -16,8 +16,8 @@
  */
 
 import { ApiService, DropActions, LoginPage, UploadActions, UsersActions } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 import { FileModel } from '../../models/ACS/file.model';
 

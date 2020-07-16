@@ -24,11 +24,11 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { SearchDialogPage } from '../../pages/adf/dialog/search-dialog.page';
-import { SearchResultsPage } from '../../pages/adf/search-results.page';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { SearchFiltersPage } from '../../pages/adf/search-filters.page';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchResultsPage } from '../pages/search-results.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { SearchFiltersPage } from '../pages/search-filters.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
 import { SearchConfiguration } from '../search.config';
 

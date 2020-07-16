@@ -25,7 +25,7 @@ import {
     Widget
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { TasksPage } from '../../pages/adf/process-services/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 
 const widgets = {

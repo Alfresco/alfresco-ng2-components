@@ -17,7 +17,7 @@
 
 import { BrowserActions } from '@alfresco/adf-testing';
 import { element, by } from 'protractor';
-import { TaskFiltersPage } from '../../process-services/task-filters.page';
+import { TaskFiltersPage } from './task-filters.page';
 
 export class TaskFiltersDemoPage {
 

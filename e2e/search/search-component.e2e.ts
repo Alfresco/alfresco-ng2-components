@@ -28,12 +28,12 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
-import { ContentServicesPage } from '../pages/adf/content-services.page';
-import { SearchResultsPage } from '../pages/adf/search-results.page';
+import { SearchDialogPage } from './pages/search-dialog.page';
+import { ContentServicesPage } from '../core/pages/content-services.page';
+import { SearchResultsPage } from './pages/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
 import { FolderModel } from '../models/ACS/folder.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { SearchConfiguration } from './search.config';
 
 describe('Search component - Search Bar', () => {

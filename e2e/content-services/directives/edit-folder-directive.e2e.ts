@@ -25,10 +25,10 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { FolderDialogPage } from '../../core/pages/dialog/folder-dialog.page';
 import { browser, protractor } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
 
 describe('Edit folder directive', () => {

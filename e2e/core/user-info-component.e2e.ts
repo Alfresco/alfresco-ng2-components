@@ -19,7 +19,7 @@ import { PeopleApi } from '@alfresco/js-api';
 import { ApiService, LocalStorageUtil, LoginPage, UserInfoPage, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FileModel } from '../models/ACS/file.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import * as path from 'path';
 import * as fs from 'fs';
 

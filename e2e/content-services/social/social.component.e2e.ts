@@ -25,8 +25,8 @@ import {
     UsersActions
 } from '@alfresco/adf-testing';
 import { FileModel } from '../../models/ACS/file.model';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { SocialPage } from '../../pages/adf/demo-shell/social.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { SocialPage } from '../../content-services/pages/social.page';
 import { browser } from 'protractor';
 
 describe('Social component', () => {

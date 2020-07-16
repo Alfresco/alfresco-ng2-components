@@ -16,11 +16,11 @@
  */
 
 import { ApiService, BrowserActions, LoginPage, StringUtil, UserModel, UsersActions } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { CreateLibraryDialogPage } from '../../pages/adf/dialog/create-library-dialog.page';
-import { CustomSourcesPage } from '../../pages/adf/demo-shell/custom-sources.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { CreateLibraryDialogPage } from '../../core/pages/dialog/create-library-dialog.page';
+import { CustomSourcesPage } from '../../core/pages/custom-sources.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Create library directive', () => {
 

@@ -25,7 +25,7 @@ export class ProcessDetailsPage {
     processEndDateField = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
     processCategoryField = element(by.css('[data-automation-id="card-textitem-value-category"]'));
     processBusinessKeyField = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
-    processCreatedByField = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
+    processCreatedByField = element(by.css('[data-automation-id="card-textitem-value-createdBy"]'));
     processCreatedField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
     processIdField = element(by.css('[data-automation-id="card-textitem-value-id"]'));
     processDescription = element(by.css('[data-automation-id="card-textitem-value-description"]'));

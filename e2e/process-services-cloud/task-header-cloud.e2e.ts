@@ -30,8 +30,8 @@ import {
     PeopleCloudComponentPage
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { TasksCloudDemoPage } from '../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import moment = require('moment');
 
 const isValueInvalid = (value: any): boolean => {

@@ -16,7 +16,7 @@
  */
 
 import { ApiService, FormPage, LoginPage, UsersActions, Widget } from '@alfresco/adf-testing';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
 
 describe('Form Component', () => {

@@ -18,7 +18,6 @@ branches:
   - /.*old-env.*/
   - /.*next-release.*/
   - /.*beta.*/
-  - /.*greenkeeper.*/
 
 stages:
   - name: Lint & Build Dist & Release

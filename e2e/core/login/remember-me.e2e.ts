@@ -16,7 +16,7 @@
  */
 
 import { SettingsPage } from '@alfresco/adf-testing';
-import { LoginShellPage } from '../../pages/adf/demo-shell/login-shell.page';
+import { LoginShellPage } from '../../core/pages/login-shell.page';
 
 describe('Login component - Remember Me', () => {
 

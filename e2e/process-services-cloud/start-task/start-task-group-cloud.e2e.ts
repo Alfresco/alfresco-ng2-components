@@ -16,8 +16,8 @@
  */
 
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { TasksCloudDemoPage } from '../../pages/adf/demo-shell/process-services/tasks-cloud-demo.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { TasksCloudDemoPage } from '.././pages/tasks-cloud-demo.page';
 import {
     LoginPage,
     AppListCloudPage,

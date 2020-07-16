@@ -23,11 +23,11 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
-import { FolderDialogPage } from '../../pages/adf/dialog/folder-dialog.page';
-import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
+import { FolderDialogPage } from '../../core/pages/dialog/folder-dialog.page';
+import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { browser, Key } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 
 describe('Create folder directive', () => {
 

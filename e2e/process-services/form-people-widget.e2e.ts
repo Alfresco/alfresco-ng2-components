@@ -23,12 +23,12 @@ import {
     UsersActions,
     Widget
 } from '@alfresco/adf-testing';
-import { ProcessFiltersPage } from '../pages/adf/process-services/process-filters.page';
-import { ProcessDetailsPage } from '../pages/adf/process-services/process-details.page';
-import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { ProcessFiltersPage } from './pages/process-filters.page';
+import { ProcessDetailsPage } from './pages/process-details.page';
+import { TaskDetailsPage } from './pages/task-details.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { browser } from 'protractor';
-import { ProcessServiceTabBarPage } from '../pages/adf/process-services/process-service-tab-bar.page';
+import { ProcessServiceTabBarPage } from './pages/process-service-tab-bar.page';
 
 describe('Form widgets - People ', () => {
 

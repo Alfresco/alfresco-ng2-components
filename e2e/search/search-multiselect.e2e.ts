@@ -17,11 +17,11 @@
 
 import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { SearchDialogPage } from '../pages/adf/dialog/search-dialog.page';
-import { SearchResultsPage } from '../pages/adf/search-results.page';
-import { SearchFiltersPage } from '../pages/adf/search-filters.page';
+import { SearchDialogPage } from './pages/search-dialog.page';
+import { SearchResultsPage } from './pages/search-results.page';
+import { SearchFiltersPage } from './pages/search-filters.page';
 import { FileModel } from '../models/ACS/file.model';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import CONSTANTS = require('../util/constants');
 
 describe('Search Component - Multi-Select Facet', () => {

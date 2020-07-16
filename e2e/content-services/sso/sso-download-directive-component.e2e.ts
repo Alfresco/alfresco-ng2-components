@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import {
     ApiService,
     FileBrowserUtil,

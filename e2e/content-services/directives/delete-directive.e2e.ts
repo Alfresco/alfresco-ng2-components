@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import {
     ApiService,

@@ -24,11 +24,11 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { MetadataViewPage } from '../../pages/adf/metadata-view.page';
+import { MetadataViewPage } from '../../core/pages/metadata-view.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
-import { NavigationBarPage } from '../../pages/adf/navigation-bar.page';
-import { ContentServicesPage } from '../../pages/adf/content-services.page';
+import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { ContentServicesPage } from '../../core/pages/content-services.page';
 
 describe('CardView Component - properties', () => {
 

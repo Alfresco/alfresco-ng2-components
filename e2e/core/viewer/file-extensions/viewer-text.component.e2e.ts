@@ -25,7 +25,7 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { ContentServicesPage } from '../../../pages/adf/content-services.page';
+import { ContentServicesPage } from '../../../core/pages/content-services.page';
 import { FolderModel } from '../../../models/ACS/folder.model';
 import CONSTANTS = require('../../../util/constants');
 

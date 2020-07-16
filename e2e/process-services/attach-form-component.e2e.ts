@@ -17,10 +17,10 @@
 
 import { ApiService, ApplicationsUtil, FormFields, LoginPage, UsersActions } from '@alfresco/adf-testing';
 import { browser, by } from 'protractor';
-import { NavigationBarPage } from '../pages/adf/navigation-bar.page';
-import { AttachFormPage } from '../pages/adf/process-services/attach-form.page';
-import { TasksPage } from '../pages/adf/process-services/tasks.page';
-import { TaskDetailsPage } from '../pages/adf/process-services/task-details.page';
+import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { AttachFormPage } from './pages/attach-form.page';
+import { TasksPage } from './pages/tasks.page';
+import { TaskDetailsPage } from './pages/task-details.page';
 import { TaskRepresentation } from '@alfresco/js-api';
 import CONSTANTS = require('../util/constants');
 

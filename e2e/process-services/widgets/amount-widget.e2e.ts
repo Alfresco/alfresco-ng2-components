@@ -16,7 +16,7 @@
  */
 
 import { LoginPage, BrowserActions, Widget, ApplicationsUtil, ProcessUtil, ApiService, UsersActions } from '@alfresco/adf-testing';
-import { TasksPage } from '../../pages/adf/process-services/tasks.page';
+import { TasksPage } from '../pages/tasks.page';
 import CONSTANTS = require('../../util/constants');
 import { browser } from 'protractor';
 

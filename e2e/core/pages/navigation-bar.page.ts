@@ -17,8 +17,7 @@
 
 import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
-import { PeopleGroupCloudComponentPage } from './demo-shell/process-services/people-group-cloud-component.page';
-import { ProcessServicesPage } from './process-services/process-services.page';
+import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
 export class NavigationBarPage {
 
@@ -81,11 +80,10 @@ export class NavigationBarPage {
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
     }
 
-    async navigateToPeopleGroupCloudPage(): Promise<PeopleGroupCloudComponentPage> {
+    async navigateToPeopleGroupCloudPage(): Promise<void> {
         await this.clickProcessCloudButton();
         await BrowserActions.click(this.peopleGroupCloudButton);
         await BrowserVisibility.waitUntilElementIsNotPresent(this.linkMenuChildrenContainer);
-        return new PeopleGroupCloudComponentPage();
     }
 
     async clickProcessServicesButton() {
