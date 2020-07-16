@@ -62,7 +62,8 @@ describe('Task form cloud component', () => {
         tabFieldField: 'tabBasicFieldField',
         tabVarVar: 'tabBasicVarVar',
         tabFieldVar: 'tabBasicFieldVar',
-        tabNextOperators: 'tabNextOperators'
+        tabNextOperators: 'tabNextOperators',
+        tabMultipleConditions: 'tabMultipleConditions'
     };
 
     const widgets = {
@@ -101,13 +102,13 @@ describe('Task form cloud component', () => {
 
         const tabVisibilityVarsId = await formCloudService.getIdByFormName(simpleApp, browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.tabVisibilityVars.name);
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
                 simpleApp, tabVisibilityFieldsId);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
         }
 
-        for (let i = 3; i < 7; i++) {
+        for (let i = 4; i < 7; i++) {
             visibilityConditionTasks[i] = await tasksService.createStandaloneTaskWithForm(StringUtil.generateRandomString(),
                 simpleApp, tabVisibilityVarsId);
             await tasksService.claimTask(visibilityConditionTasks[i].entry.id, simpleApp);
@@ -262,8 +263,8 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[3].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[3].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[4].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[4].entry.name);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -274,11 +275,11 @@ describe('Task form cloud component', () => {
             await taskFormCloudComponent.clickCompleteButton();
 
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[4].entry.name);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[3].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[3].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[4].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[4].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabVarValue);
         });
@@ -287,8 +288,8 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[4].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[4].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
@@ -306,33 +307,6 @@ describe('Task form cloud component', () => {
         });
 
         it('[C315179] Should be able to complete a standalone task with visible tab with valid value for field', async () => {
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
-            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
-
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
-            await widget.textWidget().isWidgetVisible(widgets.textOneId);
-
-            await widget.tab().clickTabByLabel(tab.tabVarVar);
-            await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
-
-            await taskFormCloudComponent.clickCompleteButton();
-
-            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[5].entry.name);
-
-            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
-            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[5].entry.name);
-            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[5].entry.name);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
-            await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
-        });
-
-        it('[C315180] Should be able to complete a standalone task with tab when has multiple visibility conditions and next condition operators', async () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
@@ -357,6 +331,40 @@ describe('Task form cloud component', () => {
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[6].entry.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabVarVar);
+        });
+
+        it('[C315180] Should be able to complete a standalone task with tab when has multiple visibility conditions and next condition operators', async () => {
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[3].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[3].entry.name);
+            await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
+
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabMultipleConditions);
+
+            await widget.textWidget().isWidgetVisible(widgets.textOneId);
+            await widget.textWidget().setValue(widgets.textOneId, value.displayTab);
+            await widget.textWidget().isWidgetVisible(widgets.textThreeId);
+            await widget.textWidget().setValue(widgets.textThreeId, value.displayTab);
+            await widget.tab().checkTabIsNotDisplayedByLabel(tab.tabMultipleConditions);
+
+            await widget.textWidget().setValue(widgets.textThreeId, value.notDisplayTab);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabMultipleConditions);
+
+            await taskFormCloudComponent.clickCompleteButton();
+
+            await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(visibilityConditionTasks[3].entry.name);
+
+            await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(visibilityConditionTasks[3].entry.name);
+            await tasksCloudDemoPage.taskListCloudComponent().selectRow(visibilityConditionTasks[3].entry.name);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
+            await widget.tab().checkTabIsDisplayedByLabel(tab.tabMultipleConditions);
+
         });
    });
 });
