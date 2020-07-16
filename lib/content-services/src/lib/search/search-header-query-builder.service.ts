@@ -64,8 +64,7 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     removeActiveFilter(columnRemoved: string) {
-        const removeIndex = this.activeFilters.findIndex((column) => column === columnRemoved);
-        this.activeFilters.splice(removeIndex, 1);
+        this.activeFilters = this.activeFilters.filter((column) => column !== columnRemoved);
     }
 
     getCategoryForColumn(columnKey: string): SearchCategory {

@@ -116,7 +116,7 @@ describe('SearchHeaderComponent', () => {
         await fixture.whenStable();
         component.widgetContainer.componentRef.instance.value = 'searchText';
         const widgetContainer = fixture.debugElement.query(By.css('adf-search-widget-container'));
-        widgetContainer.triggerEventHandler('keydown.enter', {});
+        widgetContainer.triggerEventHandler('keypress', {key: 'Enter'});
         fixture.detectChanges();
         await fixture.whenStable();
     });

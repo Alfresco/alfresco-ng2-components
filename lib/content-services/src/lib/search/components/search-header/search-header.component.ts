@@ -38,6 +38,7 @@ import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
     selector: 'adf-search-header',
@@ -127,9 +128,10 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         this.onDestroy$.complete();
     }
 
-    onEnterPressed() {
-        if (this.widgetContainer.selector !== 'check-list') {
+    onKeyPressed(event: KeyboardEvent, menuTrigger: MatMenuTrigger) {
+        if (event.key === 'Enter' && this.widgetContainer.selector !== 'check-list') {
             this.onApply();
+            menuTrigger.closeMenu();
         }
     }
 

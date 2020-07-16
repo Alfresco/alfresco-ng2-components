@@ -19,3 +19,4 @@ export * from './applications.util';
 export * from './integration.service';
 export * from './models.service';
 export * from './process.util';
+export * from './task.util';

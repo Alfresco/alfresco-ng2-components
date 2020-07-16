@@ -347,9 +347,13 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     formatSorting(sorting: TaskListCloudSortingModel[]) {
-        this.formattedSorting = sorting.length ? [
+        this.formattedSorting = this.isValidSorting(sorting) ? [
             TaskListCloudComponent.ENTRY_PREFIX + sorting[0].orderBy,
             sorting[0].direction.toLocaleLowerCase()
         ] : null;
+    }
+
+    isValidSorting(sorting: TaskListCloudSortingModel[]) {
+        return sorting.length && sorting[0].orderBy && sorting[0].direction;
     }
 }
