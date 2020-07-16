@@ -60,11 +60,14 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
                 this.options = new SearchFilterList(this.settings.options, this.pageSize);
             }
 
-            this.enableChangeUpdate = this.settings.allowUpdateOnChange;
-
-            if (this.startValue) {
-                this.setValue(this.startValue);
+            if (this.settings.allowUpdateOnChange !== undefined &&
+                this.settings.allowUpdateOnChange !== null) {
+                this.enableChangeUpdate = this.settings.allowUpdateOnChange;
             }
+        }
+
+        if (this.startValue) {
+            this.setValue(this.startValue);
         }
     }
 

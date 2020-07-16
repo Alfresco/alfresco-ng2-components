@@ -57,7 +57,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
     maxDate: any;
     isActive = false;
-    startValue: any = null;
+    startValue: any;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -104,8 +104,16 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             }
         }
 
-        this.from = new FormControl('', validators);
-        this.to = new FormControl('', validators);
+        if (this.startValue) {
+            const splittedValue = this.startValue.split('||');
+            const fromValue = this.dateAdapter.parse(splittedValue[0], this.datePickerDateFormat);
+            const toValue = this.dateAdapter.parse(splittedValue[1], this.datePickerDateFormat);
+            this.from = new FormControl(fromValue, validators);
+            this.to = new FormControl(toValue, validators);
+        } else {
+            this.from = new FormControl('', validators);
+            this.to = new FormControl('', validators);
+        }
 
         this.form = new FormGroup({
             from: this.from,

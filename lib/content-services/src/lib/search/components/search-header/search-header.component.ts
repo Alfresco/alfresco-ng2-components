@@ -191,7 +191,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
         this.searchHeaderQueryBuilder.setCurrentRootFolderId(currentFolderId);
         if (this.value) {
             this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.initialValue);
-            this.widgetContainer.setValue(this.value);
+            this.initialValue = this.value;
         }
     }
 

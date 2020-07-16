@@ -36,7 +36,8 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
 
-        this.updated.pipe(filter((query: QueryBody) => !!query)).subscribe(() => {
+        this.updated.pipe(
+            filter((query: QueryBody) => !!query)).subscribe(() => {
             this.execute();
         });
     }

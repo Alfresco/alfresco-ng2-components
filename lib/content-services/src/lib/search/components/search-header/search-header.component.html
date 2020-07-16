@@ -8,7 +8,7 @@
             (keyup.enter)="$event.stopPropagation()"
             class="adf-filter-button"
             [matTooltip]="getTooltipTranslation(col?.title)">
-            <adf-icon value="adf:filter"
+            <adf-icon value="adf:filter" 
                 [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
                 matBadge="filter"
                 matBadgeColor="warn"
