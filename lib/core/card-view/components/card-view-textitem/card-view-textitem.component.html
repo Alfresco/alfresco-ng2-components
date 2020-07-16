@@ -14,8 +14,7 @@
                    class="adf-property-value"
                    [placeholder]="property.default"
                    [(ngModel)]="editedValue"
-                   (blur)="update()"
-                   (keydown.enter)="update()"
+                   (ngModelChange)="update()"
                    [disabled]="!isEditable"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
@@ -30,8 +29,7 @@
                       class="adf-property-value"
                       [placeholder]="property.default"
                       [(ngModel)]="editedValue"
-                      (blur)="update()"
-                      (keydown.enter)="update()"
+                      (ngModelChange)="update()"
                       [disabled]="!isEditable"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
             <button mat-button
@@ -104,8 +102,7 @@
                    [ngClass]="{ 'adf-textitem-clickable-value': !isEditable }"
                    [placeholder]="property.default"
                    [(ngModel)]="editedValue"
-                   (blur)="update()"
-                   (keydown.enter)="update()"
+                   (ngModelChange)="update()"
                    [disabled]="!isEditable"
                    [attr.data-automation-id]="'card-textitem-value-' + property.key">
             <button mat-icon-button
