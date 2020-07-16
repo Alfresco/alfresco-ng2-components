@@ -131,6 +131,16 @@ describe('TaskHeaderCloudComponent', () => {
             });
         }));
 
+        it('should hide the title if showTitle is false', () => {
+            component.showTitle = false;
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                const valueEl = fixture.debugElement.query(By.css('.adf-task-title'));
+                expect(valueEl).toBeNull();
+            });
+        });
+
         it('should display placeholder if no due date', async(() => {
             component.taskDetails.dueDate = null;
             component.refreshData();
