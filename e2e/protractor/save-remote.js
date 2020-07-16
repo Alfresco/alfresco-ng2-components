@@ -14,6 +14,8 @@ function buildNumber() {
 }
 
 async function uploadScreenshot(retryCount) {
+    console.log(`Start uploading failures screenshot ${i}`);
+
     let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
 
     if (files && files.length > 0) {
@@ -72,22 +74,6 @@ async function uploadScreenshot(retryCount) {
     }
 }
 
-async function cleanReportFolder() {
-    const reportsFolder = path.resolve(__dirname, '../e2e-output/junit-report/');
-
-    fs.exists(reportsFolder, function (exists, error) {
-        if (exists) {
-            rimraf(reportsFolder, function (err) {
-            });
-        }
-
-        if (error) {
-            console.error('[ERROR] fs', error);
-        }
-    });
-}
-
 module.exports = {
-    uploadScreenshot: uploadScreenshot,
-    cleanReportFolder: cleanReportFolder
+    uploadScreenshot: uploadScreenshot
 };
