@@ -1,4 +1,4 @@
-const {LocalStorageUtil, ACTIVITI_CLOUD_APPS, Logger} = require('../lib/dist/testing');
+const { LocalStorageUtil, Logger } = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
@@ -17,7 +17,6 @@ const width = 1657, height = 1657;
 const ENV_FILE = process.env.ENV_FILE;
 const GROUP_SUFFIX = process.env.PREFIX || 'adf';
 
-RESOURCES.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 if (ENV_FILE) {
     require('dotenv').config({path: ENV_FILE});
 }

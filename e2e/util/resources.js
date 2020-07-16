@@ -23,8 +23,11 @@
  */
 var exports = module.exports = {};
 var path = require('path');
+const { ACTIVITI_CLOUD_APPS } = require('@alfresco/adf-testing');
 
 exports.Files = {
+
+    ACTIVITI_CLOUD_APPS : ACTIVITI_CLOUD_APPS,
 
     APP_WITH_DATE_FIELD_FORM: {
         file_location: "/resources/apps/TestDate.zip",
