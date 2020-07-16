@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { setupTestBed } from 'core';
 import { CoreTestingModule } from 'core/testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,7 +35,7 @@ describe('ProcessNameCloudPipe', () => {
     const nameWithProcessDefinitionIdentifier = `${defaultName} - ${processDefinitionIdentifier}`;
     const nameWithDatetimeIdentifier = `${defaultName} - ${datetimeIdentifier}`;
     const nameWithAllIdentifiers = `${defaultName} ${processDefinitionIdentifier} - ${datetimeIdentifier}`;
-    const fakeProcessInstanceDetails = new ProcessInstanceCloud({ processDefinitionName: 'my-process-definition' });
+    const fakeProcessInstanceDetails: ProcessInstanceCloud = { processDefinitionName: 'my-process-definition' };
 
     setupTestBed({
         imports: [
@@ -44,10 +44,10 @@ describe('ProcessNameCloudPipe', () => {
         ]
     });
 
-    beforeEach(async(() => {
+    beforeEach(() => {
         const localizedDatePipe = TestBed.inject(LocalizedDatePipe);
         processNamePipe = new ProcessNameCloudPipe(localizedDatePipe);
-    }));
+    });
 
     it('should not modify the name when there is no identifier', () => {
         const transformResult = processNamePipe.transform(defaultName);

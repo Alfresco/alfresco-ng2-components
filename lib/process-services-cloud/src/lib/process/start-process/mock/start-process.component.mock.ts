@@ -19,21 +19,19 @@ import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 
-export let fakeProcessInstance = new ProcessInstanceCloud({
+export const fakeProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
-    appVersion: '',
     id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',
     name: 'My Process Name',
-    startDate: '2018-10-30T15:45:24.136+0000',
+    startDate: new Date('2018-10-30T15:45:24.136+0000'),
     initiator: 'usermock',
     status: 'RUNNING',
     processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
     processDefinitionKey: 'BasicProcess'
-});
+};
 
-export let fakeCreatedProcessInstance = new ProcessInstanceCloud({
+export const fakeCreatedProcessInstance: ProcessInstanceCloud = {
     appName: 'simple-app',
-    appVersion: '',
     id: 'd0b30377-dc5a-11e8-ae24-0a58646001fa',
     name: 'My Process Name',
     startDate: null,
@@ -41,9 +39,9 @@ export let fakeCreatedProcessInstance = new ProcessInstanceCloud({
     status: 'CREATED',
     processDefinitionId: 'BasicProcess:1:d05062f1-c6fb-11e8-ae24-0a58646001fa',
     processDefinitionKey: 'BasicProcess'
-});
+};
 
-export let fakeProcessDefinitions: ProcessDefinitionCloud[] = [
+export const fakeProcessDefinitions: ProcessDefinitionCloud[] = [
     new ProcessDefinitionCloud({
         appName: 'myApp',
         appVersion: 0,
@@ -100,7 +98,7 @@ export function fakeSingleProcessDefinitionWithoutForm(name: string): ProcessDef
     ];
 }
 
-export let fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
+export const fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
     new ProcessDefinitionCloud({
         appName: 'myApp',
         appVersion: 0,
@@ -117,13 +115,13 @@ export let fakeNoNameProcessDefinitions: ProcessDefinitionCloud[] = [
     })
 ];
 
-export let fakeProcessPayload = new ProcessPayloadCloud({
+export const fakeProcessPayload = new ProcessPayloadCloud({
     processDefinitionKey: 'NewProcess:1',
     name: 'NewProcess 1',
     payloadType: 'string'
 });
 
-export let fakeStartForm = {
+export const fakeStartForm = {
     'formRepresentation': {
         'id': 'form-de8895be-d0d7-4434-beef-559b15305d72',
         'name': 'StartEventForm',
@@ -187,7 +185,7 @@ export let fakeStartForm = {
     }
 };
 
-export let fakeStartFormNotValid = {
+export const fakeStartFormNotValid = {
     'formRepresentation': {
         'id': 'form-a5d50817-5183-4850-802d-17af54b2632f',
         'name': 'simpleform',
