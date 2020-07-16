@@ -69,7 +69,7 @@ export class ProcessCloudService extends BaseCloudService {
             return this.delete(queryUrl).pipe(
                 map((res: any) => {
                    this.dataChangesDetected.next(res.entry);
-                   return new ProcessInstanceCloud(res.entry);
+                   return res.entry;
                 })
             );
         } else {
