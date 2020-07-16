@@ -25,12 +25,14 @@ import { of } from 'rxjs';
 import { Node, VersionPaging, VersionEntry } from '@alfresco/js-api';
 import { ContentTestingModule } from '../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PreviewService } from '../../../../../demo-shell/src/app/services/preview.service';
 
 describe('VersionListComponent', () => {
     let component: VersionListComponent;
     let fixture: ComponentFixture<VersionListComponent>;
     let alfrescoApiService: AlfrescoApiService;
     let dialog: MatDialog;
+    let previewService: PreviewService;
 
     const nodeId = 'test-id';
     const versionId = '1.0';
@@ -61,6 +63,7 @@ describe('VersionListComponent', () => {
         fixture = TestBed.createComponent(VersionListComponent);
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         dialog = TestBed.inject(MatDialog);
+        previewService = TestBed.inject(PreviewService);
 
         component = fixture.componentInstance;
         component.node = <Node> { id: nodeId, allowableOperations: ['update'] };
@@ -226,6 +229,13 @@ describe('VersionListComponent', () => {
 
             component.downloadVersion('1.0');
             expect(alfrescoApiService.contentApi.getContentUrl).toHaveBeenCalledWith(nodeId, true);
+        });
+
+        it('should be able to view a version', () => {
+            spyOn(component.viewVersion, 'emit');
+            component.onViewVersion('1.0');
+            fixture.detectChanges();
+            expect(component.viewVersion.emit).toHaveBeenCalledWith('1.0');
         });
 
         it('should NOT be able to download a version if configured so', () => {

@@ -4,6 +4,7 @@
       "RESTORE": "Restore",
       "DELETE": "Delete",
       "DOWNLOAD": "Download",
+      "VIEW": "View",
       "UPLOAD": {
         "TITLE": "Upload new version",
         "TOOLTIP": "Restriction: you must upload a file with the same name to create a new version of it",

@@ -637,4 +637,8 @@ export class ViewerPage {
         const unknownFormatLabel = this.unknownFormat.element(by.css(`.adf-viewer__unknown-label`));
         return BrowserActions.getText(unknownFormatLabel);
     }
+
+    async expectUrlToContain(text: string): Promise<void> {
+        await expect(browser.getCurrentUrl()).toContain(text);
+    }
 }

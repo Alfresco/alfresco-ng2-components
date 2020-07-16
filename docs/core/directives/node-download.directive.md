@@ -14,7 +14,8 @@ Allows folders and/or files to be downloaded, with multiple nodes packed as a '.
 ```html
 <adf-toolbar>
     <button mat-icon-button
-            [adfNodeDownload]="documentList.selection">
+            [adfNodeDownload]="documentList.selection"
+            [version]="version">
             <mat-icon>get_app</mat-icon>
     </button>
 </adf-toolbar>
@@ -31,3 +32,4 @@ Allows folders and/or files to be downloaded, with multiple nodes packed as a '.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)` \| `[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` |  | Nodes to download. |
+| version | [`VersionEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/VersionEntry.md) |  | [Node's](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) version to download. |
