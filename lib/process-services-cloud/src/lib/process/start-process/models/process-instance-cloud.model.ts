@@ -15,32 +15,17 @@
  * limitations under the License.
  */
 
-export class ProcessInstanceCloud {
-    appName: string;
-    id: string;
-    name: string;
-    startDate: Date;
-    initiator: string;
-    status: string;
-    businessKey: string;
-    lastModified: Date;
-    parentId: string;
-    processDefinitionId: string;
-    processDefinitionKey: string;
-    processDefinitionName: string;
-
-    constructor(obj?: any) {
-        this.appName = obj && obj.appName || null;
-        this.id = obj && obj.id || null;
-        this.name = obj && obj.name || null;
-        this.startDate = obj && obj.startDate || null;
-        this.initiator = obj && obj.initiator || null;
-        this.status = obj && obj.status || null;
-        this.businessKey = obj && obj.businessKey || null;
-        this.lastModified = obj && obj.lastModified || null;
-        this.parentId = obj && obj.parentId || null;
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
-        this.processDefinitionName = obj && obj.processDefinitionName || null;
-    }
+export interface ProcessInstanceCloud {
+    appName?: string;
+    id?: string;
+    name?: string;
+    startDate?: Date;
+    initiator?: string;
+    status?: string;
+    businessKey?: string;
+    lastModified?: Date;
+    parentId?: string;
+    processDefinitionId?: string;
+    processDefinitionKey?: string;
+    processDefinitionName?: string;
 }

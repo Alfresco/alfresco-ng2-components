@@ -19,9 +19,12 @@ import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IdentityUserService, setupTestBed } from '@alfresco/adf-core';
 import { CancelProcessDirective } from './cancel-process.directive';
-import { processDetailsMockRunning, processDetailsMockCompleted } from '../mock/process-details.mock';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessInstanceCloud } from '../start-process/models/process-instance-cloud.model';
+
+const processDetailsMockRunning: ProcessInstanceCloud = { initiator: 'usermock', status: 'RUNNING' };
+const processDetailsMockCompleted: ProcessInstanceCloud = { initiator: 'usermock', status: 'COMPLETED' };
 
 describe('CancelProcessDirective', () => {
 

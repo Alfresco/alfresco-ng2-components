@@ -29,11 +29,11 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     /** Emitted when the process is cancelled. */
     @Output()
-    success: EventEmitter<any> = new EventEmitter<any>();
+    success = new EventEmitter<any>();
 
     /** Emitted when the process cannot be cancelled. */
     @Output()
-    error: EventEmitter<any> = new EventEmitter<any>();
+    error = new EventEmitter<any>();
 
     processInstanceDetails: ProcessInstanceCloud;
 
@@ -49,7 +49,7 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     ngOnInit() {
         this.processCloudService.dataChangesDetected
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((processDetails: ProcessInstanceCloud) => {
+            .subscribe((processDetails) => {
                 this.processInstanceDetails = processDetails;
                 this.canCancelProcess = this.checkCanCancelProcess();
                 this.setElementVisibility();
@@ -57,12 +57,8 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
     }
 
     @HostListener('click')
-    async onClick() {
-        try {
-            await this.cancelProcess();
-        } catch (error) {
-            this.error.emit(error);
-        }
+    onClick() {
+        this.cancelProcess();
     }
 
     private setElementVisibility() {
@@ -71,18 +67,16 @@ export class CancelProcessDirective implements OnInit, OnDestroy {
 
     checkCanCancelProcess(): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return  this.processInstanceDetails.initiator === currentUser && this.processInstanceDetails.status === 'RUNNING';
+        return this.processInstanceDetails.initiator === currentUser && this.processInstanceDetails.status === 'RUNNING';
     }
 
-    async cancelProcess() {
+    cancelProcess() {
         if (this.canCancelProcess) {
-            await this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
-                .pipe(takeUntil(this.onDestroy$))
-                .subscribe((response) => {
-                    this.success.emit(response);
-                }, ((error) => {
-                    this.error.emit(error);
-                }));
+            this.processCloudService.cancelProcess(this.processInstanceDetails.appName, this.processInstanceDetails.id)
+                .subscribe(
+                    (response) => this.success.emit(response),
+                    (error) => this.error.emit(error)
+                );
         } else {
             this.error.emit('Permission denied, only process initiator can cancel the process');
         }

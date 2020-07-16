@@ -38,7 +38,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
     @Input()
     processInstanceId: string;
 
-    processInstanceDetails: ProcessInstanceCloud = new ProcessInstanceCloud();
+    processInstanceDetails: ProcessInstanceCloud;
     properties: CardViewItem[];
     dateFormat: string;
     dateLocale: string;
@@ -56,7 +56,7 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
     ngOnInit() {
         this.processCloudService.dataChangesDetected
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe((processDetails: ProcessInstanceCloud) => {
+            .subscribe((processDetails) => {
                 this.processInstanceDetails = processDetails;
                 this.refreshData();
             });
@@ -155,5 +155,4 @@ export class ProcessHeaderCloudComponent implements OnChanges, OnInit {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
-
 }

@@ -19,17 +19,11 @@ import { async, TestBed } from '@angular/core/testing';
 import { setupTestBed, IdentityUserService } from '@alfresco/adf-core';
 import { of } from 'rxjs';
 import { ProcessFilterCloudService } from './process-filter-cloud.service';
-import {
-    fakeProcessCloudFilterEntries,
-    fakeProcessCloudFilters,
-    fakeEmptyProcessCloudFilterEntries,
-    fakeProcessCloudFilterWithDifferentEntries,
-    fakeProcessFilter
-} from '../mock/process-filters.cloud.mock';
 import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -39,7 +33,185 @@ describe('ProcessFilterCloudService', () => {
     let createPreferenceSpy: jasmine.Spy;
     let getCurrentUserInfoSpy: jasmine.Spy;
 
-    const identityUserMock = { username: 'mock-username', firstName: 'fake-identity-first-name', lastName: 'fake-identity-last-name', email: 'fakeIdentity@email.com' };
+    const identityUserMock = {
+        username: 'mock-username',
+        firstName: 'fake-identity-first-name',
+        lastName: 'fake-identity-last-name',
+        email: 'fakeIdentity@email.com'
+    };
+
+    const fakeProcessFilter: ProcessFilterCloudModel = {
+        name: 'MOCK_PROCESS_NAME_1',
+        id: '1',
+        key: 'all-mock-process',
+        icon: 'adjust',
+        appName: 'mock-appName',
+        sort: 'startDate',
+        status: 'MOCK_ALL',
+        order: 'DESC',
+        index: 2,
+        processName: 'process-name',
+        processInstanceId: 'processinstanceid',
+        initiator: 'mockuser',
+        processDefinitionId: 'processDefid',
+        processDefinitionKey: 'processDefKey',
+        lastModified: null,
+        lastModifiedTo: null,
+        lastModifiedFrom: null
+    };
+
+    const fakeProcessCloudFilterEntries = {
+        list: {
+            entries: [
+                {
+                    entry: {
+                        key: 'process-filters-mock-appName-mock-username',
+                        value: JSON.stringify([
+                            {
+                                name: 'MOCK_PROCESS_NAME_1',
+                                id: '1',
+                                key: 'all-mock-process',
+                                icon: 'adjust',
+                                appName: 'mock-appName',
+                                sort: 'startDate',
+                                status: 'MOCK_ALL',
+                                order: 'DESC'
+                            },
+                            {
+                                name: 'MOCK_PROCESS_NAME_2',
+                                id: '2',
+                                key: 'run-mock-process',
+                                icon: 'adjust',
+                                appName: 'mock-appName',
+                                sort: 'startDate',
+                                status: 'MOCK-RUNNING',
+                                order: 'DESC'
+                            },
+                            {
+                                name: 'MOCK_PROCESS_NAME_3',
+                                id: '3',
+                                key: 'complete-mock-process',
+                                icon: 'adjust',
+                                appName: 'mock-appName',
+                                sort: 'startDate',
+                                status: 'MOCK-COMPLETED',
+                                order: 'DESC'
+                            }
+                        ])
+                    }
+                },
+                {
+                    entry: {
+                        key: 'mock-key-2',
+                        value: {
+                            name: 'MOCK_PROCESS_NAME_2',
+                            id: '2',
+                            key: 'run-mock-process',
+                            icon: 'adjust',
+                            appName: 'mock-appName',
+                            sort: 'startDate',
+                            status: 'MOCK-RUNNING',
+                            order: 'DESC'
+                        }
+                    }
+                },
+                {
+                    entry: {
+                        key: 'mock-key-3',
+                        value: {
+                            name: 'MOCK_PROCESS_NAME_3',
+                            id: '3',
+                            key: 'complete-mock-process',
+                            icon: 'adjust',
+                            appName: 'mock-appName',
+                            sort: 'startDate',
+                            status: 'MOCK-COMPLETED',
+                            order: 'DESC'
+                        }
+                    }
+                }
+            ],
+            pagination: {
+                skipCount: 0,
+                maxItems: 100,
+                count: 3,
+                hasMoreItems: false,
+                totalItems: 3
+            }
+        }
+    };
+
+    const fakeEmptyProcessCloudFilterEntries = {
+        list: {
+            entries: [],
+            pagination: {
+                skipCount: 0,
+                maxItems: 100,
+                count: 0,
+                hasMoreItems: false,
+                totalItems: 0
+            }
+        }
+    };
+
+    const fakeProcessCloudFilterWithDifferentEntries = {
+        list: {
+            entries: [
+                {
+                    entry: {
+                        key: 'my-mock-key-1',
+                        value: 'my-mock-value-2'
+                    }
+                },
+                {
+                    entry: {
+                        key: 'my-mock-key-2',
+                        value: 'my-mock-key-2'
+                    }
+                }
+            ],
+            pagination: {
+                skipCount: 0,
+                maxItems: 100,
+                count: 4,
+                hasMoreItems: false,
+                totalItems: 2
+            }
+        }
+    };
+
+    const fakeProcessCloudFilters = [
+        {
+            name: 'MOCK_PROCESS_NAME_1',
+            id: '1',
+            key: 'all-mock-process',
+            icon: 'adjust',
+            appName: 'mock-appName',
+            sort: 'startDate',
+            status: 'MOCK_ALL',
+            order: 'DESC'
+        },
+        {
+            name: 'MOCK_PROCESS_NAME_2',
+            id: '2',
+            key: 'run-mock-process',
+            icon: 'adjust',
+            appName: 'mock-appName',
+            sort: 'startDate',
+            status: 'MOCK-RUNNING',
+            order: 'DESC'
+        },
+        {
+            name: 'MOCK_PROCESS_NAME_3',
+            id: '3',
+            key: 'complete-mock-process',
+            icon: 'adjust',
+            appName: 'mock-appName',
+            sort: 'startDate',
+            status: 'MOCK-COMPLETED',
+            order: 'DESC'
+        }
+    ];
 
     setupTestBed({
         imports: [

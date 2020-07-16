@@ -45,10 +45,10 @@ export class ProcessCloudService extends BaseCloudService {
         if (appName && processInstanceId) {
             const url = `${this.getBasePath(appName)}/query/v1/process-instances/${processInstanceId}`;
 
-            return this.get(url).pipe(
-                map((res: any) => {
+            return this.get<{ entry: ProcessInstanceCloud }>(url).pipe(
+                map((res) => {
                     this.dataChangesDetected.next(res.entry);
-                    return new ProcessInstanceCloud(res.entry);
+                    return res.entry;
                 })
             );
         } else {
@@ -69,7 +69,7 @@ export class ProcessCloudService extends BaseCloudService {
             return this.delete(queryUrl).pipe(
                 map((res: any) => {
                    this.dataChangesDetected.next(res.entry);
-                   return new ProcessInstanceCloud(res.entry);
+                   return res.entry;
                 })
             );
         } else {

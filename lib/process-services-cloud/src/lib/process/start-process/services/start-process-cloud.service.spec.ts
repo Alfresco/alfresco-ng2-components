@@ -20,7 +20,6 @@ import { of, throwError } from 'rxjs';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { StartProcessCloudService } from './start-process-cloud.service';
 import { fakeProcessPayload } from '../mock/start-process.component.mock';
-import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
 import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 
@@ -39,7 +38,7 @@ describe('StartProcessCloudService', () => {
                 }
             })
         }
-};
+    };
 
     setupTestBed({
         imports: [HttpClientModule]
@@ -54,7 +53,7 @@ describe('StartProcessCloudService', () => {
         spyOn(service, 'startProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name' }));
         service.startProcess('appName1', fakeProcessPayload)
             .subscribe(
-                (res: ProcessInstanceCloud) => {
+                (res) => {
                     expect(res).toBeDefined();
                     expect(res.id).toEqual('fake-id');
                     expect(res.name).toEqual('fake-name');
@@ -119,7 +118,7 @@ describe('StartProcessCloudService', () => {
         spyOn(service, 'createProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'CREATED' }));
         service.createProcess('appName1', fakeProcessPayload)
             .subscribe(
-                (res: ProcessInstanceCloud) => {
+                (res) => {
                     expect(res).toBeDefined();
                     expect(res.id).toEqual('fake-id');
                     expect(res.name).toEqual('fake-name');
@@ -133,7 +132,7 @@ describe('StartProcessCloudService', () => {
         spyOn(service, 'startCreatedProcess').and.returnValue(of({ id: 'fake-id', name: 'fake-name', status: 'RUNNING' }));
         service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
             .subscribe(
-                (res: ProcessInstanceCloud) => {
+                (res) => {
                     expect(res).toBeDefined();
                     expect(res.id).toEqual('fake-id');
                     expect(res.name).toEqual('fake-name');
@@ -147,7 +146,7 @@ describe('StartProcessCloudService', () => {
         spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         service.startCreatedProcess('appName1', 'fake-id', fakeProcessPayload)
             .subscribe(
-                (res: ProcessInstanceCloud) => {
+                (res) => {
                     expect(res).toBeDefined();
                     expect(res.id).toEqual('fake-id');
                     expect(res.name).toEqual('fake-name');
