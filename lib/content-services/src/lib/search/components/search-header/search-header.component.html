@@ -20,7 +20,7 @@
                 <div (click)="$event.stopPropagation()" class="adf-filter-container">
                     <div class="adf-filter-title">{{ category?.name | translate }}</div>
                     <adf-search-widget-container
-                        (keydown.enter)="onEnterPressed()"
+                        (keypress)="onKeyPressed($event, menuTrigger)"
                         [id]="category?.id"
                         [selector]="category?.component?.selector"
                         [settings]="category?.component?.settings">
