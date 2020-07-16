@@ -24,9 +24,9 @@
 var path = require('path');
 const ACTIVITI_CLOUD_APPS = require('../../lib/testing/src/lib/process-services-cloud/resources/resources.json');
 
-exports.Files = {
+exports.ACTIVITI_CLOUD_APPS = ACTIVITI_CLOUD_APPS;
 
-    ACTIVITI_CLOUD_APPS : ACTIVITI_CLOUD_APPS,
+exports.Files = {
 
     APP_WITH_DATE_FIELD_FORM: {
         file_location: "/resources/apps/TestDate.zip",
@@ -72,13 +72,13 @@ exports.Files = {
         description: "Description for app",
         processNames: ["simple", "candidate-task"],
         userTasks: {
-            "simple": { one: 'Candidate Task', two: 'User Task' },
-            "candidateTask":  "Human step"
+            "simple": {one: 'Candidate Task', two: 'User Task'},
+            "candidateTask": "Human step"
         },
         candidateGroup: "candidates",
         adminGroup: "admin",
         adminCapabilities: ['tenant-admin'],
-        candidate: { firstName: 'Candidate', lastName: 'User', email: 'candidateuser@actviti.com' }
+        candidate: {firstName: 'Candidate', lastName: 'User', email: 'candidateuser@actviti.com'}
     },
 
     APP_WITH_USER_WIDGET: {
@@ -391,7 +391,7 @@ exports.Files = {
             },
             case2: {
                 searchTerm: 'One',
-                result: [ '123456789 - Customer Number One' ]
+                result: ['123456789 - Customer Number One']
             }
         },
 
@@ -414,11 +414,11 @@ exports.Files = {
         file_location: "/resources/apps/More Widgets.zip",
         file_path: path.join(__dirname, '../resources/apps/More Widgets.zip'),
         title: "More Widgets",
-        group: { name:  "Users", subgroup: [  { name: "Heros" },  { name: "Villains" }] },
-        subGroupUser: { firstName: "Hero", lastName: "User" } ,
+        group: {name: "Users", subgroup: [{name: "Heros"}, {name: "Villains"}]},
+        subGroupUser: {firstName: "Hero", lastName: "User"},
         groupUser: [
-            { firstName: "Hero", lastName: "Audience" },
-            { firstName: "Villain", lastName: "Audience" },
+            {firstName: "Hero", lastName: "Audience"},
+            {firstName: "Villain", lastName: "Audience"},
         ],
 
         ADD_PEOPLE_AND_GROUP_RESTRICTION: {
