@@ -29,6 +29,12 @@ import { UserPreferencesService, UserPreferenceValues } from '../services/user-p
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
+export type PaginationAction =
+    | 'NEXT_PAGE'
+    | 'PREV_PAGE'
+    | 'CHANGE_PAGE_SIZE'
+    | 'CHANGE_PAGE_NUMBER';
+
 @Component({
     selector: 'adf-pagination',
     host: { 'class': 'adf-pagination' },
@@ -38,19 +44,15 @@ import { TranslateService } from '@ngx-translate/core';
     encapsulation: ViewEncapsulation.None
 })
 export class PaginationComponent implements OnInit, OnDestroy, PaginationComponentInterface {
-
-    static DEFAULT_PAGINATION: Pagination = new Pagination({
+    static DEFAULT_PAGINATION = new Pagination({
         skipCount: 0,
         maxItems: 25,
         totalItems: 0
     });
 
-    static ACTIONS = {
-        NEXT_PAGE: 'NEXT_PAGE',
-        PREV_PAGE: 'PREV_PAGE',
-        CHANGE_PAGE_SIZE: 'CHANGE_PAGE_SIZE',
-        CHANGE_PAGE_NUMBER: 'CHANGE_PAGE_NUMBER'
-    };
+    private _pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
+    private _isEmpty = true;
+    private _hasItems = false;
 
     /** Component that provides custom pagination support. */
     @Input()
@@ -60,33 +62,46 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     @Input()
     supportedPageSizes: number[];
 
+    get pagination(): PaginationModel {
+        return this._pagination;
+    }
+
     /** Pagination object. */
     @Input()
-    pagination: PaginationModel = PaginationComponent.DEFAULT_PAGINATION;
+    set pagination(value: PaginationModel) {
+        this._pagination = value;
+        this._hasItems = value && value.count > 0;
+        this._isEmpty = !this.hasItems;
+
+        this.cdr.detectChanges();
+    }
 
     /** Emitted when pagination changes in any way. */
     @Output()
-    change: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    change = new EventEmitter<PaginationModel>();
 
     /** Emitted when the page number changes. */
     @Output()
-    changePageNumber: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    changePageNumber = new EventEmitter<PaginationModel>();
 
     /** Emitted when the page size changes. */
     @Output()
-    changePageSize: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    changePageSize = new EventEmitter<PaginationModel>();
 
     /** Emitted when the next page is requested. */
     @Output()
-    nextPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    nextPage = new EventEmitter<PaginationModel>();
 
     /** Emitted when the previous page is requested. */
     @Output()
-    prevPage: EventEmitter<PaginationModel> = new EventEmitter<PaginationModel>();
+    prevPage = new EventEmitter<PaginationModel>();
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(private cdr: ChangeDetectorRef, private userPreferencesService: UserPreferencesService, private translate: TranslateService) {
+    constructor(
+        private cdr: ChangeDetectorRef,
+        private userPreferencesService: UserPreferencesService,
+        private translate: TranslateService) {
     }
 
     ngOnInit() {
@@ -108,7 +123,6 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
                     }
 
                     this.pagination = pagination;
-                    this.cdr.detectChanges();
                 });
         }
 
@@ -153,12 +167,12 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
     }
 
     get hasItems(): boolean {
-        return this.pagination && this.pagination.count > 0;
+        return this._hasItems;
     }
 
     @HostBinding('class.adf-pagination__empty')
     get isEmpty(): boolean {
-        return !this.hasItems;
+        return this._isEmpty;
     }
 
     get range(): number[] {
@@ -183,13 +197,16 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
 
     get itemRangeText(): string {
         const rangeString = this.range.join('-');
+
         let translation = this.translate.instant('CORE.PAGINATION.ITEMS_RANGE', {
             range: rangeString,
             total: this.pagination.totalItems
         });
+
         if (!this.pagination.totalItems) {
             translation = translation.substr(0, translation.indexOf(rangeString) + rangeString.length);
         }
+
         return translation;
     }
 
@@ -197,12 +214,13 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         if (this.hasItems) {
             const maxItems = this.pagination.maxItems;
             const skipCount = (this.next - 1) * maxItems;
-            this.pagination.skipCount = skipCount;
 
-            this.handlePaginationEvent(PaginationComponent.ACTIONS.NEXT_PAGE, {
-                skipCount,
-                maxItems
-            });
+            this.pagination = {
+                ...this.pagination,
+                skipCount
+            };
+
+            this.handlePaginationEvent('NEXT_PAGE');
         }
     }
 
@@ -210,12 +228,13 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         if (this.hasItems) {
             const maxItems = this.pagination.maxItems;
             const skipCount = (this.previous - 1) * maxItems;
-            this.pagination.skipCount = skipCount;
 
-            this.handlePaginationEvent(PaginationComponent.ACTIONS.PREV_PAGE, {
-                skipCount,
-                maxItems
-            });
+            this.pagination = {
+                ...this.pagination,
+                skipCount
+            };
+
+            this.handlePaginationEvent('PREV_PAGE');
         }
     }
 
@@ -223,22 +242,25 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         if (this.hasItems) {
             const maxItems = this.pagination.maxItems;
             const skipCount = (pageNumber - 1) * maxItems;
-            this.pagination.skipCount = skipCount;
 
-            this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_NUMBER, {
-                skipCount,
-                maxItems
-            });
+            this.pagination = {
+                ...this.pagination,
+                skipCount
+            };
+
+            this.handlePaginationEvent('CHANGE_PAGE_NUMBER');
         }
     }
 
     onChangePageSize(maxItems: number) {
-        this.pagination.skipCount = 0;
-        this.userPreferencesService.paginationSize = maxItems;
-        this.handlePaginationEvent(PaginationComponent.ACTIONS.CHANGE_PAGE_SIZE, {
+        this.pagination = {
+            ...this.pagination,
             skipCount: 0,
             maxItems
-        });
+        };
+
+        this.userPreferencesService.paginationSize = maxItems;
+        this.handlePaginationEvent('CHANGE_PAGE_SIZE');
     }
 
     ngOnDestroy() {
@@ -246,45 +268,29 @@ export class PaginationComponent implements OnInit, OnDestroy, PaginationCompone
         this.onDestroy$.complete();
     }
 
-    handlePaginationEvent(action: string, params: PaginationModel) {
-        const {
-            NEXT_PAGE,
-            PREV_PAGE,
-            CHANGE_PAGE_NUMBER,
-            CHANGE_PAGE_SIZE
-        } = PaginationComponent.ACTIONS;
+    handlePaginationEvent(action: PaginationAction) {
+        const paginationModel = { ...this.pagination };
 
-        const {
-            change,
-            changePageNumber,
-            changePageSize,
-            nextPage,
-            prevPage,
-            pagination
-        } = this;
-
-        const paginationModel: PaginationModel = Object.assign({}, pagination, params);
-
-        if (action === NEXT_PAGE) {
-            nextPage.emit(paginationModel);
+        if (action === 'NEXT_PAGE') {
+            this.nextPage.emit(paginationModel);
         }
 
-        if (action === PREV_PAGE) {
-            prevPage.emit(paginationModel);
+        if (action === 'PREV_PAGE') {
+            this.prevPage.emit(paginationModel);
         }
 
-        if (action === CHANGE_PAGE_NUMBER) {
-            changePageNumber.emit(paginationModel);
+        if (action === 'CHANGE_PAGE_NUMBER') {
+            this.changePageNumber.emit(paginationModel);
         }
 
-        if (action === CHANGE_PAGE_SIZE) {
-            changePageSize.emit(paginationModel);
+        if (action === 'CHANGE_PAGE_SIZE') {
+            this.changePageSize.emit(paginationModel);
         }
 
-        change.emit(params);
+        this.change.emit(paginationModel);
 
         if (this.target) {
-            this.target.updatePagination(params);
+            this.target.updatePagination(paginationModel);
         }
     }
 }
