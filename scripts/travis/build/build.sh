@@ -6,6 +6,8 @@ cd $DIR/../../../
 
 rm -rf tmp && mkdir tmp;
 
+echo "Update commit sha in package JSON"
+
 npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
 
 if [[ $TRAVIS_PULL_REQUEST == "false" ]];
@@ -21,6 +23,8 @@ then
     fi
 
     node ./scripts/pre-publish.js
+
+    echo "Install dependencies"
 
     npm install
 

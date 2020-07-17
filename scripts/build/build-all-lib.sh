@@ -5,30 +5,30 @@ cd $DIR
 
 rm -rf lib/dist
 
-echo "====== Run lib ====="
+echo "====== Build lib ====="
 
-echo "====== Run extensions ====="
+echo "====== Build extensions ====="
 ./build-extensions.sh || exit 1
 
-echo "====== run core ====="
+echo "====== Build core ====="
 ./build-core.sh || exit 1
 
-echo "====== Run content-services ====="
+echo "====== Build content-services ====="
 ./build-content-services.sh || exit 1
 
-echo "====== Run process-services ====="
+echo "====== Build process-services ====="
 ./build-process-services.sh || exit 1
 
-echo "====== Run insights ====="
+echo "====== Build insights ====="
 ./build-insights.sh || exit 1
 
-echo "====== Run process-services-cloud ====="
+echo "====== Build process-services-cloud ====="
 ./build-process-services-cloud.sh || exit 1
 
-echo "====== Run testing ====="
+echo "====== Build testing ====="
 ./build-testing.sh || exit 1
 
-echo "====== Run Cli ====="
+echo "====== Build Cli ====="
 ./build-cli.sh || exit 1
 
 echo "====== Copy schema ====="
