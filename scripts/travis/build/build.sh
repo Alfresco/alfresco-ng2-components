@@ -33,7 +33,11 @@ then
 else
     echo "====== Update the package.json with latest JS-API/CLI deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
+
+    echo "Install dependencies"
     npm install;
+
+    echo "Check affected lib $BASE_HASH $HEAD_HASH"
     nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude="cli,demoshell" --prod --with-deps  || exit 1;
 fi;
 

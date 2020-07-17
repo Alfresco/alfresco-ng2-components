@@ -3,21 +3,23 @@
 pip install --user awscli
 
 export NODE_OPTIONS="--max_old_space_size=30000"
-export GIT_HASH=`git rev-parse HEAD`
-echo "GIT_HASH: $GIT_HASH"
+
 S3_DBP_PATH="s3://alfresco-travis-builds/adf"
-export BASE_HASH="$(git merge-base origin/$BRANCH_NAME HEAD)"
+
 export HEAD_HASH="HEAD"
 
 if [ "${TRAVIS_EVENT_TYPE}" == "push" ]; then
     export S3_DBP_FOLDER="$S3_DBP_PATH/$TRAVIS_BRANCH/$TRAVIS_BUILD_ID"
+    export BASE_HASH="$(git merge-base origin/$BRANCH_NAME HEAD)"
 elif [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     export S3_DBP_FOLDER="$S3_DBP_PATH/$TRAVIS_PULL_REQUEST/$TRAVIS_BUILD_ID"
     export BASE_HASH="origin/$TRAVIS_BRANCH"
 elif [ "${TRAVIS_EVENT_TYPE}" == "cron" ]; then
     export S3_DBP_FOLDER="$S3_DBP_PATH/cron/$TRAVIS_BUILD_ID"
+    export BASE_HASH="$(git merge-base origin/$BRANCH_NAME HEAD)"
 else
     export S3_DBP_FOLDER="$S3_DBP_PATH/api/$TRAVIS_BUILD_ID"
+    export BASE_HASH="$(git merge-base origin/$BRANCH_NAME HEAD)"
 fi
 
 echo "BASE_HASH: $BASE_HASH"
