@@ -17,36 +17,18 @@
 
 /* tslint:disable */
 let log = null;
-try {
-    log = new (require('@angular-devkit/core').logging.IndentLogger)('root');
-    const { bold, gray, red, yellow, white } = require('@angular-devkit/core').terminal;
-    const filter = require('rxjs/operators').filter;
 
-    log
-        .pipe(filter(entry => (entry.level !== 'debug')))
-        .subscribe(entry => {
-            let color = gray;
-            let output = process.stdout;
-            switch (entry.level) {
-                case 'info': color = white; break;
-                case 'warn': color = yellow; break;
-                case 'error': color = red; output = process.stderr; break;
-                case 'fatal': color = x => bold(red(x)); output = process.stderr; break;
-            }
-
-            output.write(color(entry.message) + '\n');
-        });
-} catch (e) {
-    console.error(`Reverting to manual console logging.\nReason: ${e.message}.`);
-    log = {
-        debug: console.log.bind(console),
-        info: console.log.bind(console),
-        warn: console.warn.bind(console),
-        error: console.error.bind(console),
-        fatal: x => { console.error(x); process.exit(100); },
-        createChild: () => log
-    };
-}
+log = {
+    debug: console.log.bind(console),
+    info: console.log.bind(console),
+    warn: console.warn.bind(console),
+    error: console.error.bind(console),
+    fatal: x => {
+        console.error(x);
+        process.exit(100);
+    },
+    createChild: () => log
+};
 
 export let logger = log;
 /* tslint:enable */
