@@ -277,7 +277,19 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     parseForm(formRepresentationJSON: any): FormModel {
         if (formRepresentationJSON) {
-            const form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService);
+            let form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService);
+            if (formRepresentationJSON.contentForm && this.data && ('metadata' in this.data)) {
+                const unwrappedData = {};
+                const keys = Object.keys(this.data);
+                keys.forEach(key => {
+                    if (key !== 'metadata') {
+                        unwrappedData[key] = this.data[key];
+                    }
+                });
+                Object.assign(unwrappedData, this.data['metadata']);
+                form = new FormModel(formRepresentationJSON, unwrappedData, this.readOnly, this.formService);
+            }
+
             if (!formRepresentationJSON.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
