@@ -105,9 +105,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         }
 
         if (this.startValue) {
-            const splittedValue = this.startValue.split('||');
-            const fromValue = this.dateAdapter.parse(splittedValue[0], this.datePickerDateFormat);
-            const toValue = this.dateAdapter.parse(splittedValue[1], this.datePickerDateFormat);
+            const splitValue = this.startValue.split('||');
+            const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerDateFormat);
+            const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerDateFormat);
             this.from = new FormControl(fromValue, validators);
             this.to = new FormControl(toValue, validators);
         } else {
@@ -152,9 +152,9 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     setValue(parsedDate: string) {
-        const splittedValue = parsedDate.split('||');
-        const fromValue = this.dateAdapter.parse(splittedValue[0], this.datePickerDateFormat);
-        const toValue = this.dateAdapter.parse(splittedValue[1], this.datePickerDateFormat);
+        const splitValue = parsedDate.split('||');
+        const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerDateFormat);
+        const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerDateFormat);
         this.from.setValue(fromValue);
         this.from.markAsDirty();
         this.from.markAsTouched();
