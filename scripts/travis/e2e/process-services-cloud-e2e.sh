@@ -19,7 +19,7 @@ RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2
 check_env(){
    ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env --host "$E2E_HOST_BPM" --oauth "$E2E_HOST_SSO" --modelerUsername "$E2E_MODELER_USERNAME" --modelerPassword "$E2E_MODELER_PASSWORD" --devopsUsername "$E2E_DEVOPS_USERNAME" --devopsPassword "$E2E_DEVOPS_PASSWORD" --clientId 'activiti' || exit 1
 
-   node ./scripts/check-env/check-cs-env.js --host "$E2E_HOST_BPM" -u "$E2E_ADMIN_EMAIL_IDENTITY" -p "$E2E_ADMIN_PASSWORD_IDENTITY" || exit 1
+   ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env.js --host "$E2E_HOST_BPM" -u "$E2E_ADMIN_EMAIL_IDENTITY" -p "$E2E_ADMIN_PASSWORD_IDENTITY" || exit 1
 }
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || $TRAVIS_PULL_REQUEST == "false"  ]];

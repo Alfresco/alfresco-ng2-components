@@ -42,6 +42,8 @@ In develop mode, the CLI takes the prebuilt scripts from the dist folder.
 
 | **Commands** |**Description** |
 |--- |--- |
+|check-cs-env |Check cs env is up |
+|check-ps-env |Check ps env is up |
 |artifact-from-s3  |Get artifact from S3 |
 |artifact-to-s3    |Get artifact to S3 |
 |docker-publish    |publish docker image|
