@@ -8,10 +8,11 @@ export CONTEXT_ENV="core"
 export PROVIDER='ALL'
 export AUTH_TYPE='BASIC'
 
-./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
-
-AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
-AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
+if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
+    ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+    AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
+    AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
+fi;
 
 node ./scripts/check-env/check-ps-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1
 node ./scripts/check-env/check-cs-env.js --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1

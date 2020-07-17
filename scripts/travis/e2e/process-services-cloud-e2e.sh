@@ -8,10 +8,11 @@ export CONTEXT_ENV="process-services-cloud"
 export PROVIDER="ALL"
 export AUTH_TYPE="OAUTH"
 
-./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
-
-AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
-AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
+if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
+    ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+    AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
+    AFFECTED_E2E="$(./scripts/git-util/affected-folder.sh -b $TRAVIS_BRANCH -f "e2e/$CONTEXT_ENV")";
+fi;
 
 RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST_BPM" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" -host_sso "$E2E_HOST_SSO" -identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -prefix $TRAVIS_BUILD_NUMBER --use-dist -m 2 -save -b )
 
