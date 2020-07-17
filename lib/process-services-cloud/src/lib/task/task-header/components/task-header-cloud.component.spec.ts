@@ -215,7 +215,11 @@ describe('TaskHeaderCloudComponent', () => {
             component.properties = null;
             fixture.detectChanges();
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
+<<<<<<< HEAD
             expect(loading).toBeTruthy();
+=======
+            expect(loading).not.toBeNull();
+>>>>>>> add task header spinner
         });
     });
 
