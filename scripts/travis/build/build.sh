@@ -38,7 +38,7 @@ else
     npm install;
 
     echo "Check affected lib $BASE_HASH $HEAD_HASH"
-    nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude="cli,demoshell" --prod --with-deps  || exit 1;
+    nx affected --target=build --base=origin/develop --head=HEAD --exclude="cli,demoshell" --prod  || exit 1;
 fi;
 
 echo "====== Build Demo shell for production ====="
