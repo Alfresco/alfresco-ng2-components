@@ -10,6 +10,7 @@
     </adf-login-dialog-panel>
     <adf-content-node-selector-panel *ngIf="isLoggedIn()"
                                      id="attach-file-content-node"
+                                     [currentFolderId]="data?.currentFolderId"
                                      [isSelectionValid]="data?.isSelectionValid"
                                      [showFilesInResult]="data?.showFilesInResult"
                                      (select)="onSelect($event)"

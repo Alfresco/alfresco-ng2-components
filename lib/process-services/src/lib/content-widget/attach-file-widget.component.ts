@@ -215,7 +215,7 @@ export class AttachFileWidgetComponent extends UploadWidgetComponent implements 
                     this.uploadFileFromCS(selections, accountIdentifier);
                 });
         } else {
-            this.contentDialog.openFileBrowseDialogBySite().subscribe(
+            this.contentDialog.openFileBrowseDialogByDefaultSite().subscribe(
                 (selections: Node[]) => {
                     this.tempFilesList.push(...selections);
                     this.uploadFileFromCS(selections, accountIdentifier);

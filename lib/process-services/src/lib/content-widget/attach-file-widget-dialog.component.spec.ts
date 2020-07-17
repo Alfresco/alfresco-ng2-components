@@ -35,6 +35,7 @@ describe('AttachFileWidgetDialogComponent', () => {
     const data: AttachFileWidgetDialogComponentData = {
         title: 'Choose along citizen...',
         actionName: 'Choose',
+        currentFolderId: '-my-',
         selected: new EventEmitter<any>(),
         ecmHost: 'http://fakeUrl.com/'
     };

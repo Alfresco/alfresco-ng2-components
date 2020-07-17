@@ -22,6 +22,7 @@ export interface AttachFileWidgetDialogComponentData {
     title: string;
     actionName?: string;
     selected: Subject<Node[]>;
+    currentFolderId: string;
     ecmHost: string;
     context?: string;
     isSelectionValid?: (entry: Node) => boolean;

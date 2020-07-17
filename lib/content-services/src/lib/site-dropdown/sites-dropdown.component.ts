@@ -164,10 +164,6 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
 
                 this.selected = this.siteList.list.entries.find((site: SiteEntry) => site.entry.id === this.value);
 
-                if (this.isDefaultOptionSelected()) {
-                    this.selectedSite(<MatSelectChange> { value: this.selected});
-                }
-
                 if (this.value && !this.selected && this.siteListHasMoreItems()) {
                     this.loadSiteList();
                 }
@@ -181,10 +177,6 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
 
     showLoading(): boolean {
         return this.loading && this.siteListHasMoreItems();
-    }
-
-    isDefaultOptionSelected(): boolean {
-        return this.selected && (this.selected.entry.id === this.MY_FILES_VALUE);
     }
 
     isInfiniteScrollingEnabled(): boolean {
