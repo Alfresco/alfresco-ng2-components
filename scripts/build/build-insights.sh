@@ -9,10 +9,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building insights for production"
-    npm run ng -- build insights --prod || exit 1
+    nx build insights --prod || exit 1
 else
     echo "Building insights for development"
-    npm run ng -- build insights || exit 1
+    nx build insights || exit 1
 fi
 
 echo "====== Build style ======"
