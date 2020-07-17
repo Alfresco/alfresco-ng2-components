@@ -22,7 +22,7 @@ import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { LogService } from './log.service';
 import { EcmUserModel } from '../models/ecm-user.model';
-import { PersonEntry } from '@alfresco/js-api';
+import { PeopleApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
@@ -34,17 +34,19 @@ export class EcmUserService {
                 private logService: LogService) {
     }
 
+    private get peopleApi(): PeopleApi {
+        return new PeopleApi(this.apiService.getInstance());
+    }
+
     /**
      * Gets information about a user identified by their username.
      * @param userName Target username
      * @returns User information
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
-        return from(this.apiService.getInstance().core.peopleApi.getPerson(userName))
+        return from(this.peopleApi.getPerson(userName))
             .pipe(
-                map((personEntry: PersonEntry) => {
-                    return new EcmUserModel(personEntry.entry);
-                }),
+                map((personEntry) => new EcmUserModel(personEntry.entry)),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -63,10 +65,7 @@ export class EcmUserService {
      * @returns Image URL
      */
     getUserProfileImage(avatarId: string): string {
-        if (avatarId) {
-            return this.contentService.getContentUrl(avatarId);
-        }
-        return null;
+        return this.contentService.getContentUrl(avatarId);
     }
 
     /**
@@ -77,5 +76,4 @@ export class EcmUserService {
         this.logService.error(error);
         return throwError(error || 'Server error');
     }
-
 }
