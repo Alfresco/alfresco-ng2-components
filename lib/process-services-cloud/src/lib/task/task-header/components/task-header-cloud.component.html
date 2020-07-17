@@ -4,6 +4,7 @@
     <mat-card *ngIf="isTaskValid()" class="adf-card-container">
         <mat-card-content>
             <adf-card-view
+                *ngIf="properties; else loadingTemplate"
                 [properties]="properties"
                 [editable]="isTaskEditable()"
                 [displayClearAction]="displayDateClearAction">
@@ -11,3 +12,9 @@
         </mat-card-content>
     </mat-card>
 </div>
+
+<ng-template #loadingTemplate>
+    <div class="adf-task-header-loading">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

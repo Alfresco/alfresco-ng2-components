@@ -198,6 +198,13 @@ describe('TaskHeaderCloudComponent', () => {
             description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
             expect(description.nativeElement.value.trim()).toEqual('This is the description');
         });
+
+        it('should show loading spinner when properties are not loaded', () => {
+            component.properties = null;
+            fixture.detectChanges();
+            const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
+            expect(loading).not.toBeNull();
+        });
     });
 
     describe('Task with parentTaskId', () => {
