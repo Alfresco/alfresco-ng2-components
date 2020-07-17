@@ -28,10 +28,10 @@ Gets process definitions and starts processes.
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
 
--   **getProcessDefinitions**(appName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-definition-cloud.model.ts)`[]>`<br/>
+-   **getProcessDefinitions**(appName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>`<br/>
     Gets the process definitions associated with an app.
     -   _appName:_ `string`  - Name of the target app
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-definition-cloud.model.ts)`[]>` - Array of process definitions
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>` - Array of process definitions
 -   **startCreatedProcess**(appName: `string`, createdProcessInstanceId: `string`, payload: [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
     Starts an already created process using the process instance id.
     -   _appName:_ `string`  - 

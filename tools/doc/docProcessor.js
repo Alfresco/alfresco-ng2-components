@@ -8,7 +8,7 @@ var jsyaml = require("js-yaml");
 var remark = require("remark");
 var frontMatter = require("remark-frontmatter");
 var mdCompact = require("mdast-util-compact");
-var minimatch = require("Minimatch");
+var minimatch = require("minimatch");
 
 var si = require("./sourceInfoClasses");
 

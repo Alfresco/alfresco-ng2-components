@@ -67,7 +67,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     processDefinitionId: string = '';
 
-    /** Filter the processes to display only the ones with this process definition ID. */
+    /** Filter the processes to display only the ones with this process definition name. */
     @Input()
     processDefinitionName: string = '';
 

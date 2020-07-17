@@ -18,7 +18,7 @@ processNameCloudPipe.transform('Example - %{processDefinition} - %{datetime}', n
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | processNameFormat | string | undefined | The process name format including the preferred identifiers to be used |
-| selectedProcessDefinition | [`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-definition-cloud.model.ts) | undefined | (optional) The selected process definition |
+| selectedProcessDefinition | [`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts) | undefined | (optional) The selected process definition |
 
 ## Details
 

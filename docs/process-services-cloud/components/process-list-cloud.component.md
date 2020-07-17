@@ -63,6 +63,7 @@ when the process list is empty:
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |
 | processDefinitionId | `string` | "" | Filter the processes to display only the ones with this process definition ID. |
 | processDefinitionKey | `string` | "" | Filter the processes to display only the ones with this process definition key. |
+| processDefinitionName | `string` | "" | Filter the processes to display only the ones with this process definition name. |
 | selectionMode | `string` | "single" | Row selection mode. Can be "none", "single" or "multiple". For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showActions | `boolean` | false | Toggles the data actions column. |
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
