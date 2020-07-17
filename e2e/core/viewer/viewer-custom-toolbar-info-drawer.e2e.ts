@@ -16,11 +16,11 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { BrowserActions, FileBrowserUtil, ApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { VersionManagePage } from '../../content-services/pages/version-manager.page';
+import { VersionManagePage } from '../../core/pages/version-manager.page';
 
 describe('Viewer', () => {
 
