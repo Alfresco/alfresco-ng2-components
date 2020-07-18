@@ -7,10 +7,15 @@ cd $DIR/../..
 echo "====== Testing ======"
 echo "====== Build ======"
 
-nx build testing || exit 1
+if [ "$CI" = "true" ]; then
+    echo "Building testing for production"
+    nx build testing --prod || exit 1
+else
+    echo "Building testing for development"
+    nx build testing || exit 1
+fi
 
 echo "====== Move to node_modules ======"
 rm -rf ./node_modules/@alfresco/adf-testing/ && \
 mkdir -p ./node_modules/@alfresco/adf-testing/ && \
 cp -R ./lib/dist/testing/* ./node_modules/@alfresco/adf-testing/
-

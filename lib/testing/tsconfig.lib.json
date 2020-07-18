@@ -3,10 +3,11 @@
   "compilerOptions": {
     "outDir": "../dist/testing/",
     "baseUrl": "src",
-    "resolveJsonModule": true,
     "paths": {
     }
   },
+  "esModuleInterop": true,
+  "resolveJsonModule": true,
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
