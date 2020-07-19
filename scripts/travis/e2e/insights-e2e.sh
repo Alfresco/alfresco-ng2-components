@@ -9,7 +9,7 @@ export AUTH_TYPE='BASIC'
 
 cd $DIR/../../../
 
-if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
+if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
     ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
     echo "Affected libs ${AFFECTED_LIBS}"
@@ -17,7 +17,7 @@ if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
     echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
-if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "insight" || $TRAVIS_PULL_REQUEST == "false"  ]];
+if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "insight" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
   ./node_modules/@alfresco/adf-cli/bin/adf-cli check-ps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1;
   ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --folder insights --use-dist   || exit 1;

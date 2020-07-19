@@ -10,7 +10,7 @@ export CONTEXT_ENV="process-services-cloud"
 export PROVIDER="ALL"
 export AUTH_TYPE="OAUTH"
 
-if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
+if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
     ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
     AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
@@ -27,7 +27,7 @@ check_env(){
    ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST_BPM" -u "$E2E_ADMIN_EMAIL_IDENTITY" -p "$E2E_ADMIN_PASSWORD_IDENTITY" || exit 1
 }
 
-if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || $TRAVIS_PULL_REQUEST == "false"  ]];
+if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
     echo "Case 1 - adf-testing has been changed";
     check_env;
