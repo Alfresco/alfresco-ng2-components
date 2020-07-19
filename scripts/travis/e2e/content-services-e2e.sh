@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "Start Content service e2e"
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "Start process services cloud e2e"
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../

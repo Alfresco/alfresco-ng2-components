@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+echo "Start search e2e"
+
 cd $DIR/../../../
 
 export CONTEXT_ENV="search"

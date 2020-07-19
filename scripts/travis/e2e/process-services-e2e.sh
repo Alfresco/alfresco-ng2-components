@@ -8,6 +8,8 @@ export CONTEXT_ENV="process-services"
 export PROVIDER='BPM'
 export AUTH_TYPE='BASIC'
 
+echo "Start process services e2e"
+
 if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
     echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
     ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
