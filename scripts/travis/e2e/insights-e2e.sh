@@ -8,8 +8,11 @@ export AUTH_TYPE='BASIC'
 cd $DIR/../../../
 
 if [[ $TRAVIS_PULL_REQUEST == "true"  ]]; then
+    echo "Calculate affected e2e $BASE_HASH $HEAD_HASH"
     ./scripts/git-util/check-branch-updated.sh -b $TRAVIS_BRANCH || exit 1;
+    echo "Affected libs ${AFFECTED_LIBS}"
     AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
+    echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "insight" || $TRAVIS_PULL_REQUEST == "false"  ]];
