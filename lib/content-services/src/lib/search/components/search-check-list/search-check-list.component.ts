@@ -42,8 +42,10 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
     context?: SearchQueryBuilderService;
     options: SearchFilterList<SearchListOption>;
     operator: string = 'OR';
+    startValue: SearchListOption = null;
     pageSize = 5;
     isActive = false;
+    enableChangeUpdate = true;
 
     constructor() {
         this.options = new SearchFilterList<SearchListOption>();
@@ -57,6 +59,15 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
             if (this.settings.options && this.settings.options.length > 0) {
                 this.options = new SearchFilterList(this.settings.options, this.pageSize);
             }
+
+            if (this.settings.allowUpdateOnChange !== undefined &&
+                this.settings.allowUpdateOnChange !== null) {
+                this.enableChangeUpdate = this.settings.allowUpdateOnChange;
+            }
+        }
+
+        if (this.startValue) {
+            this.setValue(this.startValue);
         }
     }
 
@@ -74,12 +85,26 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     changeHandler(event: MatCheckboxChange, option: any) {
         option.checked = event.checked;
-        this.submitValues();
+        const checkedValues = this.getCheckedValues();
+        this.isActive = !!checkedValues.length;
+        if (this.enableChangeUpdate) {
+            this.submitValues();
+        }
     }
 
     hasValidValue() {
         const checkedValues = this.getCheckedValues();
         return !!checkedValues.length;
+    }
+
+    getCurrentValue() {
+        return this.getCheckedValues();
+    }
+
+    setValue(value: any) {
+        this.options.items.filter((item) => value.includes(item.value))
+            .map((item) => item.checked = true);
+        this.submitValues();
     }
 
     private getCheckedValues() {
@@ -90,11 +115,7 @@ export class SearchCheckListComponent implements SearchWidget, OnInit {
 
     submitValues() {
         const checkedValues = this.getCheckedValues();
-
-        this.isActive = !!checkedValues.length;
-
         const query = checkedValues.join(` ${this.operator} `);
-
         if (this.id && this.context) {
             this.context.queryFragments[this.id] = query;
             this.context.update();

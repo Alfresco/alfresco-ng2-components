@@ -8,7 +8,7 @@
             (keyup.enter)="$event.stopPropagation()"
             class="adf-filter-button"
             [matTooltip]="getTooltipTranslation(col?.title)">
-            <adf-icon value="adf:filter"
+            <adf-icon value="adf:filter" 
                 [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
                 matBadge="filter"
                 matBadgeColor="warn"
@@ -23,7 +23,8 @@
                         (keypress)="onKeyPressed($event, menuTrigger)"
                         [id]="category?.id"
                         [selector]="category?.component?.selector"
-                        [settings]="category?.component?.settings">
+                        [settings]="category?.component?.settings"
+                        [value]="initialValue">
                     </adf-search-widget-container>
                 </div>
                 <mat-dialog-actions class="adf-filter-actions">

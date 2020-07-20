@@ -47,6 +47,7 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
     options: SearchFilterList<SearchRadioOption>;
     pageSize = 5;
     isActive = false;
+    startValue: any;
 
     constructor() {
         this.options = new SearchFilterList<SearchRadioOption>();
@@ -64,7 +65,10 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         }
 
         const initialValue = this.getSelectedValue();
+
         if (initialValue !== null) {
+            this.setValue(initialValue);
+        } else if (this.startValue !== null) {
             this.setValue(initialValue);
         }
     }
@@ -93,10 +97,14 @@ export class SearchRadioComponent implements SearchWidget, OnInit {
         return !!currentValue;
     }
 
-    private setValue(newValue: string) {
+    setValue(newValue: string) {
         this.value = newValue;
         this.context.queryFragments[this.id] = newValue;
         this.context.update();
+    }
+
+    getCurrentValue() {
+        return this.getSelectedValue();
     }
 
     changeHandler(event: MatRadioChange) {

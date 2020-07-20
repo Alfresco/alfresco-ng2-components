@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-if [[ $TRAVIS_PULL_REQUEST == "false" ]];
+if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]];
 then
     TAG_NPM=latest
     if [[ $TRAVIS_BRANCH == "develop" ]];

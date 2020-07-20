@@ -57,6 +57,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     datePickerDateFormat = DEFAULT_FORMAT_DATE;
     maxDate: any;
     isActive = false;
+    startValue: any;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -95,14 +96,6 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
             Validators.required
         ]);
 
-        this.from = new FormControl('', validators);
-        this.to = new FormControl('', validators);
-
-        this.form = new FormGroup({
-            from: this.from,
-            to: this.to
-        });
-
         if (this.settings && this.settings.maxDate) {
             if (this.settings.maxDate === 'today') {
                 this.maxDate = this.dateAdapter.today().endOf('day');
@@ -110,6 +103,22 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
                 this.maxDate = moment(this.settings.maxDate).endOf('day');
             }
         }
+
+        if (this.startValue) {
+            const splitValue = this.startValue.split('||');
+            const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerDateFormat);
+            const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerDateFormat);
+            this.from = new FormControl(fromValue, validators);
+            this.to = new FormControl(toValue, validators);
+        } else {
+            this.from = new FormControl('', validators);
+            this.to = new FormControl('', validators);
+        }
+
+        this.form = new FormGroup({
+            from: this.from,
+            to: this.to
+        });
     }
 
     ngOnDestroy() {
@@ -137,6 +146,24 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
         return this.form.valid;
     }
 
+    getCurrentValue() {
+        return { from : this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat),
+                to: this.dateAdapter.format(this.form.value.from, this.datePickerDateFormat) };
+    }
+
+    setValue(parsedDate: string) {
+        const splitValue = parsedDate.split('||');
+        const fromValue = this.dateAdapter.parse(splitValue[0], this.datePickerDateFormat);
+        const toValue = this.dateAdapter.parse(splitValue[1], this.datePickerDateFormat);
+        this.from.setValue(fromValue);
+        this.from.markAsDirty();
+        this.from.markAsTouched();
+        this.to.setValue(toValue);
+        this.to.markAsDirty();
+        this.to.markAsTouched();
+        this.submitValues();
+    }
+
     reset() {
         this.isActive = false;
         this.form.reset({
@@ -150,6 +177,7 @@ export class SearchDateRangeComponent implements SearchWidget, OnInit, OnDestroy
     }
 
     onChangedHandler(event: any, formControl: FormControl) {
+
         const inputValue = event.srcElement.value;
 
         const formatDate = this.dateAdapter.parse(inputValue, this.datePickerDateFormat);

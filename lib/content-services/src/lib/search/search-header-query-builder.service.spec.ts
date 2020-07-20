@@ -136,39 +136,6 @@ describe('SearchHeaderQueryBuilder', () => {
         );
     });
 
-    it('should replace the new query filter for the old parent node with the new one', () => {
-        const expectedResult = [
-            { query: 'PARENT:"workspace://SpacesStore/fake-next-node-id"' }
-        ];
-
-        const config: SearchConfiguration = {
-            categories: [
-                <any> { id: 'cat1', enabled: true },
-                <any> { id: 'cat2', enabled: true }
-            ],
-            filterQueries: [
-                { query: 'PARENT:"workspace://SpacesStore/fake-node-id' }
-            ]
-        };
-
-        const searchHeaderService = new SearchHeaderQueryBuilderService(
-            buildConfig(config),
-            null,
-            null
-        );
-
-        searchHeaderService.currentParentFolderId = 'fake-node-id';
-
-        searchHeaderService.setCurrentRootFolderId(
-            'fake-next-node-id'
-        );
-
-        expect(searchHeaderService.filterQueries).toEqual(
-            expectedResult,
-            'Filters are not as expected'
-        );
-    });
-
     it('should not add duplicate column names in activeFilters', () => {
         const activeFilter = 'FakeColumn';
 
@@ -187,11 +154,11 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
-        expect(searchHeaderService.activeFilters.length).toBe(0);
+        expect(searchHeaderService.activeFilters.size).toBe(0);
 
-        searchHeaderService.setActiveFilter(activeFilter);
-        searchHeaderService.setActiveFilter(activeFilter);
+        searchHeaderService.setActiveFilter(activeFilter, 'fake-value');
+        searchHeaderService.setActiveFilter(activeFilter, 'fake-value');
 
-        expect(searchHeaderService.activeFilters.length).toBe(1);
+        expect(searchHeaderService.activeFilters.size).toBe(1);
     });
 });

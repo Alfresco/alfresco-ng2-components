@@ -173,7 +173,8 @@ describe('SearchHeaderComponent', () => {
         spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(false);
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
         spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-        spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
+        queryBuilder.queryFragments['fake'] = 'test';
+        spyOn(component.widgetContainer, 'resetInnerWidget').and.callThrough();
         const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
         const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
         component.update.subscribe((newNodePaging) => {

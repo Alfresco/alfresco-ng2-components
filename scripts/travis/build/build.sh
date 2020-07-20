@@ -8,7 +8,7 @@ rm -rf tmp && mkdir tmp;
 
 npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
 
-if [[ $TRAVIS_PULL_REQUEST == "false" ]];
+if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]];
 then
     if [[ $TRAVIS_BRANCH == "develop" ]];
     then
