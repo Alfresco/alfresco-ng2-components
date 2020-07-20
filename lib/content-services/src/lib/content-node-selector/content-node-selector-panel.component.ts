@@ -60,6 +60,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private showSearchField = true;
     private showFiles = false;
 
+    /** If defined will be uses to restrict the search. It can be used also a well-known aliases such as -my- -shared- -root- or a nodeId */
+    @Input()
+    root: string = null;
+
     /** Node ID of the folder currently listed. */
     @Input()
     currentFolderId: string = null;
@@ -396,7 +400,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId || this.root, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
                 .subscribe(this.showSearchResults.bind(this));
         }
     }
