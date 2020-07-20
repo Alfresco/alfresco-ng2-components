@@ -26,6 +26,7 @@ Implements a checklist [widget](../../../lib/testing/src/lib/core/pages/form/wid
                     "pageSize": 5,
                     "settings": {
                         "operator": "OR",
+                        "allowUpdateOnChange": true,
                         "options": [
                             { "name": "Folder", "value": "TYPE:'cm:folder'" },
                             { "name": "Document", "value": "TYPE:'cm:content'" }
@@ -44,6 +45,7 @@ Implements a checklist [widget](../../../lib/testing/src/lib/core/pages/form/wid
 | ---- | ---- | ----------- |
 | operator | `string` | Logical operator to combine query fragments. Can be 'AND' or 'OR'. |
 | options | `array` | Array of objects with `name` and `value` properties. Each object defines a checkbox, labelled with `name`, that adds the query fragment in `value` to the query when enabled. |
+| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed
 
 ## Details
 
