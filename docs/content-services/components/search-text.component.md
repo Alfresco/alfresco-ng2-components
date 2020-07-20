@@ -48,7 +48,7 @@ Implements a text input [widget](../../../lib/testing/src/lib/core/pages/form/wi
 | placeholder | string | Text displayed in the [widget](../../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) when the input string is empty |
 | searchSuffix | string | Text to append always in the search of a string|
 | searchPrefix | string | Text to prepend always in the search of a string|
-| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed
+| allowUpdateOnChange | `boolean` | Enable/Disable the update fire event when text has been changed. By default is true.
 
 ## Details
 
