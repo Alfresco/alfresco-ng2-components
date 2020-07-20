@@ -27,14 +27,12 @@ check_env(){
    ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST_BPM" -u "$E2E_ADMIN_EMAIL_IDENTITY" -p "$E2E_ADMIN_PASSWORD_IDENTITY" || exit 1
 }
 
-if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
-then
-    echo "Case 1 - adf-testing has been changed";
+if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || "${TRAVIS_EVENT_TYPE}" == "push"  ]]; then
+    echo "Run all e2e $CONTEXT_ENV"
     check_env;
     $RUN_E2E --folder $CONTEXT_ENV
-else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
-    then
-        echo "Case 2 - e2e/$CONTEXT_ENV folder has been changed";
+else if [[ $AFFECTED_E2E  == "e2e/$CONTEXT_ENV" ]]; then
+        echo "Run affected e2e"
         check_env;
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
         LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV/" | paste -sd , -)"
