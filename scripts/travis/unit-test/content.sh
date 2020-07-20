@@ -9,7 +9,7 @@ ng test content-services --watch=false || exit 1;
 # echo "================== content-services unit ==================="
 
 AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
-if [[ $AFFECTED_LIBS =~ "content-services" || $TRAVIS_PULL_REQUEST == "false"  ]];
+if [[ $AFFECTED_LIBS =~ "content-services" ||  "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
     ng test content-services --watch=false || exit 1;
 fi;

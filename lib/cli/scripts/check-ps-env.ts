@@ -1,14 +1,16 @@
-let alfrescoApi = require('@alfresco/js-api');
-let program = require('commander');
+const alfrescoApi = require('@alfresco/js-api');
+const program = require('commander');
 
-let MAX_RETRY = 10;
+const MAX_RETRY = 10;
+const TIMEOUT = 60000;
 let counter = 0;
-let TIMEOUT = 60000;
 
-async function main() {
+export default async function main(_args: string[]) {
 
     program
         .version('0.1.0')
+        .description('Check Process service is up ')
+        .usage('check-ps-env [options]')
         .option('--host [type]', 'Remote environment host adf.lab.com ')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
@@ -46,5 +48,3 @@ function sleep(delay) {
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay) ;
 }
-
-main();

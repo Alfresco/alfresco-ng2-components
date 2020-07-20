@@ -29,6 +29,8 @@ import { MatSliderChange } from '@angular/material/slider';
     host: { class: 'adf-search-slider' }
 })
 export class SearchSliderComponent implements SearchWidget, OnInit {
+    isActive?: boolean;
+    startValue: any;
 
     id: string;
     settings: SearchWidgetSettings;
@@ -58,6 +60,10 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
 
             this.thumbLabel = this.settings['thumbLabel'] ? true : false;
         }
+
+        if (this.startValue) {
+            this.setValue(this.startValue);
+        }
     }
 
     reset() {
@@ -76,6 +82,15 @@ export class SearchSliderComponent implements SearchWidget, OnInit {
 
     hasValidValue() {
         return !!this.value;
+    }
+
+    getCurrentValue() {
+        return this.value;
+    }
+
+    setValue(value: any) {
+        this.value = value;
+        this.submitValues();
     }
 
     private updateQuery(value: number | null) {

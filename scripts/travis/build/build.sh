@@ -10,7 +10,7 @@ echo "Update commit sha in package JSON"
 
 npx @alfresco/adf-cli@alpha update-commit-sha --pointer "HEAD" --pathPackage "$(pwd)"
 
-if [[ $TRAVIS_PULL_REQUEST == "false" ]];
+if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]];
 then
     if [[ $TRAVIS_BRANCH == "develop" ]];
     then
@@ -24,10 +24,6 @@ then
 
     node ./scripts/pre-publish.js
 
-    echo "Install dependencies"
-
-    npm install
-
 else
     echo "====== Update the package.json with latest JS-API/CLI deps ====="
     npx @alfresco/adf-cli@alpha update-version --alpha --pathPackage "$(pwd)"
@@ -37,6 +33,8 @@ else
 
 #    echo "Check affected lib $BASE_HASH $HEAD_HASH" TODO restore later
 #    nx affected --target=build --base=origin/develop --head=HEAD --exclude="cli,demoshell" --prod  || exit 1;
+=======
+#    nx affected --target=build --base=$BASE_HASH --head=$HEAD_HASH --exclude="cli,demoshell" --prod --with-deps  || exit 1;  TODO comment out when affected is fixe
 fi;
 
 ./scripts/build/build-all-lib.sh

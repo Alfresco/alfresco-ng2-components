@@ -20,7 +20,9 @@ import { AlfrescoApiService, AppConfigService, NodesApiService } from '@alfresco
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from './search-category.interface';
-import { MinimalNode } from '@alfresco/js-api';
+import { MinimalNode, QueryBody } from '@alfresco/js-api';
+import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -29,11 +31,15 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
 
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
-    activeFilters: string[] = [];
-    currentParentFolderId: string;
+    activeFilters: Map<string, string> = new Map();
 
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
+
+        this.updated.pipe(
+            filter((query: QueryBody) => !!query)).subscribe(() => {
+            this.execute();
+        });
     }
 
     public isFilterServiceActive(): boolean {
@@ -53,18 +59,22 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         }
     }
 
-    setActiveFilter(columnActivated: string) {
-        if (!this.activeFilters.includes(columnActivated)) {
-            this.activeFilters.push(columnActivated);
-        }
+    setActiveFilter(columnActivated: string, filterValue: string) {
+        this.activeFilters.set(columnActivated, filterValue);
+    }
+
+    getActiveFilters(): Map<string, string> {
+        return this.activeFilters;
     }
 
     isNoFilterActive(): boolean {
-        return this.activeFilters.length === 0;
+        return this.activeFilters.size === 0;
     }
 
     removeActiveFilter(columnRemoved: string) {
-        this.activeFilters = this.activeFilters.filter((column) => column !== columnRemoved);
+        if (this.activeFilters.get(columnRemoved) !== null) {
+            this.activeFilters.delete(columnRemoved);
+        }
     }
 
     getCategoryForColumn(columnKey: string): SearchCategory {
@@ -78,19 +88,6 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setCurrentRootFolderId(currentFolderId: string) {
-        if (currentFolderId !== this.currentParentFolderId) {
-            if (this.customSources.includes(currentFolderId)) {
-                this.nodeApiService.getNode(currentFolderId).subscribe((nodeEntity: MinimalNode) => {
-                    this.updateCurrentParentFilter(nodeEntity.id);
-                });
-            } else {
-                this.currentParentFolderId = currentFolderId;
-                this.updateCurrentParentFilter(currentFolderId);
-            }
-        }
-    }
-
-    private updateCurrentParentFilter(currentFolderId: string) {
         const alreadyAddedFilter = this.filterQueries.find(filterQueries =>
             filterQueries.query.includes(currentFolderId)
         );
@@ -102,6 +99,14 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         this.filterQueries = [{
             query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
         }];
+    }
+
+    isCustomSourceNode(currentNodeId: string): boolean {
+        return this.customSources.includes(currentNodeId);
+    }
+
+    getNodeIdForCustomSource(customSourceId: string): Observable<MinimalNode> {
+        return this.nodeApiService.getNode(customSourceId);
     }
 
 }

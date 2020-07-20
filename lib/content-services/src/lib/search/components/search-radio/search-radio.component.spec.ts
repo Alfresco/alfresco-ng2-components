@@ -41,10 +41,10 @@ describe('SearchRadioComponent', () => {
 
    describe('Pagination', () => {
         it('should show 5 items when pageSize not defined', () => {
-            component.id = 'checklist';
+            component.id = 'radio';
             component.context = <any> {
                 queryFragments: {
-                    'checklist': 'query'
+                    'radio': 'query'
                 },
                 update() {}
             };
@@ -60,10 +60,10 @@ describe('SearchRadioComponent', () => {
         });
 
         it('should show all items when pageSize is high', () => {
-            component.id = 'checklist';
+            component.id = 'radio';
             component.context = <any> {
                 queryFragments: {
-                    'checklist': 'query'
+                    'radio': 'query'
                 },
                 update() {}
             };
@@ -78,21 +78,22 @@ describe('SearchRadioComponent', () => {
         });
     });
 
-   it('should able to check the radio button', () => {
-        component.id = 'checklist';
+   it('should able to check the radio button', async () => {
+        component.id = 'radio';
         component.context = <any> {
             queryFragments: {
-                'checklist': 'query'
+                'radio': 'query'
             },
             update: () => {}
         };
         component.settings = <any> { options: sizeOptions };
         spyOn(component.context, 'update').and.stub();
-        component.ngOnInit();
         fixture.detectChanges();
+        await fixture.whenStable();
 
         const optionElements = fixture.debugElement.query(By.css('mat-radio-button'));
         optionElements.triggerEventHandler('change', { checked: true });
+        fixture.detectChanges();
 
         expect(component.context.update).toHaveBeenCalled();
         expect(component.context.queryFragments[component.id]).toBe(sizeOptions[0].value);

@@ -6,6 +6,8 @@
     "paths": {
     }
   },
+  "esModuleInterop": true,
+  "resolveJsonModule": true,
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,

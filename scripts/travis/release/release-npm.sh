@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../../../
 
-if [[ $TRAVIS_PULL_REQUEST == "false" ]];
+if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]];
 then
     TAG_NPM=latest
     if [[ $TRAVIS_BRANCH == "develop" ]];
@@ -19,5 +19,5 @@ then
     echo "Publishing on npm with tag $TAG_NPM"
     npx @alfresco/adf-cli npm-publish --npmRegistry $NPM_REGISTRY_ADDRESS --tokenRegistry $NPM_REGISTRY_TOKEN --tag $TAG_NPM --pathProject "$(pwd)"
 else
-     echo "PR Not need to release in NPM"
+     echo "PR No need to release in NPM"
 fi;

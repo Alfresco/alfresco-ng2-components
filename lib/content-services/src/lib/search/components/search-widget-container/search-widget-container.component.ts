@@ -41,6 +41,9 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
     @Input()
     config: any;
 
+    @Input()
+    value: any;
+
     componentRef: ComponentRef<any>;
 
     constructor(
@@ -66,6 +69,10 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
             ref.instance.id = this.id;
             ref.instance.settings = { ...this.settings };
             ref.instance.context = this.queryBuilder;
+            if (this.value) {
+                ref.instance.isActive = true;
+                ref.instance.startValue = this.value;
+            }
         }
     }
 
@@ -80,8 +87,17 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
         this.componentRef.instance.submitValues();
     }
 
+    setValue(currentValue: string | Object) {
+        this.componentRef.instance.isActive = true;
+        this.componentRef.instance.setValue(currentValue);
+    }
+
     hasValueSelected() {
         return this.componentRef.instance.hasValidValue();
+    }
+
+    getCurrentValue() {
+        return this.componentRef.instance.getCurrentValue();
     }
 
     resetInnerWidget() {

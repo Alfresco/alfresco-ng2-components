@@ -9,10 +9,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building core for production"
-    npm run ng -- build core --prod || exit 1
+    nx build core --prod || exit 1
 else
     echo "Building core for development"
-    npm run ng -- build core || exit 1
+    nx build core || exit 1
 fi
 
 echo "====== Build style ======"

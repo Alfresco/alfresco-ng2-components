@@ -36,15 +36,25 @@ export class SearchTextComponent implements SearchWidget, OnInit {
     id: string;
     settings: SearchWidgetSettings;
     context: SearchQueryBuilderService;
+    startValue: string;
     isActive = false;
+    enableChangeUpdate = true;
 
     ngOnInit() {
         if (this.context && this.settings && this.settings.pattern) {
             const pattern = new RegExp(this.settings.pattern, 'g');
             const match = pattern.exec(this.context.queryFragments[this.id] || '');
+            if (this.settings.allowUpdateOnChange !== undefined &&
+                this.settings.allowUpdateOnChange !== null) {
+                this.enableChangeUpdate = this.settings.allowUpdateOnChange;
+            }
 
             if (match && match.length > 1) {
                 this.value = match[1];
+            }
+
+            if (this.startValue) {
+                this.setValue(this.startValue);
             }
         }
     }
@@ -58,12 +68,13 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     onChangedHandler(event) {
         this.value = event.target.value;
-        this.updateQuery(this.value);
+        this.isActive = !!this.value;
+        if (this.enableChangeUpdate) {
+            this.updateQuery(this.value);
+        }
     }
 
     private updateQuery(value: string) {
-        this.isActive = !!value;
-
         if (this.context && this.settings && this.settings.field) {
             this.context.queryFragments[this.id] = value ? `${this.settings.field}:'${this.getSearchPrefix()}${value}${this.getSearchSuffix()}'` : '';
             this.context.update();
@@ -77,6 +88,15 @@ export class SearchTextComponent implements SearchWidget, OnInit {
 
     hasValidValue() {
         return !!this.value;
+    }
+
+    getCurrentValue() {
+        return this.value;
+    }
+
+    setValue(value: string) {
+        this.value = value;
+        this.submitValues();
     }
 
     private getSearchPrefix(): string {

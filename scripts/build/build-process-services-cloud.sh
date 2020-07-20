@@ -9,10 +9,10 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building process-services-cloud  for production"
-    npm run ng -- build process-services-cloud --prod || exit 1
+    nx build process-services-cloud --prod || exit 1
 else
     echo "Building process-services-cloud  for development"
-    npm run ng -- build process-services-cloud || exit 1
+    nx build process-services-cloud || exit 1
 fi
 
 echo "====== Build style ======"

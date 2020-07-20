@@ -4,6 +4,7 @@
     "outDir": "../dist/process-services-cloud/",
     "baseUrl": "src",
     "types": [],
+    "resolveJsonModule": true,
     "paths": {
       "@alfresco/adf-extensions": ["../../dist/extensions"],
       "@alfresco/adf-extensions/*": ["../../dist/extensions/*"],
