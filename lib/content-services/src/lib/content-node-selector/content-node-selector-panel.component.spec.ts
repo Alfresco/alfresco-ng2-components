@@ -641,7 +641,7 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
             });
 
-            it('should restrict the search to the site and not to the root in case is defined', () => {
+            it('should restrict the search to the site and not to the root in case is changed', () => {
                 component.root = 'my-root-id';
                 component.ngOnInit();
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
