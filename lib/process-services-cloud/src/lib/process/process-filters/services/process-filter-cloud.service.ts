@@ -171,6 +171,16 @@ export class ProcessFilterCloudService {
     }
 
     /**
+     * Checks if given filter is a default filter
+     * @param filterName Name of the target process filter
+     * @returns Boolean value for whether the filter is a default filter
+     */
+    isDefaultFilter(filterName: string) {
+        const defaultFilters = this.defaultProcessFilters();
+        return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
+    }
+
+    /**
      * Checks user preference are empty or not
      * @param preferences User preferences of the target app
      * @returns Boolean value if the preferences are not empty
@@ -256,13 +266,13 @@ export class ProcessFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of ProcessFilterCloudModel
      */
-    private defaultProcessFilters(appName: string): ProcessFilterCloudModel[] {
+    private defaultProcessFilters(appName?: string): ProcessFilterCloudModel[] {
         return [
             new ProcessFilterCloudModel({
                 name: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
                 icon: 'inbox',
                 key: 'running-processes',
-                appName: appName,
+                appName,
                 sort: 'startDate',
                 status: 'RUNNING',
                 order: 'DESC'
@@ -271,7 +281,7 @@ export class ProcessFilterCloudService {
                 name: 'ADF_CLOUD_PROCESS_FILTERS.COMPLETED_PROCESSES',
                 icon: 'done',
                 key: 'completed-processes',
-                appName: appName,
+                appName,
                 sort: 'startDate',
                 status: 'COMPLETED',
                 order: 'DESC'
@@ -280,7 +290,7 @@ export class ProcessFilterCloudService {
                 name: 'ADF_CLOUD_PROCESS_FILTERS.ALL_PROCESSES',
                 key: 'all-processes',
                 icon: 'adjust',
-                appName: appName,
+                appName,
                 sort: 'startDate',
                 status: '',
                 order: 'DESC'
