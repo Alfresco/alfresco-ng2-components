@@ -82,7 +82,11 @@ describe('TaskHeaderCloudComponent', () => {
             component.showTitle = true;
             fixture.detectChanges();
             taskTitle = fixture.debugElement.query(By.css('.adf-task-title'));
+<<<<<<< HEAD
             expect(taskTitle).toBeTruthy();
+=======
+            expect(taskTitle).not.toBeNull();
+>>>>>>> fix unit test
         });
 
         it('should fectch task details when appName and taskId defined', async(() => {
@@ -142,16 +146,6 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
             });
         }));
-
-        it('should hide the title if showTitle is false', () => {
-            component.showTitle = false;
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-                const valueEl = fixture.debugElement.query(By.css('.adf-task-title'));
-                expect(valueEl).toBeNull();
-            });
-        });
 
         it('should display placeholder if no due date', async(() => {
             component.taskDetails.dueDate = null;
