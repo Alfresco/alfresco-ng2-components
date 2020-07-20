@@ -237,6 +237,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.siteId = this.root;
         this.searchInput.valueChanges
             .pipe(
                 debounceTime(this.debounceSearch),
@@ -400,7 +401,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId || this.root, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
+            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
                 .subscribe(this.showSearchResults.bind(this));
         }
     }
