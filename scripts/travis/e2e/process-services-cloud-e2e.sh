@@ -36,9 +36,11 @@ else if [[ $AFFECTED_E2E  == "e2e/$CONTEXT_ENV" ]]; then
         check_env;
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
         LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV/" | paste -sd , -)"
+
+        echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
+
         if [[ $LIST_SPECS != "" ]];
         then
-            echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
             $RUN_E2E --specs "$LIST_SPECS"
         fi
     fi
