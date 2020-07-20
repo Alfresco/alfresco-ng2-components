@@ -9,14 +9,14 @@ AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
 
 echo "================== core unit ==================="
 
-if [[ $AFFECTED_LIBS =~ "core" || $TRAVIS_PULL_REQUEST == "false" ]];
+if [[ $AFFECTED_LIBS =~ "core" || "${TRAVIS_EVENT_TYPE}" == "push" ]];
 then
     ng test core --watch=false || exit 1;
 fi;
 
 echo "================== extensions unit ==================="
 
-if [[ $AFFECTED_LIBS =~ "extensions" || $TRAVIS_PULL_REQUEST == "false"  ]];
+if [[ $AFFECTED_LIBS =~ "extensions" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then
     ng test extensions --watch=false || exit 1;
 fi;
