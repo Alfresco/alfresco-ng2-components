@@ -636,7 +636,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should restrict the search to the currentFolderId in case is defined', () => {
                 component.currentFolderId = 'my-root-id';
-                component.restrictSearchToFolderId = true;
+                component.restrictSearchToCurrentFolderId = true;
                 component.ngOnInit();
                 component.search('search');
 
@@ -645,7 +645,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should restrict the search to the site and not to the currentFolderId in case is changed', () => {
                 component.currentFolderId = 'my-root-id';
-                component.restrictSearchToFolderId = true;
+                component.restrictSearchToCurrentFolderId = true;
                 component.ngOnInit();
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
                 component.search('search');
