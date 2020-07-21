@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
+import { Group } from '@alfresco/js-api';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserProcessModel } from '../models/user-process.model';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { IdentityUserModel } from '../models/identity-user.model';
+
+export type User = Group & UserProcessModel & EcmUserModel & IdentityUserModel;
 
 @Pipe({
     name: 'usernameInitials'
@@ -29,10 +32,10 @@ export class InitialUsernamePipe implements PipeTransform {
     constructor(private sanitized: DomSanitizer) {
     }
 
-    transform(user: UserProcessModel | EcmUserModel | IdentityUserModel, className: string = '', delimiter: string = ''): SafeHtml {
+    transform(user: User, className: string = '', delimiter: string = ''): SafeHtml {
         let safeHtml: SafeHtml = '';
         if (user) {
-            const initialResult = this.getInitialUserName(user.firstName, user.lastName, delimiter);
+            const initialResult = this.getInitialUserName(user.firstName || user.displayName, user.lastName, delimiter);
             safeHtml = this.sanitized.bypassSecurityTrustHtml(`<div id="user-initials-image" class="${className}">${initialResult}</div>`);
         }
         return safeHtml;
