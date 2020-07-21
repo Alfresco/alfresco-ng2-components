@@ -66,7 +66,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     showVersions = false;
     allowDropFiles = true;
     displayMode = DisplayMode.List;
-    includeFields = ['isFavorite', 'isLocked', 'aspectNames'];
+    includeFields = ['isFavorite', 'isLocked', 'aspectNames', 'definition'];
 
     baseShareUrl = (
         this.appConfig.get<string>(AppConfigValues.BASESHAREURL) ||
