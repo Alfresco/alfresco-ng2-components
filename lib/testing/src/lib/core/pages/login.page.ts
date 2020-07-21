@@ -87,7 +87,7 @@ export class LoginPage {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await BrowserVisibility.waitUntilElementIsVisible(this.header);
 
-        await browser.waitForAngular();
+        await browser.waitForAngularEnabled(true);
     }
 
     async loginBasicAuth(username: string, password: string): Promise<void> {
