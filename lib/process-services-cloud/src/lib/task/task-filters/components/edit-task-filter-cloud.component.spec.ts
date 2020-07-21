@@ -127,6 +127,50 @@ describe('EditTaskFilterCloudComponent', () => {
         });
     }));
 
+    it('should disable save and delete button for default task filters', () => {
+        getTaskFilterSpy.and.returnValue(of({
+            name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+            id: 'filter-id',
+            key: 'all-fake-task',
+            icon: 'adjust',
+            sort: 'startDate',
+            status: 'ALL',
+            order: 'DESC'
+        }));
+
+        const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
+        component.ngOnChanges({ 'id': taskFilterIdChange });
+        fixture.detectChanges();
+
+        component.toggleFilterActions = true;
+        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+        expansionPanel.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+            expect(saveButton.disabled).toBe(true);
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            expect(deleteButton.disabled).toBe(true);
+        });
+    });
+
+    it('should enable save and delete button for custom task filters', () => {
+        const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
+        component.ngOnChanges({ 'id': taskFilterIdChange });
+        fixture.detectChanges();
+
+        component.toggleFilterActions = true;
+        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+        expansionPanel.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+            expect(saveButton.disabled).toBe(true);
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            expect(deleteButton.disabled).toBe(true);
+        });
+    });
+
     describe('EditTaskFilter form', () => {
 
         beforeEach(() => {
