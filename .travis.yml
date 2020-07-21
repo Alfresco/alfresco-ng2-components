@@ -79,12 +79,11 @@ jobs:
 
 
         - stage: e2e Test
-          name: login
+          name: core
           before_script:
             - ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
             - ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
-          script: ./scripts/travis/e2e/login-e2e.sh
-
+          script: ./scripts/travis/e2e/core-e2e.sh
         # - stage: e2e Test
         #   name:  content
         #   before_script:
