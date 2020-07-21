@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { Group } from '@alfresco/js-api';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserProcessModel } from '../models/user-process.model';
 import { EcmUserModel } from '../models/ecm-user.model';
 import { IdentityUserModel } from '../models/identity-user.model';
 
-export type User = Group & UserProcessModel & EcmUserModel & IdentityUserModel;
+export type User = (EcmUserModel | UserProcessModel  | IdentityUserModel) & { displayName?: string };
 
 @Pipe({
     name: 'usernameInitials'
