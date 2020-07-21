@@ -639,6 +639,7 @@ describe('ContentNodeSelectorComponent', () => {
                 component.restrictSearchToFolderId = true;
                 component.ngOnInit();
                 component.search('search');
+
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
             });
 
@@ -648,6 +649,7 @@ describe('ContentNodeSelectorComponent', () => {
                 component.ngOnInit();
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
                 component.search('search');
+
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-site-id', 0, 25, [], false);
             });
 
