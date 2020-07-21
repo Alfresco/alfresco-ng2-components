@@ -42,4 +42,5 @@ export interface DataColumn {
     copyContent?: boolean;
     editable?: boolean;
     focus?: boolean;
+    sortingKey?: string;
 }

@@ -78,6 +78,10 @@ export class DataColumnComponent implements OnInit {
     @Input()
     focus: boolean = true;
 
+    /** When using server side sorting the column used by the api call where the sorting will be performed */
+    @Input()
+    sortingKey: string;
+
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';

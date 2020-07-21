@@ -191,7 +191,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * before delivering it.
      */
     @Input()
-    sortingMode = 'client';
+    sortingMode = 'server';
 
     /** The inline style to apply to every row. See
      * the Angular NgStyle
@@ -314,6 +314,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     selection = new Array<NodeEntry>();
     $folderNode: Subject<Node> = new Subject<Node>();
     allowFiltering: boolean = true;
+    orderBy: string[] = ['name ASC'];
+    // sortingProperties: string[] = ['isFolder','name', 'mimeType', 'nodeType', 'sizeInBytes', 'modifiedAt', 'createdAt', 'modifiedByUser', 'createdByUser'];
 
     // @deprecated 3.0.0
     folderNode: Node;
@@ -639,7 +641,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.updateCustomSourceData(this._currentFolderId);
         }
 
-        this.documentListService.loadFolderByNodeId(this._currentFolderId, this._pagination, this.includeFields, this.where)
+        this.documentListService.loadFolderByNodeId(this._currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy)
             .subscribe((documentNode: DocumentLoaderNode) => {
                 if (documentNode.currentNode) {
                     this.folderNode = documentNode.currentNode.entry;
@@ -663,6 +665,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
+    }
+
+    onSortingChanged(event: CustomEvent) {
+        this.orderBy = [''.concat(event.detail.key, ' ' , event.detail.direction)];
+        this.reload();
     }
 
     /**

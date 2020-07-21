@@ -110,6 +110,9 @@ export class DocumentListService implements DocumentListLoader {
             if (opts.where) {
                 params.where = opts.where;
             }
+            if (opts.orderBy) {
+                params.orderBy = opts.orderBy;
+            }
         }
 
         return from(this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params)).pipe(
@@ -169,22 +172,23 @@ export class DocumentListService implements DocumentListLoader {
      * @param where  Optionally filter the list
      * @returns Details of the folder
      */
-    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
+    loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string, orderBy?: string[]): Observable<DocumentLoaderNode> {
         if (this.customResourcesService.isCustomSource(nodeId)) {
             return this.customResourcesService.loadFolderByNodeId(nodeId, pagination, includeFields, where).pipe(
                 map((result: any) => new DocumentLoaderNode(null, result))
             );
         } else {
-            return this.retrieveDocumentNode(nodeId, pagination, includeFields, where);
+            return this.retrieveDocumentNode(nodeId, pagination, includeFields, where, orderBy);
         }
     }
 
-    private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string): Observable<DocumentLoaderNode> {
+    private retrieveDocumentNode(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string, orderByValue?: string[]): Observable<DocumentLoaderNode> {
         return forkJoin(
             this.getFolderNode(nodeId, includeFields),
             this.getFolder(null, {
                 maxItems: pagination.maxItems,
                 skipCount: pagination.skipCount,
+                orderBy: orderByValue,
                 rootFolderId: nodeId,
                 where: where
             }, includeFields)).pipe(
