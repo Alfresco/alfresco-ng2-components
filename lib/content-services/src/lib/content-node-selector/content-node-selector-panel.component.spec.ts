@@ -634,15 +634,17 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
-            it('should restrict the search to the root in case is defined', () => {
-                component.root = 'my-root-id';
+            it('should restrict the search to the currentFolderId in case is defined', () => {
+                component.currentFolderId = 'my-root-id';
+                component.restrictSearchToFolderId = true;
                 component.ngOnInit();
                 component.search('search');
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
             });
 
-            it('should restrict the search to the site and not to the root in case is changed', () => {
-                component.root = 'my-root-id';
+            it('should restrict the search to the site and not to the currentFolderId in case is changed', () => {
+                component.currentFolderId = 'my-root-id';
+                component.restrictSearchToFolderId = true;
                 component.ngOnInit();
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
                 component.search('search');

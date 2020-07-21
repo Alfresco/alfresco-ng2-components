@@ -31,7 +31,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | breadcrumbTransform | `Function` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
-| root | `string` | null |  If defined will be uses to restrict the search. It can be used also a well-known aliases such as -my- -shared- -root- or a nodeId |
+| restrictSearchToFolderId | `boolean` | false |  If true will restrict the search to the currentFolderId. |
 | currentFolderId | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | false | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | null | Custom site for site dropdown. This is the same as the `siteList`. property of the Sites Dropdown component (see its doc page for more information). |

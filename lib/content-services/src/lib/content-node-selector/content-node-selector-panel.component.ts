@@ -60,9 +60,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private showSearchField = true;
     private showFiles = false;
 
-    /** If defined will be uses to restrict the search. It can be used also a well-known aliases such as -my- -shared- -root- or a nodeId */
+    /** If true will restrict the search to the currentFolderId */
     @Input()
-    root: string = null;
+    restrictSearchToFolderId: boolean = false;
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -237,7 +237,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.siteId = this.root;
         this.searchInput.valueChanges
             .pipe(
                 debounceTime(this.debounceSearch),
@@ -253,7 +252,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
         if (this.currentFolderId) {
-            this.getStartSite();
+            if (this.restrictSearchToFolderId) {
+                this.siteId = this.currentFolderId;
+            } else {
+                this.getStartSite();
+            }
         }
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
