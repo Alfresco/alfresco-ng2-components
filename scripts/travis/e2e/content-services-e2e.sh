@@ -24,15 +24,18 @@ fi;
 #-b is needed to run the Folder upload test that are not workin in Headless chrome
 RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --use-dist -b -save -m 4 || exit 1)
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" ||  "${TRAVIS_EVENT_TYPE}" == "push" ]]; then
+    echo "Run all e2e $CONTEXT_ENV"
     $RUN_CHECK
     $RUN_E2E --folder $CONTEXT_ENV
-else if [[ $AFFECTED_E2E = "e2e/$CONTEXT_ENV" ]];
-    then
+else if [[ $AFFECTED_E2E  == "e2e/$CONTEXT_ENV" ]]; then
+        echo "Run affected e2e"
+
         HEAD_SHA_BRANCH="$(git merge-base origin/$TRAVIS_BRANCH HEAD)"
         LIST_SPECS="$(git diff --name-only $HEAD_SHA_BRANCH HEAD | grep "^e2e/$CONTEXT_ENV" | paste -sd , -)"
-        if [[ $LIST_SPECS != "" ]];
-        then
-            echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
+
+        echo "Run $CONTEXT_ENV e2e based on the sha $HEAD_SHA_BRANCH with the specs: "$LIST_SPECS
+
+        if [[ $LIST_SPECS != "" ]]; then
             $RUN_CHECK
             $RUN_E2E --specs "$LIST_SPECS"
         fi

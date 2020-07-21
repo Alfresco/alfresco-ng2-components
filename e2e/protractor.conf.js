@@ -57,7 +57,7 @@ let specs = function () {
 
     if (LIST_SPECS && LIST_SPECS !== '') {
         arraySpecs = LIST_SPECS.split(',');
-        arraySpecs = arraySpecs.map((el) => './' + el);
+        arraySpecs = arraySpecs.map((el) => './' + el.replace('e2e/', ''));
 
         specExists(arraySpecs);
     } else {
