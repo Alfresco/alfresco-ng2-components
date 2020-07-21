@@ -62,7 +62,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /** If true will restrict the search to the currentFolderId */
     @Input()
-    restrictSearchToFolderId: boolean = false;
+    restrictSearchToCurrentFolderId: boolean = false;
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -252,7 +252,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
         if (this.currentFolderId) {
-            if (this.restrictSearchToFolderId) {
+            if (this.restrictSearchToCurrentFolderId) {
                 this.siteId = this.currentFolderId;
             } else {
                 this.getStartSite();
