@@ -82,15 +82,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.showTitle = true;
             fixture.detectChanges();
             taskTitle = fixture.debugElement.query(By.css('.adf-task-title'));
-<<<<<<< HEAD
-<<<<<<< HEAD
             expect(taskTitle).toBeTruthy();
-=======
-            expect(taskTitle).not.toBeNull();
->>>>>>> fix unit test
-=======
-            expect(taskTitle).toBeDefined();
->>>>>>> change expect
         });
 
         it('should fectch task details when appName and taskId defined', async(() => {
@@ -213,11 +205,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.properties = null;
             fixture.detectChanges();
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
-<<<<<<< HEAD
             expect(loading).toBeTruthy();
-=======
-            expect(loading).not.toBeNull();
->>>>>>> add task header spinner
         });
     });
 
