@@ -82,8 +82,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.showTitle = true;
             fixture.detectChanges();
             taskTitle = fixture.debugElement.query(By.css('.adf-task-title'));
-            expect(taskTitle).not.toBeNull();
-            expect(taskTitle).toBeDefined();
+            expect(taskTitle).toBeTruthy();
         });
 
         it('should fectch task details when appName and taskId defined', async(() => {
