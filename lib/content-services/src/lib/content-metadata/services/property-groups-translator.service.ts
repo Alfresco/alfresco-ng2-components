@@ -147,12 +147,11 @@ export class PropertyGroupTranslatorService {
     }
 
     private isListOfValues(constraint: Constraint[]): boolean {
-        return constraint && constraint[0] && constraint[0].type === 'LIST';
+        return constraint?.[0]?.type === 'LIST';
     }
 
-    private getPropertyConstraints(propertyName: string, definition: Definition): Constraint[] | null {
-        const property = definition && definition.properties.find((item) => item.id === propertyName);
-        return property ? property.constraints : null;
+    private getPropertyConstraints(propertyName: string, definition: Definition): Constraint[] {
+        return definition?.properties.find((item) => item.id === propertyName)?.constraints ?? [];
     }
 
     private checkECMTypeValidity(ecmPropertyType) {
