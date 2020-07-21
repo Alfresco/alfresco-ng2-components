@@ -634,6 +634,25 @@ describe('ContentNodeSelectorComponent', () => {
                 expect(component.showingSearchResults).toBeFalsy();
             });
 
+            it('should restrict the search to the currentFolderId in case is defined', () => {
+                component.currentFolderId = 'my-root-id';
+                component.restrictSearchToCurrentFolderId = true;
+                component.ngOnInit();
+                component.search('search');
+
+                expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-root-id', 0, 25, [], false);
+            });
+
+            it('should restrict the search to the site and not to the currentFolderId in case is changed', () => {
+                component.currentFolderId = 'my-root-id';
+                component.restrictSearchToCurrentFolderId = true;
+                component.ngOnInit();
+                component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
+                component.search('search');
+
+                expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-site-id', 0, 25, [], false);
+            });
+
             it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync(() => {
                 spyOn(component, 'clear').and.callThrough();
                 typeToSearchBox('a');
