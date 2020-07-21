@@ -37,6 +37,9 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     @Input()
     displayNoneOption: boolean = true;
 
+    @Input()
+    displayEmpty: boolean = true;
+
     value: string;
 
     constructor(cardViewUpdateService: CardViewUpdateService) {
@@ -63,5 +66,9 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     showNoneOption() {
         return this.displayNoneOption;
+    }
+
+    get showProperty(): boolean {
+        return this.displayEmpty || !this.property.isEmpty();
     }
 }

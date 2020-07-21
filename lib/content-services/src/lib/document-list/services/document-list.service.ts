@@ -125,7 +125,7 @@ export class DocumentListService implements DocumentListLoader {
      */
     getNode(nodeId: string, includeFields: string[] = []): Observable<NodeEntry> {
 
-        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', ...includeFields]
+        const includeFieldsRequest = ['path', 'properties', 'allowableOperations', 'permissions', 'definition', ...includeFields]
             .filter((element, index, array) => index === array.indexOf(element));
 
         const opts: any = {

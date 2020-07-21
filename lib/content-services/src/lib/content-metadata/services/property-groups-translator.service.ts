@@ -22,6 +22,7 @@ import {
     CardViewTextItemModel,
     CardViewBoolItemModel,
     CardViewDateItemModel,
+    CardViewSelectItemModel,
     CardViewDatetimeItemModel,
     CardViewIntItemModel,
     CardViewFloatItemModel,
@@ -31,6 +32,8 @@ import {
     DecimalNumberPipe
 } from '@alfresco/adf-core';
 import { Property, CardViewGroup, OrganisedPropertyGroup } from '../interfaces/content-metadata.interfaces';
+import { of } from 'rxjs';
+import { Definition, Constraint } from '@alfresco/js-api';
 
 const D_TEXT = 'd:text';
 const D_MLTEXT = 'd:mltext';
@@ -58,21 +61,21 @@ export class PropertyGroupTranslatorService {
         this.valueSeparator = this.appConfig.get<string>('content-metadata.multi-value-pipe-separator');
     }
 
-    public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues): CardViewGroup[] {
+    public translateToCardViewGroups(propertyGroups: OrganisedPropertyGroup[], propertyValues, definition: Definition): CardViewGroup[] {
         return propertyGroups.map((propertyGroup) => {
             const translatedPropertyGroup: any = Object.assign({}, propertyGroup);
-            translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues);
+            translatedPropertyGroup.properties = this.translateArray(propertyGroup.properties, propertyValues, definition);
             return translatedPropertyGroup;
         });
     }
 
-    private translateArray(properties: Property[], propertyValues: any): CardViewItem[] {
+    private translateArray(properties: Property[], propertyValues: any, definition: Definition): CardViewItem[] {
         return properties.map((property) => {
-            return this.translate(property, propertyValues);
+            return this.translate(property, propertyValues, this.getPropertyConstraints(property.name, definition));
         });
     }
 
-    private translate(property: Property, propertyValues: any): CardViewItem {
+    private translate(property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
         let propertyValue;
         if (propertyValues && propertyValues[property.name]) {
             propertyValue = propertyValues[property.name];
@@ -87,52 +90,68 @@ export class PropertyGroupTranslatorService {
             value: propertyValue,
             key: `${prefix}${property.name}`,
             default: property.defaultValue,
-            editable: property.editable !== undefined ? property.editable : true
+            editable: property.editable !== undefined ? property.editable : true,
+            constraints: constraints
         };
+
         let cardViewItemProperty;
 
-        switch (property.dataType) {
+        if (this.isListOfValues(propertyDefinition.constraints)) {
+            const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ key: value, label: value }));
+            const properties =  Object.assign(propertyDefinition, { options$: of(options) });
 
-            case D_MLTEXT:
-                cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                    multiline: true
-                }));
-                break;
+            cardViewItemProperty = new CardViewSelectItemModel(properties);
+        } else {
+            switch (property.dataType) {
+                case D_MLTEXT:
+                    cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
+                        multiline: true
+                    }));
+                    break;
 
-            case D_INT:
-            case D_LONG:
-                cardViewItemProperty = new CardViewIntItemModel(propertyDefinition);
-                break;
+                case D_INT:
+                case D_LONG:
+                    cardViewItemProperty = new CardViewIntItemModel(propertyDefinition);
+                    break;
 
-            case D_FLOAT:
-            case D_DOUBLE:
-                cardViewItemProperty = new CardViewFloatItemModel(Object.assign(propertyDefinition, {
-                    pipes: [{ pipe: this.decimalNumberPipe }]
-                }));
-                break;
+                case D_FLOAT:
+                case D_DOUBLE:
+                    cardViewItemProperty = new CardViewFloatItemModel(Object.assign(propertyDefinition, {
+                        pipes: [{ pipe: this.decimalNumberPipe }]
+                    }));
+                    break;
 
-            case D_DATE:
-                cardViewItemProperty = new CardViewDateItemModel(propertyDefinition);
-                break;
+                case D_DATE:
+                    cardViewItemProperty = new CardViewDateItemModel(propertyDefinition);
+                    break;
 
-            case D_DATETIME:
-                cardViewItemProperty = new CardViewDatetimeItemModel(propertyDefinition);
-                break;
+                case D_DATETIME:
+                    cardViewItemProperty = new CardViewDatetimeItemModel(propertyDefinition);
+                    break;
 
-            case D_BOOLEAN:
-                cardViewItemProperty = new CardViewBoolItemModel(propertyDefinition);
-                break;
+                case D_BOOLEAN:
+                    cardViewItemProperty = new CardViewBoolItemModel(propertyDefinition);
+                    break;
 
-            case D_TEXT:
-            default:
-                cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
-                    multivalued: property.multiValued,
-                    multiline: property.multiValued,
-                    pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator]}]
-                }));
+                case D_TEXT:
+                default:
+                    cardViewItemProperty = new CardViewTextItemModel(Object.assign(propertyDefinition, {
+                        multivalued: property.multiValued,
+                        multiline: property.multiValued,
+                        pipes: [{ pipe: this.multiValuePipe, params: [this.valueSeparator]}]
+                    }));
+            }
         }
 
         return cardViewItemProperty;
+    }
+
+    private isListOfValues(constraint: Constraint[]): boolean {
+        return constraint?.[0]?.type === 'LIST';
+    }
+
+    private getPropertyConstraints(propertyName: string, definition: Definition): Constraint[] {
+        return definition?.properties.find((item) => item.id === propertyName)?.constraints ?? [];
     }
 
     private checkECMTypeValidity(ecmPropertyType) {

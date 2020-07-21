@@ -63,7 +63,7 @@ export class ContentMetadataService {
                     map((groups) => contentMetadataConfig.filterExcludedPreset(groups)),
                     map((groups) => this.filterEmptyPreset(groups)),
                     map((groups) => this.setTitleToNameIfNotSet(groups)),
-                    map((groups) => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties))
+                    map((groups) => this.propertyGroupTranslatorService.translateToCardViewGroups(groups, node.properties, node.definition))
                 );
             }
         }
