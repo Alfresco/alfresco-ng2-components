@@ -29,25 +29,107 @@ export class ProcessInstanceHeaderPage {
     id = new CardTextItemPage('id');
     description = new CardTextItemPage('description');
 
-    async isIdFieldPresent(): Promise<boolean> {
+    async isIdFieldDisplayed(): Promise<boolean> {
         try {
-            await this.id.checkLabelIsPresent();
+            await this.id.checkLabelIsVisible();
             return true;
         } catch (e) {
             return false;
         }
-        
     }
 
     async getIdFieldValue(): Promise<string> {
         return this.id.getFieldValue();
     }
 
-    async checkStatusFieldIsPresent(): Promise<void> {
-        await this.id.checkLabelIsPresent();
+    async isStatusFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.status.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     async getStatusFieldValue(): Promise<string> {
-        return this.id.getFieldValue();
+        return this.status.getFieldValue();
+    }
+
+    async isEndDateFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.endDate.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getEndDateFieldValue(): Promise<string> {
+        return this.endDate.getDateValue();
+    }
+
+    async isCategoryFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.category.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getCategoryFieldValue(): Promise<string> {
+        return this.category.getFieldValue();
+    }
+
+    async isBusinessKeyFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.businessKey.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getBusinessKeyFieldValue(): Promise<string> {
+        return this.businessKey.getFieldValue();
+    }
+
+    async isStartedByFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.startedBy.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getStartedByFieldValue(): Promise<string> {
+        return this.startedBy.getFieldValue();
+    }
+
+    async isStartDateFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.startDate.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getStartDateFieldValue(): Promise<string> {
+        return this.startDate.getDateValue();
+    }
+
+    async isDescriptionFieldDisplayed(): Promise<boolean> {
+        try {
+            await this.description.checkLabelIsVisible();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    async getDescriptionFieldValue(): Promise<string> {
+        return this.description.getFieldValue();
     }
 }

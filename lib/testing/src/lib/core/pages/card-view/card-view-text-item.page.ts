@@ -43,6 +43,11 @@ export class CardTextItemPage {
         await BrowserVisibility.waitUntilElementIsPresent(labelElement);
     }
 
+    async checkLabelIsVisible(): Promise<void> {
+        const labelElement = this.rootElement.element(this.labelLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(labelElement);
+    }
+
     async enterTextField(text: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.textField));
         await BrowserActions.clearSendKeys(this.rootElement.element(this.textField), text);

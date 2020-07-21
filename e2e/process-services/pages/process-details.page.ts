@@ -16,19 +16,12 @@
  */
 
 import { by, element, protractor } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
+import { BrowserVisibility, BrowserActions, ProcessInstanceHeaderPage } from '@alfresco/adf-testing';
 
 export class ProcessDetailsPage {
+    processInstanceHeaderPage = new ProcessInstanceHeaderPage();
     processTitle = element(by.css('.mat-card-title'));
     processDetailsMessage = element(by.css('adf-process-instance-details div'));
-    processStatusField = element(by.css('[data-automation-id="card-textitem-value-status"]'));
-    processEndDateField = element(by.css('span[data-automation-id="card-dateitem-ended"]'));
-    processCategoryField = element(by.css('[data-automation-id="card-textitem-value-category"]'));
-    processBusinessKeyField = element(by.css('[data-automation-id="card-textitem-value-businessKey"]'));
-    processCreatedByField = element(by.css('[data-automation-id="card-textitem-value-createdBy"]'));
-    processCreatedField = element(by.css('span[data-automation-id="card-dateitem-created"]'));
-    processIdField = element(by.css('[data-automation-id="card-textitem-value-id"]'));
-    processDescription = element(by.css('[data-automation-id="card-textitem-value-description"]'));
     showDiagramButtonDisabled = element(by.css('button[id="show-diagram-button"][disabled]'));
     propertiesList = element(by.css('.adf-property-list'));
     showDiagramButton = element(by.id('show-diagram-button'));
@@ -42,22 +35,6 @@ export class ProcessDetailsPage {
     completedTask = element(by.css('div[data-automation-id="completed-tasks"]'));
     taskTitle = element(by.css('.adf-activiti-task-details__header'));
 
-    async checkDetailsAreDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.processStatusField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processEndDateField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processCategoryField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processBusinessKeyField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processCreatedByField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processCreatedField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processIdField);
-        await BrowserVisibility.waitUntilElementIsVisible(this.processDescription);
-        await BrowserVisibility.waitUntilElementIsVisible(this.showDiagramButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.activeTask);
-        await BrowserVisibility.waitUntilElementIsVisible(this.cancelProcessButton);
-        await BrowserVisibility.waitUntilElementIsVisible(this.commentInput);
-        await BrowserVisibility.waitUntilElementIsVisible(this.auditLogButton);
-    }
-
     checkProcessTitleIsDisplayed(): Promise<string> {
         return BrowserActions.getText(this.processTitle);
     }
@@ -66,36 +43,68 @@ export class ProcessDetailsPage {
         return BrowserActions.getText(this.processDetailsMessage);
     }
 
+    isProcessStatusFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isStatusFieldDisplayed();
+    }
+
+    isProcessEndDateFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isEndDateFieldDisplayed();
+    }
+
+    isProcessCategoryFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isCategoryFieldDisplayed();
+    }
+
+    isProcessBusinessKeyFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isBusinessKeyFieldDisplayed();
+    }
+
+    isProcessCreatedByFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isStartedByFieldDisplayed();
+    }
+
+    isProcessCreatedFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isStartDateFieldDisplayed();
+    }
+
+    isProcessIdFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isIdFieldDisplayed();
+    }
+
+    isProcessDescriptionFieldVisible(): Promise<boolean> {
+        return this.processInstanceHeaderPage.isDescriptionFieldDisplayed();
+    }
+
     getProcessStatus(): Promise<string> {
-        return BrowserActions.getInputValue(this.processStatusField);
+        return this.processInstanceHeaderPage.getStatusFieldValue();
     }
 
     getEndDate(): Promise<string> {
-        return BrowserActions.getText(this.processEndDateField);
+        return this.processInstanceHeaderPage.getEndDateFieldValue();
     }
 
     getProcessCategory(): Promise<string> {
-        return BrowserActions.getInputValue(this.processCategoryField);
+        return this.processInstanceHeaderPage.getCategoryFieldValue();
     }
 
     getBusinessKey(): Promise<string> {
-        return BrowserActions.getInputValue(this.processBusinessKeyField);
+        return this.processInstanceHeaderPage.getBusinessKeyFieldValue();
     }
 
     getCreatedBy(): Promise<string> {
-        return BrowserActions.getInputValue(this.processCreatedByField);
+        return this.processInstanceHeaderPage.getStartedByFieldValue();
     }
 
     getCreated(): Promise<string> {
-        return BrowserActions.getText(this.processCreatedField);
+        return this.processInstanceHeaderPage.getStartDateFieldValue();
     }
 
     getId(): Promise<string> {
-        return BrowserActions.getInputValue(this.processIdField);
+        return this.processInstanceHeaderPage.getIdFieldValue();
     }
 
     getProcessDescription(): Promise<string> {
-        return BrowserActions.getInputValue(this.processDescription);
+        return this.processInstanceHeaderPage.getDescriptionFieldValue();
     }
 
     async clickShowDiagram(): Promise<void> {

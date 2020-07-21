@@ -18,6 +18,7 @@
 import { element, by, ElementFinder } from 'protractor';
 import { DateTimePickerPage } from '../material/date-time-picker.page';
 import { DatePickerPage } from '../material/date-picker.page';
+import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class CardDateItemPage {
 
@@ -45,5 +46,10 @@ export class CardDateItemPage {
 
     async getDateValue(): Promise<string> {
         return this.rootElement.element(this.valueLocator).getText();
+    }
+
+    async checkLabelIsVisible(): Promise<void> {
+        const labelElement = this.rootElement.element(this.labelLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(labelElement);
     }
 }
