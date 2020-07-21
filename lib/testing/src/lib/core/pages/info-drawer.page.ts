@@ -66,10 +66,10 @@ export class InfoDrawerPage {
     }
 
     async getNoOfTabs(): Promise<Number> {
-        return await this.tabsPage.getNoOfTabs();
+        return this.tabsPage.getNoOfTabs();
     }
 
     async getTabsLabels(): Promise<string> {
-        return await this.tabsPage.getTabsLabels();
+        return this.tabsPage.getTabsLabels();
     }
 }

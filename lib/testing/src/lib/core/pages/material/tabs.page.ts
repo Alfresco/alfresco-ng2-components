@@ -17,7 +17,7 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
-import { BrowserVisibility } from '../../utils/browser-visibility'; 
+import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class TabsPage {
 

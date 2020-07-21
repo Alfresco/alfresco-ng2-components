@@ -194,7 +194,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.enterProcessName('Test');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.clickFormStartProcessButton();
-                
+
                 await expect(await processDetailsPage.isProcessStatusFieldVisible()).toBe(true, 'Status field is not visible');
                 await expect(await processDetailsPage.isProcessEndDateFieldVisible()).toBe(true, 'End date field is not visible');
                 await expect(await processDetailsPage.isProcessCategoryFieldVisible()).toBe(true, 'Category field is not visible');
