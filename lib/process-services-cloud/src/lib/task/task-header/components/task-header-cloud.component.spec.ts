@@ -83,10 +83,14 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
             taskTitle = fixture.debugElement.query(By.css('.adf-task-title'));
 <<<<<<< HEAD
+<<<<<<< HEAD
             expect(taskTitle).toBeTruthy();
 =======
             expect(taskTitle).not.toBeNull();
 >>>>>>> fix unit test
+=======
+            expect(taskTitle).toBeDefined();
+>>>>>>> change expect
         });
 
         it('should fectch task details when appName and taskId defined', async(() => {
