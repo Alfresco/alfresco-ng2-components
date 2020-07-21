@@ -26,10 +26,13 @@ import {
     LogService,
     CardViewBoolItemModel,
     CardViewDatetimeItemModel,
-    setupTestBed
+    CardViewSelectItemModel,
+    setupTestBed,
+    CardViewSelectItemProperties
 } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../testing/content.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { Constraint, Definition } from '@alfresco/js-api';
 
 describe('PropertyGroupTranslatorService', () => {
 
@@ -95,7 +98,7 @@ describe('PropertyGroupTranslatorService', () => {
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
             expect(cardViewGroup[0].properties.length).toBe(2);
             expect(cardViewGroup[0].properties[0] instanceof CardViewTextItemModel).toBeTruthy('First property should be instance of CardViewTextItemModel');
             expect(cardViewGroup[0].properties[1] instanceof CardViewTextItemModel).toBeTruthy('Second property should be instance of CardViewTextItemModel');
@@ -127,7 +130,7 @@ describe('PropertyGroupTranslatorService', () => {
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
             expect(cardViewGroup.length).toBe(2);
             expect(cardViewGroup[0].properties[0] instanceof CardViewTextItemModel).toBeTruthy('First group\'s property should be instance of CardViewTextItemModel');
             expect(cardViewGroup[1].properties[0] instanceof CardViewTextItemModel).toBeTruthy('Second group\'s property should be instance of CardViewTextItemModel');
@@ -145,7 +148,7 @@ describe('PropertyGroupTranslatorService', () => {
 
             propertyGroups.push(Object.assign({}, propertyGroup));
 
-            service.translateToCardViewGroups(propertyGroups, propertyValues);
+            service.translateToCardViewGroups(propertyGroups, propertyValues, null);
             expect(logService.error).toHaveBeenCalledWith('Unknown type for mapping: daemonic:scorcher');
         });
 
@@ -161,7 +164,7 @@ describe('PropertyGroupTranslatorService', () => {
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
 
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
             const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
         });
@@ -181,7 +184,7 @@ describe('PropertyGroupTranslatorService', () => {
                 property.dataType = dataType;
 
                 propertyValues = { 'prefix:name': null };
-                const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+                const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
                 const cardViewProperty = cardViewGroup[0].properties[0];
                 expect(cardViewProperty.label).toBe(property.title);
@@ -195,7 +198,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:text';
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
@@ -207,7 +210,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:mltext';
 
             propertyValues = { 'FAS:PLAGUE': 'The Chariot Line' };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewTextItemModel = <CardViewTextItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewTextItemModel).toBeTruthy('Property should be instance of CardViewTextItemModel');
@@ -220,7 +223,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:date';
 
             propertyValues = { 'FAS:PLAGUE': expectedValue };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewDateItemModel = <CardViewDateItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewDateItemModel).toBeTruthy('Property should be instance of CardViewDateItemModel');
@@ -232,7 +235,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:datetime';
 
             propertyValues = { 'FAS:PLAGUE': expectedValue };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewDatetimeItemModel = <CardViewDatetimeItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewDatetimeItemModel).toBeTruthy('Property should be instance of CardViewDatetimeItemModel');
@@ -243,7 +246,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:int';
 
             propertyValues = { 'FAS:PLAGUE': '1024' };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewIntItemModel = <CardViewIntItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewIntItemModel).toBeTruthy('Property should be instance of CardViewIntItemModel');
@@ -254,7 +257,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:long';
 
             propertyValues = { 'FAS:PLAGUE': '1024' };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewIntItemModel = <CardViewIntItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewIntItemModel).toBeTruthy('Property should be instance of CardViewIntItemModel');
@@ -265,7 +268,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:float';
 
             propertyValues = { 'FAS:PLAGUE': '1024.24' };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
@@ -276,7 +279,7 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:double';
 
             propertyValues = { 'FAS:PLAGUE': '1024.24' };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewFloatItemModel = <CardViewFloatItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewFloatItemModel).toBeTruthy('Property should be instance of CardViewFloatItemModel');
@@ -287,11 +290,34 @@ describe('PropertyGroupTranslatorService', () => {
             property.dataType = 'd:boolean';
 
             propertyValues = { 'FAS:PLAGUE': true };
-            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues);
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, null);
 
             const cardViewProperty: CardViewBoolItemModel = <CardViewBoolItemModel> cardViewGroup[0].properties[0];
             expect(cardViewProperty instanceof CardViewBoolItemModel).toBeTruthy('Property should be instance of CardViewBoolItemModel');
             expect(cardViewProperty.value).toBe(true);
+        });
+
+        it('should translate property for type LIST constraint', () => {
+            const definition: Definition = {
+                properties: [{
+                    id: 'FAS:PLAGUE',
+                    constraints: [
+                        {
+                            type: 'LIST',
+                            parameters: {
+                                allowedValues: ['one', 'two', 'three']
+                            }
+                        }
+                    ]
+                } as Constraint ]
+            };
+            property.dataType = 'd:text';
+            propertyValues = { 'FAS:PLAGUE': 'two' };
+            const cardViewGroup = service.translateToCardViewGroups(propertyGroups, propertyValues, definition);
+
+            const cardViewProperty: CardViewSelectItemModel<CardViewSelectItemProperties<string>> = <CardViewSelectItemModel<CardViewSelectItemProperties<string>>> cardViewGroup[0].properties[0];
+            expect(cardViewProperty instanceof CardViewSelectItemModel).toBeTruthy('Property should be instance of CardViewBoolItemModel');
+            expect(cardViewProperty.value).toBe('two');
         });
     });
 });
