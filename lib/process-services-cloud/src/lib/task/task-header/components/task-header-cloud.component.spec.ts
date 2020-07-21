@@ -206,8 +206,7 @@ describe('TaskHeaderCloudComponent', () => {
             component.properties = null;
             fixture.detectChanges();
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
-            expect(loading).toBeDefined();
-            expect(loading).not.toEqual(null);
+            expect(loading).toBeTruthy();
         });
     });
 
