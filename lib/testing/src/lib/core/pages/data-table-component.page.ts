@@ -190,7 +190,7 @@ export class DataTableComponentPage {
 
         try {
             await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first(), 1000);
-            columnValues = <string[]>await element.all(columnLocator)
+            columnValues = <string[]> await element.all(columnLocator)
                 .filter(async (el) => el.isPresent())
                 .map(async (el) => el.getText());
         } catch (error) {
