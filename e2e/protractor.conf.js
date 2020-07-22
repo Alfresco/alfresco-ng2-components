@@ -182,6 +182,9 @@ exports.config = {
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
         screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
+    },{
+        package: 'protractor-console',
+        logLevels: ['severe']
     }],
 
     onCleanUp(results) {
