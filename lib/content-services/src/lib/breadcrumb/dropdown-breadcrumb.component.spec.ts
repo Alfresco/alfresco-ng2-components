@@ -144,7 +144,7 @@ describe('DropdownBreadcrumb', () => {
             fixture.whenStable().then(() => {
                 clickOnTheFirstOption();
 
-                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined);
+                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined, ['name ASC']);
                 done();
             });
         });

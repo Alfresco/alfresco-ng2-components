@@ -315,7 +315,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     $folderNode: Subject<Node> = new Subject<Node>();
     allowFiltering: boolean = true;
     orderBy: string[] = ['name ASC'];
-    // sortingProperties: string[] = ['isFolder','name', 'mimeType', 'nodeType', 'sizeInBytes', 'modifiedAt', 'createdAt', 'modifiedByUser', 'createdByUser'];
 
     // @deprecated 3.0.0
     folderNode: Node;

@@ -121,7 +121,8 @@ describe('Breadcrumb', () => {
             expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith(node.id,
                 documentListComponent.DEFAULT_PAGINATION,
                 documentListComponent.includeFields,
-                documentListComponent.where);
+                documentListComponent.where,
+                documentListComponent.orderBy);
         });
 
         it('should build the path based on the document list node', () => {
