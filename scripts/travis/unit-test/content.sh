@@ -6,7 +6,9 @@ cd $DIR/../../../
 
 ng test content-services --watch=false || exit 1;
 
-# echo "================== content-services unit ==================="
+echo "================== AFFECTED_LIBS  ${AFFECTED_LIBS} ==================="
+
+echo "================== content-services unit ==================="
 
 AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
 if [[ $AFFECTED_LIBS =~ "content-services" ||  "${TRAVIS_EVENT_TYPE}" == "push"  ]];
@@ -14,4 +16,4 @@ then
     ng test content-services --watch=false || exit 1;
 fi;
 
-# bash <(curl -s https://codecov.io/bash) -X gcov
+bash <(curl -s https://codecov.io/bash) -X gcov

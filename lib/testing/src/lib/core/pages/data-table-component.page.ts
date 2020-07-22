@@ -31,6 +31,9 @@ export class DataTableComponentPage {
     allSelectedRows: ElementArrayFinder;
     selectAll: ElementFinder;
     copyColumnTooltip: ElementFinder;
+    emptyList: ElementFinder;
+    emptyListTitle: ElementFinder;
+    emptyListSubtitle: ElementFinder;
 
     constructor(rootElement = element.all(by.css('adf-datatable')).first()) {
         this.rootElement = rootElement;
@@ -42,6 +45,9 @@ export class DataTableComponentPage {
         this.allSelectedRows = this.rootElement.all(by.css(`adf-datatable-row[class*='is-selected']`));
         this.selectAll = this.rootElement.element(by.css(`div[class*='adf-datatable-header'] mat-checkbox`));
         this.copyColumnTooltip = this.rootElement.element(by.css(`adf-copy-content-tooltip span`));
+        this.emptyList = this.rootElement.element(by.css(`div.adf-no-content-container`));
+        this.emptyListTitle = this.rootElement.element(by.css(`.adf-empty-content__title`));
+        this.emptyListSubtitle = this.rootElement.element(by.css(`.adf-empty-content__subtitle`));
     }
 
     async checkAllRowsButtonIsDisplayed(): Promise<void> {
@@ -184,7 +190,7 @@ export class DataTableComponentPage {
 
         try {
             await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first(), 1000);
-            columnValues = <string[]> await element.all(columnLocator)
+            columnValues = <string[]>await element.all(columnLocator)
                 .filter(async (el) => el.isPresent())
                 .map(async (el) => el.getText());
         } catch (error) {
@@ -371,5 +377,51 @@ export class DataTableComponentPage {
 
     async clickColumn(columnName: string, columnValue: string): Promise<void> {
         await BrowserActions.clickExecuteScript(`div[title="${columnName}"] div[data-automation-id="text_${columnValue}"] span`);
+    }
+
+    async selectMultipleItems(names: string[]): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        for (const name of names) {
+            await this.selectRowByContent(name);
+        }
+        await this.clearSelection();
+    }
+
+    async clearSelection(): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
+    }
+
+    async getEmptyListText(): Promise<string> {
+        const isEmpty = await this.isEmpty();
+        if (isEmpty) {
+            return this.rootElement.by.css('adf-custom-empty-content-template').getText();
+        }
+        return '';
+    }
+
+    async isEmpty(): Promise<boolean> {
+        return this.emptyList.isPresent();
+    }
+
+    async waitForEmptyState(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsPresent(this.tableBody.element(this.emptyList));
+    }
+
+    async getEmptyStateTitle(): Promise<string> {
+        const isEmpty = await this.isEmpty();
+        if (isEmpty) {
+            return this.emptyListTitle.getText();
+        }
+        return '';
+    }
+
+    async getEmptyStateSubtitle(): Promise<string> {
+        const isEmpty = await this.isEmpty();
+        if (isEmpty) {
+            return this.emptyListSubtitle.getText();
+        }
+        return '';
     }
 }

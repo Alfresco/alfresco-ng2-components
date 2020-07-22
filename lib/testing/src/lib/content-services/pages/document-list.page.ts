@@ -88,4 +88,13 @@ export class DocumentListPage {
     async doubleClickRow(nodeName: string): Promise<void> {
         await this.dataTable.doubleClickRow('Display name', nodeName);
     }
+
+    async isItemPresent(name: string): Promise<boolean> {
+        return this.dataTable.getRow('Display name', name).isPresent();
+    }
+
+    async getLibraryRole(name: string): Promise<string> {
+        return this.getRowByName(name).element(by.css('adf-library-role-column')).getText();
+    }
+
 }
