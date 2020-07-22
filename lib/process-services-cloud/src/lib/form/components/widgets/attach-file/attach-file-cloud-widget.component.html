@@ -5,35 +5,11 @@
         <span *ngIf="isRequired()">*</span>
     </label>
     <div class="adf-attach-widget-container">
-        <div id="adf-attach-widget-simple-upload" *ngIf="isSimpleUploadButton() && isUploadButtonVisible()">
-            <a mat-raised-button color="primary">
+        <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible()">
+            <button (click)="openSelectDialog()" mat-raised-button color="primary" [id]="field.id">
                 {{ 'FORM.FIELD.UPLOAD' | translate }}
-                <mat-icon>file_upload</mat-icon>
-                <input #uploadFiles
-                       [multiple]="multipleOption"
-                       type="file"
-                       [id]="field.id"
-                       (change)="onAttachFileChanged($event)"/>
-            </a>
-        </div>
-        <div class="adf-attach-widget__menu-upload" *ngIf="isUploadButtonVisible() && isMultipleSourceUpload()">
-            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" [id]="field.id">
-                {{ 'FORM.FIELD.UPLOAD' | translate }}
-                <mat-icon>attach_file</mat-icon>
+                <mat-icon>{{getWidgetIcon()}}</mat-icon>
             </button>
-            <mat-menu #menu="matMenu" class="adf-attach-widget__menu-content">
-                <div *ngIf="isContentSourceSelected()">
-                    <button mat-menu-item
-                            id="attach-{{field.params?.fileSource?.name}}"
-                            (click)="uploadFileFromCS()">
-                        {{field.params?.fileSource?.name}}
-                        <mat-icon>
-                            <img alt="alfresco" class="adf-attach-widget__image-logo"
-                                 src="./assets/images/alfresco-flower.svg">
-                        </mat-icon>
-                    </button>
-                </div>
-            </mat-menu>
         </div>
     </div>
 </div>

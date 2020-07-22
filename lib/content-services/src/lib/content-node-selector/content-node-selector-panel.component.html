@@ -71,7 +71,7 @@
             [allowDropFiles]="false"
             [sorting]="'server'"
             [where]="where"
-            (folderChange)="onFolderChange()"
+            (folderChange)="onFolderChange($event)"
             (ready)="onFolderLoaded()"
             (nodeSelected)="onCurrentSelection($event)"
             data-automation-id="content-node-selector-document-list">

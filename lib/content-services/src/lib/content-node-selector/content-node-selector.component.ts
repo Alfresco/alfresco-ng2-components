@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
+import { NodeEntryEvent } from '../document-list';
+import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
+import { NotificationService } from '../../../../core/notifications';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -28,17 +31,22 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent {
+    @ViewChild('selectorPanelComponent', { static: true })
+    selectorPanelComponent: ContentNodeSelectorPanelComponent;
 
     title: string;
     action: string;
     buttonActionName: string;
     chosenNode: Node[];
+    currentDirectoryId: string;
 
     constructor(private translation: TranslationService,
+                private notificationService: NotificationService,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
+        this.currentDirectoryId = data.currentFolderId;
     }
 
     close() {
@@ -57,6 +65,10 @@ export class ContentNodeSelectorComponent {
         this.updateTitle(siteTitle);
     }
 
+    onNavigationChange(pathElement: NodeEntryEvent) {
+        this.currentDirectoryId = pathElement.value.id;
+    }
+
     onClick(): void {
         this.data.select.next(this.chosenNode);
         this.data.select.complete();
@@ -70,5 +82,14 @@ export class ContentNodeSelectorComponent {
 
     getTitleTranslation(action: string, name: string): string {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
+    }
+
+    onSuccess($event) {
+        this.selectorPanelComponent.documentList.reload();
+        this.notificationService.showInfo(`${$event.value.entry.name} has been uploaded`);
+    }
+
+    onError(error) {
+        this.notificationService.showError(error);
     }
 }

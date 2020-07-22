@@ -5,7 +5,7 @@
 </header>
 
 <mat-dialog-content>
-    <adf-content-node-selector-panel
+    <adf-content-node-selector-panel #selectorPanelComponent
         [currentFolderId]="data?.currentFolderId"
         [restrictRootToCurrentFolderId]="data?.restrictRootToCurrentFolderId"
         [dropdownHideMyFiles]="data?.dropdownHideMyFiles"
@@ -21,11 +21,18 @@
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
         (select)="onSelect($event)"
-        (siteChange)="onSiteChange($event)">
+        (siteChange)="onSiteChange($event)"
+        (navigationChange)="onNavigationChange($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+    <adf-upload-button *ngIf="data?.showUploadButton"
+        [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
+        [rootFolderId]="currentDirectoryId"
+        (success)="onSuccess($event)"
+        (error)="onError($event)">
+    </adf-upload-button>
     <button
         mat-button
         (click)="close()"

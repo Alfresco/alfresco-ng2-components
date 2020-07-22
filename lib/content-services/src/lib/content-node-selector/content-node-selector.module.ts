@@ -27,6 +27,7 @@ import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
+import { UploadModule } from '../upload';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import { NameLocationCellComponent } from './name-location-cell/name-location-ce
         MaterialModule,
         SitesDropdownModule,
         BreadcrumbModule,
-        DocumentListModule
+        DocumentListModule,
+        UploadModule
     ],
     exports: [
         ContentNodeSelectorPanelComponent,

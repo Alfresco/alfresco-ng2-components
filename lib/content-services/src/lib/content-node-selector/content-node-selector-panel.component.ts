@@ -33,7 +33,7 @@ import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
-import { ShareDataRow } from '../document-list';
+import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
 
 export type ValidationFunction = (entry: Node) => boolean;
@@ -185,6 +185,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /** Emitted when the user has chosen an item. */
     @Output()
     select: EventEmitter<Node[]> = new EventEmitter<Node[]>();
+
+    /** Emitted when the navigation changes. */
+    @Output()
+    navigationChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
 
     /** Emitted when the select site changes. */
     @Output()
@@ -426,11 +430,12 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /**
      * Sets showingSearchResults state to be able to differentiate between search results or folder results
      */
-    onFolderChange(): void {
+    onFolderChange($event: NodeEntryEvent): void {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
         this.clearSearch();
+        this.navigationChange.emit($event);
     }
 
     /**
