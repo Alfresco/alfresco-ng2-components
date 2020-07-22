@@ -44,5 +44,5 @@ The below component shows the diagram of a running process instance with the act
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | error. |
-| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<>` | success. |
+| error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | error. |
+| success | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | success. |

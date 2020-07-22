@@ -69,7 +69,7 @@ Displays the documents from a repository.
 | maxItems | `number` |  | Default value is stored in the user preference settings. Use this only if you are not using pagination. |
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
-| navigationMode | `string` |  | User interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
+| navigationMode | `string` |  | [User](../../../lib/core/pipes/user-initial.pipe.ts) interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) | null | The Document list will show all the nodes contained in the [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) entity |
 | permissionsStyle | [`PermissionStyleModel`](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
@@ -77,7 +77,7 @@ Displays the documents from a repository.
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 | showHeader | `string` |  | Toggles the header |
 | sorting | `string[]` | ['name', 'asc'] | Defines default sorting. The format is an array of 2 strings `[key, direction]` i.e. `['name', 'desc']` or `['name', 'asc']`. Set this value only if you want to override the default sorting detected by the component based on columns. |
-| sortingMode | `string` | "client" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
+| sortingMode | `string` | "server" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
 | where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
