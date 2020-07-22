@@ -164,21 +164,19 @@ export class AuthenticationService {
      * Logs the user out.
      * @returns Response event called when logout is complete
      */
-    logout(): Promise<any> {
-        if (this.isLoggedIn) {
-            return from(this.callApiLogout())
-                .pipe(
-                    tap((response) => {
-                        this.onLogout.next(response);
-                        return response;
-                    }),
-                    catchError((err) => this.handleError(err))
-                );
-        }
+    logout() {
+        return from(this.callApiLogout())
+            .pipe(
+                tap((response) => {
+                    this.onLogout.next(response);
+                    return response;
+                }),
+                catchError((err) => this.handleError(err))
+            );
     }
 
     private callApiLogout(): Promise<any> {
-        if (this.alfrescoApi.getInstance()) {
+        if (this.alfrescoApi.getInstance() && this.isLoggedIn()) {
             return this.alfrescoApi.getInstance().logout();
         }
         return Promise.resolve();
@@ -267,7 +265,7 @@ export class AuthenticationService {
      * @returns The redirect URL
      */
     getRedirect(): string {
-        const provider = <string>this.appConfig.get(AppConfigValues.PROVIDERS);
+        const provider = <string> this.appConfig.get(AppConfigValues.PROVIDERS);
         return this.hasValidRedirection(provider) ? this.redirectUrl.url : null;
     }
 
