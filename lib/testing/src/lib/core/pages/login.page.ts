@@ -66,8 +66,6 @@ export class LoginPage {
     }
 
     async loginSSOIdentityService(username: string, password: string) {
-        Logger.log('Login With ' + username);
-
         browser.ignoreSynchronization = true;
 
         const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
