@@ -94,7 +94,7 @@ export class DocumentListPage {
     }
 
     async getLibraryRole(name: string): Promise<string> {
-        return this.getRowByName(name).element(by.css('adf-library-role-column')).getText();
+        return this.dataTable.getRow('Display name', name).element(by.css('adf-library-role-column')).getText();
     }
 
 }
