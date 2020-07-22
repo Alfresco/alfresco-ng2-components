@@ -16,9 +16,19 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { SitePaging, SiteEntry, MinimalNode, SitesApi, SiteMembershipRequestWithPersonPaging, SiteMembershipBodyCreate, SiteMemberEntry, SiteMembershipBodyUpdate } from '@alfresco/js-api';
+import {
+    MinimalNode,
+    SiteEntry, SiteGroupEntry, SiteGroupPaging,
+    SiteMemberEntry,
+    SiteMemberPaging,
+    SiteMembershipBodyCreate,
+    SiteMembershipBodyUpdate,
+    SiteMembershipRequestWithPersonPaging,
+    SitePaging,
+    SitesApi
+} from '@alfresco/js-api';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -96,6 +106,16 @@ export class SitesService {
     }
 
     /**
+     * Gets a list of all a site's members.
+     * @param siteId ID of the target site
+     * @param opts Optional parameters supported by JS-API
+     * @returns Observable<SiteMemberPaging>
+     */
+    listSiteMemberships(siteId: string, opts: any): Observable<SiteMemberPaging> {
+        return from(this.sitesApi.listSiteMemberships(siteId, opts));
+    }
+
+    /**
      * Gets the username of the user currently logged into ACS.
      * @returns Username string
      */
@@ -126,7 +146,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns Site membership requests
      */
-    getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+    getSiteMembershipRequests(opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.getSiteMembershipRequests(opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -138,9 +158,9 @@ export class SitesService {
      * @param siteId The identifier of a site
      * @param siteMembershipBodyCreate The person to add and their role
      * @param opts Optional parameters
-     * @return Site member entry
+     * @return Observable<SiteMemberEntry>
      */
-    createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry | {}> {
+    createSiteMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate, opts?: any): Observable<SiteMemberEntry> {
         return from(this.sitesApi.createSiteMembership(siteId, siteMembershipBodyCreate, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -153,9 +173,9 @@ export class SitesService {
      * @param personId The identifier of a person.
      * @param siteMembershipBodyUpdate The persons new role
      * @param opts Optional parameters
-     * @return Site member entry>
+     * @return Observable<SiteMemberEntry>
      */
-    updateSiteMembership(siteId: string, personId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: any): Observable<SiteMemberEntry | {}> {
+    updateSiteMembership(siteId: string, personId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate, opts?: any): Observable<SiteMemberEntry> {
         return from(this.sitesApi.updateSiteMembership(siteId, personId, siteMembershipBodyUpdate, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -168,7 +188,7 @@ export class SitesService {
      * @param personId The identifier of a person.
      * @return  Null response notifying when the operation is complete
      */
-    deleteSiteMembership(siteId: string, personId: string): Observable<any> {
+    deleteSiteMembership(siteId: string, personId: string): Observable<void> {
         return from(this.sitesApi.deleteSiteMembership(siteId, personId))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -182,7 +202,7 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns  Null response notifying when the operation is complete
      */
-    approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+    approveSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.approveSiteMembershipRequest(siteId, inviteeId, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
@@ -196,14 +216,80 @@ export class SitesService {
      * @param opts Options supported by JS-API
      * @returns  Null response notifying when the operation is complete
      */
-    rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging | {}> {
+    rejectSiteMembershipRequest(siteId: string, inviteeId: string, opts?: any): Observable<SiteMembershipRequestWithPersonPaging> {
         return from(this.sitesApi.rejectSiteMembershipRequest(siteId, inviteeId, opts))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
     }
 
-    private handleError(error: any): any {
+    /**
+     * List group membership for site
+     * @param siteId The identifier of a site.
+     * @param opts Options supported by JS-API
+     * @returns  Observable<SiteGroupPaging>
+     */
+    listSiteGroups(siteId: string, opts?: any): Observable<SiteGroupPaging> {
+        return from(this.sitesApi.listSiteGroups(siteId, opts))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Create a site membership for group
+     * @param siteId The identifier of a site.
+     * @param siteMembershipBodyCreate The Group to add and its role
+     * @returns Observable<SiteGroupEntry>
+     */
+    createSiteGroupMembership(siteId: string, siteMembershipBodyCreate: SiteMembershipBodyCreate): Observable<SiteGroupEntry> {
+        return from(this.sitesApi.createSiteGroupMembership(siteId, siteMembershipBodyCreate))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Get information about site membership of group
+     * @param siteId The identifier of a site.
+     * @param groupId The authorityId of a group.
+     * @return Observable<SiteGroupEntry>
+     */
+    getSiteGroupMembership(siteId: string, groupId: string): Observable<SiteGroupEntry> {
+        return from(this.sitesApi.getSiteGroupMembership(siteId, groupId))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Update site membership of group
+     * @param siteId The identifier of a site.
+     * @param groupId The authorityId of a group.
+     * @param siteMembershipBodyUpdate The group new role
+     * @return Observable<SiteGroupEntry>
+     */
+    updateSiteGroupMembership(siteId: string, groupId: string, siteMembershipBodyUpdate: SiteMembershipBodyUpdate): Observable<SiteGroupEntry> {
+        return from(this.sitesApi.updateSiteGroupMembership(siteId, groupId, siteMembershipBodyUpdate))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    /**
+     * Delete a group membership for site
+     * @param siteId The identifier of a site.
+     * @param groupId The authorityId of a group.
+     * @return Observable<void>
+     */
+    deleteSiteGroupMembership(siteId: string, groupId: string): Observable<void> {
+        return from(this.sitesApi.deleteSiteGroupMembership(siteId, groupId))
+            .pipe(
+                catchError((err: any) => this.handleError(err))
+            );
+    }
+
+    private handleError(error: any): Observable<never> {
         console.error(error);
         return throwError(error || 'Server error');
     }

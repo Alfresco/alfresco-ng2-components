@@ -67,8 +67,11 @@ jobs:
           name: Unit test core extension demo
           script: ./scripts/travis/unit-test/core-extension.sh
         - stage: Unit test
-          name: Unit test process process-cloud insights
+          name: Unit test process insights
           script: ./scripts/travis/unit-test/process.sh
+        - stage: Unit test
+          name: Unit test process-cloud
+          script: ./scripts/travis/unit-test/process-cloud.sh
 
 
         - stage: Update Children Projects

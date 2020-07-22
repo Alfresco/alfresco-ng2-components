@@ -7,6 +7,8 @@ cd $DIR/../../../
 
 AFFECTED_LIBS="$(nx affected:libs --base=$BASE_HASH --head=$HEAD_HASH --plain)"
 
+echo "================== AFFECTED_LIBS  ${AFFECTED_LIBS} ==================="
+
 echo "================== core unit ==================="
 
 if [[ $AFFECTED_LIBS =~ "core" || "${TRAVIS_EVENT_TYPE}" == "push" ]];
@@ -21,4 +23,4 @@ then
     ng test extensions --watch=false || exit 1;
 fi;
 
-# bash <(curl -s https://codecov.io/bash) -X gcov
+bash <(curl -s https://codecov.io/bash) -X gcov
