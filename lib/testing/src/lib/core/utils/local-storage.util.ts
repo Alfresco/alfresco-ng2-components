@@ -67,4 +67,10 @@ export class LocalStorageUtil {
         );
     }
 
+    static async logout(): Promise<void> {
+        await browser.executeScript(
+            `window.adf.logout();`
+        );
+    }
+
 }
