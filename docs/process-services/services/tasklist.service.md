@@ -20,7 +20,7 @@ Manages Task Instances.
 -   **assignTask**(taskId: `string`, requestNode: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Assigns a task to a user or group.
     -   _taskId:_ `string`  - The task to assign
-    -   _requestNode:_ `any`  - User or group to assign the task to
+    -   _requestNode:_ `any`  - [User](../../../lib/core/pipes/user-initial.pipe.ts) or group to assign the task to
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Details of the assigned task
 -   **assignTaskByUserId**(taskId: `string`, userId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Assigns a task to a user.

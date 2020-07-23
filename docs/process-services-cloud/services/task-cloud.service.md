@@ -29,7 +29,7 @@ Manages task cloud.
     Claims a task for an assignee.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task to claim
-    -   _assignee:_ `string`  - User to assign the task to
+    -   _assignee:_ `string`  - [User](../../../lib/core/pipes/user-initial.pipe.ts) to assign the task to
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Details of the claimed task
 -   **completeTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Complete a task.

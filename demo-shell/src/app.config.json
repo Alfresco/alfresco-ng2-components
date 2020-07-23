@@ -716,7 +716,8 @@
           "type": "text",
           "title": "ADF-DOCUMENT-LIST.LAYOUT.NAME",
           "cssClass": "full-width ellipsis-cell",
-          "sortable": true
+          "sortable": true,
+          "sortingKey": "name"
         },
         {
           "key": "visibility",

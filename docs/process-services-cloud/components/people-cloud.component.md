@@ -25,14 +25,14 @@ Allows one or more users to be selected (with auto-suggestion) based on the inpu
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` |  | Name of the application. If specified, this shows the users who have access to the app. |
-| mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | User selection mode (single/multiple). |
+| mode | [`ComponentSelectionMode`](../../../lib/process-services-cloud/src/lib/types.ts) | "single" | [User](../../../lib/core/pipes/user-initial.pipe.ts) selection mode (single/multiple). |
 | preSelectUsers | [`IdentityUserModel`](../../../lib/core/models/identity-user.model.ts)`[]` | \[] | Array of users to be pre-selected. All users in the array are pre-selected in multi selection mode, but only the first user is pre-selected in single selection mode. Mandatory properties are: id, email, username |
 | readOnly | `boolean` | false | Show the info in readonly mode |
 | roles | `string[]` |  | Role names of the users to be listed. |
 | searchUserCtrl | `FormControl` |  | FormControl to search the user |
 | title | `string` |  | Placeholder translation key |
 | userChipsCtrl | `FormControl` |  | FormControl to list of users |
-| validate | `boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
+| validate | `boolean` | false | This flag enables the validation on the preSelectUsers passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
 ### Events
 

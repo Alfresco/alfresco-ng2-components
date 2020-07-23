@@ -50,8 +50,8 @@ have any content you like:
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | selectedIndex | `number` | 0 | The selected index tab. |
-| title | `string \| null` | null | The title of the info drawer (string or translation key). |
 | showHeader | `boolean` | true | The visibility of the header. |
+| title | `string \| null` | null | The title of the info drawer (string or translation key). |
 
 ### Events
 

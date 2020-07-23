@@ -23,7 +23,7 @@ Enables/disables components based on ACS version in use.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| adf-acs-version | `string` |  | Minimum version required for component to work correctly . |
+| version | `void` |  | Minimum version required for component to work correctly . |
 
 ## Details
 

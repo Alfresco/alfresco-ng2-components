@@ -279,7 +279,7 @@ describe('DataTable', () => {
     });
 
     it('should emit "sorting-changed" DOM event', (done) => {
-        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc' });
+        const column = new ObjectDataColumn({ key: 'name', sortable: true, direction: 'asc', sortingKey: 'displayName' });
         dataTable.data = new ObjectDataTableAdapter(
             [
                 { name: '1' },
@@ -290,7 +290,7 @@ describe('DataTable', () => {
         dataTable.data.setSorting(new DataSorting('name', 'desc'));
 
         fixture.nativeElement.addEventListener('sorting-changed', (event: CustomEvent) => {
-            expect(event.detail.key).toBe('name');
+            expect(event.detail.key).toBe('displayName');
             expect(event.detail.direction).toBe('asc');
             done();
         });
