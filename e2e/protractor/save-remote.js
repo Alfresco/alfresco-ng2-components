@@ -14,11 +14,13 @@ function buildNumber() {
 }
 
 async function uploadScreenshot(retryCount) {
-    console.log(`Start uploading failures screenshot ${retryCount}`);
+    console.log(`Start uploading screenshot ${retryCount}`);
 
     let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
 
     if (files && files.length > 0) {
+
+        console.log(`Upload ${files.length} files`);
 
         let alfrescoJsApi = new AlfrescoApi({
             provider: 'ECM',
@@ -32,14 +34,14 @@ async function uploadScreenshot(retryCount) {
         try {
             folder = await alfrescoJsApi.nodes.addNode('-my-', {
                 'name': `retry-${retryCount}`,
-                'relativePath': `Builds/${buildNumber()}/screenshot`,
+                'relativePath': `Builds/ADF-${buildNumber()}/screenshot`,
                 'nodeType': 'cm:folder'
             }, {}, {
                 'overwrite': true
             });
         } catch (error) {
             folder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
+                'relativePath': `Builds/ADF-${buildNumber()}/screenshot/retry-${retryCount}`,
                 'nodeType': 'cm:folder'
             }, {}, {
                 'overwrite': true

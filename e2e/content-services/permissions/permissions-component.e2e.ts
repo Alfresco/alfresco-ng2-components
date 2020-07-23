@@ -27,7 +27,8 @@ import {
     UploadActions,
     UserModel,
     UsersActions,
-    ViewerPage
+    ViewerPage,
+    Logger
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -163,7 +164,7 @@ describe('Permissions Component', () => {
         await uploadActions.uploadFile(fileModel.location, 'RoleCoordinator' + fileModel.name, roleCoordinatorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleCollaborator' + fileModel.name, roleCollaboratorFolder.entry.id);
         await uploadActions.uploadFile(fileModel.location, 'RoleEditor' + fileModel.name, roleEditorFolder.entry.id);
-   });
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
@@ -190,10 +191,12 @@ describe('Permissions Component', () => {
         afterEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
             try {
+                await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
                 await uploadActions.deleteFileOrFolder(file.entry.id);
             } catch (error) {
+                Logger.error('Delete e2e files failed')
             }
-    });
+        });
 
         it('[C268974] Inherit Permission', async () => {
             await permissionsPage.addPermissionsDialog.checkPermissionInheritedButtonIsDisplayed();
@@ -238,7 +241,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.checkResultListIsDisplayed();
             await permissionsPage.addPermissionsDialog.checkUserOrGroupIsDisplayed('EVERYONE');
         });
-   });
+    });
 
     describe('Changing and duplicate Permissions', () => {
         beforeEach(async () => {
@@ -302,7 +305,7 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickDeletePermissionButton();
             await permissionsPage.addPermissionsDialog.checkUserOrGroupIsDeleted(filePermissionUser.email);
         });
-   });
+    });
 
     describe('Role: Consumer, Contributor, Coordinator, Collaborator, Editor, No Permissions', () => {
         it('[C276993] Role Consumer', async () => {
@@ -428,5 +431,5 @@ describe('Permissions Component', () => {
             await permissionsPage.addPermissionsDialog.clickAddPermissionButton();
             await notificationHistoryPage.checkNotifyContains('You are not allowed to change permissions');
         });
-   });
+    });
 });

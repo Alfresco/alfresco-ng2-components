@@ -153,7 +153,7 @@ describe('User Info component', () => {
     it('[C260120] Should not display profile image in UserInfo when deleted in ACS', async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ECM');
 
-        await peopleApi.deleteAvatarImage(user.email);
+        await deleteAvatarACS();
 
         await loginPage.login(user.email, user.password);
 
@@ -169,5 +169,10 @@ describe('User Info component', () => {
         const absolutePath = path.resolve(path.join(browser.params.testConfig.main.rootPath, acsAvatarFileModel.getLocation()));
         const file: any = fs.readFileSync(absolutePath);
         await peopleApi.updateAvatarImage('-me-', file);
+    };
+
+    const deleteAvatarACS = async function () {
+        await apiService.getInstance().login(user.email, user.password);
+        await peopleApi.deleteAvatarImage(user.email);
     };
 });

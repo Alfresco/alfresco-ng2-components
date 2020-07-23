@@ -91,8 +91,8 @@ describe('Lock File', () => {
 
                 await contentServices.waitForTableBody();
             } catch (error) {
-        }
-    });
+            }
+        });
 
         afterEach(async () => {
             try {
@@ -101,8 +101,8 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
 
             } catch (error) {
-        }
-    });
+            }
+        });
 
         afterAll(async () => {
             try {
@@ -113,8 +113,8 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(lockedFileNodeId);
 
             } catch (error) {
-        }
-    });
+            }
+        });
 
         it('[C286604] Should be able to open Lock file option by clicking the lock image', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -158,7 +158,7 @@ describe('Lock File', () => {
 
             await contentServices.checkUnlockedIcon(pngFileModel.name);
         });
-   });
+    });
 
     describe('Locked file without owner permissions', () => {
         beforeEach(async () => {
@@ -179,7 +179,7 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
             } catch (error) {
             }
-    });
+        });
 
         it('[C286610] Should not be able to delete a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -189,11 +189,12 @@ describe('Lock File', () => {
             await lockFilePage.clickSaveButton();
 
             try {
+                await apiService.getInstance().login(adminUser.email, adminUser.password);
                 await apiService.getInstance().core.nodesApi.deleteNode(nodeId);
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
-    });
+        });
 
         it('[C286611] Should not be able to rename a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -208,7 +209,7 @@ describe('Lock File', () => {
             } catch (error) {
                 await expect(error.status).toEqual(409);
             }
-    });
+        });
 
         it('[C286612] Should not be able to move a locked file', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -239,7 +240,7 @@ describe('Lock File', () => {
                 await expect(error.status).toEqual(409);
             }
         });
-   });
+    });
 
     describe('Locked file with owner permissions', () => {
         let pngFileToBeLocked;
@@ -250,7 +251,7 @@ describe('Lock File', () => {
                 lockedFileNodeId = pngFileToBeLocked.entry.id;
             } catch (error) {
             }
-    });
+        });
 
         beforeEach(async () => {
             try {
@@ -260,7 +261,7 @@ describe('Lock File', () => {
                 await navigationBarPage.openContentServicesFolder(documentLibrary);
             } catch (error) {
             }
-    });
+        });
 
         afterEach(async () => {
             await apiService.getInstance().login(adminUser.email, adminUser.password);
@@ -269,7 +270,7 @@ describe('Lock File', () => {
                 await uploadActions.deleteFileOrFolder(nodeId);
             } catch (error) {
             }
-    });
+        });
 
         it('[C286614] Owner of the locked file should be able to rename if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -284,7 +285,7 @@ describe('Lock File', () => {
                 await expect(response.entry.name).toEqual('My new name');
             } catch (error) {
             }
-    });
+        });
 
         it('[C286615] Owner of the locked file should be able to update a new version if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -299,7 +300,7 @@ describe('Lock File', () => {
                 await expect(response.entry.modifiedAt.getTime()).toBeGreaterThan(response.entry.createdAt.getTime());
             } catch (error) {
             }
-    });
+        });
 
         it('[C286616] Owner of the locked file should be able to move if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileModel.name);
@@ -317,7 +318,7 @@ describe('Lock File', () => {
                 await expect(movedFile.entry.parentId).not.toEqual(documentLibrary);
             } catch (error) {
             }
-    });
+        });
 
         it('[C286617] Owner of the locked file should be able to delete if Allow owner to modify is checked', async () => {
             await contentServices.lockContent(pngFileToLock.name);
@@ -330,5 +331,5 @@ describe('Lock File', () => {
             await contentServices.deleteContent(pngFileToBeLocked.entry.name);
             await contentServices.checkContentIsNotDisplayed(pngFileToBeLocked.entry.name);
         });
-   });
+    });
 });

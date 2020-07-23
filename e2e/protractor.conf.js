@@ -1,4 +1,4 @@
-const { LocalStorageUtil, Logger } = require('@alfresco/adf-testing');
+const {LocalStorageUtil, Logger} = require('@alfresco/adf-testing');
 const path = require('path');
 const {SpecReporter} = require('jasmine-spec-reporter');
 const retry = require('protractor-retry').retry;
@@ -181,7 +181,7 @@ exports.config = {
         screenshotOnExpectFailure: true,
         screenshotOnSpecFailure: false,
         clearFoldersBeforeTest: true,
-        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
+        screenshotPath: path.resolve(__dirname, '../e2e-output/screenshots/')
     }],
 
     onCleanUp(results) {
@@ -265,8 +265,9 @@ exports.config = {
     },
 
     afterLaunch: async function () {
+        console.log(`Save screenshots ${SAVE_SCREENSHOT}`);
+
         if (SAVE_SCREENSHOT) {
-            console.log(`Save screenshot failures enabled`);
 
             let retryCount = 1;
             if (argv.retry) {
@@ -277,7 +278,7 @@ exports.config = {
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
-        }else{
+        } else {
             console.log(`Save screenshot failures disabled`);
         }
 

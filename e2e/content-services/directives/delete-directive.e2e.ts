@@ -26,7 +26,8 @@ import {
     StringUtil,
     UploadActions,
     UserModel,
-    UsersActions
+    UsersActions,
+    Logger
 } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { FolderModel } from '../../models/ACS/folder.model';
@@ -105,7 +106,12 @@ describe('Delete Directive', () => {
     });
 
     afterEach(async () => {
-        await uploadActions.deleteFileOrFolder(baseFolderUploaded.entry.id);
+        try {
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
+            await uploadActions.deleteFileOrFolder(baseFolderUploaded.entry.id);
+        }catch(e){
+            Logger.error('Delete e2e files failed')
+        }
     });
 
     describe('Handling multiselection', () => {
