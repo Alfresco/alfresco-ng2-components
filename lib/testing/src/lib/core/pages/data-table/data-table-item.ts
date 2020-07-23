@@ -65,4 +65,11 @@ export class DataTableItem {
         await BrowserActions.click(row);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
+
+    async getColumnValueForRow(identifyingColumnName: string, identifyingColumnValue: string, columnName: string): Promise<string> {
+        const row = this.getRow(identifyingColumnName, identifyingColumnValue);
+        await BrowserVisibility.waitUntilElementIsVisible(row);
+        const rowColumn = row.element(by.css(`div[title="${columnName}"] span`));
+        return BrowserActions.getText(rowColumn);
+    }
 }

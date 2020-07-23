@@ -29,7 +29,7 @@ export class InfoDrawerPage {
         this.rootElement = element(by.css(`adf-info-drawer[class*='${classLocator}']`));
     }
 
-    async isProcessInfoDrawerDisplayed(): Promise<boolean> {
+    async isInfoDrawerDisplayed(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
             return true;
@@ -38,7 +38,7 @@ export class InfoDrawerPage {
         }
     }
 
-    async isProcessInfoDrawerNotDisplayed(): Promise<boolean> {
+    async isInfoDrawerNotDisplayed(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement);
             return true;
@@ -47,7 +47,7 @@ export class InfoDrawerPage {
         }
     }
 
-    async isProcessInfoDrawerHeaderDisplayed(): Promise<boolean> {
+    async isInfoDrawerHeaderDisplayed(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.element(this.infoDrawerHeader));
             return true;
@@ -56,7 +56,7 @@ export class InfoDrawerPage {
         }
     }
 
-    async isProcessInfoDrawerHeaderNotDisplayed(): Promise<boolean> {
+    async isInfoDrawerHeaderNotDisplayed(): Promise<boolean> {
         try {
             await BrowserVisibility.waitUntilElementIsNotVisible(this.rootElement.element(this.infoDrawerHeader));
             return true;

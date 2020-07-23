@@ -21,6 +21,7 @@ export * from './process-filters.page';
 export * from './process-list.page';
 export * from './task-list.page';
 export * from './task-filters.page';
+export * from './task-header.page';
 export * from './process-instance-tasks.page';
 export * from './process-instance-header.page';
 export * from './start-process.page';
