@@ -109,8 +109,8 @@ describe('Delete Directive', () => {
         try {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await uploadActions.deleteFileOrFolder(baseFolderUploaded.entry.id);
-        }catch(e){
-            Logger.error('Delete e2e files failed')
+        } catch (e) {
+            Logger.error('Delete e2e files failed');
         }
     });
 
@@ -189,7 +189,7 @@ describe('Delete Directive', () => {
 
     describe('When selection on multiple pages', () => {
         beforeEach(async () => {
-            await uploadActions.uploadFile( txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
+            await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(pdfFileModel.location, pdfFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(secondPdfFileModel.location, secondPdfFileModel.name, baseFolderUploaded.entry.id);
@@ -254,7 +254,8 @@ describe('Delete Directive', () => {
         afterAll(async () => {
             try {
                 await apiService.getInstance().core.sitesApi.deleteSite(createdSite.entry.id, { permanent: true });
-            } catch (error) {}
+            } catch (error) {
+            }
         });
 
         it('[C216426] Delete file without delete permissions', async () => {

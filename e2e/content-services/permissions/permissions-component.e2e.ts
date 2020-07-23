@@ -194,7 +194,7 @@ describe('Permissions Component', () => {
                 await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
                 await uploadActions.deleteFileOrFolder(file.entry.id);
             } catch (error) {
-                Logger.error('Delete e2e files failed')
+                Logger.error('Delete e2e files failed');
             }
         });
 
