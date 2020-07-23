@@ -47,7 +47,41 @@ export class VersionCompatibilityService {
         }
     }
 
-    public getAcsVersion(): VersionModel {
+    getAcsVersion(): VersionModel {
         return this.acsVersion;
+    }
+
+    isVersionSupported(requiredVersion: string): boolean {
+        const parsedRequiredVersion = this.parseVersion(requiredVersion);
+        const currentVersion = this.getAcsVersion();
+
+        let versionSupported = false;
+
+        if (currentVersion) {
+            if (+currentVersion.major > +parsedRequiredVersion.major) {
+                versionSupported = true;
+            } else if (currentVersion.major === parsedRequiredVersion.major &&
+                +currentVersion.minor > +parsedRequiredVersion.minor) {
+                versionSupported = true;
+            } else if (currentVersion.major === parsedRequiredVersion.major &&
+                currentVersion.minor === parsedRequiredVersion.minor &&
+                +currentVersion.patch >= +parsedRequiredVersion.patch) {
+                versionSupported = true;
+            }
+        }
+
+        return versionSupported;
+    }
+
+    private parseVersion(version: string): VersionModel {
+        const major = version.split('.')[0];
+        const minor = version.split('.')[1] || '0';
+        const patch = version.split('.')[2] || '0';
+
+        return {
+            major: major,
+            minor: minor,
+            patch: patch
+        } as VersionModel;
     }
 }
