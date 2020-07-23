@@ -76,4 +76,16 @@ export class TaskHeaderPage {
     async setPriorityFieldValue(priority): Promise<void> {
         await this.priority.enterTextField(priority);
     }
+
+    async getDueDateFieldValue(): Promise<string> {
+        return this.dueDate.getDateValue();
+    }
+
+    async setDueDateFieldValue(date): Promise<void> {
+        await this.dueDate.setDateValue(date);
+    }
+
+    async setDueDateFieldValueToCurrentDate(): Promise<void> {
+        await this.dueDate.setTodayDateValue();
+    }
 }
