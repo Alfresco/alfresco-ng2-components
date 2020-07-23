@@ -31,7 +31,6 @@ import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model
 import { Subject, Observable } from 'rxjs';
 import { TaskVariableCloud } from '../../../form/models/task-variable-cloud.model';
 import { ProcessNameCloudPipe } from '../../../pipes/process-name-cloud.pipe';
-
 @Component({
     selector: 'adf-cloud-start-process',
     templateUrl: './start-process-cloud.component.html',

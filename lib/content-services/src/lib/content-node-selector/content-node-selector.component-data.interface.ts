@@ -27,6 +27,7 @@ export interface ContentNodeSelectorComponentData {
     rowFilter?: any;
     where?: string;
     imageResolver?: any;
+    selectionMode?: string;
     isSelectionValid?: (entry: Node) => boolean;
     breadcrumbTransform?: (node) => any;
     excludeSiteContent?: string[];

@@ -14,6 +14,7 @@
         [isSelectionValid]="data?.isSelectionValid"
         [breadcrumbTransform]="data?.breadcrumbTransform"
         [excludeSiteContent]="data?.excludeSiteContent"
+        [selectionMode]="data?.selectionMode"
         [where]="data?.where"
         [showSearch]="data?.showSearch"
         [showDropdownSiteList]="data?.showDropdownSiteList"
@@ -31,7 +32,7 @@
     </button>
 
     <button mat-button
-        [disabled]="!chosenNode"
+        [disabled]="!hasNodeSelected()"
         class="adf-choose-action"
         (click)="onClick()"
         data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}

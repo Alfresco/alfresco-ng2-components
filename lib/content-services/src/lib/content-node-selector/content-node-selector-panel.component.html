@@ -1,4 +1,4 @@
-<div class="adf-content-node-selector-content" (node-select)="onNodeSelect($event)">
+<div class="adf-content-node-selector-content">
     <mat-form-field floatPlaceholder="never" class="adf-content-node-selector-content-input" *ngIf="showSearch">
         <input matInput
             id="searchInput"
@@ -64,7 +64,7 @@
             [rowFilter]="_rowFilter"
             [imageResolver]="imageResolver"
             [currentFolderId]="folderIdToShow"
-            selectionMode="single"
+            [selectionMode]="selectionMode"
             [contextMenuActions]="false"
             [contentActions]="false"
             [allowDropFiles]="false"
@@ -72,6 +72,7 @@
             [where]="where"
             (folderChange)="onFolderChange()"
             (ready)="onFolderLoaded()"
+            (currentSelection)="onCurrentSelection($event)"
             data-automation-id="content-node-selector-document-list">
 
             <adf-custom-empty-content-template>

@@ -108,15 +108,20 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     }
 
     openSelectDialog() {
-        const filesSaved: Node[] = [];
+        const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
 
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.field.form.contentHost)
+            .openUploadFileDialog(this.field.form.contentHost, '-my-', selectedMode)
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
-                filesSaved.push(selections[0]);
-                this.fixIncompatibilityFromPreviousAndNewForm(filesSaved);
+                const selectionWithoutDuplication = this.removeExistingSelection(selections);
+                this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
             });
+    }
+
+    removeExistingSelection(selections: Node[]) {
+        const existingNode: Node[] = [...this.field.value || []];
+        return selections.filter(opt => !existingNode.some( (node) => node.id === opt.id));
     }
 
     isContentSourceSelected(): boolean {

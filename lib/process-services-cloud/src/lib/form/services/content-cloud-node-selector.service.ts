@@ -32,7 +32,7 @@ export class ContentCloudNodeSelectorService {
     private dialog: MatDialog) {
   }
 
-  openUploadFileDialog(contentHost: string): Observable<Node[]> {
+  openUploadFileDialog(contentHost: string, currentFolderId?: string,  selectionMode?: string): Observable<Node[]> {
     const changedConfig = this.apiService.lastConfig;
     changedConfig.provider = 'ALL';
     changedConfig.hostEcm = contentHost.replace('/alfresco', '');
@@ -44,8 +44,9 @@ export class ContentCloudNodeSelectorService {
     const data = <ContentNodeSelectorComponentData> {
       title: 'Select a file',
       actionName: 'Choose',
-      currentFolderId: '-my-',
+      currentFolderId,
       select,
+      selectionMode,
       isSelectionValid: (entry: Node) => entry.isFile,
       showFilesInResult: true
     };
