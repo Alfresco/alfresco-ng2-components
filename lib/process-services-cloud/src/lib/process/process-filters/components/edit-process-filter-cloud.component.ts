@@ -437,18 +437,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return property.type === 'number';
     }
 
-    isDisabledAction(action: any): boolean {
+    isDisabledAction(action: ProcessFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
 
-    isDisabledForDefaultFilters(action: any): boolean {
+    isDisabledForDefaultFilters(action: ProcessFilterAction): boolean {
         return (
             this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
             this.actionDisabledForDefault.includes(action.actionType)
         );
     }
 
-    hasFormChanged(action: any): boolean {
+    hasFormChanged(action: ProcessFilterAction): boolean {
         if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }
