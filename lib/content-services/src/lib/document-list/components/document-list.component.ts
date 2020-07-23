@@ -306,7 +306,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Emitted when the node selection change */
     @Output()
-    currentSelection: EventEmitter<NodeEntry[]> = new EventEmitter<NodeEntry[]>();
+    nodeSelected: EventEmitter<NodeEntry[]> = new EventEmitter<NodeEntry[]>();
 
     @ViewChild('dataTable', { static: true })
     dataTable: DataTableComponent;
@@ -759,7 +759,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             },
             bubbles: true
         });
-        this.currentSelection.emit(this.selection);
+        this.nodeSelected.emit(this.selection);
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
@@ -772,7 +772,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             },
             bubbles: true
         });
-        this.currentSelection.emit(this.selection);
+        this.nodeSelected.emit(this.selection);
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 

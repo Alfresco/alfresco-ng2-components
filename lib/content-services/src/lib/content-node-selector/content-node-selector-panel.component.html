@@ -72,7 +72,7 @@
             [where]="where"
             (folderChange)="onFolderChange()"
             (ready)="onFolderLoaded()"
-            (currentSelection)="onCurrentSelection($event)"
+            (nodeSelected)="onCurrentSelection($event)"
             data-automation-id="content-node-selector-document-list">
 
             <adf-custom-empty-content-template>
