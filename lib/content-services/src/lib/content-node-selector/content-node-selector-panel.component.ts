@@ -244,12 +244,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(pagSize => this.pageSize = pagSize);
+
+        this.target = this.documentList;
+        this.folderIdToShow = this.currentFolderId;
         if (this.currentFolderId) {
             this.getStartSite();
         }
 
-        this.target = this.documentList;
-        this.folderIdToShow = this.currentFolderId;
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
     }

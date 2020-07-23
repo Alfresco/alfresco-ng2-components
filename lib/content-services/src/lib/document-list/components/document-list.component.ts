@@ -658,7 +658,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     resetSelection() {
         this.dataTable.resetSelection();
         this.selection = [];
-        this.currentSelection.emit(this.selection);
         this.noPermission = false;
     }
 

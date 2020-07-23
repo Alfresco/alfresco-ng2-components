@@ -479,7 +479,7 @@ describe('ContentNodeSelectorComponent', () => {
                 tick(debounceSearch);
                 fixture.detectChanges();
 
-                expect(component.chosenNode).toEqual([]);
+                expect(component.chosenNode).toBeNull();
             }));
 
             it('should update the breadcrumb when changing to a custom site', fakeAsync(() => {
