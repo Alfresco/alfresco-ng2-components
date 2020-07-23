@@ -26,23 +26,27 @@
     </adf-content-node-selector-panel>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-    <adf-upload-button *ngIf="data?.showUploadButton"
+<mat-dialog-actions>
+    <adf-upload-button
+        *ngIf="data?.showUploadButton"
         [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
+        [multipleFiles]="data?.multipleUpload"
         [rootFolderId]="currentDirectoryId"
         (success)="onSuccess($event)"
         (error)="onError($event)">
     </adf-upload-button>
-    <button
-        mat-button
-        (click)="close()"
-        data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
-    </button>
+    <div>
+        <button
+            mat-button
+            (click)="close()"
+            data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
+        </button>
 
-    <button mat-button
-        [disabled]="!hasNodeSelected()"
-        class="adf-choose-action"
-        (click)="onClick()"
-        data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
-    </button>
+        <button mat-button
+                [disabled]="!chosenNode"
+                class="adf-choose-action"
+                (click)="onClick()"
+                data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
+        </button>
+    </div>
 </mat-dialog-actions>

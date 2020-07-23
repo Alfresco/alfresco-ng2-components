@@ -84,9 +84,8 @@ export class ContentNodeSelectorComponent {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 
-    onSuccess($event) {
+    onSuccess() {
         this.selectorPanelComponent.documentList.reload();
-        this.notificationService.showInfo(`${$event.value.entry.name} has been uploaded`);
     }
 
     onError(error) {

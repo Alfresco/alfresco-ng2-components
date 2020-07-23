@@ -68,8 +68,13 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         return (
             this.field.params &&
             this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'local-file'
+            this.field.params.fileSource.serviceId === 'all-file-sources'
+            || this.field.params.fileSource.serviceId === 'local-file'
         );
+    }
+
+    isAttachMultiple(): boolean {
+        return this.field.params.multiple;
     }
 
     isUploadButtonVisible(): boolean {
@@ -88,9 +93,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         });
 
         const isLocal = this.isOnlyLocalSourceSelected();
+        const isAttachMultiple = this.isAttachMultiple();
 
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.field.form.contentHost, '-my-', selectedMode)
+            .openUploadFileDialog(this.field.form.contentHost, this.rootDirectory, isLocal, isAttachMultiple)
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);

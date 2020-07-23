@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Enter at least {{ minLength }} characters",
         "NO_LONGER_THAN": "Enter no more than {{ maxLength }} characters"
       },
-      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded."
+      "FILE_ALREADY_UPLOADED": "A file with the same name is already uploaded.",
+      "ATTACH":"Attach"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nameless task"

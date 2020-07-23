@@ -36,7 +36,8 @@
             padding: 8px;
             background-color: mat-color($background, background);
             display: flex;
-            justify-content: flex-end;
+            flex-direction: row;
+            justify-content: space-between;
             color: mat-color($foreground, text, 0.72);
 
             button {

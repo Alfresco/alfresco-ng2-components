@@ -5,7 +5,7 @@
         <!--Single Files Upload-->
         <button *ngIf="!multipleFiles"
             [disabled]="isButtonDisabled()"
-            mat-raised-button color="primary"
+            mat-button
             (click)="uploadSingleFile.click()">
             <mat-icon>file_upload</mat-icon>
             <span id="upload-single-file-label"
@@ -27,7 +27,7 @@
         <!--Multiple Files Upload-->
         <button *ngIf="multipleFiles"
             [disabled]="isButtonDisabled()"
-            mat-raised-button color="primary"
+            mat-button
             (click)="uploadMultipleFiles.click()">
             <mat-icon>file_upload</mat-icon>
 
@@ -53,7 +53,7 @@
     <div *ngIf="uploadFolders">
         <button
             [disabled]="isButtonDisabled()"
-            mat-raised-button color="primary"
+            mat-button
             (click)="uploadFolders.click()">
             <mat-icon>file_upload</mat-icon>
             <span id="uploadFolder-label"
