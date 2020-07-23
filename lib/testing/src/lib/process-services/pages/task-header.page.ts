@@ -25,7 +25,7 @@ export class TaskHeaderPage {
     priority = new CardTextItemPage('priority');
     dueDate = new CardDateItemPage('dueDate');
     category = new CardTextItemPage('category');
-    parentName = new CardDateItemPage('parentName');//ce e adf-card-view-mapitem? 
+    parentName = new CardDateItemPage('parentName');
     createdDate = new CardDateItemPage('created');
     duration = new CardTextItemPage('duration');
     parentTaskId = new CardTextItemPage('parentTaskId');
