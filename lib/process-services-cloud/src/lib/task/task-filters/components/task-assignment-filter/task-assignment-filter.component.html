@@ -1,0 +1,20 @@
+<div fxLayout="row">
+    <mat-form-field>
+        <mat-select class="adf-task-assignment-filter"
+                    placeholder="{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.ASSIGNMENT_TYPE' | translate }}"
+                    [(ngModel)]="assignmentType"
+                    (ngModelChange)="onAssignmentTypeChange(assignmentType)">
+            <mat-option [value]="assignmentTypeList.currentUser">{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.ASSIGNED_TO_ME' | translate }} </mat-option>
+            <mat-option [value]="assignmentTypeList.unassinged">{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.UNASSIGNED' | translate }} </mat-option>
+            <mat-option [value]="assignmentTypeList.candidateGroups">{{ 'ADF_CLOUD_TASK_ASSIGNEMNT_FILTER.LIST_OF_CANDIDATE_USERS' | translate }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <adf-cloud-group class="adf-group-cloud-filter" *ngIf="isCandidateGroupsType()"
+        [mode]="'multiple'"
+        [appName]="appName"
+        [preSelectGroups]="currentGroup"
+        [searchGroupsControl]="groupForm"
+        (changedGroups)="onChangedGroups($event)"
+        [title]="'ADF_CLOUD_TASK_LIST.START_TASK.FORM.LABEL.CANDIDATE_GROUP'"></adf-cloud-group>
+</div>

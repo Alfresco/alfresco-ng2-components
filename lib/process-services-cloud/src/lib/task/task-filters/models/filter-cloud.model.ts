@@ -18,9 +18,9 @@
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 import { ComponentSelectionMode } from '../../../types';
-import { IdentityUserModel } from '@alfresco/adf-core';
+import { IdentityUserModel, IdentityGroupModel } from '@alfresco/adf-core';
 
-export class TaskFilterCloudModel {
+export class TaskFilterCloudModel  {
     id: string;
     name: string;
     key: string;
@@ -49,6 +49,7 @@ export class TaskFilterCloudModel {
     createdDateType: DateCloudFilterType;
     completedDate: Date;
     completedBy: IdentityUserModel;
+    candidateGroups: IdentityGroupModel[];
 
     private _completedFrom: string;
     private _completedTo: string;
@@ -94,6 +95,7 @@ export class TaskFilterCloudModel {
             this.createdDateType = obj.createdDateType || null;
             this.createdFrom = obj._createdFrom || null;
             this.createdTo = obj._createdTo || null;
+            this.candidateGroups = obj.candidateGroups || null;
         }
     }
 
@@ -243,6 +245,12 @@ export class TaskFilterAction {
 export interface FilterOptions {
     label?: string;
     value?: string;
+}
+
+export enum AssignmentType {
+    CURRENT_USER = 'CURRENT_USER',
+    UNASSIGNED = 'UNASSIGNED',
+    CANDIDATE_GROUPS = 'CANDIDATE_GROUPS'
 }
 
 export class TaskFilterProperties {
