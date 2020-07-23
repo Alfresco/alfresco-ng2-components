@@ -15,8 +15,6 @@ if grep "envalfresco" . -R --exclude-dir={node_modules,.history,.idea,scripts,di
     exit 1
 fi
 
-nx lint
-
 nx affected:lint --all --parallel && \
 npm run lint-e2e && \
 npm run stylelint && \
