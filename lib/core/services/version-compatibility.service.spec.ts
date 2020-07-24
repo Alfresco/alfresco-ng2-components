@@ -48,28 +48,32 @@ describe('VersionCompatibilityService', () => {
         ]
     });
 
-    beforeEach(() => {
+    beforeEach(async () => {
         discoveryApiService = TestBed.inject(DiscoveryApiService);
         authenticationService = TestBed.inject(AuthenticationService);
         spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(acsResponceMock));
         spyOn(authenticationService, 'isEcmLoggedIn').and.returnValue(true);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
         alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
-
-    });
-
-    it('should get ACS running version', (done) => {
         versionCompatibilityService = new VersionCompatibilityService(
             alfrescoApiService,
             authenticationService,
             discoveryApiService
         );
-        alfrescoApiService.initialize();
-        setTimeout(() => {
-            const acsVersion = versionCompatibilityService.getAcsVersion();
-            expect(acsVersion).toBeDefined();
-            expect(acsVersion.display).toBe('7.0.1');
-            done();
-        }, 100);
+        await alfrescoApiService.initialize();
+    });
+
+    it('should get ACS running version', () => {
+        const acsVersion = versionCompatibilityService.getAcsVersion();
+        expect(acsVersion).toBeDefined();
+        expect(acsVersion.display).toBe('7.0.1');
+    });
+
+    it('should validate give version', () => {
+        expect(versionCompatibilityService.getAcsVersion()).toEqual({ display: '7.0.1', major: '7', minor: '0', patch: '1' } as any);
+        expect(versionCompatibilityService.isVersionSupported('8.0.0')).toBe(false);
+        expect(versionCompatibilityService.isVersionSupported('7.0.1')).toBe(true);
+        expect(versionCompatibilityService.isVersionSupported('7.0.0')).toBe(true);
+        expect(versionCompatibilityService.isVersionSupported('6.0.0')).toBe(true);
     });
 });
