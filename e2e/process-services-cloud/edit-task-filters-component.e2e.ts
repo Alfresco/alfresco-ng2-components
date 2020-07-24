@@ -110,7 +110,7 @@ describe('Edit task filters cloud', () => {
 
         await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
+        await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(false);
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
     });
 
