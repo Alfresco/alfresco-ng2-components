@@ -130,7 +130,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     /** Define the selection mode for document list. The allowed values are single or multiple */
     @Input()
-    selectionMode: string = 'single';
+    selectionMode: 'single' | 'multiple' = 'single';
 
     /** Function used to decide if the selected node has permission to be selected.
      * Default value is a function that always returns true.
