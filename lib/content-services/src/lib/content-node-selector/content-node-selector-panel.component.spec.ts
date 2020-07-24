@@ -638,7 +638,7 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should restrict the search to the currentFolderId in case is defined', () => {
                 component.currentFolderId = 'my-root-id';
-                component.restrictSearchToCurrentFolderId = true;
+                component.restrictRootToCurrentFolderId = true;
                 component.ngOnInit();
                 component.search('search');
 
@@ -647,12 +647,26 @@ describe('ContentNodeSelectorComponent', () => {
 
             it('should restrict the search to the site and not to the currentFolderId in case is changed', () => {
                 component.currentFolderId = 'my-root-id';
-                component.restrictSearchToCurrentFolderId = true;
+                component.restrictRootToCurrentFolderId = true;
                 component.ngOnInit();
                 component.siteChanged(<SiteEntry> { entry: { guid: 'my-site-id' } });
                 component.search('search');
 
                 expect(cnSearchSpy).toHaveBeenCalledWith('search', 'my-site-id', 0, 25, [], false);
+            });
+
+            it('should restrict the breadcrumb to the currentFolderId in case restrictedRoot is true', () => {
+                component.currentFolderId = 'my-root-id';
+                component.restrictRootToCurrentFolderId = true;
+                fixture.detectChanges();
+                expect(component.breadcrumbRootId).toEqual('my-root-id');
+            });
+
+            it('should NOT restrict the breadcrumb to the currentFolderId in case restrictedRoot is false', () => {
+                component.currentFolderId = 'my-root-id';
+                component.restrictRootToCurrentFolderId = false;
+                fixture.detectChanges();
+                expect(component.breadcrumbRootId).toBeUndefined();
             });
 
             it('should clear the search field, nodes and chosenNode when deleting the search input', fakeAsync(() => {
