@@ -26,8 +26,12 @@ export class PreviewService {
 
     constructor(private router: Router) {}
 
-    showResource(resourceId): void {
-        this.router.navigate([{ outlets: { overlay: ['files', resourceId, 'view'] } }]);
+    showResource(resourceId, versionId?): void {
+        if (versionId) {
+            this.router.navigate([{outlets: {overlay: ['files', resourceId, versionId, 'view']}}]);
+        } else {
+            this.router.navigate([{outlets: {overlay: ['files', resourceId, 'view']}}]);
+        }
     }
 
     showBlob(name: string, content: Blob): void {

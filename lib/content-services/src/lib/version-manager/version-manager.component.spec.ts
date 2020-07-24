@@ -73,6 +73,13 @@ describe('VersionManagerComponent', () => {
         expect(component.uploadState).toBe('open');
     });
 
+    it('should be able to view a version', () => {
+        spyOn(component.viewVersion, 'emit');
+        component.onViewVersion('1.0');
+        fixture.detectChanges();
+        expect(component.viewVersion.emit).toHaveBeenCalledWith('1.0');
+    });
+
     it('should display comments for versions when not configured otherwise', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {

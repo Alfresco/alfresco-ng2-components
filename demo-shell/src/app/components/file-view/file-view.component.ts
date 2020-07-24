@@ -30,6 +30,7 @@ import { PreviewService } from '../../services/preview.service';
 export class FileViewComponent implements OnInit {
 
     nodeId: string = null;
+    versionId: string = null;
     displayEmptyMetadata = false;
     expanded: boolean;
     multi = false;
@@ -72,6 +73,7 @@ export class FileViewComponent implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params) => {
             const id = params.nodeId;
+            this.versionId = params.versionId;
             if (id) {
                 this.nodeApiService.getNode(id).subscribe(
                     (node) => {
@@ -90,6 +92,10 @@ export class FileViewComponent implements OnInit {
                 this.displayName = this.preview.name;
             }
         });
+    }
+
+    onViewVersion(versionId: string) {
+        this.preview.showResource(this.nodeId, versionId);
     }
 
     onViewerVisibilityChanged() {
