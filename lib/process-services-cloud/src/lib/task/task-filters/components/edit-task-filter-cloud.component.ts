@@ -451,18 +451,18 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return property.type === 'checkbox';
     }
 
-    isDisabledAction(action: any): boolean {
+    isDisabledAction(action: TaskFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
 
-    isDisabledForDefaultFilters(action: any): boolean {
+    isDisabledForDefaultFilters(action: TaskFilterAction): boolean {
         return (
             this.taskFilterCloudService.isDefaultFilter(this.taskFilter.name) &&
             this.actionDisabledForDefault.includes(action.actionType)
         );
     }
 
-    hasFormChanged(action: any): boolean {
+    hasFormChanged(action: TaskFilterAction): boolean {
         if (action.actionType === EditTaskFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }

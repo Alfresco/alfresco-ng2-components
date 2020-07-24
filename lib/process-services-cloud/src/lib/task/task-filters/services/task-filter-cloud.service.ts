@@ -221,7 +221,7 @@ export class TaskFilterCloudService {
      * @param filterName Name of the target task filter
      * @returns Boolean value for whether the filter is a default filter
      */
-    isDefaultFilter(filterName: string) {
+    isDefaultFilter(filterName: string): boolean {
         const defaultFilters = this.defaultTaskFilters();
         return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
     }
