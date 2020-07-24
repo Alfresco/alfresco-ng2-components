@@ -64,7 +64,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
 
-    isOnlyLocalSourceSelected(): boolean {
+    isAlfrescoAndLocal(): boolean {
         return (
             this.field.params &&
             this.field.params.fileSource &&
@@ -92,11 +92,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             this.rootDirectory = nodeId;
         });
 
-        const isLocal = this.isOnlyLocalSourceSelected();
-        const isAttachMultiple = this.isAttachMultiple();
-
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.field.form.contentHost, this.rootDirectory, isLocal, isAttachMultiple)
+            .openUploadFileDialog(this.field.form.contentHost, this.rootDirectory, this.isAlfrescoAndLocal(), this.isAttachMultiple())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
@@ -122,6 +119,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     }
 
     getWidgetIcon(): string {
-        return this.isOnlyLocalSourceSelected() ? 'file_upload' : 'attach_file';
+        return this.isAlfrescoAndLocal() ? 'file_upload' : 'attach_file';
     }
 }

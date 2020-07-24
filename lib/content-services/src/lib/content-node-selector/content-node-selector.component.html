@@ -27,14 +27,15 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <adf-upload-button
-        *ngIf="data?.showUploadButton"
-        [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
-        [multipleFiles]="data?.multipleUpload"
-        [rootFolderId]="currentDirectoryId"
-        (success)="onSuccess($event)"
-        (error)="onError($event)">
-    </adf-upload-button>
+    <div>
+        <adf-upload-button
+            *ngIf="data?.showUploadButton"
+            [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
+            [multipleFiles]="data?.multipleUpload"
+            [rootFolderId]="currentDirectoryId"
+            (error)="onError($event)">
+        </adf-upload-button>
+    </div>
     <div>
         <button
             mat-button

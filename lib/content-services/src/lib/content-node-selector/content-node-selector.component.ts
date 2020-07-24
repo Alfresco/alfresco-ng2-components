@@ -84,10 +84,6 @@ export class ContentNodeSelectorComponent {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
     }
 
-    onSuccess() {
-        this.selectorPanelComponent.documentList.reload();
-    }
-
     onError(error) {
         this.notificationService.showError(error);
     }

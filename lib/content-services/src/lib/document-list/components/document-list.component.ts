@@ -60,7 +60,8 @@ import { NavigableComponentInterface } from '../../breadcrumb/navigable-componen
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { UploadService } from '../../../../../core/services';
 
 @Component({
     selector: 'adf-document-list',
@@ -337,6 +338,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
                 private contentService: ContentService,
+                private uploadService: UploadService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
@@ -346,6 +348,18 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .subscribe(pagSize => {
                 this.maxItems = this._pagination.maxItems = pagSize;
             });
+
+        this.uploadService.fileUploadComplete
+            .pipe(
+                debounceTime(300),
+                takeUntil(this.onDestroy$))
+            .subscribe(() => this.reload());
+
+        this.uploadService.fileUploadDeleted
+            .pipe(
+                debounceTime(300),
+                takeUntil(this.onDestroy$))
+            .subscribe(() => this.reload());
     }
 
     getContextActions(node: NodeEntry) {
