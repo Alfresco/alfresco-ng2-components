@@ -237,10 +237,23 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         return !this.rows || this.rows.length === 0;
     }
 
+    resetPaginationValues(pagination?: PaginationModel) {
+        if (pagination) {
+            this.size = pagination.maxItems;
+            this.skipCount = pagination.skipCount;
+            this.pagination.next(pagination);
+        } else {
+            this.skipCount = 0;
+            this.size = this.userPreferences.paginationSize;
+            this.pagination.next({
+                skipCount: 0,
+                maxItems: this.size
+            });
+        }
+    }
+
     updatePagination(pagination: PaginationModel) {
-        this.size = pagination.maxItems;
-        this.skipCount = pagination.skipCount;
-        this.pagination.next(pagination);
+        this.resetPaginationValues(pagination);
         this.reload();
     }
 
