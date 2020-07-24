@@ -85,4 +85,24 @@ describe('CardViewTextItemModel', () => {
             expect(itemModel.displayValue).toBe('testpiped-testpiped-testpiped-Banuk-1-2-3');
         });
     });
+
+    it('should validate based on defined constraints', () => {
+        const constrainedProperties = {
+            label: 'Tribe',
+            value: 'test',
+            key: 'tribe',
+            dataType: 'd:text',
+            constraints: [{
+                id: 'constraint-id',
+                type: 'REGEX',
+                parameters: { expression: '^(?=.*test).*' }
+            }]
+        };
+
+        const itemModel = new CardViewTextItemModel(constrainedProperties);
+        expect(itemModel.isValid(itemModel.value)).toBe(true);
+
+        itemModel.value = 'dummy';
+        expect(itemModel.isValid(itemModel.value)).toBe(false, '`dummy` is not a constraint expression pattern');
+    });
 });

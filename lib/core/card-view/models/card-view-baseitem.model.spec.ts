@@ -91,7 +91,7 @@ describe('CardViewBaseItemModel', () => {
             const isValid = itemModel.isValid('test-against-this');
 
             expect(isValid).toBe(false);
-            expect(itemModel.getValidationErrors('test-against-this')).toEqual(['validator 1', 'validator 3']);
+            expect(itemModel.getValidationErrors('test-against-this')).toEqual([validator1, validator3 ]);
         });
     });
 });

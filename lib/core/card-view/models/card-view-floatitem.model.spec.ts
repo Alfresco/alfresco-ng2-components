@@ -56,4 +56,24 @@ describe('CardViewFloatItemModel', () => {
         expect(itemModel.isValid('42.3')).toBe(true, 'For "42.3" it should be true');
         expect(itemModel.isValid('test')).toBe(false, 'For "test" it should be false');
     });
+
+    it('should validate based on defined constraints', () => {
+        const constrainedProperties = {
+            label: 'Tribe',
+            value: '42.42',
+            key: 'tribe',
+            dataType: 'd:float',
+            constraints: [{
+                id: 'constraint-id',
+                type: 'MINMAX',
+                parameters: { minValue: 10,  maxValue: 40 }
+            }]
+        };
+
+        const itemModel = new CardViewFloatItemModel(constrainedProperties);
+        expect(itemModel.isValid(itemModel.value)).toBe(false, '42.42 is bigger than maximum allowed');
+
+        itemModel.value = '9.1';
+        expect(itemModel.isValid(itemModel.value)).toBe(false, '9.1 is less than minimum allowed');
+    });
 });
