@@ -193,7 +193,14 @@ if [[  $EXECLINT == "true" ]]; then
 fi
 
 echo "====== Update webdriver-manager ====="
-./node_modules/protractor/bin/webdriver-manager update --gecko=false
+if [ "$CI" = "true" ]; then
+    export chrome=$(google-chrome --product-version)
+    echo "Updating wedriver-manager with chromedriver: $chrome."
+    webdriver-manager update --gecko=false --versions.chrome=$chrome
+else
+    echo "Updating wedriver-manager with latest chromedriver, be sure to use evergreen Chrome."
+    webdriver-manager update --gecko=false
+fi
 
 export DEBUG_OPTION=''
 if [[  $DEBUG == "true" ]]; then
