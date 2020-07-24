@@ -17,3 +17,7 @@
 
 export * from './card-view-item-int.validator';
 export * from './card-view-item-float.validator';
+export * from './card-view-item-match.valiator';
+export * from './card-view-item-minmax.valiator';
+export * from './card-view-item-length.valiator';
+export * from './validators.map';
