@@ -17,11 +17,10 @@
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
-import { NodeEntryEvent } from '../document-list';
-import { NotificationService } from '../../../../core/notifications';
+import { NodeEntryEvent } from '../document-list/components/node.event';
 
 @Component({
     selector: 'adf-content-node-selector',

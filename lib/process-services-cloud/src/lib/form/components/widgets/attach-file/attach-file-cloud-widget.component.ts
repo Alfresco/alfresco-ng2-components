@@ -51,7 +51,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     implements OnInit {
 
     typeId = 'AttachFileCloudWidgetComponent';
-    rootDirectory;
+    rootDirectory = '-my-';
 
     constructor(
         formService: FormService,
@@ -88,12 +88,15 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
 
-        await this.contentNodeSelectorService.fetchNodeIdFromRelativePath('User Homes/hruser/mydir/new').then((nodeId: string) => {
-            this.rootDirectory = nodeId;
-        });
+        if (this.isAlfrescoAndLocal()) {
+            const destinationFolderRelativePath = this.getRelativeDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
+            await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderRelativePath).then((nodeId: string) => {
+                this.rootDirectory = nodeId;
+            });
+        }
 
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.field.form.contentHost, this.rootDirectory, this.isAlfrescoAndLocal(), this.isAttachMultiple())
+            .openUploadFileDialog( this.rootDirectory, selectedMode, this.isAlfrescoAndLocal(), this.isAttachMultiple())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
@@ -104,6 +107,14 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     removeExistingSelection(selections: Node[]) {
         const existingNode: Node[] = [...this.field.value || []];
         return selections.filter(opt => !existingNode.some( (node) => node.id === opt.id));
+    }
+
+    getRelativeDestinationFolderPath(destinationFolder: string): string {
+        const companyHome = 'Company Home/';
+        if (destinationFolder.includes(companyHome)) {
+            destinationFolder = destinationFolder.replace(companyHome, '');
+        }
+        return destinationFolder;
     }
 
     downloadContent(file: Node): void {

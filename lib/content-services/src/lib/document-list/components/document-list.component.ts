@@ -45,7 +45,8 @@ import {
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
-    LockService
+    LockService,
+    UploadService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -61,7 +62,6 @@ import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { UploadService } from '../../../../../core/services';
 
 @Component({
     selector: 'adf-document-list',

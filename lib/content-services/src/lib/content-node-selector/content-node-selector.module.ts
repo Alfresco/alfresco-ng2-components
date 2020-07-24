@@ -27,7 +27,7 @@ import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
-import { UploadModule } from '../upload';
+import { UploadModule } from '../upload/upload.module';
 
 @NgModule({
     imports: [
