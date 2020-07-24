@@ -16,6 +16,7 @@
  */
 
 import { CardViewItemProperties, CardViewItemValidator } from '../interfaces/card-view.interfaces';
+import validatorsMap from '../validators/validators.map';
 
 export abstract class CardViewBaseItemModel {
     label: string;
@@ -38,6 +39,14 @@ export abstract class CardViewBaseItemModel {
         this.icon = cardViewItemProperties.icon || '';
         this.validators = cardViewItemProperties.validators || [];
         this.data = cardViewItemProperties.data || null;
+
+        if (cardViewItemProperties?.constraints?.length ?? 0) {
+            for (const constraint of cardViewItemProperties.constraints) {
+                if (constraint.type !== 'LIST') {
+                    this.validators.push(validatorsMap[constraint.type.toLowerCase()](constraint.parameters));
+                }
+            }
+        }
     }
 
     isEmpty(): boolean {
