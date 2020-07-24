@@ -111,7 +111,7 @@ export class NodesApiService {
      */
     updateNode(nodeId: string, nodeBody: any, options: any = {}): Observable<MinimalNode> {
         const defaults = {
-            include: [ 'path', 'properties', 'allowableOperations', 'permissions' ]
+            include: [ 'path', 'properties', 'allowableOperations', 'permissions', 'definition' ]
         };
         const queryOptions = Object.assign(defaults, options);
 
