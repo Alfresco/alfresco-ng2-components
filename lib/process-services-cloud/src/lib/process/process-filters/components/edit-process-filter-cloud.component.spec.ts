@@ -179,6 +179,7 @@ describe('EditProcessFilterCloudComponent', () => {
     });
 
     it('should enable save and delete button for custom process filters', () => {
+        const disableCheckSpy = spyOn(component, 'isDisabledAction');
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });
         fixture.detectChanges();
@@ -187,6 +188,7 @@ describe('EditProcessFilterCloudComponent', () => {
         const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
         expansionPanel.click();
         fixture.detectChanges();
+        expect(disableCheckSpy).toHaveBeenCalled();
         fixture.whenStable().then(() => {
             const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
             expect(saveButton.disabled).toEqual(false);
