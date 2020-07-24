@@ -44,6 +44,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | showDropdownSiteList | `boolean` |  | Toggle sites list dropdown rendering |
 | showFilesInResult | `void` |  | Shows the files and folders in the search result |
 | showSearch | `boolean` |  | Toggle search input rendering |
+| selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
 
 ### Events
 

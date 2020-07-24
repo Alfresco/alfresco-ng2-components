@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { TRANSLATION_PROVIDER, CoreModule, FormRenderingService } from '@alfresco/adf-core';
 import { AppListCloudModule } from './app/app-list-cloud.module';
 import { TaskCloudModule } from './task/task-cloud.module';
@@ -54,9 +54,7 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
             }
         },
         { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
-        FormRenderingService,
-        { provide: FormRenderingService, useClass: CloudFormRenderingService }
+        { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService }
     ],
     exports: [
         AppListCloudModule,
@@ -69,4 +67,30 @@ import { ProcessServicesCloudPipeModule } from './pipes/process-services-cloud-p
         ProcessServicesCloudPipeModule
     ]
 })
-export class ProcessServicesCloudModule { }
+export class ProcessServicesCloudModule {
+    static forRoot(): ModuleWithProviders<ProcessServicesCloudModule> {
+        return {
+            ngModule: ProcessServicesCloudModule,
+            providers: [
+                {
+                    provide: TRANSLATION_PROVIDER,
+                    multi: true,
+                    useValue: {
+                        name: 'adf-process-services-cloud',
+                        source: 'assets/adf-process-services-cloud'
+                    }
+                },
+                { provide: PROCESS_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                { provide: TASK_FILTERS_SERVICE_TOKEN, useClass: LocalPreferenceCloudService },
+                FormRenderingService,
+                { provide: FormRenderingService, useClass: CloudFormRenderingService }
+            ]
+        };
+    }
+
+    static forChild(): ModuleWithProviders<ProcessServicesCloudModule> {
+        return {
+            ngModule: ProcessServicesCloudModule
+        };
+    }
+}

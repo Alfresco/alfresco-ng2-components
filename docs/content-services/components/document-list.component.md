@@ -94,6 +94,7 @@ Displays the documents from a repository.
 | nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
 | preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
 | ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
+| nodeSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Returns the current node selected |
 
 ## Details
 

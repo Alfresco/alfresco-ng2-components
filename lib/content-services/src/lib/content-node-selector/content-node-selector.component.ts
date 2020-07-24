@@ -49,6 +49,10 @@ export class ContentNodeSelectorComponent {
         this.chosenNode = nodeList;
     }
 
+    hasNodeSelected(): boolean {
+        return this.chosenNode?.length > 0;
+    }
+
     onSiteChange(siteTitle: string) {
         this.updateTitle(siteTitle);
     }

@@ -133,14 +133,14 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should trigger the select event when selection has been made', (done) => {
-                const expectedNode = <Node> {};
+                const expectedNode = <Node> { id: 'fakeid'};
                 component.select.subscribe((nodes) => {
                     expect(nodes.length).toBe(1);
                     expect(nodes[0]).toBe(expectedNode);
                     done();
                 });
 
-                component.chosenNode = expectedNode;
+                component.chosenNode = [expectedNode];
             });
 
             it('should be able to filter out the exclude site content', () => {
@@ -291,7 +291,7 @@ describe('ContentNodeSelectorComponent', () => {
                 tick(debounceSearch);
 
                 const chosenNode = new Node({ path: { elements: ['one'] } });
-                component.onNodeSelect({ detail: { node: { entry: chosenNode } } });
+                component.onCurrentSelection([ { entry: chosenNode } ]);
                 fixture.detectChanges();
 
                 tick(debounceSearch);
@@ -313,7 +313,7 @@ describe('ContentNodeSelectorComponent', () => {
                 fixture.detectChanges();
 
                 const chosenNode = <Node> { path: { elements: [] } };
-                component.onNodeSelect({ detail: { node: { entry: chosenNode } } });
+                component.onCurrentSelection([ { entry: chosenNode } ]);
                 fixture.detectChanges();
 
                 tick(debounceSearch);
@@ -395,6 +395,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Search functionality', () => {
             let getCorrespondingNodeIdsSpy;
+            const entry: Node = <Node> { id: 'fakeid'};
 
             const defaultSearchOptions = (searchTerm, rootNodeId = undefined, skipCount = 0, showFiles = false) => {
 
@@ -472,7 +473,7 @@ describe('ContentNodeSelectorComponent', () => {
             }));
 
             it('should reset the currently chosen node in case of starting a new search', fakeAsync(() => {
-                component.chosenNode = <Node> {};
+                component.chosenNode = [entry];
                 typeToSearchBox('kakarot');
 
                 tick(debounceSearch);
@@ -617,10 +618,11 @@ describe('ContentNodeSelectorComponent', () => {
             }));
 
             it('should clear the search field, nodes and chosenNode when clicking on the X (clear) icon', () => {
-                component.chosenNode = <Node> {};
+                component.chosenNode = [entry];
+
                 component.nodePaging = {
                     list: {
-                        entries: [{ entry: component.chosenNode }]
+                        entries: [{ entry }]
                     }
                 };
                 component.searchTerm = 'piccolo';
@@ -935,7 +937,7 @@ describe('ContentNodeSelectorComponent', () => {
 
         describe('Chosen node', () => {
 
-            const entry: Node = <Node> {};
+            const entry: Node = <Node> { id: 'fakeid'};
             const nodePage: NodePaging = <NodePaging> { list: {}, pagination: {} };
             let hasAllowableOperations;
 
@@ -960,11 +962,10 @@ describe('ContentNodeSelectorComponent', () => {
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
                         expect(nodes).not.toBeNull();
-                        expect(component.chosenNode).toBe(entry);
+                        expect(component.chosenNode[0]).toBe(entry);
                     });
 
                     component.documentList.ready.emit(nodePage);
-                    fixture.detectChanges();
                 }));
 
                 it('should be null after selecting node without the necessary permissions', async(() => {
@@ -978,7 +979,6 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.documentList.ready.emit(nodePage);
-                    fixture.detectChanges();
                 }));
 
                 it('should NOT be null after clicking on a node (with the right permissions) in the list (onNodeSelect)', async(() => {
@@ -987,54 +987,48 @@ describe('ContentNodeSelectorComponent', () => {
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
                         expect(nodes).not.toBeNull();
-                        expect(component.chosenNode).toBe(entry);
+                        expect(component.chosenNode[0]).toBe(entry);
                     });
 
-                    component.onNodeSelect({ detail: { node: { entry } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([ { entry } ]);
                 }));
 
-                it('should remain null when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async(() => {
+                it('should remain empty when clicking on a node (with the WRONG permissions) in the list (onNodeSelect)', async(() => {
                     hasAllowableOperations = false;
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
-                        expect(nodes).toBeNull();
-                        expect(component.chosenNode).toBeNull();
+                        expect(nodes).toEqual([]);
+                        expect(component.chosenNode).toEqual([]);
                     });
 
-                    component.onNodeSelect({ detail: { node: { entry } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([ { entry } ]);
                 }));
 
-                it('should become null when clicking on a node (with the WRONG permissions) after previously selecting a right node', async(() => {
+                it('should become empty when clicking on a node (with the WRONG permissions) after previously selecting a right node', async(() => {
                     component.select.subscribe((nodes) => {
-
                         if (hasAllowableOperations) {
                             expect(nodes).toBeDefined();
                             expect(nodes).not.toBeNull();
-                            expect(component.chosenNode).not.toBeNull();
-
+                            expect(component.chosenNode[0]).not.toBeNull();
                         } else {
                             expect(nodes).toBeDefined();
-                            expect(nodes).toBeNull();
-                            expect(component.chosenNode).toBeNull();
+                            expect(nodes).toEqual([]);
+                            expect(component.chosenNode).toEqual([]);
                         }
                     });
 
                     hasAllowableOperations = true;
-                    component.onNodeSelect({ detail: { node: { entry } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([{ entry }]);
 
                     hasAllowableOperations = false;
-                    component.onNodeSelect({ detail: { node: { entry } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([{ entry }]);
+
                 }));
 
-                it('should be null when the chosenNode is reset', async(() => {
+                it('should be empty when the chosenNode is reset', async(() => {
                     hasAllowableOperations = true;
-                    component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([{ entry: <Node> {} }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -1043,7 +1037,6 @@ describe('ContentNodeSelectorComponent', () => {
                     });
 
                     component.resetChosenNode();
-                    fixture.detectChanges();
                 }));
             });
 
@@ -1060,7 +1053,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
                         expect(nodes).not.toBeNull();
-                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.chosenNode[0]).not.toBeNull();
                         expect(component.isSelectionValid).not.toBeNull();
                     });
 
@@ -1070,21 +1063,21 @@ describe('ContentNodeSelectorComponent', () => {
 
                 it('should NOT be null after clicking on a node in the list (onNodeSelect)', async(() => {
                     fixture.detectChanges();
+
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
                         expect(nodes).not.toBeNull();
-                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.chosenNode[0]).not.toBeNull();
+                        expect(component.chosenNode[0].id).toBe('fakeid');
                         expect(component.isSelectionValid).not.toBeNull();
                     });
 
-                    component.onNodeSelect({ detail: { node: { entry } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([{ entry }]);
                 }));
 
                 it('should be null when the chosenNode is reset', async(() => {
                     fixture.detectChanges();
-                    component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([{ entry: <Node> {} }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -1111,7 +1104,7 @@ describe('ContentNodeSelectorComponent', () => {
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
                         expect(nodes).not.toBeNull();
-                        expect(component.chosenNode).not.toBeNull();
+                        expect(component.chosenNode[0]).not.toBeNull();
                         expect(component.isSelectionValid).not.toBeNull();
                     });
 
@@ -1119,24 +1112,9 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
                 }));
 
-                it('should NOT be null after clicking on a node in the list (onNodeSelect)', async(() => {
-                    component.select.subscribe((nodes) => {
-                        expect(nodes).toBeDefined();
-                        expect(nodes).not.toBeNull();
-                        expect(component.chosenNode).not.toBeNull();
-                        expect(component.isSelectionValid).not.toBeNull();
-                    });
-                    fixture.detectChanges();
-
-                    component.onNodeSelect({ detail: { node: { entry } } });
-                    fixture.detectChanges();
-                }));
-
                 it('should be null when the chosenNode is reset', async(() => {
                     fixture.detectChanges();
-
-                    component.onNodeSelect({ detail: { node: { entry: <Node> {} } } });
-                    fixture.detectChanges();
+                    component.onCurrentSelection([{ entry: <Node> {} }]);
 
                     component.select.subscribe((nodes) => {
                         expect(nodes).toBeDefined();
@@ -1149,6 +1127,7 @@ describe('ContentNodeSelectorComponent', () => {
                     fixture.detectChanges();
                 }));
             });
+
         });
     });
 });

@@ -26,7 +26,7 @@ import {
     SitesService
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
-import { Node, NodePaging, Pagination, SiteEntry, SitePaging } from '@alfresco/js-api';
+import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry } from '@alfresco/js-api';
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
@@ -132,6 +132,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Input()
     pageSize: number = this.DEFAULT_PAGINATION.maxItems;
 
+    /** Define the selection mode for document list. The allowed values are single or multiple */
+    @Input()
+    selectionMode: 'single' | 'multiple' = 'single';
+
     /** Function used to decide if the selected node has permission to be selected.
      * Default value is a function that always returns true.
      */
@@ -198,7 +202,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
     inDialog: boolean = false;
-    _chosenNode: Node = null;
+    _chosenNode: Node [] = null;
     folderIdToShow: string | null = null;
     breadcrumbFolderTitle: string | null = null;
     startSiteGuid: string | null = null;
@@ -223,13 +227,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 private sitesService: SitesService) {
     }
 
-    set chosenNode(value: Node) {
+    set chosenNode(value: Node[]) {
         this._chosenNode = value;
-        let valuesArray = null;
-        if (value) {
-            valuesArray = [value];
-        }
-        this.select.next(valuesArray);
+        this.select.next(value);
     }
 
     get chosenNode() {
@@ -334,7 +334,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         let folderNode: Node;
 
         if (this.showingSearchResults && this.chosenNode) {
-            folderNode = this.chosenNode;
+            folderNode = this.chosenNode[0];
         } else {
             folderNode = this.documentList.folderNode;
         }
@@ -468,7 +468,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
      */
     private attemptNodeSelection(entry: Node): void {
         if (entry && this.isSelectionValid(entry)) {
-            this.chosenNode = entry;
+            this.chosenNode = [entry];
         } else {
             this.resetChosenNode();
         }
@@ -482,12 +482,14 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Invoked when user selects a node
+     * It filters and emit the selection coming from the document list
      *
-     * @param event CustomEvent for node-select
+     * @param nodesEntries
      */
-    onNodeSelect(event: any): void {
-        this.attemptNodeSelection(event.detail.node.entry);
+    onCurrentSelection(nodesEntries: NodeEntry[]): void {
+        const validNodesEntity = nodesEntries.filter((node) => this.isSelectionValid(node.entry));
+        const nodes: Node[] = validNodesEntity.map((node) => node.entry );
+        this.chosenNode = nodes;
     }
 
     setTitleIfCustomSite(site: SiteEntry) {
