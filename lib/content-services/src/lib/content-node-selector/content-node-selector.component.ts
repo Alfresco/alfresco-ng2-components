@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
 import { NodeEntryEvent } from '../document-list';
-import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
 import { NotificationService } from '../../../../core/notifications';
 
 @Component({
@@ -31,9 +30,6 @@ import { NotificationService } from '../../../../core/notifications';
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent {
-    @ViewChild('selectorPanelComponent', { static: true })
-    selectorPanelComponent: ContentNodeSelectorPanelComponent;
-
     title: string;
     action: string;
     buttonActionName: string;
