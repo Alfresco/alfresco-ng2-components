@@ -37,7 +37,7 @@ Opens a [Content Node Selector](content-node-selector.component.md)  in its own 
 | imageResolver | [`ImageResolver`](../../../lib/content-services/src/lib/document-list/data/image-resolver.model.ts) | null | Custom image resolver function. See the [Image Resolver Model](image-resolver.model.md) page for more information. |
 | isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) | defaultValidation | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | pageSize | `number` |  | Number of items shown per page in the list. |
-| restrictSearchToCurrentFolderId | `boolean` | false | If true will restrict the search to the currentFolderId |
+| restrictRootToCurrentFolderId | `boolean` | false | If true will restrict the search and breadcrumbs to the currentFolderId |
 | where | `string` |  | Custom _where_ filter function. See the [Document List component](../../content-services/components/document-list.component.md) for more information. |
 | excludeSiteContent | `string[]` |  | Custom list of site content componentIds. Used to filter out the corresponding items from the displayed nodes |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom row filter function. See the [Row Filter Model](row-filter.model.md) page for more information. |
