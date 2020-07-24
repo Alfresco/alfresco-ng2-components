@@ -63,11 +63,11 @@ export abstract class CardViewBaseItemModel {
             .reduce((isValidUntilNow, isValid) => isValidUntilNow && isValid, true);
     }
 
-    getValidationErrors(value): string[] {
+    getValidationErrors(value): CardViewItemValidator[] {
         if (!this.validators.length) {
             return [];
         }
 
-        return this.validators.filter((validator) => !validator.isValid(value)).map((validator) => validator.message);
+        return this.validators.filter((validator) => !validator.isValid(value)).map((validator) => validator);
     }
 }
