@@ -27,6 +27,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { DebugElement } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 
 describe('CardViewTextItemComponent', () => {
 
@@ -441,7 +442,7 @@ describe('CardViewTextItemComponent', () => {
         });
 
         it('should set the errorMessages properly if the editedValue is invalid', async () => {
-            const expectedErrorMessages = ['Something went wrong'];
+            const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
             component.property.isValid = () => false;
             component.property.getValidationErrors = () => expectedErrorMessages;
 
@@ -450,7 +451,7 @@ describe('CardViewTextItemComponent', () => {
             await fixture.whenStable();
 
             updateTextField(component.property.key, 'updated-value');
-            expect(component.errorMessages).toBe(expectedErrorMessages);
+            expect(component.errors).toBe(expectedErrorMessages);
         });
 
         it('should update the property value after a successful update attempt', async () => {

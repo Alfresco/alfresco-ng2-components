@@ -15,9 +15,20 @@
  * limitations under the License.
  */
 
-export * from './card-view-item-int.validator';
-export * from './card-view-item-float.validator';
-export * from './card-view-item-match.valiator';
-export * from './card-view-item-minmax.valiator';
-export * from './card-view-item-length.valiator';
-export * from './validators.map';
+import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
+
+export interface MatchValidatorParams {
+    expression: string;
+    flags?: string;
+}
+
+export class CardViewItemMatchValidator implements CardViewItemValidator {
+    message = 'CORE.CARDVIEW.VALIDATORS.MATCH_VALIDATION_ERROR';
+
+    constructor(private expression: string, private flags?: string) {}
+
+    isValid(value: string): boolean {
+        const regex = new RegExp(this.expression, this.flags);
+        return value === '' || regex.test(value);
+    }
+}

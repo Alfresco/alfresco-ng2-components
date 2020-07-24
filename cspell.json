@@ -129,7 +129,8 @@
     "uploadfileform",
     "processwithstarteventform",
     "processstring",
-    "typeahed"
+    "typeahed",
+    "minmax"
   ],
   "dictionaries": [
     "html",

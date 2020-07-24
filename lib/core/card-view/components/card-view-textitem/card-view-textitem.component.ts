@@ -22,6 +22,7 @@ import { BaseCardView } from '../base-card-view';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../services/translation.service';
+import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -55,7 +56,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     multiValueSeparator: string = DEFAULT_SEPARATOR;
 
     editedValue: string | string[];
-    errorMessages: string[];
+    errors: CardViewItemValidator[];
     templateType: string;
 
     constructor(cardViewUpdateService: CardViewUpdateService,
@@ -92,7 +93,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     private resetErrorMessages() {
-        this.errorMessages = [];
+        this.errors = [];
     }
 
     update(): void {
@@ -102,7 +103,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.property.value = updatedValue;
             this.resetErrorMessages();
         } else {
-            this.errorMessages = this.property.getValidationErrors(this.editedValue);
+            this.errors = this.property.getValidationErrors(this.editedValue);
         }
     }
 
@@ -176,7 +177,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     }
 
     get hasErrors(): boolean {
-        return this.errorMessages && this.errorMessages.length > 0;
+        return (!!this.errors?.length) ?? false;
     }
 
     get isChipViewEnabled(): boolean {

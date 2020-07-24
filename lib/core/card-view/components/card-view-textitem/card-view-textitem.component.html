@@ -55,7 +55,7 @@
                class="adf-textitem-editable-error"
                *ngIf="hasErrors">
         <ul>
-            <li *ngFor="let errorMessage of errorMessages">{{ errorMessage | translate }}</li>
+            <li *ngFor="let error of errors">{{ error.message | translate: error }}</li>
         </ul>
     </mat-error>
 

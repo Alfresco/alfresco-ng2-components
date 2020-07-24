@@ -15,9 +15,20 @@
  * limitations under the License.
  */
 
-export * from './card-view-item-int.validator';
-export * from './card-view-item-float.validator';
-export * from './card-view-item-match.valiator';
-export * from './card-view-item-minmax.valiator';
-export * from './card-view-item-length.valiator';
-export * from './validators.map';
+import { CardViewItemValidator } from '../interfaces/card-view.interfaces';
+
+export interface LengthValidatorParams {
+    minLength: number;
+    maxLength: number;
+}
+
+export class CardViewItemLengthValidator implements CardViewItemValidator {
+    message = 'CORE.CARDVIEW.VALIDATORS.LENGTH_VALIDATION_ERROR';
+
+    constructor(private minLength: number, private maxLength: number) {}
+
+    isValid(value: string = ''): boolean {
+        const stringLength = value.length;
+        return stringLength >= this.minLength && stringLength <= this.maxLength;
+    }
+}
