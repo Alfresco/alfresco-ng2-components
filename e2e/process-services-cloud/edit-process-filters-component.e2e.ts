@@ -81,7 +81,7 @@ describe('Edit process filters cloud', () => {
         await processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsDisplayed();
         await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
+        await expect(await processCloudDemoPage.editProcessFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(false);
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
     });
 
