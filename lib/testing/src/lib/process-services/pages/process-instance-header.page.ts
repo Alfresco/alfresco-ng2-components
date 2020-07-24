@@ -132,4 +132,15 @@ export class ProcessInstanceHeaderPage {
     async getDescriptionFieldValue(): Promise<string> {
         return this.description.getFieldValue();
     }
+
+    async checkDetailsAreDisplayed(): Promise<void> {
+        await this.status.checkLabelIsVisible();
+        await this.endDate.checkLabelIsVisible();
+        await this.category.checkLabelIsVisible();
+        await this.businessKey.checkLabelIsVisible();
+        await this.startedBy.checkLabelIsVisible();
+        await this.startDate.checkLabelIsVisible();
+        await this.id.checkLabelIsVisible();
+        await this.description.checkLabelIsVisible();
+    }
 }

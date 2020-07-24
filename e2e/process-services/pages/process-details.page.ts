@@ -43,36 +43,8 @@ export class ProcessDetailsPage {
         return BrowserActions.getText(this.processDetailsMessage);
     }
 
-    isProcessStatusFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isStatusFieldDisplayed();
-    }
-
-    isProcessEndDateFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isEndDateFieldDisplayed();
-    }
-
-    isProcessCategoryFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isCategoryFieldDisplayed();
-    }
-
-    isProcessBusinessKeyFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isBusinessKeyFieldDisplayed();
-    }
-
-    isProcessCreatedByFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isStartedByFieldDisplayed();
-    }
-
-    isProcessCreatedFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isStartDateFieldDisplayed();
-    }
-
-    isProcessIdFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isIdFieldDisplayed();
-    }
-
-    isProcessDescriptionFieldVisible(): Promise<boolean> {
-        return this.processInstanceHeaderPage.isDescriptionFieldDisplayed();
+    async checkProcessHeaderDetailsAreVisible(): Promise<void> {
+        await this.processInstanceHeaderPage.checkDetailsAreDisplayed();
     }
 
     getProcessStatus(): Promise<string> {

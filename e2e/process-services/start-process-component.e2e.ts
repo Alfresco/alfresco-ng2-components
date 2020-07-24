@@ -195,14 +195,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.clickFormStartProcessButton();
 
-                await expect(await processDetailsPage.isProcessStatusFieldVisible()).toBe(true, 'Status field is not visible');
-                await expect(await processDetailsPage.isProcessEndDateFieldVisible()).toBe(true, 'End date field is not visible');
-                await expect(await processDetailsPage.isProcessCategoryFieldVisible()).toBe(true, 'Category field is not visible');
-                await expect(await processDetailsPage.isProcessBusinessKeyFieldVisible()).toBe(true, 'Business Key field is not visible');
-                await expect(await processDetailsPage.isProcessCreatedByFieldVisible()).toBe(true, 'Started By field is not visible');
-                await expect(await processDetailsPage.isProcessCreatedFieldVisible()).toBe(true, 'Start Date field is not visible');
-                await expect(await processDetailsPage.isProcessIdFieldVisible()).toBe(true, 'ID field is not visible');
-                await expect(await processDetailsPage.isProcessDescriptionFieldVisible()).toBe(true, 'Description field is not visible');
+                await processDetailsPage.checkProcessHeaderDetailsAreVisible();
 
                 const processId = await processDetailsPage.getId();
                 const response = await apiService.getInstance().activiti.processApi.getProcessInstance(processId);
