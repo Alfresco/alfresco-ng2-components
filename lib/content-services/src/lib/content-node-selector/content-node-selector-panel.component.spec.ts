@@ -658,14 +658,14 @@ describe('ContentNodeSelectorComponent', () => {
             it('should restrict the breadcrumb to the currentFolderId in case restrictedRoot is true', () => {
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = true;
-                fixture.detectChanges();
+                component.ngOnInit();
                 expect(component.breadcrumbRootId).toEqual('my-root-id');
             });
 
             it('should NOT restrict the breadcrumb to the currentFolderId in case restrictedRoot is false', () => {
                 component.currentFolderId = 'my-root-id';
                 component.restrictRootToCurrentFolderId = false;
-                fixture.detectChanges();
+                component.ngOnInit();
                 expect(component.breadcrumbRootId).toBeUndefined();
             });
 
