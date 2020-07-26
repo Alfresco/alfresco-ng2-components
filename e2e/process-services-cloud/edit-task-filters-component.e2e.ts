@@ -97,7 +97,7 @@ describe('Edit task filters cloud', () => {
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
     });
 
-    it('[C306896] Delete Save and Save as actions should be displayed when clicking on custom filter header', async () => {
+    it('[C306896] Delete Save and Save as actions should be displayed and disabled when clicking on default filter header', async () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
@@ -110,7 +110,7 @@ describe('Edit task filters cloud', () => {
 
         await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveButtonIsEnabled()).toEqual(false);
         await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkSaveAsButtonIsEnabled()).toEqual(false);
-        await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(true);
+        await expect(await tasksCloudDemoPage.editTaskFilterCloudComponent().checkDeleteButtonIsEnabled()).toEqual(false);
         await tasksCloudDemoPage.editTaskFilterCloudComponent().openFilter();
     });
 

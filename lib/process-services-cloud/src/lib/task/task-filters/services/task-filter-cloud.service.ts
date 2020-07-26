@@ -217,6 +217,16 @@ export class TaskFilterCloudService {
     }
 
     /**
+     * Checks if given filter is a default filter
+     * @param filterName Name of the target task filter
+     * @returns Boolean value for whether the filter is a default filter
+     */
+    isDefaultFilter(filterName: string): boolean {
+        const defaultFilters = this.defaultTaskFilters();
+        return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
+    }
+
+    /**
      * Calls update preference api to update task filter
      * @param appName Name of the target app
      * @param key Key of the task filters
@@ -264,13 +274,13 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
-    private defaultTaskFilters(appName: string): TaskFilterCloudModel[] {
+    private defaultTaskFilters(appName?: string): TaskFilterCloudModel[] {
         return [
             new TaskFilterCloudModel({
                 name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
                 key: 'my-tasks',
                 icon: 'inbox',
-                appName: appName,
+                appName,
                 status: 'ASSIGNED',
                 assignee: this.getUsername(),
                 sort: 'createdDate',
@@ -280,7 +290,7 @@ export class TaskFilterCloudService {
                 name: 'ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS',
                 key: 'queued-tasks',
                 icon: 'queue',
-                appName: appName,
+                appName,
                 status: 'CREATED',
                 assignee: '',
                 sort: 'createdDate',
@@ -290,7 +300,7 @@ export class TaskFilterCloudService {
                 name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',
                 key: 'completed-tasks',
                 icon: 'done',
-                appName: appName,
+                appName,
                 status: 'COMPLETED',
                 assignee: '',
                 sort: 'createdDate',

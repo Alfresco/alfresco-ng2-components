@@ -107,6 +107,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         { label: 'ASC', value: 'ASC' },
         { label: 'DESC', value: 'DESC' }
     ];
+    actionDisabledForDefault = [
+        EditTaskFilterCloudComponent.ACTION_SAVE,
+        EditTaskFilterCloudComponent.ACTION_DELETE
+    ];
 
     private applicationNames: any[] = [];
     private formHasBeenChanged = false;
@@ -447,7 +451,18 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return property.type === 'checkbox';
     }
 
-    hasFormChanged(action: any): boolean {
+    isDisabledAction(action: TaskFilterAction): boolean {
+        return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
+    }
+
+    isDisabledForDefaultFilters(action: TaskFilterAction): boolean {
+        return (
+            this.taskFilterCloudService.isDefaultFilter(this.taskFilter.name) &&
+            this.actionDisabledForDefault.includes(action.actionType)
+        );
+    }
+
+    hasFormChanged(action: TaskFilterAction): boolean {
         if (action.actionType === EditTaskFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }

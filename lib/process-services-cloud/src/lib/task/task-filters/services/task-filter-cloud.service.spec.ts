@@ -220,6 +220,14 @@ describe('TaskFilterCloudService', () => {
         });
         expect(updatePreferenceSpy).toHaveBeenCalled();
     });
+
+    it('should check if given filter is a default filter', () => {
+        const fakeFilterName = 'fake-task-filter';
+        const defaultFilterName = 'ADF_CLOUD_TASK_FILTERS.MY_TASKS';
+
+        expect(service.isDefaultFilter(defaultFilterName)).toBe(true);
+        expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
+    });
 });
 
 describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService', () => {
