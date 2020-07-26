@@ -103,6 +103,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     ];
 
     directions = [{ label: 'ASC', value: 'ASC' }, { label: 'DESC', value: 'DESC' }];
+    actionDisabledForDefault = [
+        EditProcessFilterCloudComponent.ACTION_SAVE,
+        EditProcessFilterCloudComponent.ACTION_DELETE
+    ];
     applicationNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
@@ -433,7 +437,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         return property.type === 'number';
     }
 
-    hasFormChanged(action: any): boolean {
+    isDisabledAction(action: ProcessFilterAction): boolean {
+        return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
+    }
+
+    isDisabledForDefaultFilters(action: ProcessFilterAction): boolean {
+        return (
+            this.processFilterCloudService.isDefaultFilter(this.processFilter.name) &&
+            this.actionDisabledForDefault.includes(action.actionType)
+        );
+    }
+
+    hasFormChanged(action: ProcessFilterAction): boolean {
         if (action.actionType === EditProcessFilterCloudComponent.ACTION_SAVE) {
             return !this.formHasBeenChanged;
         }

@@ -381,4 +381,12 @@ describe('ProcessFilterCloudService', () => {
         });
         expect(updatePreferenceSpy).toHaveBeenCalled();
     });
+
+    it('should check if given filter is a default filter', () => {
+        const fakeFilterName = 'fake-process-filter';
+        const defaultFilterName = 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES';
+
+        expect(service.isDefaultFilter(defaultFilterName)).toBe(true);
+        expect(service.isDefaultFilter(fakeFilterName)).toBe(false);
+    });
 });

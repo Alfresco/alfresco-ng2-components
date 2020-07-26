@@ -153,6 +153,50 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
+    it('should disable save and delete button for default process filters', () => {
+        getProcessFilterByIdSpy.and.returnValue(of({
+            id: 'filter-id',
+            processName: 'ADF_CLOUD_PROCESS_FILTERS.RUNNING_PROCESSES',
+            sort: 'my-custom-sort',
+            processDefinitionId: 'process-definition-id',
+            priority: '12'
+        }));
+
+        const processFilterIdChange = new SimpleChange(null, 'filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+
+        component.toggleFilterActions = true;
+        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+        expansionPanel.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+            expect(saveButton.disabled).toEqual(true);
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            expect(deleteButton.disabled).toEqual(true);
+        });
+    });
+
+    it('should enable save and delete button for custom process filters', () => {
+        const disableCheckSpy = spyOn(component, 'isDisabledAction');
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+
+        component.toggleFilterActions = true;
+        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+        expansionPanel.click();
+        fixture.detectChanges();
+        expect(disableCheckSpy).toHaveBeenCalled();
+        fixture.whenStable().then(() => {
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+            expect(saveButton.disabled).toEqual(false);
+            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+            expect(deleteButton.disabled).toEqual(false);
+        });
+    });
+
     describe('EditProcessFilter form', () => {
 
         beforeEach(() => {
