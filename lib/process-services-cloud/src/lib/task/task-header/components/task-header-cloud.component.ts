@@ -50,6 +50,10 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     @Input()
     taskId: string;
 
+    /** Show/Hide the task title */
+    @Input()
+    showTitle: boolean = true;
+
     /** Emitted when the task is claimed. */
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();

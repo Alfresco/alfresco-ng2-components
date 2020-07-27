@@ -27,6 +27,7 @@ Shows all the information related to a task.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | appName | `string` | "" | (Required) The name of the application. |
+| showTitle | `boolean` | true | Show/Hide the task title |
 | taskId | `string` |  | (Required) The id of the task. |
 
 ### Events

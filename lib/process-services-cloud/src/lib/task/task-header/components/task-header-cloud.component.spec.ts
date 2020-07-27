@@ -73,6 +73,18 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
+        it('should hide the title if showTitle is false', () => {
+            component.showTitle = false;
+            fixture.detectChanges();
+            let taskTitle = fixture.debugElement.query(By.css('.adf-task-title'));
+            expect(taskTitle).toBeNull();
+
+            component.showTitle = true;
+            fixture.detectChanges();
+            taskTitle = fixture.debugElement.query(By.css('.adf-task-title'));
+            expect(taskTitle).toBeTruthy();
+        });
+
         it('should fectch task details when appName and taskId defined', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -187,6 +199,13 @@ describe('TaskHeaderCloudComponent', () => {
             fixture.detectChanges();
             description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
             expect(description.nativeElement.value.trim()).toEqual('This is the description');
+        });
+
+        it('should show loading spinner when properties are not loaded', () => {
+            component.properties = null;
+            fixture.detectChanges();
+            const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
+            expect(loading).toBeTruthy();
         });
     });
 

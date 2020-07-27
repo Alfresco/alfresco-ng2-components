@@ -22,6 +22,11 @@
         &-claim-controls {
             color: rgb(131, 131, 131);
         }
+
+        &-task-header-loading {
+            display: flex;
+            justify-content: center;
+        }
     }
 
     @media screen and  ($mat-small) {
@@ -31,4 +36,9 @@
             white-space: nowrap;
         }
     }
+}
+
+.adf-task-header-loading {
+    display: flex;
+    justify-content: center;
 }
