@@ -392,6 +392,7 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         this.fileTitle = this.getDisplayName(nodeData.name);
 
         this.urlFileContent = versionData ? this.apiService.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
+            this.apiService.contentApi.getContentUrl(this.nodeId);
         this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
 
         this.extension = this.getFileExtension(versionData ? versionData.name : nodeData.name);
