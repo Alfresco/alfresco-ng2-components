@@ -199,7 +199,7 @@ if [ "$CI" = "true" ]; then
     webdriver-manager update --gecko=false --versions.chrome=$chrome
 else
     echo "Updating wedriver-manager with latest chromedriver, be sure to use evergreen Chrome."
-    webdriver-manager update --gecko=false
+    ./node_modules/protractor/bin/webdriver-manager update --gecko=false
 fi
 
 export DEBUG_OPTION=''
