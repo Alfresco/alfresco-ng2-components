@@ -25,7 +25,6 @@ import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.moc
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { Person } from '@alfresco/js-api';
-import { TaskListModule } from '@alfresco/adf-process-services';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 
@@ -85,8 +84,7 @@ describe('TaskListCloudComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            ProcessServiceCloudTestingModule,
-            TaskListModule
+            ProcessServiceCloudTestingModule
         ],
         declarations: [
             EmptyTemplateComponent
@@ -343,8 +341,7 @@ describe('TaskListCloudComponent', () => {
         setupTestBed({
             imports: [
                 TranslateModule.forRoot(),
-                ProcessServiceCloudTestingModule,
-                TaskListModule
+                ProcessServiceCloudTestingModule
             ],
             declarations: [
                 CustomTaskListComponent,
