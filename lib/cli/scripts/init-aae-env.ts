@@ -24,6 +24,7 @@ import request = require('request');
 import * as fs from 'fs';
 import { logger } from './logger';
 import { AlfrescoApi } from '@alfresco/js-api';
+
 const ACTIVITI_CLOUD_APPS = require('./resources').ACTIVITI_CLOUD_APPS;
 /* tslint:enable */
 
@@ -45,7 +46,6 @@ export interface ConfigArgs {
 
 export const AAE_MICROSERVICES = [
     'deployment-service',
-    'modeling-service',
     'dmn-service'
 ];
 
@@ -102,64 +102,14 @@ function getDescriptors() {
     }
 }
 
-function getProjects() {
-    const url = `${args.host}/modeling-service/v1/projects`;
-
-    const pathParams = {}, queryParams = { maxItems: 1000 },
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-    try {
-        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-
-    } catch (error) {
-        logger.error('Get Projects' + error.status);
-        isValid = false;
-    }
-}
-
-function getProjectRelease(projectId: string) {
-    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-    try {
-        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-
-    } catch (error) {
-        logger.error('Get Projects Release' + error.status);
-        isValid = false;
-    }
-}
-
-function releaseProject(projectId: string) {
-    const url = `${args.host}/modeling-service/v1/projects/${projectId}/releases`;
-
-    const pathParams = {}, queryParams = {},
-        headerParams = {}, formParams = {}, bodyParam = {},
-        contentTypes = ['application/json'], accepts = ['application/json'];
-    try {
-        return alfrescoJsApiModeler.oauth2Auth.callCustomApi(url, 'POST', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
-
-    } catch (error) {
-        logger.error('Post Projects Release' + error.status);
-        isValid = false;
-    }
-}
 
 async function importAndReleaseProject(absoluteFilePath: string) {
     const fileContent = await fs.createReadStream(absoluteFilePath);
 
     try {
-        const project = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
+        await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/deployment-service/v1/descriptors/import`, 'POST', {}, {}, {}, { file: fileContent }, {}, ['multipart/form-data'], ['application/json']);
         logger.info(`Project imported`);
         logger.info(`Create release`);
-        const release = await alfrescoJsApiModeler.oauth2Auth.callCustomApi(`${args.host}/modeling-service/v1/projects/${project.entry.id}/releases`, 'POST', {}, {}, {}, {}, {},
-            ['application/json'], ['application/json']);
-        return release;
 
     } catch (error) {
         logger.error(`Not able to import the project/create the release ${absoluteFilePath} with status: ${error}`);
@@ -231,59 +181,28 @@ async function deployMissingApps() {
 }
 
 async function checkIfAppIsReleased(absentApps: any []) {
-    const projectList = await getProjects();
     let TIME = 5000;
     let noError = true;
 
     for (let i = 0; i < absentApps.length; i++) {
         noError = true;
         const currentAbsentApp = absentApps[i];
-        const project = projectList.list.entries.find((currentApp: any) => {
-            return currentAbsentApp.name === currentApp.entry.name;
-        });
+
         let projectRelease: any;
 
-        if (project === undefined) {
+        logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
 
-            logger.warn('Missing project: Create the project for ' + currentAbsentApp.name);
+        try {
+            projectRelease = await importProjectAndRelease(currentAbsentApp);
+        } catch (error) {
+            logger.info(`error status ${error.status}`);
 
-            try {
-                projectRelease = await importProjectAndRelease(currentAbsentApp);
-            } catch (error) {
-                logger.info(`error status ${error.status}`);
-
-                if (error.status !== 409) {
-                    logger.info(`Not possible to upload the project ${currentAbsentApp.name} status  : ${JSON.stringify(error)}`);
-                    process.exit(1);
-                } else {
-                    logger.error(`Not possible to upload the project because inconsistency CS - Modelling try to delete manually the node`);
-                    process.exit(1);
-                }
-            }
-
-        } else {
-
-            TIME += 5000;
-
-            logger.info('Project ' + project.entry.name + ' found');
-
-            const projectReleaseList = await getProjectRelease(project.entry.id);
-
-            if (projectReleaseList.list.entries.length === 0) {
-                logger.warn('Project needs release');
-                projectRelease = await releaseProject(project);
-                logger.warn(`Project released: ${projectRelease.id}`);
+            if (error.status !== 409) {
+                logger.info(`Not possible to upload the project ${currentAbsentApp.name} status  : ${JSON.stringify(error)}`);
+                process.exit(1);
             } else {
-                logger.info('Project already has release');
-
-                // getting the latest project release
-                let currentReleaseVersion = -1;
-                projectReleaseList.list.entries.forEach((currentRelease: any) => {
-                    if (currentRelease.entry.version > currentReleaseVersion) {
-                        currentReleaseVersion = currentRelease.entry.version;
-                        projectRelease = currentRelease;
-                    }
-                });
+                logger.error(`Not possible to upload the project because inconsistency CS - Modelling try to delete manually the node`);
+                process.exit(1);
             }
         }
 
@@ -320,7 +239,6 @@ async function checkDescriptorExist(name: string) {
 
 async function importProjectAndRelease(app: any) {
     await getFileFromRemote(app.file_location, app.name);
-    logger.warn('Project imported ' + app.name);
     const projectRelease = await importAndReleaseProject(`${app.name}.zip`);
     await deleteLocalFile(`${app.name}`);
     return projectRelease;
