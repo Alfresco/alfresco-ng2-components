@@ -26,10 +26,11 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    template: '<div [adfNodeDownload]="selection"></div>'
+    template: '<div [adfNodeDownload]="selection" [version]="version"></div>'
 })
 class TestComponent {
     selection;
+    version;
 }
 
 describe('NodeDownloadDirective', () => {
@@ -89,6 +90,22 @@ describe('NodeDownloadDirective', () => {
         element.triggerEventHandler('click', null);
 
         expect(contentService.getContentUrl).toHaveBeenCalledWith(node.entry.id, true);
+    });
+
+    it('should download selected node version as file', () => {
+        component.version = {
+            entry: {
+                id: '1.0'
+            }
+        };
+        spyOn(contentService, 'getVersionContentUrl');
+        const node = {entry: {id: 'node-id', isFile: true}};
+        component.selection = [node];
+
+        fixture.detectChanges();
+        element.triggerEventHandler('click', null);
+
+        expect(contentService.getVersionContentUrl).toHaveBeenCalledWith(node.entry.id, '1.0', true);
     });
 
     it('should download selected shared node as file', () => {

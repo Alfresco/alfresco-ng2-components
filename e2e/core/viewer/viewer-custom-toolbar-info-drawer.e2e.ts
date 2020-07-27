@@ -16,10 +16,11 @@
  */
 
 import { browser } from 'protractor';
-import { ApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { ApiService, BrowserActions, FileBrowserUtil, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
+import { VersionManagePage } from '../pages/version-manager.page';
 
 describe('Viewer', () => {
 
@@ -32,12 +33,18 @@ describe('Viewer', () => {
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
+    const versionManagePage = new VersionManagePage();
     const acsUser = new UserModel();
     let txtFileUploaded;
 
     const txtFileInfo = new FileModel({
         'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
         'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_path
+    });
+
+    const fileModelVersionTwo = new FileModel({
+        'name': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_name,
+        'location': browser.params.resources.Files.ADF_DOCUMENTS.TXT.file_location
     });
 
     beforeAll(async () => {
@@ -83,5 +90,23 @@ describe('Viewer', () => {
         await viewerPage.checkTabIsActive('Properties');
         await viewerPage.clickOnTab('Versions');
         await viewerPage.checkTabIsActive('Versions');
+    });
+
+    it('[C362242] Should the Viewer be able to view a previous version of a file', async () => {
+        await viewerPage.clickCloseButton();
+        await contentServicesPage.versionManagerContent(txtFileInfo.name);
+        await BrowserActions.click(versionManagePage.showNewVersionButton);
+        await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
+        await versionManagePage.closeVersionDialog();
+        await contentServicesPage.doubleClickRow(txtFileUploaded.entry.name);
+        await viewerPage.clickInfoButton();
+        await viewerPage.clickOnTab('Versions');
+        await versionManagePage.viewFileVersion('1.0');
+        await viewerPage.expectUrlToContain('1.0');
+    });
+
+    it('[C362265] Should the Viewer be able to download a previous version of a file', async () => {
+        await viewerPage.clickDownloadButton();
+        await FileBrowserUtil.isFileDownloaded(txtFileInfo.name);
     });
 });

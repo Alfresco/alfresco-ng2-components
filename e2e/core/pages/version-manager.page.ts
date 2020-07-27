@@ -17,7 +17,7 @@
 
 import * as path from 'path';
 import { BrowserActions, BrowserVisibility, TogglePage } from '@alfresco/adf-testing';
-import { browser, by, element } from 'protractor';
+import { browser, by, element, ElementFinder } from 'protractor';
 
 export class VersionManagePage {
 
@@ -171,6 +171,12 @@ export class VersionManagePage {
         await this.clickActionButton(version);
         const restoreButton = element(by.id(`adf-version-list-action-restore-${version}`));
         await BrowserActions.click(restoreButton);
+    }
+
+    async viewFileVersion(version): Promise<void> {
+        await this.clickActionButton(version);
+        const viewButton: ElementFinder = element(by.id(`adf-version-list-action-view-${version}`));
+        await BrowserActions.click(viewButton);
     }
 
     async checkActionsArePresent(version: string): Promise<void> {

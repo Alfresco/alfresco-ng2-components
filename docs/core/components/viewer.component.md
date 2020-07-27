@@ -103,6 +103,7 @@ See the [Custom layout](#custom-layout) section for full details of all availabl
 | thumbnailsTemplate | [`TemplateRef`](https://angular.io/api/core/TemplateRef)`<any>` | null | The template for the pdf thumbnails. |
 | urlFile | `string` | "" | If you want to load an external file that does not come from ACS you can use this URL to specify where to load the file from. |
 | urlFileViewer | `string` | null | Viewer to use with the `urlFile` address (`pdf`, `image`, `media`, `text`). Used when `urlFile` has no filename and extension. |
+| versionId | `string` | null | Version Id of the file to load. |
 
 ### Events
 

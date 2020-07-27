@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { RenditionEntry, RenditionPaging } from '@alfresco/js-api';
 import { AlfrescoApiService } from '../../services/alfresco-api.service';
 import { LogService } from '../../services/log.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,17 @@ export class ViewUtilService {
         image: ['image/png', 'image/jpeg', 'image/gif', 'image/bmp', 'image/svg+xml'],
         media: ['video/mp4', 'video/webm', 'video/ogg', 'audio/mpeg', 'audio/ogg', 'audio/wav']
     };
+
+    /**
+     * Timeout used for setInterval.
+     */
+    TRY_TIMEOUT: number = 10000;
+
+    /**
+     * Subscribers needed for ViewerComponent to update the viewerType and urlFileContent.
+     */
+    viewerTypeChange: Subject<string> = new Subject<string>();
+    urlFileContentChange: Subject<string> = new Subject<string>();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -165,6 +177,112 @@ export class ViewUtilService {
             }
         }
         return new Promise<RenditionEntry>((resolve) => resolve(rendition));
+    }
+
+    async displayNodeRendition(nodeId: string, versionId?: string) {
+        try {
+            const rendition = await this.resolveNodeRendition(nodeId, 'pdf', versionId);
+            if (rendition) {
+                const renditionId = rendition.entry.id;
+
+                if (renditionId === 'pdf') {
+                    this.viewerTypeChange.next('pdf');
+                } else if (renditionId === 'imgpreview') {
+                    this.viewerTypeChange.next('image');
+                }
+
+                const urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
+                    this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
+                this.urlFileContentChange.next(urlFileContent);
+            }
+        } catch (err) {
+            this.logService.error(err);
+        }
+    }
+
+    private async resolveNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<RenditionEntry> {
+        renditionId = renditionId.toLowerCase();
+
+        const supportedRendition: RenditionPaging = versionId ? await this.apiService.versionsApi.listVersionRenditions(nodeId, versionId) :
+            await this.apiService.renditionsApi.getRenditions(nodeId);
+
+        let rendition: RenditionEntry = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+        if (!rendition) {
+            renditionId = 'imgpreview';
+            rendition = supportedRendition.list.entries.find((renditionEntry: RenditionEntry) => renditionEntry.entry.id.toLowerCase() === renditionId);
+        }
+
+        if (rendition) {
+            const status: string = rendition.entry.status.toString();
+
+            if (status === 'NOT_CREATED') {
+                try {
+                    if (versionId) {
+                        await this.apiService.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId}).then(() => {
+                            this.viewerTypeChange.next('in_creation');
+                        });
+                    } else {
+                        await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId}).then(() => {
+                            this.viewerTypeChange.next('in_creation');
+                        });
+                    }
+                    rendition = await this.waitNodeRendition(nodeId, renditionId, versionId);
+                } catch (err) {
+                    this.logService.error(err);
+                }
+            }
+        }
+
+        return rendition;
+    }
+
+    private async waitNodeRendition(nodeId: string, renditionId: string, versionId?: string): Promise<RenditionEntry> {
+        let currentRetry: number = 0;
+        return new Promise<RenditionEntry>((resolve, reject) => {
+            const intervalId = setInterval(() => {
+                currentRetry++;
+                if (this.maxRetries >= currentRetry) {
+                    if (!versionId) {
+                        this.apiService.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
+                            this.handleNodeRendition(rendition, nodeId, renditionId, versionId);
+                            clearInterval(intervalId);
+                            return resolve(rendition);
+                        }, () => {
+                            this.viewerTypeChange.next('error_in_creation');
+                            return reject();
+                        });
+                    } else {
+                        this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
+                            this.handleNodeRendition(rendition, nodeId, renditionId);
+                            clearInterval(intervalId);
+                            return resolve(rendition);
+                        }, () => {
+                            this.viewerTypeChange.next('error_in_creation');
+                            return reject();
+                        });
+                    }
+                } else {
+                    this.viewerTypeChange.next('error_in_creation');
+                    clearInterval(intervalId);
+                }
+            }, this.TRY_TIMEOUT);
+        });
+    }
+
+    private async handleNodeRendition(rendition: RenditionEntry, nodeId: string, renditionId: string, versionId?: string) {
+        const status: string = rendition.entry.status.toString();
+        if (status === 'CREATED') {
+
+            if (renditionId === 'pdf') {
+                this.viewerTypeChange.next('pdf');
+            } else if (renditionId === 'imgpreview') {
+                this.viewerTypeChange.next('image');
+            }
+
+            const urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
+                this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
+            this.urlFileContentChange.next(urlFileContent);
+        }
     }
 
 }
