@@ -35,6 +35,10 @@
         }
     }
 
+    .adf-edit-task-filter-dateRange mat-grid-list {
+        width: 450px;
+    }
+
     .adf {
         &-cloud-edit-task-filter-loading-margin {
             margin-left: calc((100% - 100px) / 2);

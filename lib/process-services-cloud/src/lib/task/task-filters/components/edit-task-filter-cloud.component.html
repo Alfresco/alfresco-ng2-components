@@ -60,12 +60,17 @@
                         </div>
                     </mat-form-field>
                     <div fxFlex="23%" class="adf-edit-task-filter-checkbox" *ngIf="isCheckBoxType(taskFilterProperty)">
-                    <mat-checkbox
-                        color="primary"
-                        [formControlName]="taskFilterProperty.key"
-                        [attr.data-automation-id]="taskFilterProperty.key">
-                        {{taskFilterProperty.label | translate}}
-                    </mat-checkbox>
+                        <mat-checkbox
+                            color="primary"
+                            [formControlName]="taskFilterProperty.key"
+                            [attr.data-automation-id]="taskFilterProperty.key">
+                            {{taskFilterProperty.label | translate}}
+                        </mat-checkbox>
+                    </div>
+
+                    <div fxFlex="23%" class="adf-edit-task-filter-dateRange" *ngIf="isDateRangeType(taskFilterProperty)">
+                        <adf-date-range-widget [field]="taskFilterProperty"
+                            [group]="editTaskFilterForm"></adf-date-range-widget>
                     </div>
                 </ng-container>
             </div>

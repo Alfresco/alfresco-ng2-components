@@ -38,6 +38,8 @@ export class TaskFilterCloudModel  {
     standalone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
+    startDate: Date;
+    endDate: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -63,6 +65,8 @@ export class TaskFilterCloudModel  {
             this.standalone = obj.standalone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
+            this.startDate = obj.startDate || null;
+            this.endDate = obj.endDate || null;
         }
     }
 }
