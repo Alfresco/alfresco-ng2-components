@@ -75,10 +75,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         );
     }
 
-    isAttachMultiple(): boolean {
-        return this.field.params.multiple;
-    }
-
     isUploadButtonVisible(): boolean {
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
