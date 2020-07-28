@@ -107,7 +107,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             }
         }
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.rootDirectory, selectedMode, this.isAlfrescoAndLocal(), this.isAttachMultiple())
+            .openUploadFileDialog(this.rootDirectory, selectedMode, this.isAlfrescoAndLocal())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);

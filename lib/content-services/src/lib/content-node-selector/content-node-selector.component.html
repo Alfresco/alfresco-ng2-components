@@ -31,7 +31,7 @@
         <adf-upload-button
             *ngIf="data?.showLocalUploadButton"
             [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
-            [multipleFiles]="data?.multipleUpload"
+            [multipleFiles]="isMultipleSelection()"
             [rootFolderId]="currentDirectoryId"
             (error)="onError($event)">
         </adf-upload-button>
