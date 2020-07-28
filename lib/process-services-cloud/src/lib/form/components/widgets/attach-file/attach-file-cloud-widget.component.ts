@@ -23,7 +23,8 @@ import {
   LogService,
   ThumbnailService,
   NotificationService,
-  ContentLinkModel
+  ContentLinkModel,
+  TranslationService
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -59,7 +60,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         thumbnails: ThumbnailService,
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
-        private contentNodeSelectorService: ContentCloudNodeSelectorService
+        private contentNodeSelectorService: ContentCloudNodeSelectorService,
+        private translationService: TranslationService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -89,14 +91,23 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
 
         if (this.isAlfrescoAndLocal()) {
-            const destinationFolderRelativePath = this.getRelativeDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
-            await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderRelativePath).then((nodeId: string) => {
-                this.rootDirectory = nodeId;
-            });
-        }
+            const destinationFolderPath = this.field.params.fileSource.destinationFolderPath;
+            const alias = this.getAliasFromDestinationFolderPath(destinationFolderPath);
+            const opts = {
+                relativePath: this.getRelativePathFromDestinationFolderPath(destinationFolderPath)
+            };
 
+            if (alias && opts && opts.relativePath) {
+                await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(alias, opts).then((nodeId: string) => {
+                    this.rootDirectory = nodeId;
+                });
+            } else {
+                const errorMessage = this.translationService.instant('ADF_CLOUD_TASK_FORM.ERROR.INVALID_DESTINATION_FOLDER_PATH');
+                this.notificationService.showError(errorMessage);
+            }
+        }
         this.contentNodeSelectorService
-            .openUploadFileDialog( this.rootDirectory, selectedMode, this.isAlfrescoAndLocal(), this.isAttachMultiple())
+            .openUploadFileDialog(this.rootDirectory, selectedMode, this.isAlfrescoAndLocal(), this.isAttachMultiple())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
@@ -104,17 +115,19 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             });
     }
 
+    getAliasFromDestinationFolderPath(destinationFolderPath: string): string {
+        const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
+        return destinationFolderPath.substring(0, startOfRelativePathIndex);
+    }
+
+    getRelativePathFromDestinationFolderPath(destinationFolderPath: string): string {
+        const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
+        return destinationFolderPath.substring(startOfRelativePathIndex, destinationFolderPath.length);
+    }
+
     removeExistingSelection(selections: Node[]) {
         const existingNode: Node[] = [...this.field.value || []];
         return selections.filter(opt => !existingNode.some( (node) => node.id === opt.id));
-    }
-
-    getRelativeDestinationFolderPath(destinationFolder: string): string {
-        const companyHome = 'Company Home/';
-        if (destinationFolder.includes(companyHome)) {
-            destinationFolder = destinationFolder.replace(companyHome, '');
-        }
-        return destinationFolder;
     }
 
     downloadContent(file: Node): void {

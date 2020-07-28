@@ -32,7 +32,7 @@ export class ContentCloudNodeSelectorService {
     private dialog: MatDialog) {
   }
 
-  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, showUploadButton?: boolean, multipleUpload?: boolean): Observable<Node[]> {
+  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, showLocalUploadButton?: boolean, multipleUpload?: boolean): Observable<Node[]> {
     const select = new Subject<Node[]>();
     select.subscribe({
       complete: this.close.bind(this)
@@ -47,16 +47,16 @@ export class ContentCloudNodeSelectorService {
       isSelectionValid: (entry: Node) => entry.isFile,
       showFilesInResult: true,
       showDropdownSiteList: false,
-      showUploadButton,
+      showLocalUploadButton,
       multipleUpload
   };
     this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
     return select;
   }
 
-    async fetchNodeIdFromRelativePath(relativePath: string) {
+    async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
         let nodeId = '';
-        await this.apiService.getInstance().node.getNode('-root-', { relativePath }).then(node => {
+        await this.apiService.getInstance().node.getNode(alias, opts).then(node => {
             nodeId = node.entry.id;
         });
         return nodeId;
