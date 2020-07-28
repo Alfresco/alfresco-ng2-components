@@ -56,6 +56,7 @@ when the task list is empty:
 | assignee | `string` | "" | The assignee of the process. Possible values are: "assignee" (the current user is the assignee), "candidate" (the current user is a task candidate", "group_x" (the task is assigned to a group where the current user is a member, no value (the current user is involved). |
 | createdDate | `string` | "" | Filter the tasks. Display only tasks created on the supplied date. |
 | dueDate | `string` | "" | Filter the tasks. Display only tasks with dueDate equal to the supplied date. |
+| endDueDate | `string` | "" | Filter the tasks. Display only tasks with endDueDate equal to the supplied date. |
 | id | `string` | "" | Filter the tasks. Display only tasks with id equal to the supplied value. |
 | lastModifiedFrom | `string` | "" | Filter the tasks. Display only tasks with lastModifiedFrom equal to the supplied date. |
 | lastModifiedTo | `string` | "" | Filter the tasks. Display only tasks with lastModifiedTo equal to the supplied date. |
@@ -72,6 +73,7 @@ when the task list is empty:
 | showContextMenu | `boolean` | false | Toggles custom context menu for the component. |
 | sorting | [`TaskListCloudSortingModel`](../../../lib/process-services-cloud/src/lib/task/task-list/models/task-list-sorting.model.ts)`[]` |  | Specifies how the table should be sorted. The parameters are for BE sorting. |
 | standalone | `boolean` | false | Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. |
+| startDueDate | `string` | "" | Filter the tasks. Display only tasks with startDueDate equal to the supplied date. |
 | status | `string` | "" | Filter the tasks. Display only tasks with status equal to the supplied value. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 
