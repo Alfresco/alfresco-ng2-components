@@ -163,7 +163,7 @@ exports.config = {
         print: () => {
         },
         ...smartRunner.withOptionalExclusions(
-            resolve(__dirname, './protractor.excludes.json')
+            resolve(__dirname, './e2e/protractor.excludes.json')
         )
     },
 
