@@ -181,7 +181,8 @@ export class ViewUtilService {
 
     async displayNodeRendition(nodeId: string, versionId?: string) {
         try {
-            const rendition = await this.resolveNodeRendition(nodeId, 'pdf', versionId);
+            const rendition = versionId ? await this.resolveNodeRendition(nodeId, 'pdf', versionId) :
+                await this.resolveNodeRendition(nodeId, 'pdf');
             if (rendition) {
                 const renditionId = rendition.entry.id;
 
@@ -226,7 +227,7 @@ export class ViewUtilService {
                             this.viewerTypeChange.next('in_creation');
                         });
                     }
-                    rendition = await this.waitNodeRendition(nodeId, renditionId, versionId);
+                    rendition = versionId ? await this.waitNodeRendition(nodeId, renditionId, versionId) : await this.waitNodeRendition(nodeId, renditionId);
                 } catch (err) {
                     this.logService.error(err);
                 }
@@ -242,7 +243,7 @@ export class ViewUtilService {
             const intervalId = setInterval(() => {
                 currentRetry++;
                 if (this.maxRetries >= currentRetry) {
-                    if (!versionId) {
+                    if (versionId) {
                         this.apiService.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
                             this.handleNodeRendition(rendition, nodeId, renditionId, versionId);
                             clearInterval(intervalId);
