@@ -85,6 +85,7 @@
       "PRIORITY": "Priority",
       "CREATED_DATE": "Created Date",
       "LAST_MODIFIED": "Last Modified",
+      "DUE_DATE": "Due Date",
       "CREATED": "Created",
       "JSON_CELL": "Json"
     },
