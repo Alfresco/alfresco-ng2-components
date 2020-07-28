@@ -90,6 +90,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         } else {
             this.editedValue = this.property.displayValue;
         }
+
+        this.resetErrorMessages();
     }
 
     private resetErrorMessages() {
