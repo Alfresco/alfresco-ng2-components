@@ -140,6 +140,7 @@ export class ContentNodeDialogService {
             const data: ContentNodeSelectorComponentData = {
                 title: this.getTitleTranslation(action, contentEntry.name),
                 actionName: action,
+                selectionMode: 'single',
                 currentFolderId: contentEntry.parentId,
                 imageResolver: this.imageResolver.bind(this),
                 where: '(isFolder=true)',
@@ -182,6 +183,7 @@ export class ContentNodeDialogService {
         const data: ContentNodeSelectorComponentData = {
             title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
             actionName: action,
+            selectionMode: 'single',
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: this.hasAllowableOperationsOnNodeFolder.bind(this),
@@ -209,6 +211,7 @@ export class ContentNodeDialogService {
         const data: ContentNodeSelectorComponentData = {
             title: this.getTitleTranslation(action, this.translation.instant('DROPDOWN.MY_FILES_OPTION')),
             actionName: action,
+            selectionMode: 'single',
             currentFolderId: contentEntry.id,
             imageResolver: this.imageResolver.bind(this),
             isSelectionValid: (entry: Node) => entry.isFile,
