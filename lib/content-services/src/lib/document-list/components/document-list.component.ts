@@ -182,7 +182,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * override the default sorting detected by the component based on columns.
      */
     @Input()
-    sorting = ['name', 'asc'];
+    sorting = ['nodeType', 'DESC'];
 
     /** Defines sorting mode. Can be either `client` (items in the list
      * are sorted client-side) or `server` (the ordering supplied by the
@@ -671,7 +671,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onSortingChanged(event: CustomEvent) {
-        this.orderBy = [''.concat(event.detail.key, ' ' , event.detail.direction)];
+        const flattenExtraSortingOption = this.sorting.join(' ');
+        const orderArray = [flattenExtraSortingOption];
+        orderArray.push(''.concat(event.detail.key, ' ', event.detail.direction));
+        this.orderBy = orderArray;
         this.reload();
     }
 

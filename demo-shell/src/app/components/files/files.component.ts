@@ -89,7 +89,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     processId;
 
     @Input()
-    sorting = ['name', 'asc'];
+    sorting = ['nodeType', 'DESC'];
 
     @Input()
     sortingMode = 'server';
