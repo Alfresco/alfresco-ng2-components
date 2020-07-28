@@ -390,7 +390,6 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.fileTitle = this.getDisplayName(nodeData.name);
-
         this.urlFileContent = versionData ? this.apiService.contentApi.getVersionContentUrl(this.nodeId, versionData.id) :
             this.apiService.contentApi.getContentUrl(this.nodeId);
         this.urlFileContent = this.cacheBusterNumber ? this.urlFileContent + '&' + this.cacheBusterNumber : this.urlFileContent;
@@ -405,7 +404,11 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         if (this.viewerType === 'unknown') {
-            setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData ? versionData.id : undefined);
+            if (versionData) {
+                setupNode = this.viewUtils.displayNodeRendition(nodeData.id, versionData.id);
+            } else {
+                setupNode = this.viewUtils.displayNodeRendition(nodeData.id);
+            }
         }
 
         this.extensionChange.emit(this.extension);

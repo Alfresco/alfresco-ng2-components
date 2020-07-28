@@ -23,17 +23,22 @@ import {
   FormOutcomeEvent,
   AuthenticationService,
   TranslationService,
-  FormFieldModel
+  FormFieldModel,
+  FormRenderingService
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
 import { UserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
+import { ProcessFormRenderingService } from '../../../form/process-form-rendering.service';
 
 @Component({
   selector: 'adf-task-form',
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  styleUrls: ['./task-form.component.scss'],
+  providers: [
+    { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+]
 })
 export class TaskFormComponent implements OnInit {
 
