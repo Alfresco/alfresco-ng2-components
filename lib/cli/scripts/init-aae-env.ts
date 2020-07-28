@@ -34,8 +34,6 @@ let args: ConfigArgs;
 let isValid = true;
 
 export interface ConfigArgs {
-    modelerUsername: string;
-    modelerPassword: string;
     devopsUsername: string;
     devopsPassword: string;
     clientId: string;
@@ -296,13 +294,11 @@ async function main(configArgs: ConfigArgs) {
     program
         .version('0.1.0')
         .description('The following command is in charge of Initializing the activiti cloud env with the default apps' +
-            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --modelerUsername "modelerusername" --modelerPassword "modelerpassword" --devopsUsername "devevopsusername" --devopsPassword "devopspassword"')
+            'adf-cli init-aae-env --host "gateway_env"  --oauth "identity_env" --devopsUsername "devopsUsername" --devopsPassword "devopsPassword"')
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
         .option('-jsonAppsPath, --oauth [type]', 'Host sso server')
         .option('--clientId[type]', 'sso client')
-        .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
-        .option('--modelerPassword [type]', 'modeler password')
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
         .option('--devopsPassword [type]', 'devops password')
         .parse(process.argv);
@@ -313,10 +309,10 @@ async function main(configArgs: ConfigArgs) {
     }
 
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
-    await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
+    await alfrescoJsApiModeler.login(args.devopsUsername, args.devopsPassword).then(() => {
         logger.info('login SSO ok');
     }, (error) => {
-        logger.info(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
+        logger.info(`login SSO error ${JSON.stringify(error)} ${args.devopsUsername}`);
         process.exit(1);
     });
 
