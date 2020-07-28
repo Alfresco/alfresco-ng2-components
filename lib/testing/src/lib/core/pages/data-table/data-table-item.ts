@@ -35,13 +35,13 @@ export class DataTableItem {
 
     getColumn(columnName: string): Column {
         return this.columns.find(
-            (column) => column.columnName === columnName
+            (column) =>  column.getColumnName() === columnName
         );
     }
 
     getRow(columnName: string, columnValue: string): ElementFinder {
         const column = this.getColumn(columnName);
-        const locator = `//div[@title="${columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`;
+        const locator = `//div[@title="${column.columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'adf-datatable-row')]`;
         return this.rootElement.element(by.xpath(locator));
     }
 
