@@ -29,7 +29,7 @@ import { DocumentListService } from '../document-list/services/document-list.ser
 import { DocumentListComponent } from '../document-list/components/document-list.component';
 import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.component';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
-import { ShareDataRow } from '../document-list';
+import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
 
 const ONE_FOLDER_RESULT = {
@@ -59,6 +59,8 @@ describe('ContentNodeSelectorComponent', () => {
     let sitesService: SitesService;
     let searchSpy: jasmine.Spy;
     let cnSearchSpy: jasmine.Spy;
+    const fakeNodeEntry = new Node({ id: 'fakeId' });
+    const nodeEntryEvent = new NodeEntryEvent(fakeNodeEntry);
 
     let _observer: Observer<NodePaging>;
 
@@ -271,7 +273,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 tick(debounceSearch);
 
-                component.onFolderChange();
+                component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
                 const breadcrumb = fixture.debugElement.query(By.directive(DropdownBreadcrumbComponent));
                 expect(breadcrumb).not.toBeNull();
@@ -309,7 +311,7 @@ describe('ContentNodeSelectorComponent', () => {
                 respondWithSearchResults(ONE_FOLDER_RESULT);
                 fixture.detectChanges();
 
-                component.onFolderChange();
+                component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
 
                 const chosenNode = <Node> { path: { elements: [] } };
@@ -700,7 +702,7 @@ describe('ContentNodeSelectorComponent', () => {
                 tick();
                 fixture.detectChanges();
 
-                component.onFolderChange();
+                component.onFolderChange(nodeEntryEvent);
                 fixture.detectChanges();
 
                 expect(component.clearSearch).toHaveBeenCalled();
