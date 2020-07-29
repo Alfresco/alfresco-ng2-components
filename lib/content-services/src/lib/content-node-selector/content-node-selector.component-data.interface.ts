@@ -23,6 +23,7 @@ export interface ContentNodeSelectorComponentData {
     actionName?: string;
     currentFolderId: string;
     dropdownHideMyFiles?: boolean;
+    restrictRootToCurrentFolderId?: boolean;
     dropdownSiteList?: SitePaging;
     rowFilter?: any;
     where?: string;

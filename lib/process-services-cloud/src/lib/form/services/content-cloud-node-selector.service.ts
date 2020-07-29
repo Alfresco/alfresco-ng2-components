@@ -45,6 +45,7 @@ export class ContentCloudNodeSelectorService {
       title: 'Select a file',
       actionName: 'Choose',
       currentFolderId,
+      restrictRootToCurrentFolderId: true,
       select,
       selectionMode,
       isSelectionValid: (entry: Node) => entry.isFile,

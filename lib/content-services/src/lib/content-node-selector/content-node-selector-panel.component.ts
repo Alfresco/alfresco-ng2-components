@@ -60,9 +60,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private showSearchField = true;
     private showFiles = false;
 
-    /** If true will restrict the search to the currentFolderId */
+    /** If true will restrict the search and breadcrumbs to the currentFolderId */
     @Input()
-    restrictSearchToCurrentFolderId: boolean = false;
+    restrictRootToCurrentFolderId: boolean = false;
 
     /** Node ID of the folder currently listed. */
     @Input()
@@ -198,6 +198,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     nodePaging: NodePaging | null = null;
     siteId: null | string;
+    breadcrumbRootId: null | string;
     searchTerm: string = '';
     showingSearchResults: boolean = false;
     loadingSearchResults: boolean = false;
@@ -252,7 +253,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.target = this.documentList;
         this.folderIdToShow = this.currentFolderId;
         if (this.currentFolderId) {
-            if (this.restrictSearchToCurrentFolderId) {
+            if (this.restrictRootToCurrentFolderId) {
+                this.breadcrumbRootId = this.currentFolderId;
                 this.siteId = this.currentFolderId;
             } else {
                 this.getStartSite();
