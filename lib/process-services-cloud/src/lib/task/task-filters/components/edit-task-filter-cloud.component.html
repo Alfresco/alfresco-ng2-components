@@ -73,6 +73,14 @@
                         [options]="taskFilterProperty.dateFilterOptions"
                         (dateTypeChange)="onDateTypeChange($event, taskFilterProperty)"
                         (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)"></adf-cloud-date-range-filter>
+
+                    <div fxFlex="23%" class="adf-edit-task-filter-checkbox" *ngIf="isUserSelectType(taskFilterProperty)">
+                        <adf-cloud-people
+                            [preSelectUsers]="[]"
+                            [validate]="true"
+                            [appName]="appName"
+                            (changedUsers)="onChangedUser($event, taskFilterProperty)"></adf-cloud-people>
+                    </div>
                 </ng-container>
             </div>
             </form>

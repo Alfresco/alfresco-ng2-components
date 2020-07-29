@@ -43,6 +43,7 @@ export class TaskFilterCloudModel  {
     standalone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
+    completedBy: string;
 
     private _dueDateFrom: string;
     private _dueDateTo: string;
@@ -76,6 +77,7 @@ export class TaskFilterCloudModel  {
             this.standalone = obj.standalone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
+            this.completedBy = obj.completedBy || null;
         }
     }
 

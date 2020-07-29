@@ -89,7 +89,8 @@
       "LAST_MODIFIED": "Last Modified",
       "DUE_DATE": "Due Date",
       "CREATED": "Created",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Completed By"
     },
     "LIST": {
       "MESSAGES": {

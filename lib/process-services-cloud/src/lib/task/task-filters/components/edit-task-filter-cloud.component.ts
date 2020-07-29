@@ -27,7 +27,7 @@ import { Moment } from 'moment';
 import { TaskFilterCloudModel, TaskFilterProperties, FilterOptions, TaskFilterAction } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { TranslationService, UserPreferencesService, UserPreferenceValues, IdentityUserModel } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
@@ -352,6 +352,12 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         );
     }
 
+    onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
+        if (users.length > 0) {
+            this.getPropertyController(userProperty).setValue(users[0].username);
+        }
+    }
+
     hasError(property: TaskFilterProperties): boolean {
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }
@@ -505,6 +511,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     isCheckBoxType(property: TaskFilterProperties): boolean {
         return property.type === 'checkbox';
+    }
+
+    isUserSelectType(property: TaskFilterProperties): boolean {
+        return property.type === 'people';
     }
 
     isDisabledAction(action: TaskFilterAction): boolean {
@@ -690,6 +700,12 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                     DateCloudFilterType.NEXT_7_DAYS,
                     DateCloudFilterType.RANGE
                 ]
+            )},
+            new TaskFIlterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
+                type: 'people',
+                key: 'completedBy',
+                value: currentTaskFilter.standalone || false
             })
         ];
     }
