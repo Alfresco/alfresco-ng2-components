@@ -74,13 +74,15 @@ export class FolderDialogComponent implements OnInit {
     ngOnInit() {
         const { folder } = this.data;
         let name = '';
+        let title = '';
         let description = '';
 
         if (folder) {
             const { properties } = folder;
 
             name = folder.name || '';
-            description = properties ? properties['cm:description'] : '';
+            title = properties?.['cm:title'] ?? '';
+            description = properties?.['cm:description'] ?? '';
         }
 
         const validators = {
@@ -94,6 +96,7 @@ export class FolderDialogComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             name: [ name, validators.name ],
+            title: [ title ],
             description: [ description ]
         });
     }
@@ -104,6 +107,12 @@ export class FolderDialogComponent implements OnInit {
         return (name || '').trim();
     }
 
+    get title(): string {
+        const { title } = this.form.value;
+
+        return (title || '').trim();
+    }
+
     get description(): string {
         const { description } = this.form.value;
 
@@ -111,7 +120,7 @@ export class FolderDialogComponent implements OnInit {
     }
 
     private get properties(): any {
-        const { name: title, description } = this;
+        const { title, description } = this;
 
         return {
             'cm:title': title,
