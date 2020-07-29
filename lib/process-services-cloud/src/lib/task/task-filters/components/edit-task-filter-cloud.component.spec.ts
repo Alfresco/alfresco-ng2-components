@@ -127,50 +127,6 @@ describe('EditTaskFilterCloudComponent', () => {
         });
     }));
 
-    it('should disable save and delete button for default task filters', () => {
-        getTaskFilterSpy.and.returnValue(of({
-            name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
-            id: 'filter-id',
-            key: 'all-fake-task',
-            icon: 'adjust',
-            sort: 'startDate',
-            status: 'ALL',
-            order: 'DESC'
-        }));
-
-        const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
-        fixture.detectChanges();
-
-        component.toggleFilterActions = true;
-        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-        expansionPanel.click();
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-            expect(saveButton.disabled).toBe(true);
-            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-            expect(deleteButton.disabled).toBe(true);
-        });
-    });
-
-    it('should enable save and delete button for custom task filters', () => {
-        const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
-        component.ngOnChanges({ 'id': taskFilterIdChange });
-        fixture.detectChanges();
-
-        component.toggleFilterActions = true;
-        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-        expansionPanel.click();
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-            expect(saveButton.disabled).toBe(true);
-            const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-            expect(deleteButton.disabled).toBe(true);
-        });
-    });
-
     describe('EditTaskFilter form', () => {
 
         beforeEach(() => {
@@ -199,39 +155,183 @@ describe('EditTaskFilterCloudComponent', () => {
             });
         }));
 
-        it('should disable save button if the task filter is not changed', async(() => {
-            component.toggleFilterActions = true;
-            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                expect(saveButton.disabled).toBe(true);
-            });
-        }));
+        describe('Save & Delete buttons', () => {
+            it('should disable save and delete button for default task filters', async(() => {
+                getTaskFilterSpy.and.returnValue(of({
+                    name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+                    id: 'filter-id',
+                    key: 'all-fake-task',
+                    icon: 'adjust',
+                    sort: 'startDate',
+                    status: 'ALL',
+                    order: 'DESC'
+                }));
 
-        it('should disable saveAs button if the task filter is not changed', async(() => {
-            component.toggleFilterActions = true;
-            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                expect(saveButton.disabled).toBe(true);
-            });
-        }));
+                const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
+                component.ngOnChanges({ 'id': taskFilterIdChange });
+                fixture.detectChanges();
 
-        it('should enable delete button by default', async(() => {
-            component.toggleFilterActions = true;
-            fixture.detectChanges();
-            const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
-            expansionPanel.click();
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
-                expect(deleteButton.disabled).toBe(false);
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                    expect(saveButton.disabled).toBe(true);
+                    const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+                    expect(deleteButton.disabled).toBe(true);
+                });
+            }));
+
+            it('should enable delete button for custom task filters', async(() => {
+                const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
+                component.ngOnChanges({ 'id': taskFilterIdChange });
+                fixture.detectChanges();
+
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                    expect(saveButton.disabled).toBe(true);
+                    const deleteButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-delete"]');
+                    expect(deleteButton.disabled).toBe(false);
+                });
+            }));
+
+            it('should enable save button if the filter is changed for custom task filters', (done) => {
+                const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
+                component.ngOnChanges({ 'id': taskFilterIdChange });
+                fixture.detectChanges();
+
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+
+                const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+                stateElement.click();
+                fixture.detectChanges();
+                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                sortOptions[3].nativeElement.click();
+                fixture.detectChanges();
+
+                setTimeout(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toBe(false);
+                    done();
+                }, 300);
             });
-        }));
+
+            it('should disable save button if the filter is not changed for custom filter', async(() => {
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                    expect(saveButton.disabled).toBe(true);
+                });
+            }));
+        });
+
+        describe('SaveAs button', () => {
+            it('should disable saveAs button if the process filter is not changed for default filter', async(() => {
+                getTaskFilterSpy.and.returnValue(of({
+                    name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+                    id: 'filter-id',
+                    key: 'all-fake-task',
+                    icon: 'adjust',
+                    sort: 'startDate',
+                    status: 'ALL',
+                    order: 'DESC'
+                }));
+
+                const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
+                component.ngOnChanges({ 'id': taskFilterIdChange });
+                fixture.detectChanges();
+
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    expect(saveButton.disabled).toEqual(true);
+                });
+            }));
+
+            it('should disable saveAs button if the process filter is not changed for custom filter', async(() => {
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    expect(saveButton.disabled).toEqual(true);
+                });
+            }));
+
+            it('should enable saveAs button if the filter values are changed for default filter', (done) => {
+                getTaskFilterSpy.and.returnValue(of({
+                    name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
+                    id: 'filter-id',
+                    key: 'all-fake-task',
+                    icon: 'adjust',
+                    sort: 'startDate',
+                    status: 'ALL',
+                    order: 'DESC'
+                }));
+
+                const taskFilterIdChange = new SimpleChange(null, 'filter-id', true);
+                component.ngOnChanges({ 'id': taskFilterIdChange });
+                fixture.detectChanges();
+
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+
+                const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+                stateElement.click();
+                fixture.detectChanges();
+
+                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                sortOptions[3].nativeElement.click();
+                fixture.detectChanges();
+
+                setTimeout(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                }, 300);
+            });
+
+            it('should enable saveAs button if the filter values are changed for custom filter', (done) => {
+                component.toggleFilterActions = true;
+                const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+                expansionPanel.click();
+                fixture.detectChanges();
+
+                const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
+                stateElement.click();
+                fixture.detectChanges();
+
+                const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+                sortOptions[3].nativeElement.click();
+                fixture.detectChanges();
+
+                setTimeout(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                }, 300);
+            });
+        });
 
         it('should display current task filter details', async(() => {
             fixture.detectChanges();
