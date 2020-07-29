@@ -36,3 +36,4 @@ export * from './about.page';
 export * from './snackbar.page';
 export * from './data-table/public-api';
 export * from './context-menu.page';
+export * from './info-drawer.page';

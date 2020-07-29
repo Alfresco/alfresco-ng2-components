@@ -17,8 +17,11 @@
 
 import { element, by } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
+import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class TabsPage {
+
+    tabs = element.all(by.css("div[id*='mat-tab-label']"));
 
     async clickTabByTitle(tabTitle): Promise<void> {
         const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
@@ -29,5 +32,15 @@ export class TabsPage {
         const tab = element(by.cssContainingText("div[id*='mat-tab-label']", tabTitle));
         const result = await tab.getAttribute('aria-selected');
         await expect(result).toBe('true');
+    }
+
+    async getNoOfTabs(): Promise<number> {
+        BrowserVisibility.waitUntilElementIsVisible(this.tabs.first());
+        return this.tabs.count();
+    }
+
+    async getTabsLabels(): Promise<string> {
+        BrowserVisibility.waitUntilElementIsVisible(this.tabs.first());
+        return this.tabs.getText();
     }
 }

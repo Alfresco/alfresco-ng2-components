@@ -194,7 +194,9 @@ describe('Start Process Component', () => {
                 await startProcessPage.enterProcessName('Test');
                 await startProcessPage.selectFromProcessDropdown(browser.params.resources.Files.APP_WITH_PROCESSES.process_se_name);
                 await startProcessPage.clickFormStartProcessButton();
-                await processDetailsPage.checkDetailsAreDisplayed();
+
+                await processDetailsPage.checkProcessHeaderDetailsAreVisible();
+
                 const processId = await processDetailsPage.getId();
                 const response = await apiService.getInstance().activiti.processApi.getProcessInstance(processId);
 

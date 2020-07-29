@@ -27,4 +27,8 @@ export abstract class Column {
     createLocator(columnValue: string): string {
         return `//div[@data-automation-id="${this.columnType}_${columnValue}"]`;
     }
+
+    getColumnName(): string {
+        return this.columnName;
+    }
 }

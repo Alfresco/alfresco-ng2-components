@@ -18,6 +18,7 @@
 import { element, by, ElementFinder } from 'protractor';
 import { DateTimePickerPage } from '../material/date-time-picker.page';
 import { DatePickerPage } from '../material/date-picker.page';
+import { BrowserVisibility } from '../../utils/browser-visibility';
 
 export class CardDateItemPage {
 
@@ -25,7 +26,7 @@ export class CardDateItemPage {
     dateTimePickerPage: DateTimePickerPage;
     datePickerPage = new DatePickerPage();
 
-    labelLocator = by.css('div[data-automation-id*="card-date-label"]');
+    labelLocator = by.css('div[data-automation-id*="card-dateitem-label"]');
     valueLocator = by.css('span[data-automation-id*="card-date"]');
     dateTimePicker = element.all(by.css('.mat-datetimepicker-toggle')).first();
     saveButton = by.css('button[data-automation-id*="card-dateitem-update"]');
@@ -45,5 +46,10 @@ export class CardDateItemPage {
 
     async getDateValue(): Promise<string> {
         return this.rootElement.element(this.valueLocator).getText();
+    }
+
+    async checkLabelIsVisible(): Promise<void> {
+        const labelElement = this.rootElement.element(this.labelLocator);
+        await BrowserVisibility.waitUntilElementIsVisible(labelElement);
     }
 }
