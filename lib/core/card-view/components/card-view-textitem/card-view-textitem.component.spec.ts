@@ -454,6 +454,40 @@ describe('CardViewTextItemComponent', () => {
             expect(component.errors).toBe(expectedErrorMessages);
         });
 
+        it('should render the error when the editedValue is invalid', async () => {
+            const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
+            component.property.isValid = () => false;
+            component.property.getValidationErrors = () => expectedErrorMessages;
+            component.editable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            updateTextField(component.property.key, 'updated-value');
+            const errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error').textContent;
+            expect(errorMessage).toBe('Something went wrong');
+        });
+
+        it('should reset erros when exiting editable mode', async () => {
+            let errorMessage: string;
+            const expectedErrorMessages = [{ message: 'Something went wrong' } as CardViewItemValidator];
+            component.property.isValid = () => false;
+            component.property.getValidationErrors = () => expectedErrorMessages;
+            component.editable = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            updateTextField(component.property.key, 'updated-value');
+
+            component.editable = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+            errorMessage = fixture.debugElement.nativeElement.querySelector('.adf-textitem-editable-error');
+            expect(errorMessage).toBe(null);
+            expect(component.errors).toEqual([]);
+        });
+
         it('should update the property value after a successful update attempt', async () => {
             component.property.isValid = () => true;
             component.update();
