@@ -62,6 +62,7 @@ describe('FolderDialogComponent', () => {
                     id: 'node-id',
                     name: 'folder-name',
                     properties: {
+                        ['cm:title']: 'folder-title',
                         ['cm:description']: 'folder-description'
                     }
                 }
@@ -71,6 +72,7 @@ describe('FolderDialogComponent', () => {
 
         it('should init form with folder name and description', () => {
             expect(component.name).toBe('folder-name');
+            expect(component.title).toBe('folder-title');
             expect(component.description).toBe('folder-description');
         });
 
@@ -82,9 +84,11 @@ describe('FolderDialogComponent', () => {
 
         it('should update form input', () => {
             component.form.controls['name'].setValue('folder-name-update');
+            component.form.controls['title'].setValue('folder-title-update');
             component.form.controls['description'].setValue('folder-description-update');
 
             expect(component.name).toBe('folder-name-update');
+            expect(component.title).toBe('folder-title-update');
             expect(component.description).toBe('folder-description-update');
         });
 
@@ -92,6 +96,7 @@ describe('FolderDialogComponent', () => {
             spyOn(nodesApi, 'updateNode').and.returnValue(of({}));
 
             component.form.controls['name'].setValue('folder-name-update');
+            component.form.controls['title'].setValue('folder-title-update');
             component.form.controls['description'].setValue('folder-description-update');
 
             component.submit();
@@ -101,7 +106,7 @@ describe('FolderDialogComponent', () => {
                 {
                     name: 'folder-name-update',
                     properties: {
-                        'cm:title': 'folder-name-update',
+                        'cm:title': 'folder-title-update',
                         'cm:description': 'folder-description-update'
                     }
                 }
@@ -189,6 +194,7 @@ describe('FolderDialogComponent', () => {
             spyOn(nodesApi, 'createFolder').and.returnValue(of({}));
 
             component.form.controls['name'].setValue('folder-name-update');
+            component.form.controls['title'].setValue('folder-title-update');
             component.form.controls['description'].setValue('folder-description-update');
 
             component.submit();
@@ -198,7 +204,7 @@ describe('FolderDialogComponent', () => {
                 {
                     name: 'folder-name-update',
                     properties: {
-                        'cm:title': 'folder-name-update',
+                        'cm:title': 'folder-title-update',
                         'cm:description': 'folder-description-update'
                     },
                     nodeType: 'cm:folder'
@@ -210,6 +216,7 @@ describe('FolderDialogComponent', () => {
                 spyOn(nodesApi, 'createFolder').and.returnValue(of({}));
 
                 component.form.controls['name'].setValue('folder-name-update');
+                component.form.controls['title'].setValue('folder-title-update');
                 component.form.controls['description'].setValue('folder-description-update');
                 component.nodeType = 'cm:sushi';
 
@@ -220,7 +227,7 @@ describe('FolderDialogComponent', () => {
                     {
                         name: 'folder-name-update',
                         properties: {
-                            'cm:title': 'folder-name-update',
+                            'cm:title': 'folder-title-update',
                             'cm:description': 'folder-description-update'
                         },
                         nodeType: 'cm:sushi'
@@ -234,6 +241,7 @@ describe('FolderDialogComponent', () => {
             };
 
             component.form.controls['name'].setValue('name');
+            component.form.controls['title'].setValue('title');
             component.form.controls['description'].setValue('description');
 
             spyOn(nodesApi, 'createFolder').and.returnValue(of(folder));
