@@ -111,6 +111,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Description"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Title"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Create"
       },
