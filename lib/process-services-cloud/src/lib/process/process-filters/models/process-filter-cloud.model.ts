@@ -30,7 +30,7 @@ export class ProcessFilterCloudModel {
     sort: string;
     order: string;
     processDefinitionId: string;
-    processDefinitionName: string;
+    processDefinitionName?: string;
     processDefinitionKey: string;
     lastModified: Date;
     lastModifiedTo: Date;
