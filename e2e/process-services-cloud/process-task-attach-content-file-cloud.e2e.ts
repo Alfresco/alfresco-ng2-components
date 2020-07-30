@@ -34,7 +34,7 @@ import { NavigationBarPage } from '../core/pages/navigation-bar.page';
 import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
 import CONSTANTS = require('../util/constants');
 
-xdescribe('Process Task - Attach content file', () => {
+describe('Process Task - Attach content file', () => {
 
     const loginSSOPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();

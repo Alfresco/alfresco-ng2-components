@@ -39,10 +39,8 @@ export class ProcessCloudContentService {
 
     createTemporaryRawRelatedContent(
         file: File,
-        nodeId: string,
-        contentHost: string
+        nodeId: string
     ): Observable<Node> {
-        this.updateConfig(contentHost);
 
         return from(
             this.apiService
@@ -59,8 +57,7 @@ export class ProcessCloudContentService {
         );
     }
 
-    getRawContentNode(nodeId: string, contentHost: string): Observable<Blob> {
-        this.updateConfig(contentHost);
+    getRawContentNode(nodeId: string): Observable<Blob> {
         return this.contentService.getNodeContent(nodeId);
     }
 
@@ -68,8 +65,7 @@ export class ProcessCloudContentService {
         this.contentService.downloadBlob(blob, fileName);
     }
 
-    async downloadFile(nodeId: string, contentHost: string) {
-        this.updateConfig(contentHost);
+    async downloadFile(nodeId: string) {
 
         const ticket = await this.getAuthTicket();
         const url = this.contentService.getContentUrl(nodeId, true, ticket);
@@ -86,18 +82,6 @@ export class ProcessCloudContentService {
         }
 
         return '';
-    }
-
-    private updateConfig(contentHost: string) {
-        const changedConfig = this.apiService.lastConfig;
-
-        changedConfig.provider = 'ALL';
-
-        if (contentHost) {
-            changedConfig.hostEcm = contentHost.replace('/alfresco', '');
-        }
-
-        this.apiService.getInstance().setConfig(changedConfig);
     }
 
     private handleError(error: any) {

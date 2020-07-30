@@ -248,7 +248,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         const opt = { relativePath: '/myfiles' };
         expect(fetchNodeIdFromRelativePathSpy).toHaveBeenCalledWith(alias, opt);
         expect(widget.field.params.fileSource.destinationFolderPath).toBe('-root-/myfiles');
-        expect(widget.rootDirectory).toEqual('mock-node-id');
+        expect(widget.rootNodeId).toEqual('mock-node-id');
     });
 
     it('should be able to show error notification if destinationFolderPtah wrong/undefined', async() => {

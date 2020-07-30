@@ -17,7 +17,7 @@
 
 import { Component, DebugElement, SimpleChange, NgModule, Injector, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Observable, of, throwError } from 'rxjs';
 import {
     AppConfigService,

@@ -32,7 +32,6 @@ import {
     FormFieldValidator,
     FormValues,
     FormModel,
-    AppConfigService,
     ContentLinkModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -105,8 +104,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
-                protected visibilityService: WidgetVisibilityService,
-                private appConfigService: AppConfigService) {
+                protected visibilityService: WidgetVisibilityService) {
         super();
 
         this.formService.formContentClicked
@@ -198,7 +196,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
-                    this.form.contentHost = this.appConfigService.get('ecmHost');
                     this.onFormLoaded(this.form);
                     resolve(this.form);
                 },
@@ -228,7 +225,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
-                    this.form.contentHost = this.appConfigService.get('ecmHost');
                     this.onFormLoaded(this.form);
                 },
                 (error) => {

@@ -280,7 +280,7 @@ describe('Start Task Form', () => {
         });
    });
 
-    xdescribe('Attach content to process-cloud task form using upload widget', async () => {
+    describe('Attach content to process-cloud task form using upload widget', async () => {
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

@@ -124,9 +124,7 @@ export class UploadCloudWidgetComponent extends WidgetComponent implements OnIni
     }
 
     private uploadRawContent(file: File): Observable<Node> {
-        return this.processCloudContentService.createTemporaryRawRelatedContent(
-            file, this.field.form.nodeId, this.field.form.contentHost
-        );
+        return this.processCloudContentService.createTemporaryRawRelatedContent(file, this.field.form.nodeId);
     }
 
     getMultipleFileParam() {

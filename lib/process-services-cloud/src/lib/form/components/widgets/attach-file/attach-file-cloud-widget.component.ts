@@ -127,10 +127,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     }
 
     downloadContent(file: Node): void {
-        this.processCloudContentService.downloadFile(
-            file.id,
-            this.field.form.contentHost
-        );
+        this.processCloudContentService.downloadFile(file.id);
     }
 
     onAttachFileClicked(nodeSelector: any) {
