@@ -575,9 +575,32 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(component.sortProperties.length).toBe(3);
             expect(sortController.value).toBe('my-custom-sort');
             expect(sortOptions.length).toEqual(3);
-            expect(sortOptions[1].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
         });
     }));
+
+    it('should display the process name label for the name property', () => {
+        getProcessFilterByIdSpy.and.returnValue(of({
+            id: 'filter-id',
+            processName: 'process-name',
+            sort: 'my-custom-sort',
+            processDefinitionId: 'process-definition-id',
+            priority: '12'
+        }));
+        component.sortProperties = ['name'];
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+        expansionPanel.click();
+        fixture.detectChanges();
+        const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
+        sortElement.click();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            expect(sortOptions[0].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
+        });
+    });
 
     describe('edit filter actions', () => {
 

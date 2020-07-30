@@ -262,9 +262,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.checkMandatorySortProperties();
         const defaultSortProperties = this.createProcessSortProperties();
         const sortProperties = defaultSortProperties.filter((sortProperty: ProcessFilterProperties) => this.isValidProperty(this.sortProperties, sortProperty));
-        // const sortProperties = this.sortProperties.map((property: string) => {
-        //     return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
-        // });
         return sortProperties;
     }
 
