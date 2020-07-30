@@ -27,7 +27,7 @@ import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { AlfrescoApiServiceMock } from '../../mock/alfresco-api.service.mock';
-import { NodeEntry } from '@alfresco/js-api';
+import { NodeEntry, VersionEntry } from '@alfresco/js-api';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -370,6 +370,35 @@ describe('ViewerComponent', () => {
         expect(component.fileTitle).toBe('file1');
 
         component.nodeId = 'id2';
+        component.ngOnChanges();
+        tick();
+
+        expect(component.fileTitle).toBe('file2');
+    }));
+
+    it('should change display name every time node\`s version changes', fakeAsync(() => {
+        spyOn(alfrescoApiService.nodesApi, 'getNode').and.returnValue(
+            Promise.resolve(new NodeEntry({ entry: { name: 'node1', content: {} } }))
+        );
+
+        spyOn(alfrescoApiService.versionsApi, 'getVersion').and.returnValues(
+            Promise.resolve(new VersionEntry({ entry: { name: 'file1', content: {} } })),
+            Promise.resolve(new VersionEntry({ entry: { name: 'file2', content: {} } }))
+        );
+
+        component.nodeId = 'id1';
+        component.urlFile = null;
+        component.displayName = null;
+        component.blobFile = null;
+        component.showViewer = true;
+
+        component.versionId = '1.0';
+        component.ngOnChanges();
+        tick();
+
+        expect(component.fileTitle).toBe('file1');
+
+        component.versionId = '1.1';
         component.ngOnChanges();
         tick();
 
