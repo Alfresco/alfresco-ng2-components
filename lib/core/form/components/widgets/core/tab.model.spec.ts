@@ -35,7 +35,7 @@ describe('TabModel', () => {
         expect(model.isVisible).toBe(true);
     });
 
-    it('should not setup with json config', () => {
+    it('should not setup with null json config', () => {
         const model = new TabModel(null, null);
         expect(model.id).toBeUndefined();
         expect(model.title).toBeUndefined();

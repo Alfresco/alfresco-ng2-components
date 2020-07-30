@@ -19,6 +19,7 @@
 
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
+import { WidgetVisibilityModel } from './../../../models/widget-visibility.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
 
@@ -28,6 +29,8 @@ export class FormOutcomeModel extends FormWidgetModel {
 
     isSystem: boolean = false;
     isSelected: boolean = false;
+    isVisible: boolean = true;
+    visibilityCondition: WidgetVisibilityModel;
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
@@ -35,6 +38,7 @@ export class FormOutcomeModel extends FormWidgetModel {
         if (json) {
             this.isSystem = json.isSystem ? true : false;
             this.isSelected = form && json.name === form.selectedOutcome ? true : false;
+            this.visibilityCondition = new WidgetVisibilityModel(json.visibilityCondition);
         }
     }
 }

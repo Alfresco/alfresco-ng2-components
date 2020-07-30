@@ -991,6 +991,29 @@ describe('FormCloudComponent', () => {
             const label = fixture.debugElement.query(By.css(`${container} label`));
             expect(label.nativeElement.innerText).toEqual('Attach file');
         });
+
+        it('should be able to set visibility conditions for Outcomes', async () => {
+            spyOn(formCloudService, 'getForm').and.returnValue(of(conditionalUploadWidgetsMock));
+            const formId = '123';
+            const appName = 'test-app';
+            formComponent.formId = formId;
+            formComponent.appVersion = 1;
+
+            formComponent.ngOnChanges({ 'appName': new SimpleChange(null, appName, true) });
+            expect(formCloudService.getForm).toHaveBeenCalledWith(appName, formId, 1);
+
+            fixture.detectChanges();
+            let outcome = fixture.debugElement.query(By.css(`#adf-form-custom_outcome`));
+            expect(outcome).toBeNull();
+
+            const inputElement = fixture.debugElement.query(By.css('[id="field-Text0xlk8n-container"] input'));
+            inputElement.nativeElement.value = 'hi';
+            inputElement.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+
+            outcome = fixture.debugElement.query(By.css(`#adf-form-custom_outcome`));
+            expect(outcome.nativeElement.innerText).toEqual('CUSTOM OUTCOME');
+        });
     });
 
     describe('Multilingual Form', () => {

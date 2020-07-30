@@ -23,11 +23,30 @@ describe('FormOutcomeModel', () => {
     it('should setup with json config', () => {
         const json = {
             id: '<id>',
-            name: '<name>'
+            name: '<name>',
+            visibilityCondition: {
+                leftType: 'field',
+                leftValue: 'TextOne',
+                operator: '==',
+                rightValue: 'showTab',
+                rightType: 'value',
+                nextConditionOperator: '',
+                nextCondition: null
+            }
         };
         const model = new FormOutcomeModel(null, json);
         expect(model.id).toBe(json.id);
         expect(model.name).toBe(json.name);
+        expect(model.visibilityCondition).toBeDefined();
+    });
+
+    it('should not setup with null json config', () => {
+        const model = new FormOutcomeModel(null, null);
+        expect(model.id).toBeUndefined();
+        expect(model.name).toBeUndefined();
+        expect(model.isVisible).toBeDefined();
+        expect(model.isVisible).toBe(true);
+        expect(model.visibilityCondition).toBeUndefined();
     });
 
     it('should store the form reference', () => {

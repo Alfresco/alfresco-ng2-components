@@ -826,7 +826,21 @@ export const conditionalUploadWidgetsMock = {
                     }
                 }
             ],
-            'outcomes': [],
+            'outcomes': [
+                {
+                    'id': '5f2f1c2d-5a79-4ed1-a262-4fef190d41eb',
+                    'name': 'Custom Outcome',
+                    'visibilityCondition': {
+                        'leftType': 'field',
+                        'leftValue': 'Text0xlk8n',
+                        'operator': '==',
+                        'rightValue': 'hi',
+                        'rightType': 'value',
+                        'nextConditionOperator': '',
+                        'nextCondition': null
+                    }
+                }
+            ],
             'metadata': {},
             'variables': []
         }
