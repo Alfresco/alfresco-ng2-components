@@ -4,6 +4,8 @@
                      [showSettingsPanel]="false"
                      [navigationRoute]="navigationRoute"
                      [currentFolderId]="currentFolderId"
+                     [filterSorting]="filterSorting"
                      [enableCustomHeaderFilter]="true"
-                     [paramValues]="queryParams">
+                     [paramValues]="queryParams"
+                     (sorting-changed)="onSortingChanged($event)">
 </app-files-component>

@@ -567,7 +567,7 @@
           "ascending": true
         },
         {
-          "key": "createdByUser",
+          "key": "createdByUser.displayName",
           "label": "Author",
           "type": "FIELD",
           "field": "cm:creator",

@@ -67,6 +67,9 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     skipCount: number;
 
+    @Input()
+    sorting: string = null;
+
     /** Emitted when the result of the filter is received from the API. */
     @Output()
     update: EventEmitter<NodePaging> = new EventEmitter();
@@ -136,6 +139,14 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
             this.searchHeaderQueryBuilder.setupCurrentPagination(actualMaxItems, actualSkipCount);
         }
+
+        if (changes['sorting'] && changes['sorting'].currentValue) {
+            const [key, value] = changes['sorting'].currentValue.split('-');
+            if (key === this.col.key) {
+                this.searchHeaderQueryBuilder.setSorting(key, value);
+            }
+        }
+
     }
 
     ngOnDestroy() {

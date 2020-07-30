@@ -23,6 +23,7 @@ import { SearchCategory } from './search-category.interface';
 import { MinimalNode, QueryBody } from '@alfresco/js-api';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { SearchSortingDefinition } from './search-sorting-definition.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -75,6 +76,22 @@ export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
         if (this.activeFilters.get(columnRemoved) !== null) {
             this.activeFilters.delete(columnRemoved);
         }
+    }
+
+    setSorting(column: string, direction: string) {
+        const optionAscending = direction.toLocaleLowerCase() === 'asc' ? true : false;
+        const fieldValue = this.getSortingFieldFromColumnName(column);
+        const currentSort: SearchSortingDefinition = { key: column, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending};
+        this.sorting = [currentSort];
+        this.execute();
+    }
+
+    private getSortingFieldFromColumnName(columnName: string) {
+        if (this.sortingOptions.length > 0) {
+            const sortOption: SearchSortingDefinition = this.sortingOptions.find((option: SearchSortingDefinition) => option.key === columnName);
+            return sortOption.field;
+        }
+        return '';
     }
 
     getCategoryForColumn(columnKey: string): SearchCategory {
