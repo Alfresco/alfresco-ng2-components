@@ -30,6 +30,8 @@ import { TranslationService, UserPreferencesService, UserPreferenceValues } from
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
+import { ProcessCloudService } from '../../services/process-cloud.service';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
@@ -42,6 +44,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
     public static APPLICATION_NAME: string = 'appName';
+    public static PROCESS_DEFINITION_NAME: string = 'processDefinitionName';
     public static APP_RUNNING_STATUS: string = 'RUNNING';
     public static LAST_MODIFIED: string = 'lastModified';
     public static SORT: string = 'sort';
@@ -108,6 +111,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         EditProcessFilterCloudComponent.ACTION_DELETE
     ];
     applicationNames: any[] = [];
+    processDefinitionNames: any[] = [];
     formHasBeenChanged = false;
     editProcessFilterForm: FormGroup;
     processFilterProperties: ProcessFilterProperties[] = [];
@@ -124,7 +128,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         private userPreferencesService: UserPreferencesService,
         private translateService: TranslationService,
         private processFilterCloudService: ProcessFilterCloudService,
-        private appsProcessCloudService: AppsProcessCloudService) {
+        private appsProcessCloudService: AppsProcessCloudService,
+        private processCloudService: ProcessCloudService) {
     }
 
     ngOnInit() {
@@ -198,9 +203,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     createAndFilterProperties(): ProcessFilterProperties[] {
         this.checkMandatoryFilterProperties();
-        if (this.checkForApplicationNameProperty()) {
+        if (this.checkForProperty(EditProcessFilterCloudComponent.APPLICATION_NAME)) {
             this.applicationNames = [];
             this.getRunningApplications();
+        }
+        if (this.checkForProperty(EditProcessFilterCloudComponent.PROCESS_DEFINITION_NAME)) {
+            this.processDefinitionNames = [];
+            this.getProcessDefinitions();
         }
         const defaultProperties = this.createProcessFilterProperties(this.processFilter);
         let filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterProperties) => this.isValidProperty(this.filterProperties, filterProperty));
@@ -219,8 +228,8 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
     }
 
-    checkForApplicationNameProperty(): boolean {
-        return this.filterProperties ? this.filterProperties.indexOf(EditProcessFilterCloudComponent.APPLICATION_NAME) >= 0 : false;
+    checkForProperty(property: string): boolean {
+        return this.filterProperties ? this.filterProperties.indexOf(property) >= 0 : false;
     }
 
     private isValidProperty(filterProperties: string[], filterProperty: ProcessFilterProperties): boolean {
@@ -314,6 +323,18 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                     });
                 }
             });
+    }
+
+    getProcessDefinitions() {
+        this.processCloudService.getProcessDefinitions(this.appName)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((processDefinitions: ProcessDefinitionCloud[]) => {
+            if (processDefinitions && processDefinitions.length > 0) {
+                processDefinitions.map((processDefinition) => {
+                    this.processDefinitionNames.push({ label: processDefinition.name, value: processDefinition.name });
+                });
+            }
+        });
     }
 
     executeFilterActions(action: ProcessFilterAction): void {
@@ -537,6 +558,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'text',
                 key: 'processName',
                 value: currentProcessFilter.processName || ''
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_NAME',
+                type: 'select',
+                key: 'processDefinitionName',
+                value: currentProcessFilter.processDefinitionName || '',
+                options: this.processDefinitionNames
             }),
             new ProcessFilterProperties({
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',

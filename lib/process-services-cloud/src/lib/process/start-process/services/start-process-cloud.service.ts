@@ -21,7 +21,7 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProcessInstanceCloud } from '../models/process-instance-cloud.model';
 import { ProcessPayloadCloud } from '../models/process-payload-cloud.model';
-import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
 
 @Injectable({

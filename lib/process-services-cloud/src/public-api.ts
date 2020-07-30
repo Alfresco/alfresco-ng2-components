@@ -26,3 +26,4 @@ export * from './lib/services/public-api';
 export * from './lib/types';
 export * from './lib/pipes/process-name-cloud.pipe';
 export * from './lib/pipes/process-services-cloud-pipe.module';
+export * from './lib/models/process-definition-cloud.model';

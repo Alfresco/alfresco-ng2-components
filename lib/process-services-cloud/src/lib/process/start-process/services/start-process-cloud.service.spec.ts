@@ -20,8 +20,8 @@ import { of, throwError } from 'rxjs';
 import { setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
 import { StartProcessCloudService } from './start-process-cloud.service';
 import { fakeProcessPayload } from '../mock/start-process.component.mock';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { HttpErrorResponse, HttpClientModule } from '@angular/common/http';
-import { ProcessDefinitionCloud } from '../models/process-definition-cloud.model';
 
 describe('StartProcessCloudService', () => {
 

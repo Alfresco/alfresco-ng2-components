@@ -51,6 +51,7 @@ describe('ProcessFilterCloudService', () => {
         order: 'DESC',
         index: 2,
         processName: 'process-name',
+        processDefinitionName: 'process-def-name',
         processInstanceId: 'processinstanceid',
         initiator: 'mockuser',
         processDefinitionId: 'processDefid',

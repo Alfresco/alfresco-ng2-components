@@ -17,7 +17,6 @@
 
 export * from './components/start-process-cloud.component';
 
-export * from './models/process-definition-cloud.model';
 export * from './models/process-instance-cloud.model';
 export * from './models/process-payload-cloud.model';
 
