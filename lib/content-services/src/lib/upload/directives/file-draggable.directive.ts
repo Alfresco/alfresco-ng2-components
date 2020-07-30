@@ -20,9 +20,6 @@
 import { FileUtils } from '@alfresco/adf-core';
 import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output } from '@angular/core';
 
-/**
- * Directive selectors without adf- prefix will be deprecated on 3.0.0
- */
 @Directive({
     selector: '[adf-file-draggable]'
 })
@@ -32,17 +29,17 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
 
     /** Enables/disables drag-and-drop functionality. */
     @Input('adf-file-draggable')
-    enabled: boolean = true;
+    enabled = true;
 
     /** Emitted when one or more files are dragged and dropped onto the draggable element. */
     @Output()
-    filesDropped: EventEmitter<File[]> = new EventEmitter<File[]>();
+    filesDropped = new EventEmitter<File[]>();
 
     /** Emitted when a directory is dragged and dropped onto the draggable element. */
     @Output()
-    folderEntityDropped: EventEmitter<any> = new EventEmitter();
+    folderEntityDropped = new EventEmitter<any>();
 
-    private cssClassName: string = 'adf-file-draggable__input-focus';
+    private cssClassName = 'adf-file-draggable__input-focus';
     private element: HTMLElement;
 
     constructor(el: ElementRef, private ngZone: NgZone) {
@@ -113,9 +110,10 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      *
      * @param event - DOM event.
      */
-    onDragEnter(event: Event): void {
+    onDragEnter(event: DragEvent): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
+            event.dataTransfer.dropEffect = 'copy';
             this.element.classList.add(this.cssClassName);
         }
     }
@@ -137,9 +135,10 @@ export class FileDraggableDirective implements OnInit, OnDestroy {
      *
      * @param event
      */
-    onDragOver(event: Event): void {
+    onDragOver(event: DragEvent): void {
         if (this.enabled && !event.defaultPrevented) {
             this.preventDefault(event);
+            event.dataTransfer.dropEffect = 'copy';
             this.element.classList.add(this.cssClassName);
         }
     }
