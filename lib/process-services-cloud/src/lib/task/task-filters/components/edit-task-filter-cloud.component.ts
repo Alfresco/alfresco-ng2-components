@@ -83,6 +83,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     @Input()
     showTitle = true;
 
+    /** Toggles display of task filter name */
+    @Input()
+    showTaskFilterName = true;
+
     /** Emitted when a task filter property changes. */
     @Output()
     filterChange: EventEmitter<TaskFilterCloudModel> = new EventEmitter();

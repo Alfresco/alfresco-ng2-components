@@ -99,6 +99,18 @@ describe('EditTaskFilterCloudComponent', () => {
         expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_TASK_FILTER.TITLE');
     }));
 
+    it('should not display filter name if showFilterName is false', async(() => {
+        const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
+        component.showTaskFilterName = false;
+        component.ngOnChanges({ 'id': taskFilterIdChange });
+        fixture.detectChanges();
+        const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-task-filter-title-id');
+
+        fixture.whenStable().then(() => {
+            expect(title).toBeNull();
+        });
+    }));
+
     it('should not display mat-spinner if isloading set to false', async(() => {
         const taskFilterIdChange = new SimpleChange(null, 'mock-task-filter-id', true);
         component.ngOnChanges({ 'id': taskFilterIdChange });
