@@ -291,7 +291,7 @@ describe('Edit task filters cloud', () => {
         await tasksCloudDemoPage.editTaskFilterCloudComponent().editTaskFilterDialog().clickOnCancelButton();
     });
 
-    async function createNewCustomFilter(name: string) {
+    async function createNewCustomFilter(name: string): Promise<void> {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
 
         const editTaskFilterCloudComponent = tasksCloudDemoPage.editTaskFilterCloudComponent();
