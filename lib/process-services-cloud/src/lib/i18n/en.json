@@ -165,7 +165,7 @@
       "LAST_MODIFIED": "LastModified",
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
-      "PROCESS_NAME": "ProcessName",
+      "PROCESS_NAME": "Process Name",
       "APP_VERSION": "AppReleaseVersion",
       "CREATED_DATE": "Created Date",
       "DATE_RANGE": {
@@ -181,7 +181,8 @@
       },
       "DATE_RANGE_TITLE": "Start date - End date",
       "START_DATE": "Start date",
-      "END_DATE": "End date"
+      "END_DATE": "End date",
+      "ID": "Id"
     },
     "ERROR": {
       "DATE": "Date format DD/MM/YYYY",

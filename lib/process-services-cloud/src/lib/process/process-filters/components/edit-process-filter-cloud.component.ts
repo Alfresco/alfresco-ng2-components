@@ -25,7 +25,7 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties } from '../models/process-filter-cloud.model';
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -260,9 +260,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     get createSortProperties(): ProcessFilterOptions[] {
         this.checkMandatorySortProperties();
-        const sortProperties = this.sortProperties.map((property: string) => {
-            return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
-        });
+        const defaultSortProperties = this.createProcessSortProperties();
+        const sortProperties = defaultSortProperties.filter((sortProperty: ProcessFilterProperties) => this.isValidProperty(this.sortProperties, sortProperty));
+        // const sortProperties = this.sortProperties.map((property: string) => {
+        //     return <ProcessFilterOptions> { label: property.charAt(0).toUpperCase() + property.slice(1), value: property };
+        // });
         return sortProperties;
     }
 
@@ -534,6 +536,62 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 type: 'date',
                 key: 'lastModifiedTo',
                 value: ''
+            })
+        ];
+    }
+
+    createProcessSortProperties(): ProcessSortFilterProperties[] {
+        return [
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID',
+                key: 'id',
+                value: 'id'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
+                key: 'name',
+                value: 'name'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE',
+                key: 'startDate',
+                value: 'startDate'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
+                key: 'status',
+                value: 'status'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
+                key: 'initiator',
+                value: 'initiator'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME',
+                key: 'appName',
+                value: 'appName'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
+                type: 'number',
+                key: 'appVersion',
+                value: 'appVersion'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
+                key: 'processInstanceId',
+                value: 'processInstanceId'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
+                key: 'processDefinitionId',
+                value: 'processDefinitionId'
+            }),
+            new ProcessSortFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
+                key: 'processDefinitionKey',
+                value: 'processDefinitionKey'
             })
         ];
     }

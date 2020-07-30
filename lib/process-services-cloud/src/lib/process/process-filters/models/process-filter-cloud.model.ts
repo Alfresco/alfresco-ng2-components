@@ -99,3 +99,17 @@ export class ProcessFilterProperties {
         }
     }
 }
+
+export class ProcessSortFilterProperties {
+    label: string;
+    value: string;
+    key: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.label = obj.label || null;
+            this.value = obj.value || '';
+            this.key = obj.key || null;
+        }
+    }
+}

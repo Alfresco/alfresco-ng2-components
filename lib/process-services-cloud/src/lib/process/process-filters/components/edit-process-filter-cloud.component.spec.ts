@@ -380,7 +380,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(sortElement).toBeDefined();
                 expect(orderElement).toBeDefined();
                 expect(stateElement.innerText.trim()).toEqual('RUNNING');
-                expect(sortElement.innerText.trim()).toEqual('Id');
+                expect(sortElement.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID');
                 expect(orderElement.innerText.trim()).toEqual('ASC');
             });
         }));
@@ -556,7 +556,7 @@ describe('EditProcessFilterCloudComponent', () => {
             processDefinitionId: 'process-definition-id',
             priority: '12'
         }));
-        component.sortProperties = ['id', 'processName', 'processDefinitionId'];
+        component.sortProperties = ['id', 'name', 'processDefinitionId'];
         fixture.detectChanges();
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });
@@ -575,6 +575,7 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(component.sortProperties.length).toBe(3);
             expect(sortController.value).toBe('my-custom-sort');
             expect(sortOptions.length).toEqual(3);
+            expect(sortOptions[1].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
         });
     }));
 
