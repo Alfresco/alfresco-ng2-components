@@ -237,6 +237,10 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         return !this.rows || this.rows.length === 0;
     }
 
+    /**
+     * Resets the pagination values
+     * @param pagination Pagination values to be set (optional)
+     */
     resetPaginationValues(pagination?: PaginationModel) {
         if (pagination) {
             this.size = pagination.maxItems;
@@ -252,6 +256,11 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
         }
     }
 
+    /**
+     * Resets the pagination values and
+     * Reloads the process list
+     * @param pagination Pagination values to be set
+     */
     updatePagination(pagination: PaginationModel) {
         this.resetPaginationValues(pagination);
         this.reload();
