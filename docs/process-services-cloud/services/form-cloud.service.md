@@ -58,13 +58,6 @@ class MyComponent {
     -   _formKey:_ `string`  - key of the target task
     -   _version:_ `number`  - (Optional) Version of the form
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FormContent`](../../../lib/process-services-cloud/src/lib/services/form-fields.interfaces.ts)`>` - Form definition
--   **getProcessStorageFolderTask**(appName: `string`, taskId: `string`, processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessStorageCloudModel`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`>`<br/>
-
-    -   _appName:_ `string`  - 
-    -   _taskId:_ `string`  - 
-    -   _processInstanceId:_ `string`  - 
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessStorageCloudModel`](../../../lib/process-services-cloud/src/lib/form/models/task-variable-cloud.model.ts)`>` - 
-
 -   **getTask**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Gets details of a task
     -   _appName:_ `string`  - Name of the app

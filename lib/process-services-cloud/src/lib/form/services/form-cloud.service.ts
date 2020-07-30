@@ -151,16 +151,6 @@ export class FormCloudService extends BaseCloudService {
         );
     }
 
-    getProcessStorageFolderTask(appName: string, taskId: string, processInstanceId: string): Observable<ProcessStorageCloudModel> {
-        const apiUrl = this.buildFolderTask(appName, taskId, processInstanceId);
-
-        return this.get(apiUrl).pipe(
-            map((res: any) => {
-                return new ProcessStorageCloudModel(res);
-            })
-        );
-    }
-
     /**
      * Gets the variables of a task.
      * @param appName Name of the app

@@ -123,7 +123,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         if (appName && appName.currentValue) {
             if (this.taskId) {
-                this.getFormDefinitionWithFolderTask(this.appName, this.taskId, this.processInstanceId);
+                this.getFormByTaskId(appName.currentValue, this.taskId, this.appVersion);
             } else if (this.formId) {
                 this.getFormById(appName.currentValue, this.formId, this.appVersion);
             }
@@ -237,31 +237,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     this.handleError(error);
                 }
             );
-    }
-
-    getFormDefinitionWithFolderTask(appName: string, taskId: string, processInstanceId: string) {
-        this.getFormDefinitionWithFolder(appName, taskId, processInstanceId);
-    }
-
-    async getFormDefinitionWithFolder(appName: string, taskId: string, processInstanceId: string) {
-        try {
-            await this.getFormByTaskId(appName, taskId, this.appVersion);
-
-            const hasUploadWidget = (<any> this.form).hasUpload;
-            if (hasUploadWidget) {
-                try {
-                    const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId, processInstanceId).toPromise();
-                    this.form.nodeId = processStorageCloudModel.nodeId;
-                    this.form.contentHost = processStorageCloudModel.path;
-                } catch (error) {
-                    this.notificationService.openSnackMessage('The content repo is not configured');
-                }
-            }
-
-        } catch (error) {
-            this.notificationService.openSnackMessage('Form service an error occour');
-        }
-
     }
 
     saveTaskForm() {

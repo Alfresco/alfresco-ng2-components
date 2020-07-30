@@ -52,7 +52,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     implements OnInit {
 
     typeId = 'AttachFileCloudWidgetComponent';
-    rootDirectory = '-my-';
+    rootNodeId = '-my-';
 
     constructor(
         formService: FormService,
@@ -95,7 +95,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
 
             if (alias && opts && opts.relativePath) {
                 await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(alias, opts).then((nodeId: string) => {
-                    this.rootDirectory = nodeId;
+                    this.rootNodeId = nodeId;
                 });
             } else {
                 const errorMessage = this.translationService.instant('ADF_CLOUD_TASK_FORM.ERROR.INVALID_DESTINATION_FOLDER_PATH');
@@ -103,7 +103,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             }
         }
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.rootDirectory, selectedMode, this.isAlfrescoAndLocal())
+            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
