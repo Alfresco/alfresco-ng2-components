@@ -21,7 +21,8 @@ import {
     FormFieldModel,
     FormFieldTypes,
     FormModel,
-    TabModel
+    TabModel,
+    FormOutcomeModel
 } from './../components/widgets/core/index';
 import { TaskProcessVariableModel } from './../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from './../models/widget-visibility.model';
@@ -31,7 +32,7 @@ import {
     fakeFormJson, fakeTaskProcessVariableModels,
     formTest, formValues, complexVisibilityJsonVisible,
     nextConditionForm, complexVisibilityJsonNotVisible,
-    headerVisibilityCond } from 'core/mock/form/widget-visibility-cloud.service.mock';
+    headerVisibilityCond } from '../../mock/form/widget-visibility-cloud.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -670,6 +671,24 @@ describe('WidgetVisibilityCloudService', () => {
             service.refreshVisibility(fakeFormWithField);
 
             expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
+        });
+
+        it('should refresh the visibility for Outcomes in forms', () => {
+            visibilityObjTest.leftType = WidgetTypeEnum.field;
+            visibilityObjTest.leftValue = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_VALUE';
+            const outcome = new FormOutcomeModel(fakeFormWithField, {
+                isSystem: false,
+                isSelected: false,
+                isVisible: true
+            });
+
+            outcome.visibilityCondition = visibilityObjTest;
+            fakeFormWithField.outcomes.push(outcome);
+            service.refreshVisibility(fakeFormWithField);
+            const outcomeIndex = fakeFormWithField.outcomes.length - 1;
+            expect(fakeFormWithField.outcomes[outcomeIndex].isVisible).toBeFalsy();
         });
 
         it('should use the form value to evaluate the visibility condition if the form value is defined', (done) => {

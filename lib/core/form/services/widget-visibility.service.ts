@@ -20,7 +20,7 @@ import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
 import { Observable, from, throwError } from 'rxjs';
-import { FormFieldModel, FormModel, TabModel, ContainerModel } from '../components/widgets/core/index';
+import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
@@ -43,6 +43,10 @@ export class WidgetVisibilityService {
             form.tabs.map((tabModel) => this.refreshEntityVisibility(tabModel));
         }
 
+        if (form && form.outcomes && form.outcomes.length > 0) {
+            form.outcomes.map((outcomeModel) => this.refreshOutcomeVisibility(outcomeModel));
+        }
+
         if (form) {
             form.getFormFields().map((field) => this.refreshEntityVisibility(field));
         }
@@ -51,6 +55,10 @@ export class WidgetVisibilityService {
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
         const visible = this.evaluateVisibility(element.form, element.visibilityCondition);
         element.isVisible = visible && this.isParentTabVisible(this.form, element);
+    }
+
+    refreshOutcomeVisibility(element: FormOutcomeModel) {
+        element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
