@@ -28,7 +28,6 @@ import {
     FormOutcomeModel,
     WidgetVisibilityService,
     FormService,
-    NotificationService,
     FORM_FIELD_VALIDATORS,
     FormFieldValidator,
     FormValues,
@@ -106,7 +105,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
-                private notificationService: NotificationService,
                 protected visibilityService: WidgetVisibilityService,
                 private appConfigService: AppConfigService) {
         super();
