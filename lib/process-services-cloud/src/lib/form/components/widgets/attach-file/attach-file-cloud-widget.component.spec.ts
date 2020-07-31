@@ -72,12 +72,6 @@ describe('AttachFileCloudWidgetComponent', () => {
     const onlyLocalParams = {
         fileSource: {
             serviceId: 'local-file'
-        },
-        menuOptions: {
-            show: true,
-            download: true,
-            retrieveMetadata: true,
-            remove: true
         }
     };
 
@@ -85,6 +79,12 @@ describe('AttachFileCloudWidgetComponent', () => {
         fileSource: {
             name: 'mock-alf-content',
             serviceId: 'alfresco-content'
+        },
+        menuOptions: {
+            show: true,
+            download: true,
+            retrieveMetadata: true,
+            remove: true
         }
     };
 
@@ -109,6 +109,10 @@ describe('AttachFileCloudWidgetComponent', () => {
         name: 'fake-name',
         content: {
             mimeType: 'application/pdf'
+        },
+        properties: {
+            'pfx:property_one': 'testValue',
+            'pfx:property_two': true
         }
     };
 
@@ -133,11 +137,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         mimeType: 'image/png',
         simpleType: 'image',
         previewStatus: 'queued',
-        thumbnailStatus: 'queued',
-        properties: {
-            'pfx:property_one': 'testValue',
-            'pfx:property_two': true
-        }
+        thumbnailStatus: 'queued'
     };
 
     setupTestBed({
@@ -491,7 +491,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             const expectedValues = { pfx_property_one: 'testValue', pfx_property_two: true};
 
             const menuButton: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-1155-option-menu'))
+                fixture.debugElement.query(By.css('#file-fake-option-menu'))
                     .nativeElement
             );
 
@@ -499,7 +499,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             fixture.detectChanges();
 
             const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
-                fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata'))
+                fixture.debugElement.query(By.css('#file-fake-retrieve-file-metadata'))
                     .nativeElement
             );
 
