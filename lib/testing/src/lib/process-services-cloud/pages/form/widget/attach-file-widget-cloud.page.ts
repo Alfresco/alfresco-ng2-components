@@ -35,7 +35,7 @@ export class AttachFileWidgetCloudPage {
 
     async attachLocalFile(fileLocation: string): Promise<void> {
         await browser.setFileDetector(new remote.FileDetector());
-        const uploadButton = this.widget.element(by.css(`a input`));
+        const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
