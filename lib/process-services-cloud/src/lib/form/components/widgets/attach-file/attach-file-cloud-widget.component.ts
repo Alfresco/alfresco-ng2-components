@@ -24,7 +24,8 @@ import {
   ThumbnailService,
   NotificationService,
   ContentLinkModel,
-  TranslationService
+  TranslationService,
+  FormValues
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -122,7 +123,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
 
     removeExistingSelection(selections: Node[]) {
         const existingNode: Node[] = [...this.field.value || []];
-        return selections.filter(opt => !existingNode.some( (node) => node.id === opt.id));
+        return selections.filter(opt => !existingNode.some((node) => node.id === opt.id));
     }
 
     downloadContent(file: Node): void {
@@ -136,5 +137,22 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
 
     getWidgetIcon(): string {
         return this.isAlfrescoAndLocal() ? 'file_upload' : 'attach_file';
+    }
+
+    displayMenuOption(option: string): boolean {
+        return this.field.params.menuOptions ? this.field.params.menuOptions[option] : option !== 'retrieveMetadata';
+    }
+
+    onRetrieveFileMetadata(file: Node) {
+        const values: FormValues = {};
+        const metadata = file?.properties;
+        if (metadata) {
+            const keys = Object.keys(metadata);
+            keys.forEach(key => {
+                const sanitizedKey = key.replace(':', '_');
+                values[sanitizedKey] = metadata[key];
+            });
+            this.formService.updateFormValuesRequested.next(values);
+        }
     }
 }

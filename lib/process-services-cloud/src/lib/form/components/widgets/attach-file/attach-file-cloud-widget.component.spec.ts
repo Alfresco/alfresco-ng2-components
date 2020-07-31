@@ -72,6 +72,12 @@ describe('AttachFileCloudWidgetComponent', () => {
     const onlyLocalParams = {
         fileSource: {
             serviceId: 'local-file'
+        },
+        menuOptions: {
+            show: true,
+            download: true,
+            retrieveMetadata: true,
+            remove: true
         }
     };
 
@@ -109,6 +115,30 @@ describe('AttachFileCloudWidgetComponent', () => {
     const mockNodeId = new Promise(function (resolve) {
         resolve('mock-node-id');
     });
+
+    const fakeLocalPngAnswer = {
+        id: 1155,
+        nodeId: 1155,
+        name: 'a_png_file.png',
+        created: '2017-07-25T17:17:37.099Z',
+        createdBy: {
+            id: 1001,
+            firstName: 'Admin',
+            lastName: 'admin',
+            email: 'admin'
+        },
+        relatedContent: false,
+        contentAvailable: true,
+        link: false,
+        mimeType: 'image/png',
+        simpleType: 'image',
+        previewStatus: 'queued',
+        thumbnailStatus: 'queued',
+        properties: {
+            'pfx:property_one': 'testValue',
+            'pfx:property_two': true
+        }
+    };
 
     setupTestBed({
         imports: [
@@ -454,6 +484,75 @@ describe('AttachFileCloudWidgetComponent', () => {
                 ).nativeElement
             );
             showOption.click();
+        });
+
+        it('should request form to be updated with metadata when retrieve is clicked', (done) => {
+            const updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
+            const expectedValues = { pfx_property_one: 'testValue', pfx_property_two: true};
+
+            const menuButton: HTMLButtonElement = <HTMLButtonElement> (
+                fixture.debugElement.query(By.css('#file-1155-option-menu'))
+                    .nativeElement
+            );
+
+            menuButton.click();
+            fixture.detectChanges();
+
+            const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
+                fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata'))
+                    .nativeElement
+            );
+
+            retrieveMetadataOption.click();
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                expect(updateFormSpy).toHaveBeenCalledWith(expectedValues);
+                done();
+            });
+        });
+
+        it('should display the default menu options if no options are provided', () => {
+            widget.field.params = <FormFieldMetadata> onlyLocalParams;
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const inputDebugElement = fixture.debugElement.query(
+                    By.css('#attach-file-attach')
+                );
+                inputDebugElement.triggerEventHandler('change', {
+                    target: { files: [fakeLocalPngAnswer] }
+                });
+                fixture.detectChanges();
+                const menuButton: HTMLButtonElement = <HTMLButtonElement> (
+                    fixture.debugElement.query(
+                        By.css('#file-1155-option-menu')
+                    ).nativeElement
+                );
+                menuButton.click();
+                fixture.detectChanges();
+                const showOption: HTMLButtonElement = <HTMLButtonElement> (
+                    fixture.debugElement.query(
+                        By.css('#file-1155-show-file')
+                    ).nativeElement
+                );
+                const downloadOption: HTMLButtonElement = <HTMLButtonElement> (
+                    fixture.debugElement.query(By.css('#file-1155-download-file'))
+                        .nativeElement
+                );
+                const retrieveMetadataOption: HTMLButtonElement = <HTMLButtonElement> (
+                    fixture.debugElement.query(By.css('#file-1155-retrieve-file-metadata'))
+                        .nativeElement
+                );
+                const removeOption: HTMLButtonElement = <HTMLButtonElement> (
+                    fixture.debugElement.query(By.css('#file-1155-remove'))
+                        .nativeElement
+                );
+
+                expect(showOption).not.toBeNull();
+                expect(downloadOption).not.toBeNull();
+                expect(retrieveMetadataOption).toBeNull();
+                expect(removeOption).not.toBeNull();
+            });
         });
     });
 });

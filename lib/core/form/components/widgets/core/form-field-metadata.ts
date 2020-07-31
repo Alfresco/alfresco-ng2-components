@@ -29,4 +29,10 @@ export interface FormFieldMetadata {
         type: string;
     };
     responseVariable?: boolean;
+    menuOptions?: {
+        show?: boolean,
+        download?: boolean,
+        retrieveMetadata?: boolean,
+        remove?: boolean
+    };
 }

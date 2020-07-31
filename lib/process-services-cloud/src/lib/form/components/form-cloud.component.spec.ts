@@ -30,7 +30,8 @@ import {
     setupTestBed,
     TRANSLATION_PROVIDER,
     WidgetVisibilityService,
-    VersionCompatibilityService
+    VersionCompatibilityService,
+    FormService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -40,7 +41,8 @@ import {
     conditionalUploadWidgetsMock,
     emptyFormRepresentationJSON,
     fakeCloudForm,
-    multilingualForm
+    multilingualForm,
+    fakeMetadataForm
 } from '../mocks/cloud-form.mock';
 import { FormCloudRepresentation } from '../models/form-cloud-representation.model';
 import { FormCloudModule } from '../form-cloud.module';
@@ -55,6 +57,7 @@ describe('FormCloudComponent', () => {
     let visibilityService: WidgetVisibilityService;
     let formRenderingService: CloudFormRenderingService;
     let translateService: TranslateService;
+    let formService: FormService;
 
     @Component({
         selector: 'adf-cloud-custom-widget',
@@ -117,10 +120,23 @@ describe('FormCloudComponent', () => {
         const appConfigService = TestBed.inject(AppConfigService);
         spyOn(appConfigService, 'get').and.returnValue([]);
 
+        formService = TestBed.inject(FormService);
+
         fixture = TestBed.createComponent(FormCloudComponent);
         formComponent = fixture.componentInstance;
         fixture.detectChanges();
     }));
+
+    it('should set values when updateFormValuesRequested is updated', async () => {
+        const fakeForm = new FormModel(JSON.parse(JSON.stringify(fakeMetadataForm)));
+        formComponent.form = fakeForm;
+        formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(fakeForm);
+
+        const refreshFormSpy = spyOn<any>(formComponent, 'refreshFormData');
+        formService.updateFormValuesRequested.next({ pfx_property_one: 'testValue', pfx_property_two: true });
+        expect(refreshFormSpy).toHaveBeenCalled();
+        expect(formComponent.data).toContain({ name: 'pfx_property_one', value: 'testValue' }, { name: 'pfx_property_two', value: true });
+    });
 
     it('should register custom [upload] widget', () => {
         const widget = buildWidget('upload', fixture.componentRef.injector);

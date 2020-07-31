@@ -965,3 +965,94 @@ export const multilingualForm = {
         }
     }
 };
+
+export let fakeMetadataForm = {
+    'id': 'form-de8895be-d0d7-4434-beef-559b15305d72',
+    'name': 'StartEventForm',
+    'description': '',
+    'version': 0,
+    'formDefinition': {
+        'tabs': [],
+        'fields': [
+            {
+                'type': 'container',
+                'id': '5a6b24c1-db2b-45e9-9aff-142395433d23',
+                'name': 'Label',
+                'tab': null,
+                'fields': {
+                    '1': [
+                        {
+                            'type': 'text',
+                            'id': 'pfx_property_one',
+                            'name': 'pfx_property_one',
+                            'colspan': 1,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            },
+                            'visibilityCondition': null,
+                            'placeholder': null,
+                            'value': null,
+                            'required': false,
+                            'minLength': 0,
+                            'maxLength': 0,
+                            'regexPattern': null
+                        }
+                    ],
+                    '2': [
+                        {
+                            'type': 'boolean',
+                            'id': 'pfx_property_two',
+                            'name': 'pfx_property_two',
+                            'colspan': 1,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            },
+                            'visibilityCondition': null,
+                            'placeholder': null,
+                            'value': null,
+                            'required': false,
+                            'minLength': 0,
+                            'maxLength': 0,
+                            'regexPattern': null
+                        }
+                    ],
+                    '3': [
+                        {
+                            'id': 'content_form_nodes',
+                            'name': 'Nodes',
+                            'type': 'upload',
+                            'readOnly': false,
+                            'required': true,
+                            'colspan': 1,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2,
+                                'fileSource': {
+                                    'serviceId': 'alfresco-content',
+                                    'name': 'Alfresco Content',
+                                    'metadataAllowed': true
+                                },
+                                'multiple': true,
+                                'menuOptions': {
+                                    'show': true,
+                                    'download': true,
+                                    'retrieveMetadata': true,
+                                    'remove': true
+                                },
+                                'link': false
+                            }
+                        }
+                    ]
+
+                },
+                'numberOfColumns': 2
+            }
+        ],
+        'outcomes': [],
+        'metadata': {},
+        'variables': []
+    }
+};
