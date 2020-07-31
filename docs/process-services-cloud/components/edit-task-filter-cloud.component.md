@@ -49,6 +49,7 @@ Edits task filter details.
 | id | `string` |  | (required) ID of the task filter. |
 | role | `string` | "" | user role. |
 | showFilterActions | `boolean` | true | Toggles the filter actions. |
+| showTaskFilterName | `boolean` | true | Toggles display of task filter name |
 | showTitle | `boolean` | true | Toggles the title. |
 | sortProperties | `string[]` |  | List of sort properties to display. |
 
