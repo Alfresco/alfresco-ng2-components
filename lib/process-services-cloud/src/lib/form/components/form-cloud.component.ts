@@ -28,12 +28,10 @@ import {
     FormOutcomeModel,
     WidgetVisibilityService,
     FormService,
-    NotificationService,
     FORM_FIELD_VALIDATORS,
     FormFieldValidator,
     FormValues,
     FormModel,
-    AppConfigService,
     ContentLinkModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -106,9 +104,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
     constructor(protected formCloudService: FormCloudService,
                 protected formService: FormService,
-                private notificationService: NotificationService,
-                protected visibilityService: WidgetVisibilityService,
-                private appConfigService: AppConfigService) {
+                protected visibilityService: WidgetVisibilityService) {
         super();
 
         this.formService.formContentClicked
@@ -123,7 +119,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
 
         if (appName && appName.currentValue) {
             if (this.taskId) {
-                this.getFormDefinitionWithFolderTask(this.appName, this.taskId, this.processInstanceId);
+                this.getFormByTaskId(appName.currentValue, this.taskId, this.appVersion);
             } else if (this.formId) {
                 this.getFormById(appName.currentValue, this.formId, this.appVersion);
             }
@@ -200,7 +196,6 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
-                    this.form.contentHost = this.appConfigService.get('ecmHost');
                     this.onFormLoaded(this.form);
                     resolve(this.form);
                 },
@@ -230,38 +225,12 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
                     parsedForm.validateForm();
                     this.form = parsedForm;
                     this.form.nodeId = '-my-';
-                    this.form.contentHost = this.appConfigService.get('ecmHost');
                     this.onFormLoaded(this.form);
                 },
                 (error) => {
                     this.handleError(error);
                 }
             );
-    }
-
-    getFormDefinitionWithFolderTask(appName: string, taskId: string, processInstanceId: string) {
-        this.getFormDefinitionWithFolder(appName, taskId, processInstanceId);
-    }
-
-    async getFormDefinitionWithFolder(appName: string, taskId: string, processInstanceId: string) {
-        try {
-            await this.getFormByTaskId(appName, taskId, this.appVersion);
-
-            const hasUploadWidget = (<any> this.form).hasUpload;
-            if (hasUploadWidget) {
-                try {
-                    const processStorageCloudModel = await this.formCloudService.getProcessStorageFolderTask(appName, taskId, processInstanceId).toPromise();
-                    this.form.nodeId = processStorageCloudModel.nodeId;
-                    this.form.contentHost = processStorageCloudModel.path;
-                } catch (error) {
-                    this.notificationService.openSnackMessage('The content repo is not configured');
-                }
-            }
-
-        } catch (error) {
-            this.notificationService.openSnackMessage('Form service an error occour');
-        }
-
     }
 
     saveTaskForm() {

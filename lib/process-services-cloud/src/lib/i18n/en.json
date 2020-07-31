@@ -266,6 +266,9 @@
         "CLAIM": "CLAIM",
         "UNCLAIM": "RELEASE"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path"
     }
   }
 

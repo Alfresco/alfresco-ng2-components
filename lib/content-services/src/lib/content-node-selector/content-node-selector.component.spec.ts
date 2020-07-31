@@ -40,7 +40,8 @@ describe('ContentNodeSelectorDialogComponent', () => {
         select: new EventEmitter<Node>(),
         rowFilter: (shareDataRow: ShareDataRow) => shareDataRow.node.entry.name === 'impossible-name',
         imageResolver: () => 'piccolo',
-        currentFolderId: 'cat-girl-nuku-nuku'
+        currentFolderId: 'cat-girl-nuku-nuku',
+        showLocalUploadButton: true
     };
 
     setupTestBed({
@@ -175,4 +176,22 @@ describe('ContentNodeSelectorDialogComponent', () => {
             expect(titleElement.nativeElement.innerText).toBe('NODE_SELECTOR.CHOOSE_ITEM');
        });
    });
+
+    describe('Upload button', () => {
+
+        it('should be able to show upload button if showLocalUploadButton set to true', () => {
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button'));
+
+            expect(adfUploadButton).not.toBeNull();
+            expect(adfUploadButton.nativeElement.innerText).toEqual('file_uploadFORM.FIELD.UPLOAD');
+        });
+
+        it('should not be able to show upload button if showLocalUploadButton set to false', () => {
+            component.data.showLocalUploadButton = false;
+            fixture.detectChanges();
+            const adfUploadButton = fixture.debugElement.query(By.css('adf-upload-button span'));
+
+            expect(adfUploadButton).toBeNull();
+        });
+    });
 });

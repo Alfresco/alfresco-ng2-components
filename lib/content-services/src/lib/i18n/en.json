@@ -80,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Cancel",
     "CHOOSE": "Select",
+    "ATTACH": "Attach",
     "CHOOSE_ITEM": "Select content to attach from '{{ name }}'",
     "COPY": "Copy",
     "COPY_ITEM": "Copy '{{ name }}' to...",

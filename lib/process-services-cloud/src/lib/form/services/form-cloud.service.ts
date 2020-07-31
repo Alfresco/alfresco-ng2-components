@@ -27,7 +27,7 @@ import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
 import { CompleteFormRepresentation } from '@alfresco/js-api';
-import { TaskVariableCloud, ProcessStorageCloudModel } from '../models/task-variable-cloud.model';
+import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { FormContent } from '../../services/form-fields.interfaces';
 
@@ -151,16 +151,6 @@ export class FormCloudService extends BaseCloudService {
         );
     }
 
-    getProcessStorageFolderTask(appName: string, taskId: string, processInstanceId: string): Observable<ProcessStorageCloudModel> {
-        const apiUrl = this.buildFolderTask(appName, taskId, processInstanceId);
-
-        return this.get(apiUrl).pipe(
-            map((res: any) => {
-                return new ProcessStorageCloudModel(res);
-            })
-        );
-    }
-
     /**
      * Gets the variables of a task.
      * @param appName Name of the app
@@ -236,11 +226,5 @@ export class FormCloudService extends BaseCloudService {
             return form;
         }
         return null;
-    }
-
-    private buildFolderTask(appName: string, taskId: string, processInstanceId: string): string {
-        return processInstanceId
-            ? `${this.getBasePath(appName)}/process-storage/v1/folders/${processInstanceId}/${taskId}`
-            : `${this.getBasePath(appName)}/process-storage/v1/folders/${taskId}`;
     }
 }

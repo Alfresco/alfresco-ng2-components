@@ -21,21 +21,33 @@
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
         (select)="onSelect($event)"
-        (siteChange)="onSiteChange($event)">
+        (siteChange)="onSiteChange($event)"
+        (navigationChange)="onNavigationChange($event)">
     </adf-content-node-selector-panel>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-    <button
-        mat-button
-        (click)="close()"
-        data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
-    </button>
+<mat-dialog-actions>
+    <div>
+        <adf-upload-button
+            *ngIf="data?.showLocalUploadButton"
+            [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
+            [multipleFiles]="isMultipleSelection()"
+            [rootFolderId]="currentDirectoryId"
+            (error)="onError($event)">
+        </adf-upload-button>
+    </div>
+    <div>
+        <button
+            mat-button
+            (click)="close()"
+            data-automation-id="content-node-selector-actions-cancel">{{ 'NODE_SELECTOR.CANCEL' | translate }}
+        </button>
 
-    <button mat-button
-        [disabled]="!hasNodeSelected()"
-        class="adf-choose-action"
-        (click)="onClick()"
-        data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
-    </button>
+        <button mat-button
+                [disabled]="!chosenNode"
+                class="adf-choose-action"
+                (click)="onClick()"
+                data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}
+        </button>
+    </div>
 </mat-dialog-actions>

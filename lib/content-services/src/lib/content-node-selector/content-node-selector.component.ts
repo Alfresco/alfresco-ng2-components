@@ -17,9 +17,10 @@
 
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslationService } from '@alfresco/adf-core';
+import { TranslationService, NotificationService } from '@alfresco/adf-core';
 import { Node } from '@alfresco/js-api';
 import { ContentNodeSelectorComponentData } from './content-node-selector.component-data.interface';
+import { NodeEntryEvent } from '../document-list/components/node.event';
 
 @Component({
     selector: 'adf-content-node-selector',
@@ -28,17 +29,19 @@ import { ContentNodeSelectorComponentData } from './content-node-selector.compon
     encapsulation: ViewEncapsulation.None
 })
 export class ContentNodeSelectorComponent {
-
     title: string;
     action: string;
     buttonActionName: string;
     chosenNode: Node[];
+    currentDirectoryId: string;
 
     constructor(private translation: TranslationService,
+                private notificationService: NotificationService,
                 @Inject(MAT_DIALOG_DATA) public data: ContentNodeSelectorComponentData) {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
+        this.currentDirectoryId = data.currentFolderId;
     }
 
     close() {
@@ -49,12 +52,12 @@ export class ContentNodeSelectorComponent {
         this.chosenNode = nodeList;
     }
 
-    hasNodeSelected(): boolean {
-        return this.chosenNode?.length > 0;
-    }
-
     onSiteChange(siteTitle: string) {
         this.updateTitle(siteTitle);
+    }
+
+    onNavigationChange(pathElement: NodeEntryEvent) {
+        this.currentDirectoryId = pathElement.value.id;
     }
 
     onClick(): void {
@@ -70,5 +73,13 @@ export class ContentNodeSelectorComponent {
 
     getTitleTranslation(action: string, name: string): string {
         return this.translation.instant(`NODE_SELECTOR.${action}_ITEM`, { name: this.translation.instant(name) });
+    }
+
+    isMultipleSelection(): boolean {
+        return this.data.selectionMode === 'multiple';
+    }
+
+    onError(error) {
+        this.notificationService.showError(error);
     }
 }

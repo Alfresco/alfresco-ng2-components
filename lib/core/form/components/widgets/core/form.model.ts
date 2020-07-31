@@ -69,7 +69,6 @@ export class FormModel {
 
     json: any;
     nodeId: string;
-    contentHost: string;
     values: FormValues = {};
     tabs: TabModel[] = [];
     fields: FormWidgetModel[] = [];

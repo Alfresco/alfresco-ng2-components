@@ -36,4 +36,6 @@ export interface ContentNodeSelectorComponentData {
     showSearch?: boolean;
     showFilesInResult?: boolean;
     showDropdownSiteList?: boolean;
+    showLocalUploadButton?: boolean;
+    multipleUpload?: boolean;
 }

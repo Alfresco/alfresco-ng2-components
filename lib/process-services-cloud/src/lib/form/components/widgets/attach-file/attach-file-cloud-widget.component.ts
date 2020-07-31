@@ -23,7 +23,8 @@ import {
   LogService,
   ThumbnailService,
   NotificationService,
-  ContentLinkModel
+  ContentLinkModel,
+  TranslationService
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -49,9 +50,9 @@ import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
     implements OnInit {
-    static ACS_SERVICE = 'alfresco-content';
 
     typeId = 'AttachFileCloudWidgetComponent';
+    rootNodeId = '-my-';
 
     constructor(
         formService: FormService,
@@ -59,35 +60,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         thumbnails: ThumbnailService,
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
-        private contentNodeSelectorService: ContentCloudNodeSelectorService
+        private contentNodeSelectorService: ContentCloudNodeSelectorService,
+        private translationService: TranslationService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
 
-    isFileSourceConfigured(): boolean {
-        return !!this.field.params && !!this.field.params.fileSource;
-    }
-
-    isMultipleSourceUpload(): boolean {
-        return (
-            !this.field.readOnly &&
-            this.isFileSourceConfigured() &&
-            !this.isOnlyLocalSourceSelected()
-        );
-    }
-
-    isOnlyLocalSourceSelected(): boolean {
+    isAlfrescoAndLocal(): boolean {
         return (
             this.field.params &&
             this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId === 'local-file'
-        );
-    }
-
-    isSimpleUploadButton(): boolean {
-        return (
-            (this.isUploadButtonVisible() && !this.isFileSourceConfigured()) ||
-            this.isOnlyLocalSourceSelected()
+            this.field.params.fileSource.serviceId === 'all-file-sources'
+            || this.field.params.fileSource.serviceId === 'local-file'
         );
     }
 
@@ -95,23 +79,31 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         return (!this.hasFile || this.multipleOption) && !this.field.readOnly;
     }
 
-    onAttachFileChanged(event: any) {
-        this.onFileChanged(event);
-    }
-
     onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
     }
 
-    uploadFileFromCS() {
-        this.openSelectDialog();
-    }
-
-    openSelectDialog() {
+    async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
 
+        if (this.isAlfrescoAndLocal()) {
+            const destinationFolderPath = this.field.params.fileSource.destinationFolderPath;
+            const alias = this.getAliasFromDestinationFolderPath(destinationFolderPath);
+            const opts = {
+                relativePath: this.getRelativePathFromDestinationFolderPath(destinationFolderPath)
+            };
+
+            if (alias && opts && opts.relativePath) {
+                await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(alias, opts).then((nodeId: string) => {
+                    this.rootNodeId = nodeId;
+                });
+            } else {
+                const errorMessage = this.translationService.instant('ADF_CLOUD_TASK_FORM.ERROR.INVALID_DESTINATION_FOLDER_PATH');
+                this.notificationService.showError(errorMessage);
+            }
+        }
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.field.form.contentHost, '-my-', selectedMode)
+            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
@@ -119,29 +111,31 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             });
     }
 
+    getAliasFromDestinationFolderPath(destinationFolderPath: string): string {
+        const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
+        return destinationFolderPath.substring(0, startOfRelativePathIndex);
+    }
+
+    getRelativePathFromDestinationFolderPath(destinationFolderPath: string): string {
+        const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
+        return destinationFolderPath.substring(startOfRelativePathIndex, destinationFolderPath.length);
+    }
+
     removeExistingSelection(selections: Node[]) {
         const existingNode: Node[] = [...this.field.value || []];
         return selections.filter(opt => !existingNode.some( (node) => node.id === opt.id));
     }
 
-    isContentSourceSelected(): boolean {
-        return (
-            this.field.params &&
-            this.field.params.fileSource &&
-            this.field.params.fileSource.serviceId ===
-                AttachFileCloudWidgetComponent.ACS_SERVICE
-        );
-    }
-
     downloadContent(file: Node): void {
-        this.processCloudContentService.downloadFile(
-            file.id,
-            this.field.form.contentHost
-        );
+        this.processCloudContentService.downloadFile(file.id);
     }
 
     onAttachFileClicked(nodeSelector: any) {
         nodeSelector.nodeId = nodeSelector.id;
         this.fileClicked(new ContentLinkModel(nodeSelector));
+    }
+
+    getWidgetIcon(): string {
+        return this.isAlfrescoAndLocal() ? 'file_upload' : 'attach_file';
     }
 }

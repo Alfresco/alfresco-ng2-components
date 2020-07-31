@@ -24,4 +24,5 @@ export interface FormFieldFileSource {
     name: string;
     selectedFolder: FormFieldSelectedFolder;
     serviceId: string;
+    destinationFolderPath: string;
 }
