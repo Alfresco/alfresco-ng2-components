@@ -118,7 +118,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             .subscribe((valuesToSetIfNotPresent) => {
                 const keys = Object.keys(valuesToSetIfNotPresent);
                 keys.forEach(key => {
-                    if (key in this.form.values && !this.form.values[key]) {
+                    if (!this.form.values[key]) {
                         this.form.values[key] = valuesToSetIfNotPresent[key];
                     }
                 });
