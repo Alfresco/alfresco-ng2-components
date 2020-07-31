@@ -27,6 +27,8 @@ stages:
     if: type = pull_request && commit_message =~ /\[create preview\]/
   - name: Check bundle
     if: type = push AND tag IS blank
+  - name: Trigger ADF child build
+    if: (branch = develop AND type = push) OR type = api
   - name: Unit test
     if: (branch != master AND type != cron AND tag IS blank) OR type = api
   - name: e2e Test
@@ -35,8 +37,6 @@ stages:
     if: tag =~ .*beta.*
   - name: Release tag
     if: type = cron OR branch = master
-  - name: Trigger ADF child build
-    if: (branch = develop AND type = push) OR type = api
 
 addons:
     chrome: stable
