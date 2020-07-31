@@ -317,14 +317,7 @@ describe('Start Task Form', () => {
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
-
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
 
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.removeFile(testFileModel.name);
@@ -389,15 +382,8 @@ describe('Start Task Form', () => {
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
 
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
-
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
         });
