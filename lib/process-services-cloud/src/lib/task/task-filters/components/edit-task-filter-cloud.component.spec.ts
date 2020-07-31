@@ -22,6 +22,7 @@ import { By } from '@angular/platform-browser';
 import { setupTestBed } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
@@ -294,6 +295,15 @@ describe('EditTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
+                component.editTaskFilterForm.valueChanges
+                .pipe(debounceTime(300))
+                .subscribe(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                });
+
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
                 fixture.detectChanges();
@@ -301,13 +311,6 @@ describe('EditTaskFilterCloudComponent', () => {
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 sortOptions[3].nativeElement.click();
                 fixture.detectChanges();
-
-                setTimeout(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                }, 300);
             });
 
             it('should enable saveAs button if the filter values are changed for custom filter', (done) => {
@@ -316,6 +319,15 @@ describe('EditTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
+                component.editTaskFilterForm.valueChanges
+                .pipe(debounceTime(300))
+                .subscribe(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                });
+
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
                 fixture.detectChanges();
@@ -323,13 +335,6 @@ describe('EditTaskFilterCloudComponent', () => {
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 sortOptions[3].nativeElement.click();
                 fixture.detectChanges();
-
-                setTimeout(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                }, 300);
             });
         });
 

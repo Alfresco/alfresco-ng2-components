@@ -23,6 +23,7 @@ import { setupTestBed } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { EditProcessFilterCloudComponent } from './edit-process-filter-cloud.component';
 import { ProcessFiltersCloudModule } from '../process-filters-cloud.module';
@@ -323,6 +324,15 @@ describe('EditProcessFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
+                component.editProcessFilterForm.valueChanges
+                .pipe(debounceTime(300))
+                .subscribe(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                });
+
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
                 stateElement.click();
                 fixture.detectChanges();
@@ -330,13 +340,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 stateOptions[2].nativeElement.click();
                 fixture.detectChanges();
-
-                setTimeout(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                }, 300);
             });
 
             it('should enable saveAs button if the filter values are changed for custom filter', (done) => {
@@ -345,6 +348,15 @@ describe('EditProcessFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
+                component.editProcessFilterForm.valueChanges
+                .pipe(debounceTime(300))
+                .subscribe(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toEqual(false);
+                    done();
+                });
+
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-status"] .mat-select-trigger');
                 stateElement.click();
                 fixture.detectChanges();
@@ -352,13 +364,6 @@ describe('EditProcessFilterCloudComponent', () => {
                 const stateOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 stateOptions[2].nativeElement.click();
                 fixture.detectChanges();
-
-                setTimeout(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                }, 300);
             });
         });
 
