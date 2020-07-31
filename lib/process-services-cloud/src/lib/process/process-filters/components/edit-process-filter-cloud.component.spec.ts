@@ -426,10 +426,15 @@ describe('EditProcessFilterCloudComponent', () => {
         component.ngOnChanges({ 'id': processFilterIdChange });
         fixture.detectChanges();
         const controller = component.editProcessFilterForm.get('processDefinitionName');
+        const processDefinitionNamesElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-processDefinitionName"]');
+        processDefinitionNamesElement.click();
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             expect(processSpy).toHaveBeenCalled();
             expect(controller).toBeDefined();
+            const processDefinitionNamesOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+            expect(processDefinitionNamesOptions[0].nativeElement.value).toBeUndefined();
+            expect(processDefinitionNamesOptions[0].nativeElement.innerText).toEqual(component.allprocessDefinitionNamesOption.label);
         });
     }));
 
