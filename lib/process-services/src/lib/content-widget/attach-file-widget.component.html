@@ -78,8 +78,8 @@
                 <button id="{{'file-'+file.id+'-show-file'}}"
                     [disabled]="file.isExternal || !file.contentAvailable"
                     mat-menu-item (click)="onAttachFileClicked(file)">
-                    <mat-icon>image</mat-icon>
-                    <span>{{ 'FORM.FIELD.SHOW_FILE' | translate }}</span>
+                    <mat-icon>visibility</mat-icon>
+                    <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
                 </button>
                 <button id="{{'file-'+file.id+'-download-file'}}"
                     [disabled]="file.isExternal"

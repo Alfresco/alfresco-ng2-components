@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Local storage",
       "SOURCE": "Select source from ",
-      "SHOW_FILE": "Show",
+      "VIEW_FILE": "View",
       "DOWNLOAD_FILE": "Download",
       "REMOVE_FILE": "Remove",
       "UPLOAD": "UPLOAD",
