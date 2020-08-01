@@ -36,7 +36,8 @@ import {
     ContentNodeSelectorDialogPage,
     ProcessInstancesService,
     ProcessDefinitionsService,
-    FileBrowserUtil, ProcessCloudWidgetPage
+    FileBrowserUtil, ProcessCloudWidgetPage,
+    QueryService
 } from '@alfresco/adf-testing';
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
@@ -66,6 +67,8 @@ describe('Start Task Form', () => {
     const uploadActions = new UploadActions(apiService);
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
+    const queryService = new QueryService(apiService);
+    const tasksService = new TasksService(apiService);
 
     const startProcessCloudConfiguration = new StartProcessCloudConfiguration();
     const startProcessCloudConfig = startProcessCloudConfiguration.getConfiguration();
@@ -115,6 +118,8 @@ describe('Start Task Form', () => {
             'name': StringUtil.generateRandomString(),
             'businessKey': StringUtil.generateRandomString()
         });
+        const task = await queryService.getProcessInstanceTasks(uploadContentFileProcess.entry.id, candidateBaseApp);
+        await tasksService.claimTask(task.list.entries[0].entry.id, candidateBaseApp);
 
         uploadDefaultFileProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, candidateBaseApp, {
             'name': StringUtil.generateRandomString(),
@@ -148,7 +153,6 @@ describe('Start Task Form', () => {
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
         await apiService.login(testUser.email, testUser.password);
-        const tasksService = new TasksService(apiService);
         const standaloneTaskId = await tasksService.getTaskId(standaloneTaskName, candidateBaseApp);
         await tasksService.deleteTask(standaloneTaskId, candidateBaseApp);
 
@@ -313,18 +317,10 @@ describe('Start Task Form', () => {
             await processCloudDemoPage.processListCloudComponent().selectRow(uploadContentFileProcess.entry.name);
             await processDetailsCloudDemoPage.checkTaskIsDisplayed('UploadFileTask');
             await processDetailsCloudDemoPage.selectProcessTaskByName('UploadFileTask');
-            await taskFormCloudComponent.clickClaimButton();
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
-
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
 
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.removeFile(testFileModel.name);
@@ -389,15 +385,8 @@ describe('Start Task Form', () => {
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
 
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
-
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
         });
@@ -411,14 +400,8 @@ describe('Start Task Form', () => {
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
 
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
 
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
@@ -437,13 +420,9 @@ describe('Start Task Form', () => {
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
+
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
             await taskFormCloudComponent.clickSaveButton();
@@ -463,13 +442,9 @@ describe('Start Task Form', () => {
 
             const contentFileWidget = await widget.attachFileWidgetCloud('Attachsinglecontentfile');
             await contentFileWidget.clickAttachContentFile('Attachsinglecontentfile');
-            await contentNodeSelectorDialogPage.checkDialogIsDisplayed();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().doubleClickRowByContent(folderName);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().waitTillContentLoaded();
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().clickRowByContent(testFileModel.name);
-            await contentNodeSelectorDialogPage.contentListPage().dataTablePage().checkRowByContentIsSelected(testFileModel.name);
-            await contentNodeSelectorDialogPage.clickMoveCopyButton();
-            await contentNodeSelectorDialogPage.checkDialogIsNotDisplayed();
+
+            await contentNodeSelectorDialogPage.attachFileFromContentNode(folderName, testFileModel.name);
+
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
             await contentFileWidget.checkUploadContentButtonIsNotDisplayed('Attachsinglecontentfile');
             const taskId = await taskHeaderCloudPage.getId();

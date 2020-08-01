@@ -101,6 +101,7 @@ export class ContentNodeSelectorDialogPage {
 
     async clickContentNodeSelectorResult(name: string): Promise<void> {
         await this.dataTable.clickRowByContent(name);
+        await this.dataTable.checkRowByContentIsSelected(name);
     }
 
     async doubleClickContentNodeSelectorResult(name: string): Promise<void> {

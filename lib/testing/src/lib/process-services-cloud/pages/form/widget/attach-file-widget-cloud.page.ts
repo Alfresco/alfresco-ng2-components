@@ -35,7 +35,7 @@ export class AttachFileWidgetCloudPage {
 
     async attachLocalFile(fileLocation: string): Promise<void> {
         await browser.setFileDetector(new remote.FileDetector());
-        const uploadButton = this.widget.element(by.css(`a input`));
+        const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
@@ -44,8 +44,6 @@ export class AttachFileWidgetCloudPage {
     async clickAttachContentFile(fileId: string): Promise<void> {
         const uploadButton = this.widget.element(by.css(`button[id=${fileId}]`));
         await BrowserActions.click(uploadButton);
-        await browser.sleep(1000);
-        await BrowserActions.clickExecuteScript('button[id="attach-Alfresco Content"]');
     }
 
     async checkUploadContentButtonIsDisplayed(fileId: string): Promise<void> {
