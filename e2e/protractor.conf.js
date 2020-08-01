@@ -190,7 +190,7 @@ exports.config = {
 
     async onPrepare() {
         if (process.env.CI) {
-            SmartRunner.apply({repoHash: process.env.GIT_HASH || ''});
+            smartRunner.apply({repoHash: process.env.GIT_HASH || ''});
         }
 
         retry.onPrepare();
