@@ -86,6 +86,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     @Input()
     showTitle = true;
 
+     /** Toggles the appearance of the process filter name . */
+    @Input()
+    showProcessFilterName = true;
+
     /** Emitted when a process instance filter property changes. */
     @Output()
     filterChange: EventEmitter<ProcessFilterCloudModel> = new EventEmitter();

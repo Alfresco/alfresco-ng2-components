@@ -2,7 +2,7 @@
     <mat-expansion-panel (afterExpand)="onExpand()" (closed)="onClose()">
         <mat-expansion-panel-header *ngIf="processFilter" id="adf-edit-process-filter-expansion-header">
             <ng-container *ngIf="!isLoading; else loadingTemplate">
-                <mat-panel-title fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
+                <mat-panel-title *ngIf="showProcessFilterName" fxLayoutAlign="space-between center" id="adf-edit-process-filter-title-id">{{processFilter.name | translate}}</mat-panel-title>
                 <mat-panel-description fxLayoutAlign="space-between center" id="adf-edit-process-filter-sub-title-id">
                     <span *ngIf="showTitle"> {{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE' | translate}}</span>
                     <div *ngIf="showActions()" class="adf-cloud-edit-process-filter-actions">

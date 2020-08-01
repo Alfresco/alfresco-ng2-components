@@ -113,6 +113,7 @@ describe('EditProcessFilterCloudComponent', () => {
 
     it('should display filter name as title', async(() => {
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.showProcessFilterName = true;
         component.ngOnChanges({ 'id': processFilterIdChange });
         fixture.detectChanges();
         const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
@@ -123,6 +124,18 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(subTitle).toBeDefined();
             expect(title.innerText).toEqual('FakeRunningProcess');
             expect(subTitle.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.TITLE');
+        });
+    }));
+
+    it('should not display filter name as title if the flag is false', async(() => {
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.showProcessFilterName = false;
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const title = fixture.debugElement.nativeElement.querySelector('#adf-edit-process-filter-title-id');
+
+        fixture.whenStable().then(() => {
+            expect(title).toBeNull();
         });
     }));
 
