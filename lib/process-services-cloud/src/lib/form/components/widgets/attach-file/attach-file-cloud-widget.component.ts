@@ -71,7 +71,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             this.field.params &&
             this.field.params.fileSource &&
             this.field.params.fileSource.serviceId === 'all-file-sources'
-            || this.field.params.fileSource.serviceId === 'local-file'
         );
     }
 
