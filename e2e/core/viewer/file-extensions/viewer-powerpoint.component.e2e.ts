@@ -66,6 +66,7 @@ describe('Viewer', () => {
     });
 
     afterAll(async () => {
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await apiService.getInstance().core.sitesApi.deleteSite(site.entry.id, { permanent: true });
     });
 
