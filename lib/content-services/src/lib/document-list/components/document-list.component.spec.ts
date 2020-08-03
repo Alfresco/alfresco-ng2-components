@@ -1451,7 +1451,7 @@ describe('DocumentList', () => {
             where: undefined,
             maxItems: 25,
             skipCount: 0,
-            orderBy: ['nodeType DESC', 'name asc' ],
+            orderBy: ['isFolder DESC', 'name asc' ],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1467,7 +1467,7 @@ describe('DocumentList', () => {
             where: '(isFolder=true)',
             maxItems: 25,
             skipCount: 0,
-            orderBy: ['nodeType DESC', 'name asc' ],
+            orderBy: ['isFolder DESC', 'name asc' ],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1484,7 +1484,7 @@ describe('DocumentList', () => {
             maxItems: 25,
             skipCount: 0,
             where: undefined,
-            orderBy: ['nodeType DESC', 'size DESC'],
+            orderBy: ['isFolder DESC', 'size DESC'],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1502,7 +1502,7 @@ describe('DocumentList', () => {
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             maxItems: 25,
             skipCount: 0,
-            orderBy: ['nodeType DESC', 'name asc' ],
+            orderBy: ['isFolder DESC', 'name asc' ],
             rootFolderId: 'folder-id',
             where: undefined
         }, undefined);
