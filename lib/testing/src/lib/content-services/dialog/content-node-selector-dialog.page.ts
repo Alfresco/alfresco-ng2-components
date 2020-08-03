@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, browser } from 'protractor';
+import * as remote from 'selenium-webdriver/remote';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -119,6 +120,23 @@ export class ContentNodeSelectorDialogPage {
         await this.dataTable.waitTillContentLoaded();
         await this.dataTable.checkRowContentIsDisplayed(folderName);
         await this.dataTable.doubleClickRowByContent(folderName);
+
+        await this.dataTable.waitForTableBody();
+        await this.dataTable.waitTillContentLoaded();
+        await this.dataTable.checkRowContentIsDisplayed(fileName);
+
+        await this.clickContentNodeSelectorResult(fileName);
+        await this.checkCopyMoveButtonIsEnabled();
+        await this.clickMoveCopyButton();
+    }
+
+    async attachFileFromLocal(fileName: string, fileLocation: string): Promise<void> {
+        await this.checkDialogIsDisplayed();
+
+        await browser.setFileDetector(new remote.FileDetector());
+        const uploadButton = element(by.css('adf-upload-button input'));
+        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
+        await uploadButton.sendKeys(fileLocation);
 
         await this.dataTable.waitForTableBody();
         await this.dataTable.waitTillContentLoaded();

@@ -38,6 +38,7 @@ export class AttachFileWidgetCloudPage {
         const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);
+        await BrowserActions.click(uploadButton);
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
     }
 
