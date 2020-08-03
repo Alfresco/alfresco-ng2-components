@@ -1451,7 +1451,7 @@ describe('DocumentList', () => {
             where: undefined,
             maxItems: 25,
             skipCount: 0,
-            orderBy: [ 'name ASC' ],
+            orderBy: ['nodeType DESC', 'name asc' ],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1467,14 +1467,14 @@ describe('DocumentList', () => {
             where: '(isFolder=true)',
             maxItems: 25,
             skipCount: 0,
-            orderBy: [ 'name ASC' ],
+            orderBy: ['nodeType DESC', 'name asc' ],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
 
     it('should add orderBy in the server request', () => {
         documentList.includeFields = ['test-include'];
-        documentList.orderBy = ['size DESC'];
+        documentList.sorting = ['size', 'DESC'];
         documentList.currentFolderId = 'fake-id';
         documentList.where = null;
 
@@ -1484,7 +1484,7 @@ describe('DocumentList', () => {
             maxItems: 25,
             skipCount: 0,
             where: undefined,
-            orderBy: ['size DESC'],
+            orderBy: ['nodeType DESC', 'size DESC'],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1502,7 +1502,7 @@ describe('DocumentList', () => {
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             maxItems: 25,
             skipCount: 0,
-            orderBy: [ 'name ASC' ],
+            orderBy: ['nodeType DESC', 'name asc' ],
             rootFolderId: 'folder-id',
             where: undefined
         }, undefined);

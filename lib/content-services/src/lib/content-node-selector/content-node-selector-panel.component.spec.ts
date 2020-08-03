@@ -131,7 +131,7 @@ describe('ContentNodeSelectorComponent', () => {
             });
 
             it('should the document list use the server ordering', () => {
-                expect(component.documentList.sorting).toBe('server');
+                expect(component.documentList.sortingMode).toBe('server');
             });
 
             it('should trigger the select event when selection has been made', (done) => {

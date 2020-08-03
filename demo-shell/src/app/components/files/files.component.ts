@@ -88,7 +88,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     processId;
 
     @Input()
-    sorting = ['nodeType', 'DESC'];
+    sorting = ['name', 'ASC'];
 
     @Input()
     sortingMode = 'server';
@@ -163,7 +163,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableCustomHeaderFilter = false;
 
     @Input()
-    paramValues: Map <any, any> = null;
+    paramValues: Map<any, any> = null;
+
+    @Input()
+    filterSorting: string = null;
 
     @Output()
     documentListReady: EventEmitter<any> = new EventEmitter();
@@ -208,7 +211,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
-    filtersStates: any[] = [];
+    filteredSorting: string[] = null;
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,

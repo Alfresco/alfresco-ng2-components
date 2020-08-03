@@ -19,7 +19,8 @@ import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class FolderDialogPage {
-    folderDialog = element(by.css('adf-folder-dialog'));
+
+    folderDialog = element.all(by.css('adf-folder-dialog')).first();
     folderNameField = this.folderDialog.element(by.id('adf-folder-name-input'));
     folderDescriptionField = this.folderDialog.element(by.id('adf-folder-description-input'));
     createUpdateButton = this.folderDialog.element(by.id('adf-folder-create-button'));

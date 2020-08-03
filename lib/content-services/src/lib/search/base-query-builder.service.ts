@@ -51,6 +51,7 @@ export abstract class BaseQueryBuilderService {
     filterQueries: FilterQuery[] = [];
     paging: { maxItems?: number; skipCount?: number } = null;
     sorting: Array<SearchSortingDefinition> = [];
+    sortingOptions: Array<SearchSortingDefinition> = [];
 
     protected userFacetBuckets: { [key: string]: Array<FacetFieldBucket> } = {};
 
@@ -93,6 +94,7 @@ export abstract class BaseQueryBuilderService {
             this.userFacetBuckets = {};
             if (this.config.sorting) {
                 this.sorting = this.config.sorting.defaults || [];
+                this.sortingOptions = this.config.sorting.options || [];
             }
         }
     }

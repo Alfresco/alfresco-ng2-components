@@ -149,6 +149,20 @@ describe('SearchHeaderComponent', () => {
         await fixture.whenStable();
     });
 
+    it('should execute a new query when a new sorting is requested', async (done) => {
+        spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
+        spyOn(queryBuilder, 'buildQuery').and.returnValue({});
+        component.update.subscribe((newNodePaging) => {
+            expect(newNodePaging).toBe(fakeNodePaging);
+            done();
+        });
+
+        const skipCount = new SimpleChange(null, '123-asc', false);
+        component.ngOnChanges({ 'sorting': skipCount });
+        fixture.detectChanges();
+        await fixture.whenStable();
+    });
+
     it('should emit the clear event when no filter has been selected', async (done) => {
         spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(true);
         spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));

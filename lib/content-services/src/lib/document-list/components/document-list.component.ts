@@ -183,7 +183,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * override the default sorting detected by the component based on columns.
      */
     @Input()
-    sorting = ['nodeType', 'DESC'];
+    sorting = ['name', 'asc'];
+
+    /** Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]`
+     * i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base
+     * rule to be added to the sorting apart from the one driven by the header.
+     */
+    @Input()
+    additionalSorting = ['nodeType DESC'];
 
     /** Defines sorting mode. Can be either `client` (items in the list
      * are sorted client-side) or `server` (the ordering supplied by the
@@ -255,6 +262,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     set currentFolderId(currentFolderId: string) {
         if (this._currentFolderId !== currentFolderId) {
             this._currentFolderId = currentFolderId;
+            if (this.sorting) {
+                const [key, direction] = this.sorting;
+                this.orderBy = this.buildOrderByArray(key, direction);
+            }
             if (this.data) {
                 this.data.loadPage(null, false);
                 this.resetNewFolderPagination();
@@ -456,10 +467,16 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
+
+        if (changes.sorting && changes.sorting.currentValue) {
+            const [key, direction] = changes.sorting.currentValue;
+            this.orderBy = this.buildOrderByArray(key, direction);
+        }
+
         if (this.data) {
             this.data.thumbnails = this.thumbnails;
-
         }
+
         if (changes.sortingMode && !changes.sortingMode.firstChange && this.data) {
             this.data.sortingMode = changes.sortingMode.currentValue;
         }
@@ -475,7 +492,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-
                 this.data.loadPage(changes.node.currentValue, merge);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
@@ -646,6 +662,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     loadFolder() {
+
         if (!this._pagination.merge) {
             this.setLoadingState(true);
         }
@@ -685,11 +702,14 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     onSortingChanged(event: CustomEvent) {
-        const flattenExtraSortingOption = this.sorting.join(' ');
-        const orderArray = [flattenExtraSortingOption];
-        orderArray.push(''.concat(event.detail.key, ' ', event.detail.direction));
-        this.orderBy = orderArray;
+        this.orderBy = this.buildOrderByArray(event.detail.key, event.detail.direction);
         this.reload();
+    }
+
+    private buildOrderByArray(currentKey: string, currentDirection: string ): string[] {
+        const orderArray = [...this.additionalSorting];
+        orderArray.push(''.concat(currentKey, ' ', currentDirection));
+        return orderArray;
     }
 
     /**

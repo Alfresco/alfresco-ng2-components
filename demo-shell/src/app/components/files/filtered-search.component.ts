@@ -30,6 +30,7 @@ export class FilteredSearchComponent {
     currentFolderId = '-my-';
 
     queryParams = null;
+    filterSorting = null;
 
     constructor(@Optional() private route: ActivatedRoute) {
 
@@ -44,6 +45,10 @@ export class FilteredSearchComponent {
                 this.queryParams = queryMap.params;
             });
         }
+    }
+
+    onSortingChanged(event) {
+        this.filterSorting = event.detail.column + '-' + event.detail.direction;
     }
 
 }
