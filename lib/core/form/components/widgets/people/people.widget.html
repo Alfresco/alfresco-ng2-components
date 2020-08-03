@@ -12,7 +12,10 @@
                [id]="field.id"
                [formControl]="searchTerm"
                placeholder="{{field.placeholder}}"
-               [matAutocomplete]="auto">
+               [matAutocomplete]="auto"
+               [matTooltip]="field.tooltip"
+               matTooltipPosition="above"
+               matTooltipShowDelay="1000">
         <mat-autocomplete class="adf-people-widget-list"
                           #auto="matAutocomplete"
                           (optionSelected)="onItemSelect($event.option.value)"

@@ -48,6 +48,7 @@ export class FormFieldModel extends FormWidgetModel {
     rowspan: number = 1;
     colspan: number = 1;
     placeholder: string = null;
+    tooltip: string = null;
     minLength: number = 0;
     maxLength: number = 0;
     minValue: string;
@@ -169,6 +170,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.dateDisplayFormat = json.dateDisplayFormat || this.getDefaultDateFormat(json);
             this._value = this.parseValue(json);
             this.validationSummary = new ErrorMessageModel();
+            this.tooltip = json.tooltip;
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
                 this.placeholder = json.placeholder;

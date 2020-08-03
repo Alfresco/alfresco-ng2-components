@@ -3,6 +3,9 @@
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <span matPrefix class="adf-amount-widget__prefix-spacing">{{ currency }}</span>
         <input matInput
+                [matTooltip]="field.tooltip"
+                matTooltipPosition="above"
+                matTooltipShowDelay="1000"
                 class="adf-input"
                 type="text"
                 [id]="field.id"
