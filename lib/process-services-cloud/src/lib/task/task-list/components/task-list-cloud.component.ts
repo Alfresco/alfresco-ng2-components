@@ -267,21 +267,14 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     /**
      * Resets the pagination values
-     * @param pagination Pagination values to be set (optional)
      */
-    resetPaginationValues(pagination?: PaginationModel) {
-        if (pagination) {
-            this.size = pagination.maxItems;
-            this.skipCount = pagination.skipCount;
-            this.pagination.next(pagination);
-        } else {
-            this.skipCount = 0;
-            this.size = this.userPreferences.paginationSize;
-            this.pagination.next({
-                skipCount: 0,
-                maxItems: this.size
-            });
-        }
+    resetPagination() {
+        this.skipCount = 0;
+        this.size = this.userPreferences.paginationSize;
+        this.pagination.next({
+            skipCount: 0,
+            maxItems: this.size
+        });
     }
 
     /**
@@ -290,7 +283,9 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
      * @param pagination Pagination values to be set
      */
     updatePagination(pagination: PaginationModel) {
-        this.resetPaginationValues(pagination);
+        this.size = pagination.maxItems;
+        this.skipCount = pagination.skipCount;
+        this.pagination.next(pagination);
         this.reload();
     }
 

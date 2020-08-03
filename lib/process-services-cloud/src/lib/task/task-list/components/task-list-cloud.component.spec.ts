@@ -356,7 +356,7 @@ describe('TaskListCloudComponent', () => {
             };
             component.updatePagination(pagination);
             await fixture.whenStable();
-            component.resetPaginationValues();
+            component.resetPagination();
         });
 
         it('should set pagination and reload when updatePagination is called', (done) => {
