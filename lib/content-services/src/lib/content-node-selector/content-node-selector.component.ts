@@ -82,4 +82,8 @@ export class ContentNodeSelectorComponent {
     onError(error) {
         this.notificationService.showError(error);
     }
+
+    hasNodeSelected(): boolean {
+        return this.chosenNode?.length > 0;
+    }
 }
