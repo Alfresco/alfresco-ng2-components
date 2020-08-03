@@ -434,7 +434,7 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(controller).toBeDefined();
             const processDefinitionNamesOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
             expect(processDefinitionNamesOptions[0].nativeElement.value).toBeUndefined();
-            expect(processDefinitionNamesOptions[0].nativeElement.innerText).toEqual(component.allprocessDefinitionNamesOption.label);
+            expect(processDefinitionNamesOptions[0].nativeElement.innerText).toEqual(component.allProcessDefinitionNamesOption.label);
         });
     }));
 
