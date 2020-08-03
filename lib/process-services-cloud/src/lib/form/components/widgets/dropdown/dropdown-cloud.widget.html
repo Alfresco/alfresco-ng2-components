@@ -7,7 +7,10 @@
                     [(ngModel)]="field.value"
                     [disabled]="field.readOnly"
                     [compareWith]="compareDropdownValues"
-                    (ngModelChange)="onFieldChanged(field)">
+                    (ngModelChange)="onFieldChanged(field)"
+                    [matTooltip]="field.tooltip"
+                    matTooltipPosition="above"
+                    matTooltipShowDelay="1000">
             <mat-option *ngFor="let opt of field.options"
                         [value]="getOptionValue(opt, field.value)"
                         [id]="opt.id">{{opt.name}}

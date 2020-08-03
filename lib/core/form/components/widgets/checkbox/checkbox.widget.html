@@ -6,8 +6,11 @@
         [required]="field.required"
         [disabled]="field.readOnly || readOnly"
         [(ngModel)]="field.value"
-        (ngModelChange)="onFieldChanged(field)">
+        (ngModelChange)="onFieldChanged(field)"
+        [matTooltip]="field.tooltip"
+        matTooltipPosition="right"
+        matTooltipShowDelay="1000">
         {{field.name | translate }}
-        <span *ngIf="field.required">*</span>
+        <span *ngIf="field.required" >*</span>
     </mat-checkbox>
 </div>

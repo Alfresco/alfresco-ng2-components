@@ -1,6 +1,7 @@
 <div class="adf-hyperlink-widget {{field.className}}">
-    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
-    <div>
+    <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span
+            *ngIf="isRequired()">*</span></label>
+    <div [matTooltip]="field.tooltip" matTooltipPosition="above" matTooltipShowDelay="1000">
         <a [href]="linkUrl" target="_blank" rel="nofollow">{{linkText}}</a>
     </div>
 </div>

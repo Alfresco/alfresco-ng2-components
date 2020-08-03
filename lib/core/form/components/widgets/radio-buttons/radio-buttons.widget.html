@@ -4,6 +4,9 @@
         <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
         <mat-radio-group class="adf-radio-group" [(ngModel)]="field.value" [disabled]="field.readOnly">
             <mat-radio-button
+                [matTooltip]="field.tooltip"
+                matTooltipPosition="above"
+                matTooltipShowDelay="1000"
                 [id]="field.id + '-' + opt.id"
                 [name]="field.id"
                 [value]="opt.id"

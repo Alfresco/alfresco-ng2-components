@@ -11,7 +11,10 @@
                [max]="maxDate"
                (focusout)="onDateChanged($event.srcElement.value)"
                (dateChange)="onDateChanged($event)"
-               [placeholder]="field.placeholder">
+               [placeholder]="field.placeholder"
+               [matTooltip]="field.tooltip"
+               matTooltipPosition="above"
+               matTooltipShowDelay="1000">
         <mat-datepicker-toggle  matSuffix [for]="datePicker" [disabled]="field.readOnly" ></mat-datepicker-toggle>
     </mat-form-field>
     <error-widget [error]="field.validationSummary"></error-widget>
