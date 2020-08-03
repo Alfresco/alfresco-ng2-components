@@ -20,8 +20,6 @@ import {
     ApiService,
     AppListCloudPage,
     ContentNodeSelectorDialogPage,
-    IdentityService,
-    GroupIdentityService,
     LoginPage,
     ProcessCloudWidgetPage,
     ProcessDefinitionsService,
@@ -51,19 +49,16 @@ describe('Process Task - Attach content file', () => {
     const uploadActions = new UploadActions(apiService);
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
-    const identityService = new IdentityService(apiService);
-    const groupIdentityService = new GroupIdentityService(apiService);
 
     const viewerPage = new ViewerPage();
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
     const processDefinitionName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
     const uploadWidgetId = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.uploadSingleMultiple.widgets.contentMultipleAttachFileId;
     const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
-    const folderName = StringUtil.generateRandomString(5);
+    const folderName = '0' + StringUtil.generateRandomString(5);
 
     let uploadedFolder: any;
     let processInstance: any;
-    let testUser, groupInfo;
 
     const pdfFileOne = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -76,20 +71,16 @@ describe('Process Task - Attach content file', () => {
     };
 
     beforeAll(async (done) => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
 
-        await apiService.login(testUser.email, testUser.password);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
-        await apiService.getInstance().login(testUser.email, testUser.password);
+        await apiService.getInstance().login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
 
-        await loginSSOPage.login(testUser.email, testUser.password);
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         done();
@@ -97,8 +88,6 @@ describe('Process Task - Attach content file', () => {
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-        await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
     it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {
