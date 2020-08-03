@@ -211,19 +211,21 @@ describe('EditTaskFilterCloudComponent', () => {
                 expansionPanel.click();
                 fixture.detectChanges();
 
+                component.editTaskFilterForm.valueChanges
+                .pipe(debounceTime(300))
+                .subscribe(() => {
+                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                    fixture.detectChanges();
+                    expect(saveButton.disabled).toBe(false);
+                    done();
+                });
+
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
                 fixture.detectChanges();
                 const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
                 sortOptions[3].nativeElement.click();
                 fixture.detectChanges();
-
-                setTimeout(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toBe(false);
-                    done();
-                }, 300);
             });
 
             it('should disable save button if the filter is not changed for custom filter', async(() => {
