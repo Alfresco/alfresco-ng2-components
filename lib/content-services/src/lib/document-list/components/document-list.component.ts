@@ -190,7 +190,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
      * rule to be added to the sorting apart from the one driven by the header.
      */
     @Input()
-    additionalSorting = ['nodeType DESC'];
+    additionalSorting = ['isFolder DESC'];
 
     /** Defines sorting mode. Can be either `client` (items in the list
      * are sorted client-side) or `server` (the ordering supplied by the
