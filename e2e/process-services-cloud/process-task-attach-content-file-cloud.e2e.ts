@@ -70,24 +70,24 @@ describe('Process Task - Attach content file', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
         await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
         await apiService.getInstance().login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
+
+        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await navigationBarPage.navigateToProcessServicesCloudPage();
+        await appListCloudComponent.checkApsContainer();
+        done();
     });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-    });
-
-    beforeEach(async () => {
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
-        await navigationBarPage.navigateToProcessServicesCloudPage();
-        await appListCloudComponent.checkApsContainer();
     });
 
     it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {

@@ -65,7 +65,7 @@ export class InfoDrawerPage {
         }
     }
 
-    async getNoOfTabs(): Promise<Number> {
+    async getNoOfTabs(): Promise<number> {
         return this.tabsPage.getNoOfTabs();
     }
 
