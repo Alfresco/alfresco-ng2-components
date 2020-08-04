@@ -55,7 +55,7 @@ describe('Process Task - Attach content file', () => {
     const processDefinitionName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.uploadSingleMultipleFiles;
     const uploadWidgetId = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.forms.uploadSingleMultiple.widgets.contentMultipleAttachFileId;
     const taskName = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.tasks.uploadSingleMultipleFiles;
-    const folderName = '0' + StringUtil.generateRandomString(5);
+    const folderName = StringUtil.generateRandomString(5);
 
     let uploadedFolder: any;
     let processInstance: any;
