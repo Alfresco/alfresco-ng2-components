@@ -20,12 +20,16 @@ import {
     ApiService,
     AppListCloudPage,
     ContentNodeSelectorDialogPage,
+    GroupIdentityService,
+    IdentityService,
     LoginPage,
+    QueryService,
     ProcessCloudWidgetPage,
     ProcessDefinitionsService,
     ProcessInstancesService,
     StringUtil,
     TaskFormCloudComponent,
+    TasksService,
     UploadActions,
     ViewerPage
 } from '@alfresco/adf-testing';
@@ -49,6 +53,10 @@ describe('Process Task - Attach content file', () => {
     const uploadActions = new UploadActions(apiService);
     const processDefinitionService = new ProcessDefinitionsService(apiService);
     const processInstancesService = new ProcessInstancesService(apiService);
+    const identityService = new IdentityService(apiService);
+    const groupIdentityService = new GroupIdentityService(apiService);
+    const queryService = new QueryService(apiService);
+    const tasksService = new TasksService(apiService);
 
     const viewerPage = new ViewerPage();
     const simpleApp = browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name;
@@ -59,6 +67,8 @@ describe('Process Task - Attach content file', () => {
 
     let uploadedFolder: any;
     let processInstance: any;
+    let testUser: any;
+    let groupInfo: any;
 
     const pdfFileOne = {
         'name': browser.params.resources.Files.ADF_DOCUMENTS.PDF.file_name,
@@ -70,20 +80,33 @@ describe('Process Task - Attach content file', () => {
         'location': browser.params.resources.Files.ADF_DOCUMENTS.PDF_B.file_path
     };
 
-    beforeAll(async (done) => {
-        await apiService.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+    beforeAll(async () => {
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
+        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+
+        await apiService.login(testUser.email, testUser.password);
         const processDefinition = await processDefinitionService.getProcessDefinitionByName(processDefinitionName, simpleApp);
         processInstance = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, { name: 'upload process' });
-        await apiService.getInstance().login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+
+        const task = await queryService.getProcessInstanceTasks(processInstance.entry.id, simpleApp);
+        await tasksService.claimTask(task.list.entries[0].entry.id, simpleApp);
+        await apiService.getInstance().login(testUser.email, testUser.password);
         uploadedFolder = await uploadActions.createFolder(folderName, '-my-');
         await uploadActions.uploadFile(pdfFileOne.location, pdfFileOne.name, uploadedFolder.entry.id);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, uploadedFolder.entry.id);
 
-        await loginSSOPage.login(browser.params.testConfig.hrUser.email, browser.params.testConfig.hrUser.password);
+        await loginSSOPage.login(testUser.email, testUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
-        done();
+    });
+
+    afterAll(async () => {
+        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
+        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+        await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
     afterAll(async () => {
