@@ -44,7 +44,7 @@
         </button>
 
         <button mat-button
-                [disabled]="!chosenNode"
+                [disabled]="!hasNodeSelected()"
                 class="adf-choose-action"
                 (click)="onClick()"
                 data-automation-id="content-node-selector-actions-choose">{{ buttonActionName | translate }}

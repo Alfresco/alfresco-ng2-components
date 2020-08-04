@@ -161,6 +161,22 @@ describe('ContentNodeSelectorDialogComponent', () => {
             const actionButton = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
             expect(actionButton.nativeElement.disabled).toBeFalsy();
         });
+
+        it('should be disabled when no node chosen', () => {
+            component.onSelect([new Node({ id: 'fake' })]);
+            fixture.detectChanges();
+
+            const actionButtonWithNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+
+            expect(actionButtonWithNodeSelected.nativeElement.disabled).toBe(false);
+
+            component.onSelect([]);
+            fixture.detectChanges();
+
+            const actionButtonWithoutNodeSelected = fixture.debugElement.query(By.css('[data-automation-id="content-node-selector-actions-choose"]'));
+
+            expect(actionButtonWithoutNodeSelected.nativeElement.disabled).toBe(true);
+        });
     });
 
     describe('Title', () => {
