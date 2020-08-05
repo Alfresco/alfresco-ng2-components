@@ -13,10 +13,10 @@ Before you submit a pull request please follow the steps below:
 * Search in the [GitHub release history](https://github.com/Alfresco/alfresco-ng2-components/releases) to see if your
   issue has already been solved in a new version of ADF.
 * Fork our repository (if you don't know how to do this, read [this GitHub document](https://help.github.com/articles/creating-a-pull-request-from-a-fork/)).
-* Make your changes in a new git branch starting from development and following our [naming convention](https://github.com/Alfresco/alfresco-ng2-components/wiki/Branching-Strategy)
+* Make your changes in a new git branch starting from develop and following our [naming convention](https://github.com/Alfresco/alfresco-ng2-components/wiki/Branching-Strategy)
 
      ```shell
-     git checkout -b dev-{developerName}-{GitIssuedId/JiraIssueId} development
+     git checkout -b dev-{developerName}-{GitIssuedId/JiraIssueId} develop
      ```
 
 * Create your PR **including appropriate test cases** following the [code contribution acceptance criteria](https://github.com/Alfresco/alfresco-ng2-components/wiki/Code-contribution-acceptance-criteria)
@@ -28,16 +28,16 @@ Before you submit a pull request please follow the steps below:
     git push origin dev-{developerName}-{GitIssuedId/JiraIssueId}
     ```
 
-* In GitHub, send a pull request to `development`.
+* In GitHub, send a pull request to `develop`.
 * If we suggest changes then:
   * Make the required updates.
   * Re-run the tests.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
-    git fetch development
+    git fetch develop
     git checkout dev-my-branch
-    git rebase development -i
+    git rebase develop -i
     git push -f
     ```
 Note: If you need more information about how to sync your fork, see [this page](https://help.github.com/articles/syncing-a-fork/).
