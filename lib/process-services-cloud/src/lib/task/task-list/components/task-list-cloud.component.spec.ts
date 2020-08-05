@@ -27,6 +27,7 @@ import { ProcessServiceCloudTestingModule } from '../../../testing/process-servi
 import { Person } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
+import { skip } from 'rxjs/operators';
 
 @Component({
     template: `
@@ -328,6 +329,58 @@ describe('TaskListCloudComponent', () => {
             expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getTaskByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should reset pagination when resetPaginationValues is called', async (done) => {
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            const size = component.size;
+            const skipCount = component.skipCount;
+            component.pagination.pipe(skip(3))
+            .subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(size);
+                    expect(component.skipCount).toBe(skipCount);
+                    expect(updatedPagination.maxItems).toEqual(size);
+                    expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
+            });
+
+            const pagination = {
+                maxItems: 250,
+                skipCount: 200
+            };
+            component.updatePagination(pagination);
+            await fixture.whenStable();
+            component.resetPagination();
+        });
+
+        it('should set pagination and reload when updatePagination is called', (done) => {
+            spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(fakeGlobalTask));
+            spyOn(component, 'reload').and.stub();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            const pagination = {
+                maxItems: 250,
+                skipCount: 200
+            };
+            component.pagination.pipe(skip(1))
+            .subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(pagination.maxItems);
+                    expect(component.skipCount).toBe(pagination.skipCount);
+                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                    done();
+            });
+
+            component.updatePagination(pagination);
         });
     });
 

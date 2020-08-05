@@ -265,6 +265,23 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         return !this.rows || this.rows.length === 0;
     }
 
+    /**
+     * Resets the pagination values
+     */
+    resetPagination() {
+        this.skipCount = 0;
+        this.size = this.userPreferences.paginationSize;
+        this.pagination.next({
+            skipCount: 0,
+            maxItems: this.size
+        });
+    }
+
+    /**
+     * Resets the pagination values and
+     * Reloads the task list
+     * @param pagination Pagination values to be set
+     */
     updatePagination(pagination: PaginationModel) {
         this.size = pagination.maxItems;
         this.skipCount = pagination.skipCount;

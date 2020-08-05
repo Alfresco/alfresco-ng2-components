@@ -27,6 +27,7 @@ import { ProcessListCloudService } from '../services/process-list-cloud.service'
 import { ProcessListCloudComponent } from './process-list-cloud.component';
 import { fakeCustomSchema, fakeProcessCloudList, processListSchemaMock } from '../mock/process-list-service.mock';
 import { of } from 'rxjs';
+import { skip } from 'rxjs/operators';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessListCloudSortingModel } from '../models/process-list-sorting.model';
@@ -290,6 +291,58 @@ describe('ProcessListCloudComponent', () => {
             expect(component.formattedSorting).toEqual(['entry.fakeName', 'asc']);
             expect(component.isListEmpty()).toBeFalsy();
             expect(getProcessByRequestSpy).toHaveBeenCalled();
+        });
+
+        it('should reset pagination when resetPaginationValues is called', async (done) => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            const size = component.size;
+            const skipCount = component.skipCount;
+            component.pagination.pipe(skip(3))
+            .subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(size);
+                    expect(component.skipCount).toBe(skipCount);
+                    expect(updatedPagination.maxItems).toEqual(size);
+                    expect(updatedPagination.skipCount).toEqual(skipCount);
+                    done();
+            });
+
+            const pagination = {
+                maxItems: 250,
+                skipCount: 200
+            };
+            component.updatePagination(pagination);
+            await fixture.whenStable();
+            component.resetPagination();
+        });
+
+        it('should set pagination and reload when updatePagination is called', (done) => {
+            spyOn(processListCloudService, 'getProcessByRequest').and.returnValue(of(fakeProcessCloudList));
+            spyOn(component, 'reload').and.stub();
+            const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
+            component.ngOnChanges({ appName });
+            fixture.detectChanges();
+
+            const pagination = {
+                maxItems: 250,
+                skipCount: 200
+            };
+            component.pagination.pipe(skip(1))
+            .subscribe((updatedPagination) => {
+                    fixture.detectChanges();
+                    expect(component.size).toBe(pagination.maxItems);
+                    expect(component.skipCount).toBe(pagination.skipCount);
+                    expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
+                    expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
+                    done();
+            });
+
+            component.updatePagination(pagination);
         });
     });
 
