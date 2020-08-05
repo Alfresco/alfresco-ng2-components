@@ -26,7 +26,7 @@ export interface OAuth2RequestParams {
     httpMethod?: string;
     pathParams?: any;
     queryParams?: any;
-    bodyParams?: any;
+    bodyParam?: any;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -46,7 +46,7 @@ export class OAuth2Service {
                 opts.queryParams,
                 {},
                 {},
-                opts.bodyParams,
+                opts.bodyParam,
                 JSON_TYPE,
                 JSON_TYPE,
                 Object

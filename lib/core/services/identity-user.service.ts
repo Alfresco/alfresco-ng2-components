@@ -49,8 +49,6 @@ export interface IdentityJoinGroupRequestModel {
     groupId: string;
 }
 
-// const JSON_TYPE = ['application/json'];
-
 @Injectable({
     providedIn: 'root'
 })
@@ -376,9 +374,9 @@ export class IdentityUserService {
      */
     createUser(newUser: IdentityUserModel): Observable<any> {
         const url = this.buildUserUrl();
-        const bodyParams = JSON.stringify(newUser);
+        const bodyParam = JSON.stringify(newUser);
 
-        return this.oAuth2Service.post({ url, bodyParams });
+        return this.oAuth2Service.post({ url, bodyParam });
     }
 
     /**
@@ -389,9 +387,9 @@ export class IdentityUserService {
      */
     updateUser(userId: string, updatedUser: IdentityUserModel): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId;
-        const bodyParams = JSON.stringify(updatedUser);
+        const bodyParam = JSON.stringify(updatedUser);
 
-        return this.oAuth2Service.put({ url, bodyParams });
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -412,9 +410,9 @@ export class IdentityUserService {
      */
     changePassword(userId: string, newPassword: IdentityUserPasswordModel): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/reset-password';
-        const bodyParams = JSON.stringify(newPassword);
+        const bodyParam = JSON.stringify(newPassword);
 
-        return this.oAuth2Service.put({ url, bodyParams });
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -436,9 +434,9 @@ export class IdentityUserService {
      */
     joinGroup(joinGroupRequest: IdentityJoinGroupRequestModel): Observable<any> {
         const url = this.buildUserUrl() + '/' + joinGroupRequest.userId + '/groups/' + joinGroupRequest.groupId;
-        const bodyParams = JSON.stringify(joinGroupRequest);
+        const bodyParam = JSON.stringify(joinGroupRequest);
 
-        return this.oAuth2Service.put({ url, bodyParams });
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -494,9 +492,9 @@ export class IdentityUserService {
      */
     assignRoles(userId: string, roles: IdentityRoleModel[]): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm';
-        const bodyParams = JSON.stringify(roles);
+        const bodyParam = JSON.stringify(roles);
 
-        return this.oAuth2Service.post({ url, bodyParams });
+        return this.oAuth2Service.post({ url, bodyParam });
     }
 
     /**
@@ -507,8 +505,8 @@ export class IdentityUserService {
      */
     removeRoles(userId: string, removedRoles: IdentityRoleModel[]): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm';
-        const bodyParams = JSON.stringify(removedRoles);
+        const bodyParam = JSON.stringify(removedRoles);
 
-        return this.oAuth2Service.delete({ url, bodyParams });
+        return this.oAuth2Service.delete({ url, bodyParam });
     }
 }
