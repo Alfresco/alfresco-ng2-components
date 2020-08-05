@@ -51,6 +51,16 @@ export class IdentityGroupService {
     }
 
     /**
+     * Gets available roles
+     * @param groupId Id of the group.
+     * @returns Array of available roles information objects
+     */
+    getAvailableRoles(groupId: string): Observable<IdentityRoleModel[]> {
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm/available`;
+        return this.oAuth2Service.get({ url });
+    }
+
+    /**
      * Queries groups.
      * @returns Array of user information objects
      */
