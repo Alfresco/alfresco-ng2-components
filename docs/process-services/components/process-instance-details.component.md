@@ -13,7 +13,7 @@ Displays detailed information about a specified process instance
 
 ```html
 <adf-process-instance-details 
-    processInstanceId="YOUR_PROCESS_INSTANCE_ID">
+    [processInstanceId]="YOUR_PROCESS_INSTANCE_ID">
 </adf-process-instance-details>
 ```
 
