@@ -13,9 +13,8 @@
                    *ngIf="!property.multiline"
                    class="adf-property-value"
                    [placeholder]="property.default"
-                   [(ngModel)]="editedValue"
-                   (blur)="update()"
-                   (keydown.enter)="update()"
+                   [value]="editedValue"
+                   [formControl]="textInput"
                    [disabled]="!isEditable"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
@@ -29,9 +28,7 @@
                       matAutosizeMaxRows="5"
                       class="adf-property-value"
                       [placeholder]="property.default"
-                      [(ngModel)]="editedValue"
-                      (blur)="update()"
-                      (keydown.enter)="update()"
+                      [formControl]="textInput"
                       [disabled]="!isEditable"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
             <button mat-button

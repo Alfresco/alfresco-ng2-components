@@ -17,7 +17,7 @@
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -51,6 +51,7 @@ import { SelectFilterInputComponent } from './components/card-view-selectitem/se
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         FlexLayoutModule,
         TranslateModule,
         MatDatepickerModule,
