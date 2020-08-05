@@ -18,55 +18,39 @@
 import { IdentityGroupModel, IdentityGroupCountModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 
-export let mockIdentityGroup1 = <IdentityGroupModel> {
+export const mockIdentityGroup1 = <IdentityGroupModel> {
     id: 'mock-group-id-1', name: 'Mock Group 1', path: '/mock', subGroups: []
 };
 
-export let mockIdentityGroup2 = <IdentityGroupModel> {
+export const mockIdentityGroup2 = <IdentityGroupModel> {
     id: 'mock-group-id-2', name: 'Mock Group 2', path: '', subGroups: []
 };
 
-export let mockIdentityGroup3 = <IdentityGroupModel> {
+export const mockIdentityGroup3 = <IdentityGroupModel> {
   id: 'mock-group-id-3', name: 'Mock Group 3', path: '', subGroups: []
 };
 
-export let mockIdentityGroup4 = <IdentityGroupModel> {
+export const mockIdentityGroup4 = <IdentityGroupModel> {
     id: 'mock-group-id-4', name: 'Mock Group 4', path: '', subGroups: []
 };
 
-export let mockIdentityGroup5 = <IdentityGroupModel> {
+export const mockIdentityGroup5 = <IdentityGroupModel> {
     id: 'mock-group-id-5', name: 'Mock Group 5', path: '', subGroups: []
 };
 
-export let mockIdentityGroupsCount = <IdentityGroupCountModel> { count: 10 };
+export const mockIdentityGroupsCount = <IdentityGroupCountModel> { count: 10 };
 
-export let mockIdentityGroups = [
+export const mockIdentityGroups = [
     mockIdentityGroup1, mockIdentityGroup2, mockIdentityGroup3, mockIdentityGroup4, mockIdentityGroup5
 ];
 
-export let mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};
+export const mockApplicationDetails = {id: 'mock-app-id', name: 'mock-app-name'};
 
-export let groupAPIMockError = {
-    error: {
-        errorKey: 'failed',
-        statusCode: 400,
-        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.'
-    }
-};
-
-export let mockApiError = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.reject(groupAPIMockError);
-        }
-    }
-};
-
-export let roleMappingMock = [
+export const roleMappingMock = [
     { id: 'role-id-1', name: 'role-name-1' }, { id: 'role-id-2', name: 'role-name-2' }
 ];
 
-export let roleMappingApi = {
+export const roleMappingApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(roleMappingMock);
@@ -74,7 +58,7 @@ export let roleMappingApi = {
     }
 };
 
-export let noRoleMappingApi = {
+export const noRoleMappingApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve([]);
@@ -82,7 +66,7 @@ export let noRoleMappingApi = {
     }
 };
 
-export let groupsMockApi = {
+export const groupsMockApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve(mockIdentityGroups);
@@ -90,23 +74,7 @@ export let groupsMockApi = {
     }
 };
 
-export let getGroupsCountMockApi = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(10);
-        }
-    }
-};
-
-export let queryGroupsMockApi = {
-    oauth2Auth: {
-        callCustomApi: () => {
-            return Promise.resolve(mockIdentityGroups);
-        }
-    }
-};
-
-export let createGroupMappingApi = {
+export const createGroupMappingApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -114,7 +82,7 @@ export let createGroupMappingApi = {
     }
 };
 
-export let updateGroupMappingApi = {
+export const updateGroupMappingApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -122,7 +90,7 @@ export let updateGroupMappingApi = {
     }
 };
 
-export let deleteGroupMappingApi = {
+export const deleteGroupMappingApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve();
@@ -130,23 +98,7 @@ export let deleteGroupMappingApi = {
     }
 };
 
-export let returnCallQueryParameters = {
-    oauth2Auth: {
-        callCustomApi: (_queryUrl, _operation, _context, queryParams) => {
-            return Promise.resolve(queryParams);
-        }
-    }
-};
-
-export let returnCallUrl = {
-    oauth2Auth: {
-        callCustomApi: (queryUrl) => {
-            return Promise.resolve(queryUrl);
-        }
-    }
-};
-
-export let applicationDetailsMockApi = {
+export const applicationDetailsMockApi = {
     oauth2Auth: {
         callCustomApi: () => {
             return Promise.resolve([mockApplicationDetails]);
@@ -154,10 +106,10 @@ export let applicationDetailsMockApi = {
     }
 };
 
-export let mockIdentityRoles = [
+export const mockIdentityRoles = [
     new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ADMIN-ROLE'}),
     new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-USER-ROLE'}),
     new IdentityRoleModel({id: 'mock-role-id', name: 'MOCK-ROLE-1'})
 ];
 
-export let clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];
+export const clientRoles = [ 'MOCK-ADMIN-ROLE', 'MOCK-USER-ROLE'];
