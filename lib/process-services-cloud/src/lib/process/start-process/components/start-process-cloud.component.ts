@@ -126,7 +126,7 @@ export class StartProcessCloudComponent implements OnChanges, OnInit, OnDestroy 
 
         this.processForm.valueChanges
             .pipe(
-                debounceTime(200),
+                debounceTime(400),
                 tap(() => this.disableStartButton = true),
                 distinctUntilChanged(),
                 filter(() => this.isProcessSelectionValid()),

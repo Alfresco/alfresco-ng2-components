@@ -360,6 +360,29 @@ describe('StartProcessCloudComponent', () => {
                 expect(component.currentCreatedProcess.startDate).toBeNull();
             });
         }));
+
+        it('should have start button enabled when default values are set', fakeAsync(() => {
+            component.values = [{ 'name': 'firstName', 'value': 'FakeName' }, {
+                'name': 'lastName',
+                'value': 'FakeLastName'
+            }];
+            component.name = 'testFormWithProcess';
+            component.processDefinitionName = 'processwithoutform2';
+            getDefinitionsSpy.and.returnValue(of(fakeSingleProcessDefinition(component.processDefinitionName)));
+            fixture.detectChanges();
+            formDefinitionSpy = spyOn(formCloudService, 'getForm').and.returnValue(of(fakeStartForm));
+
+            const change = new SimpleChange(null, 'MyApp', true);
+            component.ngOnChanges({ 'appName': change });
+            fixture.detectChanges();
+            tick(450);
+
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                const startBtn = fixture.nativeElement.querySelector('#button-start');
+                expect(startBtn.disabled).toBe(false);
+            });
+        }));
     });
 
     describe('process definitions list', () => {
