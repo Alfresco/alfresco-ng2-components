@@ -578,7 +578,7 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
-    it('should display the process name label for the name property', () => {
+    it('should display the process name label for the name property', async () => {
         getProcessFilterByIdSpy.and.returnValue(of({
             id: 'filter-id',
             processName: 'process-name',
@@ -596,10 +596,9 @@ describe('EditProcessFilterCloudComponent', () => {
         const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
         sortElement.click();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-            expect(sortOptions[0].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
-        });
+        await fixture.whenStable();
+        const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+        expect(sortOptions[0].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
     });
 
     describe('edit filter actions', () => {

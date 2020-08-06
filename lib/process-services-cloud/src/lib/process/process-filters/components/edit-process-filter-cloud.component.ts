@@ -539,57 +539,56 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     createProcessSortProperties(): ProcessSortFilterProperties[] {
         return [
-            new ProcessSortFilterProperties({
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID',
                 key: 'id',
                 value: 'id'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME',
                 key: 'name',
                 value: 'name'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE',
                 key: 'startDate',
                 value: 'startDate'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STATUS',
                 key: 'status',
                 value: 'status'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.INITIATOR',
                 key: 'initiator',
                 value: 'initiator'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_NAME',
                 key: 'appName',
                 value: 'appName'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.APP_VERSION',
-                type: 'number',
                 key: 'appVersion',
                 value: 'appVersion'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_INS_ID',
                 key: 'processInstanceId',
                 value: 'processInstanceId'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_ID',
                 key: 'processDefinitionId',
                 value: 'processDefinitionId'
-            }),
-            new ProcessSortFilterProperties({
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
                 key: 'processDefinitionKey',
                 value: 'processDefinitionKey'
-            })
+            }
         ];
     }
 
