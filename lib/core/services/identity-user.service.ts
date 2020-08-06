@@ -17,15 +17,14 @@
 
 import { Pagination } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
-import { from, Observable, of, throwError } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../app-config/app-config.service';
 import { IdentityGroupModel } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
 import { IdentityUserModel } from '../models/identity-user.model';
-import { AlfrescoApiService } from './alfresco-api.service';
 import { JwtHelperService } from './jwt-helper.service';
-import { LogService } from './log.service';
+import { OAuth2Service } from './oauth2.service';
 
 export interface IdentityUserQueryResponse {
 
@@ -57,9 +56,16 @@ export class IdentityUserService {
 
     constructor(
         private jwtHelperService: JwtHelperService,
-        private alfrescoApiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
-        private logService: LogService) { }
+        private oAuth2Service: OAuth2Service,
+        private appConfigService: AppConfigService) { }
+
+    private get identityHost(): string {
+        return `${this.appConfigService.get('identityHost')}`;
+    }
+
+    private buildUserUrl(): string {
+        return `${this.identityHost}/users`;
+    }
 
     /**
      * Gets the name and other basic details of the current user.
@@ -83,21 +89,9 @@ export class IdentityUserService {
             return of([]);
         }
         const url = this.buildUserUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = { search: search }, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const queryParams = { search: search };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        ).pipe(
-            map((response: []) => {
-                return response.map( (user: IdentityUserModel) =>  {
-                    return {id: user.id, firstName: user.firstName,  lastName: user.lastName, email: user.email, username: user.username};
-                });
-            }),
-            catchError((err) => this.handleError(err))
-        );
+        return this.oAuth2Service.get({ url, queryParams });
     }
 
     /**
@@ -110,21 +104,9 @@ export class IdentityUserService {
             return of([]);
         }
         const url = this.buildUserUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = { username: username }, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const queryParams = { username: username };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        ).pipe(
-            map((response: []) => {
-                return response.map( (user: IdentityUserModel) =>  {
-                    return {id: user.id, firstName: user.firstName,  lastName: user.lastName, email: user.email, username: user.username};
-                });
-            }),
-            catchError((err) => this.handleError(err))
-        );
+        return this.oAuth2Service.get({url, queryParams });
     }
 
     /**
@@ -137,21 +119,9 @@ export class IdentityUserService {
             return of([]);
         }
         const url = this.buildUserUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = { email: email }, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const queryParams = { email: email };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        ).pipe(
-            map((response: []) => {
-                return response.map( (user: IdentityUserModel) =>  {
-                    return {id: user.id, firstName: user.firstName,  lastName: user.lastName, email: user.email, username: user.username};
-                });
-            }),
-            catchError((err) => this.handleError(err))
-        );
+        return this.oAuth2Service.get({ url, queryParams });
     }
 
     /**
@@ -164,14 +134,7 @@ export class IdentityUserService {
             return of([]);
         }
         const url = this.buildUserUrl() + '/' + id;
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        ));
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -181,15 +144,8 @@ export class IdentityUserService {
      * @returns List of client roles
      */
     getClientRoles(userId: string, clientId: string): Observable<any[]> {
-        const url = this.buildUserClientRoleMapping(userId, clientId);
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        );
+        const url = `${this.identityHost}/users/${userId}/role-mappings/clients/${clientId}/composite`;
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -200,9 +156,7 @@ export class IdentityUserService {
      */
     checkUserHasClientApp(userId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(userId, clientId).pipe(
-            map((clientRoles: any[]) => {
-                return clientRoles.length > 0;
-            })
+            map((clientRoles) => clientRoles.length > 0)
         );
     }
 
@@ -219,9 +173,7 @@ export class IdentityUserService {
                 let hasRole = false;
                 if (clientRoles.length > 0) {
                     roleNames.forEach((roleName) => {
-                        const role = clientRoles.find((availableRole) => {
-                            return availableRole.name === roleName;
-                        });
+                        const role = clientRoles.find(({ name }) => name === roleName);
 
                         if (role) {
                             hasRole = true;
@@ -240,19 +192,14 @@ export class IdentityUserService {
      * @returns Client ID string
      */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
-        const url = this.buildGetClientsUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = { clientId: applicationName }, bodyParam = {}, headerParams = {}, formParams = {},
-            contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(this.alfrescoApiService.getInstance()
-            .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
-                formParams, bodyParam, contentTypes,
-                accepts, Object, null, null)
-        ).pipe(
-            map((response: any[]) => {
-                const clientId = response && response.length > 0 ? response[0].id : '';
-                return clientId;
-            })
-        );
+        const url = `${this.identityHost}/clients`;
+        const queryParams = { clientId: applicationName };
+
+        return this.oAuth2Service
+            .get<any[]>({url, queryParams })
+            .pipe(
+                map((response) => response && response.length > 0 ? response[0].id : '')
+            );
     }
 
     /**
@@ -290,18 +237,7 @@ export class IdentityUserService {
      */
     getUsers(): Observable<IdentityUserModel[]> {
         const url = this.buildUserUrl();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, authNames = [], contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam, authNames,
-            contentTypes, accepts, null, null)
-        ).pipe(
-            map((response: IdentityUserModel[]) => {
-                return response;
-            })
-        );
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -310,19 +246,8 @@ export class IdentityUserService {
      * @returns Array of role info objects
      */
     getUserRoles(userId: string): Observable<IdentityRoleModel[]> {
-        const url = this.buildRolesUrl(userId);
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        ).pipe(
-            map((response: IdentityRoleModel[]) => {
-                return response;
-            })
-        );
+        const url = `${this.identityHost}/users/${userId}/role-mappings/realm/composite`;
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -357,7 +282,7 @@ export class IdentityUserService {
             const currentUser = this.getCurrentUserInfo();
             let users = await this.getUsers().toPromise();
 
-            users = users.filter((user) => { return user.username !== currentUser.username; });
+            users = users.filter(({ username }) => username !== currentUser.username);
 
             for (let i = 0; i < users.length; i++) {
                 const hasAnyRole = await this.userHasAnyRole(users[i].id, roleNames);
@@ -394,9 +319,7 @@ export class IdentityUserService {
             let hasRole = false;
             if (userRoles && userRoles.length > 0) {
                 roleNames.forEach((roleName: string) => {
-                    const role = userRoles.find((userRole) => {
-                        return roleName === userRole.name;
-                    });
+                    const role = userRoles.find(({ name }) => roleName === name);
                     if (role) {
                         hasRole = true;
                         return;
@@ -413,18 +336,12 @@ export class IdentityUserService {
      */
     queryUsers(requestQuery: IdentityUserQueryCloudRequestModel): Observable<IdentityUserQueryResponse> {
         const url = this.buildUserUrl();
-        const httpMethod = 'GET', pathParams = {},
-        queryParams = { first: requestQuery.first, max: requestQuery.max }, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        const queryParams = { first: requestQuery.first, max: requestQuery.max };
 
         return this.getTotalUsersCount().pipe(
-                switchMap((totalCount: any) =>
-                from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null)
-                ).pipe(
-                    map((response: IdentityUserModel[]) => {
+            switchMap((totalCount) =>
+                this.oAuth2Service.get<IdentityUserModel[]>({ url, queryParams }).pipe(
+                    map((response) => {
                         return <IdentityUserQueryResponse> {
                             entries: response,
                             pagination: {
@@ -434,10 +351,10 @@ export class IdentityUserService {
                               hasMoreItems: false,
                               totalItems: totalCount
                             }
-                          };
-                    }),
-                    catchError((error) => this.handleError(error))
-                    ))
+                        };
+                    })
+                )
+            )
         );
     }
 
@@ -447,15 +364,7 @@ export class IdentityUserService {
      */
     getTotalUsersCount(): Observable<number> {
         const url = this.buildUserUrl() + `/count`;
-        const contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(this.alfrescoApiService.getInstance()
-            .oauth2Auth.callCustomApi(url, 'GET',
-              null, null, null,
-              null, null, contentTypes,
-              accepts, null, null, null
-              )).pipe(
-                catchError((error) => this.handleError(error))
-            );
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -465,17 +374,9 @@ export class IdentityUserService {
      */
     createUser(newUser: IdentityUserModel): Observable<any> {
         const url = this.buildUserUrl();
-        const request = JSON.stringify(newUser);
-        const httpMethod = 'POST', pathParams = {}, queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const bodyParam = JSON.stringify(newUser);
 
-        return from(
-            this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                url, httpMethod, pathParams, queryParams,
-                headerParams, formParams, bodyParam,
-                contentTypes, accepts, null, null, null
-                )
-        ).pipe(catchError(error => this.handleError(error)));
+        return this.oAuth2Service.post({ url, bodyParam });
     }
 
     /**
@@ -486,17 +387,9 @@ export class IdentityUserService {
      */
     updateUser(userId: string, updatedUser: IdentityUserModel): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId;
-        const request = JSON.stringify(updatedUser);
-        const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const bodyParam = JSON.stringify(updatedUser);
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -506,16 +399,7 @@ export class IdentityUserService {
      */
     deleteUser(userId: string): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId;
-        const httpMethod = 'DELETE', pathParams = {} , queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.delete({ url });
     }
 
     /**
@@ -526,17 +410,9 @@ export class IdentityUserService {
      */
     changePassword(userId: string, newPassword: IdentityUserPasswordModel): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/reset-password';
-        const request = JSON.stringify(newPassword);
-        const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const bodyParam = JSON.stringify(newPassword);
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -546,17 +422,9 @@ export class IdentityUserService {
      */
     getInvolvedGroups(userId: string): Observable<IdentityGroupModel[]> {
         const url = this.buildUserUrl() + '/' + userId + '/groups/';
-        const httpMethod = 'GET', pathParams = { id: userId},
-        queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        const pathParams = { id: userId };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null
-                    )).pipe(
-                        catchError((error) => this.handleError(error))
-                    );
+        return this.oAuth2Service.get({ url, pathParams });
     }
 
     /**
@@ -566,17 +434,9 @@ export class IdentityUserService {
      */
     joinGroup(joinGroupRequest: IdentityJoinGroupRequestModel): Observable<any> {
         const url = this.buildUserUrl() + '/' + joinGroupRequest.userId + '/groups/' + joinGroupRequest.groupId;
-        const request = JSON.stringify(joinGroupRequest);
-        const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const bodyParam = JSON.stringify(joinGroupRequest);
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -587,16 +447,7 @@ export class IdentityUserService {
      */
     leaveGroup(userId: any, groupId: string): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/groups/' + groupId;
-        const httpMethod = 'DELETE', pathParams = {} , queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.delete({ url });
     }
 
     /**
@@ -606,17 +457,7 @@ export class IdentityUserService {
      */
     getAvailableRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm/available';
-        const httpMethod = 'GET', pathParams = {},
-        queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null
-                    )).pipe(
-                        catchError((error) => this.handleError(error))
-                    );
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -626,17 +467,9 @@ export class IdentityUserService {
      */
     getAssignedRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm';
-        const httpMethod = 'GET', pathParams = { id: userId},
-        queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        const pathParams = { id: userId };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null
-                    )).pipe(
-                        catchError((error) => this.handleError(error))
-                    );
+        return this.oAuth2Service.get({ url, pathParams });
     }
 
     /**
@@ -646,17 +479,9 @@ export class IdentityUserService {
      */
     getEffectiveRoles(userId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm/composite';
-        const httpMethod = 'GET', pathParams = { id: userId},
-        queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        const pathParams = { id: userId };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null
-                    )).pipe(
-                        catchError((error) => this.handleError(error))
-                    );
+        return this.oAuth2Service.get({ url, pathParams });
     }
 
     /**
@@ -667,17 +492,9 @@ export class IdentityUserService {
      */
     assignRoles(userId: string, roles: IdentityRoleModel[]): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm';
-        const request = JSON.stringify(roles);
-        const httpMethod = 'POST', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const bodyParam = JSON.stringify(roles);
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.post({ url, bodyParam });
     }
 
     /**
@@ -688,41 +505,8 @@ export class IdentityUserService {
      */
     removeRoles(userId: string, removedRoles: IdentityRoleModel[]): Observable<any> {
         const url = this.buildUserUrl() + '/' + userId + '/role-mappings/realm';
-        const request = JSON.stringify(removedRoles);
-        const httpMethod = 'DELETE', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const bodyParam = JSON.stringify(removedRoles);
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
-    }
-
-    private buildUserUrl(): string {
-        return `${this.appConfigService.get('identityHost')}/users`;
-    }
-
-    private buildUserClientRoleMapping(userId: string, clientId: string): string {
-        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/clients/${clientId}/composite`;
-    }
-
-    private buildRolesUrl(userId: string): string {
-        return `${this.appConfigService.get('identityHost')}/users/${userId}/role-mappings/realm/composite`;
-    }
-
-    private buildGetClientsUrl(): string {
-        return `${this.appConfigService.get('identityHost')}/clients`;
-    }
-
-    /**
-     * Throw the error
-     * @param error
-     */
-    private handleError(error: Response) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return this.oAuth2Service.delete({ url, bodyParam });
     }
 }

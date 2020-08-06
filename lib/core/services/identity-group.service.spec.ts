@@ -16,14 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import {
-    setupTestBed,
-    AlfrescoApiService,
-    LogService,
-    IdentityGroupService,
-    IdentityGroupSearchParam,
-    groupAPIMockError
-} from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService, IdentityGroupService, IdentityGroupSearchParam } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
@@ -33,7 +26,6 @@ import {
     roleMappingApi,
     clientRoles,
     applicationDetailsMockApi,
-    mockApiError,
     mockIdentityGroup1,
     createGroupMappingApi,
     updateGroupMappingApi,
@@ -46,7 +38,6 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
     let apiService: AlfrescoApiService;
-    let logService: LogService;
 
     setupTestBed({
         imports: [
@@ -58,7 +49,6 @@ describe('IdentityGroupService', () => {
     beforeEach(async(() => {
         service = TestBed.inject(IdentityGroupService);
         apiService = TestBed.inject(AlfrescoApiService);
-        logService = TestBed.inject(LogService);
     }));
 
     it('should be able to fetch groups based on group name', (done) => {
@@ -231,18 +221,6 @@ describe('IdentityGroupService', () => {
         );
     });
 
-    it('should return only the properties of IdentityGroupSearchParam', (done) => {
-        spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
-        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe((groups) => {
-            expect(groups).toBeDefined();
-            expect(groups).toBeDefined();
-            expect(groups[0].id).toEqual('mock-group-id-1');
-            expect(groups[0].name).toEqual('Mock Group 1');
-            expect(groups[0]['subGroups']).not.toBeDefined();
-            done();
-        });
-    });
-
     it('should be able to fetch the client id', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(applicationDetailsMockApi);
         service.getClientIdByApplicationName('mock-app-name').subscribe((clientId) => {
@@ -253,25 +231,9 @@ describe('IdentityGroupService', () => {
         });
     });
 
-    it('should notify errors returned from the API', (done) => {
-        const logServiceSpy = spyOn(logService, 'error').and.callThrough();
-        spyOn(apiService, 'getInstance').and.returnValue(mockApiError);
-        service.findGroupsByName(<IdentityGroupSearchParam> {name: 'mock'}).subscribe(
-            () => {},
-            (res: any) => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(groupAPIMockError);
-                expect(logServiceSpy).toHaveBeenCalled();
-                done();
-            }
-        );
-    });
-
     it('should be able to all fetch groups', (done) => {
         spyOn(apiService, 'getInstance').and.returnValue(groupsMockApi);
         service.getGroups().subscribe((res) => {
-            expect(res).toBeDefined();
-            expect(res).not.toBeNull();
             expect(res.length).toBe(5);
             expect(res[0].id).toBe('mock-group-id-1');
             expect(res[0].name).toBe('Mock Group 1');

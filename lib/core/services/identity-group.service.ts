@@ -16,11 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, of, from, throwError } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../app-config/app-config.service';
-import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
 import {
     IdentityGroupSearchParam,
     IdentityGroupQueryCloudRequestModel,
@@ -29,35 +27,37 @@ import {
     IdentityGroupCountModel
 } from '../models/identity-group.model';
 import { IdentityRoleModel } from '../models/identity-role.model';
+import { OAuth2Service } from './oauth2.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class IdentityGroupService {
 
     constructor(
-        private alfrescoApiService: AlfrescoApiService,
-        private appConfigService: AppConfigService,
-        private logService: LogService
+        private oAuth2Service: OAuth2Service,
+        private appConfigService: AppConfigService
     ) {}
+
+    private get identityHost(): string {
+        return `${this.appConfigService.get('identityHost')}`;
+    }
 
     /**
      * Gets all groups.
      * @returns Array of group information objects
      */
     getGroups(): Observable<IdentityGroupModel[]> {
-        const url = this.getGroupsApi();
-        const httpMethod = 'GET', pathParams = {},
-        queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        const url = `${this.identityHost}/groups`;
+        return this.oAuth2Service.get({ url });
+    }
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam, authNames,
-                    contentTypes, null, null, null
-                    )).pipe(
-                        catchError((error) => this.handleError(error))
-                    );
+    /**
+     * Gets available roles
+     * @param groupId Id of the group.
+     * @returns Array of available roles information objects
+     */
+    getAvailableRoles(groupId: string): Observable<IdentityRoleModel[]> {
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm/available`;
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -65,18 +65,13 @@ export class IdentityGroupService {
      * @returns Array of user information objects
      */
     queryGroups(requestQuery: IdentityGroupQueryCloudRequestModel): Observable<IdentityGroupQueryResponse> {
-        const url = this.getGroupsApi();
-        const httpMethod = 'GET', pathParams = {},
-        queryParams = { first: requestQuery.first || 0, max: requestQuery.max || 5 }, bodyParam = {}, headerParams = {},
-        formParams = {}, authNames = [], contentTypes = ['application/json'];
+        const url = `${this.identityHost}/groups`;
+        const queryParams = { first: requestQuery.first || 0, max: requestQuery.max || 5 };
+
         return this.getTotalGroupsCount().pipe(
             switchMap((totalCount: IdentityGroupCountModel) =>
-            from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                url, httpMethod, pathParams, queryParams,
-                headerParams, formParams, bodyParam, authNames,
-                contentTypes, null, null, null)
-            ).pipe(
-                map((response: any[]) => {
+            this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(
+                map((response) => {
                     return <IdentityGroupQueryResponse> {
                         entries: response,
                         pagination: {
@@ -86,11 +81,10 @@ export class IdentityGroupService {
                             hasMoreItems: false,
                             totalItems: totalCount.count
                         }
-                        };
-                    }),
-                catchError((error) => this.handleError(error))
-                ))
-            );
+                    };
+                })
+            ))
+        );
     }
 
     /**
@@ -98,15 +92,8 @@ export class IdentityGroupService {
      * @returns Number of groups count.
      */
     getTotalGroupsCount(): Observable<IdentityGroupCountModel> {
-        const url = this.getGroupsApi() + `/count`;
-        const contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(this.alfrescoApiService.getInstance()
-            .oauth2Auth.callCustomApi(url, 'GET',
-              null, null, null,
-              null, null, contentTypes,
-              accepts, null, null, null)).pipe(
-                catchError((error) => this.handleError(error))
-            );
+        const url = `${this.identityHost}/groups/count`;
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -115,17 +102,10 @@ export class IdentityGroupService {
      * @returns Empty response when the group created.
      */
     createGroup(newGroup: IdentityGroupModel): Observable<any> {
-        const url = this.getGroupsApi();
-        const httpMethod = 'POST', pathParams = {}, queryParams = {}, bodyParam = newGroup, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const url = `${this.identityHost}/groups`;
+        const bodyParam = newGroup;
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.post({ url, bodyParam });
     }
 
     /**
@@ -135,18 +115,10 @@ export class IdentityGroupService {
      * @returns Empty response when the group updated.
      */
     updateGroup(groupId: string, updatedGroup: IdentityGroupModel): Observable<any> {
-        const url = this.getGroupsApi() + `/${groupId}`;
-        const request = JSON.stringify(updatedGroup);
-        const httpMethod = 'PUT', pathParams = {} , queryParams = {}, bodyParam = request, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const url = `${this.identityHost}/groups/${groupId}`;
+        const bodyParam = JSON.stringify(updatedGroup);
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.put({ url, bodyParam });
     }
 
     /**
@@ -155,17 +127,8 @@ export class IdentityGroupService {
      * @returns Empty response when the group deleted.
      */
     deleteGroup(groupId: string): Observable<any> {
-        const url = this.getGroupsApi() + `/${groupId}`;
-        const httpMethod = 'DELETE', pathParams = {} , queryParams = {}, bodyParam = {}, headerParams = {},
-        formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-        url, httpMethod, pathParams, queryParams,
-        headerParams, formParams, bodyParam,
-        contentTypes, accepts, null, null, null
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        const url = `${this.identityHost}/groups/${groupId}`;
+        return this.oAuth2Service.delete({ url });
     }
 
     /**
@@ -177,22 +140,10 @@ export class IdentityGroupService {
         if (searchParams.name === '') {
             return of([]);
         }
-        const url = this.getGroupsApi();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {search: searchParams.name}, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
+        const url = `${this.identityHost}/groups`;
+        const queryParams = { search: searchParams.name };
 
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        ).pipe(
-            map((response: []) => {
-                return response.map( (group: IdentityGroupModel) =>  {
-                    return {id: group.id, name: group.name};
-                });
-            }),
-            catchError((err) => this.handleError(err))
-        );
+        return this.oAuth2Service.get({ url, queryParams });
     }
 
     /**
@@ -202,16 +153,7 @@ export class IdentityGroupService {
      */
     getGroupRoles(groupId: string): Observable<IdentityRoleModel[]> {
         const url = this.buildRolesUrl(groupId);
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return (from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-            url, httpMethod, pathParams, queryParams,
-            headerParams, formParams, bodyParam,
-            contentTypes, accepts, Object, null, null)
-        )).pipe(
-            catchError((error) => this.handleError(error))
-        );
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -221,13 +163,11 @@ export class IdentityGroupService {
      * @returns True if the group has one or more of the roles, false otherwise
      */
     checkGroupHasRole(groupId: string, roleNames: string[]): Observable<boolean>  {
-        return this.getGroupRoles(groupId).pipe(map((groupRoles: IdentityRoleModel[]) => {
+        return this.getGroupRoles(groupId).pipe(map((groupRoles) => {
             let hasRole = false;
             if (groupRoles && groupRoles.length > 0) {
                 roleNames.forEach((roleName: string) => {
-                    const role = groupRoles.find((groupRole) => {
-                        return roleName === groupRole.name;
-                    });
+                    const role = groupRoles.find(({ name }) => roleName === name);
                     if (role) {
                         hasRole = true;
                         return;
@@ -244,20 +184,12 @@ export class IdentityGroupService {
      * @returns client Id string
      */
     getClientIdByApplicationName(applicationName: string): Observable<string> {
-        const url = this.getApplicationIdApi();
-        const httpMethod = 'GET', pathParams = {}, queryParams = {clientId: applicationName}, bodyParam = {}, headerParams = {}, formParams = {},
-              contentTypes = ['application/json'], accepts = ['application/json'];
-        return from(this.alfrescoApiService.getInstance()
-                        .oauth2Auth.callCustomApi(url, httpMethod, pathParams, queryParams, headerParams,
-                                              formParams, bodyParam, contentTypes,
-                                              accepts, Object, null, null)
-            ).pipe(
-                map((response: any[]) => {
-                    const clientId = response && response.length > 0 ? response[0].id : '';
-                    return clientId;
-                }),
-                catchError((error) => this.handleError(error))
-            );
+        const url = `${this.identityHost}/clients`;
+        const queryParams = {clientId: applicationName};
+
+        return this.oAuth2Service.get<any[]>({ url, queryParams }).pipe(
+            map((response) => response && response.length > 0 ? response[0].id : '')
+        );
     }
 
     /**
@@ -267,15 +199,8 @@ export class IdentityGroupService {
      * @returns List of roles
      */
     getClientRoles(groupId: string, clientId: string): Observable<IdentityRoleModel[]> {
-        const url = this.groupClientRoleMappingApi(groupId, clientId);
-        const httpMethod = 'GET', pathParams = {}, queryParams = {}, bodyParam = {}, headerParams = {},
-            formParams = {}, contentTypes = ['application/json'], accepts = ['application/json'];
-
-        return from(this.alfrescoApiService.getInstance().oauth2Auth.callCustomApi(
-                    url, httpMethod, pathParams, queryParams,
-                    headerParams, formParams, bodyParam,
-                    contentTypes, accepts, Object, null, null)
-                );
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/clients/${clientId}`;
+        return this.oAuth2Service.get({ url });
     }
 
     /**
@@ -286,11 +211,8 @@ export class IdentityGroupService {
      */
     checkGroupHasClientApp(groupId: string, clientId: string): Observable<boolean> {
         return this.getClientRoles(groupId, clientId).pipe(
-                    map((response: any[]) => {
-                        return response && response.length > 0;
-                    }),
-                    catchError((error) => this.handleError(error))
-            );
+            map((response) => response && response.length > 0)
+        );
     }
 
     /**
@@ -306,9 +228,7 @@ export class IdentityGroupService {
                 let hasRole = false;
                 if (clientRoles.length > 0) {
                     roleNames.forEach((roleName) => {
-                        const role = clientRoles.find((availableRole) => {
-                            return availableRole.name === roleName;
-                        });
+                        const role = clientRoles.find(({ name }) => name === roleName);
 
                         if (role) {
                             hasRole = true;
@@ -317,33 +237,11 @@ export class IdentityGroupService {
                     });
                 }
                 return hasRole;
-            }),
-            catchError((error) => this.handleError(error))
+            })
         );
     }
 
-    private groupClientRoleMappingApi(groupId: string, clientId: string): string {
-        return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/clients/${clientId}`;
-    }
-
-    private getApplicationIdApi(): string {
-        return `${this.appConfigService.get('identityHost')}/clients`;
-    }
-
-    private getGroupsApi(): string {
-        return `${this.appConfigService.get('identityHost')}/groups`;
-    }
-
     private buildRolesUrl(groupId: string): string {
-        return `${this.appConfigService.get('identityHost')}/groups/${groupId}/role-mappings/realm/composite`;
-    }
-
-    /**
-     * Throw the error
-     * @param error
-     */
-    private handleError(error: Response) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
+        return `${this.identityHost}/groups/${groupId}/role-mappings/realm/composite`;
     }
 }
