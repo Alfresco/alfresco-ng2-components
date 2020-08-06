@@ -269,7 +269,7 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path"
     }
-  }
+  },
   "ADF_CLOUD_FORM_COMPONENT": {
     "RETRIEVE_METADATA": "Fill form fields with this file's metadata"
   }
