@@ -8,7 +8,7 @@
         height: $select-filter-height;
         display: flex;
 
-        .select-filter-input-container {
+        .adf-select-filter-input-container {
             position: absolute;
             top: 0;
             width: 100%;
@@ -18,7 +18,7 @@
             color: mat-color($foreground, text, 0.87);
             line-height: 3em;
             height: $select-filter-height;
-            padding: 5px 16px 0 16px;
+            padding: 5px 16px 0;
             background: mat-color($background, card);
         }
 
