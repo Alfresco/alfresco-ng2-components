@@ -54,7 +54,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnChanges(): void {
-        this.value = this.property.value;
+        this.value = this.property.value.toString();
     }
 
     ngOnInit() {
