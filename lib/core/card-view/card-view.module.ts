@@ -45,6 +45,8 @@ import { CardViewTextItemComponent } from './components/card-view-textitem/card-
 import { CardViewKeyValuePairsItemComponent } from './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 import { CardViewSelectItemComponent } from './components/card-view-selectitem/card-view-selectitem.component';
 import { CardViewArrayItemComponent } from './components/card-view-arrayitem/card-view-arrayitem.component';
+import { OptionsFilterPipe } from './components/card-view-selectitem/select-filter-input/options-filter.pipe';
+import { SelectFilterInputComponent } from './components/card-view-selectitem/select-filter-input/select-filter-input.component';
 
 @NgModule({
     imports: [
@@ -78,7 +80,9 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
         CardViewSelectItemComponent,
         CardViewItemDispatcherComponent,
         CardViewContentProxyDirective,
-        CardViewArrayItemComponent
+        CardViewArrayItemComponent,
+        SelectFilterInputComponent,
+        OptionsFilterPipe
     ],
     exports: [
         CardViewComponent,
@@ -88,7 +92,9 @@ import { CardViewArrayItemComponent } from './components/card-view-arrayitem/car
         CardViewTextItemComponent,
         CardViewSelectItemComponent,
         CardViewKeyValuePairsItemComponent,
-        CardViewArrayItemComponent
+        CardViewArrayItemComponent,
+        SelectFilterInputComponent,
+        OptionsFilterPipe
     ]
 })
 export class CardViewModule {}
