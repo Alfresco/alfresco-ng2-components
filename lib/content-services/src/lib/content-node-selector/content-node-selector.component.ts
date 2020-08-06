@@ -34,6 +34,7 @@ export class ContentNodeSelectorComponent {
     buttonActionName: string;
     chosenNode: Node[];
     currentDirectoryId: string;
+    localUploadedFiles: any;
 
     constructor(private translation: TranslationService,
                 private notificationService: NotificationService,
@@ -85,5 +86,9 @@ export class ContentNodeSelectorComponent {
 
     hasNodeSelected(): boolean {
         return this.chosenNode?.length > 0;
+    }
+
+    onLocalFilesUpload(uploaded: any) {
+        this.localUploadedFiles = uploaded;
     }
 }

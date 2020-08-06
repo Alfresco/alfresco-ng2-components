@@ -20,6 +20,7 @@
         [showSearch]="data?.showSearch"
         [showDropdownSiteList]="data?.showDropdownSiteList"
         [showFilesInResult]="data?.showFilesInResult"
+        [preSelectedNodes]="localUploadedFiles"
         (select)="onSelect($event)"
         (siteChange)="onSiteChange($event)"
         (navigationChange)="onNavigationChange($event)">
@@ -33,6 +34,7 @@
             [staticTitle]="'FORM.FIELD.UPLOAD' | translate "
             [multipleFiles]="isMultipleSelection()"
             [rootFolderId]="currentDirectoryId"
+            (success)="onLocalFilesUpload($event)"
             (error)="onError($event)">
         </adf-upload-button>
     </div>

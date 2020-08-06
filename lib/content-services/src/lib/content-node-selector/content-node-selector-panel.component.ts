@@ -182,6 +182,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
     }
 
+    @Input()
+    preSelectedNodes: any;
+
     /** Emitted when the user has chosen an item. */
     @Output()
     select: EventEmitter<Node[]> = new EventEmitter<Node[]>();

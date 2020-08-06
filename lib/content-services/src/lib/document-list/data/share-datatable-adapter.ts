@@ -245,7 +245,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preSelectedRows: any = []) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -291,6 +291,20 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             this.rows = this.rows.concat(listPrunedDuplicate);
         } else {
             this.rows = shareDataRows;
+        }
+        this.preSelectNodes(preSelectedRows);
+    }
+
+    preSelectNodes(preSelectedRows: any) {
+        if (preSelectedRows) {
+            this.rows = this.rows.map((row) => {
+                if (preSelectedRows && preSelectedRows.value && preSelectedRows.value.entry) {
+                    if (row.obj.entry.id === preSelectedRows.value.entry.id) {
+                        row.isSelected = true;
+                    }
+                }
+                return row;
+            });
         }
     }
 

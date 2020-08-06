@@ -257,7 +257,35 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
-    currentFolderId: string = null;
+    // currentFolderId: string = null;
+    _currentFolderId: string = null;
+
+    @Input()
+    preSelectedNodes: any[] = [];
+
+    /** The ID of the folder node to display or a reserved string alias for special sources */
+    @Input()
+    set currentFolderId(currentFolderId: string) {
+        if (this._currentFolderId !== currentFolderId) {
+            this._currentFolderId = currentFolderId;
+            if (this.sorting) {
+                const [key, direction] = this.sorting;
+                this.orderBy = this.buildOrderByArray(key, direction);
+            }
+            if (this.data) {
+                this.data.loadPage(null, false, null, this.preSelectedNodes);
+                this.resetNewFolderPagination();
+            }
+
+            if (this._currentFolderId) {
+                this.loadFolder();
+            }
+        }
+    }
+
+    get currentFolderId(): string {
+        return this._currentFolderId;
+    }
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
@@ -483,7 +511,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-                this.data.loadPage(changes.node.currentValue, merge);
+                this.data.loadPage(changes.node.currentValue, merge, null, this.preSelectedNodes);
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -495,7 +523,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
-                this.data.loadPage(this.node, this._pagination.merge);
+                this.data.loadPage(this.node, this._pagination.merge, null, this.preSelectedNodes);
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
@@ -685,7 +713,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
+            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.preSelectedNodes);
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
