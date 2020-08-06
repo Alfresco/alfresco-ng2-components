@@ -16,13 +16,7 @@
  */
 
 import { async, TestBed } from '@angular/core/testing';
-import {
-    setupTestBed,
-    AlfrescoApiService,
-    LogService,
-    IdentityGroupService,
-    IdentityGroupSearchParam
-} from '@alfresco/adf-core';
+import { setupTestBed, AlfrescoApiService, IdentityGroupService, IdentityGroupSearchParam } from '@alfresco/adf-core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, of } from 'rxjs';
 import {
@@ -44,7 +38,6 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('IdentityGroupService', () => {
     let service: IdentityGroupService;
     let apiService: AlfrescoApiService;
-    let logService: LogService;
 
     setupTestBed({
         imports: [
@@ -56,7 +49,6 @@ describe('IdentityGroupService', () => {
     beforeEach(async(() => {
         service = TestBed.inject(IdentityGroupService);
         apiService = TestBed.inject(AlfrescoApiService);
-        logService = TestBed.inject(LogService);
     }));
 
     it('should be able to fetch groups based on group name', (done) => {
