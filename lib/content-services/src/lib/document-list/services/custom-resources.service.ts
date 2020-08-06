@@ -36,12 +36,18 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
+
+    private _peopleApi: PeopleApi;
+    private _sitesApi: SitesApi;
+    private _trashcanApi: TrashcanApi;
+    private _searchApi: SearchApi;
+    private _sharedLinksApi: SharedlinksApi;
+    private _favoritesApi: FavoritesApi;
+    private _nodesApi: NodesApi;
 
     constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
 
@@ -49,32 +55,32 @@ export class CustomResourcesService {
         return this.apiService.getInstance();
     }
 
-    private get peopleApi(): PeopleApi {
-        return new PeopleApi(this.api);
+    get peopleApi(): PeopleApi {
+        return this._peopleApi || (this._peopleApi = new PeopleApi(this.api));
     }
 
-    private get sitesApi(): SitesApi {
-        return new SitesApi(this.api);
+    get sitesApi(): SitesApi {
+        return this._sitesApi || (this._sitesApi = new SitesApi(this.api));
     }
 
-    private get searchApi(): SearchApi {
-        return new SearchApi(this.api);
+    get searchApi(): SearchApi {
+        return this._searchApi || (this._searchApi = new SearchApi(this.api));
     }
 
-    private get favoritesApi(): FavoritesApi {
-        return new FavoritesApi(this.api);
+    get favoritesApi(): FavoritesApi {
+        return this._favoritesApi || (this._favoritesApi = new FavoritesApi(this.api));
     }
 
-    private get sharedLinksApi(): SharedlinksApi {
-        return new SharedlinksApi(this.api);
+    get sharedLinksApi(): SharedlinksApi {
+        return this._sharedLinksApi || (this._sharedLinksApi = new SharedlinksApi(this.api));
     }
 
-    private get trashcanApi(): TrashcanApi {
-        return new TrashcanApi(this.api);
+    get trashcanApi(): TrashcanApi {
+        return this._trashcanApi || (this._trashcanApi = new TrashcanApi(this.api));
     }
 
-    private get nodesApi(): NodesApi {
-        return new NodesApi(this.api);
+    get nodesApi(): NodesApi {
+        return this._nodesApi || (this._nodesApi = new NodesApi(this.api));
     }
 
     /**

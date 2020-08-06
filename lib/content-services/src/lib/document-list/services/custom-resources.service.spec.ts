@@ -19,19 +19,18 @@ import { CustomResourcesService } from './custom-resources.service';
 import { PaginationModel, AlfrescoApiServiceMock, AppConfigService, LogService, AppConfigServiceMock, StorageService } from '@alfresco/adf-core';
 
 describe('CustomResourcesService', () => {
-    let customActionService: CustomResourcesService;
-    let alfrescoApiService: AlfrescoApiServiceMock;
+    let customResourcesService: CustomResourcesService;
 
     beforeEach(() => {
         const logService = new LogService(new AppConfigServiceMock(null));
+        const alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
 
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), new StorageService());
-        customActionService = new CustomResourcesService(alfrescoApiService, logService);
+        customResourcesService = new CustomResourcesService(alfrescoApiService, logService);
     });
 
     describe('loadFavorites', () => {
         it('should return a list of items with default properties when target properties does not exist', (done) => {
-            spyOn(alfrescoApiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({
+            spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve({
                 list: {
                     entries: [
                         {
@@ -52,7 +51,7 @@ describe('CustomResourcesService', () => {
                 skipCount: 0
             };
 
-            customActionService.loadFavorites(pagination).subscribe((result) => {
+            customResourcesService.loadFavorites(pagination).subscribe((result) => {
                 expect(result.list.entries).toEqual([
                     {
                         entry: {
@@ -70,7 +69,7 @@ describe('CustomResourcesService', () => {
         });
 
         it('should return a list of items with merged properties when target properties exist', (done) => {
-            spyOn(alfrescoApiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({
+            spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve({
                 list: {
                     entries: [
                         {
@@ -94,7 +93,7 @@ describe('CustomResourcesService', () => {
                 skipCount: 0
             };
 
-            customActionService.loadFavorites(pagination).subscribe((result) => {
+            customResourcesService.loadFavorites(pagination).subscribe((result) => {
                 expect(result.list.entries).toEqual([
                     {
                         entry: {
