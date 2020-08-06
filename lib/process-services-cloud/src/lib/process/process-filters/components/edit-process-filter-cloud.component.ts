@@ -588,6 +588,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
                 key: 'processDefinitionKey',
                 value: 'processDefinitionKey'
+            },
+            {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.LAST_MODIFIED',
+                key: 'lastModified',
+                value: 'lastModified'
+            },
+            {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.BUSINESS_KEY',
+                key: 'businessKey',
+                value: 'businessKey'
             }
         ];
     }

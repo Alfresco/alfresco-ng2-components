@@ -162,7 +162,7 @@
       "PROCESS_DEF_ID": "ProcessDefinitionId",
       "PROCESS_DEF_NAME": "ProcessDefinitionName",
       "PROCESS_DEF_KEY": "ProcessDefinitionKey",
-      "LAST_MODIFIED": "LastModified",
+      "LAST_MODIFIED": "Last Modified",
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "PROCESS_NAME": "Process Name",
@@ -182,7 +182,8 @@
       "DATE_RANGE_TITLE": "Start date - End date",
       "START_DATE": "Start date",
       "END_DATE": "End date",
-      "ID": "Id"
+      "ID": "Id",
+      "BUSINESS_KEY": "Business Key"
     },
     "ERROR": {
       "DATE": "Date format DD/MM/YYYY",
