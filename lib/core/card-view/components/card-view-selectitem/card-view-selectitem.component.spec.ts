@@ -24,12 +24,13 @@ import { setupTestBed } from '../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../testing/core.testing.module';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppConfigService } from '../../../app-config/app-config.service';
 
 describe('CardViewSelectItemComponent', () => {
-
     let fixture: ComponentFixture<CardViewSelectItemComponent>;
     let component: CardViewSelectItemComponent;
     let overlayContainer: OverlayContainer;
+    let appConfig: AppConfigService;
     const mockData = [{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }, { key: 'three', label: 'Three' }];
     const mockDefaultProps = {
         label: 'Select box label',
@@ -50,6 +51,7 @@ describe('CardViewSelectItemComponent', () => {
         fixture = TestBed.createComponent(CardViewSelectItemComponent);
         component = fixture.componentInstance;
         overlayContainer = TestBed.inject(OverlayContainer);
+        appConfig = TestBed.inject(AppConfigService);
         component.property = new CardViewSelectItemModel(mockDefaultProps);
     });
 
@@ -143,5 +145,80 @@ describe('CardViewSelectItemComponent', () => {
             const label = fixture.debugElement.query(By.css('[data-automation-class="select-box"] .mat-form-field-label'));
             expect(label).toBeNull();
         });
-   });
+    });
+
+    describe('Filter', () => {
+        it('should render a list of filtered options', () => {
+            appConfig.config['content-metadata'] = {
+                selectFilterLimit: 0
+            };
+            let optionsElement: any[];
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+
+            fixture.detectChanges();
+            optionsElement = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            expect(optionsElement.length).toBe(3);
+
+            const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input input'));
+            filterInput.nativeElement.value = mockData[0].label;
+            filterInput.nativeElement.dispatchEvent(new Event('input'));
+
+            fixture.detectChanges();
+            optionsElement = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            expect(optionsElement.length).toBe(1);
+            expect(optionsElement[0].innerText).toEqual(mockData[0].label);
+        });
+
+        it('should hide filter if options are less then limit', () => {
+            appConfig.config['content-metadata'] = {
+                selectFilterLimit: mockData.length + 1
+            };
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+            fixture.detectChanges();
+
+            const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input'));
+            expect(filterInput).toBe(null);
+        });
+
+        it('should show filter if options are greater then limit', () => {
+            appConfig.config['content-metadata'] = {
+                selectFilterLimit: mockData.length - 1
+            };
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = false;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+            fixture.detectChanges();
+
+            const filterInput = fixture.debugElement.query(By.css('.adf-select-filter-input'));
+            expect(filterInput).not.toBe(null);
+        });
+    });
 });
