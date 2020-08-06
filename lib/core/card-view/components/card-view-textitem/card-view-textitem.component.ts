@@ -113,6 +113,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         } else {
             this.editedValue = this.property.displayValue;
             this.textInput.setValue(this.editedValue);
+            this.isEditable ? this.textInput.enable() : this.textInput.disable();
         }
 
         this.resetErrorMessages();

@@ -19,7 +19,7 @@ import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
+import { setupTestBed, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -43,9 +43,16 @@ describe('TaskHeaderCloudComponent', () => {
     let getCandidateGroupsSpy: jasmine.Spy;
     let getCandidateUsersSpy: jasmine.Spy;
     let isTaskEditableSpy: jasmine.Spy;
+    let alfrescoApiService: AlfrescoApiService;
 
     const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
+
+    const mock = {
+        oauth2Auth: {
+            callCustomApi: () => Promise.resolve({})
+        }
+    };
 
     setupTestBed({
         imports: [
@@ -60,12 +67,18 @@ describe('TaskHeaderCloudComponent', () => {
         component = fixture.componentInstance;
         appConfigService = TestBed.inject(AppConfigService);
         taskCloudService = TestBed.inject(TaskCloudService);
+        alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.appName = 'mock-app-name';
         component.taskId = 'mock-task-id';
+        spyOn(alfrescoApiService, 'getInstance').and.returnValue(mock);
         getTaskByIdSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
         isTaskEditableSpy = spyOn(taskCloudService, 'isTaskEditable').and.returnValue(true);
         getCandidateUsersSpy = spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
         getCandidateGroupsSpy = spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
+    });
+
+    afterEach(() => {
+        fixture.destroy();
     });
 
     describe('Task Details', () => {
@@ -86,121 +99,127 @@ describe('TaskHeaderCloudComponent', () => {
             expect(taskTitle).toBeTruthy();
         });
 
-        it('should fectch task details when appName and taskId defined', async(() => {
+        it('should fectch task details when appName and taskId defined', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(getTaskByIdSpy).toHaveBeenCalled();
                 expect(component.taskDetails).toBe(assignedTaskDetailsCloudMock);
             });
-        }));
+        });
 
-        it('should display assignee', async(() => {
+        it('should display assignee', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
                 expect(assigneeEl.nativeElement.value).toBe('AssignedTaskUser');
             });
-        }));
+        });
 
-        it('should display status', async(() => {
+        it('should display status', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
                 expect(statusEl.nativeElement.value).toBe('ASSIGNED');
             });
-        }));
+        });
 
-        it('should display priority', async(() => {
+        it('should display priority', () => {
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
                 expect(priorityEl.nativeElement.value).toBe('5');
             });
-        }));
+        });
 
-        it('should display error if priority is not a number', async(() => {
+        it('should display error if priority is not a number', (done) => {
             fixture.detectChanges();
-
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
 
                 const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
                 formPriorityEl.nativeElement.value = 'stringValue';
                 formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
-                formPriorityEl.nativeElement.dispatchEvent(new Event('blur'));
+
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+
+                    const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
+                    expect(errorMessageEl).not.toBeNull();
+                    done();
+                });
+            });
+        });
+
+        it('should display due date', () => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
                 fixture.detectChanges();
 
-                const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
-                expect(errorMessageEl).not.toBeNull();
-            });
-        }));
-
-        it('should display due date', async(() => {
-            fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
                 const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
                 expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
             });
-        }));
+        });
 
-        it('should display placeholder if no due date', async(() => {
+        it('should display placeholder if no due date', () => {
             component.taskDetails.dueDate = null;
             component.refreshData();
             fixture.detectChanges();
-
             fixture.whenStable().then(() => {
                 const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
                 expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT');
             });
-        }));
+        });
 
-        it('should display the default parent value if is undefined', async(() => {
+        it('should display the default parent value if is undefined', () => {
             component.taskDetails.processInstanceId = null;
             fixture.detectChanges();
-
             fixture.whenStable().then(() => {
                 const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] input'));
                 expect(valueEl.nativeElement.value).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
             });
-        }));
+        });
 
-        it('should be able to call update service on updating task description', async(() => {
+        it('should be able to call update service on updating task description', (done) => {
             spyOn(taskCloudService, 'updateTask').and.returnValue(of(assignedTaskDetailsCloudMock));
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-
+                fixture.detectChanges();
                 const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
                 inputEl.nativeElement.value = 'updated description';
                 inputEl.nativeElement.dispatchEvent(new Event('input'));
-                inputEl.nativeElement.dispatchEvent(new Event('blur'));
-
                 fixture.detectChanges();
-                expect(taskCloudService.updateTask).toHaveBeenCalled();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(taskCloudService.updateTask).toHaveBeenCalled();
+                    done();
+                });
             });
-        }));
+        });
 
-        it('should roll back task description on error', async () => {
+        it('should roll back task description on error', async(() => {
             spyOn(taskCloudService, 'updateTask').and.returnValue(throwError('fake'));
             fixture.detectChanges();
 
-            await fixture.whenStable();
-            let description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-            expect(description.nativeElement.value.trim()).toEqual('This is the description');
-
-            const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-            inputEl.nativeElement.value = 'updated description';
-            inputEl.nativeElement.dispatchEvent(new Event('input'));
-            inputEl.nativeElement.dispatchEvent(new Event('blur'));
-
-            fixture.detectChanges();
-            expect(taskCloudService.updateTask).toHaveBeenCalled();
-
-            await fixture.whenStable();
-            fixture.detectChanges();
-            description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-            expect(description.nativeElement.value.trim()).toEqual('This is the description');
-        });
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+                expect(description.nativeElement.value.trim()).toEqual('This is the description');
+                const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+                inputEl.nativeElement.value = 'updated description';
+                inputEl.nativeElement.dispatchEvent(new Event('input'));
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+                    expect(description.nativeElement.value.trim()).toEqual('This is the description');
+                    expect(taskCloudService.updateTask).toHaveBeenCalled();
+                });
+            });
+        }));
 
         it('should show loading spinner when properties are not loaded', () => {
             component.properties = null;
@@ -217,28 +236,28 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should fectch parent task details if the task has parent id', async(() => {
+        it('should fectch parent task details if the task has parent id', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 expect(getTaskByIdSpy).toHaveBeenCalledTimes(2);
             });
-        }));
+        });
 
-        it('should display parent task id', async(() => {
+        it('should display parent task id', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentTaskId"'));
                 expect(assigneeEl.nativeElement.value).toBe('mock-parent-task-id');
             });
-        }));
+        });
 
-        it('should display parent task name', async(() => {
+        it('should display parent task name', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentName"]'));
                 expect(statusEl.nativeElement.value.trim()).toBe('This is a parent task name');
             });
-        }));
+        });
     });
 
     describe('Assigned Task', () => {
@@ -248,28 +267,30 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display assignee', async(() => {
+        it('should display assignee', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
                 expect(assigneeEl.nativeElement.value).toBe('AssignedTaskUser');
             });
-        }));
+        });
 
-        it('should display status', async(() => {
+        it('should display status', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
                 expect(statusEl.nativeElement.value).toBe('ASSIGNED');
             });
-        }));
+        });
 
         it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', () => {
             fixture.detectChanges();
-
-            const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(value).not.toBeNull();
-            expect(value.nativeElement.innerText).toBe('create');
+            fixture.whenStable().then(() => {
+                const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+                expect(value).not.toBeNull();
+                expect(value.nativeElement.innerText).toBe('create');
+            });
         });
 
         it('should not render defined edit icon for assignee property if the task in created state and shared among condidates', async () => {
@@ -321,21 +342,23 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display status', async(() => {
+        it('should display status', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
                 expect(statusEl.nativeElement.value).toBe('CREATED');
             });
-        }));
+        });
 
-        it('should display placeholder if no assignee', async(() => {
+        it('should display placeholder if no assignee', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
+                fixture.detectChanges();
                 const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
                 expect(assigneeEl.nativeElement.value).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
             });
-        }));
+        });
 
         it('should not render defined clickable edit icon for assignee property if the task in created state and not assigned', () => {
             fixture.detectChanges();
@@ -362,13 +385,13 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display status', async(() => {
+        it('should display status', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
                 expect(statusEl.nativeElement.value).toBe('COMPLETED');
             });
-        }));
+        });
 
         it('should not render defined clickable edit icon for assignee property if the task in completed state', () => {
             fixture.detectChanges();
@@ -395,13 +418,13 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display status', async(() => {
+        it('should display status', () => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
                 expect(statusEl.nativeElement.value).toBe('SUSPENDED');
             });
-        }));
+        });
 
         it('should not render defined clickable edit icon for assignee property if the task in suspended state', () => {
             fixture.detectChanges();
@@ -422,7 +445,7 @@ describe('TaskHeaderCloudComponent', () => {
 
     describe('Task with candidates', () => {
 
-        it('should display candidate groups', async(() => {
+        it('should display candidate groups', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
@@ -433,9 +456,9 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(candidateGroup1.innerText).toBe('mockgroup1');
                 expect(candidateGroup2.innerText).toBe('mockgroup2');
             });
-        }));
+        });
 
-        it('should display candidate user', async(() => {
+        it('should display candidate user', () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
@@ -446,9 +469,9 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(candidateUser1.innerText).toBe('mockuser1');
                 expect(candidateUser2.innerText).toBe('mockuser2');
             });
-        }));
+        });
 
-        it('should display placeholder if no candidate groups', async(() => {
+        it('should display placeholder if no candidate groups', () => {
             getCandidateGroupsSpy.and.returnValue(of([]));
             fixture.detectChanges();
             component.ngOnChanges();
@@ -461,9 +484,9 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT');
             });
 
-        }));
+        });
 
-        it('should display placeholder if no candidate users', async(() => {
+        it('should display placeholder if no candidate users', () => {
             getCandidateUsersSpy.and.returnValue(of([]));
             fixture.detectChanges();
             component.ngOnChanges();
@@ -475,12 +498,12 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS');
                 expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT');
             });
-        }));
+        });
     });
 
     describe('Config properties', () => {
 
-        it('should show only the properties from the configuration file', async(() => {
+        it('should show only the properties from the configuration file', () => {
             spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
             component.ngOnChanges();
             fixture.detectChanges();
@@ -493,9 +516,9 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
                 expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
             });
-        }));
+        });
 
-        it('should show all the default properties if there is no configuration', async(() => {
+        it('should show all the default properties if there is no configuration', () => {
             spyOn(appConfigService, 'get').and.returnValue(null);
             component.ngOnChanges();
             fixture.detectChanges();
@@ -508,7 +531,7 @@ describe('TaskHeaderCloudComponent', () => {
                 expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
                 expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
             });
-        }));
+        });
     });
 
     describe('Task errors', () => {
@@ -543,13 +566,13 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         }));
 
-        it('should call the loadTaskDetailsById when both app name and task id are provided', async(() => {
+        it('should call the loadTaskDetailsById when both app name and task id are provided', () => {
             spyOn(component, 'loadTaskDetailsById');
             component.appName = 'appName';
             component.taskId = 'taskId';
             component.ngOnChanges();
             fixture.detectChanges();
             expect(component.loadTaskDetailsById).toHaveBeenCalledWith(component.appName, component.taskId);
-        }));
+        });
     });
 });

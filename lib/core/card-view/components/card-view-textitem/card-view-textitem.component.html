@@ -15,7 +15,6 @@
                    [placeholder]="property.default"
                    [value]="editedValue"
                    [formControl]="textInput"
-                   [disabled]="!isEditable"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
                    [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
@@ -29,7 +28,6 @@
                       class="adf-property-value"
                       [placeholder]="property.default"
                       [formControl]="textInput"
-                      [disabled]="!isEditable"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
             <button mat-button
                     matSuffix
