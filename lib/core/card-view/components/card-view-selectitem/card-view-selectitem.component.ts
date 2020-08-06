@@ -41,6 +41,8 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     displayEmpty: boolean = true;
 
     value: string;
+    filter: string = '';
+    showInputFilter: boolean = false;
 
     constructor(cardViewUpdateService: CardViewUpdateService) {
         super(cardViewUpdateService);
