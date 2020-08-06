@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-import { Pipe, PipeTransform, Injectable } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { CardViewSelectItemOption } from '../../../interfaces/card-view-selectitem-properties.interface';
 
 @Pipe({
   name: 'optionsFilter'
 })
-@Injectable()
 export class OptionsFilterPipe implements PipeTransform {
     transform(items: CardViewSelectItemOption<any>[], term: string = ''): CardViewSelectItemOption<any>[] {
         if (!items) {
