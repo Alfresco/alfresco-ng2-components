@@ -63,3 +63,4 @@ export * from './identity-group.service';
 export * from './identity-role.service';
 export * from './version-compatibility.service';
 export * from './auth-bearer.interceptor';
+export * from './oauth2.service';
