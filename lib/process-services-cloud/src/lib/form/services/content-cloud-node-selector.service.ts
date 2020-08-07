@@ -16,11 +16,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, TranslationService, NotificationService } from '@alfresco/adf-core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentNodeSelectorComponent, ContentNodeSelectorComponentData } from '@alfresco/adf-content-services';
 import { Node } from '@alfresco/js-api';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,8 @@ export class ContentCloudNodeSelectorService {
 
   constructor(
     private apiService: AlfrescoApiService,
+    private translationService: TranslationService,
+    private notificationService: NotificationService,
     private dialog: MatDialog) {
   }
 
@@ -57,6 +59,10 @@ export class ContentCloudNodeSelectorService {
         let nodeId = '';
         await this.apiService.getInstance().node.getNode(alias, opts).then(node => {
             nodeId = node.entry.id;
+        }).catch((err) => {
+            const errorMessage = this.translationService.instant('ADF_CLOUD_TASK_FORM.ERROR.INVALID_DESTINATION_FOLDER_PATH');
+            this.notificationService.showError(errorMessage);
+            this.handleError(err);
         });
         return nodeId;
     }
@@ -67,5 +73,9 @@ export class ContentCloudNodeSelectorService {
 
   close() {
     this.dialog.closeAll();
+  }
+
+  private handleError(error: any): Observable<any> {
+    return throwError(error || 'Server error');
   }
 }
