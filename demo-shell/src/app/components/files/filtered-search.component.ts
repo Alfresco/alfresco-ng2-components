@@ -48,7 +48,7 @@ export class FilteredSearchComponent {
     }
 
     onSortingChanged(event) {
-        this.filterSorting = event.detail.column + '-' + event.detail.direction;
+        this.filterSorting = event.detail.key + '-' + event.detail.direction;
     }
 
 }

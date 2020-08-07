@@ -290,7 +290,8 @@ describe('DataTable', () => {
         dataTable.data.setSorting(new DataSorting('name', 'desc'));
 
         fixture.nativeElement.addEventListener('sorting-changed', (event: CustomEvent) => {
-            expect(event.detail.key).toBe('displayName');
+            expect(event.detail.key).toBe('name');
+            expect(event.detail.sortingKey).toBe('displayName');
             expect(event.detail.direction).toBe('asc');
             done();
         });

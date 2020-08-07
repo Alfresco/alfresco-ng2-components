@@ -771,11 +771,11 @@ export class DataTableComponent implements AfterContentInit, OnChanges, DoCheck,
         this.elementRef.nativeElement.dispatchEvent(domEvent);
     }
 
-    private emitSortingChangedEvent(column: string, key: string, direction: string) {
+    private emitSortingChangedEvent(key: string, sortingKey: string, direction: string) {
         const domEvent = new CustomEvent('sorting-changed', {
             detail: {
-                column,
                 key,
+                sortingKey,
                 direction
             },
             bubbles: true
