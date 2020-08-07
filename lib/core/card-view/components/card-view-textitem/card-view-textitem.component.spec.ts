@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ComponentFixture, TestBed, tick, fakeAsync, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync, async, discardPeriodicTasks } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
@@ -61,6 +61,7 @@ describe('CardViewTextItemComponent', () => {
                 default: 'FAKE-DEFAULT-KEY',
                 editable: false
             });
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
         });
 
         it('should render the label and value', () => {
@@ -82,6 +83,7 @@ describe('CardViewTextItemComponent', () => {
                 value: { id: 123, displayName: 'User Name' },
                 key: 'namekey'
             });
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 
@@ -100,6 +102,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: false
             });
             component.displayEmpty = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 
@@ -117,6 +120,7 @@ describe('CardViewTextItemComponent', () => {
                 editable: true
             });
             component.editable = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
             fixture.detectChanges();
             fixture.whenStable().then(() => {
 
@@ -177,6 +181,7 @@ describe('CardViewTextItemComponent', () => {
                 multivalued: true
             });
             component.useChipsForMultiValueProperty = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -201,6 +206,7 @@ describe('CardViewTextItemComponent', () => {
             });
 
             component.useChipsForMultiValueProperty = false;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -222,6 +228,7 @@ describe('CardViewTextItemComponent', () => {
                 default: 'FAKE-DEFAULT-KEY',
                 editable: false
             });
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
         });
 
         it('should render the default as value if the value is empty, clickable is false and displayEmpty is true', () => {
@@ -279,6 +286,7 @@ describe('CardViewTextItemComponent', () => {
             component.property.clickable = true;
             component.property.icon = 'FAKE_ICON';
             component.editable = true;
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
 
             fixture.detectChanges();
             fixture.whenStable().then(() => {
@@ -360,7 +368,7 @@ describe('CardViewTextItemComponent', () => {
             component.editable = true;
             component.property.isValid = () => true;
             const expectedText = 'changed text';
-
+            component.ngOnChanges({});
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -370,15 +378,15 @@ describe('CardViewTextItemComponent', () => {
                     expect(updateNotification.changed).toEqual({ textkey: expectedText });
 
                     expect(getTextFieldValue(component.property.key)).toEqual(expectedText);
-                    expect(component.property.value).toBe(expectedText);
                     disposableUpdate.unsubscribe();
                     done();
                 });
 
                 updateTextField(component.property.key, expectedText);
-                tick(600);
+                tick(1000);
 
                 fixture.detectChanges();
+                discardPeriodicTasks();
             });
         }));
 
@@ -412,10 +420,10 @@ describe('CardViewTextItemComponent', () => {
                 default: 'FAKE-DEFAULT-KEY',
                 editable: true
             });
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
         });
 
         it('should call the isValid method with the edited value', fakeAsync(() => {
-
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -538,7 +546,7 @@ describe('CardViewTextItemComponent', () => {
             });
         });
 
-        it('should render the default as value if the value is empty, clickable is true and displayEmpty is true', async ((done) => {
+        it('should render the default as value if the value is empty, clickable is true and displayEmpty is true', async((done) => {
             const functionTestClick = () => done();
 
             component.property = new CardViewTextItemModel({
@@ -652,7 +660,7 @@ describe('CardViewTextItemComponent', () => {
             });
             component.editable = true;
             component.property.validators.push(new CardViewItemIntValidator());
-
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
         });
 
         it('should show validation error when string passed', fakeAsync(() => {
@@ -772,6 +780,7 @@ describe('CardViewTextItemComponent', () => {
             });
             component.editable = true;
             component.property.validators.push(new CardViewItemFloatValidator());
+            component.ngOnChanges({ property: new SimpleChange(null, null, true) });
         });
 
         it('should show validation error when string passed', fakeAsync(() => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
@@ -24,7 +24,7 @@ import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../services/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
 import { FormControl } from '@angular/forms';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs/internal/Subject';
 
 export const DEFAULT_SEPARATOR = ', ';
@@ -41,7 +41,7 @@ const templateTypes = {
     templateUrl: './card-view-textitem.component.html',
     styleUrls: ['./card-view-textitem.component.scss']
 })
-export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnInit, OnChanges {
+export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemModel> implements OnChanges {
 
     @Input()
     editable: boolean = false;
@@ -72,24 +72,25 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         super(cardViewUpdateService);
     }
 
-    ngOnInit() {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.property && changes.property.firstChange) {
+            this.textInput.valueChanges
+                .pipe(
+                    filter(textInputValue => textInputValue !== this.editedValue),
+                    debounceTime(500),
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe(textInputValue => {
+                    this.editedValue = textInputValue;
+                    this.update();
+                });
+        }
+
         this.resetValue();
         this.setTemplateType();
-        this.textInput.valueChanges
-            .pipe(
-                debounceTime(500),
-                takeUntil(this.onDestroy$)
-            )
-            .subscribe(textInputValue => {
-                this.editedValue = textInputValue;
-                this.update();
-            });
-    }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.property && !changes.property.firstChange) {
-            this.resetValue();
-            this.setTemplateType();
+        if (changes.editable) {
+            this.isEditable ? this.textInput.enable() : this.textInput.disable();
         }
     }
 
@@ -113,7 +114,6 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
         } else {
             this.editedValue = this.property.displayValue;
             this.textInput.setValue(this.editedValue);
-            this.isEditable ? this.textInput.enable() : this.textInput.disable();
         }
 
         this.resetErrorMessages();
