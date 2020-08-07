@@ -109,10 +109,6 @@ describe('Process Task - Attach content file', () => {
         await identityService.deleteIdentityUser(testUser.idIdentityService);
     });
 
-    afterAll(async () => {
-        await uploadActions.deleteFileOrFolder(uploadedFolder.entry.id);
-    });
-
     it('[C311290] Should be able to attach multiple files when widget allows multiple files to be attached from content', async () => {
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
         await appListCloudComponent.goToApp(simpleApp);
