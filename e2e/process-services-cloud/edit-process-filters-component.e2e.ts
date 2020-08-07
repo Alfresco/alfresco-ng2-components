@@ -90,8 +90,8 @@ describe('Edit process filters cloud', () => {
         await expect(await processCloudDemoPage.processFilterCloudComponent.getActiveFilterName()).toBe('New');
         await processCloudDemoPage.processFilterCloudComponent.clickProcessFilter('custom-new');
         await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
-        await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('StartDate');
-        await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('StartDate');
+        await processCloudDemoPage.editProcessFilterCloudComponent().setSortFilterDropDown('Start Date');
+        await expect(await processCloudDemoPage.editProcessFilterCloudComponent().getSortFilterDropDownValue()).toEqual('Start Date');
 
         await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveButtonIsDisplayed();
         await processCloudDemoPage.editProcessFilterCloudComponent().checkSaveAsButtonIsDisplayed();
