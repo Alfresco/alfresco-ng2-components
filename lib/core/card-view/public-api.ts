@@ -24,8 +24,7 @@ export {
     CardViewSelectItemComponent,
     CardViewKeyValuePairsItemComponent,
     CardViewArrayItemComponent,
-    SelectFilterInputComponent,
-    OptionsFilterPipe
+    SelectFilterInputComponent
 } from './components/card-view.components';
 
 export * from './interfaces/card-view.interfaces';
