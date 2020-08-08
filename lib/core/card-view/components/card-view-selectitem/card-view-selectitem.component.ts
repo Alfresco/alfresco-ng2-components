@@ -23,7 +23,7 @@ import { CardViewSelectItemOption } from '../../interfaces/card-view.interfaces'
 import { MatSelectChange } from '@angular/material/select';
 import { BaseCardView } from '../base-card-view';
 import { AppConfigService } from '../../../app-config/app-config.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-card-view-selectitem',
@@ -54,7 +54,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnChanges(): void {
-        this.value = this.property.value.toString();
+        this.value = this.property.value?.toString();
     }
 
     ngOnInit() {
@@ -75,6 +75,16 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
 
     getOptions(): Observable<CardViewSelectItemOption<string>[]> {
         return this.options$ || this.property.options$;
+    }
+
+    getList(): Observable<CardViewSelectItemOption<string>[]> {
+        return this.getOptions()
+            .pipe(
+                map((items: CardViewSelectItemOption<string>[]) => items.filter(
+                    (item: CardViewSelectItemOption<string>) =>
+                        item.label.toLowerCase().includes(this.filter.toLowerCase()))),
+                takeUntil(this.onDestroy$)
+            );
     }
 
     onChange(event: MatSelectChange): void {
