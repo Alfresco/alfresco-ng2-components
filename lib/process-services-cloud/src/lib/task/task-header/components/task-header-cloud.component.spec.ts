@@ -99,126 +99,115 @@ describe('TaskHeaderCloudComponent', () => {
             expect(taskTitle).toBeTruthy();
         });
 
-        it('should fectch task details when appName and taskId defined', () => {
+        it('should fectch task details when appName and taskId defined', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(getTaskByIdSpy).toHaveBeenCalled();
-                expect(component.taskDetails).toBe(assignedTaskDetailsCloudMock);
-            });
+            await fixture.whenStable();
+            expect(getTaskByIdSpy).toHaveBeenCalled();
+            expect(component.taskDetails).toBe(assignedTaskDetailsCloudMock);
+
         });
 
-        it('should display assignee', () => {
+        it('should display assignee', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
-                expect(assigneeEl.nativeElement.value).toBe('AssignedTaskUser');
-            });
+            await fixture.whenStable();
+            const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
+            expect(assigneeEl.nativeElement.value).toBe('AssignedTaskUser');
         });
 
-        it('should display status', () => {
+        it('should display status', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
-                expect(statusEl.nativeElement.value).toBe('ASSIGNED');
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
+            expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
 
-        it('should display priority', () => {
+        it('should display priority', async () => {
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-                expect(priorityEl.nativeElement.value).toBe('5');
-            });
-        });
-
-        it('should display error if priority is not a number', (done) => {
+            await fixture.whenStable();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-
-                const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
-                formPriorityEl.nativeElement.value = 'stringValue';
-                formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
-
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-
-                    const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
-                    expect(errorMessageEl).not.toBeNull();
-                    done();
-                });
-            });
+            const priorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+            expect(priorityEl.nativeElement.value).toBe('5');
         });
 
-        it('should display due date', () => {
+        it('should display error if priority is not a number', async (done) => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
 
-                const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-                expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
-            });
+            const formPriorityEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-priority"]'));
+            formPriorityEl.nativeElement.value = 'stringValue';
+            formPriorityEl.nativeElement.dispatchEvent(new Event('input'));
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const errorMessageEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-error-priority"]'));
+            expect(errorMessageEl).not.toBeNull();
+            done();
+
         });
 
-        it('should display placeholder if no due date', () => {
+        it('should display due date', async () => {
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText.trim()).toBe(moment(assignedTaskDetailsCloudMock.dueDate, 'x').format('MMM D, Y, H:mm'));
+        });
+
+        it('should display placeholder if no due date', async () => {
             component.taskDetails.dueDate = null;
             component.refreshData();
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
-                expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT');
-            });
+            await fixture.whenStable();
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-dueDate"] .adf-property-value'));
+            expect(valueEl.nativeElement.innerText.trim()).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.DUE_DATE_DEFAULT');
         });
 
-        it('should display the default parent value if is undefined', () => {
+        it('should display the default parent value if is undefined', async () => {
             component.taskDetails.processInstanceId = null;
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] input'));
-                expect(valueEl.nativeElement.value).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
-            });
+            await fixture.whenStable();
+            const valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-parentName"] input'));
+            expect(valueEl.nativeElement.value).toEqual('ADF_CLOUD_TASK_HEADER.PROPERTIES.PARENT_NAME_DEFAULT');
         });
 
-        it('should be able to call update service on updating task description', (done) => {
+        it('should be able to call update service on updating task description', async (done) => {
             spyOn(taskCloudService, 'updateTask').and.returnValue(of(assignedTaskDetailsCloudMock));
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-                inputEl.nativeElement.value = 'updated description';
-                inputEl.nativeElement.dispatchEvent(new Event('input'));
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(taskCloudService.updateTask).toHaveBeenCalled();
-                    done();
-                });
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+            inputEl.nativeElement.value = 'updated description';
+            inputEl.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            expect(taskCloudService.updateTask).toHaveBeenCalled();
+            done();
         });
 
-        it('should roll back task description on error', async(() => {
+        it('should roll back task description on error', async(async () => {
             spyOn(taskCloudService, 'updateTask').and.returnValue(throwError('fake'));
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                let description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-                expect(description.nativeElement.value.trim()).toEqual('This is the description');
-                const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-                inputEl.nativeElement.value = 'updated description';
-                inputEl.nativeElement.dispatchEvent(new Event('input'));
-                fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
-                    expect(description.nativeElement.value.trim()).toEqual('This is the description');
-                    expect(taskCloudService.updateTask).toHaveBeenCalled();
-                });
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+            let description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+            expect(description.nativeElement.value.trim()).toEqual('This is the description');
+            const inputEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+            inputEl.nativeElement.value = 'updated description';
+            inputEl.nativeElement.dispatchEvent(new Event('input'));
+            fixture.detectChanges();
+            await fixture.whenStable();
+            fixture.detectChanges();
+            description = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-description"]'));
+            expect(description.nativeElement.value.trim()).toEqual('This is the description');
+            expect(taskCloudService.updateTask).toHaveBeenCalled();
         }));
 
         it('should show loading spinner when properties are not loaded', () => {
@@ -236,27 +225,24 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should fectch parent task details if the task has parent id', () => {
+        it('should fectch parent task details if the task has parent id', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                expect(getTaskByIdSpy).toHaveBeenCalledTimes(2);
-            });
+            await fixture.whenStable();
+            expect(getTaskByIdSpy).toHaveBeenCalledTimes(2);
         });
 
-        it('should display parent task id', () => {
+        it('should display parent task id', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentTaskId"'));
-                expect(assigneeEl.nativeElement.value).toBe('mock-parent-task-id');
-            });
+            await fixture.whenStable();
+            const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentTaskId"'));
+            expect(assigneeEl.nativeElement.value).toBe('mock-parent-task-id');
         });
 
-        it('should display parent task name', () => {
+        it('should display parent task name', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentName"]'));
-                expect(statusEl.nativeElement.value.trim()).toBe('This is a parent task name');
-            });
+            await fixture.whenStable();
+            const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-parentName"]'));
+            expect(statusEl.nativeElement.value.trim()).toBe('This is a parent task name');
         });
     });
 
@@ -267,30 +253,27 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display assignee', () => {
+        it('should display assignee', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
-                expect(assigneeEl.nativeElement.value).toBe('AssignedTaskUser');
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
+            expect(assigneeEl.nativeElement.value).toBe('AssignedTaskUser');
         });
 
-        it('should display status', () => {
+        it('should display status', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
-                expect(statusEl.nativeElement.value).toBe('ASSIGNED');
-            });
+            await fixture.whenStable();
+            const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
+            expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
 
         it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-                expect(value).not.toBeNull();
-                expect(value.nativeElement.innerText).toBe('create');
-            });
+            await fixture.whenStable();
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText).toBe('create');
         });
 
         it('should not render defined edit icon for assignee property if the task in created state and shared among condidates', async () => {
@@ -342,22 +325,20 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display status', () => {
+        it('should display status', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
-                expect(statusEl.nativeElement.value).toBe('CREATED');
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
+            expect(statusEl.nativeElement.value).toBe('CREATED');
         });
 
-        it('should display placeholder if no assignee', () => {
+        it('should display placeholder if no assignee', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-                const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
-                expect(assigneeEl.nativeElement.value).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
-            });
+            await fixture.whenStable();
+            fixture.detectChanges();
+            const assigneeEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-assignee"]'));
+            expect(assigneeEl.nativeElement.value).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT');
         });
 
         it('should not render defined clickable edit icon for assignee property if the task in created state and not assigned', () => {
@@ -385,12 +366,11 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display status', () => {
+        it('should display status', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
-                expect(statusEl.nativeElement.value).toBe('COMPLETED');
-            });
+            await fixture.whenStable();
+            const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
+            expect(statusEl.nativeElement.value).toBe('COMPLETED');
         });
 
         it('should not render defined clickable edit icon for assignee property if the task in completed state', () => {
@@ -405,7 +385,7 @@ describe('TaskHeaderCloudComponent', () => {
             const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
             const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
             expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(descriptionEditIcon).toBeNull('Edit icon shouaaa`zld NOT be shown');
             expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
         });
     });
@@ -418,12 +398,11 @@ describe('TaskHeaderCloudComponent', () => {
             component.ngOnChanges();
         });
 
-        it('should display status', () => {
+        it('should display status', async () => {
             fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
-                expect(statusEl.nativeElement.value).toBe('SUSPENDED');
-            });
+            await fixture.whenStable();
+            const statusEl = fixture.debugElement.query(By.css('[data-automation-id="card-textitem-value-status"]'));
+            expect(statusEl.nativeElement.value).toBe('SUSPENDED');
         });
 
         it('should not render defined clickable edit icon for assignee property if the task in suspended state', () => {
@@ -445,92 +424,85 @@ describe('TaskHeaderCloudComponent', () => {
 
     describe('Task with candidates', () => {
 
-        it('should display candidate groups', () => {
+        it('should display candidate groups', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"] span');
-                const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"] span');
-                expect(getCandidateGroupsSpy).toHaveBeenCalled();
-                expect(candidateGroup1.innerText).toBe('mockgroup1');
-                expect(candidateGroup2.innerText).toBe('mockgroup2');
-            });
+            await fixture.whenStable();
+            const candidateGroup1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup1"] span');
+            const candidateGroup2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockgroup2"] span');
+            expect(getCandidateGroupsSpy).toHaveBeenCalled();
+            expect(candidateGroup1.innerText).toBe('mockgroup1');
+            expect(candidateGroup2.innerText).toBe('mockgroup2');
         });
 
-        it('should display candidate user', () => {
+        it('should display candidate user', async () => {
             component.ngOnChanges();
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                const candidateUser1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser1"] span');
-                const candidateUser2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser2"] span');
-                expect(getCandidateUsersSpy).toHaveBeenCalled();
-                expect(candidateUser1.innerText).toBe('mockuser1');
-                expect(candidateUser2.innerText).toBe('mockuser2');
-            });
+            await fixture.whenStable();
+            const candidateUser1 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser1"] span');
+            const candidateUser2 = fixture.nativeElement.querySelector('[data-automation-id="card-arrayitem-chip-mockuser2"] span');
+            expect(getCandidateUsersSpy).toHaveBeenCalled();
+            expect(candidateUser1.innerText).toBe('mockuser1');
+            expect(candidateUser2.innerText).toBe('mockuser2');
         });
 
-        it('should display placeholder if no candidate groups', () => {
+        it('should display placeholder if no candidate groups', async () => {
             getCandidateGroupsSpy.and.returnValue(of([]));
             fixture.detectChanges();
             component.ngOnChanges();
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateGroups"]'));
-                const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
-                expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS');
-                expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT');
-            });
-
+            await fixture.whenStable();
+            const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateGroups"]'));
+            const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
+            expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS');
+            expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_GROUPS_DEFAULT');
         });
 
-        it('should display placeholder if no candidate users', () => {
+        it('should display placeholder if no candidate users', async () => {
             getCandidateUsersSpy.and.returnValue(of([]));
             fixture.detectChanges();
             component.ngOnChanges();
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateUsers"]'));
-                const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
-                expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS');
-                expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT');
-            });
+            await fixture.whenStable();
+            const labelValue = fixture.debugElement.query(By.css('[data-automation-id="card-array-label-candidateUsers"]'));
+            const defaultElement = fixture.debugElement.query(By.css('[data-automation-id="card-arrayitem-default"]'));
+            expect(labelValue.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS');
+            expect(defaultElement.nativeElement.innerText).toBe('ADF_CLOUD_TASK_HEADER.PROPERTIES.CANDIDATE_USERS_DEFAULT');
         });
     });
 
     describe('Config properties', () => {
 
-        it('should show only the properties from the configuration file', () => {
+        it('should show only the properties from the configuration file', async () => {
             spyOn(appConfigService, 'get').and.returnValue(['assignee', 'status']);
             component.ngOnChanges();
             fixture.detectChanges();
             const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
 
-            fixture.whenStable().then(() => {
-                expect(propertyList).toBeDefined();
-                expect(propertyList).not.toBeNull();
-                expect(propertyList.length).toBe(2);
-                expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
-                expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
-            });
+            await fixture.whenStable();
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(2);
+            expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
+            expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
         });
 
-        it('should show all the default properties if there is no configuration', () => {
+        it('should show all the default properties if there is no configuration', async () => {
             spyOn(appConfigService, 'get').and.returnValue(null);
             component.ngOnChanges();
             fixture.detectChanges();
 
-            fixture.whenStable().then(() => {
-                const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
-                expect(propertyList).toBeDefined();
-                expect(propertyList).not.toBeNull();
-                expect(propertyList.length).toBe(component.properties.length);
-                expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
-                expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
-            });
+            await fixture.whenStable();
+            const propertyList = fixture.debugElement.queryAll(By.css('.adf-property-list .adf-property'));
+            expect(propertyList).toBeDefined();
+            expect(propertyList).not.toBeNull();
+            expect(propertyList.length).toBe(component.properties.length);
+            expect(propertyList[0].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE');
+            expect(propertyList[1].nativeElement.textContent).toContain('ADF_CLOUD_TASK_HEADER.PROPERTIES.STATUS');
         });
     });
 
