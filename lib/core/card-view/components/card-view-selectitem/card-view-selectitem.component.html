@@ -8,10 +8,14 @@
         <div *ngIf="isEditable()">
             <mat-form-field class="adf-select-item-padding-editable adf-property-value">
                 <mat-select [(value)]="value"
+                            panelClass="adf-select-filter"
                             (selectionChange)="onChange($event)"
                             data-automation-class="select-box">
+
+                    <adf-select-filter-input *ngIf="showInputFilter" (change)="onFilterInputChange($event)"></adf-select-filter-input>
+
                     <mat-option *ngIf="showNoneOption()">{{ 'CORE.CARDVIEW.NONE' | translate }}</mat-option>
-                    <mat-option *ngFor="let option of getOptions() | async"
+                    <mat-option *ngFor="let option of getList() | async"
                                 [value]="option.key">
                         {{ option.label | translate }}
                     </mat-option>

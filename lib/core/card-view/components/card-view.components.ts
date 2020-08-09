@@ -23,5 +23,6 @@ export * from './card-view-item-dispatcher/card-view-item-dispatcher.component';
 export * from './card-view-mapitem/card-view-mapitem.component';
 export * from './card-view-textitem/card-view-textitem.component';
 export * from './card-view-selectitem/card-view-selectitem.component';
+export * from './card-view-selectitem/select-filter-input/select-filter-input.component';
 export * from './card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 export * from './card-view-arrayitem/card-view-arrayitem.component';

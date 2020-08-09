@@ -1,0 +1,35 @@
+@mixin adf-select-filter-input-theme($theme) {
+    $mat-select-panel-max-height: 256px !default;
+    $select-filter-height: 4em !default;
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    .adf-select-filter-input {
+        height: $select-filter-height;
+        display: flex;
+
+        .adf-select-filter-input-container {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            z-index: 100;
+            font-size: 14px;
+            color: mat-color($foreground, text, 0.87);
+            line-height: 3em;
+            height: $select-filter-height;
+            padding: 5px 16px 0;
+            background: mat-color($background, card);
+        }
+
+        .mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .mat-select-panel.adf-select-filter {
+        transform: none !important;
+        overflow-x: hidden !important;
+        max-height: calc(#{$mat-select-panel-max-height} + #{$select-filter-height});
+    }
+}

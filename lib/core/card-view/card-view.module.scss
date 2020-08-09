@@ -3,6 +3,7 @@
 @import './components/card-view-textitem/card-view-textitem.component';
 @import './components/card-view-keyvaluepairsitem/card-view-keyvaluepairsitem.component';
 @import './components/card-view/card-view.component';
+@import './components/card-view-selectitem/select-filter-input/select-filter-input.component';
 @import '~@mat-datetimepicker/core/datetimepicker/datetimepicker-theme.scss';
 
 @mixin adf-card-view-module-theme($theme) {
@@ -12,4 +13,5 @@
     @include adf-card-view-theme($theme);
     @include mat-datetimepicker-theme($theme);
     @include adf-card-view-array-item-theme($theme);
+    @include adf-select-filter-input-theme($theme);
 }

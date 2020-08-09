@@ -1036,6 +1036,14 @@
         "multi-value-chips": {
           "description": "Use chips for multi value properties",
           "type": "boolean"
+        },
+        "copy-to-clipboard-action": {
+          "description": "Copy property to the clipboard on double click",
+          "type": "boolean"
+        },
+        "selectFilterLimit": {
+          "description": "Shows a filter if list options exceed a specified number. Default value 5",
+          "type": "number"
         }
       }
     },

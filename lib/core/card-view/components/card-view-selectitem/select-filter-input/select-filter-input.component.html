@@ -1,0 +1,25 @@
+
+<div class="adf-select-filter-input-container">
+    <mat-form-field>
+        <input matInput
+            autocomplete="off"
+            (keydown)="handleKeydown($event)"
+            [placeholder]="'SELECT_FILTER.INPUT.PLACEHOLDER' | translate"
+            #selectFilterInput
+            [ngModel]="term"
+            (ngModelChange)="onModelChange($event)"
+            [attr.aria-label]="'SELECT_FILTER.INPUT.ARIA_LABEL' | translate"
+            (change)="$event.stopPropagation()"
+        />
+
+        <button mat-button
+            matSuffix
+            mat-icon-button
+            [attr.aria-label]="'SELECT_FILTER.BUTTON.ARIA_LABEL' | translate"
+            *ngIf="term"
+            (keydown.enter)="reset($event)"
+            (click)="reset()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</div>

@@ -509,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Click to copy",
     "SUCCESS_COPY": "Text copied to clipboard"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Search",
+      "ARIA_LABEL": "Search options"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Clear"
+    }
   }
 }

@@ -35,7 +35,7 @@ export class CardViewSelectItemModel<T> extends CardViewBaseItemModel implements
     get displayValue() {
         return this.options$.pipe(
             switchMap((options) => {
-                const option = options.find((o) => o.key === this.value);
+                const option = options.find((o) => o.key === this.value?.toString());
                 return of(option ? option.label : '');
             })
         );
