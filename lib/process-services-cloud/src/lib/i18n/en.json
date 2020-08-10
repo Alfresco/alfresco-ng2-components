@@ -188,7 +188,6 @@
       "NOT_FOUND": "No group found with the name {{groupName}}"
     }
   },
-
   "ADF_CLOUD_USERS": {
     "ERROR": {
       "NOT_FOUND": "No user found with the username {{userName}}"
@@ -270,6 +269,8 @@
     "ERROR": {
       "INVALID_DESTINATION_FOLDER_PATH": "Invalid destination folder path"
     }
+  },
+  "ADF_CLOUD_FORM_COMPONENT": {
+    "RETRIEVE_METADATA": "Fill form fields with this file's metadata"
   }
-
 }

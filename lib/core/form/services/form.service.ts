@@ -60,6 +60,8 @@ export class FormService {
 
     executeOutcome = new Subject<FormOutcomeEvent>();
 
+    updateFormValuesRequested = new Subject<FormValues>();
+
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
                 protected logService: LogService) {
