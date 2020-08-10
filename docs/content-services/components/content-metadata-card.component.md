@@ -413,3 +413,17 @@ Once you have enabled this feature you will be able to double click on your meta
    "copy-to-clipboard-action": true
 }
 ```
+
+## Search select options (ACS 7+)
+
+When the list of values is too long, the options selection panel will be enhanced with a search input to make it easier for the user to find the value by a label. The default number is `5` and can be configured by `selectFilterLimit` property in `app.config.json` to change after how many options this search input should render.
+
+```json
+"content-metadata": {
+   "presets": {...},
+   ...
+   "selectFilterLimit": 10
+}
+```
+
+![Chips for multi value properties](../../docassets/images/adf-search-select.png)
