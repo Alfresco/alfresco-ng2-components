@@ -170,6 +170,7 @@ export class DocumentListService implements DocumentListLoader {
      * @param pagination
      * @param includeFields List of data field names to include in the results
      * @param where  Optionally filter the list
+     * @param orderBy order by node property
      * @returns Details of the folder
      */
     loadFolderByNodeId(nodeId: string, pagination: PaginationModel, includeFields: string[], where?: string, orderBy?: string[]): Observable<DocumentLoaderNode> {

@@ -52,7 +52,7 @@ The properties are described in the table below:
 | ---- | ---- | ------------- | ----------- |
 | title | `string` | "" | Dialog title |
 | actionName | `string` | "" | Text to appear on the dialog's main action button ("Move", "Copy", etc) |
-| currentFolderId | `string` | `null` | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
+| currentFolderId | `string` | `null` | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) ID of the folder currently listed. |
 | dropdownHideMyFiles | `boolean` | `false` | Hide the "My Files" option added to the site list by default. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | dropdownSiteList | [`SitePaging`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/SitePaging.md) | `null` | Custom site for site dropdown same as siteList. See the [Sites Dropdown component](sites-dropdown.component.md) for more information. |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) | `null` | Custom row filter function. See the [Row Filter Model](../models/row-filter.model.md) page for more information. |
@@ -61,7 +61,7 @@ The properties are described in the table below:
 | pageSize | `number` |  | Number of items shown per page in the list. |
 | isSelectionValid | [`ValidationFunction`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector-panel.component.ts) | `defaultValidation` | Function used to decide if the selected node has permission to be selected. Default value is a function that always returns true. |
 | breadcrumbTransform | `(node: any) => any` |  | Transformation to be performed on the chosen/folder node before building the breadcrumb UI. Can be useful when custom formatting is needed for the breadcrumb. You can change the path elements from the node that are used to build the breadcrumb using this function. |
-| select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
+| select | [`Subject<Node>`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Event emitted with the current node selection when the dialog closes |
 | showSearch | `boolean` | `true` | Render search input |
 | showDropdownSiteList | `boolean` | `true` | Render sites list dropdown menu |
 
@@ -126,7 +126,7 @@ pages for more information.
 ### Using the breadcrumbTransform function
 
 The `breadcrumbTransform` property of [`ContentNodeSelectorComponentData`](../../../lib/content-services/src/lib/content-node-selector/content-node-selector.component-data.interface.ts) lets you modify
-the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) object that is used to generate the
+the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) object that is used to generate the
 list of breadcrumbs. You can use this, for example, to remove path elements that are not
 relevant to the use case. See the [Breadcrumb component](breadcrumb.component.md) page for an
 example of how to use this function.

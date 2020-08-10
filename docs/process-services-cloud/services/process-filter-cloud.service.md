@@ -30,6 +30,10 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     Gets all process instance filters for a process app.
     -   _appName:_ `string`  - Name of the target app
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>` - Observable of process filters details
+-   **isDefaultFilter**(filterName: `string`): `boolean`<br/>
+    Checks if given filter is a default filter
+    -   _filterName:_ `string`  - Name of the target process filter
+    -   **Returns** `boolean` - Boolean value for whether the filter is a default filter
 -   **updateFilter**(updatedFilter: [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)`[]>`<br/>
     Update process instance filter
     -   _updatedFilter:_ [`ProcessFilterCloudModel`](../../../lib/process-services-cloud/src/lib/process/process-filters/models/process-filter-cloud.model.ts)  - 

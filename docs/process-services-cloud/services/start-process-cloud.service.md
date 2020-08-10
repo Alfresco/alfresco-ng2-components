@@ -15,12 +15,12 @@ Gets process definitions and starts processes.
 
 -   **createProcess**(appName: `string`, payload: [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
     Create a process based on a process definition, name, form values or variables.
-    -   _appName:_ `string`  - name of the Application
+    -   _appName:_ `string`  - name of the [Application](../../../lib/testing/src/lib/core/structure/application.ts)
     -   _payload:_ [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)  - Details of the process (definition key, name, variables, etc)
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` - Details of the process instance just created
 -   **deleteProcess**(appName: `string`, processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Delete an existing process instance
-    -   _appName:_ `string`  - name of the Application
+    -   _appName:_ `string`  - name of the [Application](../../../lib/testing/src/lib/core/structure/application.ts)
     -   _processInstanceId:_ `string`  - process instance to update
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - 
 -   **getBasePath**(appName: `string`): `string`<br/>
@@ -40,12 +40,12 @@ Gets process definitions and starts processes.
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` - Details of the process instance just started
 -   **startProcess**(appName: `string`, payload: [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
     Starts a process based on a process definition, name, form values or variables.
-    -   _appName:_ `string`  - name of the Application
+    -   _appName:_ `string`  - name of the [Application](../../../lib/testing/src/lib/core/structure/application.ts)
     -   _payload:_ [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)  - Details of the process (definition key, name, variables, etc)
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` - Details of the process instance just started
 -   **updateProcess**(appName: `string`, processInstanceId: `string`, payload: [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>`<br/>
     Update an existing process instance
-    -   _appName:_ `string`  - name of the Application
+    -   _appName:_ `string`  - name of the [Application](../../../lib/testing/src/lib/core/structure/application.ts)
     -   _processInstanceId:_ `string`  - process instance to update
     -   _payload:_ [`ProcessPayloadCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-payload-cloud.model.ts)  - Details of the process (definition key, name, variables, etc)
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceCloud`](../../../lib/process-services-cloud/src/lib/process/start-process/models/process-instance-cloud.model.ts)`>` - Details of the process instance just started

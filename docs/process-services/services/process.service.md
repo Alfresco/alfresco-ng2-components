@@ -17,10 +17,10 @@ Manages process instances, process variables, and process audit Log.
     Cancels a process instance.
     -   _processInstanceId:_ `string`  - ID of process to cancel
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<void>` - Null response notifying when the operation is complete
--   **createOrUpdateProcessInstanceVariables**(processInstanceId: `string`, variables: [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]>`<br/>
+-   **createOrUpdateProcessInstanceVariables**(processInstanceId: `string`, variables: [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/RestVariable.md)`[]`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]>`<br/>
     Creates or updates variables for a process instance.
     -   _processInstanceId:_ `string`  - ID of the target process
-    -   _variables:_ [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/RestVariable.md)`[]`  - Variables to update
+    -   _variables:_ [`RestVariable`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/RestVariable.md)`[]`  - Variables to update
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]>` - Array of instance variable info
 -   **deleteProcessInstanceVariable**(processInstanceId: `string`, variableName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<void>`<br/>
     Deletes a variable for a process instance.
@@ -39,10 +39,10 @@ Manages process instances, process variables, and process audit Log.
     Gets Process Instance metadata.
     -   _processInstanceId:_ `string`  - ID of the target process
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstance`](../../../lib/process-services/src/lib/process-list/models/process-instance.model.ts)`>` - Metadata for the instance
--   **getProcessDefinitions**(appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`[]>`<br/>
+-   **getProcessDefinitions**(appId?: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`[]>`<br/>
     Gets process definitions associated with an app.
     -   _appId:_ `number`  - (Optional) ID of a target app
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`[]>` - Array of process definitions
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md)`[]>` - Array of process definitions
 -   **getProcessInstanceVariables**(processInstanceId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessInstanceVariable`](../../../lib/process-services/src/lib/process-list/models/process-instance-variable.model.ts)`[]>`<br/>
     Gets the variables for a process instance.
     -   _processInstanceId:_ `string`  - ID of the target process

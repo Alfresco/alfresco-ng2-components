@@ -18,17 +18,17 @@ Manages ratings for items in Content Services.
     -   _nodeId:_ `string`  - Target node
     -   _ratingType:_ `any`  - Type of rating to remove (can be "likes" or "fiveStar")
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Null response indicating that the operation is complete
--   **getRating**(nodeId: `string`, ratingType: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>`<br/>
+-   **getRating**(nodeId: `string`, ratingType: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/RatingEntry.md)`|__type>`<br/>
     Gets the current user's rating for a node.
-    -   _nodeId:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to get the rating from
+    -   _nodeId:_ `string`  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to get the rating from
     -   _ratingType:_ `any`  - Type of rating (can be "likes" or "fiveStar")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>` - The rating value
--   **postRating**(nodeId: `string`, ratingType: `string`, vote: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>`<br/>
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/RatingEntry.md)`|__type>` - The rating value
+-   **postRating**(nodeId: `string`, ratingType: `string`, vote: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/RatingEntry.md)`|__type>`<br/>
     Adds the current user's rating for a node.
     -   _nodeId:_ `string`  - Target node for the rating
     -   _ratingType:_ `string`  - Type of rating (can be "likes" or "fiveStar")
     -   _vote:_ `any`  - Rating value (boolean for "likes", numeric 0..5 for "fiveStar")
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/RatingEntry.md)`|__type>` - Details about the rating, including the new value
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`RatingEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/RatingEntry.md)`|__type>` - Details about the rating, including the new value
 
 ## Details
 

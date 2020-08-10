@@ -13,8 +13,8 @@ Sets custom CSS styles for rows of a Document List according to the item's permi
 
 ### Properties
 
-| [`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) | Type | Description |
-| ----------------------------------------------------------------------------------------------------- | ---- | ----------- |
+| [`Property`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/property.ts) | Type | Description |
+| ----------------------------------------------------------------------------------------------- | ---- | ----------- |
 | isFile | boolean | Does this style apply to files? |
 | isFolder | boolean | Does this style apply to folders? |
 | permission | Permissions | An enum value defining the permissions that this style applies to (see below) |
@@ -29,7 +29,7 @@ and can be applied separately to files and folders by setting `isFile` and `isFo
 
 ### Permissions enum
 
-The [Allowable Operations](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/models/allowable-operations.enum.ts)
+The [Allowable Operations](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/core/models/allowable-operations.enum.ts)
 enum contains all the valid permissions for which you can apply custom styles: **DELETE**, **UPDATE**,
 **CREATE**, **UPDATEPERMISSIONS**, **NOT_DELETE**, **NOT_UPDATE**, **NOT_CREATE**, **NOT_UPDATEPERMISSIONS**.
 

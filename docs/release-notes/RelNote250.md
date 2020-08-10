@@ -338,7 +338,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - CLONE - Thumbs.db files are uploading with a folder upload
 -   \[
     [ADF-3289](https://issues.alfresco.com/jira/browse/ADF-3289)
-    ] - [`AppsDefinitionApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api-legacy/activiti-rest-api/src/api/AppsDefinitionApi.ts) contains two methods with same name and different firms
+    ] - [`AppsDefinitionApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api-legacy/activiti-rest-api/src/api/AppsDefinitionApi.ts) contains two methods with same name and different firms
 -   \[
     [ADF-3292](https://issues.alfresco.com/jira/browse/ADF-3292)
     ] - CLONE - Filter category should be deselected when user makes a new search query
@@ -374,7 +374,7 @@ Release Notes - Apps Development Framework - Version 2.5.0
     ] - Refresh button is not displayed on the form
 -   \[
     [ADF-3383](https://issues.alfresco.com/jira/browse/ADF-3383)
-    ] - Incorrect datatype for password in [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/model/personBodyCreate.ts) in index.d.ts
+    ] - Incorrect datatype for password in [`PersonBodyCreate`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/model/personBodyCreate.ts) in index.d.ts
 -   \[
     [ADF-3386](https://issues.alfresco.com/jira/browse/ADF-3386)
     ] - Task Filters accordion is not expanding / collapsing

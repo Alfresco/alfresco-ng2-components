@@ -51,7 +51,8 @@ This component is designed to be used as transcluded inside the [document list c
 | currentFolderNodeId | `string` |  | The id of the current folder of the document list. |
 | maxItems | `number` |  | Maximum number of search results to show in a page. |
 | skipCount | `number` |  | The offset of the start of the page within the results list. |
-| value | `any` |  |  |
+| sorting | `string` | null | The sorting to apply to the the filter. |
+| value | `any` |  | (optional) Initial filter value to sort . |
 
 ### Events
 
@@ -59,7 +60,7 @@ This component is designed to be used as transcluded inside the [document list c
 | ---- | ---- | ----------- |
 | clear | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when the last of all the filters is cleared. |
 | selection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<Map<string, string>>` | Emitted when a filter value is selected |
-| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the result of the filter is received from the API. |
+| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the result of the filter is received from the API. |
 
 ## See also
 

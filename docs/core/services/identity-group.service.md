@@ -41,6 +41,10 @@ Performs CRUD operations on identity groups.
     Finds groups filtered by name.
     -   _searchParams:_ [`IdentityGroupSearchParam`](../../../lib/core/models/identity-group.model.ts)  - Object containing the name filter string
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityGroupModel`](../../../lib/core/models/identity-group.model.ts)`[]>` - List of group information
+-   **getAvailableRoles**(groupId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>`<br/>
+    Gets available roles
+    -   _groupId:_ `string`  - Id of the group.
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`IdentityRoleModel`](../../../lib/core/models/identity-role.model.ts)`[]>` - Array of available roles information objects
 -   **getClientIdByApplicationName**(applicationName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string>`<br/>
     Gets the client Id using the app name.
     -   _applicationName:_ `string`  - Name of the app

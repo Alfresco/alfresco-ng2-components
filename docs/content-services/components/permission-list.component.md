@@ -44,7 +44,7 @@ but you can also supply your own content:
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | error | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<any>` | Emitted when an error occurs. |
-| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/PermissionElement.md)`>` | Emitted when the permission is updated. |
+| update | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`PermissionElement`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/PermissionElement.md)`>` | Emitted when the permission is updated. |
 
 ## Details
 

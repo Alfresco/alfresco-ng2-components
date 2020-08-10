@@ -31,7 +31,7 @@ Displays the version history of a node with the ability to upload a new version.
 | ---- | ---- | ------------- | ----------- |
 | allowDownload | `boolean` | true | Enable/disable downloading a version of the current node. |
 | newFileVersion | `File` |  | New file for updating current version. |
-| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | Target node to manage version history. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | Target node to manage version history. |
 | showComments | `boolean` | true | Toggles showing/hiding of comments. |
 | showVersionComparison | `boolean` | false | Toggles showing/hiding the [version comparison component](../../content-services/components/version-comparison.component.md). |
 
@@ -40,8 +40,8 @@ Displays the version history of a node with the ability to upload a new version.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | uploadCancel | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<boolean>` | Emitted when an cancelling during upload. |
-| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when an error occurs during upload. |
-| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a file is uploaded successfully. |
+| uploadError | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when an error occurs during upload. |
+| uploadSuccess | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a file is uploaded successfully. |
 | viewVersion | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<string>` | Emitted when viewing a version. |
 
 ## Details

@@ -24,7 +24,7 @@ Stores preferences for the app and for individual components.
 -   **getPropertyKey**(property: `string`): `string`<br/>
     Gets the full property key with prefix.
     -   _property:_ `string`  - The property name
-    -   **Returns** `string` - [Property](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) key
+    -   **Returns** `string` - [Property](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/property.ts) key
 -   **getStoragePrefix**(): `string`<br/>
     Gets the active storage prefix for preferences.
     -   **Returns** `string` - Storage prefix

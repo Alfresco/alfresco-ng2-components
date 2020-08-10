@@ -43,7 +43,7 @@ Selectively disables an HTML element or Angular component.
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | nodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]` | \[] | Nodes to check permission for. |
-| permission | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
+| permission | `string` | null | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) permission to check (create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions). |
 
 ## Details
 

@@ -75,7 +75,7 @@ export class ContentMetadataComponent implements OnChanges, OnInit, OnDestroy {
     @Input()
     displayDefaultProperties: boolean = true;
 
-    /** (Optional) shows the given aspect in the expanded  card */
+    /** (optional) shows the given aspect in the expanded  card */
     @Input()
     displayAspect: string = null;
 

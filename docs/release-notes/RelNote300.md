@@ -126,7 +126,7 @@ This rewrite has been necessary to make the JS-API  lighter and  faster with the
 
 Note that the following old package names have been deprecated: **alfresco-js-api**, **alfresco-js-api-node**.
 
-The [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) and Browser version are now both in: **_@alfresco/js-api_**
+The [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) and Browser version are now both in: **_@alfresco/js-api_**
 Refer to the official [Alfresco JS-API documenation](https://github.com/Alfresco/alfresco-js-api) to learn more about this.
 
 ### Angular 7

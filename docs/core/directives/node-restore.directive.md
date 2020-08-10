@@ -50,7 +50,7 @@ Restores deleted nodes to their original location.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| selection | [`DeletedNodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/DeletedNodeEntry.md)`[]` |  | Array of deleted nodes to restore. |
+| selection | [`DeletedNodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/DeletedNodeEntry.md)`[]` |  | Array of deleted nodes to restore. |
 
 ### Events
 
@@ -60,7 +60,7 @@ Restores deleted nodes to their original location.
 
 ## Details
 
-The directive takes a selection of [`DeletedNodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/DeletedNodeEntry.md) instances and restores them to
+The directive takes a selection of [`DeletedNodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/DeletedNodeEntry.md) instances and restores them to
 their original locations. If the original location doesn't exist anymore then they remain
 in the trash list.
 

@@ -193,7 +193,7 @@ The due date and the description of the task details are now editable and integr
 
 ### 12. Configuration back end service hostname feature
 
-[Application Configuration Service](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-core#appconfigservice) (AppConfigService) gets support for dynamic variable substitution for APS and ACS endpoint settings.
+[Application Configuration Service](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/ng2-components/ng2-alfresco-core#appconfigservice) (AppConfigService) gets support for dynamic variable substitution for APS and ACS endpoint settings.
 It is now possible having a configuration like given below:
 
     {
@@ -206,7 +206,7 @@ It is now possible having a configuration like given below:
 
 At runtime, the "hostname" and "port" variables will be automatically replaced with the actual values taken from the client machine. This helps reducing overhead with having multiple CI and E2E environments, all environments can use the same config file.
 
-You can see more details on this feature in the following article: [Variable substitution in configuration strings](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-core#variable-substitution-in-configuration-strings)
+You can see more details on this feature in the following article: [Variable substitution in configuration strings](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/ng2-components/ng2-alfresco-core#variable-substitution-in-configuration-strings)
 
 ### 13. User Preferences Service
 
@@ -246,8 +246,8 @@ Two new methods has been added into the alfresco-js-api to support retrieve the 
 
 | API | Name | HTTP method | URL | Description |
 | --- | ---- | ----------- | --- | ----------- |
-| _ActivitiPublicRestApi.[`TaskApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api-legacy/activiti-rest-api/docs/TaskApi.md)_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET** | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
-| _ActivitiPublicRestApi.[`TaskApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api-legacy/activiti-rest-api/docs/TaskApi.md)_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET** | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
+| _ActivitiPublicRestApi.[`TaskApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api-legacy/activiti-rest-api/docs/TaskApi.md)_ | [**getTaskAuditJson**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditJson) | **GET** | /api/enterprise/tasks/{taskId}/audit | Retrieve audit infromation in json format |
+| _ActivitiPublicRestApi.[`TaskApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api-legacy/activiti-rest-api/docs/TaskApi.md)_ | [**getTaskAuditPdf**](https://github.com/Alfresco/alfresco-js-api/blob/a82ce3bbe56cb0944f8771d14193704b571adf96/src/alfresco-activiti-rest-api/docs/TaskApi.md#getTaskAuditPdf) | **GET** | /app/rest/tasks/{taskId}/audit | Retrieve the task audit infromation in pdf format |
 
 For further details about those endepoints please refer to the [official documentation](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-activiti-rest-api/docs/TaskApi.md) 
 
@@ -343,7 +343,7 @@ Release Notes - Apps Development Framework - Version 1.7.
 -   \[[ADF-819](https://issues.alfresco.com/jira/browse/ADF-819)] - Snackbar does not appear when uploading files via DnD
 -   \[[ADF-923](https://issues.alfresco.com/jira/browse/ADF-923)] - Involved user should not be able to see 'Complete' button as active in a task.
 -   \[[ADF-939](https://issues.alfresco.com/jira/browse/ADF-939)] - [Login] Sign in button does not stay at the bottom
--   \[[ADF-943](https://issues.alfresco.com/jira/browse/ADF-943)] - APS [`ContentApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/content.api.ts) is not present on index.d.ts and [`SitesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/sites.api.ts) is not complete
+-   \[[ADF-943](https://issues.alfresco.com/jira/browse/ADF-943)] - APS [`ContentApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/content.api.ts) is not present on index.d.ts and [`SitesApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/sites.api.ts) is not complete
 -   \[[ADF-945](https://issues.alfresco.com/jira/browse/ADF-945)] - 'Undefined' is displayed in 'attach file' widget after restore.
 -   \[[ADF-950](https://issues.alfresco.com/jira/browse/ADF-950)] - when the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) in readonly mode you can edit the date
 -   \[[ADF-957](https://issues.alfresco.com/jira/browse/ADF-957)] - Duplicate Rest calls are made for fields where Rest end points are given

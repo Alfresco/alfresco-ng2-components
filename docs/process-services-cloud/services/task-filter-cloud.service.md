@@ -33,6 +33,10 @@ Manages task filters.
 -   **getUsername**(): `string`<br/>
     Gets the username field from the access token.
     -   **Returns** `string` - Username string
+-   **isDefaultFilter**(filterName: `string`): `boolean`<br/>
+    Checks if given filter is a default filter
+    -   _filterName:_ `string`  - Name of the target task filter
+    -   **Returns** `boolean` - Boolean value for whether the filter is a default filter
 -   **updateFilter**(updatedFilter: [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`[]>`<br/>
     Updates a task filter.
     -   _updatedFilter:_ [`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)  - 

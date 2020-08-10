@@ -37,7 +37,7 @@ Displays the Start [`Form`](../../../lib/process-services/src/lib/task-list/mode
 | nameNode | `string` |  | Name to assign to the new node where the metadata are stored. |
 | nodeId | `string` |  | Content Services node ID for the form metadata. |
 | path | `string` |  | Path of the folder where the metadata will be stored. |
-| processDefinitionId | `string` |  | [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) ID of the process to start, this parameter can not be use in combination with processId |
+| processDefinitionId | `string` |  | [Definition](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) ID of the process to start, this parameter can not be use in combination with processId |
 | processId | `string` |  | Process ID of the process to start, this parameter can not be use in combination with processDefinitionId |
 | readOnly | `boolean` | false | Toggle readonly state of the form. Forces all form widgets to render as readonly if enabled. |
 | readOnlyForm | `boolean` | false | Is the form read-only (ie, can't be edited)? |

@@ -34,7 +34,7 @@ This document lists all the deprecated ADF v2.x components that were removed for
         `customQueryBody` inputs of the [`SearchControlComponent`](../content-services/components/search-control.component.md) have been removed in favor of the
         [custom search configuration interface](../core/interfaces/search-configuration.interface.md).
         The inputs were deprecated in v2.1.0.
-    -   `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to 
+    -   `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Id of the file to 
         load has been renamed as `nodeId`.
     -   `<adf-viewer>`: The `allowShare` input has been removed. Inject the
         [Share Directive](../content-services/directives/content-node-share.directive.md) in a

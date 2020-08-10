@@ -52,7 +52,7 @@ Picard's birthday (47457.1):
 
     Your model must extend the [`CardViewBaseItemModel`](../../../lib/core/card-view/models/card-view-baseitem.model.ts) class and implement the [`CardViewItem`](../../../lib/core/card-view/interfaces/card-view-item.interface.ts)
     and [`DynamicComponentModel`](../../../lib/core/services/dynamic-component-mapper.service.ts) interfaces. See the
-    [Card View Text Item model source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
+    [Card View Text Item model source](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
     for an example of how to do this.
 
     ```ts
@@ -101,9 +101,9 @@ Picard's birthday (47457.1):
     ```
 
     See the
-    [Card View Text Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
+    [Card View Text Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/core/card-view/components/card-view-textitem/card-view-textitem.component.ts)
     or the
-    [Card View Date Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/development/lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) for examples of how to make the field
+    [Card View Date Item component source](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/lib/core/card-view/components/card-view-dateitem/card-view-dateitem.component.ts) for examples of how to make the field
     editable.
 
 3.  Bind your custom component to the [custom model](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/api/customModel.api.ts) type so that Angular's dynamic component

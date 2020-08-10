@@ -407,7 +407,7 @@ Release Notes - Apps Development Framework - Version 2.1.
 -   \[[ADF-2209](https://issues.alfresco.com/jira/browse/ADF-2209)] - The 'Complete' button of a task that has a form is not properly field with colour when hover
 -   \[[ADF-2210](https://issues.alfresco.com/jira/browse/ADF-2210)] - Dynamic Table title is not aligned properly
 -   \[[ADF-2213](https://issues.alfresco.com/jira/browse/ADF-2213)] - Amount Widget is not aligned
--   \[[ADF-2221](https://issues.alfresco.com/jira/browse/ADF-2221)] - Search fails on Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector
+-   \[[ADF-2221](https://issues.alfresco.com/jira/browse/ADF-2221)] - Search fails on Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Selector
 -   \[[ADF-2222](https://issues.alfresco.com/jira/browse/ADF-2222)] - The user profile window is not visible when only Content Services is enabled
 
 ### New Feature

@@ -50,6 +50,6 @@ Searches and gets information for groups.
 ## Details
 
 See the
-[Groups API](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/GroupsApi.md)
+[Groups API](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/GroupsApi.md)
 page in the Alfresco JS-API docs for further details about the information about the format
 of the returned data.

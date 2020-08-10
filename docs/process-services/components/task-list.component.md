@@ -64,7 +64,7 @@ when the task list is empty:
 | name | `string` |  | Name of the tasklist. |
 | page | `number` | 0 | The page number of the tasks to fetch. |
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |
-| processDefinitionId | `string` |  | The [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process. |
+| processDefinitionId | `string` |  | The [Definition](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process. |
 | processInstanceId | `string` |  | The Instance Id of the process. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |
 | selectionMode | `string` | "single" | Row selection mode. Can be none, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |
