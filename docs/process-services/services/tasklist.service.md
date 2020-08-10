@@ -107,10 +107,10 @@ Manages Task Instances.
     Un-claims a task for the current user.
     -   _taskId:_ `string`  - ID of the task to unclaim
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Null response notifying when the operation is complete
--   **updateTask**(taskId: `string`, updated: [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
+-   **updateTask**(taskId: `string`, updated: [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md)): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>`<br/>
     Updates the details (name, description, due date) for a task.
     -   _taskId:_ `string`  - ID of the task to update
-    -   _updated:_ [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md)  - Data to update the task (as a [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md) instance).
+    -   _updated:_ [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md)  - Data to update the task (as a [`TaskUpdateRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/TaskUpdateRepresentation.md) instance).
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsModel`](../../../lib/process-services/src/lib/task-list/models/task-details.model.ts)`>` - Updated task details
 
 ## Details

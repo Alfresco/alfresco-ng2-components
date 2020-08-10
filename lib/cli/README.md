@@ -65,7 +65,7 @@ Move in the folder where you have your `package.json` and run the command:
 ```bash
 npm install
 
-adf-cli license
+adf-cli licenses
 ```
 
 ### Audit Check

@@ -26,7 +26,7 @@ If you don't have an instance of Alfresco Content Services up and running, see
 [Preparing the development environment](./preparing-environment.md)
 to learn how to set it up.
 
-You will need the `npm` client to download the requested [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) libraries (also explained in
+You will need the `npm` client to download the requested [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) libraries (also explained in
 [Preparing the development environment](./preparing-environment.md)).
 
 ## Creating the JavaScript application

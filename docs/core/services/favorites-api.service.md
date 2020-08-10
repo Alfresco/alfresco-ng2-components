@@ -13,20 +13,20 @@ Gets a list of items a user has marked as their favorites.
 
 ### Methods
 
--   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
+-   **getFavorites**(personId: `string`, options?: `any`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>`<br/>
     Gets the favorites for a user.
     -   _personId:_ `string`  - ID of the user
     -   _options:_ `any`  - (Optional) Options supported by JS-API
-    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` - List of favorites
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` - List of favorites
 -   **remapFavoriteEntries**(entries: `any[]`): `any[]`<br/>
 
     -   _entries:_ `any[]`  - 
     -   **Returns** `any[]` - 
 
--   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)<br/>
+-   **remapFavoritesData**(data: `any` = `{}`): [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)<br/>
 
     -   _data:_ `any`  - 
-    -   **Returns** [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) - 
+    -   **Returns** [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) - 
 
 -   **remapEntry**(\_\_namedParameters: `Function`): `any`<br/>
 

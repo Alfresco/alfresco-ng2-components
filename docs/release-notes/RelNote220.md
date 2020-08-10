@@ -384,7 +384,7 @@ Release Notes - Apps Development Framework - Version 2.2.
 -   \[[ADF-2163](https://issues.alfresco.com/jira/browse/ADF-2163)] - content-action target folder and file option
 -   \[[ADF-2298](https://issues.alfresco.com/jira/browse/ADF-2298)] - Process Header - Make it customizable from config file
 -   \[[ADF-2300](https://issues.alfresco.com/jira/browse/ADF-2300)] - [Upload Widget] Actions menu is needed
--   \[[ADF-2304](https://issues.alfresco.com/jira/browse/ADF-2304)] - Add option to Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Selector to transform the breadcrumb folder node
+-   \[[ADF-2304](https://issues.alfresco.com/jira/browse/ADF-2304)] - Add option to Content [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Selector to transform the breadcrumb folder node
 -   \[[ADF-2322](https://issues.alfresco.com/jira/browse/ADF-2322)] - [Document List] Gallery view
 -   \[[ADF-2340](https://issues.alfresco.com/jira/browse/ADF-2340)] - [Delete directive] delete permanent form trashcan
 -   \[[ADF-2352](https://issues.alfresco.com/jira/browse/ADF-2352)] - It should be possible to project toolbar buttons for the Viewer

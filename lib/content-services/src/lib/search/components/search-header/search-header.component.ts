@@ -52,7 +52,8 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     col: DataColumn;
 
-    @Input()
+    /** (optional) Initial filter value to sort . */
+     @Input()
     value: any;
 
     /** The id of the current folder of the document list. */
@@ -67,6 +68,7 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     skipCount: number;
 
+    /** The sorting to apply to the the filter. */
     @Input()
     sorting: string = null;
 

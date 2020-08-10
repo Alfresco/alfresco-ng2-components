@@ -98,7 +98,7 @@ class MyComponent {
     Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) related to a taskId  
     -   `taskId` - Task Id
 -   `getFormDefinitionById(formId: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
-    Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts)  
+    Get [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) [`Definition`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts)  
     -   `formId` - [`Form`](../../../lib/process-services/src/lib/task-list/models/form.model.ts) Id
 -   `getFormDefinitionByName(name: string):`[`Observable`](http://reactivex.io/documentation/observable.html)`<any>`  
     Returns form definition with a given name.  

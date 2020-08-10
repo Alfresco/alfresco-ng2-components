@@ -157,7 +157,7 @@ You can optionally set up the card view so that its properties can be edited. Yo
 the editing of properties at two levels:
 
 -   **Global level** - _via the editable parameter of the card-view.component_
--   **[`Property`](../../../lib/content-services/src/lib/content-metadata/interfaces/property.interface.ts) level** -  _in each property via the editable attribute_
+-   **[`Property`](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/property.ts) level** -  _in each property via the editable attribute_
 
 If you set the global editable parameter to false, no properties can be edited regardless of their
 individual `editable` settings.

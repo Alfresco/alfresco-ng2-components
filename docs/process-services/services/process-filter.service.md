@@ -17,10 +17,10 @@ Manage Process Filters, which are pre-configured Process Instance queries.
     Adds a filter.
     -   _filter:_ [`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)  - The filter to add
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`>` - The filter just added
--   **callApiProcessFilters**(appId?: `number`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>`<br/>
+-   **callApiProcessFilters**(appId?: `number`): [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>`<br/>
     Calls `getUserProcessInstanceFilters` from the Alfresco JS API.
     -   _appId:_ `number`  - (Optional) ID of the target app
-    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>` - List of filter details
+    -   **Returns** [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)`<`[`ResultListDataRepresentationUserProcessInstanceFilterRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ResultListDataRepresentation%C2%ABUserProcessInstanceFilterRepresentation%C2%BB.md)`>` - List of filter details
 -   **createDefaultFilters**(appId: `number`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`FilterProcessRepresentationModel`](../../../lib/process-services/src/lib/process-list/models/filter-process.model.ts)`[]>`<br/>
     Creates and returns the default filters for an app.
     -   _appId:_ `number`  - ID of the target app

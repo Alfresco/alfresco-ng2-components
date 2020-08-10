@@ -99,7 +99,7 @@ The **DocumentList Component** can now show different icons for **Smart Folders*
 
 ### Tag node list component has a configurable delete button for tag
 
-A configurable delete button has been added to the **Tag [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) List Component** to let you show it only when user has permissions.
+A configurable delete button has been added to the **Tag [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) List Component** to let you show it only when user has permissions.
 
     <adf-tag-node-list [showDelete]="showDelete" [nodeId]="nodeId"></adf-tag-node-list>
 

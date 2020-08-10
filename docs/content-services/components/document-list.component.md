@@ -56,6 +56,7 @@ Displays the documents from a repository.
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
+| additionalSorting | `string[]` | ['isFolder DESC'] | Defines default sorting. The format is an array of strings `[key direction, otherKey otherDirection]` i.e. `['name desc', 'nodeType asc']` or `['name asc']`. Set this value if you want a base rule to be added to the sorting apart from the one driven by the header. |
 | allowDropFiles | `boolean` | false | When true, this enables you to drop files directly into subfolders shown as items in the list or into another file to trigger updating it's version. When false, the dropped file will be added to the current folder (ie, the one containing all the items shown in the list). See the [Upload directive](../../core/directives/upload.directive.md) for further details about how the file drop is handled. |
 | contentActions | `boolean` | false | Toggles content actions for each row |
 | contentActionsPosition | `string` | "right" | Position of the content actions dropdown menu. Can be set to "left" or "right". |
@@ -70,7 +71,7 @@ Displays the documents from a repository.
 | multiselect | `boolean` | false | Toggles multiselect mode |
 | navigate | `boolean` | true | Toggles navigation to folder content or file preview |
 | navigationMode | `string` |  | [User](../../../lib/core/pipes/user-initial.pipe.ts) interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
-| node | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) | null | The Document list will show all the nodes contained in the [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md) entity |
+| node | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) | null | The Document list will show all the nodes contained in the [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) entity |
 | permissionsStyle | [`PermissionStyleModel`](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) page for further details and examples. |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
@@ -80,7 +81,7 @@ Displays the documents from a repository.
 | sortingMode | `string` | "server" | Defines sorting mode. Can be either `client` (items in the list are sorted client-side) or `server` (the ordering supplied by the server is used without further client-side sorting). Note that the `server` option _does not_ request the server to sort the data before delivering it. |
 | stickyHeader | `boolean` | false | Toggles the sticky header mode. |
 | thumbnails | `boolean` | false | Show document thumbnails rather than icons |
-| where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
+| where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | currentFolderId | `string` |  | The ID of the folder node to display or a reserved string alias for special sources |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
 
@@ -92,9 +93,9 @@ Displays the documents from a repository.
 | folderChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the current display folder changes |
 | nodeClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user clicks a list node |
 | nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
+| nodeSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` | Emitted when the node selection change |
 | preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
-| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
-| nodeSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntryEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Returns the current node selected |
+| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
 
 ## Details
 
@@ -205,7 +206,7 @@ You can use any of the following options to set the folder that the Document Lis
 
 #### Node ID
 
-The unique identifier of the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md). Gets automatically updated when you perform navigation to other folders.
+The unique identifier of the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md). Gets automatically updated when you perform navigation to other folders.
 
 #### Repository aliases
 
@@ -478,7 +479,7 @@ documentation for a full explanation of the component lifecycle.
 ### Underlying node object
 
 The [Document List component](document-list.component.md) assigns an instance of 
-the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) class
+the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) class
 (defined in the [Alfresco JS API](https://github.com/Alfresco/alfresco-js-api)) as the data context
 for each row. You can make use of the properties of this object when defining custom columns:
 

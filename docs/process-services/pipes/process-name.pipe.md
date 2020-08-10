@@ -18,7 +18,7 @@ processNamePipe.transform('Example - %{processDefinition} - %{datetime}', new Pr
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
 | processNameFormat | string | undefined | The process name format including the preferred identifiers to be used |
-| selectedProcessDefinition | [`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md) | undefined | (optional) The selected process definition |
+| selectedProcessDefinition | [`ProcessDefinitionRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessDefinitionRepresentation.md) | undefined | (optional) The selected process definition |
 
 ## Details
 

@@ -45,7 +45,7 @@ Searches Groups.
 | roles | `string[]` | \[] | Role names of the groups to be listed. |
 | searchGroupsControl | `FormControl` |  | FormControl to search the group |
 | title | `string` |  | Title of the field |
-| validate | `Boolean` | false | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the identity service to verify the validity of the information passed as input. Otherwise, no check will be done. |
+| validate | `Boolean` | false | This flag enables the validation on the preSelectGroups passed as input. In case the flag is true the components call the [identity service](../../../lib/testing/src/lib/core/actions/identity/identity.service.ts) to verify the validity of the information passed as input. Otherwise, no check will be done. |
 
 ### Events
 

@@ -31,23 +31,23 @@ export class MyComponent implements OnInit {
 
 | Name | Type | Default value | Description |
 | ---- | ---- | ------------- | ----------- |
-| contentApi | [`ContentApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/content.api.ts) |  | (Read only) Accesses the Content API |
-| nodesApi | [`NodesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/nodes.api.ts) |  | (Read only) Accesses the Nodes API |
-| renditionsApi | [`RenditionsApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/renditions.api.ts) |  | (Read only) Accesses the Renditions API |
-| sharedLinksApi | [`SharedLinksApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/sharedlinks.api.ts) |  | (Read only) Accesses the Shared Links API |
-| sitesApi | [`SitesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/sites.api.ts) |  | (Read only) Accesses the Sites API |
-| favoritesApi | [`FavoritesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/favorites.api.ts) |  | (Read only) Accesses the Favorites API |
-| peopleApi | [`PeopleApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/people.api.ts) |  | (Read only) Accesses the People API |
-| searchApi | [`SearchApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api-legacy/legacy.ts) |  | (Read only) Accesses the Search API |
-| versionsApi | [`VersionsApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/versions.api.ts) |  | (Read only) Accesses the Versions API |
-| classesApi | [`ClassesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/classes.api.ts) |  | (Read only) Accesses the Classes API |
-| groupsApi | [`GroupsApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/groups.api.ts) |  | (Read only) Accesses the Groups API |
+| contentApi | [`ContentApi`](https://github.com/Alfresco/alfres/co-js-api/blob/develop/src/api/content-rest-api/api/content.api.ts) |  | (Read only) Accesses the Content API |
+| nodesApi | [`NodesApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/nodes.api.ts) |  | (Read only) Accesses the Nodes API |
+| renditionsApi | [`RenditionsApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/renditions.api.ts) |  | (Read only) Accesses the Renditions API |
+| sharedLinksApi | [`SharedLinksApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/sharedlinks.api.ts) |  | (Read only) Accesses the Shared Links API |
+| sitesApi | [`SitesApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/sites.api.ts) |  | (Read only) Accesses the Sites API |
+| favoritesApi | [`FavoritesApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/favorites.api.ts) |  | (Read only) Accesses the Favorites API |
+| peopleApi | [`PeopleApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/people.api.ts) |  | (Read only) Accesses the People API |
+| searchApi | [`SearchApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api-legacy/legacy.ts) |  | (Read only) Accesses the Search API |
+| versionsApi | [`VersionsApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/versions.api.ts) |  | (Read only) Accesses the Versions API |
+| classesApi | [`ClassesApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/classes.api.ts) |  | (Read only) Accesses the Classes API |
+| groupsApi | [`GroupsApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/groups.api.ts) |  | (Read only) Accesses the Groups API |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a node updates. |
+| nodeUpdated | [`Subject`](http://reactivex.io/documentation/subject.html)`<`[`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)`>` | Emitted when a node updates. |
 
 ## Details
 

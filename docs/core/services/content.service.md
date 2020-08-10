@@ -50,14 +50,14 @@ Accesses app-generated data objects via URLs and file downloads.
     Gets content for the given node.
     -   _nodeId:_ `string`  - ID of the target node
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - Content data
--   **hasAllowableOperations**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
+-   **hasAllowableOperations**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md), allowableOperation: [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permissions on that node
-    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to check allowableOperations
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to check allowableOperations
     -   _allowableOperation:_ [`AllowableOperationsEnum`](../../../lib/core/models/allowable-operations.enum.ts)`|string`  - Create, delete, update, updatePermissions, !create, !delete, !update, !updatePermissions
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
--   **hasPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
+-   **hasPermissions**(node: [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md), permission: [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`): `boolean`<br/>
     Checks if the user has permission on that node
-    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) to check permissions
+    -   _node:_ [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md)  - [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) to check permissions
     -   _permission:_ [`PermissionsEnum`](../../../lib/core/models/permissions.enum.ts)`|string`  - Required permission type
     -   **Returns** `boolean` - True if the user has the required permissions, false otherwise
 

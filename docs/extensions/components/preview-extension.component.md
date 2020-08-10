@@ -20,7 +20,7 @@ an example of a real working viewer extension project.
 | ---- | ---- | ------------- | ----------- |
 | extension | `string` |  | File extension (.jpg, .png, etc) for the viewer. |
 | id | `string` |  | ID string of the component to preview. |
-| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) |  | [Node](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) containing the content to display. |
+| node | [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) |  | [Node](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) containing the content to display. |
 | url | `string` |  | URL of the content in the repository. |
 
 ## Details

@@ -210,7 +210,7 @@ DocumentList component now provides various enhancements for existing, and suppo
 -   **fileSize**: displays the size of the File node, including conversion to KB, MB, etc.
 -   **location**: renders a hyperlink to the node's parent folder, allows navigating to a particular route based on the "format" value settings
 
-You can get more details on the column types in the "[Column Types](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-documentlist#column-types)" section of the documentation.
+You can get more details on the column types in the "[Column Types](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/ng2-components/ng2-alfresco-documentlist#column-types)" section of the documentation.
 
 #### Data Sources and Layout Presets
 
@@ -226,7 +226,7 @@ The component provides reasonable column defaults for each custom source, so you
 
 ![](images/dl-custom-sources.gif)
 
-You can get more details on the data sources and default presets in the [Data Sources](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-documentlist#data-sources) section.
+You can get more details on the data sources and default presets in the [Data Sources](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/ng2-components/ng2-alfresco-documentlist#data-sources) section.
 
 ### 13. Directive to disable element or component based on node permission
 
@@ -246,7 +246,7 @@ For example toggling the state of the toolbar button based on the DocumentList s
      ...
     </adf-document-list>
 
-You can find all the details and usage examples in the directive documentation: [Node Permission Directive](https://github.com/Alfresco/alfresco-ng2-components/tree/development/ng2-components/ng2-alfresco-core#node-permission-directive).
+You can find all the details and usage examples in the directive documentation: [Node Permission Directive](https://github.com/Alfresco/alfresco-ng2-components/tree/develop/ng2-components/ng2-alfresco-core#node-permission-directive).
 
 ### 14. Task/Process Audit Log Directive
 

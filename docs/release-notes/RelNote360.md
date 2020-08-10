@@ -65,7 +65,7 @@ You can read further details [here](../../docs/core/components/search-text-input
 
 The list of supported browsers for ADF is still valid and clear, but some developers would like to enable the polyfill to support older browser. Officially some "old browsers" are not supported, but more tests are done on this topic.
 
-You can read further details [here](https://github.com/Alfresco/alfresco-ng2-components/blob/development/BROWSER-SUPPORT.md).
+You can read further details [here](https://github.com/Alfresco/alfresco-ng2-components/blob/develop/BROWSER-SUPPORT.md).
 
 ## Localisation
 

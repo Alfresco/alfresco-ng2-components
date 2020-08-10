@@ -193,7 +193,7 @@ Related to this issue is the `hasPermission` method of the
 made redundant by
 [`ContentService`](../core/services/content.service.md)`.hasAllowableOperations` and has now been removed.
 
-Also, the former [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Permission Directive has now been renamed as the
+Also, the former [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Permission Directive has now been renamed as the
 [Check Allowable Operation directive](../core/directives/check-allowable-operation.directive.md)
 to better reflect its true behavior. You should therefore replace existing references to
 `adf-node-permission` with `adf-check-allowable-operation`.
@@ -273,7 +273,7 @@ you should replace them with the new ones.
 ### Properties and methods
 
 -   `<adf-form>`: The `onError` event has now been renamed as `error`.
--   `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Id of the file to 
+-   `<adf-viewer>`: The `fileNodeId` input that supplies the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Id of the file to 
     load has been renamed as `nodeId`.
 -   `<adf-upload-drag-area>`:  The `parentId` input has been renamed as `rootFolderId`.
 

@@ -584,7 +584,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1633](https://issues.alfresco.com/jira/browse/ADF-1633)] - [Login] redirect to original path upon successful login
 -   \[[ADF-1694](https://issues.alfresco.com/jira/browse/ADF-1694)] - Date-picker i18n support
 -   \[[ADF-1723](https://issues.alfresco.com/jira/browse/ADF-1723)] - [Service][logservice](../core/log.service.md) configuration
--   \[[ADF-1729](https://issues.alfresco.com/jira/browse/ADF-1729)] - [Directive] Mark [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) as Favorite Directive
+-   \[[ADF-1729](https://issues.alfresco.com/jira/browse/ADF-1729)] - [Directive] Mark [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) as Favorite Directive
 -   \[[ADF-1745](https://issues.alfresco.com/jira/browse/ADF-1745)] - [Directive] Delete multiple nodes directive
 -   \[[ADF-1749](https://issues.alfresco.com/jira/browse/ADF-1749)] - [Task List][process list] - Customizable template using the app.config.json
 -   \[[ADF-1750](https://issues.alfresco.com/jira/browse/ADF-1750)] - [Viewer] Content projection for "Open With" and "More actions"
@@ -701,7 +701,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1710](https://issues.alfresco.com/jira/browse/ADF-1710)] - An error is logged into the console when using data widget
 -   \[[ADF-1711](https://issues.alfresco.com/jira/browse/ADF-1711)] - The adf-task-attachment-list component displays drag-and-drop area that is not working
 -   \[[ADF-1712](https://issues.alfresco.com/jira/browse/ADF-1712)] - The adf-task-header component displays a Requeue button for none pooled tasks
--   \[[ADF-1716](https://issues.alfresco.com/jira/browse/ADF-1716)] - Process List - processDefinitionKey is not part of the [`ProcessInstanceQueryRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/activiti-rest-api/docs/ProcessInstanceQueryRepresentation.md)
+-   \[[ADF-1716](https://issues.alfresco.com/jira/browse/ADF-1716)] - Process List - processDefinitionKey is not part of the [`ProcessInstanceQueryRepresentation`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/activiti-rest-api/docs/ProcessInstanceQueryRepresentation.md)
 -   \[[ADF-1718](https://issues.alfresco.com/jira/browse/ADF-1718)] - [`Pagination`](../../lib/content-services/document-list/models/document-library.model.ts) should not be displayed on Search Results page when there are no results
 -   \[[ADF-1720](https://issues.alfresco.com/jira/browse/ADF-1720)] - Date-time picker is not working properly with other Date Display Format than default
 -   \[[ADF-1722](https://issues.alfresco.com/jira/browse/ADF-1722)] - [object Object] appears in People control when selecting the same name
@@ -738,7 +738,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1824](https://issues.alfresco.com/jira/browse/ADF-1824)] - Moment js security issue
 -   \[[ADF-1825](https://issues.alfresco.com/jira/browse/ADF-1825)] - [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) field in start task no aligned
 -   \[[ADF-1827](https://issues.alfresco.com/jira/browse/ADF-1827)] - 'Object Object' displayed on search results page
--   \[[ADF-1829](https://issues.alfresco.com/jira/browse/ADF-1829)] - [`PeopleApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/people.api.ts) - getSiteMembership wrong returned type
+-   \[[ADF-1829](https://issues.alfresco.com/jira/browse/ADF-1829)] - [`PeopleApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/people.api.ts) - getSiteMembership wrong returned type
 -   \[[ADF-1830](https://issues.alfresco.com/jira/browse/ADF-1830)] - Cannot access processes or reports
 -   \[[ADF-1832](https://issues.alfresco.com/jira/browse/ADF-1832)] - [Document List] IE 11 erro on click
 -   \[[ADF-1835](https://issues.alfresco.com/jira/browse/ADF-1835)] - The pagination on search results page is not working properly
@@ -746,7 +746,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1839](https://issues.alfresco.com/jira/browse/ADF-1839)] - Login does not switch user preferences
 -   \[[ADF-1856](https://issues.alfresco.com/jira/browse/ADF-1856)] - Document List - location fails for a user that has granular permissions
 -   \[[ADF-1859](https://issues.alfresco.com/jira/browse/ADF-1859)] - The [document list component](../content-services/components/document-list.component.md) no longer exports [`ShareDataRow`](../../lib/content-services/document-list/data/share-data-row.model.ts)
--   \[[ADF-1860](https://issues.alfresco.com/jira/browse/ADF-1860)] - [`NodesApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/nodes.api.ts).getNodeChildren has wrong return type
+-   \[[ADF-1860](https://issues.alfresco.com/jira/browse/ADF-1860)] - [`NodesApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/nodes.api.ts).getNodeChildren has wrong return type
 -   \[[ADF-1861](https://issues.alfresco.com/jira/browse/ADF-1861)] - Line breaks not displayed in "Display Text" widget in forms
 -   \[[ADF-1862](https://issues.alfresco.com/jira/browse/ADF-1862)] - Adf toolbar should get the background color from the theme
 -   \[[ADF-1865](https://issues.alfresco.com/jira/browse/ADF-1865)] - [Document List] "Empty View" does not wrap long text
@@ -782,7 +782,7 @@ Release Notes - Apps Development Framework - Version 2.0.
 -   \[[ADF-1951](https://issues.alfresco.com/jira/browse/ADF-1951)] - Date widget doesn't display the correct date.
 -   \[[ADF-1956](https://issues.alfresco.com/jira/browse/ADF-1956)] - Date widget with advanced properties does not display value.
 -   \[[ADF-1962](https://issues.alfresco.com/jira/browse/ADF-1962)] - getContentThumbnailUrl returns file data instead or URL
--   \[[ADF-1963](https://issues.alfresco.com/jira/browse/ADF-1963)] - [`ContentApi`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/api/content.api.ts) is missing the preview rendition API
+-   \[[ADF-1963](https://issues.alfresco.com/jira/browse/ADF-1963)] - [`ContentApi`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/api/content.api.ts) is missing the preview rendition API
 -   \[[ADF-1964](https://issues.alfresco.com/jira/browse/ADF-1964)] - [Demo Shell] Max size filter is not switched off.
 -   \[[ADF-1965](https://issues.alfresco.com/jira/browse/ADF-1965)] - 'Upload file' button is enabled if user does not have permission to upload a file/folder
 -   \[[ADF-1966](https://issues.alfresco.com/jira/browse/ADF-1966)] - Wrong sort on Document List

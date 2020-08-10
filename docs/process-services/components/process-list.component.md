@@ -56,7 +56,7 @@ when the process list is empty:
 | multiselect | `boolean` | false | Toggles multiple row selection, which renders checkboxes at the beginning of each row |
 | page | `number` | 0 | The page number of the processes to fetch. |
 | presetColumn | `string` |  | Custom preset column schema in JSON format. |
-| processDefinitionId | `string` |  | The [Definition](../../../lib/cli/node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process. |
+| processDefinitionId | `string` |  | The [Definition](../../../node_modules/@alfresco/js-api/src/api/content-rest-api/model/definition.ts) Id of the process. |
 | processInstanceId | `number \| string` |  | The id of the process instance. |
 | resolverFn | `Function` | null | Resolver function is used to show dynamic complex column objects see the docs to learn how to configure a resolverFn. |
 | selectFirstRow | `boolean` | true | Toggles default selection of the first row |

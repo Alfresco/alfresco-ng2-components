@@ -314,7 +314,7 @@ Release Notes - Apps Development Framework - Version 2.4.0
 -   \[[ADF-2726](https://issues.alfresco.com/jira/browse/ADF-2726)] - Not able to view a file from the attach file widget.
 -   \[[ADF-2739](https://issues.alfresco.com/jira/browse/ADF-2739)] - Breadcrumb issue if the folder name is too big.
 -   \[[ADF-2760](https://issues.alfresco.com/jira/browse/ADF-2760)] - Background colour for document lists is not white
--   \[[ADF-2766](https://issues.alfresco.com/jira/browse/ADF-2766)] - Download [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/development/src/api/content-rest-api/docs/Node.md) Directive does not work with Shared Links
+-   \[[ADF-2766](https://issues.alfresco.com/jira/browse/ADF-2766)] - Download [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) Directive does not work with Shared Links
 -   \[[ADF-2767](https://issues.alfresco.com/jira/browse/ADF-2767)] - Side nav is not responsive
 -   \[[ADF-2771](https://issues.alfresco.com/jira/browse/ADF-2771)] - [Sidebar action menu component](../core/components/sidebar-action-menu.component.md) - UX review
 -   \[[ADF-2772](https://issues.alfresco.com/jira/browse/ADF-2772)] - Sidenav Layout - UX review

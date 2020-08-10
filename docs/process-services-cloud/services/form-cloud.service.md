@@ -36,10 +36,11 @@ class MyComponent {
     -   _outcome:_ `string`  - [Form](../../../lib/process-services/src/lib/task-list/models/form.model.ts) outcome
     -   _version:_ `number`  - of the form
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Updated task details
--   **createTemporaryRawRelatedContent**(file: `any`, nodeId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
+-   **createTemporaryRawRelatedContent**(file: `any`, nodeId: `string`, contentHost: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<any>`<br/>
 
     -   _file:_ `any`  - 
     -   _nodeId:_ `string`  - 
+    -   _contentHost:_ `string`  - 
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<any>` - 
 
 -   **getBasePath**(appName: `string`): `string`<br/>
