@@ -27,7 +27,7 @@
             <mat-menu #fileActionMenu="matMenu" xPosition="before">
                 <button *ngIf="displayMenuOption('show')" id="{{'file-'+file?.id+'-show-file'}}"
                         mat-menu-item (click)="onAttachFileClicked(file)">
-                    <mat-icon>image</mat-icon>
+                    <mat-icon>visibility</mat-icon>
                     <span>{{ 'FORM.FIELD.VIEW_FILE' | translate }}</span>
                 </button>
                 <button *ngIf="displayMenuOption('download')" id="{{'file-'+file?.id+'-download-file'}}"
