@@ -23,7 +23,6 @@ import {
   LogService,
   ThumbnailService,
   NotificationService,
-  TranslationService,
   FormValues,
   ContentLinkModel
 } from '@alfresco/adf-core';
