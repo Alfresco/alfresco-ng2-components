@@ -277,7 +277,7 @@ export class FormFieldModel extends FormWidgetModel {
             if (json.options) {
                 const options = <FormFieldOption[]> json.options || [];
                 if (options.length > 0) {
-                    if(json.hasEmptyValue ) {
+                    if(json.hasEmptyValue) {
                         const emptyOption = json.options[0];
                         if (value === '' || value === emptyOption.id || value === emptyOption.name) {
                             value = emptyOption.id;
