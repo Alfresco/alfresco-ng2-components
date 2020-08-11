@@ -15,9 +15,4 @@
  * limitations under the License.
  */
 
-export * from './like.page';
-export * from './rate.page';
-export * from './document-list.page';
-
-export * from './breadcrumb/public-api';
-export * from './search/public-api';
+export * from './breadcrumb-dropdown.page';

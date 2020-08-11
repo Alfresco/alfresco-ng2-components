@@ -16,9 +16,11 @@
  */
 
 import { element, by } from 'protractor';
-import { BrowserActions, DropdownPage } from '@alfresco/adf-testing';
+import { BrowserActions } from '../../../core/utils/browser-actions';
+import { BrowserVisibility } from '../../../core/utils/browser-visibility';
+import { DropdownPage } from '../../../core/pages/material/dropdown.page';
 
-export class BreadCrumbDropdownPage {
+export class BreadcrumbDropdownPage {
 
     breadCrumb = element(by.css(`adf-dropdown-breadcrumb[data-automation-id='content-node-selector-content-breadcrumb']`));
     parentFolder = this.breadCrumb.element(by.css(`button[data-automation-id='dropdown-breadcrumb-trigger']`));
@@ -40,5 +42,9 @@ export class BreadCrumbDropdownPage {
 
     async getTextOfCurrentFolder(): Promise<string> {
         return BrowserActions.getText(this.currentFolder);
+    }
+
+    async checkCurrentFolderIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.currentFolder);
     }
 }

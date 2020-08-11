@@ -19,6 +19,7 @@ import { browser, by, element } from 'protractor';
 import {
     ApiService,
     BreadcrumbPage,
+    BreadcrumbDropdownPage,
     ContentNodeSelectorDialogPage,
     LoginPage,
     PaginationPage,
@@ -31,7 +32,6 @@ import {
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { BreadCrumbDropdownPage } from '../pages/breadcrumb/bread-crumb-dropdown.page';
 import { InfinitePaginationPage } from '../../core/pages/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
@@ -43,7 +43,7 @@ describe('Document List Component - Actions', () => {
     const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
     const paginationPage = new PaginationPage();
-    const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
+    const breadCrumbDropdownPage = new BreadcrumbDropdownPage();
     const breadCrumbPage = new BreadcrumbPage();
     const viewerPage = new ViewerPage();
     const apiService = new ApiService();

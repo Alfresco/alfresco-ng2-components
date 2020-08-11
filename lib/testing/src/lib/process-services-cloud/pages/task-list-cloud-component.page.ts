@@ -121,6 +121,10 @@ export class TaskListCloudComponentPage {
         return BrowserActions.getText(this.noTasksFound);
     }
 
+    async checkNoTasksFoundMessageIsDisplayed(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.noTasksFound);
+    }
+
     async getAllRowsNameColumn() {
         return this.dataTable.getAllRowsColumnValues(column.name);
     }

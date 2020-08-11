@@ -21,6 +21,7 @@ import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { BreadcrumbDropdownPage } from '../pages/breadcrumb/breadcrumb-dropdown.page';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
@@ -34,6 +35,7 @@ export class ContentNodeSelectorDialogPage {
     contentList = new DocumentListPage(this.dialog);
     dataTable = this.contentList.dataTablePage();
     siteListDropdown = new DropdownPage(this.dialog.element(by.css(`mat-select[data-automation-id='site-my-files-option']`)));
+    breadcrumbDropdownPage = new BreadcrumbDropdownPage();
 
     async checkDialogIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.dialog);
@@ -132,6 +134,8 @@ export class ContentNodeSelectorDialogPage {
 
     async attachFileFromLocal(fileName: string, fileLocation: string): Promise<void> {
         await this.checkDialogIsDisplayed();
+        await this.dataTable.waitForTableBody();
+        await this.breadcrumbDropdownPage.checkCurrentFolderIsDisplayed();
 
         await browser.setFileDetector(new remote.FileDetector());
         const uploadButton = element(by.css('adf-upload-button input'));
