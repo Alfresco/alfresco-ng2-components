@@ -21,7 +21,7 @@ import { FormCloudService } from '../../../services/form-cloud.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 @Component({
     selector: 'dropdown-cloud-widget',
@@ -48,14 +48,14 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     constructor(public formService: FormService,
                 private formCloudService: FormCloudService,
                 private logService: LogService) {
-          super(formService);
-     }
+        super(formService);
+    }
 
-     ngOnInit() {
-         if (this.field && this.field.restUrl) {
+    ngOnInit() {
+        if (this.field && this.field.restUrl) {
             this.getValuesFromRestApi();
-         }
-     }
+        }
+    }
 
     getValuesFromRestApi() {
         if (this.isValidRestType()) {
@@ -81,18 +81,18 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
     }
 
     compareDropdownValues(opt1: string, opt2: FormFieldOption | string): boolean {
-        return opt1 && opt2 && typeof opt2 !== 'string' ? ( opt1 === opt2.id || opt1 === opt2.name ) : opt1 === opt2;
-     }
+        return opt1 && opt2 && typeof opt2 !== 'string' ? (opt1 === opt2.id || opt1 === opt2.name) : opt1 === opt2;
+    }
 
-     getOptionValue(option: FormFieldOption, fieldValue: string): string {
-         let optionValue: string = '';
-         if (option.id === 'empty' || option.name !== fieldValue) {
-             optionValue = option.id;
-         } else {
-             optionValue = option.name;
-         }
-         return optionValue;
-     }
+    getOptionValue(option: FormFieldOption, fieldValue: string): string {
+        let optionValue: string = '';
+        if (option.id === 'empty' || option.name !== fieldValue) {
+            optionValue = option.id;
+        } else {
+            optionValue = option.name;
+        }
+        return optionValue;
+    }
 
     isValidRestType(): boolean {
         return this.field.optionType === 'rest' && !!this.field.restUrl;
@@ -110,4 +110,4 @@ export class DropdownCloudWidgetComponent extends WidgetComponent implements OnI
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
- }
+}
