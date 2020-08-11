@@ -43,7 +43,7 @@ import {
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from './pages/process-details-cloud-demo.page';
-import { FileModel } from '../models/ACS../../lib/testing/src/lib/content-services/pages/breadcrumb/bread-crumb-dropdown.page
+import { FileModel } from '../models/ACS/file.model';
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {
@@ -55,7 +55,7 @@ describe('Start Task Form', () => {
     const tasksCloudDemoPage = new TasksCloudDemoPage();
     const startTask = new StartTasksCloudPage();
     const contentNodeSelectorDialogPage = new ContentNodeSelectorDialogPage();
-    const breadCrumbDropdownPage = new BreadCrumbDropdownPage();
+    const breadCrumbDropdownPage = new BreadcrumbDropdownPage();
     const processDetailsCloudDemoPage = new ProcessDetailsCloudDemoPage();
     const widget = new ProcessCloudWidgetPage();
     const startProcessPage = new StartProcessCloudPage();
