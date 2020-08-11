@@ -20,7 +20,13 @@ import { LogService } from '../../services/log.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment-es6';
 import { Observable, from, throwError } from 'rxjs';
-import { FormFieldModel, FormModel, TabModel, ContainerModel, FormOutcomeModel } from '../components/widgets/core/index';
+import {
+    FormFieldModel,
+    FormModel,
+    TabModel,
+    ContainerModel,
+    FormOutcomeModel
+} from '../components/widgets/core/index';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel, WidgetTypeEnum } from '../models/widget-visibility.model';
 import { map, catchError } from 'rxjs/operators';
@@ -148,11 +154,11 @@ export class WidgetVisibilityService {
     }
 
     getFieldValue(valueList: any, fieldId: string): any {
-        let dropDownFilterByName, valueFound;
+        let labelFilterByName, valueFound;
         if (fieldId && fieldId.indexOf('_LABEL') > 0) {
-            dropDownFilterByName = fieldId.substring(0, fieldId.length - 6);
-            if (valueList[dropDownFilterByName]) {
-                valueFound = valueList[dropDownFilterByName].name;
+            labelFilterByName = fieldId.substring(0, fieldId.length - 6);
+            if (valueList[labelFilterByName]) {
+                valueFound = valueList[labelFilterByName].name;
             }
         } else if (valueList[fieldId] && valueList[fieldId].id) {
             valueFound = valueList[fieldId].id;
@@ -167,8 +173,7 @@ export class WidgetVisibilityService {
     }
 
     getFormFieldById(form: FormModel, fieldId: string): FormFieldModel {
-        return form.getFormFields().
-            find( (formField: FormFieldModel) => this.isSearchedField(formField, fieldId));
+        return form.getFormFields().find((formField: FormFieldModel) => this.isSearchedField(formField, fieldId));
     }
 
     searchValueInForm(formField: FormFieldModel, fieldId: string): string {
@@ -191,9 +196,9 @@ export class WidgetVisibilityService {
     isParentTabVisible(form: FormModel, currentFormField: FormFieldModel | TabModel): boolean {
         const containers = this.getFormTabContainers(form);
         let isVisible: boolean = true;
-        containers.map( (container: ContainerModel) => {
-            if ( !!this.getCurrentFieldFromTabById(container, currentFormField.id) ) {
-                const currentTab = form.tabs.find( (tab: TabModel) => tab.id === container.tab );
+        containers.map((container: ContainerModel) => {
+            if (!!this.getCurrentFieldFromTabById(container, currentFormField.id)) {
+                const currentTab = form.tabs.find((tab: TabModel) => tab.id === container.tab);
                 if (!!currentTab) {
                     isVisible = currentTab.isVisible;
                 }
@@ -203,11 +208,11 @@ export class WidgetVisibilityService {
     }
 
     private getCurrentFieldFromTabById(container: ContainerModel, fieldId: string): FormFieldModel {
-        const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map( key => container.field.fields[key]);
+        const tabFields: FormFieldModel[][] = Object.keys(container.field.fields).map(key => container.field.fields[key]);
         let currentField: FormFieldModel;
 
         for (const tabField of tabFields) {
-            currentField = tabField.find( (tab: FormFieldModel) => tab.id === fieldId );
+            currentField = tabField.find((tab: FormFieldModel) => tab.id === fieldId);
             if (currentField) {
                 return currentField;
             }
@@ -245,7 +250,8 @@ export class WidgetVisibilityService {
         return optionValue;
     }
 
-    private isSearchedField(field: FormFieldModel, fieldToFind: string): boolean {
+    private isSearchedField(field: FormFieldModel, fieldId: string): boolean {
+        const fieldToFind = fieldId?.indexOf('_LABEL') > 0 ? fieldId.replace('_LABEL', '') : fieldId;
         return (field.id && fieldToFind) ? field.id.toUpperCase() === fieldToFind.toUpperCase() : false;
     }
 

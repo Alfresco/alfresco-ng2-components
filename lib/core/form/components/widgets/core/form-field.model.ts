@@ -227,7 +227,7 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     private getFieldNameWithLabel(name: string): string {
-        return name += '_LABEL';
+        return name + '_LABEL';
     }
 
     private getProcessVariableValue(field: any, form: FormModel): any {
