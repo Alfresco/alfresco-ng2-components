@@ -27,11 +27,13 @@ import { TaskProcessVariableModel } from './../models/task-process-variable.mode
 import { WidgetVisibilityModel } from './../models/widget-visibility.model';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { setupTestBed } from '../../testing/setup-test-bed';
-import { fakeTaskProcessVariableModels,
-        fakeFormJson, formTest,
-        formValues, complexVisibilityJsonVisible,
-        complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
-        tabInvalidFormVisibility } from 'core/mock/form/widget-visibility.service.mock';
+import {
+    fakeTaskProcessVariableModels,
+    fakeFormJson, formTest,
+    formValues, complexVisibilityJsonVisible,
+    complexVisibilityJsonNotVisible, tabVisibilityJsonMock,
+    tabInvalidFormVisibility
+} from 'core/mock/form/widget-visibility.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -933,14 +935,14 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should evaluate radio box LABEL condition', (done) => {
-            visibilityObjTest.leftFormFieldId = "radioBoxField_LABEL";
+            visibilityObjTest.leftFormFieldId = 'radioBoxField_LABEL';
             visibilityObjTest.leftRestResponseId = null;
-            visibilityObjTest.operator = "==";
-            visibilityObjTest.rightValue = "No";
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = 'No';
             visibilityObjTest.rightType = null;
-            visibilityObjTest.rightFormFieldId = "";
-            visibilityObjTest.rightRestResponseId = "";
-            visibilityObjTest.nextConditionOperator = "";
+            visibilityObjTest.rightFormFieldId = '';
+            visibilityObjTest.rightRestResponseId = '';
+            visibilityObjTest.nextConditionOperator = '';
             visibilityObjTest.nextCondition = null;
 
             const radioBoxForm = new FormModel({
@@ -962,23 +964,23 @@ describe('WidgetVisibilityService', () => {
                         fields: {
                             1: [
                                 {
-                                    id: "radioboxField",
-                                    name: "radioboxField test",
-                                    type: "radio-buttons",
+                                    id: 'radioboxField',
+                                    name: 'radioboxField test',
+                                    type: 'radio-buttons',
                                     options: [
                                         {
-                                            "id": "radioBoxYes",
-                                            "name": "Yes"
+                                            'id': 'radioBoxYes',
+                                            'name': 'Yes'
                                         },
                                         {
-                                            "id": "radioBoxNo",
-                                            "name": "No"
+                                            'id': 'radioBoxNo',
+                                            'name': 'No'
                                         }
                                     ]
                                 }, {
-                                    id: "textBoxTest",
-                                    name: "textbox test",
-                                    type: "people",
+                                    id: 'textBoxTest',
+                                    name: 'textbox test',
+                                    type: 'people',
                                     visibilityCondition: visibilityObjTest
                                 }
                             ]

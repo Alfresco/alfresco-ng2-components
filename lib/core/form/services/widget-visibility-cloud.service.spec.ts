@@ -644,7 +644,7 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.rightType = 'field';
             visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
 
-            const container = <ContainerModel>fakeFormWithField.fields[0];
+            const container = <ContainerModel> fakeFormWithField.fields[0];
             const column0 = container.field.columns[0];
             const column1 = container.field.columns[1];
 
@@ -947,14 +947,14 @@ describe('WidgetVisibilityCloudService', () => {
         });
 
         it('should evaluate radio box LABEL condition', (done) => {
-            visibilityObjTest.leftFormFieldId = "radioBoxField_LABEL";
+            visibilityObjTest.leftFormFieldId = 'radioBoxField_LABEL';
             visibilityObjTest.leftRestResponseId = null;
-            visibilityObjTest.operator = "==";
-            visibilityObjTest.rightValue = "No";
+            visibilityObjTest.operator = '==';
+            visibilityObjTest.rightValue = 'No';
             visibilityObjTest.rightType = null;
-            visibilityObjTest.rightFormFieldId = "";
-            visibilityObjTest.rightRestResponseId = "";
-            visibilityObjTest.nextConditionOperator = "";
+            visibilityObjTest.rightFormFieldId = '';
+            visibilityObjTest.rightRestResponseId = '';
+            visibilityObjTest.nextConditionOperator = '';
             visibilityObjTest.nextCondition = null;
 
             const radioBoxForm = new FormModel({
@@ -976,91 +976,23 @@ describe('WidgetVisibilityCloudService', () => {
                         fields: {
                             1: [
                                 {
-                                    id: "radioboxField",
-                                    name: "radioboxField test",
-                                    type: "radio-buttons",
+                                    id: 'radioboxField',
+                                    name: 'radioboxField test',
+                                    type: 'radio-buttons',
                                     options: [
                                         {
-                                            "id": "radioBoxYes",
-                                            "name": "Yes"
+                                            'id': 'radioBoxYes',
+                                            'name': 'Yes'
                                         },
                                         {
-                                            "id": "radioBoxNo",
-                                            "name": "No"
+                                            'id': 'radioBoxNo',
+                                            'name': 'No'
                                         }
                                     ]
                                 }, {
-                                    id: "textBoxTest",
-                                    name: "textbox test",
-                                    type: "people",
-                                    visibilityCondition: visibilityObjTest
-                                }
-                            ]
-                        }
-                    }
-                ]
-            });
-
-            const fieldWithVisibilityAttached = radioBoxForm.getFieldById('textBoxTest');
-
-            fieldWithVisibilityAttached.value = true;
-            service.refreshVisibility(radioBoxForm);
-            expect(fieldWithVisibilityAttached.isVisible).toBeFalsy();
-
-            fieldWithVisibilityAttached.value = false;
-            service.refreshVisibility(radioBoxForm);
-            expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
-
-            done();
-        });
-
-        it('should evaluate radio box LABEL condition', (done) => {
-            visibilityObjTest.leftFormFieldId = "radioBoxField_LABEL";
-            visibilityObjTest.leftRestResponseId = null;
-            visibilityObjTest.operator = "==";
-            visibilityObjTest.rightValue = "No";
-            visibilityObjTest.rightType = null;
-            visibilityObjTest.rightFormFieldId = "";
-            visibilityObjTest.rightRestResponseId = "";
-            visibilityObjTest.nextConditionOperator = "";
-            visibilityObjTest.nextCondition = null;
-
-            const radioBoxForm = new FormModel({
-                id: '9999',
-                name: 'CHECKBOX_VISIBILITY',
-                processDefinitionId: 'PROCESS_TEST:9:9999',
-                processDefinitionName: 'PROCESS_TEST',
-                processDefinitionKey: 'PROCESS_TEST',
-                taskId: '999',
-                taskName: 'TEST',
-                fields: [
-                    {
-                        fieldType: 'ContainerRepresentation',
-                        id: '000000000000000000',
-                        name: 'Label',
-                        type: 'container',
-                        value: null,
-                        numberOfColumns: 2,
-                        fields: {
-                            1: [
-                                {
-                                    id: "radioboxField",
-                                    name: "radioboxField test",
-                                    type: "radio-buttons",
-                                    options: [
-                                        {
-                                            "id": "radioBoxYes",
-                                            "name": "Yes"
-                                        },
-                                        {
-                                            "id": "radioBoxNo",
-                                            "name": "No"
-                                        }
-                                    ]
-                                }, {
-                                    id: "textBoxTest",
-                                    name: "textbox test",
-                                    type: "people",
+                                    id: 'textBoxTest',
+                                    name: 'textbox test',
+                                    type: 'people',
                                     visibilityCondition: visibilityObjTest
                                 }
                             ]
