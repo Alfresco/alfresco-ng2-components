@@ -32,7 +32,8 @@ import {
     fakeFormJson, fakeTaskProcessVariableModels,
     formTest, formValues, complexVisibilityJsonVisible,
     nextConditionForm, complexVisibilityJsonNotVisible,
-    headerVisibilityCond } from '../../mock/form/widget-visibility-cloud.service.mock';
+    headerVisibilityCond
+} from '../../mock/form/widget-visibility-cloud.service.mock';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -643,7 +644,7 @@ describe('WidgetVisibilityCloudService', () => {
             visibilityObjTest.rightType = 'field';
             visibilityObjTest.rightValue = 'RIGHT_FORM_FIELD_ID';
 
-            const container = <ContainerModel> fakeFormWithField.fields[0];
+            const container = <ContainerModel>fakeFormWithField.fields[0];
             const column0 = container.field.columns[0];
             const column1 = container.field.columns[1];
 
@@ -945,14 +946,18 @@ describe('WidgetVisibilityCloudService', () => {
             expect(contModel.isVisible).toBeFalsy();
         });
 
-        it('should evaluate checkbox condition', (done) => {
-            visibilityObjTest.leftType = WidgetTypeEnum.field;
-            visibilityObjTest.leftValue = 'CheckboxOne';
-            visibilityObjTest.operator = '==';
-            visibilityObjTest.rightType = WidgetTypeEnum.field;
-            visibilityObjTest.rightValue = 'CheckboxTwo';
+        it('should evaluate radio box LABEL condition', (done) => {
+            visibilityObjTest.leftFormFieldId = "radioBoxField_LABEL";
+            visibilityObjTest.leftRestResponseId = null;
+            visibilityObjTest.operator = "==";
+            visibilityObjTest.rightValue = "No";
+            visibilityObjTest.rightType = null;
+            visibilityObjTest.rightFormFieldId = "";
+            visibilityObjTest.rightRestResponseId = "";
+            visibilityObjTest.nextConditionOperator = "";
+            visibilityObjTest.nextCondition = null;
 
-            const checkboxForm = new FormModel({
+            const radioBoxForm = new FormModel({
                 id: '9999',
                 name: 'CHECKBOX_VISIBILITY',
                 processDefinitionId: 'PROCESS_TEST:9:9999',
@@ -971,31 +976,23 @@ describe('WidgetVisibilityCloudService', () => {
                         fields: {
                             1: [
                                 {
-                                    id: 'CheckboxOne',
-                                    name: 'CheckboxOne',
-                                    type: 'boolean',
-                                    required: false,
-                                    value: false,
-                                    colspan: 1,
-                                    visibilityCondition: null
-                                },
-                                {
-                                    id: 'CheckboxTwo',
-                                    name: 'CheckboxTwo',
-                                    type: 'boolean',
-                                    required: false,
-                                    value: false,
-                                    colspan: 1,
-                                    visibilityCondition: null
-                                }
-                            ],
-                            2: [
-                                {
-                                    id: 'CheckboxNotReq',
-                                    name: 'CheckboxNotReq',
-                                    type: 'boolean',
-                                    required: false,
-                                    colspan: 1,
+                                    id: "radioboxField",
+                                    name: "radioboxField test",
+                                    type: "radio-buttons",
+                                    options: [
+                                        {
+                                            "id": "radioBoxYes",
+                                            "name": "Yes"
+                                        },
+                                        {
+                                            "id": "radioBoxNo",
+                                            "name": "No"
+                                        }
+                                    ]
+                                }, {
+                                    id: "textBoxTest",
+                                    name: "textbox test",
+                                    type: "people",
                                     visibilityCondition: visibilityObjTest
                                 }
                             ]
@@ -1004,10 +1001,85 @@ describe('WidgetVisibilityCloudService', () => {
                 ]
             });
 
-            service.refreshVisibility(checkboxForm);
+            const fieldWithVisibilityAttached = radioBoxForm.getFieldById('textBoxTest');
 
-            const fieldWithVisibilityAttached = checkboxForm.getFieldById('CheckboxNotReq');
+            fieldWithVisibilityAttached.value = true;
+            service.refreshVisibility(radioBoxForm);
+            expect(fieldWithVisibilityAttached.isVisible).toBeFalsy();
+
+            fieldWithVisibilityAttached.value = false;
+            service.refreshVisibility(radioBoxForm);
             expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+
+            done();
+        });
+
+        it('should evaluate radio box LABEL condition', (done) => {
+            visibilityObjTest.leftFormFieldId = "radioBoxField_LABEL";
+            visibilityObjTest.leftRestResponseId = null;
+            visibilityObjTest.operator = "==";
+            visibilityObjTest.rightValue = "No";
+            visibilityObjTest.rightType = null;
+            visibilityObjTest.rightFormFieldId = "";
+            visibilityObjTest.rightRestResponseId = "";
+            visibilityObjTest.nextConditionOperator = "";
+            visibilityObjTest.nextCondition = null;
+
+            const radioBoxForm = new FormModel({
+                id: '9999',
+                name: 'CHECKBOX_VISIBILITY',
+                processDefinitionId: 'PROCESS_TEST:9:9999',
+                processDefinitionName: 'PROCESS_TEST',
+                processDefinitionKey: 'PROCESS_TEST',
+                taskId: '999',
+                taskName: 'TEST',
+                fields: [
+                    {
+                        fieldType: 'ContainerRepresentation',
+                        id: '000000000000000000',
+                        name: 'Label',
+                        type: 'container',
+                        value: null,
+                        numberOfColumns: 2,
+                        fields: {
+                            1: [
+                                {
+                                    id: "radioboxField",
+                                    name: "radioboxField test",
+                                    type: "radio-buttons",
+                                    options: [
+                                        {
+                                            "id": "radioBoxYes",
+                                            "name": "Yes"
+                                        },
+                                        {
+                                            "id": "radioBoxNo",
+                                            "name": "No"
+                                        }
+                                    ]
+                                }, {
+                                    id: "textBoxTest",
+                                    name: "textbox test",
+                                    type: "people",
+                                    visibilityCondition: visibilityObjTest
+                                }
+                            ]
+                        }
+                    }
+                ]
+            });
+
+            const fieldWithVisibilityAttached = radioBoxForm.getFieldById('textBoxTest');
+            const radioBox = radioBoxForm.getFieldById('radioboxField');
+
+            radioBox.value = 'Yes';
+            service.refreshVisibility(radioBoxForm);
+            expect(fieldWithVisibilityAttached.isVisible).toBeFalsy();
+
+            radioBox.value = 'No';
+            service.refreshVisibility(radioBoxForm);
+            expect(fieldWithVisibilityAttached.isVisible).toBeTruthy();
+
             done();
         });
     });
