@@ -21,6 +21,7 @@ import { TasksCloudDemoPage } from './pages/tasks-cloud-demo.page';
 import {
     LoginPage,
     AppListCloudPage,
+    BreadcrumbDropdownPage,
     StringUtil,
     StartTasksCloudPage,
     ApiService,
@@ -42,8 +43,7 @@ import {
 import { StartProcessCloudConfiguration } from './config/start-process-cloud.config';
 import { ProcessCloudDemoPage } from './pages/process-cloud-demo.page';
 import { ProcessDetailsCloudDemoPage } from './pages/process-details-cloud-demo.page';
-import { FileModel } from '../models/ACS/file.model';
-import { BreadCrumbDropdownPage } from '../content-services/pages/breadcrumb/bread-crumb-dropdown.page';
+import { FileModel } from '../models/ACS../../lib/testing/src/lib/content-services/pages/breadcrumb/bread-crumb-dropdown.page
 import CONSTANTS = require('../util/constants');
 
 describe('Start Task Form', () => {

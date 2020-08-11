@@ -19,6 +19,7 @@ import { browser, by, element } from 'protractor';
 import {
     ApiService,
     BreadcrumbPage,
+    BreadcrumbDropdownPage,
     ContentNodeSelectorDialogPage,
     LoginPage,
     PaginationPage,
@@ -30,8 +31,7 @@ import {
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { FileModel } from '../../models/ACS/file.model';
-import { BreadCrumbDropdownPage } from '../pages/breadcrumb/bread-crumb-dropdown.page';
+import { FileModel } from '../../models/../../../lib/testing/src/lib/content-services/pages/breadcrumb/bread-crumb-dropdown.page
 import { InfinitePaginationPage } from '../../core/pages/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
