@@ -17,6 +17,7 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
     -   [Angular 10](#angular-10)
+    -   [Ordering across pages in document list](#ordering-across-pages-in-document-list)
     -   [Property constraint support for ACS 7](#property-constraint-support-for-acs-7)
 -   [Localisation](#localisation)
 -   [References](#references)
@@ -45,6 +46,10 @@ Please report issues with this release in the [issue tracker](https://github.com
 As you probably know, ADF 3 relies on Angular 7 that has already finished its official support. Because of this, to follow the commitment to keep ADF aligned with the most recent version of Angular, here it is the "upgrade" to its version 10, recently released.
 
 For further details on the Angular 10 release, [here](https://blog.angular.io/version-10-of-angular-now-available-78960babd41) you can find an Angular blog post describing it.
+
+### Ordering across pages in document list
+
+Since ADF 3.9.0, the user experience of the navigation of the repository has been enhanced allowing the filtering of the content (see [ACA-3206](https://issues.alfresco.com/jira/browse/ACA-3206) for further details). In this release of ADF, the user experience can benefit of an enhanced ordering ([ACA-3205](https://issues.alfresco.com/jira/browse/ACA-3205)) that is now "cross-pages". in case of a multi-page view on content.
 
 ### Property constraint support for ACS 7
 
