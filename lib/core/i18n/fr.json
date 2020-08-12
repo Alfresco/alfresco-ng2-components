@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Stockage local",
       "SOURCE": "Sélectionner la source dans ",
-      "SHOW_FILE": "Afficher",
+      "VIEW_FILE": "Afficher",
       "DOWNLOAD_FILE": "Télécharger",
       "REMOVE_FILE": "Supprimer",
       "UPLOAD": "Importer",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Saisir {{ minLength }} caractères minimum",
         "NO_LONGER_THAN": "Saisir {{ maxLength }} caractères maximum"
       },
-      "FILE_ALREADY_UPLOADED": "Un fichier du même nom a déjà été importé."
+      "FILE_ALREADY_UPLOADED": "Un fichier du même nom a déjà été importé.",
+      "ATTACH": "Joindre"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tâche sans nom"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Description"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Titre"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Créer"
       },
@@ -175,7 +179,10 @@
       "NONE": "Aucun",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utiliser un format de numéro",
-        "INT_VALIDATION_ERROR": "Utiliser un format d'entier"
+        "INT_VALIDATION_ERROR": "Utiliser un format d'entier",
+        "LENGTH_VALIDATION_ERROR": "La taille de la valeur doit être de {{ minLength }} minimum et de {{ maxLength }} maximum",
+        "MATCH_VALIDATION_ERROR": "La valeur ne correspond pas au modèle : {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "La valeur doit être comprise entre {{ minValue }} minimum et {{ maxValue }} maximum"
       },
       "MORE": "Plus"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Cliquer pour copier",
     "SUCCESS_COPY": "Texte copié dans le presse-papiers"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Rechercher",
+      "ARIA_LABEL": "Options de recherche"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Supprimer"
+    }
   }
 }

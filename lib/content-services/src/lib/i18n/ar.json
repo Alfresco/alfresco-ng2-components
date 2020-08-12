@@ -4,6 +4,7 @@
       "RESTORE": "استعادة",
       "DELETE": "حذف",
       "DOWNLOAD": "تنزيل",
+      "VIEW": "عرض",
       "UPLOAD": {
         "TITLE": "تحميل إصدار جديد",
         "TOOLTIP": "القيد: يجب عليك تحميل ملف بنفس الاسم لإنشاء إصدار جديد منه",
@@ -62,11 +63,6 @@
       "VIEW": "عرض",
       "REMOVE": "إزالة",
       "DOWNLOAD": "تنزيل"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "تصفية حسب {{ category }}",
-      "CLEAR": "مسح",
-      "APPLY": "تطبيق"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "إلغاء",
     "CHOOSE": "اختيار",
+    "ATTACH": "إرفاق",
     "CHOOSE_ITEM": "اختيار محتوى لإرفاقه من '{{ name }}'",
     "COPY": "نسخ",
     "COPY_ITEM": "نسخ '{{ name }}' إلى...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "بدء العملية"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "عامل التصفية",
+      "TYPE": "النوع",
+      "FILTER_BY": "تصفية حسب {{ category }}",
+      "CLEAR": "مسح",
+      "APPLY": "تطبيق",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "الاسم",
+          "PLACEHOLDER": "أدخل الاسم"
+        },
+        "TYPE": {
+          "TITLE": "تحديد النوع",
+          "FOLDER": "مجلد",
+          "DOCUMENT": "مستند"
+        },
+        "SIZE": {
+          "TITLE": "حجم المحتوى (نطاق)",
+          "SMALL": "صغير",
+          "MEDIUM": "متوسط",
+          "LARGE": "كبير",
+          "HUGE": "ضخم"
+        },
+        "DATE": {
+          "TITLE": "تاريخ الإنشاء (نطاق)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "مدير",
       "COLLABORATOR": "معاون",
       "CONTRIBUTOR": "مساهم",
-      "CONSUMER": "مستهلك"
+      "CONSUMER": "مستهلك",
+      "NONE": "ليس رقمًا"
     },
     "VISIBILITY": {
       "PRIVATE": "خاص",

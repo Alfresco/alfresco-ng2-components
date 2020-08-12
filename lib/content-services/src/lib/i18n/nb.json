@@ -4,6 +4,7 @@
       "RESTORE": "Gjenopprett",
       "DELETE": "Slett",
       "DOWNLOAD": "Last ned",
+      "VIEW": "Vis",
       "UPLOAD": {
         "TITLE": "Last opp ny versjon",
         "TOOLTIP": "Begrensning: Du må laste opp en fil med samme navn for å opprette en ny versjon av den",
@@ -62,11 +63,6 @@
       "VIEW": "Vis",
       "REMOVE": "Fjern",
       "DOWNLOAD": "Last ned"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtrer etter {{ category }}",
-      "CLEAR": "Fjern",
-      "APPLY": "Bruk"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Avbryt",
     "CHOOSE": "Velg",
+    "ATTACH": "Legg ved",
     "CHOOSE_ITEM": "Velg innhold du vil legge ved fra '{{ name }}'",
     "COPY": "Kopier",
     "COPY_ITEM": "Kopier {{ name }} til ...",
@@ -227,14 +224,14 @@
       "ACTIONS": {
         "CLEAR": "Fjern",
         "APPLY": "Bruk",
-        "CLEAR-ALL": "Slett alle",
+        "CLEAR-ALL": "Fjern alle",
         "SHOW-MORE": "Vis flere",
         "SHOW-LESS": "Vis mindre",
         "FILTER-CATEGORY": "Filtrer etter kategori"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
-          "LABEL": "Slett alle",
+          "LABEL": "Fjern alle",
           "TOOLTIP": "Dette vil fjerne alle valg"
         },
         "RESET-ALL": {
@@ -287,6 +284,34 @@
           "MOVE": "Flytt",
           "COPY": "Kopier",
           "PROCESS_ACTION": "Start prosess"
+        }
+      }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Filtrer etter {{ category }}",
+      "CLEAR": "Fjern",
+      "APPLY": "Bruk",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Navn",
+          "PLACEHOLDER": "Skriv inn navnet"
+        },
+        "TYPE": {
+          "TITLE": "Velg type",
+          "FOLDER": "Mappe",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Innholdsstørrelse (område)",
+          "SMALL": "Liten",
+          "MEDIUM": "Middels",
+          "LARGE": "Stor",
+          "HUGE": "Enorm"
+        },
+        "DATE": {
+          "TITLE": "Opprettet dato (område)"
         }
       }
     }
@@ -378,7 +403,8 @@
       "MANAGER": "Administrator",
       "COLLABORATOR": "Medarbeider",
       "CONTRIBUTOR": "Bidragsyter",
-      "CONSUMER": "Forbruker"
+      "CONSUMER": "Forbruker",
+      "NONE": "Ikke medlem"
     },
     "VISIBILITY": {
       "PRIVATE": "Privat",

@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokalt lager",
       "SOURCE": "Vælg kilde fra ",
-      "SHOW_FILE": "Vis",
+      "VIEW_FILE": "Vis",
       "DOWNLOAD_FILE": "Download",
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Upload",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Skriv mindst {{ minLength }} tegn",
         "NO_LONGER_THAN": "Skriv højst {{ maxLength }} tegn"
       },
-      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede uploadet."
+      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede uploadet.",
+      "ATTACH": "Vedhæft"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Opgave uden navn"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Beskrivelse"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Titel"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Opret"
       },
@@ -175,7 +179,10 @@
       "NONE": "Ingen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Brug et talformat",
-        "INT_VALIDATION_ERROR": "Brug et heltalsformat"
+        "INT_VALIDATION_ERROR": "Brug et heltalsformat",
+        "LENGTH_VALIDATION_ERROR": "Værdien skal være mindst {{ minLength }} og maksimalt {{ maxLength }} i længden",
+        "MATCH_VALIDATION_ERROR": "Værdien matcher ikke mønstret: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Værdien skal mindst være mellem {{ minValue }} og maksimalt {{ maxValue }}"
       },
       "MORE": "Mere"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Klik for at kopiere",
     "SUCCESS_COPY": "Teksten er kopieret til Udklipsholder"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Søg",
+      "ARIA_LABEL": "Søgemuligheder"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Ryd"
+    }
   }
 }

@@ -4,6 +4,7 @@
       "RESTORE": "Obnovit",
       "DELETE": "Odstranit",
       "DOWNLOAD": "Stáhnout",
+      "VIEW": "Zobrazit",
       "UPLOAD": {
         "TITLE": "Odeslat novou verzi",
         "TOOLTIP": "Omezení: Pokud chcete vytvořit novou verzi souboru, musíte nahrát soubor se stejným názvem",
@@ -62,11 +63,6 @@
       "VIEW": "Zobrazit",
       "REMOVE": "Odstranit",
       "DOWNLOAD": "Stáhnout"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtrovat podle {{ category }}",
-      "CLEAR": "Vymazat",
-      "APPLY": "Použít"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Zrušit",
     "CHOOSE": "Vybrat",
+    "ATTACH": "Připojit",
     "CHOOSE_ITEM": "Vybrat obsah pro připojení z '{{ name }}'",
     "COPY": "Kopírovat",
     "COPY_ITEM": "Zkopírovat položku '{{ name }}' do...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Zahájit proces"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filtr",
+      "TYPE": "Typ",
+      "FILTER_BY": "Filtrovat podle {{ category }}",
+      "CLEAR": "Vymazat",
+      "APPLY": "Použít",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Název",
+          "PLACEHOLDER": "Zadejte název"
+        },
+        "TYPE": {
+          "TITLE": "Zkontrolujte typ",
+          "FOLDER": "Složka",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Velikost obsahu (rozmezí)",
+          "SMALL": "Malá",
+          "MEDIUM": "Střední",
+          "LARGE": "Velká",
+          "HUGE": "Obrovská"
+        },
+        "DATE": {
+          "TITLE": "Datum vytvoření (rozmezí)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Správce",
       "COLLABORATOR": "Spolupracovník",
       "CONTRIBUTOR": "Přispěvatel",
-      "CONSUMER": "Spotřebitel"
+      "CONSUMER": "Spotřebitel",
+      "NONE": "Není člen"
     },
     "VISIBILITY": {
       "PRIVATE": "Soukromé",

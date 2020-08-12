@@ -17,6 +17,7 @@
       "DESCRIPTION": "Beskrivning",
       "LAST_MODIFIED": "Senast ändrad",
       "PROCESS_NAME": "Processnamn",
+      "PROCESS_DEFINITION_NAME": "Processdefinitionsnamn",
       "PARENT_TASK_ID": "Överordnad uppgift ID",
       "PROCESS_DEF_ID": "Processdefinitions-ID",
       "PROCESS_DEF_KEY": "Processdefinitionsnyckel",
@@ -85,6 +86,7 @@
       "PRIORITY": "Prioritet",
       "CREATED_DATE": "Skapad datum",
       "LAST_MODIFIED": "Senast ändrad",
+      "DUE_DATE": "Förfallodatum",
       "CREATED": "Skapad",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Sortera",
       "DIRECTION": "Riktning",
       "PROCESS_DEF_ID": "Processdefinitions-ID",
+      "PROCESS_DEF_NAME": "Processdefinitionsnamn",
       "PROCESS_DEF_KEY": "Processdefinitionsnyckel",
       "LAST_MODIFIED": "Senast ändrad",
       "LAST_MODIFIED_DATE_FORM": "Senast ändrad från",
@@ -262,6 +265,9 @@
         "CLAIM": "Anta",
         "UNCLAIM": "Avsäga"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Ogiltig sökväg för målmapp"
     }
   }
 }

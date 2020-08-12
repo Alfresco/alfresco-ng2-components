@@ -17,6 +17,7 @@
       "DESCRIPTION": "Beskrivelse",
       "LAST_MODIFIED": "Senest ændret",
       "PROCESS_NAME": "Procesnavn",
+      "PROCESS_DEFINITION_NAME": "Processens difinitionsnavn",
       "PARENT_TASK_ID": "Id for overordnet opgave",
       "PROCESS_DEF_ID": "Id for procesdefinition",
       "PROCESS_DEF_KEY": "Procesdefinitionsnøgle",
@@ -85,6 +86,7 @@
       "PRIORITY": "Prioritet",
       "CREATED_DATE": "Oprettelsesdato",
       "LAST_MODIFIED": "Senest ændret",
+      "DUE_DATE": "Forfaldsdato",
       "CREATED": "Oprettet",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Sortér",
       "DIRECTION": "Retning",
       "PROCESS_DEF_ID": "Procesdefinitions-id",
+      "PROCESS_DEF_NAME": "ProcessDefinitionName",
       "PROCESS_DEF_KEY": "Procesdefinitionsnøgle",
       "LAST_MODIFIED": "Sidst redigeret",
       "LAST_MODIFIED_DATE_FORM": "Sidst redigeret fra",
@@ -262,6 +265,9 @@
         "CLAIM": "Gør krav på",
         "UNCLAIM": "Frigiv"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig destinationsfolder"
     }
   }
 }

@@ -4,6 +4,7 @@
       "RESTORE": "復元",
       "DELETE": "削除",
       "DOWNLOAD": "ダウンロード",
+      "VIEW": "表示",
       "UPLOAD": {
         "TITLE": "新しいバージョンのアップロード",
         "TOOLTIP": "制限事項: 作成する新しいバージョンのファイルと同じ名前のファイルをアップロードする必要があります",
@@ -62,11 +63,6 @@
       "VIEW": "表示",
       "REMOVE": "削除",
       "DOWNLOAD": "ダウンロード"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "{{ category }} でフィルタ",
-      "CLEAR": "消去",
-      "APPLY": "適用"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "キャンセル",
     "CHOOSE": "選択",
+    "ATTACH": "添付",
     "CHOOSE_ITEM": "'{{ name }}' から添付するコンテンツを選択してください",
     "COPY": "コピー",
     "COPY_ITEM": "'{{ name }}' のコピー先...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "プロセスの開始"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "フィルタ",
+      "TYPE": "種類",
+      "FILTER_BY": "{{ category }} でフィルタ",
+      "CLEAR": "消去",
+      "APPLY": "適用",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "名前",
+          "PLACEHOLDER": "名前を入力してください"
+        },
+        "TYPE": {
+          "TITLE": "種類を選択してください",
+          "FOLDER": "フォルダ",
+          "DOCUMENT": "文書"
+        },
+        "SIZE": {
+          "TITLE": "コンテンツのサイズ (範囲)",
+          "SMALL": "小",
+          "MEDIUM": "中",
+          "LARGE": "大",
+          "HUGE": "特大"
+        },
+        "DATE": {
+          "TITLE": "作成日 (範囲)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "マネージャ",
       "COLLABORATOR": "共同作業者",
       "CONTRIBUTOR": "投稿者",
-      "CONSUMER": "利用者"
+      "CONSUMER": "利用者",
+      "NONE": "非メンバー"
     },
     "VISIBILITY": {
       "PRIVATE": "非公開",

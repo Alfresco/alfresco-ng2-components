@@ -4,6 +4,7 @@
       "RESTORE": "Przywróć",
       "DELETE": "Usuń",
       "DOWNLOAD": "Pobierz",
+      "VIEW": "Widok",
       "UPLOAD": {
         "TITLE": "Prześlij nową wersję",
         "TOOLTIP": "Ograniczenie: aby utworzyć nową wersję pliku, należy przesłać plik o tej samej nazwie.",
@@ -62,11 +63,6 @@
       "VIEW": "Widok",
       "REMOVE": "Usuń",
       "DOWNLOAD": "Pobierz"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtruj wg {{ category }}",
-      "CLEAR": "Wyczyść",
-      "APPLY": "Zastosuj"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Anuluj",
     "CHOOSE": "Wybierz",
+    "ATTACH": "Załącz",
     "CHOOSE_ITEM": "Wybierz treść do dołączenia z „{{ name }}”",
     "COPY": "Kopiuj",
     "COPY_ITEM": "Kopiuj '{{ name }}' do...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Rozpocznij proces"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filtr",
+      "TYPE": "Typ",
+      "FILTER_BY": "Filtruj wg {{ category }}",
+      "CLEAR": "Wyczyść",
+      "APPLY": "Zastosuj",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nazwa",
+          "PLACEHOLDER": "Wprowadź nazwę"
+        },
+        "TYPE": {
+          "TITLE": "Zaznacz typ",
+          "FOLDER": "Folder",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Rozmiar zawartości (zakres)",
+          "SMALL": "Mały",
+          "MEDIUM": "Średni",
+          "LARGE": "Duży",
+          "HUGE": "Ogromny"
+        },
+        "DATE": {
+          "TITLE": "Data utworzenia (zakres)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Menedżer",
       "COLLABORATOR": "Współpracownik",
       "CONTRIBUTOR": "Współautor",
-      "CONSUMER": "Konsument"
+      "CONSUMER": "Konsument",
+      "NONE": "Nie jest członkiem"
     },
     "VISIBILITY": {
       "PRIVATE": "Prywatne",

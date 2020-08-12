@@ -4,6 +4,7 @@
       "RESTORE": "恢复",
       "DELETE": "删除",
       "DOWNLOAD": "下载",
+      "VIEW": "查看",
       "UPLOAD": {
         "TITLE": "上传新版本",
         "TOOLTIP": "限制：您必须上传同名文件才能创建该文件的新版本",
@@ -62,11 +63,6 @@
       "VIEW": "查看",
       "REMOVE": "删除",
       "DOWNLOAD": "下载"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "根据 {{ category }} 筛选",
-      "CLEAR": "清除",
-      "APPLY": "应用"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "取消",
     "CHOOSE": "选择",
+    "ATTACH": "附加",
     "CHOOSE_ITEM": "从 '{{ name }}'中选择要附加的内容",
     "COPY": "复制",
     "COPY_ITEM": "将 '{{ name }}' 复制到...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "启动流程"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "筛选",
+      "TYPE": "类型",
+      "FILTER_BY": "根据 {{ category }} 筛选",
+      "CLEAR": "清除",
+      "APPLY": "应用",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "名称",
+          "PLACEHOLDER": "输入名称"
+        },
+        "TYPE": {
+          "TITLE": "勾选类型",
+          "FOLDER": "文件夹",
+          "DOCUMENT": "文档"
+        },
+        "SIZE": {
+          "TITLE": "内容大小（范围）",
+          "SMALL": "小",
+          "MEDIUM": "中",
+          "LARGE": "大",
+          "HUGE": "特大"
+        },
+        "DATE": {
+          "TITLE": "创建日期（范围）"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "管理员",
       "COLLABORATOR": "合作者",
       "CONTRIBUTOR": "贡献者",
-      "CONSUMER": "使用者"
+      "CONSUMER": "使用者",
+      "NONE": "不是成员"
     },
     "VISIBILITY": {
       "PRIVATE": "私有",

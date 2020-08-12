@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "ローカルストレージ",
       "SOURCE": "ソースの選択先 ",
-      "SHOW_FILE": "表示",
+      "VIEW_FILE": "表示",
       "DOWNLOAD_FILE": "ダウンロード",
       "REMOVE_FILE": "削除",
       "UPLOAD": "アップロード",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "{{ minLength }} 文字以上で入力してください",
         "NO_LONGER_THAN": "{{ maxLength }} 文字以内で入力してください"
       },
-      "FILE_ALREADY_UPLOADED": "同じ名前のファイルが既にアップロードされています。"
+      "FILE_ALREADY_UPLOADED": "同じ名前のファイルが既にアップロードされています。",
+      "ATTACH": "添付"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "無名のタスク"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "説明"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "タイトル"
+      },
       "CREATE_BUTTON": {
         "LABEL": "作成"
       },
@@ -175,7 +179,10 @@
       "NONE": "なし",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "番号形式を使用してください",
-        "INT_VALIDATION_ERROR": "整数形式を使用してください"
+        "INT_VALIDATION_ERROR": "整数形式を使用してください",
+        "LENGTH_VALIDATION_ERROR": "値は {{ minLength }} ～ {{ maxLength }} 文字で入力してください",
+        "MATCH_VALIDATION_ERROR": "値がパターンと一致していません: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "値には {{ minValue }} ～ {{ maxValue }} の数字を入力してください"
       },
       "MORE": "詳細"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "コピーするにはクリックします",
     "SUCCESS_COPY": "テキストがクリップボードにコピーされました"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "検索",
+      "ARIA_LABEL": "検索オプション"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "消去"
+    }
   }
 }

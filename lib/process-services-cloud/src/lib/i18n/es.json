@@ -17,6 +17,7 @@
       "DESCRIPTION": "Descripción",
       "LAST_MODIFIED": "Modificada por última vez",
       "PROCESS_NAME": "Nombre del proceso",
+      "PROCESS_DEFINITION_NAME": "Nombre de definición de proceso",
       "PARENT_TASK_ID": "ID de tarea primaria",
       "PROCESS_DEF_ID": "ID de definición del proceso",
       "PROCESS_DEF_KEY": "Clave de definición de proceso",
@@ -85,6 +86,7 @@
       "PRIORITY": "Prioridad",
       "CREATED_DATE": "Fecha de creación",
       "LAST_MODIFIED": "Modificada por última vez",
+      "DUE_DATE": "Fecha de vencimiento",
       "CREATED": "Creado",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Clasificar",
       "DIRECTION": "Dirección",
       "PROCESS_DEF_ID": "ID de definición de proceso",
+      "PROCESS_DEF_NAME": "Nombre de definición de proceso",
       "PROCESS_DEF_KEY": "Clave de definición de procesos",
       "LAST_MODIFIED": "Última modificación",
       "LAST_MODIFIED_DATE_FORM": "Última modificación desde",
@@ -262,6 +265,9 @@
         "CLAIM": "Pedir",
         "UNCLAIM": "Liberar"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Ruta de carpeta de destino no válida"
     }
   }
 }

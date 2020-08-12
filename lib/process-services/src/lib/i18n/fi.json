@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Ei lisättäviä lomakkeita",
       "BUTTONS": {
         "COMPLETE": "Merkitse valmiiksi",
-        "CANCEL": "Peruuta"
+        "CANCEL": "Peruuta",
+        "CLAIM": "Varaa",
+        "UNCLAIM": "Vapauta"
       }
     },
     "COMPLETED_TASK": {

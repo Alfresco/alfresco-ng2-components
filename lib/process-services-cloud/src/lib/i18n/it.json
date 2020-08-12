@@ -17,6 +17,7 @@
       "DESCRIPTION": "Descrizione",
       "LAST_MODIFIED": "Ultima modifica",
       "PROCESS_NAME": "Nome processo",
+      "PROCESS_DEFINITION_NAME": "Nome definizione processo",
       "PARENT_TASK_ID": "ID compito principale",
       "PROCESS_DEF_ID": "ID definizione di processo",
       "PROCESS_DEF_KEY": "Chiave di definizione processo",
@@ -85,6 +86,7 @@
       "PRIORITY": "Priorità",
       "CREATED_DATE": "Data di creazione",
       "LAST_MODIFIED": "Ultima modifica",
+      "DUE_DATE": "Scadenza",
       "CREATED": "Creato",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Ordina",
       "DIRECTION": "Direzione",
       "PROCESS_DEF_ID": "ID definizione processo",
+      "PROCESS_DEF_NAME": "NomeDefinizioneProcesso",
       "PROCESS_DEF_KEY": "Chiave definizione processo",
       "LAST_MODIFIED": "Ultima modifica",
       "LAST_MODIFIED_DATE_FORM": "Ultima modifica a partire dal:",
@@ -262,6 +265,9 @@
         "CLAIM": "Richiedi",
         "UNCLAIM": "Restituisci"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Percorso cartella di destinazione non valido"
     }
   }
 }

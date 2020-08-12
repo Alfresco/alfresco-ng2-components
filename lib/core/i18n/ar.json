@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "التخزين المحلي",
       "SOURCE": "تحديد المصدر من ",
-      "SHOW_FILE": "إظهار",
+      "VIEW_FILE": "عرض",
       "DOWNLOAD_FILE": "تنزيل",
       "REMOVE_FILE": "إزالة",
       "UPLOAD": "تحميل",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "أدخل {{ minLength }} حرف (حرفًا) على الأقل",
         "NO_LONGER_THAN": "أدخل {{ maxLength }} حرف (حرفًا) كحد أقصى"
       },
-      "FILE_ALREADY_UPLOADED": "تم تحميل ملف بالاسم نفسه بالفعل."
+      "FILE_ALREADY_UPLOADED": "تم تحميل ملف بالاسم نفسه بالفعل.",
+      "ATTACH": "إرفاق"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "مهمة بدون اسم"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "الوصف"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "العنوان"
+      },
       "CREATE_BUTTON": {
         "LABEL": "إنشاء"
       },
@@ -175,7 +179,10 @@
       "NONE": "بلا",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "استخدام تنسيق رقم",
-        "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح"
+        "INT_VALIDATION_ERROR": "استخدام تنسيق عدد صحيح",
+        "LENGTH_VALIDATION_ERROR": "ينبغي أن يكون طول القيمة بحد أدنى {{ minLength }} وحد أقصى {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "القيمة لا تطابق النمط: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "ينبغي أن تكون القيمة بين الحد الأدنى {{ minValue }} والحد الأقصى {{ maxValue }}"
       },
       "MORE": "المزيد"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "انقر للنسخ",
     "SUCCESS_COPY": "تم نسخ النص إلى الحافظة"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "بحث",
+      "ARIA_LABEL": "خيارات البحث"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "مسح"
+    }
   }
 }

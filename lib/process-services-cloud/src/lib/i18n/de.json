@@ -17,6 +17,7 @@
       "DESCRIPTION": "Beschreibung",
       "LAST_MODIFIED": "Zuletzt geändert",
       "PROCESS_NAME": "Prozessname",
+      "PROCESS_DEFINITION_NAME": "Name der Prozessdefinition",
       "PARENT_TASK_ID": "ID der übergeordneten Aufgabe",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
       "PROCESS_DEF_KEY": "Prozessdefinitionsschlüssel",
@@ -85,6 +86,7 @@
       "PRIORITY": "Priorität",
       "CREATED_DATE": "Datum der Erstellung",
       "LAST_MODIFIED": "Zuletzt geändert",
+      "DUE_DATE": "Fälligkeitsdatum",
       "CREATED": "Erstellt",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Sortieren",
       "DIRECTION": "Richtung",
       "PROCESS_DEF_ID": "Prozessdefinitions-ID",
+      "PROCESS_DEF_NAME": "Name der Prozessdefinition",
       "PROCESS_DEF_KEY": "Prozessdefinitionsschlüssel",
       "LAST_MODIFIED": "Zuletzt bearbeitet",
       "LAST_MODIFIED_DATE_FORM": "Zuletzt bearbeitet von",
@@ -262,6 +265,9 @@
         "CLAIM": "Beanspruchen",
         "UNCLAIM": "Anspruch aufheben"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Unzulässiger Pfad für Zielordner"
     }
   }
 }

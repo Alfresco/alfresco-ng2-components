@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Almacenamiento local",
       "SOURCE": "Seleccionar origen de ",
-      "SHOW_FILE": "Mostrar",
+      "VIEW_FILE": "Ver",
       "DOWNLOAD_FILE": "Descargar",
       "REMOVE_FILE": "Eliminar",
       "UPLOAD": "Cargar",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Introducir al menos {{ minLength }} caracteres",
         "NO_LONGER_THAN": "No introducir más de {{ maxLength }} caracteres"
       },
-      "FILE_ALREADY_UPLOADED": "Ya se ha cargado un fichero con el mismo nombre."
+      "FILE_ALREADY_UPLOADED": "Ya se ha cargado un fichero con el mismo nombre.",
+      "ATTACH": "Adjuntar"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Tarea sin nombre"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Descripción"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Título"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Crear"
       },
@@ -175,7 +179,10 @@
       "NONE": "Ninguno",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizar un formato de número",
-        "INT_VALIDATION_ERROR": "Utilizar un formato de entero"
+        "INT_VALIDATION_ERROR": "Utilizar un formato de entero",
+        "LENGTH_VALIDATION_ERROR": "El valor debe tener una longitud mínima de {{ minLength }} y máxima de {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "El valor no coincide con el patrón: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "El valor debe estar entre un mínimo de {{ minValue }} y un máximo de {{ maxValue }}"
       },
       "MORE": "Más"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Haga clic para copiar",
     "SUCCESS_COPY": "Texto copiado al portapapeles"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Buscar",
+      "ARIA_LABEL": "Opciones de búsqueda"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Borrar"
+    }
   }
 }

@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Brak formularzy do dodania.",
       "BUTTONS": {
         "COMPLETE": "Zakończ",
-        "CANCEL": "Anuluj"
+        "CANCEL": "Anuluj",
+        "CLAIM": "Przejmij",
+        "UNCLAIM": "Zwolnij"
       }
     },
     "COMPLETED_TASK": {

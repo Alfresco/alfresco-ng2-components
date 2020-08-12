@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Magazyn lokalny",
       "SOURCE": "Wybierz źródło z ",
-      "SHOW_FILE": "Pokaż",
+      "VIEW_FILE": "Widok",
       "DOWNLOAD_FILE": "Pobierz",
       "REMOVE_FILE": "Usuń",
       "UPLOAD": "Prześlij",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Wprowadź co najmniej następującą liczbę znaków: {{ minLength }}.",
         "NO_LONGER_THAN": "Możesz wprowadzić maksymalnie następującą liczbę znaków: {{ maxLength }}."
       },
-      "FILE_ALREADY_UPLOADED": "Plik o tej samej nazwie został już przesłany."
+      "FILE_ALREADY_UPLOADED": "Plik o tej samej nazwie został już przesłany.",
+      "ATTACH": "Załącz"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Zadanie bez nazwy"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Opis"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Tytuł"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Utwórz"
       },
@@ -175,7 +179,10 @@
       "NONE": "Brak",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Użyj formatu liczby",
-        "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej"
+        "INT_VALIDATION_ERROR": "Użyj formatu liczby całkowitej",
+        "LENGTH_VALIDATION_ERROR": "Wartość powinna mieć długość minimum {{ minLength }} i maksimum {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "Wartość nie pasuje do wzorca: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Wartość powinna mieć minimum {{ minValue }} i maksimum {{ maxValue }}"
       },
       "MORE": "Więcej"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Kliknij, aby skopiować",
     "SUCCESS_COPY": "Tekst skopiowano do schowka"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Szukaj",
+      "ARIA_LABEL": "Opcje wyszukiwania"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Wyczyść"
+    }
   }
 }

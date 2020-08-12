@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Нет форм для добавления",
       "BUTTONS": {
         "COMPLETE": "Завершить",
-        "CANCEL": "Отмена"
+        "CANCEL": "Отмена",
+        "CLAIM": "Принять",
+        "UNCLAIM": "Освободить"
       }
     },
     "COMPLETED_TASK": {

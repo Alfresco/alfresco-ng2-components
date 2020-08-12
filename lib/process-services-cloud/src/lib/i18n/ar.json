@@ -17,6 +17,7 @@
       "DESCRIPTION": "الوصف",
       "LAST_MODIFIED": "آخر تعديل",
       "PROCESS_NAME": "اسم العملية",
+      "PROCESS_DEFINITION_NAME": "اسم تعريف العملية",
       "PARENT_TASK_ID": "معرف المهمة الأصلية",
       "PROCESS_DEF_ID": "معرف تعريف العملية",
       "PROCESS_DEF_KEY": "مفتاح تعريف العملية",
@@ -85,6 +86,7 @@
       "PRIORITY": "أولوية",
       "CREATED_DATE": "تاريخ الإنشاء",
       "LAST_MODIFIED": "آخر تعديل",
+      "DUE_DATE": "تاريخ الاستحقاق",
       "CREATED": "تم الإنشاء",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "فرز",
       "DIRECTION": "اتجاه",
       "PROCESS_DEF_ID": "رقم تعريف العملية",
+      "PROCESS_DEF_NAME": "اسم تعريف العملية",
       "PROCESS_DEF_KEY": "مفتاح تعريف العملية",
       "LAST_MODIFIED": "آخر تعديل",
       "LAST_MODIFIED_DATE_FORM": "آخر تعديل من",
@@ -262,6 +265,9 @@
         "CLAIM": "مطالبة",
         "UNCLAIM": "تحرير"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "مسار مجلد وجهة غير صحيح"
     }
   }
 }

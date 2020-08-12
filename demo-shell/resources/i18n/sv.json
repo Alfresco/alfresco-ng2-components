@@ -56,6 +56,7 @@
   "APP_LAYOUT": {
     "APP": "Program",
     "APP_NAME": "ADF-demoprogram",
+    "FILTERED_SEARCH": "Filter",
     "HOME": "Hem",
     "NODE-SELECTOR": "Nodväljare",
     "SITES": "Webbplatser",

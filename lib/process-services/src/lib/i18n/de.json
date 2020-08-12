@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Keine Formulare, die hinzugefügt werden können",
       "BUTTONS": {
         "COMPLETE": "Abschließen",
-        "CANCEL": "Abbrechen"
+        "CANCEL": "Abbrechen",
+        "CLAIM": "Beanspruchen",
+        "UNCLAIM": "Anspruch aufheben"
       }
     },
     "COMPLETED_TASK": {

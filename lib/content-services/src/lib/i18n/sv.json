@@ -4,6 +4,7 @@
       "RESTORE": "Återställ",
       "DELETE": "Radera",
       "DOWNLOAD": "Ladda ner",
+      "VIEW": "Visa",
       "UPLOAD": {
         "TITLE": "Ladda upp ny version",
         "TOOLTIP": "Begränsning: du måste ladda upp en fil med samma namn för att skapa en ny version av den.",
@@ -62,11 +63,6 @@
       "VIEW": "Visa",
       "REMOVE": "Ta bort",
       "DOWNLOAD": "Ladda ner"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtrera efter {{ category }}",
-      "CLEAR": "Rensa",
-      "APPLY": "Tillämpa"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Avbryt",
     "CHOOSE": "Välj",
+    "ATTACH": "Bifoga",
     "CHOOSE_ITEM": "Välj innehåll att bifoga från '{{ name }}'",
     "COPY": "Kopiera",
     "COPY_ITEM": "Kopiera '{{ name }}' till...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Starta process"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Typ",
+      "FILTER_BY": "Filtrera efter {{ category }}",
+      "CLEAR": "Rensa",
+      "APPLY": "Tillämpa",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Namn",
+          "PLACEHOLDER": "Ange namn"
+        },
+        "TYPE": {
+          "TITLE": "Kontrolltyp",
+          "FOLDER": "Mapp",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Innehållsstorlek (område)",
+          "SMALL": "Litet",
+          "MEDIUM": "Medium",
+          "LARGE": "Stort",
+          "HUGE": "Jättestort"
+        },
+        "DATE": {
+          "TITLE": "Skapad datum (område)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Hanterare",
       "COLLABORATOR": "Medarbetare",
       "CONTRIBUTOR": "Deltagare",
-      "CONSUMER": "Förbrukare"
+      "CONSUMER": "Förbrukare",
+      "NONE": "Inte medlem"
     },
     "VISIBILITY": {
       "PRIVATE": "Privat",

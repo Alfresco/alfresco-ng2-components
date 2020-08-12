@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Inga formulär ska läggas till",
       "BUTTONS": {
         "COMPLETE": "Slutför",
-        "CANCEL": "Avbryt"
+        "CANCEL": "Avbryt",
+        "CLAIM": "Anta",
+        "UNCLAIM": "Avsäga"
       }
     },
     "COMPLETED_TASK": {

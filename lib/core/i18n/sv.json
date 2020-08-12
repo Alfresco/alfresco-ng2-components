@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokal lagring",
       "SOURCE": "Välj källa från ",
-      "SHOW_FILE": "Visa",
+      "VIEW_FILE": "Visa",
       "DOWNLOAD_FILE": "Ladda ner",
       "REMOVE_FILE": "Ta bort",
       "UPLOAD": "Ladda upp",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Ange minst {{ minLength }} tecken",
         "NO_LONGER_THAN": "Ange inte fler än {{ maxLength }} tecken"
       },
-      "FILE_ALREADY_UPLOADED": "En fil med samma namn finns redan uppladdad."
+      "FILE_ALREADY_UPLOADED": "En fil med samma namn finns redan uppladdad.",
+      "ATTACH": "Bifoga"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Namnlös uppgift"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Beskrivning"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Titel"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Skapa"
       },
@@ -175,7 +179,10 @@
       "NONE": "Ingen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Använd ett nummerformat",
-        "INT_VALIDATION_ERROR": "Använd ett heltalsformat"
+        "INT_VALIDATION_ERROR": "Använd ett heltalsformat",
+        "LENGTH_VALIDATION_ERROR": "Värdet ska vara minst {{ minLength }} och högst {{ maxLength }} långt",
+        "MATCH_VALIDATION_ERROR": "Värdet matchar inte mönstret: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Värdet ska ligga mellan {{ minValue }} och {{ maxValue }}"
       },
       "MORE": "Mer"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Klicka för att kopiera",
     "SUCCESS_COPY": "Texten har kopierats till urklipp"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Sök",
+      "ARIA_LABEL": "Sökalternativ"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Rensa"
+    }
   }
 }

@@ -17,6 +17,7 @@
       "DESCRIPTION": "Description",
       "LAST_MODIFIED": "Dernière modification",
       "PROCESS_NAME": "Nom de processus",
+      "PROCESS_DEFINITION_NAME": "Nom de la définition de processus",
       "PARENT_TASK_ID": "ID de la tâche parent",
       "PROCESS_DEF_ID": "ID de la définition de processus",
       "PROCESS_DEF_KEY": "Clé de la définition de processus",
@@ -85,6 +86,7 @@
       "PRIORITY": "Priorité",
       "CREATED_DATE": "Date de création",
       "LAST_MODIFIED": "Dernière modification",
+      "DUE_DATE": "Date d'échéance",
       "CREATED": "Créé",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Trier",
       "DIRECTION": "Direction",
       "PROCESS_DEF_ID": "ID de la définition du processus",
+      "PROCESS_DEF_NAME": "Nom de la définition de processus",
       "PROCESS_DEF_KEY": "Clé de définition de processus",
       "LAST_MODIFIED": "Dernière modification",
       "LAST_MODIFIED_DATE_FORM": "Date de dernière modification à partir du",
@@ -262,6 +265,9 @@
         "CLAIM": "S'attribuer",
         "UNCLAIM": "Libérer"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Chemin d'accès au dossier de destination non valide"
     }
   }
 }

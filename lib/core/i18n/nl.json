@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokale opslag",
       "SOURCE": "Selecteer bron uit ",
-      "SHOW_FILE": "Weergeven",
+      "VIEW_FILE": "Weergeven",
       "DOWNLOAD_FILE": "Downloaden",
       "REMOVE_FILE": "Verwijderen",
       "UPLOAD": "Uploaden",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Voer ten minste {{ minLength }} tekens in",
         "NO_LONGER_THAN": "Voer niet meer dan {{ maxLength }} tekens in"
       },
-      "FILE_ALREADY_UPLOADED": "Er is al een bestand met dezelfde naam geüpload."
+      "FILE_ALREADY_UPLOADED": "Er is al een bestand met dezelfde naam geüpload.",
+      "ATTACH": "Bijvoegen"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Naamloze taak"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Beschrijving"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Titel"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Maken"
       },
@@ -175,7 +179,10 @@
       "NONE": "Geen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Gebruik een getalnotatie",
-        "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen"
+        "INT_VALIDATION_ERROR": "Gebruik een notatie voor gehele getallen",
+        "LENGTH_VALIDATION_ERROR": "Waarde moet een minimale {{ minLength }} en maximale {{ maxLength }} lengte hebben",
+        "MATCH_VALIDATION_ERROR": "Waarde komt niet overeen met patroon: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Waarde moet liggen tussen minimaal {{ minValue }} en maximaal {{ maxValue }}"
       },
       "MORE": "Meer"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Klik om te kopiëren",
     "SUCCESS_COPY": "Tekst gekopieerd naar klembord"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Zoeken",
+      "ARIA_LABEL": "Zoekopties"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Wissen"
+    }
   }
 }

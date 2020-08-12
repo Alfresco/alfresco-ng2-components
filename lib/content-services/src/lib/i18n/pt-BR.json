@@ -4,6 +4,7 @@
       "RESTORE": "Restaurar",
       "DELETE": "Excluir",
       "DOWNLOAD": "Download",
+      "VIEW": "Visualizar",
       "UPLOAD": {
         "TITLE": "Carregar nova versão",
         "TOOLTIP": "Restrição: você deve carregar um arquivo com o mesmo nome para criar uma versão dele",
@@ -62,11 +63,6 @@
       "VIEW": "Visualizar",
       "REMOVE": "Remover",
       "DOWNLOAD": "Download"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtrar por {{ category }}",
-      "CLEAR": "Limpar",
-      "APPLY": "Aplicar"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Cancelar",
     "CHOOSE": "Selecionar",
+    "ATTACH": "Anexar",
     "CHOOSE_ITEM": "Selecionar conteúdo para anexar a partir de '{{ name }}'",
     "COPY": "Copiar",
     "COPY_ITEM": "Copiar '{{ name }}' para...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Iniciar processo"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filtro",
+      "TYPE": "Tipo",
+      "FILTER_BY": "Filtrar por {{ category }}",
+      "CLEAR": "Limpar",
+      "APPLY": "Aplicar",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nome",
+          "PLACEHOLDER": "Insira o nome"
+        },
+        "TYPE": {
+          "TITLE": "Marque o tipo",
+          "FOLDER": "Pasta",
+          "DOCUMENT": "Documento"
+        },
+        "SIZE": {
+          "TITLE": "Tamanho do conteúdo (intervalo)",
+          "SMALL": "Pequeno",
+          "MEDIUM": "Médio",
+          "LARGE": "Grande",
+          "HUGE": "Enorme"
+        },
+        "DATE": {
+          "TITLE": "Data de criação (intervalo)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Gerente",
       "COLLABORATOR": "Colaborador",
       "CONTRIBUTOR": "Contribuidor",
-      "CONSUMER": "Consumidor"
+      "CONSUMER": "Consumidor",
+      "NONE": "Não é membro"
     },
     "VISIBILITY": {
       "PRIVATE": "Privado",

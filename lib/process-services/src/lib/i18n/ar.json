@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "لا توجد نماذج لإضافتها",
       "BUTTONS": {
         "COMPLETE": "تم",
-        "CANCEL": "إلغاء"
+        "CANCEL": "إلغاء",
+        "CLAIM": "مطالبة",
+        "UNCLAIM": "تحرير"
       }
     },
     "COMPLETED_TASK": {

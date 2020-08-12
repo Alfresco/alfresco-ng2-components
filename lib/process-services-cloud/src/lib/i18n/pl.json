@@ -17,6 +17,7 @@
       "DESCRIPTION": "Opis",
       "LAST_MODIFIED": "Ostatnia modyfikacja",
       "PROCESS_NAME": "Nazwa procesu",
+      "PROCESS_DEFINITION_NAME": "Nazwa definicji procesu",
       "PARENT_TASK_ID": "Identyfikator zadania nadrzędnego",
       "PROCESS_DEF_ID": "Identyfikator definicji procesu",
       "PROCESS_DEF_KEY": "Klucz definicji procesu",
@@ -85,6 +86,7 @@
       "PRIORITY": "Priorytet",
       "CREATED_DATE": "Data utworzenia",
       "LAST_MODIFIED": "Ostatnia modyfikacja",
+      "DUE_DATE": "Data ukończenia",
       "CREATED": "Utworzono",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Sortuj",
       "DIRECTION": "Kolejność",
       "PROCESS_DEF_ID": "Identyfikator definicji procesu",
+      "PROCESS_DEF_NAME": "Nazwadefinicjiprocesu",
       "PROCESS_DEF_KEY": "Klucz definicji procesu",
       "LAST_MODIFIED": "Ostatnia modyfikacja",
       "LAST_MODIFIED_DATE_FORM": "Ostatnia modyfikacja - od",
@@ -262,6 +265,9 @@
         "CLAIM": "Przejmij",
         "UNCLAIM": "Zwolnij"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Nieprawidłowa ścieżka folderu docelowego"
     }
   }
 }

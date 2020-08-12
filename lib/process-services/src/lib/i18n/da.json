@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Der er ikke tilføjet nogen formularer",
       "BUTTONS": {
         "COMPLETE": "Fuldført",
-        "CANCEL": "Annuller"
+        "CANCEL": "Annuller",
+        "CLAIM": "Gør krav på",
+        "UNCLAIM": "Frigiv"
       }
     },
     "COMPLETED_TASK": {
