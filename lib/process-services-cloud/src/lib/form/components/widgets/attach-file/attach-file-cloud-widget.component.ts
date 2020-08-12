@@ -51,11 +51,12 @@ import { DestinationFolderPathModel } from '../../../models/form-cloud-represent
 })
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
-    static DEFAULT_ROOT = '-my-';
-    static VALID_ALIAS = [AttachFileCloudWidgetComponent.DEFAULT_ROOT, '-shared-', '-root-'];
+    static MY_FILES_FOLDER_ID = '-my-';
+    static ROOT_FOLDER_ID = '-root-';
+    static VALID_ALIAS = [AttachFileCloudWidgetComponent.ROOT_FOLDER_ID, AttachFileCloudWidgetComponent.MY_FILES_FOLDER_ID, '-shared-'];
 
     typeId = 'AttachFileCloudWidgetComponent';
-    rootNodeId = AttachFileCloudWidgetComponent.DEFAULT_ROOT;
+    rootNodeId = AttachFileCloudWidgetComponent.MY_FILES_FOLDER_ID;
 
     constructor(
         formService: FormService,
@@ -121,7 +122,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             }
         }
 
-        return this.isValidAlias(alias) ? { alias, path } : { alias: AttachFileCloudWidgetComponent.DEFAULT_ROOT, path: undefined };
+        return this.isValidAlias(alias) ? { alias, path } : { alias: AttachFileCloudWidgetComponent.ROOT_FOLDER_ID, path: undefined };
     }
 
     removeExistingSelection(selections: Node[]) {
