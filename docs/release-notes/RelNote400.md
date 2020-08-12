@@ -16,7 +16,8 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 -   [New package versions](#new-package-versions)
 -   [Goals for this release](#goals-for-this-release)
-    -   [TODO](#todo)
+    -   [Angular 10](#angular-10)
+    -   [Property constraint support for ACS 7](#property-constraint-support-for-acs-7)
 -   [Localisation](#localisation)
 -   [References](#references)
 -   [PR merged](#pr-merged)
@@ -35,13 +36,21 @@ You can contact Francesco Corti (francesco.corti at alfresco.com) for details of
 
 This is a major release of the Alfresco Application Development Framework developed to receive the latest and greatest benefits of the most recent version of the [Angular framework (v10)](https://blog.angular.io/version-10-of-angular-now-available-78960babd41).
 
-The highlights of this release include [DocumentList filtering](https://issues.alfresco.com/jira/browse/ADF-5108) for the benfit of the end user as well as technical improvements like the introduction of the ECM version directive, improvements of the SiteService and an updated JS Renditions API.
+The highlights of this release include the mentioned [Angular version 10 support](https://issues.alfresco.com/jira/browse/ADF-5139), ... and last but not least, the [property constraint support](https://issues.alfresco.com/jira/browse/ADF-3484) available for ACS v7 ahead.
 
 Please report issues with this release in the [issue tracker](https://github.com/Alfresco/alfresco-ng2-components/issues/new). You can collaborate on this release or share feedback by using the discussion tools on [Gitter](http://gitter.im/Alfresco/alfresco-ng2-components).
 
-### TODO
+### Angular 10
 
-TODO
+As you probably know, ADF 3 relies on Angular 7 that has already finished its official support. Because of this, to follow the commitment to keep ADF aligned with the most recent version of Angular, here it is the "upgrade" to its version 10, recently released.
+
+For further details on the Angular 10 release, [here](https://blog.angular.io/version-10-of-angular-now-available-78960babd41) you can find an Angular blog post describing it.
+
+### Property constraint support for ACS 7
+
+Starting from ACS 7 (Community Edition and the future Enterprise Edition) the enhanced REST API allows the property contratint support on ADF side. As part of this enhancement, ADF and all the ADF based applications, will benefit of the support of: [list of values](https://issues.alfresco.com/jira/browse/ADF-3484), [min/max length constraints](https://issues.alfresco.com/jira/browse/ADF-5145), [min/max value constraints](https://issues.alfresco.com/jira/browse/ADF-5145) and [regular expression constraints](https://issues.alfresco.com/jira/browse/ADF-5125).
+
+In addition to this, [the search option in list of values](https://issues.alfresco.com/jira/browse/ADF-5128) has been added, to provide a better way to comsume long lists and filter the items.
 
 ## Localisation
 
