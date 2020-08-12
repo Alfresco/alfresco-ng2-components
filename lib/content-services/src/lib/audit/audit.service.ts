@@ -87,11 +87,10 @@ export class AuditService {
 
     getAuditEntriesForNode(nodeId: string, opts?: any): Observable<AuditEntryPaging> {
         const defaultOptions = {
-            skipCount: 0,
-            maxItems: 100
+            nodeId: nodeId
         };
         const queryOptions = Object.assign({}, defaultOptions, opts);
-        return from(this.auditApi.listAuditEntriesForAuditApp(nodeId, queryOptions))
+        return from(this.auditApi.listAuditEntriesForNode(queryOptions))
             .pipe(
                 catchError((err: any) => this.handleError(err))
             );
