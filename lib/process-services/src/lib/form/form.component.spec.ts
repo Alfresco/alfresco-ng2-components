@@ -975,13 +975,13 @@ describe('FormComponent', () => {
         formComponent.form = new FormModel(JSON.parse(JSON.stringify(fakeForm)));
         let formFields = formComponent.form.getFormFields();
 
-        let labelField = formFields.find((field) => field.id === 'label');
+        let dropdownField = formFields.find((field) => field.id === 'dropdownId');
         let radioField = formFields.find((field) => field.id === 'radio');
-        expect(labelField.value).toBe('empty');
+        expect(dropdownField.value).toBe('empty');
         expect(radioField.value).toBeNull();
 
         const formValues: any = {};
-        formValues.label = {
+        formValues.dropdownId = {
             id: 'option_2',
             name: 'test2'
         };
@@ -991,9 +991,11 @@ describe('FormComponent', () => {
         formComponent.ngOnChanges({ 'data': change });
 
         formFields = formComponent.form.getFormFields();
-        labelField = formFields.find((field) => field.id === 'label');
+        dropdownField = formFields.find((field) => field.id === 'dropdownId');
         radioField = formFields.find((field) => field.id === 'radio');
-        expect(labelField.value).toBe('option_2');
+
+        expect(dropdownField.value.id).toBe('option_2');
+        expect(dropdownField.value.name).toBe('test2');
         expect(radioField.value).toBe('option_2');
     });
 

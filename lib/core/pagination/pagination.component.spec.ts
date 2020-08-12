@@ -250,9 +250,6 @@ describe('PaginationComponent', () => {
             expect(component.isFirstPage).toBe(true, 'isFirstPage');
             expect(component.isLastPage).toBe(true, 'isLastPage');
 
-            // tslint:disable-next-line: no-console
-            console.log(JSON.stringify(component.pagination));
-
             expect(component.range).toEqual([ 0, 0 ], 'range');
             expect(component.pages).toEqual([ 1 ], 'pages');
         });
