@@ -21,19 +21,14 @@ import { RolesService } from './roles.service';
 import { Logger } from '../../utils/logger';
 
 export class IdentityService {
-
-    api: ApiService;
-
-    constructor(api: ApiService) {
-        this.api = api;
-    }
-
     ROLES = {
         ACTIVITI_USER: 'ACTIVITI_USER',
         ACTIVITI_ADMIN: 'ACTIVITI_ADMIN',
         ACTIVITI_DEVOPS: 'ACTIVITI_DEVOPS',
         ACTIVITI_IDENTITY: 'ACTIVITI_IDENTITY'
     };
+
+    constructor(public api: ApiService) {}
 
     async createIdentityUserWithRole(roles: string[]): Promise<any> {
         const rolesService = new RolesService(this.api);

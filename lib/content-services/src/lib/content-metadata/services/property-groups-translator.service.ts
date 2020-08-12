@@ -76,7 +76,7 @@ export class PropertyGroupTranslatorService {
     }
 
     private translate(property: Property, propertyValues: any, constraints: Constraint[]): CardViewItem {
-        let propertyValue;
+        let propertyValue: any;
         if (propertyValues && propertyValues[property.name]) {
             propertyValue = propertyValues[property.name];
         }
@@ -94,7 +94,7 @@ export class PropertyGroupTranslatorService {
             constraints: constraints
         };
 
-        let cardViewItemProperty;
+        let cardViewItemProperty: CardViewItem;
 
         if (this.isListOfValues(propertyDefinition.constraints)) {
             const options = propertyDefinition.constraints[0].parameters.allowedValues.map((value) => ({ key: value, label: value }));
@@ -154,7 +154,7 @@ export class PropertyGroupTranslatorService {
         return definition?.properties.find((item) => item.id === propertyName)?.constraints ?? [];
     }
 
-    private checkECMTypeValidity(ecmPropertyType) {
+    private checkECMTypeValidity(ecmPropertyType: string) {
         if (PropertyGroupTranslatorService.RECOGNISED_ECM_TYPES.indexOf(ecmPropertyType) === -1) {
             this.logService.error(`Unknown type for mapping: ${ecmPropertyType}`);
         }

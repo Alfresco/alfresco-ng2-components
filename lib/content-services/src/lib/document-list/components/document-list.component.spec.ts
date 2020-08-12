@@ -74,14 +74,14 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         eventMock = {
-            preventDefault: function () {
-            }
+            preventDefault: function () {}
         };
 
         fixture = TestBed.createComponent(DocumentListComponent);
 
         element = fixture.nativeElement;
         documentList = fixture.componentInstance;
+
         documentListService = TestBed.inject(DocumentListService);
         apiService = TestBed.inject(AlfrescoApiService);
         customResourcesService = TestBed.inject(CustomResourcesService);
@@ -101,8 +101,8 @@ describe('DocumentList', () => {
         documentList.ngOnInit();
         documentList.currentFolderId = 'no-node';
 
-        spyGetSites = spyOn(apiService.sitesApi, 'getSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
-        spyFavorite = spyOn(apiService.favoritesApi, 'getFavorites').and.returnValue(Promise.resolve({ list: { entries: [] } }));
+        spyGetSites = spyOn(customResourcesService.sitesApi, 'listSites').and.returnValue(Promise.resolve(fakeGetSitesAnswer));
+        spyFavorite = spyOn(customResourcesService.favoritesApi, 'listFavorites').and.returnValue(Promise.resolve({ list: { entries: [] } }));
     });
 
     afterEach(() => {
@@ -1287,15 +1287,16 @@ describe('DocumentList', () => {
     });
 
     it('should fetch trashcan', () => {
-        spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.resolve(null));
+        const trashcanApi = customResourcesService.trashcanApi;
+        spyOn(trashcanApi, 'listDeletedNodes').and.returnValue(Promise.resolve(null));
 
         documentList.currentFolderId = '-trashcan-';
         documentList.loadFolder();
-        expect(apiService.nodesApi.getDeletedNodes).toHaveBeenCalled();
+        expect(trashcanApi.listDeletedNodes).toHaveBeenCalled();
     });
 
     it('should emit error when fetch trashcan fails', (done) => {
-        spyOn(apiService.nodesApi, 'getDeletedNodes').and.returnValue(Promise.reject('error'));
+        spyOn(customResourcesService.trashcanApi, 'listDeletedNodes').and.returnValue(Promise.reject('error'));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1308,17 +1309,16 @@ describe('DocumentList', () => {
     });
 
     it('should fetch shared links', () => {
-        const sharedlinksApi = apiService.getInstance().core.sharedlinksApi;
-        spyOn(sharedlinksApi, 'findSharedLinks').and.returnValue(Promise.resolve(null));
+        const sharedlinksApi = customResourcesService.sharedLinksApi;
+        spyOn(sharedlinksApi, 'listSharedLinks').and.returnValue(Promise.resolve(null));
 
         documentList.currentFolderId = '-sharedlinks-';
         documentList.loadFolder();
-        expect(sharedlinksApi.findSharedLinks).toHaveBeenCalled();
+        expect(sharedlinksApi.listSharedLinks).toHaveBeenCalled();
     });
 
     it('should emit error when fetch shared links fails', (done) => {
-        spyOn(apiService.getInstance().core.sharedlinksApi, 'findSharedLinks')
-            .and.returnValue(Promise.reject('error'));
+        spyOn(customResourcesService.sharedLinksApi, 'listSharedLinks').and.returnValue(Promise.reject('error'));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1331,11 +1331,11 @@ describe('DocumentList', () => {
     });
 
     it('should fetch sites', () => {
-        const sitesApi = apiService.getInstance().core.sitesApi;
+        const sitesApi = customResourcesService.sitesApi;
 
         documentList.currentFolderId = '-sites-';
         documentList.loadFolder();
-        expect(sitesApi.getSites).toHaveBeenCalled();
+        expect(sitesApi.listSites).toHaveBeenCalled();
     });
 
     it('should emit error when fetch sites fails', (done) => {
@@ -1352,17 +1352,16 @@ describe('DocumentList', () => {
     });
 
     it('should fetch user membership sites', () => {
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        const sitesApi = customResourcesService.sitesApi;
+        spyOn(sitesApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.currentFolderId = '-mysites-';
         documentList.loadFolder();
-        expect(peopleApi.listSiteMembershipsForPerson).toHaveBeenCalled();
+        expect(sitesApi.listSiteMembershipsForPerson).toHaveBeenCalled();
     });
 
     it('should emit error when fetch membership sites fails', (done) => {
-        spyOn(apiService.getInstance().core.peopleApi, 'listSiteMembershipsForPerson')
-            .and.returnValue(Promise.reject('error'));
+        spyOn(customResourcesService.sitesApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.reject('error'));
 
         const disposableError = documentList.error.subscribe((val) => {
             expect(val).toBe('error');
@@ -1375,11 +1374,11 @@ describe('DocumentList', () => {
     });
 
     it('should fetch favorites', () => {
-        const favoritesApi = apiService.getInstance().core.favoritesApi;
+        const favoritesApi = customResourcesService.favoritesApi;
 
         documentList.currentFolderId = '-favorites-';
         documentList.loadFolder();
-        expect(favoritesApi.getFavorites).toHaveBeenCalled();
+        expect(favoritesApi.listFavorites).toHaveBeenCalled();
     });
 
     it('should emit error when fetch favorites fails', (done) => {
@@ -1410,9 +1409,7 @@ describe('DocumentList', () => {
 
     it('should have correct currentFolderId on loading folder by node id', () => {
         documentList.currentFolderId = '12345-some-id-6789';
-
-        const peopleApi = apiService.getInstance().core.peopleApi;
-        spyOn(peopleApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
+        spyOn(customResourcesService.sitesApi, 'listSiteMembershipsForPerson').and.returnValue(Promise.resolve(fakeGetSiteMembership));
 
         documentList.currentFolderId = '-mysites-';
         documentList.loadFolder();

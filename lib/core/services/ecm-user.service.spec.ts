@@ -18,13 +18,10 @@
 import { TestBed } from '@angular/core/testing';
 import { fakeEcmUser } from '../mock/ecm-user.service.mock';
 import { EcmUserService } from '../services/ecm-user.service';
-import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthenticationService } from './authentication.service';
 import { ContentService } from './content.service';
-
-declare let jasmine: any;
 
 describe('EcmUserService', () => {
 
@@ -32,25 +29,17 @@ describe('EcmUserService', () => {
     let authService: AuthenticationService;
     let contentService: ContentService;
 
-    setupTestBed({
-        imports: [
-            TranslateModule.forRoot(),
-            CoreTestingModule
-        ]
-    });
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                TranslateModule.forRoot(),
+                CoreTestingModule
+            ]
+        });
+
         service = TestBed.inject(EcmUserService);
         authService = TestBed.inject(AuthenticationService);
         contentService = TestBed.inject(ContentService);
-    });
-
-    beforeEach(() => {
-        jasmine.Ajax.install();
-    });
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
     });
 
     describe('when user is logged in', () => {
@@ -60,6 +49,7 @@ describe('EcmUserService', () => {
         });
 
         it('should be able to retrieve current user info', (done) => {
+            spyOn(service.peopleApi, 'getPerson').and.returnValue(Promise.resolve({ entry: fakeEcmUser }));
             service.getCurrentUserInfo().subscribe(
                 (user) => {
                     expect(user).toBeDefined();
@@ -67,23 +57,8 @@ describe('EcmUserService', () => {
                     expect(user.lastName).toEqual('fake-ecm-last-name');
                     expect(user.email).toEqual('fakeEcm@ecmUser.com');
                     done();
-                });
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'application/json',
-                responseText: JSON.stringify({entry: fakeEcmUser})
-            });
-        });
-
-        it('should be able to log errors on call', (done) => {
-            service.getCurrentUserInfo().subscribe(() => {
-            }, () => {
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
+                }
+            );
         });
 
         it('should retrieve avatar url for current user', () => {
@@ -91,14 +66,6 @@ describe('EcmUserService', () => {
             const urlRs = service.getUserProfileImage('fake-avatar-id');
 
             expect(urlRs).toEqual('fake/url/image/for/ecm/user');
-        });
-
-        it('should not call content service without avatar id', () => {
-            spyOn(contentService, 'getContentUrl').and.callThrough();
-            const urlRs = service.getUserProfileImage(undefined);
-
-            expect(urlRs).toBeNull();
-            expect(contentService.getContentUrl).not.toHaveBeenCalled();
         });
     });
 });

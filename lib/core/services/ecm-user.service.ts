@@ -16,22 +16,26 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { LogService } from './log.service';
 import { EcmUserModel } from '../models/ecm-user.model';
-import { PersonEntry } from '@alfresco/js-api';
+import { PeopleApi } from '@alfresco/js-api';
 
 @Injectable({
     providedIn: 'root'
 })
 export class EcmUserService {
 
+    private _peopleApi: PeopleApi;
+
     constructor(private apiService: AlfrescoApiService,
-                private contentService: ContentService,
-                private logService: LogService) {
+                private contentService: ContentService) {
+    }
+
+    get peopleApi(): PeopleApi {
+        return this._peopleApi || (this._peopleApi = new PeopleApi(this.apiService.getInstance()));
     }
 
     /**
@@ -40,12 +44,9 @@ export class EcmUserService {
      * @returns User information
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
-        return from(this.apiService.getInstance().core.peopleApi.getPerson(userName))
+        return from(this.peopleApi.getPerson(userName))
             .pipe(
-                map((personEntry: PersonEntry) => {
-                    return new EcmUserModel(personEntry.entry);
-                }),
-                catchError((err) => this.handleError(err))
+                map((personEntry) => new EcmUserModel(personEntry.entry))
             );
     }
 
@@ -63,19 +64,6 @@ export class EcmUserService {
      * @returns Image URL
      */
     getUserProfileImage(avatarId: string): string {
-        if (avatarId) {
-            return this.contentService.getContentUrl(avatarId);
-        }
-        return null;
+        return this.contentService.getContentUrl(avatarId);
     }
-
-    /**
-     * Throw the error
-     * @param error
-     */
-    private handleError(error: any) {
-        this.logService.error(error);
-        return throwError(error || 'Server error');
-    }
-
 }

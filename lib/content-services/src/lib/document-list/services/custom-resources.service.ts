@@ -15,36 +15,72 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoApiService,
-    LogService,
-    PaginationModel
-} from '@alfresco/adf-core';
-
+import { AlfrescoApiService, LogService, PaginationModel } from '@alfresco/adf-core';
 import {
     NodePaging,
-    PersonEntry,
-    SitePaging,
     DeletedNodesPaging,
     SearchRequest,
     SharedLinkPaging,
     FavoritePaging,
     SiteMemberPaging,
-    SiteRolePaging
+    SiteRolePaging,
+    PeopleApi,
+    SitesApi,
+    SearchApi,
+    FavoritesApi,
+    SharedlinksApi,
+    TrashcanApi,
+    NodesApi
 } from '@alfresco/js-api';
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CustomResourcesService {
 
     private CREATE_PERMISSION = 'create';
 
-    constructor(private apiService: AlfrescoApiService,
-                private logService: LogService) {
+    private _peopleApi: PeopleApi;
+    private _sitesApi: SitesApi;
+    private _trashcanApi: TrashcanApi;
+    private _searchApi: SearchApi;
+    private _sharedLinksApi: SharedlinksApi;
+    private _favoritesApi: FavoritesApi;
+    private _nodesApi: NodesApi;
+
+    constructor(private apiService: AlfrescoApiService, private logService: LogService) {}
+
+    private get api() {
+        return this.apiService.getInstance();
+    }
+
+    get peopleApi(): PeopleApi {
+        return this._peopleApi || (this._peopleApi = new PeopleApi(this.api));
+    }
+
+    get sitesApi(): SitesApi {
+        return this._sitesApi || (this._sitesApi = new SitesApi(this.api));
+    }
+
+    get searchApi(): SearchApi {
+        return this._searchApi || (this._searchApi = new SearchApi(this.api));
+    }
+
+    get favoritesApi(): FavoritesApi {
+        return this._favoritesApi || (this._favoritesApi = new FavoritesApi(this.api));
+    }
+
+    get sharedLinksApi(): SharedlinksApi {
+        return this._sharedLinksApi || (this._sharedLinksApi = new SharedlinksApi(this.api));
+    }
+
+    get trashcanApi(): TrashcanApi {
+        return this._trashcanApi || (this._trashcanApi = new TrashcanApi(this.api));
+    }
+
+    get nodesApi(): NodesApi {
+        return this._nodesApi || (this._nodesApi = new NodesApi(this.api));
     }
 
     /**
@@ -79,8 +115,8 @@ export class CustomResourcesService {
         ];
 
         return new Observable((observer) => {
-            this.apiService.peopleApi.getPerson(personId)
-                .then((person: PersonEntry) => {
+            this.peopleApi.getPerson(personId)
+                .then((person) => {
                         const username = person.entry.id;
                         const filterQueries = [
                             { query: `cm:modified:[NOW/DAY-30DAYS TO NOW/DAY+1DAY]` },
@@ -94,7 +130,7 @@ export class CustomResourcesService {
                             });
                         }
 
-                        const query: SearchRequest = new SearchRequest({
+                        const query = new SearchRequest({
                             query: {
                                 query: '*',
                                 language: 'afts'
@@ -111,7 +147,7 @@ export class CustomResourcesService {
                                 skipCount: pagination.skipCount
                             }
                         });
-                        return this.apiService.searchApi.search(query)
+                        return this.searchApi.search(query)
                             .then((searchResult) => {
                                     observer.next(searchResult);
                                     observer.complete();
@@ -147,7 +183,7 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.apiService.favoritesApi.getFavorites('-me-', options)
+            this.favoritesApi.listFavorites('-me-', options)
                 .then((result: FavoritePaging) => {
                         const page: FavoritePaging = {
                             list: {
@@ -195,7 +231,7 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.apiService.peopleApi.listSiteMembershipsForPerson('-me-', options)
+            this.sitesApi.listSiteMembershipsForPerson('-me-', options)
                 .then((result: SiteRolePaging) => {
                         const page: SiteMemberPaging = new SiteMemberPaging( {
                             list: {
@@ -236,8 +272,10 @@ export class CustomResourcesService {
         };
 
         return new Observable((observer) => {
-            this.apiService.sitesApi.getSites(options)
-                .then((page: SitePaging) => {
+            this.sitesApi
+                .listSites(options)
+                .then(
+                    (page) => {
                         page.list.entries.map(
                             ({ entry }: any) => {
                                 entry.name = entry.name || entry.title;
@@ -269,7 +307,7 @@ export class CustomResourcesService {
             skipCount: pagination.skipCount
         };
 
-        return from(this.apiService.nodesApi.getDeletedNodes(options))
+        return from(this.trashcanApi.listDeletedNodes(options))
             .pipe(catchError((err) => this.handleError(err)));
 
     }
@@ -291,7 +329,7 @@ export class CustomResourcesService {
             where
         };
 
-        return from(this.apiService.sharedLinksApi.findSharedLinks(options))
+        return from(this.sharedLinksApi.listSharedLinks(options))
             .pipe(catchError((err) => this.handleError(err)));
     }
 
@@ -369,7 +407,7 @@ export class CustomResourcesService {
 
         } else if (nodeId) {
             // cases when nodeId is '-my-', '-root-' or '-shared-'
-            return from(this.apiService.nodesApi.getNode(nodeId)
+            return from(this.nodesApi.getNode(nodeId)
                 .then((node) => [node.entry.id]));
         }
 
