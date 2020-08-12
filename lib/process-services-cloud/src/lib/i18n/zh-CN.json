@@ -17,6 +17,7 @@
       "DESCRIPTION": "说明",
       "LAST_MODIFIED": "最近一次修改时间",
       "PROCESS_NAME": "流程名称",
+      "PROCESS_DEFINITION_NAME": "流程定义名称",
       "PARENT_TASK_ID": "父任务 ID",
       "PROCESS_DEF_ID": "流程定义 ID",
       "PROCESS_DEF_KEY": "流程定义的 Key",
@@ -85,6 +86,7 @@
       "PRIORITY": "优先级",
       "CREATED_DATE": "创建日期",
       "LAST_MODIFIED": "最近一次修改时间",
+      "DUE_DATE": "截止日期",
       "CREATED": "已创建",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "排序",
       "DIRECTION": "排序方向",
       "PROCESS_DEF_ID": "流程定义 ID",
+      "PROCESS_DEF_NAME": "流程定义名称",
       "PROCESS_DEF_KEY": "流程定义的 Key",
       "LAST_MODIFIED": "最近一次修改时间",
       "LAST_MODIFIED_DATE_FORM": "上一次修改开始日期",
@@ -262,6 +265,9 @@
         "CLAIM": "申领",
         "UNCLAIM": "释放"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "无效的目标文件夹路径"
     }
   }
 }

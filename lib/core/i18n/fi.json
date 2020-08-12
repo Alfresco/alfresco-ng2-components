@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Paikallinen tallennustila",
       "SOURCE": "Valitse lähde kohteesta: ",
-      "SHOW_FILE": "Näytä",
+      "VIEW_FILE": "Näytä",
       "DOWNLOAD_FILE": "Lataa",
       "REMOVE_FILE": "Poista",
       "UPLOAD": "Lataa",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Anna vähintään {{ minLength }} merkkiä",
         "NO_LONGER_THAN": "Anna enintään {{ maxLength }} merkkiä"
       },
-      "FILE_ALREADY_UPLOADED": "Samanniminen tiedosto on jo ladattu."
+      "FILE_ALREADY_UPLOADED": "Samanniminen tiedosto on jo ladattu.",
+      "ATTACH": "Liitä"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Nimetön tehtävä"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Kuvaus"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Otsikko"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Luo"
       },
@@ -175,7 +179,10 @@
       "NONE": "Ei mitään",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Käytä numeromuotoa",
-        "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa"
+        "INT_VALIDATION_ERROR": "Käytä kokonaislukumuotoa",
+        "LENGTH_VALIDATION_ERROR": "Arvon tulee olla vähintään {{ minLength }} ja enintään {{ maxLength }} pituudeltaan",
+        "MATCH_VALIDATION_ERROR": "Arvo ei vastaa kaavaa: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Arvon tulee olla vähintään {{ minValue }} ja enintään {{ maxValue }}"
       },
       "MORE": "Lisää"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Kopioi napsauttamalla",
     "SUCCESS_COPY": "Teksti kopioitiin leikepöydälle"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Hae",
+      "ARIA_LABEL": "Haun valikko"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Tyhjennä"
+    }
   }
 }

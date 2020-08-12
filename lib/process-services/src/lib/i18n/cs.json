@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Žádné formuláře určené k připojení",
       "BUTTONS": {
         "COMPLETE": "Dokončit",
-        "CANCEL": "Zrušit"
+        "CANCEL": "Zrušit",
+        "CLAIM": "Převzít",
+        "UNCLAIM": "Vzdát se"
       }
     },
     "COMPLETED_TASK": {

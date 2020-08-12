@@ -4,6 +4,7 @@
       "RESTORE": "Palauta",
       "DELETE": "Poista",
       "DOWNLOAD": "Lataa",
+      "VIEW": "Näytä",
       "UPLOAD": {
         "TITLE": "Lataa uusi versio",
         "TOOLTIP": "Rajoitus: jos haluat luoda tiedostosta uuden version, sinun täytyy ladata tiedosto samalla nimellä",
@@ -62,11 +63,6 @@
       "VIEW": "Näytä",
       "REMOVE": "Poista",
       "DOWNLOAD": "Lataa"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Suodata {{ category }}-luokan perusteella",
-      "CLEAR": "Tyhjennä",
-      "APPLY": "Käytä"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Peruuta",
     "CHOOSE": "Valitse",
+    "ATTACH": "Liitä",
     "CHOOSE_ITEM": "Valitse liitettävä sisältö kohteesta '{{ name }}'",
     "COPY": "Kopioi",
     "COPY_ITEM": "Kopioi '{{ name }}' kohteeseen...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Käynnistä prosessi"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Suodatin",
+      "TYPE": "Tyyppi",
+      "FILTER_BY": "Suodata {{ category }}-luokan perusteella",
+      "CLEAR": "Tyhjennä",
+      "APPLY": "Käytä",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nimi",
+          "PLACEHOLDER": "Kirjoita nimi"
+        },
+        "TYPE": {
+          "TITLE": "Valitse tyyppi",
+          "FOLDER": "Kansio",
+          "DOCUMENT": "Asiakirja"
+        },
+        "SIZE": {
+          "TITLE": "Sisällön koko (vaihteluväli)",
+          "SMALL": "Pieni",
+          "MEDIUM": "Keskikokoinen",
+          "LARGE": "Suuri",
+          "HUGE": "Valtava"
+        },
+        "DATE": {
+          "TITLE": "Luontipäivämäärä (vaihteluväli)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Vastaava",
       "COLLABORATOR": "Yhteistyökumppani",
       "CONTRIBUTOR": "Osallistuja",
-      "CONSUMER": "Kuluttaja"
+      "CONSUMER": "Kuluttaja",
+      "NONE": "Ei jäsen"
     },
     "VISIBILITY": {
       "PRIVATE": "Yksityinen",

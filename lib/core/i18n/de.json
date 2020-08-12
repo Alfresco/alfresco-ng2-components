@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokaler Speicherort",
       "SOURCE": "Quelle auswählen aus ",
-      "SHOW_FILE": "Anzeigen",
+      "VIEW_FILE": "Anzeigen",
       "DOWNLOAD_FILE": "Herunterladen",
       "REMOVE_FILE": "Entfernen",
       "UPLOAD": "Hochladen",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Geben Sie mindestens {{ minLength }} Zeichen ein",
         "NO_LONGER_THAN": "Geben Sie höchstens {{ maxLength }} Zeichen ein"
       },
-      "FILE_ALREADY_UPLOADED": "Eine Datei mit diesem Namen wurde bereits hochgeladen."
+      "FILE_ALREADY_UPLOADED": "Eine Datei mit diesem Namen wurde bereits hochgeladen.",
+      "ATTACH": "Anhängen"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Namenlose Aufgabe"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Beschreibung"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Titel"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Erstellen"
       },
@@ -175,7 +179,10 @@
       "NONE": "Keine",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Verwenden Sie ein Zahlenformat",
-        "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat"
+        "INT_VALIDATION_ERROR": "Verwenden Sie ein Ganzzahlenformat",
+        "LENGTH_VALIDATION_ERROR": "Wert muss zwischen {{ minLength }} und {{ maxLength }} lang sein",
+        "MATCH_VALIDATION_ERROR": "Wert muss dem folgenden Muster entsprechen: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Wert muss zwischen {{ minValue }} und {{ maxValue }} liegen"
       },
       "MORE": "Mehr"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Zum Kopieren klicken",
     "SUCCESS_COPY": "Text in Zwischenablage kopiert"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Suche",
+      "ARIA_LABEL": "Suchoptionen"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Löschen"
+    }
   }
 }

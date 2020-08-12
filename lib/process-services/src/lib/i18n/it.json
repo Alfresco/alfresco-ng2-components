@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Nessun modulo da aggiungere",
       "BUTTONS": {
         "COMPLETE": "Completa",
-        "CANCEL": "Annulla"
+        "CANCEL": "Annulla",
+        "CLAIM": "Richiedi",
+        "UNCLAIM": "Restituisci"
       }
     },
     "COMPLETED_TASK": {

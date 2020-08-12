@@ -17,6 +17,7 @@
       "DESCRIPTION": "Beskrivelse",
       "LAST_MODIFIED": "Sist endret",
       "PROCESS_NAME": "Prosessnavn",
+      "PROCESS_DEFINITION_NAME": "Prosessdefinisjonsnavn",
       "PARENT_TASK_ID": "Overordnet oppgave-ID",
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
       "PROCESS_DEF_KEY": "Prosessdefinisjonsnøkkel",
@@ -85,6 +86,7 @@
       "PRIORITY": "Prioritet",
       "CREATED_DATE": "Opprettelsesdato",
       "LAST_MODIFIED": "Sist endret",
+      "DUE_DATE": "Forfallsdato",
       "CREATED": "Opprettet",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Sorter",
       "DIRECTION": "Retning",
       "PROCESS_DEF_ID": "Prosessdefinisjons-ID",
+      "PROCESS_DEF_NAME": "Prosessdefinisjonsnavn",
       "PROCESS_DEF_KEY": "Prosessdefinisjonsnøkkel",
       "LAST_MODIFIED": "Sist endret",
       "LAST_MODIFIED_DATE_FORM": "Sist endret fra",
@@ -262,6 +265,9 @@
         "CLAIM": "Krev",
         "UNCLAIM": "Frigi"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Ugyldig målmappebane"
     }
   }
 }

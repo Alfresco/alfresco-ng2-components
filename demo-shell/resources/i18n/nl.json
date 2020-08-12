@@ -56,6 +56,7 @@
   "APP_LAYOUT": {
     "APP": "App",
     "APP_NAME": "ADF-demotoepassing",
+    "FILTERED_SEARCH": "Filterkoptekst",
     "HOME": "Home",
     "NODE-SELECTOR": "Selectiefunctie voor node",
     "SITES": "Sites",

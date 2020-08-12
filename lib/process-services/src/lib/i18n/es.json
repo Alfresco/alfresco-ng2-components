@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "No se han añadido formularios",
       "BUTTONS": {
         "COMPLETE": "Completar",
-        "CANCEL": "Cancelar"
+        "CANCEL": "Cancelar",
+        "CLAIM": "Pedir",
+        "UNCLAIM": "Liberar"
       }
     },
     "COMPLETED_TASK": {

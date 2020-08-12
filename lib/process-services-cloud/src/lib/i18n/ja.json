@@ -17,6 +17,7 @@
       "DESCRIPTION": "説明",
       "LAST_MODIFIED": "最終更新日時",
       "PROCESS_NAME": "プロセス名",
+      "PROCESS_DEFINITION_NAME": "プロセス定義名",
       "PARENT_TASK_ID": "親タスク ID",
       "PROCESS_DEF_ID": "プロセス定義 ID",
       "PROCESS_DEF_KEY": "プロセス定義キー",
@@ -85,6 +86,7 @@
       "PRIORITY": "優先度",
       "CREATED_DATE": "作成日",
       "LAST_MODIFIED": "最終更新日時",
+      "DUE_DATE": "期限",
       "CREATED": "作成日",
       "JSON_CELL": "JSON"
     },
@@ -104,7 +106,7 @@
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "すべて",
     "RUNNING_PROCESSES": "進行中",
-    "COMPLETED_PROCESSES": "完了日"
+    "COMPLETED_PROCESSES": "完了"
   },
   "ADF_CLOUD_START_TASK": {
     "ERROR": {
@@ -157,6 +159,7 @@
       "SORT": "表示順",
       "DIRECTION": "昇順/降順",
       "PROCESS_DEF_ID": "プロセス定義 ID",
+      "PROCESS_DEF_NAME": "プロセス定義名",
       "PROCESS_DEF_KEY": "プロセス定義キー",
       "LAST_MODIFIED": "最終更新日時",
       "LAST_MODIFIED_DATE_FORM": "最終変更日 - 開始",
@@ -262,6 +265,9 @@
         "CLAIM": "担当する",
         "UNCLAIM": "担当解除"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "対象フォルダのパスが無効です"
     }
   }
 }

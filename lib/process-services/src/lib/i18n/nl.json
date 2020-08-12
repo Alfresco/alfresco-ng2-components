@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Geen formulieren om toe te voegen",
       "BUTTONS": {
         "COMPLETE": "Voltooid",
-        "CANCEL": "Annuleren"
+        "CANCEL": "Annuleren",
+        "CLAIM": "Claimen",
+        "UNCLAIM": "Vrijgeven"
       }
     },
     "COMPLETED_TASK": {

@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "本地存储",
       "SOURCE": "来源选自 ",
-      "SHOW_FILE": "显示",
+      "VIEW_FILE": "查看",
       "DOWNLOAD_FILE": "下载",
       "REMOVE_FILE": "删除",
       "UPLOAD": "上传",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "至少输入 {{ minLength }} 个字符",
         "NO_LONGER_THAN": "输入不超过 {{ maxLength }} 个字符"
       },
-      "FILE_ALREADY_UPLOADED": "已上传使用相同名称的文件。"
+      "FILE_ALREADY_UPLOADED": "已上传使用相同名称的文件。",
+      "ATTACH": "附加"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "无名称的任务"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "说明"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "标题"
+      },
       "CREATE_BUTTON": {
         "LABEL": "创建"
       },
@@ -175,7 +179,10 @@
       "NONE": "无",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "使用数字格式",
-        "INT_VALIDATION_ERROR": "使用整数格式"
+        "INT_VALIDATION_ERROR": "使用整数格式",
+        "LENGTH_VALIDATION_ERROR": "数值的最小长度应为 {{ minLength }} ，最大长度应为 {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "数值与模式不匹配：{{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "数值应在最小值 {{ minValue }} 和最大值 {{ maxValue }} 之间"
       },
       "MORE": "更多"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "单击以复制",
     "SUCCESS_COPY": "复制到剪贴板上的文本"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "搜索",
+      "ARIA_LABEL": "搜索选项"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "清除"
+    }
   }
 }

@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "フォームは追加されません",
       "BUTTONS": {
         "COMPLETE": "完了",
-        "CANCEL": "キャンセル"
+        "CANCEL": "キャンセル",
+        "CLAIM": "担当する",
+        "UNCLAIM": "担当解除"
       }
     },
     "COMPLETED_TASK": {

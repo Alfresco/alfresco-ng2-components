@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Локальное хранение",
       "SOURCE": "Выберите источник из ",
-      "SHOW_FILE": "Показать",
+      "VIEW_FILE": "Посмотреть",
       "DOWNLOAD_FILE": "Скачать",
       "REMOVE_FILE": "Удалить",
       "UPLOAD": "Загрузить",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Введите не менее {{ minLength }} символов",
         "NO_LONGER_THAN": "Введите не более {{ maxLength }} символов"
       },
-      "FILE_ALREADY_UPLOADED": "Файл с таким названием уже загружен."
+      "FILE_ALREADY_UPLOADED": "Файл с таким названием уже загружен.",
+      "ATTACH": "Прикрепить"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Задача без имени"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Описание"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Заголовок"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Создать"
       },
@@ -175,7 +179,10 @@
       "NONE": "Нет",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Использовать формат числа",
-        "INT_VALIDATION_ERROR": "Использовать формат целого числа"
+        "INT_VALIDATION_ERROR": "Использовать формат целого числа",
+        "LENGTH_VALIDATION_ERROR": "По длине значение должно быть минимум {{ minLength }} и максимум {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "Значение не совпадает с шаблоном: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Значение должно быть минимум {{ minValue }} и максимум {{ maxValue }}"
       },
       "MORE": "Больше"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Нажмите, чтобы скопировать",
     "SUCCESS_COPY": "Текст скопирован в буфер обмена"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Поиск",
+      "ARIA_LABEL": "Параметры поиска"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Очистить"
+    }
   }
 }

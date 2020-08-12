@@ -17,6 +17,7 @@
       "DESCRIPTION": "Popis",
       "LAST_MODIFIED": "Poslední úprava",
       "PROCESS_NAME": "Název procesu",
+      "PROCESS_DEFINITION_NAME": "Název definice procesu",
       "PARENT_TASK_ID": "ID nadřazeného úkolu",
       "PROCESS_DEF_ID": "ID definice procesu",
       "PROCESS_DEF_KEY": "Klíč definice procesu",
@@ -85,6 +86,7 @@
       "PRIORITY": "Priorita",
       "CREATED_DATE": "Datum vytvoření",
       "LAST_MODIFIED": "Poslední úprava",
+      "DUE_DATE": "Termín",
       "CREATED": "Vytvořeno",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Třídění",
       "DIRECTION": "Směr",
       "PROCESS_DEF_ID": "ID definice procesu",
+      "PROCESS_DEF_NAME": "Název definice procesu",
       "PROCESS_DEF_KEY": "Klíč definice procesu",
       "LAST_MODIFIED": "Poslední úprava",
       "LAST_MODIFIED_DATE_FORM": "Poslední úprava od",
@@ -262,6 +265,9 @@
         "CLAIM": "Převzít",
         "UNCLAIM": "Vzdát se"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Neplatná cesta k cílové složce"
     }
   }
 }

@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "Ingen skjemaer å legge til",
       "BUTTONS": {
         "COMPLETE": "Fullfør",
-        "CANCEL": "Avbryt"
+        "CANCEL": "Avbryt",
+        "CLAIM": "Krev",
+        "UNCLAIM": "Frigi"
       }
     },
     "COMPLETED_TASK": {

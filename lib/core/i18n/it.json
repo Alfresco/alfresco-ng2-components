@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Archivio locale",
       "SOURCE": "Seleziona origine da ",
-      "SHOW_FILE": "Mostra",
+      "VIEW_FILE": "Visualizza",
       "DOWNLOAD_FILE": "Scarica",
       "REMOVE_FILE": "Rimuovi",
       "UPLOAD": "Carica",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Immettere almeno {{ minLength }} caratteri",
         "NO_LONGER_THAN": "Immettere non più di {{ maxLength }} caratteri"
       },
-      "FILE_ALREADY_UPLOADED": "È già stato caricato un file con lo stesso nome."
+      "FILE_ALREADY_UPLOADED": "È già stato caricato un file con lo stesso nome.",
+      "ATTACH": "Allega"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Compito senza nome"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Descrizione"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Titolo"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Crea"
       },
@@ -175,7 +179,10 @@
       "NONE": "Nessuno",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Utilizzare un formato numerico",
-        "INT_VALIDATION_ERROR": "Utilizzare numeri interi"
+        "INT_VALIDATION_ERROR": "Utilizzare numeri interi",
+        "LENGTH_VALIDATION_ERROR": "Il valore della lunghezza deve essere minimo {{ minLength }} e massimo {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "Il valore non corrisponde al modello: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Il valore deve essere compreso fra un minimo di {{ minValue }} e un massimo di {{ maxValue }}"
       },
       "MORE": "Altro"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Fare clic per copiare",
     "SUCCESS_COPY": "Testo copiato negli appunti"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Cerca",
+      "ARIA_LABEL": "Opzioni di ricerca"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Cancella"
+    }
   }
 }

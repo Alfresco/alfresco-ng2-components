@@ -346,7 +346,9 @@
       "COMPLETE-TASK-SUB-MESSAGE": "没有要添加的表单",
       "BUTTONS": {
         "COMPLETE": "完成",
-        "CANCEL": "取消"
+        "CANCEL": "取消",
+        "CLAIM": "申领",
+        "UNCLAIM": "释放"
       }
     },
     "COMPLETED_TASK": {

@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Lokal lagring",
       "SOURCE": "Velg kilde fra ",
-      "SHOW_FILE": "Vis",
+      "VIEW_FILE": "Vis",
       "DOWNLOAD_FILE": "Last ned",
       "REMOVE_FILE": "Fjern",
       "UPLOAD": "Laster opp",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Angi minst {{ minLength }} tegn",
         "NO_LONGER_THAN": "Angi opptil {{ maxLength }} tegn"
       },
-      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede opplastet."
+      "FILE_ALREADY_UPLOADED": "En fil med samme navn er allerede opplastet.",
+      "ATTACH": "Legg ved"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Navnløs oppgave"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Beskrivelse"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Tittel"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Opprett"
       },
@@ -175,7 +179,10 @@
       "NONE": "Ingen",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Bruk et nummerformat",
-        "INT_VALIDATION_ERROR": "Bruk heltall"
+        "INT_VALIDATION_ERROR": "Bruk heltall",
+        "LENGTH_VALIDATION_ERROR": "Verdiens lengde skal være minimum {{ minLength }} og maksimum {{ maxLength }}",
+        "MATCH_VALIDATION_ERROR": "Verdien samsvarer ikke med mønsteret: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Verdien skal være mellom minimum {{ minValue }} og maksimum {{ maxValue }}"
       },
       "MORE": "Mer"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Klikk for å kopiere",
     "SUCCESS_COPY": "Tekst kopiert til utklippstavle"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Søk",
+      "ARIA_LABEL": "Søkealternativer"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Fjern"
+    }
   }
 }

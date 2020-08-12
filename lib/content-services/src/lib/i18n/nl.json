@@ -4,6 +4,7 @@
       "RESTORE": "Herstellen",
       "DELETE": "Verwijderen",
       "DOWNLOAD": "Downloaden",
+      "VIEW": "Weergeven",
       "UPLOAD": {
         "TITLE": "Nieuwe versie uploaden",
         "TOOLTIP": "Beperking: u moet een bestand met dezelfde naam uploaden om een nieuwe versie van het bestand te maken",
@@ -62,11 +63,6 @@
       "VIEW": "Weergeven",
       "REMOVE": "Verwijderen",
       "DOWNLOAD": "Downloaden"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filteren op {{ category }}",
-      "CLEAR": "Wissen",
-      "APPLY": "Toepassen"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annuleren",
     "CHOOSE": "Selecteren",
+    "ATTACH": "Bijvoegen",
     "CHOOSE_ITEM": "Selecteer content om bij te voegen vanuit '{{ name }}'",
     "COPY": "Kopiëren",
     "COPY_ITEM": "'{{ name }}' kopiëren naar...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Proces starten"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Filteren op {{ category }}",
+      "CLEAR": "Wissen",
+      "APPLY": "Toepassen",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Naam",
+          "PLACEHOLDER": "Voer de naam in"
+        },
+        "TYPE": {
+          "TITLE": "Bevestig type",
+          "FOLDER": "Map",
+          "DOCUMENT": "Document"
+        },
+        "SIZE": {
+          "TITLE": "Contentgrootte (bereik)",
+          "SMALL": "Klein",
+          "MEDIUM": "Gemiddeld",
+          "LARGE": "Groot",
+          "HUGE": "Zeer groot"
+        },
+        "DATE": {
+          "TITLE": "Datum gemaakt (bereik)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Beheerder",
       "COLLABORATOR": "Medewerker",
       "CONTRIBUTOR": "Bijdrager",
-      "CONSUMER": "Consument"
+      "CONSUMER": "Consument",
+      "NONE": "Geen lid"
     },
     "VISIBILITY": {
       "PRIVATE": "Privé",

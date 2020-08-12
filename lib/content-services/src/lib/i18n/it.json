@@ -4,6 +4,7 @@
       "RESTORE": "Ripristina",
       "DELETE": "Elimina",
       "DOWNLOAD": "Scarica",
+      "VIEW": "Visualizza",
       "UPLOAD": {
         "TITLE": "Carica la nuova versione",
         "TOOLTIP": "Limite: è necessario caricare un file con lo stesso nome per crearne una nuova versione.",
@@ -62,11 +63,6 @@
       "VIEW": "Visualizza",
       "REMOVE": "Rimuovi",
       "DOWNLOAD": "Scarica"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtra per {{ category }}",
-      "CLEAR": "Cancella",
-      "APPLY": "Applica"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annulla",
     "CHOOSE": "Seleziona",
+    "ATTACH": "Allega",
     "CHOOSE_ITEM": "Selezionare il contenuto da allegare da \"{{ name }}\"",
     "COPY": "Copia",
     "COPY_ITEM": "Copia '{{ name }}' in...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Avvia processo"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filtro",
+      "TYPE": "Tipo",
+      "FILTER_BY": "Filtra per {{ category }}",
+      "CLEAR": "Cancella",
+      "APPLY": "Applica",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nome",
+          "PLACEHOLDER": "Immettere il nome"
+        },
+        "TYPE": {
+          "TITLE": "Selezionare il tipo",
+          "FOLDER": "Cartella",
+          "DOCUMENT": "Documento"
+        },
+        "SIZE": {
+          "TITLE": "Dimensioni contenuto (intervallo)",
+          "SMALL": "Piccola",
+          "MEDIUM": "Media",
+          "LARGE": "Grande",
+          "HUGE": "Enorme"
+        },
+        "DATE": {
+          "TITLE": "Data di creazione (intervallo)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Manager",
       "COLLABORATOR": "Collaboratore",
       "CONTRIBUTOR": "Contributore",
-      "CONSUMER": "Consumatore"
+      "CONSUMER": "Consumatore",
+      "NONE": "Non è un membro"
     },
     "VISIBILITY": {
       "PRIVATE": "Privato",

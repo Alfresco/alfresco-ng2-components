@@ -4,6 +4,7 @@
       "RESTORE": "Restaurar",
       "DELETE": "Eliminar",
       "DOWNLOAD": "Descargar",
+      "VIEW": "Ver",
       "UPLOAD": {
         "TITLE": "Cargar nueva versión",
         "TOOLTIP": "Restricción: debe cargar un fichero con el mismo nombre para crear una nueva versión del mismo",
@@ -62,11 +63,6 @@
       "VIEW": "Ver",
       "REMOVE": "Eliminar",
       "DOWNLOAD": "Descargar"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtrar por {{ category }}",
-      "CLEAR": "Borrar",
-      "APPLY": "Aplicar"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Cancelar",
     "CHOOSE": "Seleccionar",
+    "ATTACH": "Adjuntar",
     "CHOOSE_ITEM": "Seleccione el contenido que adjuntar de '{{ name }}'",
     "COPY": "Copiar",
     "COPY_ITEM": "Copiar '{{ name }}' a...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Iniciar proceso"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filtrar",
+      "TYPE": "Tipo",
+      "FILTER_BY": "Filtrar por {{ category }}",
+      "CLEAR": "Borrar",
+      "APPLY": "Aplicar",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nombre",
+          "PLACEHOLDER": "Introduzca el nombre"
+        },
+        "TYPE": {
+          "TITLE": "Marque el tipo",
+          "FOLDER": "Carpeta",
+          "DOCUMENT": "Documento"
+        },
+        "SIZE": {
+          "TITLE": "Tamaño de contenido (rango)",
+          "SMALL": "Pequeño",
+          "MEDIUM": "Mediano",
+          "LARGE": "Grande",
+          "HUGE": "Enorme"
+        },
+        "DATE": {
+          "TITLE": "Fecha de creación (rango)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Administrador",
       "COLLABORATOR": "Colaborador",
       "CONTRIBUTOR": "Contribuidor",
-      "CONSUMER": "Consumidor"
+      "CONSUMER": "Consumidor",
+      "NONE": "No es miembro"
     },
     "VISIBILITY": {
       "PRIVATE": "Lista privada",

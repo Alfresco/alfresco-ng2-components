@@ -17,6 +17,7 @@
       "DESCRIPTION": "Kuvaus",
       "LAST_MODIFIED": "Muokattu viimeksi",
       "PROCESS_NAME": "Prosessin nimi",
+      "PROCESS_DEFINITION_NAME": "Prosessimääritelmän nimi",
       "PARENT_TASK_ID": "Ylätason tehtävän tunnus",
       "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
       "PROCESS_DEF_KEY": "Prosessimääritelmäavain",
@@ -85,6 +86,7 @@
       "PRIORITY": "Prioriteetti",
       "CREATED_DATE": "Luontipäivämäärä",
       "LAST_MODIFIED": "Muokattu viimeksi",
+      "DUE_DATE": "Määräpäivä",
       "CREATED": "Luotu",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Lajittele",
       "DIRECTION": "Suunta",
       "PROCESS_DEF_ID": "Prosessimääritelmätunnus",
+      "PROCESS_DEF_NAME": "Prosessimääritelmän nimi",
       "PROCESS_DEF_KEY": "Prosessimääritelmäavain",
       "LAST_MODIFIED": "Muokattu viimeksi",
       "LAST_MODIFIED_DATE_FORM": "Muokattu viimeksi kohteesta",
@@ -262,6 +265,9 @@
         "CLAIM": "Varaa",
         "UNCLAIM": "Vapauta"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Virheellinen kohdekansion polku"
     }
   }
 }

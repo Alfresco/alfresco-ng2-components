@@ -4,6 +4,7 @@
       "RESTORE": "Gendan",
       "DELETE": "Slet",
       "DOWNLOAD": "Download",
+      "VIEW": "Vis",
       "UPLOAD": {
         "TITLE": "Upload ny version",
         "TOOLTIP": "Begrænsning: Du skal uploade en fil med det samme navn for at oprette en ny version af filen",
@@ -62,11 +63,6 @@
       "VIEW": "Vis",
       "REMOVE": "Fjern",
       "DOWNLOAD": "Download"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Sorter efter {{ category }}",
-      "CLEAR": "Ryd",
-      "APPLY": "Anvend"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annuller",
     "CHOOSE": "Vælg",
+    "ATTACH": "Vedhæft",
     "CHOOSE_ITEM": "Vælg indhold der skal  vedhæftes fra '{{ name }}'",
     "COPY": "Kopiér",
     "COPY_ITEM": "Kopiér '{{ name }}' til...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Start proces"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Type",
+      "FILTER_BY": "Sorter efter {{ category }}",
+      "CLEAR": "Ryd",
+      "APPLY": "Anvend",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Navn",
+          "PLACEHOLDER": "Angiv navnet"
+        },
+        "TYPE": {
+          "TITLE": "Kontrollér type",
+          "FOLDER": "Mappe",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Indholdsstørrelse (interval)",
+          "SMALL": "Lille",
+          "MEDIUM": "Medium",
+          "LARGE": "Stor",
+          "HUGE": "Meget stor"
+        },
+        "DATE": {
+          "TITLE": "Oprettelsesdato (interval)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Chef",
       "COLLABORATOR": "Samarbejdspartner",
       "CONTRIBUTOR": "Bidragyder",
-      "CONSUMER": "Forbruger"
+      "CONSUMER": "Forbruger",
+      "NONE": "Ikke medlem"
     },
     "VISIBILITY": {
       "PRIVATE": "Privat",

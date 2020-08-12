@@ -4,6 +4,7 @@
       "RESTORE": "Restaurer",
       "DELETE": "Supprimer",
       "DOWNLOAD": "Télécharger",
+      "VIEW": "Afficher",
       "UPLOAD": {
         "TITLE": "Importer une nouvelle version",
         "TOOLTIP": "Restriction : pour créer une nouvelle version d'un fichier vous devez importer un fichier du même nom",
@@ -62,11 +63,6 @@
       "VIEW": "Afficher",
       "REMOVE": "Supprimer",
       "DOWNLOAD": "Télécharger"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtrer par {{ category }}",
-      "CLEAR": "Supprimer",
-      "APPLY": "Appliquer"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Annuler",
     "CHOOSE": "Sélectionner",
+    "ATTACH": "Joindre",
     "CHOOSE_ITEM": "Sélectionner le contenu à joindre à partir de '{{ name }}'",
     "COPY": "Copier",
     "COPY_ITEM": "Copier '{{ name }}' dans...",
@@ -289,6 +286,34 @@
           "PROCESS_ACTION": "Démarrer le processus"
         }
       }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filtre",
+      "TYPE": "Type",
+      "FILTER_BY": "Filtrer par {{ category }}",
+      "CLEAR": "Supprimer",
+      "APPLY": "Appliquer",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Nom",
+          "PLACEHOLDER": "Saisir le nom"
+        },
+        "TYPE": {
+          "TITLE": "Cocher le type",
+          "FOLDER": "Dossier",
+          "DOCUMENT": "Document"
+        },
+        "SIZE": {
+          "TITLE": "Taille du contenu (plage)",
+          "SMALL": "Petite",
+          "MEDIUM": "Moyenne",
+          "LARGE": "Grande",
+          "HUGE": "Énorme"
+        },
+        "DATE": {
+          "TITLE": "Date de création (plage)"
+        }
+      }
     }
   },
   "PERMISSION": {
@@ -378,7 +403,8 @@
       "MANAGER": "Gestionnaire",
       "COLLABORATOR": "Collaborateur",
       "CONTRIBUTOR": "Contributeur",
-      "CONSUMER": "Lecteur"
+      "CONSUMER": "Lecteur",
+      "NONE": "N'est pas un membre"
     },
     "VISIBILITY": {
       "PRIVATE": "Liste privée",

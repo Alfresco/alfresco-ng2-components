@@ -21,7 +21,7 @@
     "FIELD": {
       "LOCALSTORAGE": "Místní úložiště",
       "SOURCE": "Vybrat zdroj z ",
-      "SHOW_FILE": "Zobrazit",
+      "VIEW_FILE": "Zobrazit",
       "DOWNLOAD_FILE": "Stáhnout",
       "REMOVE_FILE": "Odstranit",
       "UPLOAD": "Odeslat",
@@ -36,7 +36,8 @@
         "AT_LEAST_LONG": "Zadejte alespoň následující počet znaků: {{ minLength }}",
         "NO_LONGER_THAN": "Zadat můžete nejvýše následující počet znaků: {{ maxLength }}"
       },
-      "FILE_ALREADY_UPLOADED": "Soubor s tímto názvem již byl odeslán."
+      "FILE_ALREADY_UPLOADED": "Soubor s tímto názvem již byl odeslán.",
+      "ATTACH": "Připojit"
     },
     "FORM_RENDERER": {
       "NAMELESS_TASK": "Úloha bez názvu"
@@ -111,6 +112,9 @@
       "FOLDER_DESCRIPTION": {
         "LABEL": "Popis"
       },
+      "FOLDER_TITLE": {
+        "LABEL": "Označení"
+      },
       "CREATE_BUTTON": {
         "LABEL": "Vytvořit"
       },
@@ -175,7 +179,10 @@
       "NONE": "Žádný",
       "VALIDATORS": {
         "FLOAT_VALIDATION_ERROR": "Použít formát čísla",
-        "INT_VALIDATION_ERROR": "Použít formát celého čísla"
+        "INT_VALIDATION_ERROR": "Použít formát celého čísla",
+        "LENGTH_VALIDATION_ERROR": "Hodnota by měla mít minimálně {{ minLength }} a maximálně {{ maxLength }} znaků.",
+        "MATCH_VALIDATION_ERROR": "Hodnota nevyhovuje schématu: {{ expression }}",
+        "MINMAX_VALIDATION_ERROR": "Hodnota by měla být minimálně {{ minValue }} a maximálně {{ maxValue }}."
       },
       "MORE": "Více"
     },
@@ -502,5 +509,14 @@
   "CLIPBOARD": {
     "CLICK_TO_COPY": "Kliknutím zkopírovat",
     "SUCCESS_COPY": "Text zkopírovaný do schránky"
+  },
+  "SELECT_FILTER": {
+    "INPUT": {
+      "PLACEHOLDER": "Hledat",
+      "ARIA_LABEL": "Možnosti hledání"
+    },
+    "BUTTON": {
+      "ARIA_LABEL": "Vymazat"
+    }
   }
 }

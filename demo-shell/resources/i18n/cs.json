@@ -56,6 +56,7 @@
   "APP_LAYOUT": {
     "APP": "Aplikace",
     "APP_NAME": "Ukázková aplikace ADF",
+    "FILTERED_SEARCH": "Záhlaví filtrů",
     "HOME": "Domů",
     "NODE-SELECTOR": "Selektor uzlu",
     "SITES": "Místa",

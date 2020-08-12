@@ -17,6 +17,7 @@
       "DESCRIPTION": "Beschrijving",
       "LAST_MODIFIED": "Laatst gewijzigd",
       "PROCESS_NAME": "Procesnaam",
+      "PROCESS_DEFINITION_NAME": "Naam procesdefinitie",
       "PARENT_TASK_ID": "ID bovenliggende taak",
       "PROCESS_DEF_ID": "Procesdefinitie-ID",
       "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
@@ -85,6 +86,7 @@
       "PRIORITY": "Prioriteit",
       "CREATED_DATE": "Datum gemaakt",
       "LAST_MODIFIED": "Laatst gewijzigd",
+      "DUE_DATE": "Vervaldatum",
       "CREATED": "Gemaakt",
       "JSON_CELL": "Json"
     },
@@ -157,6 +159,7 @@
       "SORT": "Sorteren",
       "DIRECTION": "Richting",
       "PROCESS_DEF_ID": "Procesdefinitie-id",
+      "PROCESS_DEF_NAME": "Naam procesdefinitie",
       "PROCESS_DEF_KEY": "Procesdefinitiesleutel",
       "LAST_MODIFIED": "Laatst veranderd",
       "LAST_MODIFIED_DATE_FORM": "Laatst veranderd van",
@@ -262,6 +265,9 @@
         "CLAIM": "Claimen",
         "UNCLAIM": "Vrijgeven"
       }
+    },
+    "ERROR": {
+      "INVALID_DESTINATION_FOLDER_PATH": "Ongeldig pad doelmap"
     }
   }
 }

@@ -4,6 +4,7 @@
       "RESTORE": "Wiederherstellen",
       "DELETE": "Löschen",
       "DOWNLOAD": "Herunterladen",
+      "VIEW": "Anzeigen",
       "UPLOAD": {
         "TITLE": "Neue Version hochladen",
         "TOOLTIP": "Einschränkung: Sie müssen eine Datei mit dem gleichen Namen hochladen, wenn Sie eine neue Version der Datei erstellen möchten.",
@@ -62,11 +63,6 @@
       "VIEW": "Anzeigen",
       "REMOVE": "Entfernen",
       "DOWNLOAD": "Herunterladen"
-    },
-    "FILTER_MENU": {
-      "FILTER_BY": "Filtern nach {{ category }}",
-      "CLEAR": "Löschen",
-      "APPLY": "Anwenden"
     }
   },
   "ALFRESCO_DOCUMENT_LIST": {
@@ -84,6 +80,7 @@
   "NODE_SELECTOR": {
     "CANCEL": "Abbrechen",
     "CHOOSE": "Auswählen",
+    "ATTACH": "Anhängen",
     "CHOOSE_ITEM": "Wählen Sie aus '{{ name }}' Content zum Anhängen aus",
     "COPY": "Kopieren",
     "COPY_ITEM": "'{{ name }}' kopieren nach...",
@@ -225,16 +222,16 @@
     },
     "FILTER": {
       "ACTIONS": {
-        "CLEAR": "Zurücksetzen",
+        "CLEAR": "Löschen",
         "APPLY": "Anwenden",
-        "CLEAR-ALL": "Alle zurücksetzen",
+        "CLEAR-ALL": "Alle löschen",
         "SHOW-MORE": "Mehr anzeigen",
         "SHOW-LESS": "Weniger anzeigen",
         "FILTER-CATEGORY": "Kategorie filtern"
       },
       "BUTTONS": {
         "CLEAR-ALL": {
-          "LABEL": "Alle zurücksetzen",
+          "LABEL": "Alle löschen",
           "TOOLTIP": "Dadurch werden alle Auswahlen entfernt"
         },
         "RESET-ALL": {
@@ -287,6 +284,34 @@
           "MOVE": "Verschieben",
           "COPY": "Kopieren",
           "PROCESS_ACTION": "Prozess starten"
+        }
+      }
+    },
+    "SEARCH_HEADER": {
+      "TITLE": "Filter",
+      "TYPE": "Typ",
+      "FILTER_BY": "Filtern nach {{ category }}",
+      "CLEAR": "Löschen",
+      "APPLY": "Anwenden",
+      "FILTERS": {
+        "NAME": {
+          "TITLE": "Name",
+          "PLACEHOLDER": "Namen eingeben"
+        },
+        "TYPE": {
+          "TITLE": "Typ auswählen",
+          "FOLDER": "Ordner",
+          "DOCUMENT": "Dokument"
+        },
+        "SIZE": {
+          "TITLE": "Inhaltsgröße (Bereich)",
+          "SMALL": "Klein",
+          "MEDIUM": "Mittel",
+          "LARGE": "Groß",
+          "HUGE": "Riesig"
+        },
+        "DATE": {
+          "TITLE": "Erstellungsdatum (Bereich)"
         }
       }
     }
@@ -378,7 +403,8 @@
       "MANAGER": "Manager",
       "COLLABORATOR": "Mitarbeiter",
       "CONTRIBUTOR": "Beitragender",
-      "CONSUMER": "Verbraucher"
+      "CONSUMER": "Verbraucher",
+      "NONE": "Kein Mitglied"
     },
     "VISIBILITY": {
       "PRIVATE": "Privat",
