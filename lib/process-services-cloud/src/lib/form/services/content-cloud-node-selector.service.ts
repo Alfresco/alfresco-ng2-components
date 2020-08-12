@@ -32,7 +32,7 @@ export class ContentCloudNodeSelectorService {
     private dialog: MatDialog) {
   }
 
-  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, showLocalUploadButton?: boolean): Observable<Node[]> {
+  openUploadFileDialog(currentFolderId?: string, selectionMode?: string, isAllFileSources?: boolean): Observable<Node[]> {
     const select = new Subject<Node[]>();
     select.subscribe({
       complete: this.close.bind(this)
@@ -41,13 +41,13 @@ export class ContentCloudNodeSelectorService {
       title: 'Select a file',
       actionName: 'Attach',
       currentFolderId,
-      restrictRootToCurrentFolderId: true,
+      restrictRootToCurrentFolderId: isAllFileSources,
       select,
       selectionMode,
       isSelectionValid: (entry: Node) => entry.isFile,
       showFilesInResult: true,
       showDropdownSiteList: false,
-      showLocalUploadButton
+      showLocalUploadButton: isAllFileSources
   };
     this.openContentNodeDialog(data, 'adf-content-node-selector-dialog', '630px');
     return select;
