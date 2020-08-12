@@ -62,7 +62,7 @@ export const fakeForm: any = {
                 1: [
                     {
                         fieldType: 'RestFieldRepresentation',
-                        id: 'label',
+                        id: 'dropdownId',
                         name: 'Label',
                         type: 'dropdown',
                         value: 'Choose one...',
