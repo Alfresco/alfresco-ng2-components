@@ -54,7 +54,7 @@ export class ContentCloudNodeSelectorService {
   }
 
     async fetchNodeIdFromRelativePath(alias: string, opts: { relativePath: string }): Promise<string> {
-        const nodeEntry = await this.apiService.getInstance().node
+        const nodeEntry: any = await this.apiService.getInstance().node
             .getNode(alias, opts)
             .catch((err) => this.handleError(err));
 
