@@ -49,3 +49,8 @@ export class FormCloudRepresentation {
         this.selectedOutcome = obj.selectedOutcome || null;
     }
 }
+
+export interface DestinationFolderPathModel {
+    alias: string;
+    path: string;
+}

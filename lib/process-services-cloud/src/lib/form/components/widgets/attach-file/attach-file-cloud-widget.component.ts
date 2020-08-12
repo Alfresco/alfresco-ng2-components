@@ -23,14 +23,14 @@ import {
   LogService,
   ThumbnailService,
   NotificationService,
-  ContentLinkModel,
-  TranslationService,
-  FormValues
+  FormValues,
+  ContentLinkModel
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
+import { DestinationFolderPathModel } from '../../../models/form-cloud-representation.model';
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
@@ -49,11 +49,14 @@ import { UploadCloudWidgetComponent } from './upload-cloud.widget';
     },
     encapsulation: ViewEncapsulation.None
 })
-export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
-    implements OnInit {
+export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
+
+    static MY_FILES_FOLDER_ID = '-my-';
+    static ROOT_FOLDER_ID = '-root-';
+    static VALID_ALIAS = [AttachFileCloudWidgetComponent.ROOT_FOLDER_ID, AttachFileCloudWidgetComponent.MY_FILES_FOLDER_ID, '-shared-'];
 
     typeId = 'AttachFileCloudWidgetComponent';
-    rootNodeId = '-my-';
+    rootNodeId = AttachFileCloudWidgetComponent.MY_FILES_FOLDER_ID;
 
     constructor(
         formService: FormService,
@@ -61,8 +64,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         thumbnails: ThumbnailService,
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
-        private contentNodeSelectorService: ContentCloudNodeSelectorService,
-        private translationService: TranslationService
+        private contentNodeSelectorService: ContentCloudNodeSelectorService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -87,21 +89,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
 
         if (this.isAlfrescoAndLocal()) {
-            const destinationFolderPath = this.field.params.fileSource.destinationFolderPath;
-            const alias = this.getAliasFromDestinationFolderPath(destinationFolderPath);
-            const opts = {
-                relativePath: this.getRelativePathFromDestinationFolderPath(destinationFolderPath)
-            };
+            const destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
 
-            if (alias && opts && opts.relativePath) {
-                await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(alias, opts).then((nodeId: string) => {
-                    this.rootNodeId = nodeId;
+            if (destinationFolderPath.path) {
+                const opts = { relativePath: destinationFolderPath.path };
+                await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, opts).then((nodeId: string) => {
+                    this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
                 });
             } else {
-                const errorMessage = this.translationService.instant('ADF_CLOUD_TASK_FORM.ERROR.INVALID_DESTINATION_FOLDER_PATH');
-                this.notificationService.showError(errorMessage);
+                this.rootNodeId = destinationFolderPath.alias;
             }
         }
+
         this.contentNodeSelectorService
             .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal())
             .subscribe((selections: Node[]) => {
@@ -111,14 +110,19 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             });
     }
 
-    getAliasFromDestinationFolderPath(destinationFolderPath: string): string {
-        const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
-        return destinationFolderPath.substring(0, startOfRelativePathIndex);
-    }
+    getAliasAndRelativePathFromDestinationFolderPath(destinationFolderPath: string): DestinationFolderPathModel {
+        let alias: string; let path: string;
+        if (destinationFolderPath) {
+            const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
+            if (startOfRelativePathIndex >= 0) {
+                alias = destinationFolderPath.substring(0, startOfRelativePathIndex);
+                path = destinationFolderPath.substring(startOfRelativePathIndex, destinationFolderPath.length);
+            } else {
+                alias = destinationFolderPath;
+            }
+        }
 
-    getRelativePathFromDestinationFolderPath(destinationFolderPath: string): string {
-        const startOfRelativePathIndex = destinationFolderPath.indexOf('/');
-        return destinationFolderPath.substring(startOfRelativePathIndex, destinationFolderPath.length);
+        return this.isValidAlias(alias) ? { alias, path } : { alias: AttachFileCloudWidgetComponent.ROOT_FOLDER_ID, path: undefined };
     }
 
     removeExistingSelection(selections: Node[]) {
@@ -154,5 +158,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent
             });
             this.formService.updateFormValuesRequested.next(values);
         }
+    }
+
+    isValidAlias(alias: string): boolean {
+        return alias && AttachFileCloudWidgetComponent.VALID_ALIAS.includes(alias);
     }
 }
