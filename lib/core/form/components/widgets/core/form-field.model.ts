@@ -274,6 +274,7 @@ export class FormFieldModel extends FormWidgetModel {
          but saving back as object: { id: <id>, name: <name> }
          */
         if (json.type === FormFieldTypes.DROPDOWN) {
+
             if (json.options) {
                 const options = <FormFieldOption[]> json.options || [];
                 if (options.length > 0) {
@@ -282,10 +283,10 @@ export class FormFieldModel extends FormWidgetModel {
                         if (value === '' || value === emptyOption.id || value === emptyOption.name) {
                             value = emptyOption.id;
                         }
-                    }
-
-                    if (value.id && value.name) {
-                        value = value.id;
+                    } else {
+                        if (value?.id && value?.name) {
+                            value = value.id;
+                        }
                     }
                 }
             }
