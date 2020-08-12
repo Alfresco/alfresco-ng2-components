@@ -113,19 +113,12 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((newNodePaging: NodePaging) => {
                 this.update.emit(newNodePaging);
             });
-
-        if (this.searchHeaderQueryBuilder.isCustomSourceNode(this.currentFolderNodeId)) {
-            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(this.currentFolderNodeId).subscribe((node: MinimalNode) => {
-                this.initSearchHeader(node.id);
-            });
-        } else {
-            this.initSearchHeader(this.currentFolderNodeId);
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
             this.clearHeader();
+            this.configureSearchParent(changes['currentFolderNodeId'].currentValue);
         }
 
         if (changes['maxItems'] || changes['skipCount']) {
@@ -198,6 +191,16 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     isActive(): boolean {
         return this.widgetContainer && this.widgetContainer.componentRef && this.widgetContainer.componentRef.instance.isActive;
+    }
+
+    private configureSearchParent(currentFolderNodeId: string) {
+        if (this.searchHeaderQueryBuilder.isCustomSourceNode(currentFolderNodeId)) {
+            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(currentFolderNodeId).subscribe((node: MinimalNode) => {
+                this.initSearchHeader(node.id);
+            });
+        } else {
+            this.initSearchHeader(currentFolderNodeId);
+        }
     }
 
     private initSearchHeader(currentFolderId: string) {
