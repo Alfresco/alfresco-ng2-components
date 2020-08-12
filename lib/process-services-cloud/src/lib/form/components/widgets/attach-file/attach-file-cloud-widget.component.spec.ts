@@ -102,22 +102,6 @@ describe('AttachFileCloudWidgetComponent', () => {
         }
     };
 
-    const allSourceWithMyFilesParams = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: '-my-'
-        }
-    };
-
-    const allSourceWithShareParams = {
-        fileSource: {
-            name: 'all file sources',
-            serviceId: 'all-file-sources',
-            destinationFolderPath: '-shared-'
-        }
-    };
-
     const allSourceWithWrongAliasParams = {
         fileSource: {
             name: 'all file sources',
@@ -309,16 +293,14 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('destinationFolderPath', () => {
-
-        let fetchNodeIdFromRelativePathSpy: jasmine.Spy;
         let openUploadFileDialogSpy: jasmine.Spy;
 
         beforeEach(async(() => {
-            fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
             openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
         }));
 
-        it('should be able to fetch nodeId if destinationFolderPtah defined ', async() => {
+        it('should be able to fetch nodeId if destinationFolderPath is defined', async() => {
+            const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -342,7 +324,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.rootNodeId).toEqual('mock-node-id');
         });
 
-        it('Should be able to set given alias as rootNodeId if destinationFolderPath contains only alias i.e -root-', async() => {
+        it('Should be able to set given alias as rootNodeId if the nodeId of the alias is not fetched from the api', async() => {
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -361,48 +343,6 @@ describe('AttachFileCloudWidgetComponent', () => {
 
             expect(widget.rootNodeId).toEqual('-root-');
             expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', true);
-        });
-
-        it('Should be able to set given alias as rootNodeId if destinationFolderPath contains only alias i.e -my-', async() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.UPLOAD,
-                value: []
-            });
-            widget.field.id = 'attach-file-alfresco';
-            widget.field.params = <FormFieldMetadata> allSourceWithMyFilesParams;
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
-
-            expect(attachButton).not.toBeNull();
-
-            attachButton.click();
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            expect(widget.rootNodeId).toEqual('-my-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', true);
-        });
-
-        it('Should be able to set given alias as rootNodeId if destinationFolderPath contains only alias i.e -shared-', async() => {
-            widget.field = new FormFieldModel(new FormModel(), {
-                type: FormFieldTypes.UPLOAD,
-                value: []
-            });
-            widget.field.id = 'attach-file-alfresco';
-            widget.field.params = <FormFieldMetadata> allSourceWithShareParams;
-            fixture.detectChanges();
-            await fixture.whenStable();
-            const attachButton: HTMLButtonElement = element.querySelector('#attach-file-alfresco');
-
-            expect(attachButton).not.toBeNull();
-
-            attachButton.click();
-            await fixture.whenStable();
-            fixture.detectChanges();
-
-            expect(widget.rootNodeId).toEqual('-shared-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-shared-', 'single', true);
         });
 
         it('Should be able to set default alias as rootNodeId if destinationFolderPath contains wrong alias', async() => {
