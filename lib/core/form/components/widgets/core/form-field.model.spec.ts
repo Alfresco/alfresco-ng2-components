@@ -249,6 +249,150 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe('28-04-2017');
     });
 
+    it('should parse the checkbox set to "true" when it is readonly', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'checkbox',
+            name: 'Checkbox',
+            type: 'readonly',
+            value: 'true',
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'checkbox',
+                    name: 'Checkbox',
+                    type: 'boolean',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBeTruthy();
+    });
+
+    it('should parse the checkbox set to null when it is readonly', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'checkbox',
+            name: 'Checkbox',
+            type: 'readonly',
+            value: null,
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'checkbox',
+                    name: 'Checkbox',
+                    type: 'boolean',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBeFalsy();
+    });
+
+    it('should parse the checkbox set to "false" when it is readonly', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'checkbox',
+            name: 'Checkbox',
+            type: 'readonly',
+            value: 'false',
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'checkbox',
+                    name: 'Checkbox',
+                    type: 'boolean',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBeFalsy();
+    });
+
+    it('should parse the checkbox set to "true" when it is editable', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'checkbox',
+            name: 'Checkbox',
+            type: 'boolean',
+            value: 'true',
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'checkbox',
+                    name: 'Checkbox',
+                    type: 'boolean',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBeTruthy();
+    });
+
+    it('should parse the checkbox set to null when it is editable', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'checkbox',
+            name: 'Checkbox',
+            type: 'boolean',
+            value: null,
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'checkbox',
+                    name: 'Checkbox',
+                    type: 'boolean',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBeFalsy();
+    });
+
+    it('should parse the checkbox set to "false" when it is editable', () => {
+        const form = new FormModel();
+        const field = new FormFieldModel(form, {
+            fieldType: 'FormFieldRepresentation',
+            id: 'checkbox',
+            name: 'Checkbox',
+            type: 'boolean',
+            value: 'false',
+            required: false,
+            readOnly: true,
+            params: {
+                field: {
+                    id: 'checkbox',
+                    name: 'Checkbox',
+                    type: 'boolean',
+                    value: null,
+                    required: false,
+                    readOnly: false
+                }
+            }
+        });
+        expect(field.value).toBeFalsy();
+    });
+
     it('should return the label of selected dropdown value ', () => {
         const field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
