@@ -320,7 +320,7 @@ export class FormFieldModel extends FormWidgetModel {
             }
         }
 
-        if (json.type === FormFieldTypes.BOOLEAN) {
+        if (this.isCheckboxField(json)) {
             value = json.value === 'true' || json.value === true ? true : false;
         }
 
@@ -445,6 +445,13 @@ export class FormFieldModel extends FormWidgetModel {
             json.params.field &&
             json.params.field.type === FormFieldTypes.DATETIME) ||
             json.type === FormFieldTypes.DATETIME;
+    }
+
+    private isCheckboxField(json: any): boolean {
+        return (json.params &&
+            json.params.field &&
+            json.params.field.type === FormFieldTypes.BOOLEAN) ||
+            json.type === FormFieldTypes.BOOLEAN;
     }
 
 }
