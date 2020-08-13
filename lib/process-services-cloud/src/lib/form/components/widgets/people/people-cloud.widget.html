@@ -10,7 +10,10 @@
             [searchUserCtrl]="search"
             (changedUsers)="onChangedUser($event)"
             [roles]="roles"
-            [mode]="mode">
+            [mode]="mode"
+            [matTooltip]="field.tooltip"
+            matTooltipPosition="above"
+            matTooltipShowDelay="1000">
         </adf-cloud-people>
     <error-widget [error]="field.validationSummary"></error-widget>
 </div>
