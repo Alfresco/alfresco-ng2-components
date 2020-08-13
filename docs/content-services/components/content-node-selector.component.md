@@ -35,14 +35,21 @@ export interface ContentNodeSelectorComponentData {
     actionName?: string;
     currentFolderId: string;
     dropdownHideMyFiles?: boolean;
+    restrictRootToCurrentFolderId?: boolean;
     dropdownSiteList?: SitePaging;
     rowFilter?: any;
     where?: string;
     imageResolver?: any;
+    selectionMode?: 'multiple' | 'single';
     isSelectionValid?: (entry: Node) => boolean;
     breadcrumbTransform?: (node) => any;
     excludeSiteContent?: string[];
     select: Subject<Node[]>;
+    showSearch?: boolean;
+    showFilesInResult?: boolean;
+    showDropdownSiteList?: boolean;
+    showLocalUploadButton?: boolean;
+    multipleUpload?: boolean;
 }
 ```
 
