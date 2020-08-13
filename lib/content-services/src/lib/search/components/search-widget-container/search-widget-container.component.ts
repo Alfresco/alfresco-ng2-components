@@ -65,10 +65,7 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChan
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['value'] &&
-        changes['value'].currentValue &&
-        this.componentRef &&
-        this.componentRef.instance) {
+        if (changes['value']?.currentValue && this.componentRef?.instance) {
             this.componentRef.instance.isActive = true;
             this.componentRef.instance.setValue(changes['value'].currentValue);
         }
