@@ -241,7 +241,7 @@ describe('AttachFileWidgetComponent', () => {
     it('should isLink property of the selected node become true when the widget has link enabled', async (done) => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         const applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -267,7 +267,7 @@ describe('AttachFileWidgetComponent', () => {
     it('should isLink property of the selected node become false when the widget has link disabled', async (done) => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         const applyAlfrescoNodeSpy = spyOn(activitiContentService, 'applyAlfrescoNode');
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -293,7 +293,7 @@ describe('AttachFileWidgetComponent', () => {
     it('should be able to upload files coming from content node selector', async(() => {
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValue(of(fakePngAnswer));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []
@@ -323,7 +323,7 @@ describe('AttachFileWidgetComponent', () => {
         };
         spyOn(activitiContentService, 'getAlfrescoRepositories').and.returnValue(of(fakeRepositoryListAnswer));
         spyOn(activitiContentService, 'applyAlfrescoNode').and.returnValues(of(fakePngAnswer), of(fakePngUpload));
-        spyOn(contentNodeDialogService, 'openFileBrowseDialogBySite').and.returnValue(of([fakeMinimalNode]));
+        spyOn(contentNodeDialogService, 'openFileBrowseDialogByDefaultLocation').and.returnValue(of([fakeMinimalNode]));
         widget.field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.UPLOAD,
             value: []

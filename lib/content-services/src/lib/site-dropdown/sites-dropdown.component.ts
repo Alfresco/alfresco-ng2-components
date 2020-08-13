@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { SitesService, LogService } from '@alfresco/adf-core';
 import { SitePaging, SiteEntry } from '@alfresco/js-api';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -118,7 +118,7 @@ export class DropdownSitesComponent implements OnInit, OnDestroy {
         return event.target.scrollTop >= (event.target.scrollHeight - event.target.offsetHeight - this.ITEM_HEIGHT_TO_WAIT_BEFORE_LOAD_NEXT);
     }
 
-    selectedSite(event: any) {
+    selectedSite(event: MatSelectChange) {
         this.change.emit(event.value);
     }
 

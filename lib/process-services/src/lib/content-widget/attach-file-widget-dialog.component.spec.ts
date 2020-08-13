@@ -17,15 +17,15 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ContentModule, ContentNodeSelectorPanelComponent } from '@alfresco/adf-content-services';
-import { EventEmitter } from '@angular/core';
+import { ContentModule, ContentNodeSelectorPanelComponent, DocumentListService } from '@alfresco/adf-content-services';
+import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ProcessTestingModule } from '../testing/process.testing.module';
 import { AttachFileWidgetDialogComponent } from './attach-file-widget-dialog.component';
-import { setupTestBed, AuthenticationService, SitesService } from '@alfresco/adf-core';
+import { setupTestBed, AuthenticationService, SitesService, AlfrescoApiService, AlfrescoApiServiceMock, NodesApiService } from '@alfresco/adf-core';
 import { AttachFileWidgetDialogComponentData } from './attach-file-widget-dialog-component.interface';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Node } from '@alfresco/js-api';
+import { Node, SiteEntry, NodeEntry } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('AttachFileWidgetDialogComponent', () => {
@@ -35,14 +35,18 @@ describe('AttachFileWidgetDialogComponent', () => {
     const data: AttachFileWidgetDialogComponentData = {
         title: 'Choose along citizen...',
         actionName: 'Choose',
+        currentFolderId: '-my-',
         selected: new EventEmitter<any>(),
-        ecmHost: 'http://fakeUrl.com/'
+        ecmHost: 'http://fakeUrl.com'
     };
     let element: HTMLInputElement;
     let authService: AuthenticationService;
     let siteService: SitesService;
+    let nodeService: NodesApiService;
+    let documentListService: DocumentListService;
 
     let isLogged = false;
+    const fakeSite = new SiteEntry({ entry: { id: 'fake-site', guid: 'fake-site', title: 'fake-site', visibility: 'visible' } });
 
     setupTestBed({
         imports: [
@@ -51,8 +55,10 @@ describe('AttachFileWidgetDialogComponent', () => {
             ContentModule.forRoot()
         ],
         providers: [
-            { provide: MAT_DIALOG_DATA, useValue: data }
-        ]
+            { provide: MAT_DIALOG_DATA, useValue: data },
+            { provide: AlfrescoApiService, useClass: AlfrescoApiServiceMock }
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
     });
 
     beforeEach(async(() => {
@@ -61,6 +67,14 @@ describe('AttachFileWidgetDialogComponent', () => {
         element = fixture.nativeElement;
         authService = fixture.debugElement.injector.get(AuthenticationService);
         siteService = fixture.debugElement.injector.get(SitesService);
+        nodeService = fixture.debugElement.injector.get(NodesApiService);
+        documentListService = fixture.debugElement.injector.get(DocumentListService);
+
+        spyOn(documentListService, 'getFolderNode').and.returnValue(of(<NodeEntry> { entry: { path: { elements: [] } } }));
+        spyOn(documentListService, 'getFolder').and.returnValue(throwError('No results for test'));
+        spyOn(nodeService, 'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
+
+        spyOn(siteService, 'getSite').and.returnValue(of(fakeSite));
         spyOn(siteService, 'getSites').and.returnValue(of({ list: { entries: [] } }));
         spyOn(widget, 'isLoggedIn').and.callFake(() => {
             return isLogged;

@@ -54,6 +54,7 @@ export class AttachFileWidgetDialogService {
             actionName,
             selected,
             ecmHost,
+            currentFolderId: '-my-',
             context,
             isSelectionValid: (entry: Node) => entry.isFile,
             showFilesInResult: true
