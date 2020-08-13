@@ -231,7 +231,7 @@ describe('SearchHeaderComponent', () => {
 
     it('should not emit clear event when currentFolderNodeId changes and no filter was applied', async () => {
         const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        spyOn(component,'isActive').and.returnValue(false);
+        spyOn(component, 'isActive').and.returnValue(false);
         spyOn(component.clear, 'emit');
 
         component.ngOnChanges({ currentFolderNodeId: currentFolderNodeIdChange });
