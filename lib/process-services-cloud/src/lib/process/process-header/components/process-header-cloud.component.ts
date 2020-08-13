@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CardViewItem, CardViewTextItemModel, TranslationService, AppConfigService, CardViewDateItemModel, CardViewBaseItemModel } from '@alfresco/adf-core';
 import { ProcessInstanceCloud } from '../../start-process/models/process-instance-cloud.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
@@ -25,9 +25,9 @@ import { Subject } from 'rxjs';
 @Component({
     selector: 'adf-cloud-process-header',
     templateUrl: './process-header-cloud.component.html',
-    styleUrls: ['./process-header-cloud.component.scss']
+    encapsulation: ViewEncapsulation.None,
+    host: { class: 'adf-cloud-process-header' }
 })
-
 export class ProcessHeaderCloudComponent implements OnChanges, OnInit, OnDestroy {
 
     /** (Required) The name of the application. */
