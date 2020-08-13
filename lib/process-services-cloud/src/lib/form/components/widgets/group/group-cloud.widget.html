@@ -8,7 +8,10 @@
                          [roles]="roles"
                          [searchGroupsControl]="search"
                          (changedGroups)="onChangedGroup($event)"
-                         [preSelectGroups]="preSelectGroup">
+                         [preSelectGroups]="preSelectGroup"
+                         [matTooltip]="field.tooltip"
+                         matTooltipPosition="above"
+                         matTooltipShowDelay="1000">
         </adf-cloud-group>
         <error-widget [error]="field.validationSummary"></error-widget>
         <error-widget class="adf-dropdown-required-message" *ngIf="isInvalidFieldRequired()"
