@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, ComponentFactoryResolver, Inject } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef, OnInit, OnDestroy, ComponentRef, ComponentFactoryResolver, Inject, SimpleChanges, OnChanges } from '@angular/core';
 import { SearchFilterService } from '../search-filter/search-filter.service';
 import { BaseQueryBuilderService } from '../../base-query-builder.service';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
@@ -24,7 +24,7 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
     selector: 'adf-search-widget-container',
     template: '<div #content></div>'
 })
-export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
+export class SearchWidgetContainerComponent implements OnInit, OnDestroy, OnChanges {
 
     @ViewChild('content', { read: ViewContainerRef, static: true })
     content: ViewContainerRef;
@@ -61,6 +61,13 @@ export class SearchWidgetContainerComponent implements OnInit, OnDestroy {
                 this.componentRef = this.content.createComponent(factory, 0);
                 this.setupWidget(this.componentRef);
             }
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['value']?.currentValue && this.componentRef?.instance) {
+            this.componentRef.instance.isActive = true;
+            this.componentRef.instance.setValue(changes['value'].currentValue);
         }
     }
 
