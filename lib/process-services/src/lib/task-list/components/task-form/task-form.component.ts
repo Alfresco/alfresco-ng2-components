@@ -28,7 +28,7 @@ import {
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
-import { UserRepresentation } from '@alfresco/js-api';
+import { UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { ProcessFormRenderingService } from '../../../form/process-form-rendering.service';
 
@@ -281,10 +281,27 @@ export class TaskFormComponent implements OnInit {
     if (this.isCandidateMember()) {
       readOnlyForm = this.internalReadOnlyForm || !this.isAssignedToMe();
     } else {
-      readOnlyForm = this.internalReadOnlyForm || !(this.isAssignedToMe() || (this.canInitiatorComplete() && this.isProcessInitiator()));
+      readOnlyForm = this.internalReadOnlyForm || !(this.isAssignedToMe() || this.canCurrentUserAsInitiatorComplete() || this.isCurrentUserInvolved());
     }
 
     return readOnlyForm;
+  }
+
+  isCurrentUserInvolved(): boolean {
+    let isInvolved = false;
+    if (this.taskDetails.involvedPeople && this.currentLoggedUser) {
+      const userInvolved = this.taskDetails.involvedPeople.find(
+        (involvedUser: LightUserRepresentation) =>
+          involvedUser.email.toLocaleLowerCase() === this.currentLoggedUser.email.toLocaleLowerCase() ||
+          involvedUser.id + '' === this.currentLoggedUser.externalId
+        );
+      isInvolved = !!userInvolved;
+    }
+    return isInvolved;
+  }
+
+  canCurrentUserAsInitiatorComplete(): boolean {
+    return this.canInitiatorComplete() && this.isProcessInitiator();
   }
 
   isProcessInitiator(): boolean {
