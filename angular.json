@@ -18,9 +18,7 @@
             "tsConfig": "tsconfig.dev.json",
             "polyfills": "demo-shell/src/polyfills.ts",
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "lib"
-              ]
+              "includePaths": ["lib"]
             },
             "assets": [
               "demo-shell/src/assets",
@@ -288,13 +286,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "tsconfig.dev.json"
-            ],
-            "exclude": [
-              "**/node_modules/**/*",
-              "package.json"
-            ]
+            "tsConfig": ["tsconfig.dev.json"],
+            "exclude": ["**/node_modules/**/*", "package.json"]
           }
         }
       }
@@ -327,12 +320,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "./e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**/*"
-            ]
+            "tsConfig": ["./e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**/*"]
           }
         }
       }
@@ -373,9 +362,7 @@
               "lib/core/tsconfig.lib.json",
               "lib/core/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -416,9 +403,7 @@
               "lib/content-services/tsconfig.lib.json",
               "lib/content-services/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -459,9 +444,7 @@
               "lib/process-services/tsconfig.lib.json",
               "lib/process-services/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -502,9 +485,7 @@
               "lib/process-services-cloud/tsconfig.lib.json",
               "lib/process-services-cloud/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -545,9 +526,7 @@
               "lib/insights/tsconfig.lib.json",
               "lib/insights/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -587,9 +566,7 @@
               "lib/extensions/tsconfig.lib.json",
               "lib/extensions/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -619,9 +596,7 @@
               "lib/testing/tsconfig.lib.json",
               "lib/testing/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -646,8 +621,5 @@
       }
     }
   },
-  "defaultProject": "demoshell",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "demoshell"
 }

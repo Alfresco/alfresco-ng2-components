@@ -103,12 +103,12 @@ export class ContentNodeDialogService {
     }
 
     /**
-     * Opens a file browser at a default site location.
+     * Opens a file browser at a default myFile location.
      * shows files and folders in the dialog search result.
      * @returns Information about the selected file(s)
      */
-    openFileBrowseDialogByDefaultSite(): Observable<Node[]> {
-        return this.openFolderBrowseDialogByFolderId('-my-');
+    openFileBrowseDialogByDefaultLocation(): Observable<Node[]> {
+        return this.openFileBrowseDialogByFolderId('-my-');
     }
 
     /**
