@@ -79,37 +79,17 @@ ADF [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts) 
 
 ## Registering your custom stencils
 
-Register your custom stencil inside a service that extends from FormRenderingService.
+Register your custom stencil using the FormRenderingService.
 ```ts
-@Injectable({
-    providedIn: "root"
+@Component({
+    templateUrl: "./your-parent-component.component.html"
 })
-export class CustomFormRenderingService extends FormRenderingService {
-    constructor() {
-        super();
+class CustomParentComponent  {
+    constructor(private formRenderingService: FormRenderingService) {
 
-        this.register(
-            {
-                ng2_component_01: () => CustomStencil
-            },
-            true
-        );
+        formRenderingService.setComponentTypeResolver('ng2_component_01', () => CustomStencil, true);
     }
 }
-```
-
-Overwrite the FormRenderingService on your app module.
-
-```ts
-@NgModule({
-    declarations: [
-        ...
-    ],
-    providers: [
-        { provide: FormRenderingService, useClass: CustomFormRenderingService }
-    ]
-})
-export class AppModule {}
 ```
 
 ## Runtime result
