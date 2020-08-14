@@ -22,7 +22,7 @@ import {
     LogService,
     UpdateNotification,
     CommentsComponent,
-    ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent, FormRenderingService
+    ContentLinkModel, FormFieldValidator, FormModel, FormOutcomeEvent
 } from '@alfresco/adf-core';
 import {
     Component,
@@ -43,15 +43,11 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { TaskListService } from './../services/tasklist.service';
 import { catchError, share, takeUntil } from 'rxjs/operators';
 import { TaskFormComponent } from './task-form/task-form.component';
-import { ProcessFormRenderingService } from '../../form';
 
 @Component({
     selector: 'adf-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss'],
-    providers: [
-        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
-    ]
+    styleUrls: ['./task-details.component.scss']
 })
 export class TaskDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
