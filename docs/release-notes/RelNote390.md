@@ -1,4 +1,3 @@
-
 ---
 Title: Release notes v3.9.0
 ---

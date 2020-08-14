@@ -21,6 +21,8 @@ You can find further information about released versions of ADF in the
 
 | ADF version | Content Services | Process Services |
 | --- | --- | --- |
+| [4.0.0](versionIndex.md#v400) |v6.2.2 (AGS 3.3.1)|v7.1.0 M9 (latest CI pipeline build), v1.11.1|
+| [3.9.0](versionIndex.md#v390) |v6.2.2 (AGS 3.3.1)|v7.1.0 M8 (latest CI pipeline build), v1.11.1|
 | [3.8.0](versionIndex.md#v380) | **Full test:** v6.2.1 <br/> **Smoke test:** v5.2.4 | **Full test:** v7.1.0 M7 (latest CI pipeline build), v1.11.1 <br/>**Smoke test:** v1.10.0 |
 | [3.7.0](versionIndex.md#v370) | **Full test:** v6.2.0 <br/> **Smoke test:** v5.2.4 | **Full test:** v7.1.0 M6 (latest CI pipeline build), v1.10.0 <br/>**Smoke test:** v1.8.1 |
 | [3.6.0](versionIndex.md#v360) | **Full test:** v6.1.0 <br/> **Smoke test:** v5.2.4 | **Full test:** v7.1.0 M5 (latest CI pipeline build), v1.9.0 <br/>**Smoke test:** v1.8.1 |
