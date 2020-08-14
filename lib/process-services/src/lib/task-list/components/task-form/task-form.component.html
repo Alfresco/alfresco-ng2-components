@@ -6,6 +6,7 @@
     [showRefreshButton]="showFormRefreshButton"
     [showCompleteButton]="showFormCompleteButton"
     [showSaveButton]="isSaveButtonVisible()"
+    [disableCompleteButton]="!isCompleteButtonEnabled()"
     [readOnly]="isReadOnlyForm()"
     [fieldValidators]="fieldValidators"
     (formSaved)='onFormSaved($event)'

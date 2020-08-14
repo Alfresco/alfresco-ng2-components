@@ -845,3 +845,131 @@ export let noDataMock = [
         }
     })
 ];
+
+export const involvedUserTaskForm = {
+    id: '20259',
+    name: 'Shared task',
+    description: '',
+    category: null,
+    assignee: {
+        id: 347,
+        firstName: 'Fake',
+        lastName: 'assignee',
+        email: 'fake-assignee@test.com'
+    },
+    created: '2020-08-14T11:02:44.992+0000',
+    dueDate: null,
+    endDate: null,
+    duration: null,
+    priority: 50,
+    parentTaskId: null,
+    parentTaskName: null,
+    processInstanceId: null,
+    processInstanceName: null,
+    processDefinitionId: null,
+    processDefinitionName: null,
+    processDefinitionDescription: null,
+    processDefinitionKey: null,
+    processDefinitionCategory: null,
+    processDefinitionVersion: 0,
+    processDefinitionDeploymentId: null,
+    formKey: '3896',
+    processInstanceStartUserId: null,
+    initiatorCanCompleteTask: false,
+    adhocTaskCanBeReassigned: true,
+    taskDefinitionKey: null,
+    executionId: null,
+    involvedPeople: [
+        {
+            id: 1001,
+            email: 'fake-email@gmail.com',
+            firstName: 'fake',
+            lastName: 'user'
+        }
+    ],
+    involvedGroups: [],
+    memberOfCandidateGroup: false,
+    memberOfCandidateUsers: false,
+    managerOfCandidateGroup: false
+};
+
+export const involvedGroupTaskForm = {
+    id: '20259',
+    name: 'Shared task',
+    description: '',
+    category: null,
+    assignee: {
+        id: 347,
+        firstName: 'Fake',
+        lastName: 'assignee',
+        email: 'fake-assignee@test.com'
+    },
+    created: '2020-08-14T11:02:44.992+0000',
+    dueDate: null,
+    endDate: null,
+    duration: null,
+    priority: 50,
+    parentTaskId: null,
+    parentTaskName: null,
+    processInstanceId: null,
+    processInstanceName: null,
+    processDefinitionId: null,
+    processDefinitionName: null,
+    processDefinitionDescription: null,
+    processDefinitionKey: null,
+    processDefinitionCategory: null,
+    processDefinitionVersion: 0,
+    processDefinitionDeploymentId: null,
+    formKey: '3896',
+    processInstanceStartUserId: null,
+    initiatorCanCompleteTask: false,
+    adhocTaskCanBeReassigned: true,
+    taskDefinitionKey: null,
+    executionId: null,
+    involvedPeople: [],
+    involvedGroups: [
+        {
+            id: 637,
+            name: 'one-group'
+        }
+    ],
+    memberOfCandidateGroup: false,
+    memberOfCandidateUsers: false,
+    managerOfCandidateGroup: false
+};
+
+export const fakeUser = {
+    id: 1001,
+    email: 'fake-email@gmail.com',
+    firstName: 'fake',
+    lastName: 'user',
+    externalId: null,
+    company: null,
+    pictureId: null,
+    fullname: 'One Alfrsco',
+    password: null,
+    type: 'enterprise',
+    status: 'active',
+    created: '2020-08-14T09:21:52.306Z',
+    lastUpdate: '2020-08-14T09:22:48.147Z',
+    tenantId: 310,
+    groups: [
+        {
+            id: 637,
+            name: 'one-group',
+            externalId: null,
+            status: 'active',
+            parentGroupId: null,
+            tenantId: 310,
+            type: 1,
+            userCount: null,
+            users: null,
+            capabilities: null,
+            groups: null
+        }
+    ],
+    capabilities: null,
+    apps: [],
+    tenantPictureId: null,
+    tenantName: 'abc'
+};

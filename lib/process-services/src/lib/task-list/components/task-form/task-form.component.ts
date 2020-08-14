@@ -28,7 +28,7 @@ import {
 } from '@alfresco/adf-core';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { TaskListService } from '../../services/tasklist.service';
-import { UserRepresentation, LightUserRepresentation } from '@alfresco/js-api';
+import { UserRepresentation, LightGroupRepresentation, LightUserRepresentation } from '@alfresco/js-api';
 import { Observable } from 'rxjs';
 import { ProcessFormRenderingService } from '../../../form/process-form-rendering.service';
 
@@ -297,6 +297,16 @@ export class TaskFormComponent implements OnInit {
         );
       isInvolved = !!userInvolved;
     }
+
+    if (this.taskDetails.involvedGroups?.length && this.currentLoggedUser.groups?.length && !isInvolved) {
+        const userGroup = this.taskDetails.involvedGroups.find(
+            (involvedGroup: LightGroupRepresentation) =>
+                this.currentLoggedUser.groups.find(
+                    group => group.name === involvedGroup.name.toLocaleLowerCase() || group.id === involvedGroup.id
+                )
+        );
+        isInvolved = !!userGroup;
+    }
     return isInvolved;
   }
 
@@ -309,7 +319,7 @@ export class TaskFormComponent implements OnInit {
   }
 
   isSaveButtonVisible(): boolean {
-    return this.showFormSaveButton && (!this.canInitiatorComplete() || this.isAssignedToMe());
+    return this.showFormSaveButton && (!this.canInitiatorComplete() || this.isAssignedToMe() || this.isCurrentUserInvolved());
   }
 
   canCompleteNoFormTask(): boolean {

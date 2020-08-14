@@ -41,7 +41,10 @@ import {
     taskDetailsWithOutCandidateGroup,
     claimedTaskDetailsMock,
     claimedByGroupMemberMock,
-    initiatorWithCandidatesTaskDetailsMock
+    initiatorWithCandidatesTaskDetailsMock,
+    involvedUserTaskForm,
+    fakeUser,
+    involvedGroupTaskForm
 } from '../../../mock/task/task-details.mock';
 import { TaskDetailsModel } from '../../models/task-details.model';
 import { ProcessTestingModule } from '../../../testing/process.testing.module';
@@ -81,7 +84,7 @@ describe('TaskFormComponent', () => {
         taskDetailsMock.processDefinitionId = null;
         spyOn(formService, 'getTask').and.returnValue(of(taskDetailsMock));
         authService = TestBed.inject(AuthenticationService);
-        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of({ id: 1001, email: 'fake-email@gmail.com' }));
+        getBpmLoggedUserSpy = spyOn(authService, 'getBpmLoggedUser').and.returnValue(of(fakeUser));
     });
 
     afterEach(async() => {
@@ -732,6 +735,37 @@ describe('TaskFormComponent', () => {
 
             const unclaimBtn = fixture.debugElement.query(By.css('[adf-unclaim-task]'));
             unclaimBtn.nativeElement.click();
+        });
+    });
+
+    describe('Involved user task', () => {
+
+        beforeEach(() => {
+            component.taskId = '20259';
+        });
+
+        it('Should be able to save a form for a involved user', async() => {
+            getTaskDetailsSpy.and.returnValue(of(involvedUserTaskForm));
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const activitFormSelector = element.querySelector('adf-form');
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-complete"]');
+            expect(activitFormSelector).toBeDefined();
+            expect(saveButton.disabled).toEqual(false);
+            expect(completeButton.disabled).toEqual(true);
+        });
+
+        it('Should be able to save a form for a involved group user', async() => {
+            getTaskDetailsSpy.and.returnValue(of(involvedGroupTaskForm));
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const activitFormSelector = element.querySelector('adf-form');
+            const saveButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-save"]');
+            const completeButton = fixture.debugElement.nativeElement.querySelector('[id="adf-form-complete"]');
+            expect(activitFormSelector).toBeDefined();
+            expect(saveButton.disabled).toEqual(false);
+            expect(completeButton.disabled).toEqual(true);
         });
     });
 });
