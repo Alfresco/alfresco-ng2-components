@@ -59,22 +59,8 @@ import { ContentModule } from '@alfresco/adf-content-services';
 import { InsightsModule } from '@alfresco/adf-insights';
 import { ProcessModule } from '@alfresco/adf-process-services';
 import { TreeViewSampleComponent } from './components/tree-view/tree-view-sample.component';
-import { CloudLayoutComponent } from './components/cloud/cloud-layout.component';
-import { AppsCloudDemoComponent } from './components/cloud/apps-cloud-demo.component';
-import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.component';
-import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
-import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
-import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
-import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
-import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
-import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
-import { StartProcessCloudDemoComponent } from './components/cloud/start-process-cloud-demo.component';
-import { CloudBreadcrumbsComponent } from './components/cloud/cloud-breadcrumb-component';
-import { CloudFiltersDemoComponent } from './components/cloud/cloud-filters-demo.component';
 import { TemplateDemoComponent } from './components/template-list/template-demo.component';
-import { PeopleGroupCloudDemoComponent } from './components/cloud/people-groups-cloud-demo.component';
 import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confirm-dialog-example.component';
-import { FormCloudDemoComponent } from './components/app-layout/cloud/form-demo/cloud-form-demo.component';
 import { environment } from '../environments/environment';
 import { AppCloudSharedModule } from './components/cloud/shared/cloud.shared.module';
 import { DemoErrorComponent } from './components/error/demo-error.component';
@@ -99,6 +85,7 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
+import { AppCloud } from './app-cloud.module';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -137,7 +124,8 @@ registerLocaleData(localeSv);
         ThemePickerModule,
         ChartsModule,
         AppCloudSharedModule,
-        MonacoEditorModule.forRoot()
+        MonacoEditorModule.forRoot(),
+        AppCloud
     ],
     declarations: [
         AppComponent,
@@ -169,22 +157,7 @@ registerLocaleData(localeSv);
         FormLoadingComponent,
         ReportIssueComponent,
         TreeViewSampleComponent,
-        CloudLayoutComponent,
-        AppsCloudDemoComponent,
-        TasksCloudDemoComponent,
-        ProcessesCloudDemoComponent,
-        TaskDetailsCloudDemoComponent,
-        TaskHeaderCloudDemoComponent,
-        CloudViewerComponent,
-        ProcessDetailsCloudDemoComponent,
-        StartTaskCloudDemoComponent,
-        StartProcessCloudDemoComponent,
-        CloudBreadcrumbsComponent,
-        CloudFiltersDemoComponent,
         TemplateDemoComponent,
-        PeopleGroupCloudDemoComponent,
-        ConfirmDialogExampleComponent,
-        FormCloudDemoComponent,
         ConfirmDialogExampleComponent
     ],
     providers: [

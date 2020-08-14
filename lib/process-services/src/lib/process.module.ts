@@ -85,8 +85,7 @@ export class ProcessModule {
                         source: 'assets/adf-process-services'
                     }
                 },
-                FormRenderingService,
-                { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+                { provide: FormRenderingService, useExisting: ProcessFormRenderingService }
             ]
         };
     }
