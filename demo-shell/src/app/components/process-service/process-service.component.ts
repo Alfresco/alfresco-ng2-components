@@ -52,7 +52,8 @@ import {
     TaskDetailsComponent,
     TaskDetailsEvent,
     TaskFiltersComponent,
-    TaskListComponent
+    TaskListComponent,
+    ProcessFormRenderingService
 } from '@alfresco/adf-process-services';
 import { Subject } from 'rxjs';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
@@ -72,7 +73,10 @@ const REPORT_ROUTE = 2;
     selector: 'app-process-service',
     templateUrl: './process-service.component.html',
     styleUrls: ['./process-service.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+    ]
 })
 export class ProcessServiceComponent implements AfterViewInit, OnDestroy, OnInit {
 
