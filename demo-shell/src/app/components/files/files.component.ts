@@ -28,7 +28,8 @@ import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent, HighlightDirective,
-    SharedLinksApiService
+    SharedLinksApiService,
+    FormRenderingService
 } from '@alfresco/adf-core';
 
 import {
@@ -40,7 +41,7 @@ import {
     ContentMetadataService
 } from '@alfresco/adf-content-services';
 
-import { SelectAppsDialogComponent } from '@alfresco/adf-process-services';
+import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
 
 import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-adapter.component';
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
@@ -53,7 +54,10 @@ const DEFAULT_FOLDER_TO_SHOW = '-my-';
 @Component({
     selector: 'app-files-component',
     templateUrl: './files.component.html',
-    styleUrls: ['./files.component.scss']
+    styleUrls: ['./files.component.scss'],
+    providers: [
+        { provide: FormRenderingService, useClass: ProcessFormRenderingService }
+    ]
 })
 export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
