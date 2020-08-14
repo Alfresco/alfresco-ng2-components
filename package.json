@@ -97,7 +97,7 @@
     "moment-es6": "^1.0.0",
     "ng2-charts": "2.3.2",
     "ngx-monaco-editor": "7.0.0",
-    "pdfjs-dist": "2.3.200",
+    "pdfjs-dist": "2.4.456",
     "raphael": "2.2.7",
     "rxjs": "^6.6.0",
     "snyk": "^1.316.1",

@@ -30,23 +30,23 @@ export class PdfThumbComponent implements OnInit {
 
     image$: Promise<string>;
 
-    constructor(private sanitizer: DomSanitizer) {}
+    constructor(private sanitizer: DomSanitizer) {
+    }
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));
     }
 
     private getThumb(page): Promise<string> {
-        const viewport = page.getViewport(1);
+        const viewport = page.getViewport({ scale: 1 });
 
         const canvas = this.getCanvas();
         const scale = Math.min((canvas.height / viewport.height), (canvas.width / viewport.width));
 
         return page.render({
             canvasContext: canvas.getContext('2d'),
-            viewport: page.getViewport(scale)
-        })
-        .then(() => {
+            viewport: page.getViewport({ scale: scale })
+        }).promise.then(() => {
             const imageSource = canvas.toDataURL();
             return this.sanitizer.bypassSecurityTrustUrl(imageSource);
         });
@@ -58,4 +58,5 @@ export class PdfThumbComponent implements OnInit {
         canvas.height = this.page.getHeight();
         return canvas;
     }
+
 }

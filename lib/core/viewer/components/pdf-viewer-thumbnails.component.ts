@@ -103,8 +103,12 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     getPages() {
         return this.pdfViewer._pages.map((page) => ({
             id: page.id,
-            getWidth: () => { return this.width; },
-            getHeight: () => { return this.currentHeight; },
+            getWidth: () => {
+                return this.width;
+            },
+            getHeight: () => {
+                return this.currentHeight;
+            },
             getPage: () => this.pdfViewer.pdfDocument.getPage(page.id)
         }));
     }
@@ -115,7 +119,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private calculateHeight(page) {
-        const viewport = page.getViewport(1);
+        const viewport = page.getViewport({ scale: 1 });
         const pageRatio = viewport.width / viewport.height;
         const height = Math.floor(this.width / pageRatio);
 
@@ -133,7 +137,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         const end = Math.ceil(indexByScrollTop) + (itemsInView);
 
         this.translateY = this.itemHeight * Math.ceil(start);
-        this.virtualHeight = this.itemHeight * this.items.length  - this.translateY;
+        this.virtualHeight = this.itemHeight * this.items.length - this.translateY;
         this.renderItems = this.items.slice(start, end);
     }
 
