@@ -12,6 +12,16 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "minimatch",
+              "minimatch-browser",
+              "moment-es6",
+              "superagent",
+              "event-emitter",
+              "brace-expansion",
+              "d",
+              "chart.js"
+            ],
             "outputPath": "dist/demo-shell",
             "index": "demo-shell/src/index.html",
             "main": "demo-shell/src/main.ts",
