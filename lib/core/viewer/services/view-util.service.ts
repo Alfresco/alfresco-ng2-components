@@ -219,15 +219,21 @@ export class ViewUtilService {
             if (status === 'NOT_CREATED') {
                 try {
                     if (versionId) {
-                        await this.apiService.versionsApi.createVersionRendition(nodeId, versionId, {id: renditionId}).then(() => {
+                        await this.apiService.versionsApi.createVersionRendition(nodeId, versionId, { id: renditionId }).then(() => {
                             this.viewerTypeChange.next('in_creation');
                         });
                     } else {
-                        await this.apiService.renditionsApi.createRendition(nodeId, {id: renditionId}).then(() => {
+                        await this.apiService.renditionsApi.createRendition(nodeId, { id: renditionId }).then(() => {
                             this.viewerTypeChange.next('in_creation');
                         });
                     }
-                    rendition = versionId ? await this.waitNodeRendition(nodeId, renditionId, versionId) : await this.waitNodeRendition(nodeId, renditionId);
+                    try {
+                        rendition = versionId ? await this.waitNodeRendition(nodeId, renditionId, versionId) : await this.waitNodeRendition(nodeId, renditionId);
+                    } catch (e) {
+                        this.viewerTypeChange.next('error_in_creation');
+                        rendition = null;
+                    }
+
                 } catch (err) {
                     this.logService.error(err);
                 }
@@ -245,45 +251,47 @@ export class ViewUtilService {
                 if (this.maxRetries >= currentRetry) {
                     if (versionId) {
                         this.apiService.versionsApi.getVersionRendition(nodeId, versionId, renditionId).then((rendition: RenditionEntry) => {
-                            this.handleNodeRendition(rendition, nodeId, renditionId, versionId);
-                            clearInterval(intervalId);
-                            return resolve(rendition);
+                            const status: string = rendition.entry.status.toString();
+
+                            if (status === 'CREATED') {
+                                this.handleNodeRendition(nodeId, renditionId, versionId);
+                                clearInterval(intervalId);
+                                return resolve(rendition);
+                            }
                         }, () => {
-                            this.viewerTypeChange.next('error_in_creation');
                             return reject();
                         });
                     } else {
                         this.apiService.renditionsApi.getRendition(nodeId, renditionId).then((rendition: RenditionEntry) => {
-                            this.handleNodeRendition(rendition, nodeId, renditionId);
-                            clearInterval(intervalId);
-                            return resolve(rendition);
+                            const status: string = rendition.entry.status.toString();
+
+                            if (status === 'CREATED') {
+                                this.handleNodeRendition(nodeId, renditionId);
+                                clearInterval(intervalId);
+                                return resolve(rendition);
+                            }
                         }, () => {
-                            this.viewerTypeChange.next('error_in_creation');
                             return reject();
                         });
                     }
                 } else {
-                    this.viewerTypeChange.next('error_in_creation');
                     clearInterval(intervalId);
+                    return reject();
                 }
             }, this.TRY_TIMEOUT);
         });
     }
 
-    private async handleNodeRendition(rendition: RenditionEntry, nodeId: string, renditionId: string, versionId?: string) {
-        const status: string = rendition.entry.status.toString();
-        if (status === 'CREATED') {
-
-            if (renditionId === 'pdf') {
-                this.viewerTypeChange.next('pdf');
-            } else if (renditionId === 'imgpreview') {
-                this.viewerTypeChange.next('image');
-            }
-
-            const urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
-                this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
-            this.urlFileContentChange.next(urlFileContent);
+    private async handleNodeRendition(nodeId: string, renditionId: string, versionId?: string) {
+        if (renditionId === 'pdf') {
+            this.viewerTypeChange.next('pdf');
+        } else if (renditionId === 'imgpreview') {
+            this.viewerTypeChange.next('image');
         }
+
+        const urlFileContent = versionId ? this.apiService.contentApi.getVersionRenditionUrl(nodeId, versionId, renditionId) :
+            this.apiService.contentApi.getRenditionUrl(nodeId, renditionId);
+        this.urlFileContentChange.next(urlFileContent);
     }
 
 }
