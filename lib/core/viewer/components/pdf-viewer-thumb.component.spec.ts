@@ -35,7 +35,7 @@ describe('PdfThumbComponent', () => {
         id: 'pageId',
         getPage: jasmine.createSpy('getPage').and.returnValue(Promise.resolve({
             getViewport: () => ({ height: width, width: height }),
-            render: jasmine.createSpy('render').and.returnValue(Promise.resolve())
+            render: jasmine.createSpy('render').and.returnValue({ promise: Promise.resolve() })
         })),
 
         getWidth: jasmine.createSpy('getWidth').and.returnValue(width),
