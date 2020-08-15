@@ -172,7 +172,7 @@
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "tslint": "5.20.0",
-    "typedoc": "^0.15.0",
+    "typedoc": "^0.18.0",
     "typescript": "3.9.6",
     "unist-util-select": "^2.0.0",
     "webpack-cli": "^3.3.12"
