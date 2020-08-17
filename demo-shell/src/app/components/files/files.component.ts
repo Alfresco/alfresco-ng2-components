@@ -215,7 +215,6 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
-    filteredSorting: string[] = null;
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
