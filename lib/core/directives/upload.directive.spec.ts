@@ -39,7 +39,7 @@ describe('UploadDirective', () => {
     it('should update drag status on dragenter', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragEnter(new DragEvent('dragenter', { dataTransfer: {} as any }));
+        directive.onDragEnter(new DragEvent('dragenter', { dataTransfer: new DataTransfer() }));
         expect(directive.isDragging).toBeTruthy();
     });
 
@@ -53,12 +53,12 @@ describe('UploadDirective', () => {
     it('should update drag status on dragover', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragOver(new DragEvent('dragover', { dataTransfer: {} as any }));
+        directive.onDragOver(new DragEvent('dragover', { dataTransfer: new DataTransfer() }));
         expect(directive.isDragging).toBeTruthy();
     });
 
     it('should prevent default event on dragover', () => {
-        const event = new DragEvent('dragover', { dataTransfer: {} as any });
+        const event = new DragEvent('dragover', { dataTransfer: new DataTransfer() });
         spyOn(event, 'preventDefault').and.stub();
         directive.enabled = true;
         directive.onDragOver(event);
