@@ -30,12 +30,12 @@ import { takeUntil, map } from 'rxjs/operators';
     templateUrl: './card-view-selectitem.component.html',
     styleUrls: ['./card-view-selectitem.component.scss']
 })
-export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string>> implements OnChanges, OnDestroy {
+export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItemModel<string | number>> implements OnChanges, OnDestroy {
     static HIDE_FILTER_LIMIT = 5;
 
     @Input() editable: boolean = false;
 
-    @Input() options$: Observable<CardViewSelectItemOption<string>[]>;
+    @Input() options$: Observable<CardViewSelectItemOption<string | number>[]>;
 
     @Input()
     displayNoneOption: boolean = true;
@@ -43,7 +43,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     @Input()
     displayEmpty: boolean = true;
 
-    value: string;
+    value: string | number;
     filter: string = '';
     showInputFilter: boolean = false;
 
@@ -54,7 +54,7 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     ngOnChanges(): void {
-        this.value = this.property.value?.toString();
+        this.value = this.property.value;
     }
 
     ngOnInit() {
@@ -66,14 +66,14 @@ export class CardViewSelectItemComponent extends BaseCardView<CardViewSelectItem
     }
 
     onFilterInputChange(value: string) {
-        this.filter = value;
+        this.filter = value.toString();
     }
 
     isEditable(): boolean {
         return this.editable && this.property.editable;
     }
 
-    getOptions(): Observable<CardViewSelectItemOption<string>[]> {
+    getOptions(): Observable<CardViewSelectItemOption<string | number>[]> {
         return this.options$ || this.property.options$;
     }
 
