@@ -98,7 +98,7 @@
     "ng2-charts": "2.3.3",
     "ngx-monaco-editor": "8.1.1",
     "pdfjs-dist": "2.4.456",
-    "raphael": "2.2.7",
+    "raphael": "2.3.0",
     "rxjs": "^6.6.0",
     "snyk": "^1.374.0",
     "tslib": "^2.0.1",
