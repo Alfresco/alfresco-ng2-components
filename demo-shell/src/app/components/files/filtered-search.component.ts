@@ -30,7 +30,7 @@ export class FilteredSearchComponent {
     currentFolderId = '-my-';
 
     queryParams = null;
-    filterSorting = null;
+    filterSorting: string = 'name-asc';
 
     constructor(@Optional() private route: ActivatedRoute) {
 
