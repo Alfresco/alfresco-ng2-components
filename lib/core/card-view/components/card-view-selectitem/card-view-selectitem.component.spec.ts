@@ -32,10 +32,18 @@ describe('CardViewSelectItemComponent', () => {
     let overlayContainer: OverlayContainer;
     let appConfig: AppConfigService;
     const mockData = [{ key: 'one', label: 'One' }, { key: 'two', label: 'Two' }, { key: 'three', label: 'Three' }];
+    const mockDataNumber = [{ key: 1, label: 'One' }, { key: 2, label: 'Two' }, { key: 3, label: 'Three' }];
     const mockDefaultProps = {
         label: 'Select box label',
         value: 'two',
         options$: of(mockData),
+        key: 'key',
+        editable: true
+    };
+    const mockDefaultNumbersProps = {
+        label: 'Select box label',
+        value: 2,
+        options$: of(mockDataNumber),
         key: 'key',
         editable: true
     };
@@ -106,6 +114,30 @@ describe('CardViewSelectItemComponent', () => {
             fixture.detectChanges();
 
             expect(component.value).toEqual('one');
+        });
+
+        it('should be possible edit selectBox item with numbers', () => {
+            component.property = new CardViewSelectItemModel({
+                ...mockDefaultNumbersProps,
+                editable: true
+            });
+            component.editable = true;
+            component.displayNoneOption = true;
+            component.ngOnChanges();
+            fixture.detectChanges();
+
+            expect(component.value).toEqual(2);
+            expect(component.isEditable()).toBe(true);
+            const selectBox = fixture.debugElement.query(By.css('.mat-select-trigger'));
+            selectBox.triggerEventHandler('click', {});
+
+            fixture.detectChanges();
+            const optionsElement = Array.from(overlayContainer.getContainerElement().querySelectorAll('mat-option'));
+            expect(optionsElement.length).toEqual(4);
+            optionsElement[1].dispatchEvent(new Event('click'));
+            fixture.detectChanges();
+
+            expect(component.value).toEqual(1);
         });
 
         it('should be able to enable None option', () => {
