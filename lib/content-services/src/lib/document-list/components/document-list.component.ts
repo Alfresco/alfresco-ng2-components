@@ -233,7 +233,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._rowFilter = rowFilter;
         if (this.data) {
             this.data.setFilter(this._rowFilter);
-            if (this._currentFolderId) {
+            if (this.currentFolderId) {
                 this.reload();
             }
         }
@@ -255,31 +255,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     stickyHeader: boolean = false;
 
-    _currentFolderId: string = null;
-
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
-    set currentFolderId(currentFolderId: string) {
-        if (this._currentFolderId !== currentFolderId) {
-            this._currentFolderId = currentFolderId;
-            if (this.sorting) {
-                const [key, direction] = this.sorting;
-                this.orderBy = this.buildOrderByArray(key, direction);
-            }
-            if (this.data) {
-                this.data.loadPage(null, false);
-                this.resetNewFolderPagination();
-            }
-
-            if (this._currentFolderId) {
-                this.loadFolder();
-            }
-        }
-    }
-
-    get currentFolderId(): string {
-        return this._currentFolderId;
-    }
+    currentFolderId: string = null;
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
@@ -461,15 +439,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         const columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
-            this.setupDefaultColumns(this._currentFolderId);
+            this.setupDefaultColumns(this.currentFolderId);
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         this.resetSelection();
 
-        if (changes.sorting && changes.sorting.currentValue) {
-            const [key, direction] = changes.sorting.currentValue;
+        if (this.sorting) {
+            const [key, direction] = this.sorting;
             this.orderBy = this.buildOrderByArray(key, direction);
         }
 
@@ -487,6 +465,19 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 const [key, direction] = newValue;
                 this.data.setSorting(new DataSorting(key, direction));
             }
+        }
+
+        if (changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
+            if (this.data) {
+                this.data.loadPage(null, false);
+                this.resetNewFolderPagination();
+            }
+
+            if (changes['currentFolderId'].currentValue) {
+
+                this.loadFolder();
+            }
+
         }
 
         if (this.data) {
@@ -597,15 +588,15 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     navigateTo(node: Node | string): boolean {
         if (typeof node === 'string') {
             this.resetNewFolderPagination();
-            this._currentFolderId = node;
+            this.currentFolderId = node;
             this.folderChange.emit(new NodeEntryEvent(<Node> {id: node}));
             this.reload();
             return true;
         } else {
             if (this.canNavigateFolder(node)) {
                 this.resetNewFolderPagination();
-                this._currentFolderId = this.getNodeFolderDestinationId(node);
-                this.folderChange.emit(new NodeEntryEvent(<Node> {id: this._currentFolderId}));
+                this.currentFolderId = this.getNodeFolderDestinationId(node);
+                this.folderChange.emit(new NodeEntryEvent(<Node> {id: this.currentFolderId}));
                 this.reload();
                 return true;
             }
@@ -623,7 +614,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     updateCustomSourceData(nodeId: string): void {
-        this._currentFolderId = nodeId;
+        this.currentFolderId = nodeId;
     }
 
     /**
@@ -662,20 +653,19 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     loadFolder() {
-
         if (!this._pagination.merge) {
             this.setLoadingState(true);
         }
 
         if (!this.hasCustomLayout) {
-            this.setupDefaultColumns(this._currentFolderId);
+            this.setupDefaultColumns(this.currentFolderId);
         }
 
-        if (this.documentListService.isCustomSourceService(this._currentFolderId)) {
-            this.updateCustomSourceData(this._currentFolderId);
+        if (this.documentListService.isCustomSourceService(this.currentFolderId)) {
+            this.updateCustomSourceData(this.currentFolderId);
         }
 
-        this.documentListService.loadFolderByNodeId(this._currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy)
+        this.documentListService.loadFolderByNodeId(this.currentFolderId, this._pagination, this.includeFields, this.where, this.orderBy)
             .subscribe((documentNode: DocumentLoaderNode) => {
                 if (documentNode.currentNode) {
                     this.folderNode = documentNode.currentNode.entry;

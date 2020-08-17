@@ -74,7 +74,8 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         eventMock = {
-            preventDefault: function () {}
+            preventDefault: function () {
+            }
         };
 
         fixture = TestBed.createComponent(DocumentListComponent);
@@ -278,7 +279,7 @@ describe('DocumentList', () => {
 
         documentList.executeContentAction(node, action);
         expect(action.handler).toHaveBeenCalledWith(node, documentList, undefined);
-   });
+    });
 
     it('should call action handler with node and permission', () => {
         const node = new FileNode();
@@ -457,7 +458,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBe(true);
-   });
+    });
 
     it('should not display hidden content actions', () => {
         documentList.actions = [
@@ -546,7 +547,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FileAction');
         expect(actions[0].disabled).toBeFalsy();
-   });
+    });
 
     it('should disable the action if there is no permission for the folder and disableWithNoPermission true', () => {
         const documentMenu = new ContentActionModel({
@@ -566,7 +567,7 @@ describe('DocumentList', () => {
         expect(actions.length).toBe(1);
         expect(actions[0].title).toEqual('FolderAction');
         expect(actions[0].disabled).toBe(true);
-   });
+    });
 
     it('should not disable the action if there is the right permission for the file', () => {
         const documentMenu = new ContentActionModel({
@@ -830,7 +831,7 @@ describe('DocumentList', () => {
 
         documentList.onNodeClick(null);
         expect(documentList.loadFolder).not.toHaveBeenCalled();
-   });
+    });
 
     it('should display folder content only on folder node click', () => {
         expect(documentList.navigate).toBe(true);
@@ -1180,12 +1181,14 @@ describe('DocumentList', () => {
         documentList.onNodeDblClick(node);
     });
 
-    it('should load folder by ID on init', () => {
+    it('should load folder by ID on init', async () => {
         spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve());
 
-        documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-
         fixture.detectChanges();
+
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, '1d26e465-dea3-42f3-b415-faa8364b9692', true) });
+
+        await fixture.whenStable();
 
         expect(documentList.loadFolder).toHaveBeenCalled();
     });
@@ -1442,13 +1445,13 @@ describe('DocumentList', () => {
         documentList.includeFields = ['test-include'];
         documentList.currentFolderId = 'fake-id';
 
-        fixture.detectChanges();
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             where: undefined,
             maxItems: 25,
             skipCount: 0,
-            orderBy: ['isFolder DESC', 'name asc' ],
+            orderBy: ['isFolder DESC', 'name asc'],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1458,13 +1461,13 @@ describe('DocumentList', () => {
         documentList.where = '(isFolder=true)';
         documentList.currentFolderId = 'fake-id';
 
-        fixture.detectChanges();
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             where: '(isFolder=true)',
             maxItems: 25,
             skipCount: 0,
-            orderBy: ['isFolder DESC', 'name asc' ],
+            orderBy: ['isFolder DESC', 'name asc'],
             rootFolderId: 'fake-id'
         }, ['test-include']);
     });
@@ -1472,15 +1475,15 @@ describe('DocumentList', () => {
     it('should add orderBy in the server request', () => {
         documentList.includeFields = ['test-include'];
         documentList.sorting = ['size', 'DESC'];
-        documentList.currentFolderId = 'fake-id';
         documentList.where = null;
+        documentList.currentFolderId = 'fake-id';
 
-        fixture.detectChanges();
+        documentList.ngOnChanges({ currentFolderId: new SimpleChange(undefined, 'fake-id', true) });
 
         expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
             maxItems: 25,
             skipCount: 0,
-            where: undefined,
+            where: null,
             orderBy: ['isFolder DESC', 'size DESC'],
             rootFolderId: 'fake-id'
         }, ['test-include']);
@@ -1494,15 +1497,23 @@ describe('DocumentList', () => {
             skipCount: 10
         });
 
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, Object({
+            maxItems: 10,
+            skipCount: 10,
+            orderBy: ['name ASC'],
+            rootFolderId: 'no-node',
+            where: undefined
+        }), undefined);
+
         documentList.onNodeClick(folder);
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(null, {
+        expect(documentListService.getFolder).toHaveBeenCalledWith(null, Object({
             maxItems: 25,
             skipCount: 0,
-            orderBy: ['isFolder DESC', 'name asc' ],
+            orderBy: ['name ASC'],
             rootFolderId: 'folder-id',
             where: undefined
-        }, undefined);
+        }), undefined);
     });
 });
 

@@ -1,5 +1,5 @@
 {
-  "npmScope": "my-company",
+  "npmScope": "adf",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",
@@ -7,9 +7,7 @@
     "tslint.json": "*",
     "nx.json": "*",
     ".travis.yml": "*",
-    "e2e/protractor.excludes.json": [
-      "demoshell-e2e"
-    ]
+    "e2e/protractor.excludes.json": "*"
   },
   "projects": {
     "demoshell": {
