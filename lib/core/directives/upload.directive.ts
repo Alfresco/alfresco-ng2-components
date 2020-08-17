@@ -108,16 +108,18 @@ export class UploadDirective implements OnInit, OnDestroy {
         }
     }
 
-    onDragEnter() {
+    onDragEnter(event: DragEvent) {
         if (this.isDropMode()) {
+            event.dataTransfer.dropEffect = 'copy';
             this.element.classList.add(this.cssClassName);
             this.isDragging = true;
         }
     }
 
-    onDragOver(event: Event) {
+    onDragOver(event: DragEvent) {
         event.preventDefault();
         if (this.isDropMode()) {
+            event.dataTransfer.dropEffect = 'copy';
             this.element.classList.add(this.cssClassName);
             this.isDragging = true;
         }

@@ -40,40 +40,52 @@ export class DropZoneDirective implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.ngZone.runOutsideAngular(() => {
+            this.element.addEventListener('dragenter', this.onDragEnter.bind(this));
             this.element.addEventListener('dragover', this.onDragOver.bind(this));
             this.element.addEventListener('drop', this.onDrop.bind(this));
         });
     }
 
     ngOnDestroy() {
+        this.element.removeEventListener('dragenter', this.onDragEnter);
         this.element.removeEventListener('dragover', this.onDragOver);
         this.element.removeEventListener('drop', this.onDrop);
     }
 
-    onDragOver(event: Event) {
-        const domEvent = new CustomEvent(`${this.dropTarget}-dragover`, {
-            detail: {
-                target: this.dropTarget,
-                event,
-                column: this.dropColumn,
-                row: this.dropRow
-            },
-            bubbles: true
-        });
-
-        this.element.dispatchEvent(domEvent);
+    onDragEnter(event: DragEvent) {
+        const domEvent = this.dispatchDomEvent(event, 'dragenter');
 
         if (domEvent.defaultPrevented) {
+            event.dataTransfer.dropEffect = 'copy';
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+
+    onDragOver(event: DragEvent) {
+        const domEvent = this.dispatchDomEvent(event, 'dragover');
+
+        if (domEvent.defaultPrevented) {
+            event.dataTransfer.dropEffect = 'copy';
             event.preventDefault();
             event.stopPropagation();
         }
     }
 
     onDrop(event: Event) {
-        const domEvent = new CustomEvent(`${this.dropTarget}-drop`, {
+        const domEvent = this.dispatchDomEvent(event, 'drop');
+
+        if (domEvent.defaultPrevented) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    }
+
+    private dispatchDomEvent(originalEvent: Event, eventName: string): CustomEvent {
+        const domEvent = new CustomEvent(`${this.dropTarget}-${eventName}`, {
             detail: {
                 target: this.dropTarget,
-                event,
+                event: originalEvent,
                 column: this.dropColumn,
                 row: this.dropRow
             },
@@ -81,10 +93,6 @@ export class DropZoneDirective implements OnInit, OnDestroy {
         });
 
         this.element.dispatchEvent(domEvent);
-
-        if (domEvent.defaultPrevented) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
+        return domEvent;
     }
 }
