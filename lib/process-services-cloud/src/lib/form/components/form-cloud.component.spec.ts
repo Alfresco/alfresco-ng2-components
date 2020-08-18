@@ -131,11 +131,27 @@ describe('FormCloudComponent', () => {
         const fakeForm = new FormModel(JSON.parse(JSON.stringify(fakeMetadataForm)));
         formComponent.form = fakeForm;
         formComponent.formCloudRepresentationJSON = new FormCloudRepresentation(fakeForm);
+        formComponent.form.values['pfx_property_three'] = {};
+        formComponent.form.values['pfx_property_four'] = 'empty';
+        formComponent.form.values['pfx_property_five'] = 'green';
 
         const refreshFormSpy = spyOn<any>(formComponent, 'refreshFormData');
-        formService.updateFormValuesRequested.next({ pfx_property_one: 'testValue', pfx_property_two: true });
+        formService.updateFormValuesRequested.next(
+            {
+                pfx_property_one: 'testValue',
+                pfx_property_two: true,
+                pfx_property_three: 'opt_1',
+                pfx_property_four: 'option_2',
+                pfx_property_five: 'orange',
+                pfx_property_none: 'no_form_field'
+            }
+        );
         expect(refreshFormSpy).toHaveBeenCalled();
-        expect(formComponent.data).toContain({ name: 'pfx_property_one', value: 'testValue' }, { name: 'pfx_property_two', value: true });
+        expect(formComponent.data).toContain({ name: 'pfx_property_one', value: 'testValue' });
+        expect(formComponent.data).toContain({ name: 'pfx_property_two', value: true });
+        expect(formComponent.data).toContain({ name: 'pfx_property_three', value: 'opt_1' });
+        expect(formComponent.data).toContain({ name: 'pfx_property_four', value: 'option_2' });
+        expect(formComponent.data).toContain({ name: 'pfx_property_five', value: 'green' });
     });
 
     it('should register custom [upload] widget', () => {
