@@ -152,7 +152,7 @@
     "mdast": "^3.0.0",
     "mdast-util-compact": "^1.0.1",
     "mdast-util-heading-range": "^2.1.0",
-    "mdast-util-toc": "^2.0.1",
+    "mdast-util-toc": "^5.0.3",
     "mdast-zone": "^3.0.1",
     "mini-css-extract-plugin": "^0.9.0",
     "nconf": "^0.10.0",
