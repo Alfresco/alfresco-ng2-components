@@ -39,26 +39,26 @@ describe('UploadDirective', () => {
     it('should update drag status on dragenter', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragEnter();
+        directive.onDragEnter(new DragEvent('dragenter', { dataTransfer: new DataTransfer() }));
         expect(directive.isDragging).toBeTruthy();
     });
 
     it('should not update drag status on dragenter when disabled', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = false;
-        directive.onDragEnter();
+        directive.onDragEnter(new DragEvent('dragenter'));
         expect(directive.isDragging).toBeFalsy();
     });
 
     it('should update drag status on dragover', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = true;
-        directive.onDragOver(new CustomEvent('dragover'));
+        directive.onDragOver(new DragEvent('dragover', { dataTransfer: new DataTransfer() }));
         expect(directive.isDragging).toBeTruthy();
     });
 
     it('should prevent default event on dragover', () => {
-        const event = new Event('dom-event');
+        const event = new DragEvent('dragover', { dataTransfer: new DataTransfer() });
         spyOn(event, 'preventDefault').and.stub();
         directive.enabled = true;
         directive.onDragOver(event);
@@ -69,7 +69,7 @@ describe('UploadDirective', () => {
     it('should not update drag status on dragover when disabled', () => {
         expect(directive.isDragging).toBeFalsy();
         directive.enabled = false;
-        directive.onDragOver(new CustomEvent('dragover'));
+        directive.onDragOver(new DragEvent('dragover'));
     });
 
     it('should update drag status on dragleave', () => {
