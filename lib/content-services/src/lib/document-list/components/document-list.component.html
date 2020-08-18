@@ -25,13 +25,10 @@
     (sorting-changed)="onSortingChanged($event)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
-    <adf-header-filter-template>
-        <ng-template let-col>
-            <ng-template [ngTemplateOutlet]="customHeaderFilterTemplate?.template"
-                [ngTemplateOutletContext]="{$implicit: col}">
-            </ng-template>
-        </ng-template>
-    </adf-header-filter-template>
+    <div *ngIf="enableHeaderFilter">
+        <adf-filter-header>
+        </adf-filter-header>
+    </div>
 
     <adf-no-content-template>
         <ng-template>

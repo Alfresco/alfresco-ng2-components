@@ -20,9 +20,7 @@ import {
     Input,
     Output,
     OnInit,
-    OnChanges,
     EventEmitter,
-    SimpleChanges,
     ViewEncapsulation,
     ViewChild,
     Inject,
@@ -32,45 +30,29 @@ import {
 import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
-import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
-import { NodePaging, MinimalNode } from '@alfresco/js-api';
+import { SearchFilterQueryBuilderService } from '../../search-filter-query-builder.service';
+import { NodePaging } from '@alfresco/js-api';
 import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { FilterSearch } from '../../filter-search.interface';
 
 @Component({
-    selector: 'adf-search-header',
-    templateUrl: './search-header.component.html',
-    styleUrls: ['./search-header.component.scss'],
+    selector: 'adf-search-filter-container',
+    templateUrl: './search-filter-container.component.html',
+    styleUrls: ['./search-filter-container.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
+export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     /** The column the filter will be applied on. */
     @Input()
     col: DataColumn;
 
-    /** (optional) Initial filter value to sort . */
-     @Input()
+    /** The column the filter will be applied on. */
+    @Input()
     value: any;
-
-    /** The id of the current folder of the document list. */
-    @Input()
-    currentFolderNodeId: string;
-
-    /** Maximum number of search results to show in a page. */
-    @Input()
-    maxItems: number;
-
-    /** The offset of the start of the page within the results list. */
-    @Input()
-    skipCount: number;
-
-    /** The sorting to apply to the the filter. */
-    @Input()
-    sorting: string = null;
 
     /** Emitted when the result of the filter is received from the API. */
     @Output()
@@ -78,11 +60,11 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when the last of all the filters is cleared. */
     @Output()
-    clear: EventEmitter<any> = new EventEmitter();
+    resetFilter: EventEmitter<any> = new EventEmitter();
 
     /** Emitted when a filter value is selected */
     @Output()
-    selection: EventEmitter<Map<string, string>> = new EventEmitter();
+    selection: EventEmitter<FilterSearch> = new EventEmitter();
 
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
@@ -92,56 +74,19 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     category: SearchCategory;
     isFilterServiceActive: boolean;
-    initialValue: any;
     focusTrap: ConfigurableFocusTrap;
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchHeaderQueryBuilderService,
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchFilterQueryBuilderService,
                 private translationService: TranslationService,
                 private focusTrapFactory: ConfigurableFocusTrapFactory) {
-        this.isFilterServiceActive = this.searchHeaderQueryBuilder.isFilterServiceActive();
     }
 
     ngOnInit() {
         this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(
             this.col.key
         );
-
-        this.searchHeaderQueryBuilder.executed
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((newNodePaging: NodePaging) => {
-                this.update.emit(newNodePaging);
-            });
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
-            this.clearHeader();
-            this.configureSearchParent(changes['currentFolderNodeId'].currentValue);
-        }
-
-        if (changes['maxItems'] || changes['skipCount']) {
-            let actualMaxItems = this.maxItems;
-            let actualSkipCount = this.skipCount;
-
-            if (changes['maxItems'] && changes['maxItems'].currentValue) {
-                actualMaxItems = changes['maxItems'].currentValue;
-            }
-            if (changes['skipCount'] && changes['skipCount'].currentValue) {
-                actualSkipCount = changes['skipCount'].currentValue;
-            }
-
-            this.searchHeaderQueryBuilder.setupCurrentPagination(actualMaxItems, actualSkipCount);
-        }
-
-        if (changes['sorting'] && changes['sorting'].currentValue) {
-            const [key, value] = changes['sorting'].currentValue.split('-');
-            if (key === this.col.key) {
-                this.searchHeaderQueryBuilder.setSorting(key, value);
-            }
-        }
-
     }
 
     ngOnDestroy() {
@@ -159,25 +104,27 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
             this.widgetContainer.applyInnerWidget();
-            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
-            this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
+            this.selection.emit( <FilterSearch> {
+                key: this.category.columnKey,
+                value: this.widgetContainer.getCurrentValue()
+            });
         } else {
-            this.clearHeader();
+            this.resetSearchFilter();
         }
     }
 
     onClearButtonClick(event: Event) {
         event.stopPropagation();
-        this.clearHeader();
+        this.resetSearchFilter();
     }
 
-    clearHeader() {
+    resetSearchFilter() {
         if (this.widgetContainer && this.isActive()) {
             this.widgetContainer.resetInnerWidget();
             this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
-            this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
+            // this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
             if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
-                this.clear.emit();
+                this.resetFilter.emit();
             }
         }
     }
@@ -191,24 +138,6 @@ export class SearchHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
     isActive(): boolean {
         return this.widgetContainer && this.widgetContainer.componentRef && this.widgetContainer.componentRef.instance.isActive;
-    }
-
-    private configureSearchParent(currentFolderNodeId: string) {
-        if (this.searchHeaderQueryBuilder.isCustomSourceNode(currentFolderNodeId)) {
-            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(currentFolderNodeId).subscribe((node: MinimalNode) => {
-                this.initSearchHeader(node.id);
-            });
-        } else {
-            this.initSearchHeader(currentFolderNodeId);
-        }
-    }
-
-    private initSearchHeader(currentFolderId: string) {
-        this.searchHeaderQueryBuilder.setCurrentRootFolderId(currentFolderId);
-        if (this.value) {
-            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.initialValue);
-            this.initialValue = this.value;
-        }
     }
 
     onMenuOpen() {

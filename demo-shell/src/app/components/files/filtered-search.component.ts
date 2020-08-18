@@ -16,13 +16,13 @@
  */
 
 import { Component, Optional } from '@angular/core';
-import { SEARCH_QUERY_SERVICE_TOKEN, SearchHeaderQueryBuilderService } from '@alfresco/adf-content-services';
+import { SEARCH_QUERY_SERVICE_TOKEN, SearchFilterQueryBuilderService } from '@alfresco/adf-content-services';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'app-filtered-search-component',
     templateUrl: './filtered-search.component.html',
-    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService}]
+    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchFilterQueryBuilderService}]
 })
 export class FilteredSearchComponent {
 

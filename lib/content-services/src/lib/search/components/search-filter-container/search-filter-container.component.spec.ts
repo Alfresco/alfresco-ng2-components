@@ -18,14 +18,14 @@ import { Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchService, setupTestBed, AlfrescoApiService } from '@alfresco/adf-core';
-import { SearchHeaderComponent } from './search-header.component';
-import { SearchHeaderQueryBuilderService } from '../../search-header-query-builder.service';
+import { SearchFilterQueryBuilderService } from '../../search-filter-query-builder.service';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { fakeNodePaging } from '../../../mock';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SimpleChange } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { SearchFilterContainerComponent } from './search-filter-container.component';
 
 const mockCategory: any = {
     'id': 'queryName',
@@ -43,10 +43,10 @@ const mockCategory: any = {
     }
 };
 
-describe('SearchHeaderComponent', () => {
-    let fixture: ComponentFixture<SearchHeaderComponent>;
-    let component: SearchHeaderComponent;
-    let queryBuilder: SearchHeaderQueryBuilderService;
+describe('SearchFilterContainerComponent', () => {
+    let fixture: ComponentFixture<SearchFilterContainerComponent>;
+    let component: SearchFilterContainerComponent;
+    let queryBuilder: SearchFilterQueryBuilderService;
     let alfrescoApiService: AlfrescoApiService;
 
     const searchMock: any = {
@@ -60,12 +60,12 @@ describe('SearchHeaderComponent', () => {
         ],
         providers: [
             { provide: SearchService, useValue: searchMock },
-            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchHeaderQueryBuilderService }
+            { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchFilterQueryBuilderService }
         ]
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SearchHeaderComponent);
+        fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
         queryBuilder = fixture.componentInstance['searchHeaderQueryBuilder'];
         alfrescoApiService = TestBed.inject(AlfrescoApiService);

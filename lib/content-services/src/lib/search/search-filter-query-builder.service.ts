@@ -28,7 +28,7 @@ import { SearchSortingDefinition } from './search-sorting-definition.interface';
 @Injectable({
     providedIn: 'root'
 })
-export class SearchHeaderQueryBuilderService extends BaseQueryBuilderService {
+export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
 
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 

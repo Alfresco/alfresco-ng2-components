@@ -1,0 +1,16 @@
+<adf-header-filter-template>
+    <ng-template let-col>
+        <adf-search-filter-container
+            [col]="col"
+            (selection)="onFilterSelected($event)"
+        >
+        </adf-search-filter-container>
+
+        <!--
+        [value]="paramValues? paramValues[col.key] : null"
+        (update)="onFilterUpdate($event)"
+        (clear)="onAllFilterCleared()"
+        (selection)="onFilterSelected($event)"
+        -->
+    </ng-template>
+</adf-header-filter-template>

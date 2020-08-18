@@ -238,21 +238,9 @@
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)"
-                (name-click)="documentList.onNodeDblClick($event.detail?.node)">
-                <adf-custom-header-filter-template *ngIf="enableCustomHeaderFilter">
-                    <ng-template let-col>
-                        <adf-search-header [col]="col"
-                                           [value]="paramValues? paramValues[col.key] : null"
-                                           [currentFolderNodeId]="currentFolderId"
-                                           [sorting]="filterSorting"
-                                           [maxItems]="pagination?.maxItems"
-                                           [skipCount]="pagination?.skipCount"
-                                           (update)="onFilterUpdate($event)"
-                                           (clear)="onAllFilterCleared()"
-                                           (selection)="onFilterSelected($event)">
-                        </adf-search-header>
-                    </ng-template>
-                </adf-custom-header-filter-template>
+                (name-click)="documentList.onNodeDblClick($event.detail?.node)"
+                [enableHeaderFilter]="enableCustomHeaderFilter">
+
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
                     <h1>You don't have permissions</h1>
                 </adf-custom-no-permission-template>

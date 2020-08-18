@@ -255,6 +255,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     stickyHeader: boolean = false;
 
+    /** Toggles the sticky header mode. */
+    @Input()
+    enableHeaderFilter: boolean = true;
+
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
     currentFolderId: string = null;
