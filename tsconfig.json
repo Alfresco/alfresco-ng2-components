@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "jsx": "react",
     "downlevelIteration": true,
     "module": "esnext",
     "rootDir": ".",

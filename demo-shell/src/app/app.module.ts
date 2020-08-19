@@ -16,7 +16,7 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
@@ -190,7 +190,7 @@ registerLocaleData(localeSv);
     providers: [
         {
             provide: HTTP_INTERCEPTORS, useClass:
-            AuthBearerInterceptor, multi: true
+                AuthBearerInterceptor, multi: true
         },
         { provide: AppConfigService, useClass: DebugAppConfigService }, // not use this service in production
         {
@@ -210,7 +210,8 @@ registerLocaleData(localeSv);
             }
         }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
     constructor(automationService: CoreAutomationService) {

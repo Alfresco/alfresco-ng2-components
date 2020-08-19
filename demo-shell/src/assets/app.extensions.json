@@ -58,5 +58,14 @@
         }
       ]
     }
-  }
+  },
+  "react": [
+    {
+      "id": "react:component-one",
+      "type": "cusstom",
+      "data": {
+        "counter": 10
+      }
+    }
+  ]
 }
