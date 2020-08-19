@@ -112,7 +112,7 @@
     "@angular/cli": "^10.0.3",
     "@angular/compiler-cli": "^10.0.4",
     "@nrwl/schematics": "8.12.11",
-    "@nrwl/workspace": "^10.0.10",
+    "@nrwl/workspace": "^10.0.12",
     "@paperist/types-remark": "^0.1.3",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
