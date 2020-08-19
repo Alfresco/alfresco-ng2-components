@@ -19,7 +19,7 @@ import { ApiService } from '../api.service';
 import { Logger } from '../../utils/logger';
 import { ApiUtil } from '../../actions/api.util';
 
-export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED' | 'COMPLETED';
+export type TaskStatus = 'COMPLETED' | 'CREATED' | 'ASSIGNED' | 'SUSPENDED' | 'CANCELLED' | 'RUNNING';
 
 export class QueryService {
 
@@ -177,9 +177,7 @@ export class QueryService {
             try {
                 const path = '/' + appName + '/query/v1/process-instances';
                 const method = 'GET';
-
                 const queryParams = { name: processName }, postBody = {};
-
                 const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
                 return data.list.entries && data.list.entries.length > 0 ? data.list.entries[0].entry.id : null;
             } catch (error) {
@@ -188,5 +186,31 @@ export class QueryService {
         };
 
         return ApiUtil.waitForApi(apiCall, predicate);
+    }
+
+    async getProcessInstances(processName: string, appName: string, status?: TaskStatus): Promise<any> {
+        const predicate = (result: any) => {
+            return !!result;
+        };
+
+        const apiCall = async () => {
+            try {
+                const path = '/' + appName + '/query/v1/process-instances';
+                const method = 'GET';
+                let queryParams;
+                if (status) {
+                    queryParams = { name: processName, status: status };
+                } else {
+                    queryParams = { name: processName };
+                }
+                const postBody = {};
+                const data = await this.api.performBpmOperation(path, method, queryParams, postBody);
+                return data.list.entries ?? null;
+            } catch (error) {
+                Logger.error('Get Process Instances - Service error, Response: ', JSON.parse(JSON.stringify(error)).response.text);
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate, 2, 1000);
     }
 }
