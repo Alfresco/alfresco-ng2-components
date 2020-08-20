@@ -122,7 +122,7 @@
     "@types/request": "^2.48.5",
     "@types/selenium-webdriver": "^3.0.8",
     "ajv-cli": "^3.0.0",
-    "codelyzer": "^5.1.2",
+    "codelyzer": "^6.0.0",
     "commander": "4.0.0",
     "concurrently": "^5.3.0",
     "cspell": "^4.0.63",
