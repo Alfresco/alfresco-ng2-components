@@ -375,4 +375,24 @@ export class FormModel {
             );
         }
     }
+
+    addValuesNotPresent(valuesToSetIfNotPresent: FormValues): { name: string; value: any }[] {
+        const keys = Object.keys(valuesToSetIfNotPresent);
+        keys.forEach(key => {
+            if (!this.values[key] || this.isEmptyDropdownOption(key)) {
+                this.values[key] = valuesToSetIfNotPresent[key];
+            }
+        });
+        const data = [];
+        const fields = Object.keys(this.values);
+        fields.forEach(field => data.push({ name: field, value: this.values[field] }));
+        return data;
+    }
+
+    private isEmptyDropdownOption(key: string): boolean {
+        if (this.getFieldById(key) && (this.getFieldById(key).type === FormFieldTypes.DROPDOWN)) {
+            return typeof this.values[key] === 'string' ? this.values[key] === 'empty' : Object.keys(this.values[key]).length === 0;
+        }
+        return false;
+    }
 }

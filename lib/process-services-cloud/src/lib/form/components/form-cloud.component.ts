@@ -37,7 +37,6 @@ import {
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
 import { TaskDetailsCloudModel } from '../../task/start-task/models/task-details-cloud.model';
-import { FormFieldType } from '../../services/public-api';
 
 @Component({
     selector: 'adf-cloud-form',
@@ -117,24 +116,9 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formService.updateFormValuesRequested
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((valuesToSetIfNotPresent) => {
-                const keys = Object.keys(valuesToSetIfNotPresent);
-                keys.forEach(key => {
-                    if (!this.form.values[key] || this.isEmptyDropdownOption(key)) {
-                        this.form.values[key] = valuesToSetIfNotPresent[key];
-                    }
-                });
-                this.data = [];
-                const fields = Object.keys(this.form.values);
-                fields.forEach(field => this.data.push({ name: field, value: this.form.values[field] }));
+                this.data = this.form.addValuesNotPresent(valuesToSetIfNotPresent);
                 this.refreshFormData();
             });
-    }
-
-    private isEmptyDropdownOption(key: string): boolean {
-        if (this.form.getFieldById(key).type === FormFieldType.dropdown) {
-            return typeof this.form.values[key] === 'string' ? this.form.values[key] === 'empty' : Object.keys(this.form.values[key]).length === 0;
-        }
-        return false;
     }
 
     ngOnChanges(changes: SimpleChanges) {
