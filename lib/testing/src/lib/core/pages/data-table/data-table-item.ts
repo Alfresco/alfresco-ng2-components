@@ -84,4 +84,10 @@ export class DataTableItem {
         const locator = `//div[@title="${column.columnName}"]` + column.createLocator(columnValue) + `//ancestor::adf-datatable-row[contains(@class, 'is-selected')]`;
         await BrowserVisibility.waitUntilElementIsNotVisible(element(by.xpath(locator)));
     }
+
+    async selectRowWithKeyboard(columnName: string, columnValue: string): Promise<void> {
+        await browser.actions().sendKeys(protractor.Key.COMMAND).perform();
+        await this.selectRow(columnName, columnValue);
+        await browser.actions().sendKeys(protractor.Key.NULL).perform();
+    }
 }
