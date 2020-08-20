@@ -173,7 +173,7 @@
     "tsconfig-paths": "^3.9.0",
     "tslint": "5.20.0",
     "typedoc": "^0.18.0",
-    "typescript": "3.9.6",
+    "typescript": "3.9.7",
     "unist-util-select": "^3.0.1",
     "webpack-cli": "^3.3.12"
   },
