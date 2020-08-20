@@ -124,7 +124,7 @@
     "ajv-cli": "^3.0.0",
     "codelyzer": "^5.1.2",
     "commander": "4.0.0",
-    "concurrently": "^3.5.1",
+    "concurrently": "^5.3.0",
     "cspell": "^4.0.63",
     "css-loader": "^3.4.2",
     "dotenv": "^8.2.0",
