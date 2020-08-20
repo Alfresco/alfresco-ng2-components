@@ -93,7 +93,7 @@
     "custom-event-polyfill": "^1.0.7",
     "minimatch": "^3.0.4",
     "minimatch-browser": "1.0.0",
-    "moment": "2.22.2",
+    "moment": "2.27.0",
     "moment-es6": "^1.0.0",
     "ng2-charts": "2.3.3",
     "ngx-monaco-editor": "8.1.1",
