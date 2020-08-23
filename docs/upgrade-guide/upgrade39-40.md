@@ -28,15 +28,15 @@ Angular Update Guide | 7.0 -> 10.0 for Basic Apps
 
 ### Before Updating
 
-If you use the legacy HttpModule and the Http service, switch to HttpClientModule and the HttpClient service. 
+If you use the legacy `HttpModule` and the Http service, switch to `HttpClientModule` and the `HttpClient` service. 
 HttpClient simplifies the default ergonomics (you don't need to map to JSON anymore) and now supports typed return values and interceptors. 
-Read more on angular.io.
+Read more on [angular.io](https://angular.io/).
 
 ### During the Update
 
-Update to version 8 of the core framework and CLI by running ng update @angular/cli@8 @angular/core@8 in your terminal and review and commit the changes.
+Update to version 8 of the core framework and CLI by running `ng update @angular/cli@8 @angular/core@8` in your terminal and review and commit the changes.
 
-Replace /deep/ with ::ng-deep in your styles, read more about angular component styles and ::ng-deep. /deep/ and ::ng-deep both are deprecated but using ::ng-deep is preferred until the shadow-piercing descendant combinator is removed from browsers and tools completely.
+Replace `/deep/` with `::ng-deep` in your styles, read more about angular component styles and `::ng-deep`. `/deep/` and `::ng-deep` both are deprecated but using `::ng-deep` is preferred until the shadow-piercing descendant combinator is removed from browsers and tools completely.
 
 Angular now uses TypeScript 3.4, read more about errors that might arise from improved type checking.
 
@@ -46,15 +46,15 @@ The CLI's build command now automatically creates a modern ES2015 build with min
 
 When using new versions of the CLI, you will be asked if you want to opt-in to share your CLI usage data. You can also add your own Google Analytics account. This lets us make better decisions about which CLI features to prioritize, and measure the impact of our improvements. Learn more on angular.io.
 
-If you use ViewChild or ContentChild, we're updating the way we resolve these queries to give developers more control. You must now specify that change detection should run before results are set. Example: @ContentChild('foo', {static: false}) foo !: ElementRef;. ng update will update your queries automatically, but it will err on the side of making your queries static for compatibility. Learn more on angular.io.
+If you use ViewChild or ContentChild, we're updating the way we resolve these queries to give developers more control. You must now specify that change detection should run before results are set. Example: `@ContentChild('foo', {static: false}) foo !: ElementRef;`. ng update will update your queries automatically, but it will err on the side of making your queries static for compatibility. Learn more on angular.io.
 
 For lazy loaded modules via the router, make sure you are using dynamic imports. Importing via string is removed in v9. ng update should take care of this automatically. Learn more on angular.io.
 
 Make sure you are using Node 10.13 or later.
 
-Run ng update @angular/core@8 @angular/cli@8 in your workspace directory to update to the latest 8.x version of @angular/core and @angular/cli and commit these changes.
+Run `ng update @angular/core@8 @angular/cli@8` in your workspace directory to update to the latest 8.x version of @angular/core and @angular/cli and commit these changes.
 
-Run ng update @angular/core@9 @angular/cli@9 which should bring you to version 9 of Angular.
+Run `ng update @angular/core@9 @angular/cli@9` which should bring you to version 9 of Angular.
 
 Your project has now been updated to TypeScript 3.8, read more about new compiler checks and errors that might require you to fix issues in your code in the TypeScript 3.7 or TypeScript 3.8 announcements.
 
@@ -64,13 +64,13 @@ During the update to version 9, your project was transformed as necessary via co
 
 If you depend on many Angular libraries you may consider speeding up your build by invoking the ngcc (Angular Compatibility Compiler) in an npm postinstall script via small change to your package.json.
 
-Angular 9 introduced a global $localize() function that needs to be loaded if you depend on Angular's internationalization (i18n). Run ng add @angular/localize to add the necessary packages and code modifications. Consult the $localize Global Import Migration guide to learn more about the changes.
+Angular 9 introduced a global `$localize()` function that needs to be loaded if you depend on Angular's internationalization (i18n). Run `ng add @angular/localize` to add the necessary packages and code modifications. Consult the $localize Global Import Migration guide to learn more about the changes.
 
-Run ng update @angular/core @angular/cli which should bring you to version 10 of Angular.
+Run `ng update @angular/core @angular/cli` which should bring you to version 10 of Angular.
 
-New projects use the filename .browserslistrc instead of browserslist. ng update will migrate you automatically.
+New projects use the filename `.browserslistrc` instead of `browserslist`. ng update will migrate you automatically.
 
-Angular now recommends the use of a tsconfig.base.json to help organize the various typings contexts (shared, unit tests, end to end tests, application, etc). ng update will migrate you automatically.
+Angular now recommends the use of a `tsconfig.base.json` to help organize the various typings contexts (shared, unit tests, end to end tests, application, etc). ng update will migrate you automatically.
 
 ### After the Update
 
