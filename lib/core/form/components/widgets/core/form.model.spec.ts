@@ -24,6 +24,7 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
+import { fakeMetadataForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
 
 describe('FormModel', () => {
     let formService: FormService;
@@ -556,6 +557,36 @@ describe('FormModel', () => {
         it('should not find a process variable', () => {
             const missing = form.getProcessVariableValue('missing');
             expect(missing).toBeUndefined();
+        });
+    });
+
+    describe('add values not present', () => {
+        let form: FormModel;
+
+        beforeEach(() => {
+            form = new FormModel(fakeMetadataForm);
+            form.values['pfx_property_three'] = {};
+            form.values['pfx_property_four'] = 'empty';
+            form.values['pfx_property_five'] = 'green';
+        });
+
+        it('should not find a process variable', () => {
+            const values = {
+                pfx_property_one: 'testValue',
+                pfx_property_two: true,
+                pfx_property_three: 'opt_1',
+                pfx_property_four: 'option_2',
+                pfx_property_five: 'orange',
+                pfx_property_none: 'no_form_field'
+            };
+
+            const data = form.addValuesNotPresent(values);
+
+            expect(data).toContain({ name: 'pfx_property_one', value: 'testValue' });
+            expect(data).toContain({ name: 'pfx_property_two', value: true });
+            expect(data).toContain({ name: 'pfx_property_three', value: 'opt_1' });
+            expect(data).toContain({ name: 'pfx_property_four', value: 'option_2' });
+            expect(data).toContain({ name: 'pfx_property_five', value: 'green' });
         });
     });
 });

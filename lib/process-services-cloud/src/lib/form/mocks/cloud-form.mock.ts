@@ -1045,8 +1045,112 @@ export let fakeMetadataForm = {
                                 'link': false
                             }
                         }
+                    ],
+                    '4': [
+                        {
+                            'id': 'pfx_property_three',
+                            'name': 'pfx_property_three',
+                            'required': false,
+                            'readOnly': false,
+                            'colspan': 1,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            },
+                            'visibilityCondition': null,
+                            'type': 'dropdown',
+                            'optionType': 'manual',
+                            'options': [
+                                {
+                                    'id': 'empty',
+                                    'name': 'Choose one...'
+                                },
+                                {
+                                    'id': 'opt_1',
+                                    'name': 'Option 1'
+                                },
+                                {
+                                    'id': 'opt_2',
+                                    'name': 'Option 2'
+                                }
+                            ],
+                            'value': 'empty',
+                            'restUrl': null,
+                            'restResponsePath': null,
+                            'restIdProperty': null,
+                            'restLabelProperty': null
+                        }
+                    ],
+                    '5': [
+                        {
+                            'id': 'pfx_property_four',
+                            'name': 'pfx_property_four',
+                            'required': false,
+                            'readOnly': false,
+                            'colspan': 1,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            },
+                            'visibilityCondition': null,
+                            'type': 'dropdown',
+                            'optionType': 'manual',
+                            'options': [
+                                {
+                                    'id': 'empty',
+                                    'name': 'Choose one...'
+                                },
+                                {
+                                    'id': 'option_1',
+                                    'name': 'Option: 1'
+                                },
+                                {
+                                    'id': 'option_2',
+                                    'name': 'Option: 2'
+                                }
+                            ],
+                            'value': 'empty',
+                            'restUrl': null,
+                            'restResponsePath': null,
+                            'restIdProperty': null,
+                            'restLabelProperty': null
+                        }
+                    ],
+                    '6': [
+                        {
+                            'id': 'pfx_property_five',
+                            'name': 'pfx_property_five',
+                            'required': false,
+                            'readOnly': false,
+                            'colspan': 1,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2
+                            },
+                            'visibilityCondition': null,
+                            'type': 'dropdown',
+                            'optionType': 'manual',
+                            'options': [
+                                {
+                                    'id': 'empty',
+                                    'name': 'Choose one...'
+                                },
+                                {
+                                    'id': 'green',
+                                    'name': 'Colour green'
+                                },
+                                {
+                                    'id': 'orange',
+                                    'name': 'Colour orange'
+                                }
+                            ],
+                            'value': 'empty',
+                            'restUrl': null,
+                            'restResponsePath': null,
+                            'restIdProperty': null,
+                            'restLabelProperty': null
+                        }
                     ]
-
                 },
                 'numberOfColumns': 2
             }
