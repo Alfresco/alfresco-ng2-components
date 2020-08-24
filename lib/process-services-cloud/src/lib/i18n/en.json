@@ -242,15 +242,15 @@
   "ADF_CLOUD_PROCESS_HEADER": {
     "PROPERTIES": {
       "ID": "ID",
-      "NAME": "Name",
+      "NAME": "Process name",
       "NAME_DEFAULT": "No name",
       "DESCRIPTION": "Description",
       "DESCRIPTION_DEFAULT": "No description",
       "STATUS": "Status",
       "BUSINESS_KEY": "Business Key",
       "INITIATOR": "Initiator",
-      "START_DATE": "Start Date",
-      "LAST_MODIFIED": "Last Modified",
+      "START_DATE": "Started",
+      "LAST_MODIFIED": "Updated",
       "PARENT_ID": "Parent Id",
       "NONE": "None"
     }
