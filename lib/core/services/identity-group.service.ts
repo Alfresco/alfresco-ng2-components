@@ -71,6 +71,30 @@ export class IdentityGroupService {
     }
 
     /**
+     * Assigns roles to the group
+     * @param groupId The ID of the group
+     * @param roles Array of roles to assign
+     */
+    assignRoles(groupId: string, roles: IdentityRoleModel[]): Observable<any> {
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
+        const bodyParam = JSON.stringify(roles);
+
+        return this.oAuth2Service.post({ url, bodyParam });
+    }
+
+    /**
+     * Removes roles from the group
+     * @param groupId The ID of the group
+     * @param roles Array of roles to remove
+     */
+    removeRoles(groupId: string, roles: IdentityRoleModel[]): Observable<any> {
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
+        const bodyParam = JSON.stringify(roles);
+
+        return this.oAuth2Service.delete({ url, bodyParam });
+    }
+
+    /**
      * Get effective roles
      * @param groupId Id of the group
      * @returns Array of effective roles
