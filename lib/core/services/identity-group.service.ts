@@ -61,6 +61,26 @@ export class IdentityGroupService {
     }
 
     /**
+     * Gets assigned roles
+     * @param groupId Id of the group.
+     * @returns Array of available roles
+     */
+    getAssignedRoles(groupId: string): Observable<IdentityRoleModel[]> {
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm`;
+        return this.oAuth2Service.get({ url });
+    }
+
+    /**
+     * Get effective roles
+     * @param groupId Id of the group
+     * @returns Array of effective roles
+     */
+    getEffectiveRoles(groupId: string): Observable<IdentityRoleModel[]> {
+        const url = `${this.identityHost}/groups/${groupId}/role-mappings/realm/composite`;
+        return this.oAuth2Service.get({ url });
+    }
+
+    /**
      * Queries groups.
      * @returns Array of user information objects
      */
