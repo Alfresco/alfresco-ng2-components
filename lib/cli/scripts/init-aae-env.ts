@@ -382,7 +382,7 @@ async function main(configArgs: ConfigArgs) {
         .option('-h, --host [type]', 'Host gateway')
         .option('-o, --oauth [type]', 'Host sso server')
         .option('-jsonAppsPath, --oauth [type]', 'Host sso server')
-        .option('--clientId[type]', 'sso client')
+        .option('--clientId [type]', 'sso client')
         .option('--modelerUsername [type]', 'username of a user with role ACTIVIT_MODELER')
         .option('--modelerPassword [type]', 'modeler password')
         .option('--devopsUsername [type]', 'username of a user with role ACTIVIT_DEVOPS')
