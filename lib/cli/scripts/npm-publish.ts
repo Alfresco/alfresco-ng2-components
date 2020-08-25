@@ -60,7 +60,7 @@ async function npmPublish(args: PublishArgs, project: string) {
         const response = exec('npm', options, { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
         logger.info(response);
         if (args.npmRegistry) {
-            removeNPMRC(args, project);
+            removeNpmConfig(args, project);
         }
 
         await sleep(30000);
@@ -94,10 +94,14 @@ registry=http://${args.npmRegistry}
     }
 }
 
-function removeNPMRC(args: PublishArgs, project: string) {
+function removeNpmConfig(args: PublishArgs, project: string) {
     logger.info(`Removing file from ${project}`);
-    const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
-    logger.info(response);
+    try {
+        const response = exec('rm', ['.npmrc'], { cwd: path.resolve(`${args.pathProject}/lib/dist/${project}`) });
+        logger.info(response);
+    } catch (e) {
+        logger.error('Error removing file', e);
+    }
 }
 
 export default async function (args: PublishArgs) {
@@ -120,9 +124,9 @@ async function main(args) {
         return;
     }
 
-    for (let i = 0; i < projects.length; i++) {
-        logger.info(`========Analyzing project: ${projects[i]} ========`);
-        await npmPublish(args, projects[i]);
+    for (const project of projects) {
+        logger.info(`======== Publishing project: ${project} ========`);
+        await npmPublish(args, project);
     }
 }
 

@@ -33,4 +33,4 @@ fi;
 ./scripts/build/build-all-lib.sh
 
 echo "====== Build Demo shell for production ====="
-nx build demoshell --prod
+NODE_OPTIONS=--max_old_space_size=8192 nx build demoshell --prod
