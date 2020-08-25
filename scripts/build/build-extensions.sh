@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $DIR/../..
 
-NODE_OPTIONS=--max_old_space_size=4096
+NODE_OPTIONS=--max_old_space_size=8192
 
 if [ "$CI" = "true" ]; then
     echo "Building extensions for production"

@@ -7,7 +7,7 @@ cd $DIR/../..
 echo "====== Testing ======"
 echo "====== Build ======"
 
-NODE_OPTIONS=--max_old_space_size=4096
+NODE_OPTIONS=--max_old_space_size=8192
 
 if [ "$CI" = "true" ]; then
     echo "Building testing for production"
