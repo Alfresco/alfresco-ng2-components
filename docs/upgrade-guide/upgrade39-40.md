@@ -75,3 +75,11 @@ Angular now recommends the use of a `tsconfig.base.json` to help organize the va
 ### After the Update
 
 Once you've updated your app you'll be able to update ADF 4.0.
+
+### Common problems due an mistake during the Upgrade procedure
+
+### Errror : `Error: No component factory found for`
+
+Possible Solution:
+
+    - Check you have in yor tsconfig.base.json `enableIvy: true`
