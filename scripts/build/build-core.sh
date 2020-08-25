@@ -7,7 +7,7 @@ cd $DIR/../..
 echo "====== Core ======"
 echo "====== Build ======"
 
-NODE_OPTIONS=--max_old_space_size=8192
+export NODE_OPTIONS=--max_old_space_size=8192
 
 if [ "$CI" = "true" ]; then
     echo "Building core for production"

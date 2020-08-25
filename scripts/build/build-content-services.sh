@@ -7,7 +7,7 @@ cd $DIR/../..
 echo "====== Content Services ======"
 echo "====== Build ======"
 
-NODE_OPTIONS=--max_old_space_size=8192
+export NODE_OPTIONS=--max_old_space_size=8192
 
 if [ "$CI" = "true" ]; then
     echo "Building content-services for production"
