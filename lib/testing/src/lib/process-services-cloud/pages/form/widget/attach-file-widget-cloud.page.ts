@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import * as remote from 'selenium-webdriver/remote';
-import { element, by, browser, ElementFinder } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
 
@@ -34,7 +33,6 @@ export class AttachFileWidgetCloudPage {
     }
 
     async attachLocalFile(fileLocation: string): Promise<void> {
-        await browser.setFileDetector(new remote.FileDetector());
         const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);

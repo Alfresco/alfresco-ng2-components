@@ -18,7 +18,6 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { By } from 'selenium-webdriver';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 
 export class FormFieldsPage {
@@ -36,7 +35,7 @@ export class FormFieldsPage {
 
     selectFormDropdown = new DropdownPage(element.all(by.css('.adf-attach-form .mat-select-arrow')).first());
 
-    async setFieldValue(locator: (id: string) => By, field: string, value: string): Promise<void> {
+    async setFieldValue(locator: any, field: string, value: string): Promise<void> {
         const fieldElement = element(locator(field));
         await BrowserVisibility.waitUntilElementIsVisible(fieldElement);
         await BrowserActions.clearSendKeys(fieldElement, value);
