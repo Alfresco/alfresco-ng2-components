@@ -176,12 +176,16 @@ exports.config = {
     SELENIUM_PROMISE_MANAGER: false,
 
     plugins: [{
-        package: 'jasmine2-protractor-utils',
-        disableScreenshot: false,
-        screenshotOnExpectFailure: true,
-        screenshotOnSpecFailure: false,
-        clearFoldersBeforeTest: true,
+        package: 'protractor-screenshoter-plugin',
         screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
+        screenshotOnExpect: 'failure',
+        screenshotOnSpec: 'none',
+        withLogs: true,
+        writeReportFreq: 'end',
+        imageToAscii: 'none',
+        htmlOnExpect: 'none',
+        htmlOnSpec: 'none',
+        clearFoldersBeforeTest: true
     }],
 
     onCleanUp(results) {
