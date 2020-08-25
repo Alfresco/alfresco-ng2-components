@@ -7,11 +7,9 @@ cd $DIR/../..
 echo "====== Core ======"
 echo "====== Build ======"
 
-export NODE_OPTIONS=--max_old_space_size=8192
-
 if [ "$CI" = "true" ]; then
     echo "Building core for production"
-    nx build core --prod || exit 1
+    node --max_old_space_size=8192 ./node_modules/@nrwl/cli/bin/nx build core --prod || exit 1
 else
     echo "Building core for development"
     nx build core || exit 1
