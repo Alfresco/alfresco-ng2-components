@@ -7,6 +7,8 @@ cd $DIR/../..
 echo "====== Process Services Cloud ======"
 echo "====== Build ======"
 
+NODE_OPTIONS=--max_old_space_size=4096
+
 if [ "$CI" = "true" ]; then
     echo "Building process-services-cloud  for production"
     nx build process-services-cloud --prod || exit 1

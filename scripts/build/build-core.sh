@@ -7,6 +7,8 @@ cd $DIR/../..
 echo "====== Core ======"
 echo "====== Build ======"
 
+NODE_OPTIONS=--max_old_space_size=4096
+
 if [ "$CI" = "true" ]; then
     echo "Building core for production"
     nx build core --prod || exit 1
