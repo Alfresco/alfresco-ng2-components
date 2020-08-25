@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ElementFinder, browser, by } from 'protractor';
+import { browser, by, ElementFinder } from 'protractor';
 
 /**
  * Tagged template to convert a sting to an `ElementFinder`.

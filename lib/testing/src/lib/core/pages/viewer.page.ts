@@ -19,7 +19,7 @@ import { BrowserActions } from '../utils/browser-actions';
 import { TabsPage } from './material/tabs.page';
 import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
-import { element, by, browser, protractor } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 
 export class ViewerPage {
 

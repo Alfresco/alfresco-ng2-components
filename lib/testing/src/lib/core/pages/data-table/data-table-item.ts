@@ -16,7 +16,7 @@
  */
 
 import { Column } from './column';
-import { by, element, ElementFinder, Locator, protractor, browser } from 'protractor';
+import { browser, by, element, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 

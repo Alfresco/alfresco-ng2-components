@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, Key, protractor, browser } from 'protractor';
+import { browser, by, element, Key, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';

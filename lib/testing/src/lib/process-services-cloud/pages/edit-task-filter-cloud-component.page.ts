@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';

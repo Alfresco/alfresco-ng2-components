@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element, ElementArrayFinder, ElementFinder, Locator, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -25,7 +25,7 @@ export class DataTableComponentPage {
     list: ElementArrayFinder;
     contents: ElementArrayFinder;
     tableBody: ElementFinder;
-    rows = by.css(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
+    rows: Locator = by.css(`adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row']`);
     allColumns: ElementArrayFinder;
     selectedRowNumber: ElementFinder;
     allSelectedRows: ElementArrayFinder;
@@ -186,7 +186,7 @@ export class DataTableComponentPage {
 
     async getAllRowsColumnValues(column: string): Promise<string[]> {
         let columnValues: string[] = [];
-        const columnLocator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
+        const columnLocator: Locator = by.css("adf-datatable div[class*='adf-datatable-body'] adf-datatable-row[class*='adf-datatable-row'] div[title='" + column + "'] span");
 
         try {
             await BrowserVisibility.waitUntilElementIsPresent(element.all(columnLocator).first(), 1000);
@@ -200,7 +200,7 @@ export class DataTableComponentPage {
     }
 
     async getRowsWithSameColumnValues(columnName: string, columnValue: string) {
-        const columnLocator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
+        const columnLocator: Locator = by.css(`div[title='${columnName}'] div[data-automation-id="text_${columnValue}"] span`);
         await BrowserVisibility.waitUntilElementIsVisible(this.rootElement.all(columnLocator).first());
         return this.rootElement.all(columnLocator).getText();
     }
@@ -230,7 +230,7 @@ export class DataTableComponentPage {
      * @param sortOrder : 'ASC' to sort the list ascendant and 'DESC' for descendant
      */
     async sortByColumn(sortOrder: string, titleColumn: string): Promise<void> {
-        const locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
+        const locator: Locator = by.css(`div[data-automation-id="auto_id_${titleColumn}"]`);
         await BrowserVisibility.waitUntilElementIsVisible(element(locator));
         const result = await element(locator).getAttribute('class');
         if (sortOrder.toLocaleLowerCase() === 'asc') {

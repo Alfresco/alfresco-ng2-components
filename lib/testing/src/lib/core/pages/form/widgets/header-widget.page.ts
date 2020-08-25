@@ -21,7 +21,6 @@ import { by, Locator } from 'protractor';
 export class HeaderWidgetPage {
 
     formFields: FormFields = new FormFields();
-
     labelLocator: Locator = by.css('span[id="container-header-label"]');
 
     getFieldLabel(fieldId): Promise<string> {

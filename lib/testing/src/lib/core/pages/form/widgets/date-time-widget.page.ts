@@ -16,8 +16,8 @@
  */
 
 import { FormFields } from '../form-fields';
-import { element, by } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { by, element } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class DateTimeWidgetPage {
 

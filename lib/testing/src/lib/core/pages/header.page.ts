@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 

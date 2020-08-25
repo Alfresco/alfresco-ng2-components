@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../../../core/utils/browser-actions';
 import { BrowserVisibility } from '../../../../core/utils/browser-visibility';
 
 export class AttachFileWidgetCloudPage {
 
     widget: ElementFinder;
-    filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
+    filesListLocator: Locator = by.css('div[id="adf-attach-widget-readonly-list"]');
 
     constructor(fieldId: string) {
         this.assignWidget(fieldId);

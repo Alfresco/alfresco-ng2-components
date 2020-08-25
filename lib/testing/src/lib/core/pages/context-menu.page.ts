@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions } from '../utils/browser-actions';
-import { element, by } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 
 export class ContextMenuPage {

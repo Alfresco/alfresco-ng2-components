@@ -16,15 +16,15 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { by, element, Locator } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class GroupWidgetPage {
 
     groupField = element(by.css('input[data-automation-id="adf-group-search-input"]'));
     firstResult = element(by.id('adf-group-widget-user-0'));
     formFields = new FormFields();
-    groupDropDownList = by.css('.mat-autocomplete-panel');
+    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);
@@ -52,7 +52,7 @@ export class GroupWidgetPage {
     }
 
     async getDropDownList(): Promise<any[]> {
-        const user = by.css('[id="adf-group-label-name"]');
+        const user: Locator = by.css('[id="adf-group-label-name"]');
         await BrowserVisibility.waitUntilElementIsVisible(element(user));
         return element.all(user).map((elementFinder) => elementFinder.getText());
     }

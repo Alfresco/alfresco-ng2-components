@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserActions } from '../../utils/browser-actions';
 import { DatePickerCalendarPage } from './date-picker-calendar.page';
 

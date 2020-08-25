@@ -16,15 +16,15 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { by, element, Locator } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TypeaheadWidgetPage {
 
     field = element(by.css('input[data-automation-id="adf-typeahed-search-input"]'));
     firstResult = element(by.id('adf-typeahed-widget-user-0'));
     formFields = new FormFields();
-    groupDropDownList = by.css('.mat-autocomplete-panel');
+    groupDropDownList: Locator = by.css('.mat-autocomplete-panel');
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId);
@@ -52,7 +52,7 @@ export class TypeaheadWidgetPage {
     }
 
     async getDropDownList(): Promise<any[]> {
-        const option = by.css('[id="adf-typeahed-label-name"]');
+        const option: Locator = by.css('[id="adf-typeahed-label-name"]');
         await BrowserVisibility.waitUntilElementIsVisible(element(option));
         return element.all(option).map((elementFinder) => elementFinder.getText());
     }

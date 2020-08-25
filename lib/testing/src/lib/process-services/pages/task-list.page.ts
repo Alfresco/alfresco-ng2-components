@@ -18,7 +18,7 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 
 export class TaskListPage {
     rootElement: ElementFinder;

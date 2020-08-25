@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 
 export class CardBooleanItemPage {

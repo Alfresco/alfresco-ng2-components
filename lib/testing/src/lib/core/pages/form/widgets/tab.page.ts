@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, browser } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class TabPage {

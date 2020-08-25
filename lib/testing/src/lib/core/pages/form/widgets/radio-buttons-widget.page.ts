@@ -17,7 +17,7 @@
 
 import { FormFields } from '../form-fields';
 import { by, element, Locator } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class RadioButtonsWidgetPage {
 
@@ -26,14 +26,14 @@ export class RadioButtonsWidgetPage {
     formFields: FormFields = new FormFields();
 
     async getSpecificOptionLabel(fieldId, optionNumber): Promise<string> {
-        const optionLocator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
+        const optionLocator: Locator = by.css('label[for*="radiobuttons-option_' + optionNumber + '"]');
         const widget = await this.formFields.getWidget(fieldId);
         const option = widget.element(optionLocator);
         return BrowserActions.getText(option);
     }
 
     async selectOption(fieldId, optionNumber): Promise<void> {
-        const optionLocator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
+        const optionLocator: Locator = by.css(`label[for*="${fieldId}-option_${optionNumber}"]`);
         const widget = await this.formFields.getWidget(fieldId);
         const option = widget.element(optionLocator);
         await BrowserActions.click(option);

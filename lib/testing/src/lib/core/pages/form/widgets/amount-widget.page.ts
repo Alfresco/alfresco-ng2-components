@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { element, by, Locator } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { by, element, Locator } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 import { FormFields } from '../form-fields';
 
 export class AmountWidgetPage {

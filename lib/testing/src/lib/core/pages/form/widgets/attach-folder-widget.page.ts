@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { by, element } from 'protractor';
+import { by, element, Locator } from 'protractor';
 import { FormFields } from '../form-fields';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class AttachFolderWidgetPage {
 
     formFields: FormFields = new FormFields();
-    foldersListLocator = by.css('.adf-attach-folder-result');
+    foldersListLocator: Locator = by.css('.adf-attach-folder-result');
 
     async clickWidget(fieldId: string): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId).element(by.css(`button[id="folder-${fieldId}-button"]`));

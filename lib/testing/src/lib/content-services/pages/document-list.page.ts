@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder, browser } from 'protractor';
+import { browser, by, element, ElementFinder, Locator } from 'protractor';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -23,7 +23,7 @@ import { BrowserActions } from '../../core/utils/browser-actions';
 export class DocumentListPage {
 
     rootElement: ElementFinder;
-    optionButton = by.css('button[data-automation-id*="action_menu_"]');
+    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
     tableBody: ElementFinder;
     dataTable: DataTableComponentPage;
 

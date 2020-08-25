@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { browser, by, element, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
@@ -24,8 +24,8 @@ export class EditProcessFilterDialogPage {
     componentElement = element(by.css('adf-cloud-process-filter-dialog-cloud'));
     title = element(by.id('adf-process-filter-dialog-title'));
     filterNameInput = element(by.id('adf-filter-name-id'));
-    saveButtonLocator = by.id('adf-save-button-id');
-    cancelButtonLocator = by.id('adf-cancel-button-id');
+    saveButtonLocator: Locator = by.id('adf-save-button-id');
+    cancelButtonLocator: Locator = by.id('adf-cancel-button-id');
 
     async clickOnSaveButton(): Promise<void> {
         const saveButton = this.componentElement.element(this.saveButtonLocator);

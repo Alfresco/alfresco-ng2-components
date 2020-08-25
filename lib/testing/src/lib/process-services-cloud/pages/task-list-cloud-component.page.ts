@@ -17,7 +17,7 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 const column = {
@@ -37,7 +37,7 @@ export class TaskListCloudComponentPage {
     taskList = element(by.css('adf-cloud-task-list'));
     noTasksFound = element.all(by.css('.adf-empty-content__title')).first();
     actionMenu = element(by.css('*[role="menu"]'));
-    optionButton = by.css('button[data-automation-id*="action_menu_"]');
+    optionButton: Locator = by.css('button[data-automation-id*="action_menu_"]');
 
     dataTable = new DataTableComponentPage(this.taskList);
 

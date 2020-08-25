@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { DataTableComponentPage } from './data-table-component.page';
 

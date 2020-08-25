@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
-import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
+import { by, element, ElementFinder, Locator } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
 
 export class FormFields {
@@ -24,8 +24,8 @@ export class FormFields {
     formContent = element(by.css('adf-form-renderer'));
     refreshButton = element(by.css('div[class*="form-reload-button"] mat-icon'));
     saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
-    valueLocator = by.css('input');
-    labelLocator = by.css('label');
+    valueLocator: Locator = by.css('input');
+    labelLocator: Locator = by.css('label');
     noFormMessage = element(by.css('.adf-empty-content__title'));
     noFormMessageStandaloneTask = element(by.css('adf-task-standalone #adf-no-form-message'));
     noFormTemplate = element(by.css('adf-empty-content'));
@@ -35,7 +35,7 @@ export class FormFields {
     completeButton = element(by.id('adf-form-complete'));
     completeNoFormButton = element(by.id('adf-no-form-complete-button'));
     cancelButton = element(by.css('#adf-no-form-cancel-button'));
-    errorMessage = by.css('.adf-error-text-container .adf-error-text');
+    errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('.adf-attach-form .mat-select-arrow')).first());
 

@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
 export class ProcessFiltersCloudComponentPage {
 
     filter: ElementFinder;
-    filterIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
+    filterIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     processFilters = element(by.css("mat-expansion-panel[data-automation-id='Process Filters']"));
 

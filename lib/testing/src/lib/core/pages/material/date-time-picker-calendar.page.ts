@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { by, element, Locator } from 'protractor';
 import { BrowserVisibility } from '../../utils/browser-visibility';
 import { BrowserActions } from '../../utils/browser-actions';
 
@@ -26,8 +26,8 @@ export class DateTimePickerCalendarPage {
     timePicker = element(by.css('.mat-datetimepicker-clock'));
     hourTime = element.all(by.css('.mat-datetimepicker-clock-hours .mat-datetimepicker-clock-cell')).first();
     minutesTime = element.all(by.css('.mat-datetimepicker-clock-minutes .mat-datetimepicker-clock-cell')).first();
-    firstEnabledHourSelector = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
-    firstEnabledMinutesSelector = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
+    firstEnabledHourSelector: Locator = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
+    firstEnabledMinutesSelector: Locator = by.css('.mat-datetimepicker-clock-cell:not(.mat-datetimepicker-clock-cell-disabled)');
     hoursPicker = element(by.css('.mat-datetimepicker-clock-hours'));
     minutePicker = element(by.css('.mat-datetimepicker-clock-minutes'));
 

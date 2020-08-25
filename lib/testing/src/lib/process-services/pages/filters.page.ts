@@ -17,13 +17,13 @@
 
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 
 export class FiltersPage {
 
     accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
-    processIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
+    processIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
 
     async clickFilterButton(filterElement: ElementFinder): Promise<void> {
         await BrowserActions.click(filterElement);

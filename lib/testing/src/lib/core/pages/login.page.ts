@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, protractor } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { LocalStorageUtil } from '../utils/local-storage.util';

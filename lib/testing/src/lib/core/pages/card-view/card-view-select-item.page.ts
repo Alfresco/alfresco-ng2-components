@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Locator } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
 

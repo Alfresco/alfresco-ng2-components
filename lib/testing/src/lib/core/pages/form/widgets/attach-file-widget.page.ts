@@ -16,15 +16,15 @@
  */
 
 import { FormFields } from '../form-fields';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import { element, by, browser } from 'protractor';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
+import { browser, by, element, Locator } from 'protractor';
 
 export class AttachFileWidgetPage {
 
     formFields = new FormFields();
-    uploadLocator = by.css('button[id="attachfile"]');
+    uploadLocator: Locator = by.css('button[id="attachfile"]');
     localStorageButton = element(by.css('input[id="attachfile"]'));
-    filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
+    filesListLocator: Locator = by.css('div[id="adf-attach-widget-readonly-list"]');
     attachFileWidget = element(by.css('#attachfile'));
     attachedFileMenu = element(by.css('mat-list-item button'));
     attachedFileOptions = element(by.css('.mat-menu-panel .mat-menu-content'));

@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-import { browser, by, ElementFinder } from 'protractor';
+import { browser, by, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from '../../../core/utils/browser-visibility';
 import { BrowserActions } from '../../../core/utils/browser-actions';
 
 export class SearchSliderPage {
 
     filter: ElementFinder;
-    slider = by.css('mat-slider[data-automation-id="slider-range"]');
-    clearButton = by.css('button[data-automation-id="slider-btn-clear"]');
-    sliderWithThumbLabel = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
+    slider: Locator = by.css('mat-slider[data-automation-id="slider-range"]');
+    clearButton: Locator = by.css('button[data-automation-id="slider-btn-clear"]');
+    sliderWithThumbLabel: Locator = by.css('mat-slider[data-automation-id="slider-range"][class*="mat-slider-thumb-label-showing"]');
 
     constructor(filter: ElementFinder) {
         this.filter = filter;

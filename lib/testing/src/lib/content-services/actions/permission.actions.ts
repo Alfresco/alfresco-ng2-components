@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NodeEntry, NodeBodyUpdate } from '@alfresco/js-api';
+import { NodeBodyUpdate, NodeEntry } from '@alfresco/js-api';
 import { ApiService } from '../../core/actions/api.service';
 
 export class PermissionActions {

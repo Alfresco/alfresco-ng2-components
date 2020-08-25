@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder } from 'protractor';
+import { by, element, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility } from './../utils/browser-visibility';
 import { TabsPage } from './material/tabs.page';
 
 export class InfoDrawerPage {
 
     rootElement: ElementFinder;
-    infoDrawerHeader = by.css('adf-info-drawer-layout-header');
+    infoDrawerHeader: Locator = by.css('adf-info-drawer-layout-header');
     tabsPage: TabsPage = new TabsPage();
 
     constructor(classLocator: string = 'adf-info-drawer') {

@@ -16,13 +16,13 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
+import { by, element, Locator } from 'protractor';
 import { BrowserActions } from '../../../utils/public-api';
 
 export class HyperlinkWidgetPage {
 
     formFields = new FormFields();
-    fieldLocator = by.css('.adf-hyperlink-widget a');
+    fieldLocator: Locator = by.css('.adf-hyperlink-widget a');
 
     async getFieldText(fieldId: string): Promise<string> {
         return this.formFields.getFieldText(fieldId, this.fieldLocator);

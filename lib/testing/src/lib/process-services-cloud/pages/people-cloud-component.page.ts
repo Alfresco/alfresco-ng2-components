@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, protractor } from 'protractor';
+import { by, element, Locator, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';
@@ -26,8 +26,8 @@ export class PeopleCloudComponentPage {
     assigneeField = element(by.css('input[data-automation-id="adf-people-cloud-search-input"]'));
     selectionReady = element(by.css('div[data-automation-id="adf-people-cloud-row"]'));
     formFields = new FormFields();
-    labelLocator = by.css("label[class*='adf-label']");
-    inputLocator = by.css('input');
+    labelLocator: Locator = by.css("label[class*='adf-label']");
+    inputLocator: Locator = by.css('input');
     assigneeChipList = element(by.css('mat-chip-list[data-automation-id="adf-cloud-people-chip-list"]'));
 
     async clearAssignee(): Promise<void> {

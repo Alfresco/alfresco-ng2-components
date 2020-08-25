@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, Key, protractor, browser, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, Key, protractor } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { FormFields } from '../../core/pages/form/form-fields';

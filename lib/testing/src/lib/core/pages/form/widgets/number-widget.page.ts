@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { by, element } from 'protractor';
 import { FormFields } from '../form-fields';
-import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
+import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class NumberWidgetPage {
 
