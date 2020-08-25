@@ -85,7 +85,9 @@ function changeRegistry(args: PublishArgs, project: string) {
         `strict-ssl=false
 registry=http://${args.npmRegistry}
 //${args.npmRegistry}/:_authToken="${args.tokenRegistry}"`;
+
     try {
+        fs.mkdirSync(folder, { recursive: true });
         fs.writeFileSync(`${folder}/.npmrc`, content);
     } catch (e) {
         logger.error('Cannot write file', e);
