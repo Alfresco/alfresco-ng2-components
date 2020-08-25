@@ -17,7 +17,6 @@
 
 import { element, by, protractor, browser } from 'protractor';
 import * as path from 'path';
-import * as remote from 'selenium-webdriver/remote';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class AttachmentListPage {
@@ -34,8 +33,6 @@ export class AttachmentListPage {
     }
 
     async clickAttachFileButton(fileLocation: string): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
-
         await BrowserVisibility.waitUntilElementIsPresent(this.attachFileButton);
         await this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
     }
