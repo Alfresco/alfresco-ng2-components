@@ -148,7 +148,7 @@
     "license-checker": "^25.0.1",
     "lint-staged": "^10.2.11",
     "lite-server": "^2.4.0",
-    "markdownlint-cli": "^0.16.0",
+    "markdownlint-cli": "^0.23.2",
     "mdast": "^3.0.0",
     "mdast-util-compact": "^2.0.1",
     "mdast-util-heading-range": "^2.1.0",
