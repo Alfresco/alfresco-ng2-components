@@ -177,7 +177,7 @@ exports.config = {
 
     plugins: [{
         package: 'protractor-screenshoter-plugin',
-        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
+        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/'),
         screenshotOnExpect: 'failure',
         screenshotOnSpec: 'none',
         withLogs: true,
