@@ -71,7 +71,7 @@ export class OAuth2Service {
     post<T>(opts: OAuth2RequestParams): Observable<T> {
         return this.request({
             ...opts,
-            httpMethod: 'PUT'
+            httpMethod: 'POST'
         });
     }
 
