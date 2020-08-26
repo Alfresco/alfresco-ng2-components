@@ -37,12 +37,19 @@
     container-widget {
         .adf-grid-list {
             display: flex;
-            flex-wrap: wrap;
-            margin-left: -1%;
+            align-items: flex-start;
             margin-right: -1%;
         }
 
+        .adf-grid-list-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1 0 auto;
+        }
+
         .adf-grid-list-item {
+            width: 100%;
             flex-grow: 1;
             box-sizing: border-box;
             padding-left: 1%;
@@ -50,8 +57,17 @@
         }
 
         @media screen and ($mat-small) {
+
+            .adf-grid-list {
+                flex-direction: column;
+            }
+
+            .adf-grid-list-column {
+                width: 90% !important;
+            }
+
             .adf-grid-list-item {
-                flex: 1 0 100%;
+                flex: 1 0 auto;
             }
         }
 

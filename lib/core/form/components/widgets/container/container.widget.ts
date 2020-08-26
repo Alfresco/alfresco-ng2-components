@@ -92,6 +92,6 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
      */
     getColumnWith(field: FormFieldModel): string {
         const colspan = field ? field.colspan : 1;
-        return (100 / this.content.json.numberOfColumns) * colspan + '%';
+        return (100 / this.content.json.numberOfColumns) * colspan + '';
     }
 }
