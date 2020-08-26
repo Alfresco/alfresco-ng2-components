@@ -23,14 +23,9 @@ import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/opera
 import { Subject, Observable } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
-
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties } from '../models/process-filter-cloud.model';
-<<<<<<< HEAD
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
-=======
-import { TranslationService, UserPreferencesService, UserPreferenceValues, IdentityUserModel } from '@alfresco/adf-core';
->>>>>>> [ACA-3706] implement startedBy filter property
+import { IdentityUserModel, TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
@@ -324,7 +319,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
     }
 
-<<<<<<< HEAD
     onDateTypeChange(dateType: DateCloudFilterType, property: ProcessFilterProperties) {
         this.editProcessFilterForm.get(property.attributes.dateType).setValue(dateType);
     }
@@ -336,10 +330,10 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.editProcessFilterForm.get(property.attributes?.to).setValue(
             dateRange.endDate ? dateRange.endDate : null
         );
-=======
+    }
+
     onUsersChange(users: IdentityUserModel[], property: ProcessFilterProperties) {
         this.getPropertyController(property).setValue(users.map(user => user.username));
->>>>>>> [ACA-3706] implement startedBy filter property
     }
 
     hasError(property: ProcessFilterProperties): boolean {
