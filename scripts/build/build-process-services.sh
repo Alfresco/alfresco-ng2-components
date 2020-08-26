@@ -7,11 +7,9 @@ cd $DIR/../..
 echo "====== Process Services ======"
 echo "====== Build ======"
 
-export NODE_OPTIONS=--max_old_space_size=8192
-
 if [ "$CI" = "true" ]; then
     echo "Building process-services for production"
-    nx build process-services --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build process-services --prod || exit 1
 else
     echo "Building process-services for development"
     nx build process-services || exit 1

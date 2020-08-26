@@ -7,11 +7,10 @@ cd $DIR/../..
 echo "====== Testing ======"
 echo "====== Build ======"
 
-export NODE_OPTIONS=--max_old_space_size=8192
 
 if [ "$CI" = "true" ]; then
     echo "Building testing for production"
-    nx build testing --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build testing --prod || exit 1
 else
     echo "Building testing for development"
     nx build testing || exit 1
