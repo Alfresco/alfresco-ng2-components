@@ -23,7 +23,9 @@ import {
     UserPreferenceValues,
     InfinitePaginationComponent, PaginatedComponent,
     NodesApiService,
-    SitesService
+    SitesService,
+    UploadService,
+    FileUploadCompleteEvent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry } from '@alfresco/js-api';
@@ -31,7 +33,7 @@ import { DocumentListComponent } from '../document-list/components/document-list
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
@@ -182,9 +184,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
     }
 
-    @Input()
-    preSelectedNodes: any;
-
     /** Emitted when the user has chosen an item. */
     @Output()
     select: EventEmitter<Node[]> = new EventEmitter<Node[]>();
@@ -225,6 +224,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     searchInput: FormControl = new FormControl();
 
     target: PaginatedComponent;
+    preSelectedNodes: any[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -232,6 +232,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 private customResourcesService: CustomResourcesService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
+                private uploadService: UploadService,
                 private sitesService: SitesService) {
     }
 
@@ -270,6 +271,23 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+
+        this.uploadService.fileUploadComplete
+        .pipe(
+            debounceTime(300),
+            scan((acc, arr) => [...acc, arr], []),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
+
+            this.preSelectedNodes = uploadedFiles && uploadedFiles.length ? uploadedFiles.map((uploadedFile) => uploadedFile.data) : [];
+            this.onFileUploadEvent();
+        });
+
+    }
+
+    onFileUploadEvent() {
+        this.documentList.reload();
     }
 
     ngOnDestroy() {
@@ -480,7 +498,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (entry && this.isSelectionValid(entry)) {
             this.chosenNode = [entry];
         } else {
-            this.resetChosenNode();
+            // this.resetChosenNode();
         }
     }
 

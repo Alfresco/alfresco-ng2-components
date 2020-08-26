@@ -45,8 +45,7 @@ import {
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
-    LockService,
-    UploadService
+    LockService
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -61,7 +60,7 @@ import { NavigableComponentInterface } from '../../breadcrumb/navigable-componen
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-document-list',
@@ -273,7 +272,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 this.orderBy = this.buildOrderByArray(key, direction);
             }
             if (this.data) {
-                this.data.loadPage(null, false, null, this.preSelectedNodes);
+                if (this.hasPreSelectedNodes()) {
+                    this.data.loadPage(null, false, null, this.preSelectedNodes);
+                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
+                } else {
+                    this.data.loadPage(null, false, null);
+                }
                 this.resetNewFolderPagination();
             }
 
@@ -355,7 +359,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
                 private contentService: ContentService,
-                private uploadService: UploadService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
@@ -365,18 +368,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .subscribe(pagSize => {
                 this.maxItems = this._pagination.maxItems = pagSize;
             });
-
-        this.uploadService.fileUploadComplete
-            .pipe(
-                debounceTime(300),
-                takeUntil(this.onDestroy$))
-            .subscribe(() => this.reload());
-
-        this.uploadService.fileUploadDeleted
-            .pipe(
-                debounceTime(300),
-                takeUntil(this.onDestroy$))
-            .subscribe(() => this.reload());
     }
 
     getContextActions(node: NodeEntry) {
@@ -497,7 +488,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         if (changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
             if (this.data) {
-                this.data.loadPage(null, false);
+                if (this.hasPreSelectedNodes()) {
+                    this.data.loadPage(null, false, false, this.preSelectedNodes);
+                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
+                } else {
+                    this.data.loadPage(null, false);
+                }
+
                 this.resetNewFolderPagination();
             }
 
@@ -511,7 +508,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-                this.data.loadPage(changes.node.currentValue, merge, null, this.preSelectedNodes);
+                if (this.hasPreSelectedNodes()) {
+                    this.data.loadPage(changes.node.currentValue, merge, null, this.preSelectedNodes);
+                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
+                } else {
+                    this.data.loadPage(changes.node.currentValue, merge, null);
+                }
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -523,7 +525,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
-                this.data.loadPage(this.node, this._pagination.merge, null, this.preSelectedNodes);
+                if (this.hasPreSelectedNodes()) {
+                    this.data.loadPage(this.node, this._pagination.merge, null, this.preSelectedNodes);
+                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
+                } else {
+                    this.data.loadPage(this.node, this._pagination.merge, null);
+                }
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
@@ -713,7 +720,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.preSelectedNodes);
+            if (this.hasPreSelectedNodes()) {
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.preSelectedNodes);
+                this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
+            } else {
+                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
+            }
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -925,5 +937,9 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.setLoadingState(false);
         this.error.emit(err);
+    }
+
+    hasPreSelectedNodes(): boolean {
+        return this.preSelectedNodes && this.preSelectedNodes.length > 0;
     }
 }

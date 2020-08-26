@@ -45,6 +45,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
+    preSelectedRows: DataRow[] = [];
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -79,6 +80,10 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setRows(rows: Array<DataRow>) {
         this.rows = rows || [];
         this.sort();
+    }
+
+    getPreSelectedRows(): Array<DataRow> {
+        return this.preSelectedRows;
     }
 
     getColumns(): Array<DataColumn> {
@@ -245,7 +250,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preSelectedRows: any = []) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preSelectedRows: NodeEntry[] = []) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -292,20 +297,24 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
-        this.preSelectNodes(preSelectedRows);
+        this.setPreSelectedRows(preSelectedRows);
     }
 
-    preSelectNodes(preSelectedRows: any) {
+    setPreSelectedRows(preSelectedRows: NodeEntry[]) {
+        const selectedRows: DataRow[] = [];
         if (preSelectedRows) {
             this.rows = this.rows.map((row) => {
-                if (preSelectedRows && preSelectedRows.value && preSelectedRows.value.entry) {
-                    if (row.obj.entry.id === preSelectedRows.value.entry.id) {
+                preSelectedRows.map((res) => {
+                    if (row.obj.entry.id === res.entry.id) {
                         row.isSelected = true;
+                        selectedRows.push(row);
                     }
-                }
+                });
                 return row;
             });
         }
+
+        this.preSelectedRows = [...selectedRows];
     }
 
 }

@@ -29,7 +29,8 @@ import {
     UploadService, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent, HighlightDirective,
     SharedLinksApiService,
-    FormRenderingService
+    FormRenderingService,
+    FileUploadEvent
 } from '@alfresco/adf-core';
 
 import {
@@ -47,7 +48,7 @@ import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-a
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -277,6 +278,17 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
+        this.uploadService.fileUploadComplete
+        .pipe(
+            debounceTime(300),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe(value => this.onFileUploadEvent(value));
+
+        this.uploadService.fileUploadDeleted
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(value => this.onFileUploadEvent(value));
+
         this.contentService.folderCreated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(value => this.onFolderCreated(value));
@@ -300,6 +312,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
             });
+    }
+
+    onFileUploadEvent(event: FileUploadEvent) {
+        if (event && event.file.options.parentId === this.documentList.currentFolderId) {
+            this.documentList.reload();
+        }
     }
 
     ngOnDestroy() {
