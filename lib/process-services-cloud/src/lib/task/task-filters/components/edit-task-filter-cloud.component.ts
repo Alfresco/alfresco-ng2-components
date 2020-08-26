@@ -31,8 +31,8 @@ import { TranslationService, UserPreferencesService, UserPreferenceValues } from
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
+import { ProcessDefinitionCloud } from 'process-services-cloud/src/lib/models/process-definition-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
-import { ProcessDefinitionCloud } from 'process-services-cloud/src/lib/process/public-api';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',

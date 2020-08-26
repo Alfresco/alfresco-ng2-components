@@ -29,7 +29,7 @@ export class TaskFilterCloudModel  {
     assignee: string;
     order: string;
     owner: string;
-    processDefinitionName: string;
+    processDefinitionName?: string;
     processDefinitionId: string;
     processInstanceId: string;
     createdDate: Date;

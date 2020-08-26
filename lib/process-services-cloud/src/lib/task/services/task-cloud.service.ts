@@ -22,7 +22,7 @@ import { map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
-import { ProcessDefinitionCloud } from '../../process/public-api';
+import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 
 @Injectable({
     providedIn: 'root'
