@@ -12,7 +12,7 @@ if [ "$CI" = "true" ]; then
     node --max_old_space_size=8192 ./node_modules/@nrwl/cli/bin/nx build core --prod || exit 1
 else
     echo "Building core for development"
-    nx build core --prod || exit 1
+    ng build core --prod || exit 1
 fi
 
 echo "====== Build style ======"
