@@ -22,7 +22,7 @@ import { Locator, element, by, browser } from 'protractor';
 export class AttachFileWidgetPage {
 
     formFields = new FormFields();
-    uploadLocator: Locator = by.css('button[id="attachfile"]');
+    alfrescoTypeUploadLocator: Locator = by.css('button[id="attachfile"]');
     localStorageButton = element(by.css('input[id="attachfile"]'));
     filesListLocator: Locator = by.css('div[id="adf-attach-widget-readonly-list"]');
     attachFileWidget = element(by.css('#attachfile'));
@@ -34,10 +34,16 @@ export class AttachFileWidgetPage {
 
     async attachFile(fieldId, fileLocation): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.uploadLocator);
+        const uploadButton = await widget.element(this.alfrescoTypeUploadLocator);
         await BrowserActions.click(uploadButton);
         await BrowserVisibility.waitUntilElementIsPresent(this.localStorageButton);
         await this.localStorageButton.sendKeys(fileLocation);
+    }
+
+    async checkNoFileIsAttached(fieldId): Promise<void> {
+        const widget = await this.formFields.getWidget(fieldId);
+        const fileItem = widget.element(this.filesListLocator).element(by.css('mat-list-item'));
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileItem);
     }
 
     async checkFileIsAttached(fieldId, name): Promise<void> {
@@ -106,8 +112,18 @@ export class AttachFileWidgetPage {
 
     async checkUploadIsNotVisible(fieldId): Promise<void> {
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.uploadLocator);
+        const uploadButton = await widget.element(this.alfrescoTypeUploadLocator);
         await BrowserVisibility.waitUntilElementIsNotPresent(uploadButton);
+    }
+
+    async checkLocalTypeUploadIsPresent(fieldId): Promise<void> {
+        const localTypeUpload = element(by.css(`input[id="${fieldId}"]`));
+        await BrowserVisibility.waitUntilElementIsPresent(localTypeUpload);
+    }
+
+    async checkLocalTypeUploadIsNotPresent(fieldId): Promise<void> {
+        const localTypeUpload = element(by.css(`input[id="${fieldId}"]`));
+        await BrowserVisibility.waitUntilElementIsNotPresent(localTypeUpload);
     }
 
     async selectUploadSource(name: string): Promise<void> {
@@ -118,7 +134,7 @@ export class AttachFileWidgetPage {
     async clickUploadButton(fieldId): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.uploadLocator);
+        const uploadButton = await widget.element(this.alfrescoTypeUploadLocator);
         await BrowserActions.click(uploadButton);
     }
 }
