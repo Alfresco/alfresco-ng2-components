@@ -49,6 +49,7 @@ export class ProcessFilterCloudModel {
     private _completedTo: string;
     private _startFrom: string;
     private _startTo: string;
+    startedBy: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -79,6 +80,7 @@ export class ProcessFilterCloudModel {
             this.completedFrom = obj._completedFrom || null;
             this.completedTo = obj._completedTo || null;
             this.completedDate = obj.completedDate || null;
+            this.startedBy = obj.startedBy || null;
         }
     }
 

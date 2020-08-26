@@ -110,6 +110,9 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     /** Filter the processes. Display only process with completedDate equal to the supplied date. */
     @Input()
     completedDate: string = '';
+    /** Filter the processes. Display only process with startedBy equal to the supplied values. */
+    @Input()
+    startedBy: string[] = [];
 
     /**
      * Row selection mode. Can be "none", "single" or "multiple".
@@ -343,6 +346,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             completedFrom: this.completedFrom,
             completedTo: this.completedTo,
             completedDate: this.completedDate,
+            startedBy: this.startedBy?.join(','),
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);
