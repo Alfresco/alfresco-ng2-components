@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Host, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { PaginationModel } from '@alfresco/adf-core';
 import { DocumentListComponent } from '../document-list.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search/search-query-service.token';
 import { SearchFilterQueryBuilderService } from '../../../search/search-filter-query-builder.service';
@@ -36,7 +37,7 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
     /** The id of the current folder of the document list. */
     @Input()
-    currentFolderNodeId: string;
+    currentFolderId: string;
 
     /** Maximum number of search results to show in a page. */
     @Input()
@@ -50,79 +51,50 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     @Input()
     sorting: string = null;
 
-    /** Emitted when the result of the filter is received from the API. */
-    @Output()
-    update: EventEmitter<NodePaging> = new EventEmitter();
-
-    /** Emitted when the last of all the filters is cleared. */
-    @Output()
-    resetFilter: EventEmitter<any> = new EventEmitter();
-
     /** Emitted when a filter value is selected */
     @Output()
-    selection: EventEmitter<Map<string, string>> = new EventEmitter();
+    filterSelection: EventEmitter<FilterSearch[]> = new EventEmitter();
 
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
     constructor(
-        @Host() documentList: DocumentListComponent,
+        @Inject(DocumentListComponent) private documentList: DocumentListComponent,
         @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchFilterQueryBuilderService) {
-
         this.isFilterServiceActive = this.searchHeaderQueryBuilder.isFilterServiceActive();
     }
 
     ngOnInit() {
+        this.documentList.pagination
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((newPagination: PaginationModel) => {
+                this.searchHeaderQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
+            });
+
         this.searchHeaderQueryBuilder.executed
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((newNodePaging: NodePaging) => {
-                this.update.emit(newNodePaging);
+                this.documentList.node = newNodePaging;
+                this.documentList.reload();
             });
+
+        const [key, direction] = this.documentList.sorting;
+        this.searchHeaderQueryBuilder.setSorting(key, direction);
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderNodeId'] && changes['currentFolderNodeId'].currentValue) {
+        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.resetFilterHeader();
-            this.configureSearchParent(changes['currentFolderNodeId'].currentValue);
+            this.configureSearchParent(changes['currentFolderId'].currentValue);
         }
-
-        if (changes['maxItems'] || changes['skipCount']) {
-            let actualMaxItems = this.maxItems;
-            let actualSkipCount = this.skipCount;
-
-            if (changes['maxItems'] && changes['maxItems'].currentValue) {
-                actualMaxItems = changes['maxItems'].currentValue;
-            }
-            if (changes['skipCount'] && changes['skipCount'].currentValue) {
-                actualSkipCount = changes['skipCount'].currentValue;
-            }
-
-            this.searchHeaderQueryBuilder.setupCurrentPagination(actualMaxItems, actualSkipCount);
-        }
-
-        if (changes['sorting'] && changes['sorting'].currentValue) {
-            // const [key, value] = changes['sorting'].currentValue.split('-');
-            // if (key === this.col.key) {
-            //     this.searchHeaderQueryBuilder.setSorting(key, value);
-            // }
-        }
-
     }
 
-    onFilterSelected(newSearch: FilterSearch) {
-        this.searchHeaderQueryBuilder.setActiveFilter(newSearch.key, newSearch.value);
-        this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
+    onFilterSelectionChange() {
+        this.filterSelection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
     }
 
     resetFilterHeader() {
-        // if (this.widgetContainer && this.isActive()) {
-        //     this.widgetContainer.resetInnerWidget();
-        //     this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
-        //     this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
-        //     if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
-        //         this.clear.emit();
-        //     }
-        // }
+        this.searchHeaderQueryBuilder.resetActiveFilters();
     }
 
     private configureSearchParent(currentFolderNodeId: string) {
@@ -147,5 +119,4 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
-
 }

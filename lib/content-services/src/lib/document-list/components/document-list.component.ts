@@ -58,6 +58,7 @@ import { ContentActionModel } from './../models/content-action.model';
 import { PermissionStyleModel } from './../models/permissions-style.model';
 import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 import { NavigableComponentInterface } from '../../breadcrumb/navigable-component.interface';
+import { FilterSearch } from './../../search/filter-search.interface';
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
@@ -257,7 +258,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** Toggles the sticky header mode. */
     @Input()
-    enableHeaderFilter: boolean = true;
+    headerFilters: boolean = false;
 
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
@@ -876,6 +877,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._pagination.merge = requestPaginationModel.merge;
         this._pagination.skipCount = requestPaginationModel.skipCount;
         this.reload();
+    }
+
+    onFilterSelectionChange(activeFilters: FilterSearch[]) {
+        // tslint:disable-next-line: no-console
+        console.log(activeFilters);
     }
 
     private resetNewFolderPagination() {

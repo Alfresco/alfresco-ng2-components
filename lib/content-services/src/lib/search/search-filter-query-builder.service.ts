@@ -24,6 +24,7 @@ import { MinimalNode, QueryBody } from '@alfresco/js-api';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SearchSortingDefinition } from './search-sorting-definition.interface';
+import { FilterSearch } from './filter-search.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -32,15 +33,17 @@ export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
 
     private customSources = ['-trashcan-', '-sharedlinks-', '-sites-', '-mysites-', '-favorites-', '-recent-', '-my-'];
 
-    activeFilters: Map<string, string> = new Map();
+    activeFilters: FilterSearch[] = [];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService, private nodeApiService: NodesApiService) {
+    constructor(appConfig: AppConfigService,
+                alfrescoApiService: AlfrescoApiService,
+                private nodeApiService: NodesApiService) {
         super(appConfig, alfrescoApiService);
 
         this.updated.pipe(
             filter((query: QueryBody) => !!query)).subscribe(() => {
-            this.execute();
-        });
+                this.execute();
+            });
     }
 
     public isFilterServiceActive(): boolean {
@@ -61,27 +64,35 @@ export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setActiveFilter(columnActivated: string, filterValue: string) {
-        this.activeFilters.set(columnActivated, filterValue);
+        this.activeFilters.push(<FilterSearch> {
+            key: columnActivated,
+            value: filterValue
+        });
     }
 
-    getActiveFilters(): Map<string, string> {
+    resetActiveFilters() {
+        this.activeFilters = [];
+    }
+
+    getActiveFilters(): FilterSearch[] {
         return this.activeFilters;
     }
 
     isNoFilterActive(): boolean {
-        return this.activeFilters.size === 0;
+        return this.activeFilters.length === 0;
     }
 
     removeActiveFilter(columnRemoved: string) {
-        if (this.activeFilters.get(columnRemoved) !== null) {
-            this.activeFilters.delete(columnRemoved);
+        const filterIndex = this.activeFilters.map((activeFilter) => activeFilter.key).indexOf(columnRemoved);
+        if (filterIndex >= 0) {
+            this.activeFilters.splice(filterIndex, 1);
         }
     }
 
     setSorting(column: string, direction: string) {
         const optionAscending = direction.toLocaleLowerCase() === 'asc' ? true : false;
         const fieldValue = this.getSortingFieldFromColumnName(column);
-        const currentSort: SearchSortingDefinition = { key: column, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending};
+        const currentSort: SearchSortingDefinition = { key: column, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending };
         this.sorting = [currentSort];
         this.execute();
     }

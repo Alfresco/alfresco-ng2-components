@@ -31,12 +31,10 @@ import { ConfigurableFocusTrapFactory, ConfigurableFocusTrap } from '@angular/cd
 import { DataColumn, TranslationService } from '@alfresco/adf-core';
 import { SearchWidgetContainerComponent } from '../search-widget-container/search-widget-container.component';
 import { SearchFilterQueryBuilderService } from '../../search-filter-query-builder.service';
-import { NodePaging } from '@alfresco/js-api';
 import { SearchCategory } from '../../search-category.interface';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { FilterSearch } from '../../filter-search.interface';
 
 @Component({
     selector: 'adf-search-filter-container',
@@ -53,18 +51,9 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     /** The column the filter will be applied on. */
     @Input()
     value: any;
-
-    /** Emitted when the result of the filter is received from the API. */
-    @Output()
-    update: EventEmitter<NodePaging> = new EventEmitter();
-
-    /** Emitted when the last of all the filters is cleared. */
-    @Output()
-    resetFilter: EventEmitter<any> = new EventEmitter();
-
     /** Emitted when a filter value is selected */
     @Output()
-    selection: EventEmitter<FilterSearch> = new EventEmitter();
+    filterSelection: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
@@ -73,7 +62,6 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     filterContainer: ElementRef;
 
     category: SearchCategory;
-    isFilterServiceActive: boolean;
     focusTrap: ConfigurableFocusTrap;
 
     private onDestroy$ = new Subject<boolean>();
@@ -84,9 +72,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(
-            this.col.key
-        );
+        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
     }
 
     ngOnDestroy() {
@@ -104,10 +90,8 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
             this.widgetContainer.applyInnerWidget();
-            this.selection.emit( <FilterSearch> {
-                key: this.category.columnKey,
-                value: this.widgetContainer.getCurrentValue()
-            });
+            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
+            this.filterSelection.emit();
         } else {
             this.resetSearchFilter();
         }
@@ -119,14 +103,9 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     }
 
     resetSearchFilter() {
-        if (this.widgetContainer && this.isActive()) {
-            this.widgetContainer.resetInnerWidget();
-            this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
-            // this.selection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
-            if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
-                this.resetFilter.emit();
-            }
-        }
+        this.widgetContainer.resetInnerWidget();
+        this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
+        this.filterSelection.emit();
     }
 
     getTooltipTranslation(columnTitle: string): string {

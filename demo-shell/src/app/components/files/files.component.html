@@ -239,7 +239,7 @@
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)"
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)"
-                [enableHeaderFilter]="enableCustomHeaderFilter">
+                [headerFilters]="headerFilters">
 
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
                     <h1>You don't have permissions</h1>

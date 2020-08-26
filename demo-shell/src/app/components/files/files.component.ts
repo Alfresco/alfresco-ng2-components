@@ -165,7 +165,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     navigationRoute = '/files';
 
     @Input()
-    enableCustomHeaderFilter = false;
+    headerFilters = false;
 
     @Input()
     paramValues: Map<any, any> = null;
@@ -677,34 +677,34 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return '';
     }
 
-    onFilterUpdate(newNodePaging: NodePaging) {
-        this.nodeResult = newNodePaging;
-    }
+    // onFilterUpdate(newNodePaging: NodePaging) {
+    //     this.nodeResult = newNodePaging;
+    // }
 
-    onAllFilterCleared() {
-        this.documentList.node = null;
-        if (this.currentFolderId === '-my-') {
-            this.router.navigate([this.navigationRoute, '']);
-        } else {
-            this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
-        }
-        this.documentList.reload();
-    }
+    // onAllFilterCleared() {
+    //     this.documentList.node = null;
+    //     if (this.currentFolderId === '-my-') {
+    //         this.router.navigate([this.navigationRoute, '']);
+    //     } else {
+    //         this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
+    //     }
+    //     this.documentList.reload();
+    // }
 
-    onFilterSelected(currentActiveFilters: Map<string, string>) {
-        const objectFromMap = {};
-        currentActiveFilters.forEach((value: any, key) => {
-            let paramValue = null;
-            if (value && value.from && value.to) {
-                paramValue = `${value.from}||${value.to}`;
-            } else {
-                paramValue = value;
-            }
-            objectFromMap[key] = paramValue;
-        });
+    // onFilterSelected(currentActiveFilters: Map<string, string>) {
+    //     const objectFromMap = {};
+    //     currentActiveFilters.forEach((value: any, key) => {
+    //         let paramValue = null;
+    //         if (value && value.from && value.to) {
+    //             paramValue = `${value.from}||${value.to}`;
+    //         } else {
+    //             paramValue = value;
+    //         }
+    //         objectFromMap[key] = paramValue;
+    //     });
 
-        this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
-    }
+    //     this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
+    // }
 
     setPreselectNodes(nodes: string) {
         this.selectedNodes = this.getArrayFromString(nodes);

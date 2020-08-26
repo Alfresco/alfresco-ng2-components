@@ -25,8 +25,10 @@
     (sorting-changed)="onSortingChanged($event)"
     [class.adf-datatable-gallery-thumbnails]="data.thumbnails">
 
-    <div *ngIf="enableHeaderFilter">
-        <adf-filter-header>
+    <div *ngIf="headerFilters">
+        <adf-filter-header
+            [currentFolderId]="currentFolderId"
+            (filterSelection)="onFilterSelectionChange($event)">
         </adf-filter-header>
     </div>
 
