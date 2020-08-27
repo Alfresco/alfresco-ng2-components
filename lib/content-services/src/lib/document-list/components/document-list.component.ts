@@ -256,40 +256,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     /** The ID of the folder node to display or a reserved string alias for special sources */
     @Input()
-    // currentFolderId: string = null;
-    _currentFolderId: string = null;
+    currentFolderId: string = null;
 
     @Input()
     preSelectedNodes: any[] = [];
-
-    /** The ID of the folder node to display or a reserved string alias for special sources */
-    @Input()
-    set currentFolderId(currentFolderId: string) {
-        if (this._currentFolderId !== currentFolderId) {
-            this._currentFolderId = currentFolderId;
-            if (this.sorting) {
-                const [key, direction] = this.sorting;
-                this.orderBy = this.buildOrderByArray(key, direction);
-            }
-            if (this.data) {
-                if (this.hasPreSelectedNodes()) {
-                    this.data.loadPage(null, false, null, this.preSelectedNodes);
-                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
-                } else {
-                    this.data.loadPage(null, false, null);
-                }
-                this.resetNewFolderPagination();
-            }
-
-            if (this._currentFolderId) {
-                this.loadFolder();
-            }
-        }
-    }
-
-    get currentFolderId(): string {
-        return this._currentFolderId;
-    }
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
