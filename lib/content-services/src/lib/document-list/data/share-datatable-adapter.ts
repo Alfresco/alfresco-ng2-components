@@ -250,7 +250,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preSelectedRows: NodeEntry[] = []) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preSelectedNodes: NodeEntry[] = []) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -297,24 +297,22 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
-        this.setPreSelectedRows(preSelectedRows);
+        this.selectRowsBasedOnGivenNodes(preSelectedNodes);
     }
 
-    setPreSelectedRows(preSelectedRows: NodeEntry[]) {
-        const selectedRows: DataRow[] = [];
-        if (preSelectedRows) {
+    selectRowsBasedOnGivenNodes(preSelectedNodes: NodeEntry[]) {
+        if (preSelectedNodes && preSelectedNodes.length > 0) {
             this.rows = this.rows.map((row) => {
-                preSelectedRows.map((res) => {
-                    if (row.obj.entry.id === res.entry.id) {
+                preSelectedNodes.map((preSelectedNode) => {
+                    if (row.obj.entry.id === preSelectedNode.entry.id) {
                         row.isSelected = true;
-                        selectedRows.push(row);
                     }
                 });
                 return row;
             });
         }
 
-        this.preSelectedRows = [...selectedRows];
+        this.preSelectedRows = [...this.rows.filter((res) => res.isSelected)];
     }
 
 }

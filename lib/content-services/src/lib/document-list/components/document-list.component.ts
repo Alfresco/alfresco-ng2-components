@@ -458,11 +458,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         if (changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
             if (this.data) {
+                this.data.loadPage(null, false, null, this.preSelectedNodes);
+
                 if (this.hasPreSelectedNodes()) {
-                    this.data.loadPage(null, false, false, this.preSelectedNodes);
-                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
-                } else {
-                    this.data.loadPage(null, false);
+                    this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
                 }
 
                 this.resetNewFolderPagination();
@@ -478,12 +477,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
+                this.data.loadPage(changes.node.currentValue, merge, null, this.preSelectedNodes);
+
                 if (this.hasPreSelectedNodes()) {
-                    this.data.loadPage(changes.node.currentValue, merge, null, this.preSelectedNodes);
-                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
-                } else {
-                    this.data.loadPage(changes.node.currentValue, merge, null);
+                    this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
                 }
+
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -495,12 +494,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
+                this.data.loadPage(this.node, this._pagination.merge, null, this.preSelectedNodes);
+
                 if (this.hasPreSelectedNodes()) {
-                    this.data.loadPage(this.node, this._pagination.merge, null, this.preSelectedNodes);
-                    this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
-                } else {
-                    this.data.loadPage(this.node, this._pagination.merge, null);
+                    this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
                 }
+
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
@@ -690,12 +689,12 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
+            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.preSelectedNodes);
+
             if (this.hasPreSelectedNodes()) {
-                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.preSelectedNodes);
-                this.onNodeSelect({ row: <ShareDataRow> this.data.getPreSelectedRows()[0], selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
-            } else {
-                this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
+                this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> this.data.getPreSelectedRows() });
             }
+
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -797,7 +796,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
-                node: event.row.node,
+                node: event?.row?.node,
                 selection: this.selection
             },
             bubbles: true

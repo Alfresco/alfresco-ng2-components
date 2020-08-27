@@ -224,7 +224,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     searchInput: FormControl = new FormControl();
 
     target: PaginatedComponent;
-    preSelectedNodes: any[] = [];
+    preSelectedNodes: NodeEntry[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -275,12 +275,11 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.uploadService.fileUploadComplete
         .pipe(
             debounceTime(300),
-            scan((acc, arr) => [...acc, arr], []),
+            scan((files, currentFile) => [...files, currentFile], []),
             takeUntil(this.onDestroy$)
         )
         .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
-
-            this.preSelectedNodes = uploadedFiles && uploadedFiles.length ? uploadedFiles.map((uploadedFile) => uploadedFile.data) : [];
+            this.preSelectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
             this.onFileUploadEvent();
         });
 
@@ -384,7 +383,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.searchTerm = '';
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;
-        this.chosenNode = null;
+        this.resetChosenNode();
         this.showingSearchResults = false;
     }
 
@@ -455,6 +454,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
+        this.preSelectedNodes = [];
         this.clearSearch();
         this.navigationChange.emit($event);
     }
@@ -497,8 +497,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private attemptNodeSelection(entry: Node): void {
         if (entry && this.isSelectionValid(entry)) {
             this.chosenNode = [entry];
-        } else {
-            // this.resetChosenNode();
         }
     }
 
@@ -530,5 +528,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         } else {
             this.breadcrumbFolderTitle = null;
         }
+    }
+
+    hasPreSelectedNodes(): boolean {
+        return this.preSelectedNodes && this.preSelectedNodes.length > 0;
     }
 }

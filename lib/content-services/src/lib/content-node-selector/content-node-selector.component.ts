@@ -86,5 +86,4 @@ export class ContentNodeSelectorComponent {
     hasNodeSelected(): boolean {
         return this.chosenNode?.length > 0;
     }
-
 }
