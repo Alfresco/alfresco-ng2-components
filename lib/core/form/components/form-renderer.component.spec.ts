@@ -325,12 +325,12 @@ describe('Form Renderer Component', () => {
             await fixture.whenStable();
             const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list');
             expectElementToBeVisible(formSizedElement);
-            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section .adf-grid-list-item');
+            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section .adf-grid-list-column');
             sectionGridElement.forEach((element) => {
                 expect(element.style['width']).toBe('50%', 'Elemens is wrong sized for this section');
             });
 
-            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list .adf-grid-list-item');
+            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list .adf-grid-list-column');
             expect(fullWidthElement.style['width']).toBe('100%');
         });
 

@@ -160,9 +160,9 @@ describe('ContainerWidgetComponent', () => {
             const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel(), { numberOfColumns: 4 }));
             widget.content = container;
 
-            expect(widget.getColumnWith(undefined)).toBe('25%');
-            expect(widget.getColumnWith(<FormFieldModel> { colspan: 1 })).toBe('25%');
-            expect(widget.getColumnWith(<FormFieldModel> { colspan: 3 })).toBe('75%');
+            expect(widget.getColumnWith(undefined)).toBe('25');
+            expect(widget.getColumnWith(<FormFieldModel> { colspan: 1 })).toBe('25');
+            expect(widget.getColumnWith(<FormFieldModel> { colspan: 3 })).toBe('75');
         });
     });
 });
