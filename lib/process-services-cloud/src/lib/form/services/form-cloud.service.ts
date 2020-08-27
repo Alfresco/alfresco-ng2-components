@@ -80,12 +80,13 @@ export class FormCloudService extends BaseCloudService {
      * @param values Form values object
      * @returns Updated task details
      */
-    saveTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, values: FormValues): Observable<TaskDetailsCloudModel> {
+    saveTaskForm(appName: string, taskId: string, processInstanceId: string, processDefinitionId: string, formId: string, values: FormValues): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/save`;
         const saveFormRepresentation: any = {
             values,
             taskId,
-            processInstanceId
+            processInstanceId,
+            processDefinitionKey: processDefinitionId?.split(':')[0]
         };
 
         return this.post(apiUrl, saveFormRepresentation).pipe(
@@ -121,12 +122,13 @@ export class FormCloudService extends BaseCloudService {
      * @param version of the form
      * @returns Updated task details
      */
-    completeTaskForm(appName: string, taskId: string, processInstanceId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
+    completeTaskForm(appName: string, taskId: string, processInstanceId: string, processDefinitionId: string, formId: string, formValues: FormValues, outcome: string, version: number): Observable<TaskDetailsCloudModel> {
         const apiUrl = `${this.getBasePath(appName)}/form/v1/forms/${formId}/submit/versions/${version}`;
         const completeFormRepresentation = <CompleteFormRepresentation> {
             values: formValues,
-            taskId: taskId,
-            processInstanceId: processInstanceId
+            taskId,
+            processInstanceId,
+            processDefinitionKey: processDefinitionId?.split(':')[0]
         };
         if (outcome) {
             completeFormRepresentation.outcome = outcome;

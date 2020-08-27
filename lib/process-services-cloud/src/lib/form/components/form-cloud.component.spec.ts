@@ -617,6 +617,7 @@ describe('FormCloudComponent', () => {
         const taskId = '123-223';
         const appName = 'test-app';
         const processInstanceId = '333-444';
+        const processDefinitionId = '"Process_O5RpVqjpe:1:c0a0d05f-e855-11ea-b966-926aadb93743';
 
         const formModel = new FormModel({
             id: '23',
@@ -630,10 +631,11 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = taskId;
         formComponent.appName = appName;
         formComponent.processInstanceId = processInstanceId;
+        formComponent.processDefinitionId = processDefinitionId;
 
         formComponent.saveTaskForm();
 
-        expect(formCloudService.saveTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values);
+        expect(formCloudService.saveTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, processDefinitionId, formModel.id, formModel.values);
         expect(saved).toBeTruthy();
         expect(savedForm).toEqual(formModel);
     });
@@ -713,6 +715,7 @@ describe('FormCloudComponent', () => {
         const appVersion = 1;
         const appName = 'test-app';
         const processInstanceId = '333-444';
+        const processDefinitionId = '"Process_O5RpVqjpe:1:c0a0d05f-e855-11ea-b966-926aadb93743';
 
         const formModel = new FormModel({
             id: '23',
@@ -728,9 +731,10 @@ describe('FormCloudComponent', () => {
         formComponent.taskId = taskId;
         formComponent.appName = appName;
         formComponent.processInstanceId = processInstanceId;
+        formComponent.processDefinitionId = processDefinitionId;
         formComponent.completeTaskForm(outcome);
 
-        expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, formModel.id, formModel.values, outcome, appVersion);
+        expect(formCloudService.completeTaskForm).toHaveBeenCalledWith(appName, formModel.taskId, processInstanceId, processDefinitionId, formModel.id, formModel.values, outcome, appVersion);
         expect(completed).toBeTruthy();
     });
 

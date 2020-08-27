@@ -76,6 +76,10 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     @Input()
     fieldValidators: FormFieldValidator[] = [...FORM_FIELD_VALIDATORS];
 
+    /** Process definition id of the process the task belongs to */
+    @Input()
+    processDefinitionId: string;
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved = new EventEmitter<FormModel>();
@@ -243,7 +247,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     saveTaskForm() {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values)
+                .saveTaskForm(this.appName, this.taskId, this.processInstanceId, this.processDefinitionId, `${this.form.id}`, this.form.values)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
@@ -257,7 +261,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
     completeTaskForm(outcome?: string) {
         if (this.form && this.appName && this.taskId) {
             this.formCloudService
-                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
+                .completeTaskForm(this.appName, this.taskId, this.processInstanceId, this.processDefinitionId, `${this.form.id}`, this.form.values, outcome, this.appVersion)
                 .pipe(takeUntil(this.onDestroy$))
                 .subscribe(
                     () => {
