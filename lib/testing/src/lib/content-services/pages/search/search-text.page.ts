@@ -28,11 +28,6 @@ export class SearchTextPage {
         this.filter = filter;
     }
 
-    async getNamePlaceholder(): Promise<string> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.filter);
-        return this.filter.element(this.inputBy).getAttribute('placeholder');
-    }
-
     async searchByName(name: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.filter);
         await BrowserActions.clearSendKeys(this.filter.element(this.inputBy), name);
