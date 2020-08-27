@@ -38,7 +38,7 @@ describe('Form Cloud service', () => {
     const appName = 'app-name';
     const taskId = 'task-id';
     const processInstanceId = 'process-instance-id';
-    const processDefinitionId = '"Process_O5RpVqjpe:1:c0a0d05f-e855-11ea-b966-926aadb93743';
+    const processDefinitionId = 'Process_O5RpVqjpe:1:c0a0d05f-e855-11ea-b966-926aadb93743';
 
     setupTestBed({
         imports: [
@@ -167,7 +167,7 @@ describe('Form Cloud service', () => {
                 expect(result.name).toBe('name');
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/save`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[6]).toEqual({values: {}, taskId: 'task-id', processInstanceId: 'process-instance-id', processDefinitionKey: '"Process_O5RpVqjpe'});
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[6]).toEqual({values: {}, taskId: 'task-id', processInstanceId: 'process-instance-id', processDefinitionKey: 'Process_O5RpVqjpe'});
                 done();
             });
 
@@ -183,7 +183,27 @@ describe('Form Cloud service', () => {
                 expect(result.name).toBe('name');
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[0].endsWith(`${appName}/form/v1/forms/${formId}/submit/versions/1`)).toBeTruthy();
                 expect(oauth2Auth.callCustomApi.calls.mostRecent().args[1]).toBe('POST');
-                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[6]).toEqual({values: {}, taskId: 'task-id', processInstanceId: 'process-instance-id', processDefinitionKey: '"Process_O5RpVqjpe'});
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[6]).toEqual({values: {}, taskId: 'task-id', processInstanceId: 'process-instance-id', processDefinitionKey: 'Process_O5RpVqjpe'});
+                done();
+            });
+        });
+
+        it('should send empty process definition when complete task form without process definition id', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            const formId = 'form-id';
+
+            service.completeTaskForm(appName, taskId, processInstanceId, undefined, formId, {}, '', 1).subscribe(() => {
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[6]).toEqual({values: {}, taskId: 'task-id', processInstanceId: 'process-instance-id', processDefinitionKey: undefined});
+                done();
+            });
+        });
+
+        it('should send empty process definition when save task form without process definition id', (done) => {
+            oauth2Auth.callCustomApi.and.returnValue(Promise.resolve(responseBody));
+            const formId = 'form-id';
+
+            service.saveTaskForm(appName, taskId, processInstanceId, undefined, formId, {}).subscribe(() => {
+                expect(oauth2Auth.callCustomApi.calls.mostRecent().args[6]).toEqual({values: {}, taskId: 'task-id', processInstanceId: 'process-instance-id', processDefinitionKey: undefined});
                 done();
             });
         });
