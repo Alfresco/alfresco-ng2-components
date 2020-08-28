@@ -14,9 +14,9 @@ function buildNumber() {
 }
 
 async function uploadScreenshot(retryCount) {
-    console.log(`Start uploading failures screenshot ${retryCount}`);
+    console.log(`Start uploading screenshot ${retryCount}`);
 
-    let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
+    let files = fs.readdirSync(path.resolve(__dirname, '../../e2e-output/screenshots'));
 
     if (files && files.length > 0) {
 

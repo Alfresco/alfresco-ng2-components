@@ -176,12 +176,16 @@ exports.config = {
     SELENIUM_PROMISE_MANAGER: false,
 
     plugins: [{
-        package: 'jasmine2-protractor-utils',
-        disableScreenshot: false,
-        screenshotOnExpectFailure: true,
-        screenshotOnSpecFailure: false,
-        clearFoldersBeforeTest: true,
-        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
+        package: 'protractor-screenshoter-plugin',
+        screenshotPath: path.resolve(__dirname, '../e2e-output/screenshots/'),
+        screenshotOnExpect: 'failure',
+        screenshotOnSpec: 'none',
+        withLogs: true,
+        writeReportFreq: 'end',
+        imageToAscii: 'none',
+        htmlOnExpect: 'none',
+        htmlOnSpec: 'none',
+        clearFoldersBeforeTest: true
     }],
 
     onCleanUp(results) {
@@ -272,7 +276,7 @@ exports.config = {
 
     afterLaunch: async function () {
         if (SAVE_SCREENSHOT) {
-            console.log(`Save screenshot failures enabled`);
+            console.log(`Save screenshot enabled`);
 
             let retryCount = 1;
             if (argv.retry) {
@@ -284,7 +288,7 @@ exports.config = {
                 console.error('Error saving screenshot', error);
             }
         }else{
-            console.log(`Save screenshot failures disabled`);
+            console.log(`Save screenshot disabled`);
         }
 
         return retry.afterLaunch(MAX_RETRIES);
