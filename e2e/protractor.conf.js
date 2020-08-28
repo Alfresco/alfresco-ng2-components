@@ -219,7 +219,7 @@ exports.config = {
         jasmine.getEnv().addReporter(
             new SpecReporter({
                 spec: {
-                    displayStacktrace: true,
+                    displayStacktrace: 'pretty',
                     displayDuration: true
                 }
             })
@@ -240,9 +240,11 @@ exports.config = {
         await LocalStorageUtil.setStorageItem('baseShareUrl', HOST);
 
         // @ts-ignore
+        await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+
+        // @ts-ignore
         if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
-            // @ts-ignore
-            await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+
             // @ts-ignore
             await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
             // @ts-ignore
