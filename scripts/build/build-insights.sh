@@ -7,11 +7,9 @@ cd $DIR/../..
 echo "====== Insights ======"
 echo "====== Build ======"
 
-export NODE_OPTIONS=--max_old_space_size=8192
-
 if [ "$CI" = "true" ]; then
     echo "Building insights for production"
-    nx build insights --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build insights --prod || exit 1
 else
     echo "Building insights for development"
     nx build insights || exit 1

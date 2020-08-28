@@ -28,6 +28,7 @@ describe('PeopleSearchFieldComponent', () => {
     let component: PeopleSearchFieldComponent;
     let fixture: ComponentFixture<PeopleSearchFieldComponent>;
     let debug: DebugElement;
+    let element: HTMLElement;
 
     setupTestBed({
         imports: [
@@ -40,21 +41,23 @@ describe('PeopleSearchFieldComponent', () => {
         fixture = TestBed.createComponent(PeopleSearchFieldComponent);
         component = fixture.componentInstance;
         debug = fixture.debugElement;
+        element = fixture.nativeElement as HTMLElement;
         fixture.detectChanges();
     });
 
     it('should have the proper placeholder by default', () => {
-        const searchField = debug.query(By.css('[data-automation-id="adf-people-search-input"]')).nativeElement;
-        expect(searchField.placeholder).toBe('ADF_TASK_LIST.PEOPLE.SEARCH_USER');
+        const label = element.querySelector<HTMLElement>('label[for="userSearchText"]');
+        expect(label.innerText).toBe('ADF_TASK_LIST.PEOPLE.SEARCH_USER');
     });
 
-    it('should have the overridden placeholder if set as input parameter', () => {
+    it('should have the overridden placeholder if set as input parameter', async () => {
         component.placeholder = 'Arcadia Bay';
 
         fixture.detectChanges();
+        await fixture.whenStable();
 
-        const searchField = debug.query(By.css('[data-automation-id="adf-people-search-input"]')).nativeElement;
-        expect(searchField.placeholder).toBe('Arcadia Bay');
+        const label = element.querySelector<HTMLElement>('label[for="userSearchText"]');
+        expect(label.innerText).toBe('Arcadia Bay');
     });
 
     it('should reset the user on reset method invocation', () => {

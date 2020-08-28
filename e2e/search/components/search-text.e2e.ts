@@ -74,14 +74,6 @@ describe('Search component - Text widget', () => {
         await navigationBarPage.clickLogoutButton();
     });
 
-    it('[C289329] Placeholder should be displayed in the widget when the input string is empty', async () => {
-        await BrowserActions.getUrl(browser.baseUrl + '/search;q=*');
-        await searchResultPage.tableIsLoaded();
-
-        await searchFiltersPage.checkNameFilterIsDisplayed();
-        await expect(await searchFiltersPage.textFiltersPage().getNamePlaceholder()).toEqual('Enter the name');
-    });
-
     describe('configuration change', () => {
         let jsonFile;
 

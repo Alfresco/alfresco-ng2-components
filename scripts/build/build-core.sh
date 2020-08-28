@@ -9,7 +9,7 @@ echo "====== Build ======"
 
 if [ "$CI" = "true" ]; then
     echo "Building core for production"
-    node --max_old_space_size=8192 ./node_modules/@nrwl/cli/bin/nx build core --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build core --prod || exit 1
 else
     echo "Building core for development"
     nx build core || exit 1

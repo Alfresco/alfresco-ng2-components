@@ -7,11 +7,9 @@ cd $DIR/../..
 echo "====== Content Services ======"
 echo "====== Build ======"
 
-export NODE_OPTIONS=--max_old_space_size=8192
-
 if [ "$CI" = "true" ]; then
     echo "Building content-services for production"
-    nx build content-services --prod || exit 1
+    NODE_OPTIONS="--max-old-space-size=8192" nx build content-services --prod || exit 1
 else
     echo "Building content-services for development"
     nx build content-services || exit 1

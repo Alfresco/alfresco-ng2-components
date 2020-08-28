@@ -120,7 +120,7 @@ describe('TextWidgetComponent', () => {
                 expect(widget.field.isValid).toBe(false);
             });
 
-            it('should be able to set a placeholder for Text widget', () => {
+            it('should be able to set a placeholder for Text widget', async () => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'text-id',
                     name: 'text-name',
@@ -130,8 +130,10 @@ describe('TextWidgetComponent', () => {
                     placeholder: 'Your name here'
                 });
                 fixture.detectChanges();
-                const textWidgetLabel = element.querySelector('input');
-                expect(textWidgetLabel.getAttribute('placeholder')).toBe('Your name here');
+                await fixture.whenStable();
+
+                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
+                expect(label.innerText).toBe('Your name here');
             });
 
             it('should be able to set min/max length properties for Text widget', async () => {
@@ -217,7 +219,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
             it('should be disabled on readonly forms', async(() => {
@@ -247,7 +249,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
             it('should show text widget', () => {
@@ -256,21 +258,18 @@ describe('TextWidgetComponent', () => {
             });
 
             it('should show the field placeholder', () => {
-                expect(inputElement).toBeDefined();
-                expect(inputElement).not.toBeNull();
-                expect(inputElement.placeholder).toBe('simple placeholder');
+                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
+                expect(label.innerText).toBe('simple placeholder');
             });
 
-            it('should show the field placeholder when clicked', async(() => {
+            it('should show the field placeholder when clicked', async () => {
                 inputElement.click();
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(inputElement).toBeDefined();
-                    expect(inputElement).not.toBeNull();
-                    expect(inputElement.placeholder).toBe('simple placeholder');
-                });
-            }));
+                await fixture.whenStable();
+
+                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
+                expect(label.innerText).toBe('simple placeholder');
+            });
 
             it('should prevent text to be written if is not allowed by the mask on keyUp event', async(() => {
                 expect(element.querySelector('#text-id')).not.toBeNull();
@@ -284,7 +283,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    inputElement = element.querySelector<HTMLInputElement>('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -299,7 +298,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    inputElement = element.querySelector<HTMLInputElement>('#text-id');
                     expect(inputElement.value).toBe('');
                 });
             }));
@@ -315,7 +314,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    const textEle = element.querySelector<HTMLInputElement>('#text-id');
                     expect(textEle.value).toBe('1');
                 });
             }));
@@ -331,7 +330,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    const textEle = element.querySelector<HTMLInputElement>('#text-id');
                     expect(textEle.value).toBe('12-345,67%');
                 });
             }));
@@ -352,7 +351,7 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
             afterEach(() => {
@@ -371,7 +370,7 @@ describe('TextWidgetComponent', () => {
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
-                    const textEle: HTMLInputElement = <HTMLInputElement> element.querySelector('#text-id');
+                    const textEle = element.querySelector<HTMLInputElement>('#text-id');
                     expect(textEle.value).toBe('12,34%');
                 });
             }));
@@ -393,25 +392,22 @@ describe('TextWidgetComponent', () => {
                 });
 
                 fixture.detectChanges();
-                inputElement = <HTMLInputElement> element.querySelector('#text-id');
+                inputElement = element.querySelector<HTMLInputElement>('#text-id');
             });
 
             it('should show the input mask placeholder', () => {
-                expect(inputElement).toBeDefined();
-                expect(inputElement).not.toBeNull();
-                expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
+                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
+                expect(label.innerText).toBe('Phone : (__) ___-___');
             });
 
-            it('should show the input mask placeholder when clicked', async(() => {
+            it('should show the input mask placeholder when clicked', async () => {
                 inputElement.click();
                 fixture.detectChanges();
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(inputElement).toBeDefined();
-                    expect(inputElement).not.toBeNull();
-                    expect(inputElement.placeholder).toBe('Phone : (__) ___-___');
-                });
-            }));
+                await fixture.whenStable();
+
+                const label = element.querySelector<HTMLElement>('label.mat-form-field-label[for="text-id"]');
+                expect(label.innerText).toBe('Phone : (__) ___-___');
+            });
         });
     });
 });
