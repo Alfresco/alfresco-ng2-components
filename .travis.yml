@@ -21,10 +21,6 @@ branches:
 
 stages:
   - name: Lint & Build Dist & Release
-  - name: Update Rancher
-    if: (type = push AND tag IS blank)  OR type = api
-  - name: Deploy PR
-    if: type = pull_request && commit_message =~ /\[create preview\]/
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Trigger ADF child build
@@ -109,17 +105,6 @@ jobs:
               - ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
               - ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
-
-
-        - stage: Update Rancher
-          name: Update Rancher
-          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
-          script: ./scripts/travis/deploy/deploy.sh
-
-        - stage: Deploy PR
-          name: Deploy PR
-          script: ./scripts/travis/deploy/deploy-pr.sh
-
 
         - stage: Check bundle
           script:
