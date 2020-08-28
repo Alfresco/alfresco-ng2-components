@@ -81,6 +81,8 @@ import { DemoErrorComponent } from './components/error/demo-error.component';
 import { ProcessServicesCloudModule } from '@alfresco/adf-process-services-cloud';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
 import { RouterModule } from '@angular/router';
+import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
+import { SampleWidgetComponent } from './components/cloud/custom-form-components/sample-widget.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -185,7 +187,9 @@ registerLocaleData(localeSv);
         PeopleGroupCloudDemoComponent,
         ConfirmDialogExampleComponent,
         FormCloudDemoComponent,
-        ConfirmDialogExampleComponent
+        ConfirmDialogExampleComponent,
+        SampleWidgetComponent,
+        ProcessCloudLayoutComponent
     ],
     providers: [
         {
