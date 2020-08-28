@@ -31,14 +31,14 @@ async function checkEnv() {
         });
 
         await alfrescoJsApi.login(program.username, program.password);
-    } catch (e) {
+    } catch (error) {
         console.log('Login error environment down or inaccessible');
         counter++;
         if (MAX_RETRY === counter) {
             console.log('Give up');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`);
+            console.log(`Retry in 1 minute attempt N ${counter}`, error);
             sleep(TIMEOUT);
             checkEnv();
         }
@@ -75,7 +75,7 @@ async function checkDiskSpaceFullEnv() {
             });
         }
 
-        let pathFile = path.join(__dirname, '../../', 'README.md');
+        let pathFile = path.join(__dirname, '../', 'README.md');
         let file = fs.createReadStream(pathFile);
 
         let uploadedFile = await alfrescoJsApi.upload.uploadFile(
@@ -101,7 +101,7 @@ async function checkDiskSpaceFullEnv() {
             console.log('=============================================================');
             process.exit(1);
         } else {
-            console.log(`Retry in 1 minute attempt N ${counter}`);
+            console.log(`Retry in 1 minute attempt N ${counter}`, error);
             sleep(TIMEOUT);
             checkDiskSpaceFullEnv();
         }
