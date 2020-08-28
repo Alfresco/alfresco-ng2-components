@@ -56,7 +56,7 @@ describe('ContentNodeSelectorService', () => {
         service.search('nuka cola quantum');
 
         expect(search.query.query).toEqual({
-            query: 'nuka cola quantum* OR name:nuka cola quantum*'
+            query: 'nuka cola quantum*'
         });
     });
 
