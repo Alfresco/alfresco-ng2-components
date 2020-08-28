@@ -52,6 +52,18 @@ export class AttachFileWidgetPage {
         await BrowserVisibility.waitUntilElementIsVisible(fileAttached);
     }
 
+    async checkFilesAreAttachedToWidget(fieldId, name): Promise<void> {
+        await name.forEach(async fileName => {
+            await this.checkFileIsAttached(fieldId, fileName);
+        });
+    }
+
+    async checkFileIsNotAttached(fieldId, name): Promise<void> {
+        const widget = await this.formFields.getWidget(fieldId);
+        const fileNotAttached = widget.element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
+        await BrowserVisibility.waitUntilElementIsNotVisible(fileNotAttached);
+    }
+
     async viewFile(name: string): Promise<void> {
         const fileView = element(this.filesListLocator).element(by.cssContainingText('mat-list-item span ', name));
         await BrowserActions.click(fileView);
@@ -111,9 +123,17 @@ export class AttachFileWidgetPage {
     }
 
     async checkUploadIsNotVisible(fieldId): Promise<void> {
+        const alfrescoTypeUploadLocator = by.css(`button[id="${fieldId}"]`);
         const widget = await this.formFields.getWidget(fieldId);
-        const uploadButton = await widget.element(this.alfrescoTypeUploadLocator);
+        const uploadButton = await widget.element(alfrescoTypeUploadLocator);
         await BrowserVisibility.waitUntilElementIsNotPresent(uploadButton);
+    }
+
+    async checkUploadIsVisible(fieldId): Promise<void> {
+        const alfrescoTypeUploadLocator = by.css(`button[id="${fieldId}"]`);
+        const widget = await this.formFields.getWidget(fieldId);
+        const uploadButton = await widget.element(alfrescoTypeUploadLocator);
+        await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
     }
 
     async checkLocalTypeUploadIsPresent(fieldId): Promise<void> {

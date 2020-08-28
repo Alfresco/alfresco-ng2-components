@@ -170,4 +170,10 @@ export class StartProcessPage {
         await this.selectFromProcessDropdown(processName);
         await this.clickStartProcessButton();
     }
+
+    async selectApplicationAndProcess(applicationName: string, processName: string) {
+        await this.selectFromApplicationDropdown(applicationName);
+        await this.checkProcessDefinitionDropdownIsEnabled();
+        await this.selectFromProcessDropdown(processName);
+    }
 }
