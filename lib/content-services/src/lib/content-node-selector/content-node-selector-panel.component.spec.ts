@@ -405,7 +405,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                 const defaultSearchNode: any = {
                     query: {
-                        query: searchTerm ? `${searchTerm}* OR name:${searchTerm}*` : searchTerm
+                        query: searchTerm ? `${searchTerm}*` : searchTerm
                     },
                     include: ['path', 'allowableOperations', 'properties'],
                     paging: {
