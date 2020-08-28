@@ -1,0 +1,27 @@
+
+<mat-form-field [attr.data-automation-id]="processFilterProperty.key">
+    <mat-select
+        placeholder="{{processFilterProperty.label | translate}}"
+        (selectionChange)="onSelectionChange($event)"
+        [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
+        <mat-option [value]="'all'"></mat-option>
+        <mat-option *ngFor="let propertyOption of options" [value]="propertyOption.key" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
+            {{ propertyOption.label }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<ng-container *ngIf="isDateRangeType()">
+    <mat-form-field class="adf-cloud-date-range-picker">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker (closed)="onDateRangeClosed($event)"></mat-date-range-picker>
+
+        <mat-error *ngIf="dateRangeForm.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="dateRangeForm.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+</ng-container>
