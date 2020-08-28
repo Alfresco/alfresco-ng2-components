@@ -49,31 +49,27 @@ import { FormGroup, FormControl } from '@angular/forms';
     options = [
         {
             key: ProcessDateFilterType.today,
-            label: 'today'
-        },
-        {
-            key: ProcessDateFilterType.today,
-            label: 'today'
+            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TODAY'
         },
         {
             key: ProcessDateFilterType.week,
-            label: 'week'
+            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.WEEK'
         },
         {
             key: ProcessDateFilterType.month,
-            label: 'month'
+            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.MONTH'
         },
         {
             key: ProcessDateFilterType.quarter,
-            label: 'quarter'
+            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.QUARTER'
         },
         {
             key: ProcessDateFilterType.year,
-            label: 'year'
+            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.YEAR'
         },
         {
             key: ProcessDateFilterType.range,
-            label: 'Date within'
+            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.RANGE'
         }
     ];
 
