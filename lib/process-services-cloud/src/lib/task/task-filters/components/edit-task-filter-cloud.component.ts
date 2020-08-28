@@ -31,7 +31,7 @@ import { TranslationService, UserPreferencesService, UserPreferenceValues } from
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
-import { ProcessDefinitionCloud } from 'process-services-cloud/src/lib/models/process-definition-cloud.model';
+import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 
 @Component({
@@ -119,6 +119,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         EditTaskFilterCloudComponent.ACTION_SAVE,
         EditTaskFilterCloudComponent.ACTION_DELETE
     ];
+    allProcessDefinitionNamesOption = { label: 'All', value: '' };
 
     private applicationNames: any[] = [];
     private processDefinitionNames: any[] = [];
@@ -373,6 +374,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((processDefinitions: ProcessDefinitionCloud[]) => {
             if (processDefinitions && processDefinitions.length > 0) {
+                this.processDefinitionNames.push(this.allProcessDefinitionNamesOption);
                 processDefinitions.map((processDefinition) => {
                     this.processDefinitionNames.push({ label: processDefinition.name, value: processDefinition.name });
                 });
