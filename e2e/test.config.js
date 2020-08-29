@@ -30,10 +30,6 @@ const PASSWORD_ADF = process.env.PASSWORD_ADF || "defaultuserpassword";
 const REDIRECT_URI = process.env.REDIRECT_URI || "/";
 const REDIRECT_URI_LOGOUT = process.env.REDIRECT_URI_LOGOUT || "/logout";
 
-const SCREENSHOT_URL = process.env.SCREENSHOT_URL || HOST_ECM;
-const SCREENSHOT_PASSWORD = process.env.SCREENSHOT_PASSWORD || process.env.PASSWORD_ADF;
-const SCREENSHOT_USERNAME = process.env.SCREENSHOT_USERNAME || process.env.USERNAME_ADF;
-
 const EXTERNAL_ACS_HOST = process.env.EXTERNAL_ACS_HOST;
 const LOG_LEVEL = process.env.LOG_LEVEL || 'ERROR';
 
@@ -98,9 +94,9 @@ module.exports = {
     },
 
     screenshot: {
-        url: SCREENSHOT_URL,
-        password: SCREENSHOT_PASSWORD,
-        username: SCREENSHOT_USERNAME
+        url: HOST_ECM,
+        username: USERNAME_ADF,
+        password: PASSWORD_ADF
     },
 
     adf_external_acs: {

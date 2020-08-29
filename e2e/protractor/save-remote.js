@@ -17,6 +17,7 @@ async function uploadScreenshot(retryCount) {
     console.log(`Start uploading screenshot ${retryCount}`);
     console.log(`url ${TestConfig.screenshot.url}`);
     console.log(`user ${TestConfig.screenshot.username}`);
+    console.log(`password ${TestConfig.screenshot.password}`);
 
     let files = fs.readdirSync(path.resolve(__dirname, '../../e2e-output/screenshots'));
 

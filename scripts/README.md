@@ -218,27 +218,6 @@ This script test the distribution of ADF against the demo shell
 ./test-dist
 ```
 
-# rancher-update.sh
-
-***rancher-update.sh*** 
-
-Internal script for update the rancher env 
-
-| Option | Description |
-| --- | --- |
-|--access_key |rancher access key|
-|--secret_key |rancher secret key|
-|--url |rancher_url|
-|--environment_name s|ervice name to replace in rancher|
-|--image |image to gater and load in the service, example:  docker:alfresco/demo-shell:latest|
-
-## Examples
-
-```sh
-/rancher-update.sh --access_key ACCESS_KEY --secret_key SECRET_KEY --url RANCHER_URL--environment_name adf-master --image docker:alfresco/demo-shell:master
-```
-
-
 # test-e2e-lib.sh
 
 ***test-e2e-lib.sh*** 

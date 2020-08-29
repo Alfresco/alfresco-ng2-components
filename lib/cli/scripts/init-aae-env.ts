@@ -394,11 +394,12 @@ async function main(configArgs: ConfigArgs) {
         return;
     }
 
+    alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
+
     AAE_MICROSERVICES.map(async (serviceName) => {
         await healthCheck(serviceName);
     });
 
-    alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
     await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
         logger.info('login SSO ok');
     }, (error) => {

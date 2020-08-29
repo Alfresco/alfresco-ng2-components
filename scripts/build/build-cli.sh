@@ -2,7 +2,13 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+cd $DIR/../../
+rm -rf lib/cli/dist
+rm -rf lib/dist/cli
+
 cd $DIR/../../lib/cli/
+
+
 
 echo "====== Cli ======"
 echo "====== Build ======"
