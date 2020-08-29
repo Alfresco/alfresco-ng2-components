@@ -65,7 +65,7 @@ async function healthCheck(nameService: string) {
             logger.info(`${nameService} is UP!`);
         }
     } catch (error) {
-        logger.error(`${nameService} is not reachable ${error.status} `);
+        logger.error(`${nameService} is not reachable error: `, error);
         isValid = false;
     }
 }
@@ -394,16 +394,16 @@ async function main(configArgs: ConfigArgs) {
         return;
     }
 
+    AAE_MICROSERVICES.map(async (serviceName) => {
+        await healthCheck(serviceName);
+    });
+
     alfrescoJsApiModeler = getAlfrescoJsApiInstance(args);
     await alfrescoJsApiModeler.login(args.modelerUsername, args.modelerPassword).then(() => {
         logger.info('login SSO ok');
     }, (error) => {
         logger.info(`login SSO error ${JSON.stringify(error)} ${args.modelerUsername}`);
         process.exit(1);
-    });
-
-    AAE_MICROSERVICES.map(async (serviceName) => {
-        await healthCheck(serviceName);
     });
 
     if (isValid) {

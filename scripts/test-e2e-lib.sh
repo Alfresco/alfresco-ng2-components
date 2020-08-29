@@ -18,7 +18,6 @@ show_help() {
     echo "-p or --password"
     echo "-identity_admin_email"
     echo "-identity_admin_password"
-    echo "-e or --email"
     echo "-b or --browser run the test in the browser (No headless mode)"
     echo "-s or --spec run a single test file"
     echo "-f or --folder run a single folder test"
@@ -58,10 +57,7 @@ set_identity_admin_password(){
     IDENTITY_ADMIN_PASSWORD=$1
     export IDENTITY_ADMIN_PASSWORD=$IDENTITY_ADMIN_PASSWORD
 }
-set_email(){
-    EMAIL=$1
-    export EMAIL_ADF=$EMAIL
-}
+
 set_host(){
     HOST=$1
     export URL_HOST_ADF=$HOST
@@ -155,7 +151,6 @@ while [[ $1 == -* ]]; do
       -p|--password)  set_password $2; shift 2;;
       -identity_admin_email)  set_identity_admin_email $2; shift 2;;
       -identity_admin_password)  set_identity_admin_password $2; shift 2;;
-      -e|--email)  set_email $2; shift 2;;
       -f|--folder)  set_test_folder $2; shift 2;;
       -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
@@ -167,7 +162,7 @@ while [[ $1 == -* ]]; do
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
-      -s|--seleniumServer) set_selenium $2; shift 2;;
+      --seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -log|--log)  set_log; shift ;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
