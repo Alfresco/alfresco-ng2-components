@@ -6,7 +6,7 @@ cd $DIR/../../../
 
 export CONTEXT_ENV="process-services"
 export PROVIDER='BPM'
-export AUTH_TYPE='BASIC'
+export AUTH_TYPE="OAUTH"
 
 echo "Start process services e2e"
 

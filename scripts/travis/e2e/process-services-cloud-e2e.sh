@@ -19,7 +19,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -host_sso "$E2E_HOST" -identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -prefix $TRAVIS_BUILD_NUMBER --use-dist -m 2 -save -b )
+RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"-identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -prefix $TRAVIS_BUILD_NUMBER --use-dist -m 2 -b )
 
 check_env(){
    ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env --host "http://develop.envalfresco.com" --oauth "http://develop.envalfresco.com" --modelerUsername "modeler" --modelerPassword "password" --devopsUsername "devopsuser" --devopsPassword "password" --clientId 'activiti' || exit 1

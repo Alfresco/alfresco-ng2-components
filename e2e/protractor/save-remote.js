@@ -15,9 +15,6 @@ function buildNumber() {
 
 async function uploadScreenshot(retryCount) {
     console.log(`Start uploading screenshot ${retryCount}`);
-    console.log(`url ${TestConfig.screenshot.url}`);
-    console.log(`user ${TestConfig.screenshot.username}`);
-    console.log(`password ${TestConfig.screenshot.password}`);
 
     let files = fs.readdirSync(path.resolve(__dirname, '../../e2e-output/screenshots'));
 
@@ -52,6 +49,8 @@ async function uploadScreenshot(retryCount) {
         for (const fileName of files) {
             let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
             let file = fs.createReadStream(pathFile);
+
+            console.log(`Screenshot ${fileName}`);
 
             let safeFileName = fileName.match(/\[(.*?)\]/);
 
