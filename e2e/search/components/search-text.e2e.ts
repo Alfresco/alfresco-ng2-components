@@ -27,7 +27,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchResultsPage } from '../pages/search-results.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -40,7 +40,7 @@ describe('Search component - Text widget', () => {
     const searchFiltersPage = new SearchFiltersPage();
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchResultPage = new SearchResultsPage();
 
     const apiService = new ApiService();
@@ -101,8 +101,8 @@ describe('Search component - Text widget', () => {
             await navigationBarPage.clickContentServicesButton();
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter('*');
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
             await searchResultPage.tableIsLoaded();
 
             await searchFiltersPage.checkCheckListFilterIsDisplayed();

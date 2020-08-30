@@ -27,7 +27,7 @@ import {
 } from '@alfresco/adf-testing';
 import { SearchResultsPage } from '../pages/search-results.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
-import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchBarPage } from '../pages/search-bar.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
@@ -36,7 +36,7 @@ describe('Search Checklist Component', () => {
 
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -151,9 +151,9 @@ describe('Search Checklist Component', () => {
             }
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -190,9 +190,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -204,9 +204,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -219,9 +219,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(9);
@@ -243,9 +243,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -266,9 +266,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -303,9 +303,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
@@ -330,9 +330,9 @@ describe('Search Checklist Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickCheckListFilter();
 
             await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);

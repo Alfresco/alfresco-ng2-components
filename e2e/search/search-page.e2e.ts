@@ -19,7 +19,7 @@ import { browser } from 'protractor';
 
 import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 
-import { SearchDialogPage } from './pages/search-dialog.page';
+import { SearchBarPage } from './pages/search-bar.page';
 import { ContentServicesPage } from '../core/pages/content-services.page';
 import { SearchResultsPage } from './pages/search-results.page';
 import { FolderModel } from '../models/ACS/folder.model';
@@ -42,7 +42,7 @@ describe('Search component - Search Page', () => {
 
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchResultPage = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
 
@@ -97,24 +97,24 @@ describe('Search component - Search Page', () => {
 
     it('[C260264] Should display message when no results are found', async() => {
         const notExistentFileName = StringUtil.generateRandomString();
-        await searchDialog.checkSearchBarIsNotVisible();
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(notExistentFileName);
+        await searchBarPage.checkSearchBarIsNotVisible();
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(notExistentFileName);
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C272810] Should display only files corresponding to search', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search.active.firstFile);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
 
         await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
         await expect(await searchResultPage.numberOfResultsDisplayed()).toBe(1);
     });
 
     it('[C260267] Should display content when opening a folder from search results', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
 
         await searchResultPage.checkNoResultMessageIsNotDisplayed();
         await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
@@ -124,8 +124,8 @@ describe('Search component - Search Page', () => {
     });
 
     it('[C260261] Should be able to delete a file from search results', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search.active.firstFile);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
 
         await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
 
@@ -134,16 +134,16 @@ describe('Search component - Search Page', () => {
         await searchResultPage.checkNoResultMessageIsDisplayed();
         await searchResultPage.checkContentIsNotDisplayed(search.active.firstFile);
 
-        await searchDialog.checkSearchBarIsNotVisible();
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search.active.firstFile);
+        await searchBarPage.checkSearchBarIsNotVisible();
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C272809] Should be able to delete a folder from search results', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
 
         await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
         await searchResultPage.checkNoResultMessageIsNotDisplayed();
@@ -151,16 +151,16 @@ describe('Search component - Search Page', () => {
         await searchResultPage.deleteContent(emptyFolderModel.name);
         await searchResultPage.checkNoResultMessageIsDisplayed();
 
-        await searchDialog.checkSearchBarIsNotVisible();
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchBarPage.checkSearchBarIsNotVisible();
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C286675] Should display results when searching for all elements', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('*');
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
 
         await searchResultPage.checkNoResultMessageIsNotDisplayed();
     });

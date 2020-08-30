@@ -24,7 +24,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchResultsPage } from '../pages/search-results.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
@@ -35,7 +35,7 @@ import { SearchConfiguration } from '../search.config';
 describe('Search Sorting Picker', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchFilters = new SearchFiltersPage();
     const searchResults = new SearchResultsPage();
     const navigationBarPage = new NavigationBarPage();
@@ -83,8 +83,8 @@ describe('Search Sorting Picker', () => {
     });
 
     beforeEach(async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
     });
 
     afterEach(async () => {
@@ -111,9 +111,9 @@ describe('Search Sorting Picker', () => {
         });
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
@@ -127,9 +127,9 @@ describe('Search Sorting Picker', () => {
         const removedOption = jsonFile.sorting.options.splice(0, 1);
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
@@ -152,9 +152,9 @@ describe('Search Sorting Picker', () => {
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
@@ -203,9 +203,9 @@ describe('Search Sorting Picker', () => {
         });
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(search);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(search);
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.sortBy('ASC', 'Modified Date');

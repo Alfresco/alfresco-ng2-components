@@ -17,7 +17,7 @@
 
 import { ApiService, LoginPage, StringUtil, UploadActions, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
-import { SearchDialogPage } from './pages/search-dialog.page';
+import { SearchBarPage } from './pages/search-bar.page';
 import { SearchResultsPage } from './pages/search-results.page';
 import { SearchFiltersPage } from './pages/search-filters.page';
 import { FileModel } from '../models/ACS/file.model';
@@ -26,7 +26,7 @@ import CONSTANTS = require('../util/constants');
 
 describe('Search Component - Multi-Select Facet', () => {
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchResultsPage = new SearchResultsPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
@@ -75,9 +75,9 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await loginPage.login(acsUser.email, acsUser.password);
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter(`${randomName}`);
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter(`${randomName}`);
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
@@ -100,9 +100,9 @@ describe('Search Component - Multi-Select Facet', () => {
         it('[C280054] Should be able to select multiple items from a search facet filter', async () => {
             await loginPage.login(acsUser.email, acsUser.password);
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter(`${randomName}`);
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter(`${randomName}`);
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
@@ -167,9 +167,9 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await loginPage.login(userUploadingImg.email, userUploadingImg.password);
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
@@ -214,9 +214,9 @@ describe('Search Component - Multi-Select Facet', () => {
 
             await loginPage.login(acsUser.email, acsUser.password);
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
         });
@@ -229,9 +229,9 @@ describe('Search Component - Multi-Select Facet', () => {
         it('[C280058] Should update filter facets items number when another filter facet item is selected', async () => {
             await loginPage.login(acsUser.email, acsUser.password);
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter(`*${randomName}*`);
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
