@@ -19,10 +19,10 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD"-identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -prefix $TRAVIS_BUILD_NUMBER --use-dist -m 2 -b )
+RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -host_sso "$HOST_SSO" -identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -prefix $TRAVIS_BUILD_NUMBER --use-dist -m 2 -save -b )
 
 check_env(){
-   ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env --host "http://develop.envalfresco.com" --oauth "http://develop.envalfresco.com" --modelerUsername "modeler" --modelerPassword "password" --devopsUsername "devopsuser" --devopsPassword "password" --clientId 'activiti' || exit 1
+   ./node_modules/@alfresco/adf-cli/bin/adf-cli init-aae-env --host "$E2E_HOST" --oauth "$HOST_SSO" --modelerUsername "$E2E_MODELER_USERNAME" --modelerPassword "$E2E_MODELER_PASSWORD" --devopsUsername "$E2E_DEVOPS_USERNAME" --devopsPassword "$E2E_DEVOPS_PASSWORD" --clientId 'activiti' || exit 1
 
    ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_ADMIN_EMAIL_IDENTITY" -p "$E2E_ADMIN_PASSWORD_IDENTITY" || exit 1
 }

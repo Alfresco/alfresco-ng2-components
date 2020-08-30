@@ -15,7 +15,7 @@ const HOST_BPM = process.env.PROXY_HOST_ADF || HOST || 'bpm';
 const PROVIDER = process.env.PROVIDER ? process.env.PROVIDER : 'ALL';
 const AUTH_TYPE = process.env.AUTH_TYPE ? process.env.AUTH_TYPE : 'BASIC';
 
-const OAUTH_HOST = process.env.HOST_SSO || process.env.PROXY_HOST_ADF || HOST || 'oauth';
+const HOST_SSO = process.env.HOST_SSO || process.env.PROXY_HOST_ADF || HOST || 'oauth';
 const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENDID || 'alfresco';
 
 const IDENTITY_ADMIN_EMAIL = process.env.IDENTITY_ADMIN_EMAIL || "defaultadmin";
@@ -37,11 +37,11 @@ const appConfig = {
     "log": LOG_LEVEL,
     "ecmHost": HOST_ECM,
     "bpmHost": HOST_BPM,
-    "identityHost": `${OAUTH_HOST}/auth/admin/realms/alfresco`,
+    "identityHost": `${HOST_SSO}/auth/admin/realms/alfresco`,
     "provider": PROVIDER,
     "authType": AUTH_TYPE,
     "oauth2": {
-        "host": `${OAUTH_HOST}/auth/realms/alfresco`,
+        "host": `${HOST_SSO}/auth/realms/alfresco`,
         "clientId": OAUTH_CLIENT_ID,
         "scope": "openid",
         "secret": "",

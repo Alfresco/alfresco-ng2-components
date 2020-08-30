@@ -70,15 +70,19 @@ async function healthCheck(nameService: string) {
     }
 }
 
-function getApplicationByStatus(status: string) {
+async function getApplicationByStatus(status: string) {
     const url = `${args.host}/deployment-service/v1/applications/`;
 
     const pathParams = {}, queryParams = { status: status },
         headerParams = {}, formParams = {}, bodyParam = {},
         contentTypes = ['application/json'], accepts = ['application/json'];
     try {
+        await alfrescoJsApiDevops.login(args.devopsUsername, args.devopsPassword);
+
         return alfrescoJsApiDevops.oauth2Auth.callCustomApi(url, 'GET', pathParams, queryParams, headerParams, formParams, bodyParam,
-            contentTypes, accepts);
+            contentTypes, accepts).on('error',(error)=>{
+            logger.error(`Get application by status ${error} `);
+        });
 
     } catch (error) {
         logger.error(`Get application by status ${error.status} `);
@@ -203,6 +207,7 @@ function deploy(model: any) {
 function getAlfrescoJsApiInstance(configArgs: ConfigArgs) {
     const config = {
         provider: 'BPM',
+        hostEcm: `${configArgs.host}`,
         hostBpm: `${configArgs.host}`,
         authType: 'OAUTH',
         oauth2: {
