@@ -13,8 +13,6 @@ install:
 
 env:
     global:
-        - REDIRECT_URI=/adf/
-        - REDIRECT_URI_LOGOUT=/adf/
         - SAVE_SCREENSHOT=true
 
 branches:
