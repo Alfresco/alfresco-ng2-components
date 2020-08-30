@@ -4,8 +4,8 @@ git:
 
 language: node_js
 dist: bionic
-node_js:
-  - '12.16.3'
+#node_js:
+#  - '12.16.3'
 
 before_install: . ./scripts/ci/job_hooks/before_install.sh
 install:
