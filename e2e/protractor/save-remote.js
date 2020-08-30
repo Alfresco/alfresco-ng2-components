@@ -47,7 +47,7 @@ async function uploadScreenshot(retryCount) {
         }
 
         for (const fileName of files) {
-            let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
+            let pathFile = path.join(__dirname, '../../e2e-output/screenshots', fileName);
             let file = fs.createReadStream(pathFile);
 
             console.log(`Screenshot ${fileName}`);

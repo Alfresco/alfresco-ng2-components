@@ -5,7 +5,7 @@ echo "Start insight e2e"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 export PROVIDER='BPM'
-export AUTH_TYPE='BASIC'
+export AUTH_TYPE='OAUTH'
 
 cd $DIR/../../../
 

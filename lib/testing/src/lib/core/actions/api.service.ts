@@ -39,12 +39,16 @@ export class ApiService {
     constructor(clientIdOrAppConfig?: AlfrescoApiConfig | string, host?: string, hostSso?: string, provider?: string) {
 
         if (browser.params.testConfig && browser.params.testConfig.appConfig) {
+            Logger.log('Get Config ApiService from browser params');
+
             this.config = { ...browser.params.testConfig.appConfig };
             this.config.hostEcm = browser.params.testConfig.appConfig.ecmHost;
             this.config.hostBpm = browser.params.testConfig.appConfig.bpmHost;
         }
 
         if (clientIdOrAppConfig && typeof clientIdOrAppConfig !== 'string') {
+            Logger.log('overwrite ApiService config param');
+
             this.config = { ...this.config, ...clientIdOrAppConfig };
 
             this.config.hostEcm = clientIdOrAppConfig.hostEcm ? clientIdOrAppConfig.hostEcm : this.config.hostEcm;
@@ -54,6 +58,8 @@ export class ApiService {
         }
 
         if (hostSso) {
+            Logger.log('overwrite ApiService hostSso param');
+
             this.config.oauth2.host = hostSso;
         }
 
