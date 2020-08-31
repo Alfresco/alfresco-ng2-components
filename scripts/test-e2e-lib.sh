@@ -204,6 +204,7 @@ else
 
         npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
      else
+        echo "====== Run without lite-server  ====="
         $DEBUG_OPTION  ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
     fi
 fi
