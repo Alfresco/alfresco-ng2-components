@@ -280,13 +280,9 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         )
         .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
             this.preSelectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
-            this.onFileUploadEvent();
+            this.documentList.reload();
         });
 
-    }
-
-    onFileUploadEvent() {
-        this.documentList.reload();
     }
 
     ngOnDestroy() {
