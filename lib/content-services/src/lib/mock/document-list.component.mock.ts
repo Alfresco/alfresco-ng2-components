@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Node, NodePaging } from '@alfresco/js-api';
+import { Node, NodePaging, NodeEntry } from '@alfresco/js-api';
 
 export const fakeNodeWithCreatePermission = new Node({
     isFile: false,
@@ -212,6 +212,120 @@ export const fakeNodePaging: NodePaging = {
             entry: fakeNodeWithNoPermission
         }, {
             entry: fakeNodeWithNoPermission
+        }]
+    }
+};
+
+export const mockNode1 = new Node({
+    'isFile': true,
+    'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+    'modifiedAt': '2017-05-24T15:08:55.640Z',
+    'nodeType': 'cm:content',
+    'content': {
+        'mimeType': 'application/rtf',
+        'mimeTypeName': 'Rich Text Format',
+        'sizeInBytes': 14530,
+        'encoding': 'UTF-8'
+    },
+    'parentId': 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+    'createdAt': '2017-05-24T15:08:55.640Z',
+    'path': {
+        'name': '/Company Home/Guest Home',
+        'isComplete': true,
+        'elements': [{
+            'id': '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+            'name': 'Company Home'
+        }, { 'id': 'd124de26-6ba0-4f40-8d98-4907da2d337a', 'name': 'Guest Home' }]
+    },
+    'isFolder': false,
+    'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+    'name': 'b_txt_file.rtf',
+    'id': '70e1cc6a-6918-468a-b84a-1048093b06fd',
+    'properties': { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+    'allowableOperations': ['delete', 'update']
+});
+
+export const mockNode2 = new Node({
+    'isFile': true,
+    'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+    'modifiedAt': '2017-05-24T15:08:55.640Z',
+    'nodeType': 'cm:content',
+    'content': {
+        'mimeType': 'application/rtf',
+        'mimeTypeName': 'Rich Text Format',
+        'sizeInBytes': 14530,
+        'encoding': 'UTF-8'
+    },
+    'parentId': 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+    'createdAt': '2017-05-24T15:08:55.640Z',
+    'path': {
+        'name': '/Company Home/Guest Home',
+        'isComplete': true,
+        'elements': [{
+            'id': '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+            'name': 'Company Home'
+        }, { 'id': 'd124de26-6ba0-4f40-8d98-4907da2d337a', 'name': 'Guest Home' }]
+    },
+    'isFolder': false,
+    'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+    'name': 'b_txt_file.rtf',
+    'id': '67b80f77-dbca-4f58-be6c-71b9dd61e554',
+    'properties': { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+    'allowableOperations': ['delete', 'update']
+});
+
+export const mockNode3 = new Node({
+    'isFile': true,
+    'createdByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+    'modifiedAt': '2017-05-24T15:08:55.640Z',
+    'nodeType': 'cm:content',
+    'content': {
+        'mimeType': 'application/rtf',
+        'mimeTypeName': 'Rich Text Format',
+        'sizeInBytes': 14530,
+        'encoding': 'UTF-8'
+    },
+    'parentId': 'd124de26-6ba0-4f40-8d98-4907da2d337a',
+    'createdAt': '2017-05-24T15:08:55.640Z',
+    'path': {
+        'name': '/Company Home/Guest Home',
+        'isComplete': true,
+        'elements': [{
+            'id': '94acfc73-7014-4475-9bd9-93a2162f0f8c',
+            'name': 'Company Home'
+        }, { 'id': 'd124de26-6ba0-4f40-8d98-4907da2d337a', 'name': 'Guest Home' }]
+    },
+    'isFolder': false,
+    'modifiedByUser': { 'id': 'admin', 'displayName': 'Administrator' },
+    'name': 'c_txt_file.rtf',
+    'id': '67b80f77-dbca-4f58-be6c-71b9dd61e555',
+    'properties': { 'cm:versionLabel': '1.0', 'cm:versionType': 'MAJOR' },
+    'allowableOperations': ['delete', 'update']
+});
+
+export const mockPreselectedNodes: NodeEntry[] = [
+    {
+        entry: mockNode1
+    },
+    {
+        entry: mockNode1
+    }
+];
+
+export const mockNodePagingWithPreselectedNodes: NodePaging = {
+    list: {
+        pagination: {
+            count: 5,
+            hasMoreItems: false,
+            totalItems: 5,
+            skipCount: 0,
+            maxItems: 100
+        }, entries: [{
+            entry: mockNode1
+        }, {
+            entry: mockNode2
+        }, {
+            entry: mockNode3
         }]
     }
 };

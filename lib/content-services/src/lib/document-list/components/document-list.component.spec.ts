@@ -34,7 +34,9 @@ import {
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
-    fakeGetSiteMembership
+    fakeGetSiteMembership,
+    mockPreselectedNodes,
+    mockNodePagingWithPreselectedNodes
 } from '../../mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
@@ -1515,6 +1517,58 @@ describe('DocumentList', () => {
             where: undefined
         }), undefined);
     });
+
+    describe('Preselected rows', () => {
+
+        it('should able to emit preselected nodes', async () => {
+            const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+            const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
+
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preSelectedNodes = mockPreselectedNodes;
+            documentList.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+
+            documentList.reload();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(documentList.preSelectedNodes.length).toBe(2);
+            expect(nodeSelectedSpy).toHaveBeenCalled();
+        });
+
+        it('should able to emit preselect  nodes on the reload', async () => {
+            const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
+
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preSelectedNodes = mockPreselectedNodes;
+            documentList.reload();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(documentList.preSelectedNodes.length).toBe(2);
+            expect(nodeSelectedSpy).toHaveBeenCalled();
+        });
+
+        it('should not call nodeSelected when preselectedNodes undefined/empty', async () => {
+            const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
+
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preSelectedNodes = [];
+            documentList.reload();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(nodeSelectedSpy).not.toHaveBeenCalled();
+        });
+   });
 });
 
 @Component({

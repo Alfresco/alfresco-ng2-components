@@ -259,7 +259,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     currentFolderId: string = null;
 
     @Input()
-    preSelectedNodes: any[] = [];
+    preSelectedNodes: NodeEntry[] = [];
 
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()

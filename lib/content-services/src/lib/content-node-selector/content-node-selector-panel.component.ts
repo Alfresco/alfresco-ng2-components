@@ -271,7 +271,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+        this.onFileUploadEvent();
+    }
 
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
+    }
+
+    private onFileUploadEvent() {
         this.uploadService.fileUploadComplete
         .pipe(
             debounceTime(300),
@@ -282,12 +290,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             this.preSelectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
             this.documentList.reload();
         });
-
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next(true);
-        this.onDestroy$.complete();
     }
 
     private getStartSite() {

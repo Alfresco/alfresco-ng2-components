@@ -16,7 +16,7 @@
  */
 
 import { DataColumn, DataRow, DataSorting, ContentService, ThumbnailService, setupTestBed } from '@alfresco/adf-core';
-import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode } from './../../mock';
+import { FileNode, FolderNode, SmartFolderNode, RuleFolderNode, LinkFolderNode, mockPreselectedNodes, mockNodePagingWithPreselectedNodes, mockNode2, fakeNodePaging } from './../../mock';
 import { ShareDataRow } from './share-data-row.model';
 import { ShareDataTableAdapter } from './share-datatable-adapter';
 import { ContentTestingModule } from '../../testing/content.testing.module';
@@ -479,6 +479,33 @@ describe('ShareDataTableAdapter', () => {
             const row = new ShareDataRow(file, contentService, null);
 
             expect(row.isDropTarget).toBeFalsy();
+        });
+   });
+
+    describe('Preselected rows', () => {
+
+        it('should set isSelected to be true for each preselectedrow if the preselectedNodes are defined', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
+            adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, mockPreselectedNodes);
+
+            expect(adapter.getPreSelectedRows().length).toBe(1);
+            expect(adapter.getPreSelectedRows()[0].isSelected).toBe(true);
+        });
+
+        it('should set preselectedRows empty if preselectedNodes are undefined/empty', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
+            adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, []);
+
+            expect(adapter.getPreSelectedRows().length).toBe(0);
+        });
+
+        it('should set preselectedRows empty if preselectedNodes are not found in the list', () => {
+            const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
+            mockNode2.id = 'mock-file-id';
+            const preselectedNode = [ { entry: mockNode2 }];
+            adapter.loadPage(fakeNodePaging, null, null, preselectedNode);
+
+            expect(adapter.getPreSelectedRows().length).toBe(0);
         });
    });
 });
