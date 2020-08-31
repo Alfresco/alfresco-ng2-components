@@ -74,8 +74,8 @@ async function checkDiskSpaceFullEnv() {
                 'overwrite': true
             });
         }
-
         let pathFile = path.join(__dirname, '../', 'README.md');
+
         let file = fs.createReadStream(pathFile);
 
         let uploadedFile = await alfrescoJsApi.upload.uploadFile(
@@ -93,6 +93,8 @@ async function checkDiskSpaceFullEnv() {
         alfrescoJsApi.node.deleteNode(uploadedFile.entry.id, {permanent: true});
     } catch (error) {
         counter++;
+
+        console.log('error', error);
 
         if (MAX_RETRY === counter) {
             console.log('=============================================================');
