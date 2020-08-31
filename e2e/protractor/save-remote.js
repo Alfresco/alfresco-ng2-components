@@ -16,56 +16,50 @@ function buildNumber() {
 async function uploadScreenshot(retryCount) {
     console.log(`Start uploading report ${retryCount}`);
 
+    let alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: TestConfig.screenshot.url
+    });
 
+    await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
 
-    if (files && files.length > 0) {
+    let folder;
 
-        let alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: TestConfig.screenshot.url
+    try {
+        folder = await alfrescoJsApi.nodes.addNode('-my-', {
+            'name': `retry-${retryCount}`,
+            'relativePath': `Builds/${buildNumber()}/`,
+            'nodeType': 'cm:folder'
+        }, {}, {
+            'overwrite': true
         });
-
-        await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
-
-        let folder;
-
-        try {
-            folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                'name': `retry-${retryCount}`,
-                'relativePath': `Builds/${buildNumber()}/`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        } catch (error) {
-            folder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/${buildNumber()}/retry-${retryCount}`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        }
-
-        const child_process = require("child_process");
-        child_process.execSync(` tar -czvf e2e-result.tar .`, {
-            cwd: path.resolve(__dirname, '../../e2e-output/')
+    } catch (error) {
+        folder = await alfrescoJsApi.nodes.getNode('-my-', {
+            'relativePath': `Builds/${buildNumber()}/retry-${retryCount}`,
+            'nodeType': 'cm:folder'
+        }, {}, {
+            'overwrite': true
         });
-
-        let pathFile = path.join(__dirname, '../../e2e-output/e2e-result.tar');
-        let file = fs.createReadStream(pathFile);
-        await alfrescoJsApi.upload.uploadFile(
-            file,
-            '',
-            folder.entry.id,
-            null,
-            {
-                'name': 'e2e-result.tar',
-                'nodeType': 'cm:content',
-                'autoRename': true
-            }
-        );
-
     }
+
+    const child_process = require("child_process");
+    child_process.execSync(` tar -czvf e2e-result.tar .`, {
+        cwd: path.resolve(__dirname, '../../e2e-output/')
+    });
+
+    let pathFile = path.join(__dirname, '../../e2e-output/e2e-result.tar');
+    let file = fs.createReadStream(pathFile);
+    await alfrescoJsApi.upload.uploadFile(
+        file,
+        '',
+        folder.entry.id,
+        null,
+        {
+            'name': 'e2e-result.tar',
+            'nodeType': 'cm:content',
+            'autoRename': true
+        }
+    );
 }
 
 module.exports = {
