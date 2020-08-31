@@ -183,8 +183,7 @@ exports.config = {
         writeReportFreq: 'end',
         imageToAscii: 'none',
         htmlOnExpect: 'none',
-        htmlOnSpec: 'none',
-        clearFoldersBeforeTest: true
+        htmlOnSpec: 'none'
     }],
 
     onCleanUp(results) {
