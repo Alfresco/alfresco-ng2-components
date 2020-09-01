@@ -13,7 +13,7 @@ function buildNumber() {
     return process.env.TRAVIS_BUILD_NUMBER;
 }
 
-async function uploadScreenshot(retryCount) {
+async function uploadScreenshot(retryCount, folder) {
     console.log(`Start uploading report ${retryCount}`);
 
     let alfrescoJsApi = new AlfrescoApi({
@@ -45,11 +45,11 @@ async function uploadScreenshot(retryCount) {
     fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}/`))
 
     const child_process = require("child_process");
-    child_process.execSync(` tar -czvf ../e2e-result-${retryCount}.tar .`, {
+    child_process.execSync(` tar -czvf ../e2e-result-${folder}-${retryCount}.tar .`, {
         cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}/`)
     });
 
-    let pathFile = path.join(__dirname, `../../e2e-result-${retryCount}.tar`);
+    let pathFile = path.join(__dirname, `../../e2e-result-${folder}-${retryCount}.tar`);
     let file = fs.createReadStream(pathFile);
     await alfrescoJsApi.upload.uploadFile(
         file,
