@@ -57,7 +57,7 @@ async function uploadScreenshot(retryCount, suffixFileName) {
         folderNode.entry.id,
         null,
         {
-            'name': 'e2e-result.tar',
+            'name': `e2e-result-${suffixFileName}-${retryCount}.tar`,
             'nodeType': 'cm:content',
             'autoRename': true
         }

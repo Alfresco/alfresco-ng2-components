@@ -24,10 +24,10 @@ export class HeaderPage {
     checkBox = element(by.cssContainingText('.mat-checkbox-label', 'Show menu button'));
     headerColor = element(by.css('option[value="primary"]'));
     titleInput = element(by.css('input[name="title"]'));
-    iconInput = element(by.css('input[placeholder="URL path"]'));
-    hexColorInput = element(by.css('input[placeholder="hex color code"]'));
-    logoHyperlinkInput = element(by.css('input[placeholder="Redirect URL"]'));
-    logoTooltipInput = element(by.css('input[placeholder="Tooltip text"]'));
+    iconInput = element(by.css('input[data-placeholder="URL path"]'));
+    hexColorInput = element(by.css('input[data-placeholder="hex color code"]'));
+    logoHyperlinkInput = element(by.css('input[data-placeholder="Redirect URL"]'));
+    logoTooltipInput = element(by.css('input[data-placeholder="Tooltip text"]'));
     positionStart = element.all(by.css('mat-radio-button[value="start"]')).first();
     positionEnd = element.all(by.css('mat-radio-button[value="end"]')).first();
     sideBarPositionRight = element(by.css('mat-sidenav.mat-drawer.mat-sidenav.mat-drawer-end'));

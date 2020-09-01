@@ -30,8 +30,8 @@ export class EditTaskFilterCloudComponentPage {
     id = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-taskId"]'));
     processDefinitionId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processDefinitionId"]'));
     processInstanceId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-processInstanceId"]'));
-    lastModifiedFrom = element(by.css('input[placeholder="LastModifiedFrom"]'));
-    lastModifiedTo = element(by.css('input[placeholder="LastModifiedTo"]'));
+    lastModifiedFrom = element(by.css('input[data-placeholder="LastModifiedFrom"]'));
+    lastModifiedTo = element(by.css('input[data-placeholder="LastModifiedTo"]'));
     parentTaskId = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-parentTaskId"]'));
     owner = element(by.css('input[data-automation-id="adf-cloud-edit-task-property-owner"]'));
     saveButton = element(by.css('[data-automation-id="adf-filter-action-save"]'));

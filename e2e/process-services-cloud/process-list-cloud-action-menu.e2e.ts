@@ -52,34 +52,27 @@ describe('Process list cloud', () => {
         let testUser, groupInfo, editProcess, deleteProcess;
 
         beforeAll(async () => {
-        await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-        testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
-        groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
-        await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
+            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
+            groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
+            await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
-        await apiService.login(testUser.email, testUser.password);
-        const processDefinition = await processDefinitionService
+            await apiService.login(testUser.email, testUser.password);
+            const processDefinition = await processDefinitionService
                 .getProcessDefinitionByName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.processes.simpleProcess, simpleApp);
 
-        editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+            editProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
-        deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
+            deleteProcess = await processInstancesService.createProcessInstance(processDefinition.entry.key, simpleApp, {
                 'name': StringUtil.generateRandomString(),
                 'businessKey': StringUtil.generateRandomString()
             });
 
-        await loginSSOPage.login(testUser.email, testUser.password);
-        });
+            await loginSSOPage.login(testUser.email, testUser.password);
 
-        afterAll(async () => {
-            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
-            await identityService.deleteIdentityUser(testUser.idIdentityService);
-        });
-
-        beforeAll(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();
             await appListCloudComponent.goToApp(simpleApp);
@@ -100,6 +93,12 @@ describe('Process list cloud', () => {
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
             await processCloudDemoPage.processFilterCloudComponent.clickRunningProcessesFilter();
         });
+
+        afterAll(async () => {
+            await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
+            await identityService.deleteIdentityUser(testUser.idIdentityService);
+        });
+
 
         it('[C315236] Should be able to see and execute custom action menu', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();

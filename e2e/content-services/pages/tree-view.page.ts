@@ -21,7 +21,7 @@ import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 export class TreeViewPage {
 
     treeViewTitle = element(by.cssContainingText('app-tree-view div', 'TREE VIEW TEST'));
-    nodeIdInput = element(by.css('input[placeholder="Node Id"]'));
+    nodeIdInput = element(by.css('input[data-placeholder="Node Id"]'));
     noNodeMessage = element(by.id('adf-tree-view-missing-node'));
     nodesOnPage = element.all(by.css('mat-tree-node'));
 

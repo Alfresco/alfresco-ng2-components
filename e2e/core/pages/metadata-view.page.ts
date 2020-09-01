@@ -43,7 +43,7 @@ export class MetadataViewPage {
     presetSwitch = element(by.id('adf-toggle-custom-preset'));
     defaultPropertiesSwitch = element(by.id('adf-metadata-default-properties'));
     closeButton = element(by.cssContainingText('button.mat-button span', 'Close'));
-    displayAspect = element(by.css(`input[placeholder='Display Aspect']`));
+    displayAspect = element(by.css(`input[data-placeholder='Display Aspect']`));
     applyAspect = element(by.cssContainingText(`button span.mat-button-wrapper`, 'Apply Aspect'));
     saveMetadataButton = element(by.css(`[data-automation-id='save-metadata']`));
     resetMetadataButton = element(by.css(`[data-automation-id='reset-metadata']`));
