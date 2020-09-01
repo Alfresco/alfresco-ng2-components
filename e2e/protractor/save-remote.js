@@ -42,12 +42,14 @@ async function uploadScreenshot(retryCount) {
         });
     }
 
+    fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}/`))
+
     const child_process = require("child_process");
-    child_process.execSync(` tar -czvf e2e-result.tar .`, {
-        cwd: path.resolve(__dirname, '../../e2e-output/')
+    child_process.execSync(` tar -czvf ../e2e-result-${retryCount}.tar .`, {
+        cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}/`)
     });
 
-    let pathFile = path.join(__dirname, '../../e2e-output/e2e-result.tar');
+    let pathFile = path.join(__dirname, `../../e2e-result-${retryCount}.tar`);
     let file = fs.createReadStream(pathFile);
     await alfrescoJsApi.upload.uploadFile(
         file,
