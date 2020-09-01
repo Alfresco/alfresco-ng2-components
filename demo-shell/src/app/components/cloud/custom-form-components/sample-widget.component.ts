@@ -15,18 +15,29 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { WidgetComponent } from '@alfresco/adf-core';
+import { Component, OnInit } from '@angular/core';
+import { FormService, WidgetComponent } from '@alfresco/adf-core';
 
 @Component({
     selector: 'app-sample-widget',
     template: `
-        <div style="color: red">Look, I'm custom cloud form widget!</div>
+        <div style="color: red">
+            Look, I'm custom cloud form widget!
+            <p *ngIf="displayValue">
+               Value :: <span> {{displayValue}}</span>
+            </p>
+        </div>
     `
 })
-export class SampleWidgetComponent extends WidgetComponent {
+export class SampleWidgetComponent extends WidgetComponent  implements OnInit {
 
-    constructor() {
-        super();
+    displayValue: string;
+
+    constructor(public formService: FormService) {
+        super(formService);
+    }
+
+    ngOnInit() {
+        this.displayValue = this.field.value;
     }
 }

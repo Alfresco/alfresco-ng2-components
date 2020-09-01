@@ -60,7 +60,7 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         private automationService: CoreAutomationService,
         private formRenderingService: FormRenderingService) {
         this.formRenderingService.register({
-            'sample-widget': () => SampleWidgetComponent
+            'custom': () => SampleWidgetComponent
         });
     }
 

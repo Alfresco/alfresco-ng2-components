@@ -30,7 +30,7 @@ export class ProcessCloudLayoutComponent {
 
     constructor(private formRenderingService: FormRenderingService) {
         this.formRenderingService.register({
-            'sample-widget': () => SampleWidgetComponent
+            'custom': () => SampleWidgetComponent
         });
     }
 }
