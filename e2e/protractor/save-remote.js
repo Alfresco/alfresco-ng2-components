@@ -13,7 +13,7 @@ function buildNumber() {
     return process.env.TRAVIS_BUILD_NUMBER;
 }
 
-async function uploadScreenshot(retryCount, folder) {
+async function uploadScreenshot(retryCount, suffixFileName) {
     console.log(`Start uploading report ${retryCount}`);
 
     let alfrescoJsApi = new AlfrescoApi({
@@ -23,10 +23,10 @@ async function uploadScreenshot(retryCount, folder) {
 
     await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
 
-    let folder;
+    let folderNode;
 
     try {
-        folder = await alfrescoJsApi.nodes.addNode('-my-', {
+        folderNode = await alfrescoJsApi.nodes.addNode('-my-', {
             'name': `retry-${retryCount}`,
             'relativePath': `Builds/${buildNumber()}/`,
             'nodeType': 'cm:folder'
@@ -34,7 +34,7 @@ async function uploadScreenshot(retryCount, folder) {
             'overwrite': true
         });
     } catch (error) {
-        folder = await alfrescoJsApi.nodes.getNode('-my-', {
+        folderNode = await alfrescoJsApi.nodes.getNode('-my-', {
             'relativePath': `Builds/${buildNumber()}/retry-${retryCount}`,
             'nodeType': 'cm:folder'
         }, {}, {
@@ -45,16 +45,16 @@ async function uploadScreenshot(retryCount, folder) {
     fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}/`))
 
     const child_process = require("child_process");
-    child_process.execSync(` tar -czvf ../e2e-result-${folder}-${retryCount}.tar .`, {
+    child_process.execSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
         cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}/`)
     });
 
-    let pathFile = path.join(__dirname, `../../e2e-result-${folder}-${retryCount}.tar`);
+    let pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);
     let file = fs.createReadStream(pathFile);
     await alfrescoJsApi.upload.uploadFile(
         file,
         '',
-        folder.entry.id,
+        folderNode.entry.id,
         null,
         {
             'name': 'e2e-result.tar',

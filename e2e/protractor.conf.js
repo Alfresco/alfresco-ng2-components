@@ -281,7 +281,7 @@ exports.config = {
                 retryCount = ++argv.retry;
             }
             try {
-                await uploadScreenshot(retryCount, folder);
+                await uploadScreenshot(retryCount, (process.env.FOLDER || ''));
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
