@@ -99,7 +99,6 @@ describe('Process list cloud', () => {
             await identityService.deleteIdentityUser(testUser.idIdentityService);
         });
 
-
         it('[C315236] Should be able to see and execute custom action menu', async () => {
             await processCloudDemoPage.editProcessFilterCloudComponent().openFilter();
             await processCloudDemoPage.editProcessFilterCloudComponent().setProcessName(editProcess.entry.name);

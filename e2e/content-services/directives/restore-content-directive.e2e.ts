@@ -142,6 +142,8 @@ describe('Restore content directive', () => {
         await trashcanPage.clickRestore();
         await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsNotDisplayed(testFile.entry.name);
 
+        await notificationHistoryPage.checkNotifyContains(testFile.entry.name + ' item restored');
+
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
@@ -150,7 +152,6 @@ describe('Restore content directive', () => {
         await navigationBarPage.clickTrashcanButton();
         await trashcanPage.waitForTableBody();
         await trashcanPage.getDocumentList().dataTablePage().checkRowContentIsDisplayed(testFile.entry.name);
-        await notificationHistoryPage.checkNotifyContains(testFile.entry.name + ' item restored');
     });
 
     it('[C260239] Should restore folder with content', async () => {

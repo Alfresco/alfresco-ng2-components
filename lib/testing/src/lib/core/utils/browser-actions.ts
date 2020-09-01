@@ -69,11 +69,24 @@ export class BrowserActions {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+
         if (present) {
-            return elementFinder.getText();
+            const text = await elementFinder.getText();
+
+            if (text === '') { //DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
+                const text = await this.getTextScript(elementFinder);
+                return text;
+            }
+
+            return text;
         } else {
+            Logger.error(`Get Text ${elementFinder.locator().toString()} not present`);
             return '';
         }
+    }
+
+    static async getTextScript(elementFinder: ElementFinder): Promise<string> {
+        return browser.executeScript(`return arguments[0].textContent`, elementFinder);
     }
 
     static async getInputValue(elementFinder: ElementFinder): Promise<string> {
@@ -83,6 +96,7 @@ export class BrowserActions {
         if (present) {
             return elementFinder.getAttribute('value');
         } else {
+            Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
         }
     }
