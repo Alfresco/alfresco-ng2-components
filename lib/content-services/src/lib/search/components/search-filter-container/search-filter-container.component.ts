@@ -51,6 +51,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     /** The column the filter will be applied on. */
     @Input()
     value: any;
+
     /** Emitted when a filter value is selected */
     @Output()
     filterSelection: EventEmitter<any> = new EventEmitter();
@@ -63,6 +64,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     category: SearchCategory;
     focusTrap: ConfigurableFocusTrap;
+    initialValue: any;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -73,6 +75,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
+        this.initialValue = this.value && this.value[this.col.key] ? this.value[this.col.key] : undefined;
     }
 
     ngOnDestroy() {
@@ -89,9 +92,9 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
-            this.widgetContainer.applyInnerWidget();
             this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
             this.filterSelection.emit();
+            this.widgetContainer.applyInnerWidget();
         } else {
             this.resetSearchFilter();
         }

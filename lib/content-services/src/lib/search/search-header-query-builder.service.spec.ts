@@ -154,11 +154,11 @@ describe('SearchHeaderQueryBuilder', () => {
             null
         );
 
-        expect(searchHeaderService.activeFilters.size).toBe(0);
+        expect(searchHeaderService.activeFilters.length).toBe(0);
 
         searchHeaderService.setActiveFilter(activeFilter, 'fake-value');
         searchHeaderService.setActiveFilter(activeFilter, 'fake-value');
 
-        expect(searchHeaderService.activeFilters.size).toBe(1);
+        expect(searchHeaderService.activeFilters.length).toBe(1);
     });
 });

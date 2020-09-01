@@ -1,16 +1,10 @@
 <div *ngIf="isFilterServiceActive">
     <adf-header-filter-template>
         <ng-template let-col>
-            <adf-search-filter-container
-                [col]="col"
-                (filterSelection)="onFilterSelectionChange()">
+            <adf-search-filter-container [col]="col"
+                                         [value]="value"
+                                         (filterSelection)="onFilterSelectionChange()">
             </adf-search-filter-container>
-
-            <!--
-        [value]="paramValues? paramValues[col.key] : null"
-        (update)="onFilterUpdate($event)"
-        (clear)="onAllFilterCleared()"
-        -->
         </ng-template>
     </adf-header-filter-template>
 </div>

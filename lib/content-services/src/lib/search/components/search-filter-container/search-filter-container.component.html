@@ -1,4 +1,5 @@
-<div *ngIf="!!category" class="adf-filter">
+<div *ngIf="!!category"
+     class="adf-filter">
     <button mat-icon-button
             [matMenuTriggerFor]="filter"
             id="filter-menu-button"
@@ -28,7 +29,7 @@
                                              [id]="category?.id"
                                              [selector]="category?.component?.selector"
                                              [settings]="category?.component?.settings"
-                                             [value]="value">
+                                             [value]="initialValue">
                 </adf-search-widget-container>
             </div>
             <mat-dialog-actions class="adf-filter-actions">

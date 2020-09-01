@@ -33,23 +33,11 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
     /** (optional) Initial filter value to sort . */
     @Input()
-    value: any;
+    value: any = {};
 
     /** The id of the current folder of the document list. */
     @Input()
     currentFolderId: string;
-
-    /** Maximum number of search results to show in a page. */
-    @Input()
-    maxItems: number;
-
-    /** The offset of the start of the page within the results list. */
-    @Input()
-    skipCount: number;
-
-    /** The sorting to apply to the the filter. */
-    @Input()
-    sorting: string = null;
 
     /** Emitted when a filter value is selected */
     @Output()
@@ -78,8 +66,11 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
                 this.documentList.reload();
             });
 
-        const [key, direction] = this.documentList.sorting;
-        this.searchHeaderQueryBuilder.setSorting(key, direction);
+        this.documentList.sortingSubject
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((sorting: DataSorting[]) => {
+                this.searchHeaderQueryBuilder.setSorting(sorting);
+            });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -91,28 +82,34 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
     onFilterSelectionChange() {
         this.filterSelection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
+        if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
+            this.documentList.node = null;
+            this.documentList.reload();
+        }
     }
 
     resetFilterHeader() {
         this.searchHeaderQueryBuilder.resetActiveFilters();
     }
 
-    private configureSearchParent(currentFolderNodeId: string) {
-        if (this.searchHeaderQueryBuilder.isCustomSourceNode(currentFolderNodeId)) {
-            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(currentFolderNodeId).subscribe((node: MinimalNode) => {
+    private configureSearchParent(currentFolderId: string) {
+        if (this.searchHeaderQueryBuilder.isCustomSourceNode(currentFolderId)) {
+            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(currentFolderId).subscribe((node: MinimalNode) => {
                 this.initSearchHeader(node.id);
             });
         } else {
-            this.initSearchHeader(currentFolderNodeId);
+            this.initSearchHeader(currentFolderId);
         }
     }
 
     private initSearchHeader(currentFolderId: string) {
         this.searchHeaderQueryBuilder.setCurrentRootFolderId(currentFolderId);
-        // if (this.value) {
-        //     this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.initialValue);
-        //     this.initialValue = this.value;
-        // }
+        if (this.value) {
+            Object.keys(this.value).forEach((columnKey) => {
+                this.searchHeaderQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
+            });
+        }
+
     }
 
     ngOnDestroy() {

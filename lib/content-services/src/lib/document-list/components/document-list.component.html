@@ -28,6 +28,7 @@
     <div *ngIf="headerFilters">
         <adf-filter-header
             [currentFolderId]="currentFolderId"
+            [value]="filterValue"
             (filterSelection)="onFilterSelectionChange($event)">
         </adf-filter-header>
     </div>

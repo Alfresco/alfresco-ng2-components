@@ -222,7 +222,6 @@
                 [contentActions]="true"
                 [allowDropFiles]="allowDropFiles"
                 [selectionMode]="selectionMode"
-                [preselectNodes]="selectedNodes"
                 [multiselect]="multiselect"
                 [display]="displayMode"
                 [node]="nodeResult"
@@ -232,6 +231,8 @@
                 [showHeader]="showHeader"
                 [thumbnails]="thumbnails"
                 [stickyHeader]="stickyHeader"
+                [headerFilters]="headerFilters"
+                [filterValue]="paramValues"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (ready)="emitReadyEvent($event)"
@@ -239,7 +240,7 @@
                 (folderChange)="onFolderChange($event)"
                 (permissionError)="handlePermissionError($event)"
                 (name-click)="documentList.onNodeDblClick($event.detail?.node)"
-                [headerFilters]="headerFilters">
+                (filterSelection)="onFilterSelected($event)">
 
                 <adf-custom-no-permission-template *ngIf="enableCustomPermissionMessage">
                     <h1>You don't have permissions</h1>

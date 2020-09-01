@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService, NodesApiService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService, NodesApiService, DataSorting } from '@alfresco/adf-core';
 import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 import { SearchCategory } from './search-category.interface';
@@ -64,10 +64,14 @@ export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
     }
 
     setActiveFilter(columnActivated: string, filterValue: string) {
-        this.activeFilters.push(<FilterSearch> {
-            key: columnActivated,
-            value: filterValue
-        });
+        const filterIndex = this.activeFilters.find((activeFilter) => activeFilter.key === columnActivated);
+        if (!filterIndex) {
+            this.activeFilters.push(<FilterSearch> {
+                key: columnActivated,
+                value: filterValue
+            });
+        }
+
     }
 
     resetActiveFilters() {
@@ -89,18 +93,24 @@ export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
         }
     }
 
-    setSorting(column: string, direction: string) {
-        const optionAscending = direction.toLocaleLowerCase() === 'asc' ? true : false;
-        const fieldValue = this.getSortingFieldFromColumnName(column);
-        const currentSort: SearchSortingDefinition = { key: column, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending };
-        this.sorting = [currentSort];
+    setSorting(dataSorting: DataSorting[]) {
+        this.sorting = [];
+        dataSorting.forEach((columnSorting: DataSorting) => {
+            const fieldValue = this.getSortingFieldFromColumnName(columnSorting.key);
+            if (fieldValue) {
+                const optionAscending = columnSorting.direction.toLocaleLowerCase() === 'asc' ? true : false;
+                const currentSort: SearchSortingDefinition = { key: columnSorting.key, label: 'current', type: 'FIELD', field: fieldValue, ascending: optionAscending };
+                this.sorting.push(currentSort);
+            }
+        });
+
         this.execute();
     }
 
     private getSortingFieldFromColumnName(columnName: string) {
         if (this.sortingOptions.length > 0) {
             const sortOption: SearchSortingDefinition = this.sortingOptions.find((option: SearchSortingDefinition) => option.key === columnName);
-            return sortOption.field;
+            return sortOption ? sortOption.field : '';
         }
         return '';
     }
@@ -127,6 +137,8 @@ export class SearchFilterQueryBuilderService extends BaseQueryBuilderService {
         this.filterQueries = [{
             query: `PARENT:"workspace://SpacesStore/${currentFolderId}"`
         }];
+
+        this.execute();
     }
 
     isCustomSourceNode(currentNodeId: string): boolean {

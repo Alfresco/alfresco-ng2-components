@@ -39,7 +39,8 @@ import {
     UploadFilesEvent,
     ConfirmDialogComponent,
     LibraryDialogComponent,
-    ContentMetadataService
+    ContentMetadataService,
+    FilterSearch
 } from '@alfresco/adf-content-services';
 
 import { SelectAppsDialogComponent, ProcessFormRenderingService } from '@alfresco/adf-process-services';
@@ -79,9 +80,9 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     toolbarColor = 'default';
 
     selectionModes = [
-        {value: 'none', viewValue: 'None'},
-        {value: 'single', viewValue: 'Single'},
-        {value: 'multiple', viewValue: 'Multiple'}
+        { value: 'none', viewValue: 'None' },
+        { value: 'single', viewValue: 'Single' },
+        { value: 'multiple', viewValue: 'Multiple' }
     ];
 
     // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
@@ -365,7 +366,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
     getCurrentDocumentListNode(): MinimalNodeEntity[] {
         if (this.documentList.folderNode) {
-            return [{entry: this.documentList.folderNode}];
+            return [{ entry: this.documentList.folderNode }];
         } else {
             return [];
         }
@@ -464,7 +465,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
 
         if (this.contentService.hasAllowableOperations(contentEntry, 'update')) {
             this.dialog.open(VersionManagerDialogAdapterComponent, {
-                data: {contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload},
+                data: { contentEntry: contentEntry, showComments: showComments, allowDownload: allowDownload },
                 panelClass: 'adf-version-manager-dialog',
                 width: '630px'
             });
@@ -677,34 +678,38 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         return '';
     }
 
-    // onFilterUpdate(newNodePaging: NodePaging) {
-    //     this.nodeResult = newNodePaging;
-    // }
+    onFilterSelected(activeFilters: FilterSearch[]) {
+        if (activeFilters.length) {
+           this.navigateToFilter(activeFilters);
+        } else {
+           this.clearFilterNavigation();
+        }
+    }
 
-    // onAllFilterCleared() {
-    //     this.documentList.node = null;
-    //     if (this.currentFolderId === '-my-') {
-    //         this.router.navigate([this.navigationRoute, '']);
-    //     } else {
-    //         this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
-    //     }
-    //     this.documentList.reload();
-    // }
+    navigateToFilter(activeFilters: FilterSearch[]) {
+        const objectFromMap = {};
+        activeFilters.forEach((filter: FilterSearch) => {
+            let paramValue = null;
+            if (filter.value && filter.value.from && filter.value.to) {
+                paramValue = `${filter.value.from}||${filter.value.to}`;
+            } else {
+                paramValue = filter.value;
+            }
+            objectFromMap[filter.key] = paramValue;
+        });
 
-    // onFilterSelected(currentActiveFilters: Map<string, string>) {
-    //     const objectFromMap = {};
-    //     currentActiveFilters.forEach((value: any, key) => {
-    //         let paramValue = null;
-    //         if (value && value.from && value.to) {
-    //             paramValue = `${value.from}||${value.to}`;
-    //         } else {
-    //             paramValue = value;
-    //         }
-    //         objectFromMap[key] = paramValue;
-    //     });
+        this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
+    }
 
-    //     this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
-    // }
+    clearFilterNavigation() {
+        this.documentList.node = null;
+        if (this.currentFolderId === '-my-') {
+            this.router.navigate([this.navigationRoute, '']);
+        } else {
+            this.router.navigate([this.navigationRoute, this.currentFolderId, 'display', this.displayMode]);
+        }
+        this.documentList.reload();
+    }
 
     setPreselectNodes(nodes: string) {
         this.selectedNodes = this.getArrayFromString(nodes);

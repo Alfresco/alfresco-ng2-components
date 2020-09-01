@@ -51,7 +51,7 @@ This component is designed to be used as transcluded inside the [document list c
 | currentFolderNodeId | `string` |  | The id of the current folder of the document list. |
 | maxItems | `number` |  | Maximum number of search results to show in a page. |
 | skipCount | `number` |  | The offset of the start of the page within the results list. |
-| sorting | `string` | null | The sorting to apply to the the filter. |
+| sorting | `string[]` | null | The sorting to apply to the the filter. |
 | value | `any` |  | (optional) Initial filter value to sort . |
 
 ### Events
