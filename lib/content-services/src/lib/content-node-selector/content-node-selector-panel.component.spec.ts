@@ -19,7 +19,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NodeEntry, Node, SiteEntry, SitePaging, NodePaging } from '@alfresco/js-api';
-import { SearchService, SitesService, setupTestBed, NodesApiService, UploadService, FileUploadCompleteEvent } from '@alfresco/adf-core';
+import { SearchService, SitesService, setupTestBed, NodesApiService } from '@alfresco/adf-core';
 import { Observable, Observer, of, throwError } from 'rxjs';
 import { DropdownBreadcrumbComponent } from '../breadcrumb';
 import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel.component';
@@ -31,7 +31,6 @@ import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.componen
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
-import { FileNode } from '../mock';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -57,7 +56,6 @@ describe('ContentNodeSelectorComponent', () => {
     let contentNodeSelectorService: ContentNodeSelectorService;
     let searchService: SearchService;
     let nodeService: NodesApiService;
-    let uploadService: UploadService;
     let sitesService: SitesService;
     let searchSpy: jasmine.Spy;
     let cnSearchSpy: jasmine.Spy;
@@ -96,7 +94,6 @@ describe('ContentNodeSelectorComponent', () => {
             nodeService = TestBed.inject(NodesApiService);
             contentNodeSelectorService = TestBed.inject(ContentNodeSelectorService);
             sitesService = TestBed.inject(SitesService);
-            uploadService = TestBed.inject(UploadService);
 
             spyOn(nodeService,  'getNode').and.returnValue(of({ id: 'fake-node', path: { elements: [{ nodeType: 'st:site', name: 'fake-site'}] } }));
             cnSearchSpy = spyOn(contentNodeSelectorService, 'search').and.callThrough();
@@ -1145,40 +1142,6 @@ describe('ContentNodeSelectorComponent', () => {
                     component.resetChosenNode();
                     fixture.detectChanges();
                 }));
-            });
-
-            describe('in case preSelectedNodes defined', () => {
-
-                it('should update completed uploaded files count', () => {
-                    const completedFiles = 2;
-                    const completeEvent = new FileUploadCompleteEvent(null, completedFiles, { entry: new FileNode('file-name') }, null);
-                    uploadService.fileUploadComplete.next(completeEvent);
-
-                    expect(component.preSelectedNodes).toEqual([]);
-                });
-                it('should NOT be null after selecting node with the necessary permissions', () => {
-                    // const completeEvent = new FileUploadCompleteEvent(null, 1, { entry: {isFile: true} }, null);
-                    spyOn(uploadService, 'uploadFilesInTheQueue').and.callFake(() => {});
-                    spyOn(component.documentList, 'nodeSelected');
-                    // uploadService.fileUploadComplete.next();
-                    // spyOn(uploadService, 'getUploadPromise').and.returnValue(new Promise((success) => {
-                    //     success(ss);
-                    // }));
-
-                    component.preSelectedNodes = [new FileNode()];
-                    fixture.detectChanges();
-                    // await fixture.whenStable();
-
-                    expect(component.chosenNode.length).toEqual(2);
-                    expect(component.documentList.nodeSelected).toHaveBeenCalled();
-                    // component.select.subscribe((nodes) => {
-                    //     expect(nodes).toBeDefined();
-                    //     expect(nodes).not.toBeNull();
-                    //     expect(component.chosenNode[0]).toBe(entry);
-                    // });
-
-                    // component.documentList.ready.emit(nodePage);
-                });
             });
 
         });

@@ -482,30 +482,30 @@ describe('ShareDataTableAdapter', () => {
         });
    });
 
-    describe('Preselected rows', () => {
+    describe('Preselect rows', () => {
 
-        it('should set isSelected to be true for each preselectedrow if the preselectedNodes are defined', () => {
+        it('should set isSelected to be true for each preselectRow if the preselectNodes are defined', () => {
             const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
             adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, mockPreselectedNodes);
 
-            expect(adapter.getPreSelectedRows().length).toBe(1);
-            expect(adapter.getPreSelectedRows()[0].isSelected).toBe(true);
+            expect(adapter.getPreselectRows().length).toBe(1);
+            expect(adapter.getPreselectRows()[0].isSelected).toBe(true);
         });
 
-        it('should set preselectedRows empty if preselectedNodes are undefined/empty', () => {
+        it('should set preselectRows empty if preselectedNodes are undefined/empty', () => {
             const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
             adapter.loadPage(mockNodePagingWithPreselectedNodes, null, null, []);
 
-            expect(adapter.getPreSelectedRows().length).toBe(0);
+            expect(adapter.getPreselectRows().length).toBe(0);
         });
 
-        it('should set preselectedRows empty if preselectedNodes are not found in the list', () => {
+        it('should set preselectRows empty if preselectedNodes are not found in the list', () => {
             const adapter = new ShareDataTableAdapter(thumbnailService, contentService, []);
             mockNode2.id = 'mock-file-id';
             const preselectedNode = [ { entry: mockNode2 }];
             adapter.loadPage(fakeNodePaging, null, null, preselectedNode);
 
-            expect(adapter.getPreSelectedRows().length).toBe(0);
+            expect(adapter.getPreselectRows().length).toBe(0);
         });
    });
 });

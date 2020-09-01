@@ -209,6 +209,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     stickyHeader: boolean;
+    preselectNodes: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
 
@@ -216,6 +217,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
+
+    selectedNodes = [];
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
@@ -685,6 +688,28 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
 
         this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
+    }
+
+    setPreselectNodes(nodes: string) {
+        this.selectedNodes = this.getArrayFromString(nodes);
+        this.documentList.reload();
+    }
+
+    isStringArray(str: string): boolean {
+        try {
+            const result = JSON.parse(str);
+            return Array.isArray(result);
+        } catch (e) {
+            return false;
+        }
+    }
+
+    private getArrayFromString<T = any>(value: string): T[] {
+        if (this.isStringArray(value)) {
+            return JSON.parse(value);
+        } else {
+            return [];
+        }
     }
 
 }

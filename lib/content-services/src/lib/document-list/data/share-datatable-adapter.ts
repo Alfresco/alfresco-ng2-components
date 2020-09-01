@@ -45,7 +45,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     permissionsStyle: PermissionStyleModel[];
     selectedRow: DataRow;
     allowDropFiles: boolean;
-    preSelectedRows: DataRow[] = [];
+    preselectRows: DataRow[] = [];
 
     set sortingMode(value: string) {
         let newValue = (value || 'client').toLowerCase();
@@ -82,8 +82,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.sort();
     }
 
-    getPreSelectedRows(): Array<DataRow> {
-        return this.preSelectedRows;
+    getPreselectRows(): Array<DataRow> {
+        return this.preselectRows;
     }
 
     getColumns(): Array<DataColumn> {
@@ -250,7 +250,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         }
     }
 
-    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preSelectedNodes: NodeEntry[] = []) {
+    public loadPage(nodePaging: NodePaging, merge: boolean = false, allowDropFiles?: boolean, preselectNodes: NodeEntry[] = []) {
         let shareDataRows: ShareDataRow[] = [];
         if (allowDropFiles !== undefined) {
             this.allowDropFiles = allowDropFiles;
@@ -297,14 +297,15 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         } else {
             this.rows = shareDataRows;
         }
-        this.selectRowsBasedOnGivenNodes(preSelectedNodes);
+
+        this.selectRowsBasedOnGivenNodes(preselectNodes);
     }
 
-    selectRowsBasedOnGivenNodes(preSelectedNodes: NodeEntry[]) {
-        if (preSelectedNodes && preSelectedNodes.length > 0) {
+    selectRowsBasedOnGivenNodes(preselectNodes: NodeEntry[]) {
+        if (preselectNodes && preselectNodes.length > 0) {
             this.rows = this.rows.map((row) => {
-                preSelectedNodes.map((preSelectedNode) => {
-                    if (row.obj.entry.id === preSelectedNode.entry.id) {
+                preselectNodes.map((preselectedNode) => {
+                    if (row.obj.entry.id === preselectedNode.entry.id) {
                         row.isSelected = true;
                     }
                 });
@@ -312,7 +313,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
             });
         }
 
-        this.preSelectedRows = [...this.rows.filter((res) => res.isSelected)];
+        this.preselectRows = [...this.rows.filter((res) => res.isSelected)];
     }
 
 }

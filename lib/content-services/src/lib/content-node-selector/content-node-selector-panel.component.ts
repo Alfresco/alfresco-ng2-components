@@ -224,7 +224,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     searchInput: FormControl = new FormControl();
 
     target: PaginatedComponent;
-    preSelectedNodes: NodeEntry[] = [];
+    preselectNodes: NodeEntry[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -287,7 +287,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroy$)
         )
         .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
-            this.preSelectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
+            this.preselectNodes = this.getPreselectNodesBasedOnSelectionMode(uploadedFiles);
             this.documentList.reload();
         });
     }
@@ -452,7 +452,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
-        this.preSelectedNodes = [];
+        this.preselectNodes = [];
         this.clearSearch();
         this.navigationChange.emit($event);
     }
@@ -528,7 +528,25 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         }
     }
 
-    hasPreSelectedNodes(): boolean {
-        return this.preSelectedNodes && this.preSelectedNodes.length > 0;
+    hasPreselectNodes(): boolean {
+        return this.preselectNodes && this.preselectNodes.length > 0;
+    }
+
+    isSingleSelectionMode(): boolean {
+        return this.selectionMode === 'single';
+    }
+
+    private getPreselectNodesBasedOnSelectionMode(uploadedFiles: FileUploadCompleteEvent[]): NodeEntry[] {
+        let selectedNodes: NodeEntry[] = [];
+
+        if (uploadedFiles && uploadedFiles.length > 0 ) {
+            if (this.isSingleSelectionMode()) {
+                selectedNodes = [...[uploadedFiles[uploadedFiles.length - 1]].map((uploadedFile) => uploadedFile.data)];
+            } else {
+                selectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
+            }
+        }
+
+        return selectedNodes;
     }
 }
