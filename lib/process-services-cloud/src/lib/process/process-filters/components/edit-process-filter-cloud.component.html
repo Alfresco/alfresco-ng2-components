@@ -66,6 +66,10 @@
                             </div>
                         </div>
                         </mat-form-field>
+
+                        <adf-cloud-date-range-filter *ngIf="isDateRangeType(processFilterProperty)"
+                            [processFilterProperty]="processFilterProperty"
+                            (dateChanged)="onDateRangeFilterChange($event, processFilterProperty)"></adf-cloud-date-range-filter>
                     </ng-container>
                 </div>
             </form>

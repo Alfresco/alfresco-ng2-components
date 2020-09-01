@@ -25,7 +25,7 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties } from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties, DateRangeFilter} from '../models/process-filter-cloud.model';
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
@@ -447,8 +447,16 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.toggleFilterActions = false;
     }
 
+    onDateRangeFilterChange(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
+        this.getPropertyController(property).setValue(`${dateRange.startDate}, ${dateRange.endDate}`);
+    }
+
     isDateType(property: ProcessFilterProperties): boolean {
         return property.type === 'date';
+    }
+
+    isDateRangeType(property: ProcessFilterProperties): boolean {
+        return property.type === 'dateRange';
     }
 
     isSelectType(property: ProcessFilterProperties): boolean {
@@ -674,6 +682,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 key: 'order',
                 value: currentProcessFilter.order || this.directions[0].value,
                 options: this.directions
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.CREATED_DATE',
+                type: 'dateRange',
+                key: 'createdDate',
+                value: currentProcessFilter.createdDate || ''
             })
         ];
     }

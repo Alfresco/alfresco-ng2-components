@@ -35,6 +35,7 @@ export class ProcessFilterCloudModel {
     lastModified: Date;
     lastModifiedTo: Date;
     lastModifiedFrom: Date;
+    createdDate: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -57,6 +58,7 @@ export class ProcessFilterCloudModel {
             this.lastModified = obj.lastModified || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
+            this.createdDate = obj.createdDate || null;
         }
     }
 }
