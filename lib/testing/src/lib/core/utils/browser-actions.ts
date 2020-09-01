@@ -71,10 +71,10 @@ export class BrowserActions {
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
 
         if (present) {
-            const text = await elementFinder.getText();
+            let text = await elementFinder.getText();
 
-            if (text === '') { //DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
-                const text = await this.getTextScript(elementFinder);
+            if (text === '') { // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
+                text = await this.getTextScript(elementFinder);
                 return text;
             }
 
