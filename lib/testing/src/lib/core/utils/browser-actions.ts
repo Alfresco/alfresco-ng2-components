@@ -152,7 +152,7 @@ export class BrowserActions {
 
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        await BrowserVisibility.waitUntilElementIsNotVisible(container);
+        await BrowserVisibility.waitUntilElementIsNotVisible(container, 1000);
     }
 
     static async closeDisabledMenu(): Promise<void> {

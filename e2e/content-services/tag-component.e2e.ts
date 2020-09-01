@@ -68,12 +68,13 @@ describe('Tag component', () => {
 
         await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
 
-        await loginPage.login(acsUser.email, acsUser.password);
+        await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
 
+        await loginPage.login(acsUser.email, acsUser.password);
         await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
     });
 

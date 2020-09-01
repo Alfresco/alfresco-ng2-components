@@ -223,10 +223,17 @@ describe('Document List Component - Actions', () => {
             it('[C260060] Should be able to open a file/folder through double click action - folder', async () => {
                 const folderTwoModel = new FolderModel({ name: 'folderTwo' });
                 const numberOfSubFolders = 3;
-                await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
+
+                await contentServicesPage.createNewFolder(folderTwoModel.name);
+                const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
+                await contentServicesPage.openFolder(folderTwoModel.name);
+
                 for (let i = 0; i < numberOfSubFolders; i++) {
-                    await contentServicesPage.createNewFolder('subFolder' + (i + 1));
+                    await uploadActions.createFolder('subfolder' + (i + 1), nodeIdSubFolderTwo);
                 }
+
+                await browser.refresh();
+
                 await contentServicesPage.checkContentsAreDisplayed(numberOfSubFolders);
             });
 

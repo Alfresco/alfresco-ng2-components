@@ -76,7 +76,7 @@ export class TagPage {
 
     async getNewTagPlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return this.newTagInput.getAttribute('placeholder');
+        return this.newTagInput.getAttribute('data-placeholder');
     }
 
     async addTagButtonIsEnabled(): Promise<boolean> {
