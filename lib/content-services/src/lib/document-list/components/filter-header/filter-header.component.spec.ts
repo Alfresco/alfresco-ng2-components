@@ -18,7 +18,7 @@
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { SearchService, setupTestBed, DataTableComponent } from '@alfresco/adf-core';
+import { SearchService, setupTestBed, DataTableComponent, DataSorting } from '@alfresco/adf-core';
 import { ContentTestingModule } from '../../../testing/content.testing.module';
 import { SimpleChange } from '@angular/core';
 import { SearchFilterQueryBuilderService } from './../../../search/search-filter-query-builder.service';
@@ -42,6 +42,7 @@ describe('FilterHeaderComponent', () => {
         node: 'my-node',
         sorting: ['name', 'asc'],
         pagination: new BehaviorSubject<Pagination>(paginationMock),
+        sortingSubject: new BehaviorSubject<DataSorting[]>([]),
         reload: () => jasmine.createSpy('reload')
     };
 
@@ -68,69 +69,83 @@ describe('FilterHeaderComponent', () => {
         fixture.destroy();
     });
 
-    it('should set pagination when pagination in document list changes', async () => {
+    it('should subscribe to changes in document list pagination', async () => {
         const setupCurrentPaginationSpy = spyOn(queryBuilder, 'setupCurrentPagination');
-        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-        component.ngOnChanges({ currentFolderNodeId: currentFolderNodeIdChange });
-        fixture.detectChanges();
 
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
         await fixture.whenStable();
+
         expect(setupCurrentPaginationSpy).toHaveBeenCalled();
     });
 
-    // it('should execute a new query when a new sorting is requested', async (done) => {
-    //     spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-    //     spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-    //     component.update.subscribe((newNodePaging) => {
-    //         expect(newNodePaging).toBe(fakeNodePaging);
-    //         done();
-    //     });
+    it('should subscribe to changes in document list sorting', async () => {
+        const setSortingSpy = spyOn(queryBuilder, 'setSorting');
 
-    //     const skipCount = new SimpleChange(null, '123-asc', false);
-    //     component.ngOnChanges({ 'sorting': skipCount });
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    // });
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    // it('should emit the clear event when no filter has valued applied', async (done) => {
-    //     spyOn(queryBuilder, 'isNoFilterActive').and.returnValue(true);
-    //     spyOn(alfrescoApiService.searchApi, 'search').and.returnValue(Promise.resolve(fakeNodePaging));
-    //     spyOn(queryBuilder, 'buildQuery').and.returnValue({});
-    //     spyOn(component, 'isActive').and.returnValue(true);
-    //     spyOn(component.widgetContainer, 'resetInnerWidget').and.stub();
-    //     component.widgetContainer.componentRef.instance.value = '';
-    //     const fakeEvent = jasmine.createSpyObj('event', ['stopPropagation']);
-    //     component.clear.subscribe(() => {
-    //         done();
-    //     });
+        expect(setSortingSpy).toHaveBeenCalled();
+    });
 
-    //     const menuButton: HTMLButtonElement = fixture.nativeElement.querySelector('#filter-menu-button');
-    //     menuButton.click();
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    //     const applyButton = fixture.debugElement.query(By.css('#apply-filter-button'));
-    //     applyButton.triggerEventHandler('click', fakeEvent);
-    //     fixture.detectChanges();
-    //     await fixture.whenStable();
-    // });
+    it('should reset filters after changing the folder node', async () => {
+        const resetActiveFiltersSpy = spyOn(queryBuilder, 'resetActiveFilters');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
 
-    // it('should not emit clear event when currentFolderNodeId changes and no filter was applied', async () => {
-    //     const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-    //     spyOn(component, 'isActive').and.returnValue(false);
-    //     spyOn(component.clear, 'emit');
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    //     component.ngOnChanges({ currentFolderNodeId: currentFolderNodeIdChange });
-    //     fixture.detectChanges();
-    //     expect(component.clear.emit).not.toHaveBeenCalled();
-    // });
+        expect(resetActiveFiltersSpy).toHaveBeenCalled();
+    });
 
-    // it('should emit clear event when currentFolderNodeId changes and filter was applied', async () => {
-    //     const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
-    //     spyOn(component.clear, 'emit');
-    //     spyOn(component, 'isActive').and.returnValue(true);
+    it('should init filters after changing the folder node', async () => {
+        const setCurrentRootFolderIdSpy = spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(setCurrentRootFolderIdSpy).toHaveBeenCalled();
+    });
 
-    //     component.ngOnChanges({ currentFolderNodeId: currentFolderNodeIdChange });
-    //     fixture.detectChanges();
-    //     expect(component.clear.emit).toHaveBeenCalled();
-    // });
+    it('should set active filters when an initial value is set', async () => {
+        spyOn(queryBuilder, 'setCurrentRootFolderId');
+        spyOn(queryBuilder, 'isCustomSourceNode').and.returnValue(false);
+
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(queryBuilder.getActiveFilters().length).toBe(0);
+
+        const initialFilterValue = { name: 'pinocchio'};
+        component.value = initialFilterValue;
+        const currentFolderNodeIdChange = new SimpleChange('current-node-id', 'next-node-id', true);
+        component.ngOnChanges({ currentFolderId: currentFolderNodeIdChange });
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        expect(queryBuilder.getActiveFilters().length).toBe(1);
+        expect(queryBuilder.getActiveFilters()[0].key).toBe('name');
+        expect(queryBuilder.getActiveFilters()[0].value).toBe('pinocchio');
+    });
+
+    it('should emit filterSelection when a filter is changed', async (done) => {
+        spyOn(queryBuilder, 'getActiveFilters').and.returnValue([{ key: 'name', value: 'pinocchio' }]);
+
+        component.filterSelection.subscribe((selectedFilters) => {
+            expect(selectedFilters.length).toBe(1);
+            expect(selectedFilters[0].key).toBe('name');
+            expect(selectedFilters[0].value).toBe('pinocchio');
+            done();
+        });
+
+        component.onFilterSelectionChange();
+        fixture.detectChanges();
+        await fixture.whenStable();
+    });
+
 });

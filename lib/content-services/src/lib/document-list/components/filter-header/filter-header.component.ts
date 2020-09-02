@@ -16,7 +16,7 @@
  */
 
 import { Component, Inject, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
-import { PaginationModel } from '@alfresco/adf-core';
+import { PaginationModel, DataSorting } from '@alfresco/adf-core';
 import { DocumentListComponent } from '../document-list.component';
 import { SEARCH_QUERY_SERVICE_TOKEN } from '../../../search/search-query-service.token';
 import { SearchFilterQueryBuilderService } from '../../../search/search-filter-query-builder.service';

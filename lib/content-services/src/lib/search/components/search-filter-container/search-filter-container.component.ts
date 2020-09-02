@@ -54,7 +54,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     /** Emitted when a filter value is selected */
     @Output()
-    filterSelection: EventEmitter<any> = new EventEmitter();
+    filterChange: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(SearchWidgetContainerComponent)
     widgetContainer: SearchWidgetContainerComponent;
@@ -93,7 +93,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
             this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
-            this.filterSelection.emit();
+            this.filterChange.emit();
             this.widgetContainer.applyInnerWidget();
         } else {
             this.resetSearchFilter();
@@ -108,7 +108,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
     resetSearchFilter() {
         this.widgetContainer.resetInnerWidget();
         this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
-        this.filterSelection.emit();
+        this.filterChange.emit();
     }
 
     getTooltipTranslation(columnTitle: string): string {

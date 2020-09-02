@@ -19,7 +19,7 @@ import { SearchConfiguration } from './search-configuration.interface';
 import { AppConfigService } from '@alfresco/adf-core';
 import { SearchFilterQueryBuilderService } from './search-filter-query-builder.service';
 
-describe('SearchHeaderQueryBuilder', () => {
+describe('SearchFilterQueryBuilderService', () => {
 
     const buildConfig = (searchSettings): AppConfigService => {
         const config = new AppConfigService(null);
