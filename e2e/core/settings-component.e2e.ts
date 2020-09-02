@@ -97,7 +97,7 @@ describe('Settings component', () => {
         });
     });
 
-    fdescribe('Settings Component - Basic Authentication', () => {
+    describe('Settings Component - Basic Authentication', () => {
         beforeAll(async () => {
             await LocalStorageUtil.setStorageItem('authType', 'OAUTH');
             await browser.refresh();
