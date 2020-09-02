@@ -22,6 +22,7 @@ export class InfinitePaginationPage {
 
     rootElement: ElementFinder;
     loadMoreButton;
+    loading = element(by.css('[data-automation-id="adf-infinite-pagination-spinner"]'));
 
     constructor(rootElement = element.all(by.css('adf-infinite-pagination')).first()) {
         this.rootElement = rootElement;
@@ -30,6 +31,7 @@ export class InfinitePaginationPage {
 
     async clickLoadMoreButton(): Promise<void> {
         await BrowserActions.click(this.loadMoreButton);
+        await BrowserVisibility.waitUntilElementIsNotVisible(this.loading);
     }
 
     async checkLoadMoreButtonIsNotDisplayed(): Promise<void> {

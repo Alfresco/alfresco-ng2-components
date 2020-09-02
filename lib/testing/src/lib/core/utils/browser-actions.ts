@@ -75,7 +75,7 @@ export class BrowserActions {
 
             if (text === '') { // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
                 text = await this.getTextScript(elementFinder);
-                return text;
+                return text?.trim();
             }
 
             return text;
