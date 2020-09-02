@@ -133,6 +133,19 @@ describe('DropdownCloudWidgetComponent', () => {
                     });
             }));
 
+            it('should display tooltip when tooltip is set', async(() => {
+                widget.field.tooltip = 'dropdown widget';
+
+                widget.ngOnInit();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    const dropDownElement: any = element.querySelector('#dropdown-id');
+                    const tooltip = dropDownElement.getAttribute('ng-reflect-message');
+
+                    expect(tooltip).toEqual(widget.field.tooltip);
+                });
+            }));
+
             it('should load data from restUrl and populate options', async(() => {
                 widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                     id: 'dropdown-id',
@@ -350,7 +363,6 @@ describe('DropdownCloudWidgetComponent', () => {
                     done();
                 });
             });
-
         });
     });
 });

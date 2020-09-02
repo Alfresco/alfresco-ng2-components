@@ -268,5 +268,15 @@ describe('PeopleWidgetComponent', () => {
                 expect(selectEmitSpy).toHaveBeenCalledWith(1001);
             });
         });
+
+        it('should display tooltip when tooltip is set', async(() => {
+            widget.field.tooltip = 'people widget';
+
+            fixture.detectChanges();
+            const radioButtonsElement: any = element.querySelector('#people-id');
+            const tooltip = radioButtonsElement.getAttribute('ng-reflect-message');
+
+            expect(tooltip).toEqual(widget.field.tooltip);
+        }));
     });
 });

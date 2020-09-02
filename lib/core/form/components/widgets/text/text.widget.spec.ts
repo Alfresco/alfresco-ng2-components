@@ -203,6 +203,21 @@ describe('TextWidgetComponent', () => {
                 expect(widget.field.isValid).toBe(false);
             });
 
+            it('should display tooltip when tooltip is set', async(() => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'text-id',
+                    name: 'text-name',
+                    value: '',
+                    type: FormFieldTypes.TEXT,
+                    tooltip: 'text widget'
+                });
+
+                fixture.detectChanges();
+                const textElement: any = element.querySelector('#text-id');
+                const tooltip = textElement.getAttribute('ng-reflect-message');
+
+                expect(tooltip).toEqual(widget.field.tooltip);
+            }));
         });
 
         describe('and no mask is configured on text element', () => {
