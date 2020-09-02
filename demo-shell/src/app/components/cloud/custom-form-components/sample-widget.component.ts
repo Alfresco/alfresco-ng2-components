@@ -38,7 +38,8 @@ import { FormService, WidgetComponent } from '@alfresco/adf-core';
                        [(ngModel)]="field.value"
                        (ngModelChange)="onFieldChanged(field)">
             </mat-form-field>
-
+            <error-widget [error]="field.validationSummary"></error-widget>
+            <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         </div>
     `
 })
