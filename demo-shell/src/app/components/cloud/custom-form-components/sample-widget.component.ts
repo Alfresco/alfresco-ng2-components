@@ -23,9 +23,22 @@ import { FormService, WidgetComponent } from '@alfresco/adf-core';
     template: `
         <div style="color: red">
             Look, I'm custom cloud form widget!
-            <p *ngIf="displayValue">
+            <p *ngIf="field.readOnly || readOnly">
                Value :: <span> {{displayValue}}</span>
             </p>
+
+            <mat-form-field *ngIf="!(field.readOnly || readOnly)">
+                <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+                <input matInput
+                       class="adf-input"
+                       type="text"
+                       [id]="field.id"
+                       [required]="isRequired()"
+                       [value]="field.value"
+                       [(ngModel)]="field.value"
+                       (ngModelChange)="onFieldChanged(field)">
+            </mat-form-field>
+
         </div>
     `
 })
