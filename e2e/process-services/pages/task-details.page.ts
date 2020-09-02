@@ -44,7 +44,7 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
+    emailInvolvedUser = by.css('[data-automation-id="adf-people-email"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -302,7 +302,7 @@ export class TaskDetailsPage {
     }
 
     getRowsUser(user: string) {
-        return element(by.cssContainingText('div[class*="people-full-name"]', user));
+        return element(by.cssContainingText('div[data-automation-id="adf-people-full-name"]', user));
     }
 
     async removeInvolvedUser(user): Promise<void> {
@@ -408,7 +408,7 @@ export class TaskDetailsPage {
     }
 
     async clickCompleteFormTask(): Promise<void> {
-        await BrowserActions.clickScript(this.completeFormTask);
+        await BrowserActions.click(this.completeFormTask);
     }
 
     async getEmptyTaskDetailsMessage(): Promise<string> {
