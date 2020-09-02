@@ -227,7 +227,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
-            await navigationBarPage.clickLogoutButton()
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(candidate1.email, candidate1.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
