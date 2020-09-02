@@ -147,4 +147,20 @@ export class PaginationPage {
         const condition = () => this.totalFiles.getText().then(value => value && +value.split('of ')[1] < expectedValue);
         return browser.wait(condition, 10000);
     }
+
+    async waitUntilRangeOfItemsIsEqualTo(expectedValue: string): Promise<any> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
+        const condition = () => this.totalFiles.getText().then(value => {
+            return value && value === expectedValue;
+        });
+        return browser.wait(condition, 10000);
+    }
+
+    async waitUntilNoOfItemsIsEqualTo(expectedValue: number): Promise<any> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
+        const condition = () => this.totalFiles.getText().then(value => {
+            return value && +value.split('of ')[1] === expectedValue;
+        });
+        return browser.wait(condition, 10000);
+    }
 }
