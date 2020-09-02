@@ -17,7 +17,6 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
-import * as remote from 'selenium-webdriver/remote';
 
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
@@ -127,8 +126,6 @@ export class UsersActions {
     }
 
     async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
-        browser.setFileDetector(new remote.FileDetector());
-
         const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 

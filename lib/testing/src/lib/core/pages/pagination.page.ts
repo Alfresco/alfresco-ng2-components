@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { Locator, browser, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -25,7 +25,7 @@ export class PaginationPage {
     pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage = element(by.css('.adf-pagination__max-items'));
     itemsPerPageOpenDropdown = element(by.css('.adf-pagination__perpage-block button'));
-    itemsPerPageOptions = by.css('.adf-pagination__page-selector .mat-menu-item');
+    itemsPerPageOptions: Locator = by.css('.adf-pagination__page-selector .mat-menu-item');
     currentPage = element(by.css('.adf-pagination__current-page'));
     totalPages = element(by.css('.adf-pagination__total-pages'));
     paginationRange = element(by.css('.adf-pagination__range'));
@@ -33,7 +33,7 @@ export class PaginationPage {
     nextButtonDisabled = element(by.css('button[class*="adf-pagination__next-button"][disabled]'));
     previousButtonDisabled = element(by.css('button[class*="adf-pagination__previous-button"][disabled]'));
     pageDropDown = element(by.css('div[class*="adf-pagination__actualinfo-block"] button'));
-    pageDropDownOptions = by.css('div[class*="mat-menu-content"] button');
+    pageDropDownOptions: Locator = by.css('div[class*="mat-menu-content"] button');
     paginationSection = element(by.css('adf-pagination'));
     paginationSectionEmpty = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     totalFiles = element(by.css('.adf-pagination__range'));

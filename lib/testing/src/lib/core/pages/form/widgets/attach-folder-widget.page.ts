@@ -15,18 +15,16 @@
  * limitations under the License.
  */
 
-import * as remote from 'selenium-webdriver/remote';
-import { browser, by, element } from 'protractor';
+import { Locator, by, element } from 'protractor';
 import { FormFields } from '../form-fields';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
 
 export class AttachFolderWidgetPage {
 
     formFields: FormFields = new FormFields();
-    foldersListLocator = by.css('.adf-attach-folder-result');
+    foldersListLocator: Locator = by.css('.adf-attach-folder-result');
 
     async clickWidget(fieldId: string): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
         const widget = await this.formFields.getWidget(fieldId).element(by.css(`button[id="folder-${fieldId}-button"]`));
         await BrowserActions.click(widget);
     }

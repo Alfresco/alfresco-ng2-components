@@ -16,15 +16,15 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element, protractor } from 'protractor';
+import { Locator, by, element, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class DynamicTableWidgetPage {
 
     formFields = new FormFields();
 
-    labelLocator = by.css('dynamic-table-widget div div');
-    columnNameLocator = by.css('table[id*="dynamic-table"] th');
+    labelLocator: Locator = by.css('dynamic-table-widget div div');
+    columnNameLocator: Locator = by.css('table[id*="dynamic-table"] th');
     cancelButton = element(by.cssContainingText('button span', 'Cancel'));
     editButton = element(by.cssContainingText('button span', 'edit'));
     columnDateTime = element(by.id('columnDateTime'));

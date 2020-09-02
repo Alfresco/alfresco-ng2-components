@@ -447,7 +447,7 @@ describe('Start Process Component', () => {
                 await startProcessPage.checkStartProcessButtonIsDisabled();
             });
 
-            fit('[C261039] Advanced date time widget', async () => {
+            it('[C261039] Advanced date time widget', async () => {
                 await processServicesPage.goToApp(dateFormApp.title);
                 await processServiceTabBarPage.clickProcessButton();
                 await processFiltersPage.clickCreateProcessButton();
@@ -500,7 +500,7 @@ describe('Start Process Component', () => {
             await applicationsService.importPublishDeployApp(startProcessAttachFileApp.file_path);
         });
 
-        fit('[C260490] Should be able to start a Process within ACS', async () => {
+        it('[C260490] Should be able to start a Process within ACS', async () => {
             await BrowserActions.getUrl(`${browser.baseUrl}/settings`);
 
             await LocalStorageUtil.setStorageItem('providers', 'ALL');

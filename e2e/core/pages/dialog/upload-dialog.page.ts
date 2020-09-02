@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, browser, ElementFinder } from 'protractor';
+import { element, by, browser, ElementFinder, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class UploadDialogPage {
@@ -23,9 +23,9 @@ export class UploadDialogPage {
     closeButton = element((by.css('footer[class*="upload-dialog__actions"] button[id="adf-upload-dialog-close"]')));
     dialog = element(by.css('div[id="upload-dialog"]'));
     minimizedDialog = element(by.css('div[class*="upload-dialog--minimized"]'));
-    uploadedStatusIcon = by.css('mat-icon[class*="status--done"]');
-    cancelledStatusIcon = by.css('div[class*="status--cancelled"]');
-    errorStatusIcon = by.css('div[class*="status--error"] mat-icon');
+    uploadedStatusIcon: Locator = by.css('mat-icon[class*="status--done"]');
+    cancelledStatusIcon: Locator = by.css('div[class*="status--cancelled"]');
+    errorStatusIcon: Locator = by.css('div[class*="status--error"] mat-icon');
     errorTooltip = element(by.css('div.mat-tooltip'));
     rowByRowName = by.xpath('ancestor::adf-file-uploading-list-row');
     title = element(by.css('span[class*="upload-dialog__title"]'));

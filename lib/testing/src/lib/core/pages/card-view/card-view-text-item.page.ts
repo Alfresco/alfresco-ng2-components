@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { element, by, ElementFinder, Key } from 'protractor';
+import { Locator, element, by, ElementFinder, Key } from 'protractor';
 import { BrowserActions, BrowserVisibility } from '../../utils/public-api';
 export class CardTextItemPage {
 
     rootElement: ElementFinder;
-    textField = by.css('[data-automation-id*="card-textitem-value"]');
-    saveButton = by.css('button[data-automation-id*="card-textitem-update"]');
-    clearButton = by.css('button[data-automation-id*="card-textitem-reset"]');
-    field = by.css('[data-automation-id*="card-textitem-value"]');
-    labelLocator = by.css('div[data-automation-id*="card-textitem-label"]');
-    errorMessage = by.css('.adf-textitem-editable-error');
-    clickableElement = by.css('.adf-textitem-clickable');
-    readOnlyField = by.css('.adf-property-read-only');
+    textField: Locator = by.css('[data-automation-id*="card-textitem-value"]');
+    saveButton: Locator = by.css('button[data-automation-id*="card-textitem-update"]');
+    clearButton: Locator = by.css('button[data-automation-id*="card-textitem-reset"]');
+    field: Locator = by.css('[data-automation-id*="card-textitem-value"]');
+    labelLocator: Locator = by.css('div[data-automation-id*="card-textitem-label"]');
+    errorMessage: Locator = by.css('.adf-textitem-editable-error');
+    clickableElement: Locator = by.css('.adf-textitem-clickable');
+    readOnlyField: Locator = by.css('.adf-property-read-only');
 
     constructor(label: string = 'assignee') {
         this.rootElement = element(by.xpath(`//div[contains(@data-automation-id, "label-${label}")]/ancestor::adf-card-view-textitem`));

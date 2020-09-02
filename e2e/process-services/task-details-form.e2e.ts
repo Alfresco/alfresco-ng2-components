@@ -116,7 +116,7 @@ describe('Task Details - Form', () => {
         await attachFormPage.checkCancelButtonIsDisplayed();
         await attachFormPage.clickCancelButton();
 
-        await taskDetailsPage.checkFormIsAttached(attachedForm.name);
+        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual(attachedForm.name);
 
         await taskDetailsPage.clickForm();
 
@@ -128,7 +128,7 @@ describe('Task Details - Form', () => {
         await attachFormPage.checkAttachFormButtonIsDisplayed();
         await attachFormPage.clickAttachFormButton();
 
-        await taskDetailsPage.checkFormIsAttached(newForm.name);
+        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual(newForm.name);
     });
 
     it('[C280019] Should be able to remove the form form a task', async () => {
@@ -138,7 +138,7 @@ describe('Task Details - Form', () => {
         await taskDetailsPage.checkRemoveAttachFormIsDisplayed();
         await taskDetailsPage.clickRemoveAttachForm();
 
-        await taskDetailsPage.checkFormIsAttached('No form');
+        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual('No form');
 
         await expect(await taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
@@ -150,7 +150,8 @@ describe('Task Details - Form', () => {
         await taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 
         await tasksListPage.selectRow(otherTask.name);
-        await taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
+
+        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual(otherAttachedForm.name);
     });
 
     describe('Task Details - Complete form with visibility conditions on tabs', () => {
@@ -214,6 +215,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
+
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
         });

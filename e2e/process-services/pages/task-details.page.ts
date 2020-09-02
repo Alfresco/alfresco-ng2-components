@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { browser, by, element, Key } from 'protractor';
+import { Locator, browser, by, element, Key } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
@@ -44,7 +44,7 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.css('[data-automation-id="adf-people-email"]');
+    emailInvolvedUser: Locator = by.css('[data-automation-id="adf-people-email"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -110,16 +110,8 @@ export class TaskDetailsPage {
         await this.attachFormDropdown.selectDropdownOption(option);
     }
 
-    async checkCancelAttachFormIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.cancelAttachForm);
-    }
-
     async noFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.formContent);
-    }
-
-    async clickCancelAttachForm(): Promise<void> {
-        await BrowserActions.click(this.cancelAttachForm);
     }
 
     async checkRemoveAttachFormIsDisplayed() {
@@ -128,6 +120,7 @@ export class TaskDetailsPage {
 
     async clickRemoveAttachForm(): Promise<void> {
         await BrowserActions.click(this.removeAttachForm);
+        await browser.sleep(2000);
     }
 
     async checkAttachFormButtonIsDisplayed(): Promise<void> {
@@ -142,9 +135,8 @@ export class TaskDetailsPage {
         return BrowserActions.click(this.attachFormButton);
     }
 
-    async checkFormIsAttached(formName): Promise<void> {
-        const attachedFormName = await BrowserActions.getInputValue(this.formNameField);
-        await expect(attachedFormName).toEqual(formName);
+    async checkFormIsAttached(): Promise<string> {
+        return BrowserActions.getInputValue(this.formNameField);
     }
 
     getFormName(): Promise<string> {

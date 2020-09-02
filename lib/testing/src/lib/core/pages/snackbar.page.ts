@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by } from 'protractor';
+import { Locator, element, by } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -23,7 +23,7 @@ export class SnackbarPage {
 
     notificationSnackBar = element.all(by.css('simple-snack-bar span')).first();
     snackBarAction = element(by.css('simple-snack-bar button span'));
-    snackBarContainerCss = by.css('.mat-snack-bar-container');
+    snackBarContainerCss: Locator = by.css('.mat-snack-bar-container');
 
     async waitForSnackBarToAppear() {
         return BrowserVisibility.waitUntilElementIsVisible(element.all(this.snackBarContainerCss).first(), 5000,

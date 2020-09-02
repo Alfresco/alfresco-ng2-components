@@ -87,16 +87,12 @@ describe('Start Task - Task App', () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         const taskDetails = await taskPage.taskDetails();
 
-
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
 
-        console.log(assigneeUserModel.firstName + '' +assigneeUserModel.lastName)
         await taskPage.taskDetails().clickAddInvolvedUserButton();
-
-        await browser.sleep(900000);
 
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);

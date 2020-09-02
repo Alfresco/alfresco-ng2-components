@@ -8,7 +8,6 @@
       "@alfresco/js-api": "@alfresco/js-api",
       "moment-es6": "moment-es6",
       "protractor": "protractor",
-      "selenium-webdriver/remote": "selenium-webdriver/remote",
       "selenium-webdriver": "selenium-webdriver",
       "fs": "fs",
       "path": "path"

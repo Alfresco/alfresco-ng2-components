@@ -21,7 +21,7 @@ import { TaskDetailsPage } from './task-details.page';
 import { FiltersPage } from './filters.page';
 import { ChecklistDialog } from './dialog/create-checklist-dialog.page';
 import { TasksListPage } from './tasks-list.page';
-import { element, by } from 'protractor';
+import { Locator, element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions, FormFields } from '@alfresco/adf-testing';
 
 export class TasksPage {
@@ -29,14 +29,14 @@ export class TasksPage {
     newTaskButton = element(by.css('button[data-automation-id="btn-start-task"]'));
     addChecklistButton = element(by.css('button[class*="adf-add-to-checklist-button"]'));
     rowByRowName = by.xpath('ancestor::mat-chip');
-    checklistContainer = by.css('div[class*="checklist-menu"]');
+    checklistContainer: Locator = by.css('div[class*="checklist-menu"]');
     taskTitle = '.adf-activiti-task-details__header span';
-    rows = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[class*="adf-datatable-cell"]');
+    rows: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[class*="adf-datatable-cell"]');
     completeButtonNoForm = element(by.id('adf-no-form-complete-button'));
     checklistDialog = element(by.id('checklist-dialog'));
     checklistNoMessage = element(by.id('checklist-none-message'));
     numberOfChecklists = element(by.css('[data-automation-id="checklist-label"] mat-chip'));
-    sortByName = by.css('div[data-automation-id="auto_id_name"]');
+    sortByName: Locator = by.css('div[data-automation-id="auto_id_name"]');
 
     async createNewTask(): Promise<StartTaskDialogPage> {
         await this.clickOnCreateButton();

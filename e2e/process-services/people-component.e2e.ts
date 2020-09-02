@@ -71,6 +71,10 @@ describe('People component', () => {
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
+    afterEach(async () => {
+        await navigationBarPage.clickLogoutButton();
+    });
+
     it('[C279989] Should no people be involved when no user is typed', async () => {
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         await taskPage.tasksListPage().selectRow(tasks[0]);

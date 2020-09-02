@@ -26,13 +26,13 @@ export class FormFieldsPage {
     formContent = element(by.css('adf-form'));
     refreshButton = element(by.css('div[class*="form-reload-button"] mat-icon'));
     saveButton = element(by.cssContainingText('mat-card-actions[class*="adf-for"] span', 'SAVE'));
-    valueLocator = by.css('input');
-    labelLocator = by.css('label');
+    valueLocator: Locator = by.css('input');
+    labelLocator: Locator = by.css('label');
     noFormMessage = element(by.css('.adf-empty-content__title'));
     completedTaskNoFormMessage = element(by.css('div[id*="completed-form-message"] p'));
     attachFormButton = element(by.id('adf-attach-form-attach-button'));
     completeButton = element(by.id('adf-form-complete'));
-    errorMessage = by.css('.adf-error-text-container .adf-error-text');
+    errorMessage: Locator = by.css('.adf-error-text-container .adf-error-text');
 
     selectFormDropdown = new DropdownPage(element.all(by.css('.adf-attach-form .mat-select-arrow')).first());
 

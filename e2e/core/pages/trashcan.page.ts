@@ -16,12 +16,12 @@
  */
 
 import { BrowserActions, BrowserVisibility, DocumentListPage } from '@alfresco/adf-testing';
-import { element, by } from 'protractor';
+import { Locator, element, by } from 'protractor';
 
 export class TrashcanPage {
 
     contentList = new DocumentListPage(element(by.css('adf-document-list')));
-    rows = by.css('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
+    rows: Locator = by.css('adf-document-list div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-document-list .adf-datatable-body')).first();
     pagination = element(by.css('adf-pagination'));
     emptyTrashcan = element(by.css('adf-empty-content'));

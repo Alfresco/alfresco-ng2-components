@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, Locator } from 'protractor';
+import { Locator, by } from 'protractor';
 
 export class MultilineTextWidgetPage {
 

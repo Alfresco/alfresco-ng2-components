@@ -31,6 +31,7 @@ import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.componen
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
+import { Locator } from 'protractor';
 
 const ONE_FOLDER_RESULT = {
     list: {
@@ -906,7 +907,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     tick(debounceSearch);
 
-                    const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
+                    const spinnerSelector: Locator = by.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
                     const paginationLoading = fixture.debugElement.query(spinnerSelector);
                     expect(paginationLoading).not.toBeNull();
                 }));

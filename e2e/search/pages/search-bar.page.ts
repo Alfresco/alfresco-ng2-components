@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { Locator, browser, by, element, ElementFinder, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class SearchBarPage {
@@ -24,9 +24,9 @@ export class SearchBarPage {
     searchBar = element(by.css(`adf-search-control input`));
     searchBarExpanded = element(by.css(`adf-search-control mat-form-field[class*="mat-focused"] input`));
     noResultMessage = element(by.css(`p[class*='adf-search-fixed-text']`));
-    rowsAuthor = by.css(`.mat-list-text p[class*='adf-search-fixed-text']`);
-    completeName = by.css(`h4[class*='adf-search-fixed-text']`);
-    highlightName = by.css(`.adf-highlight`);
+    rowsAuthor: Locator = by.css(`.mat-list-text p[class*='adf-search-fixed-text']`);
+    completeName: Locator = by.css(`h4[class*='adf-search-fixed-text']`);
+    highlightName: Locator = by.css(`.adf-highlight`);
     searchBarPage = element(by.css(`mat-list[id='autocomplete-search-result-list']`));
 
     async pressDownArrowAndEnter(): Promise<void> {
