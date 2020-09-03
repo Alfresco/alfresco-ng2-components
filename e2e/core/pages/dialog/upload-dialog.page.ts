@@ -63,8 +63,9 @@ export class UploadDialogPage {
         return element.all(by.css(`div[class*='uploading-row'] span[title="${content}"]`)).first();
     }
 
-    getRowByRowName(content: string) {
+    async getRowByRowName(content: string): Promise<ElementFinder> {
         const rows = this.getRowsByName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(rows);
         return rows.element(this.rowByRowName);
     }
 
@@ -102,6 +103,7 @@ export class UploadDialogPage {
 
     async fileIsCancelled(content: string): Promise<void> {
         const row = await this.getRowByRowName(content);
+        await BrowserVisibility.waitUntilElementIsVisible(row);
         await BrowserVisibility.waitUntilElementIsVisible(row.element(this.cancelledStatusIcon), 10000);
     }
 

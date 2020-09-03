@@ -177,8 +177,12 @@ export class DataTableComponentPage {
     }
 
     async numberOfRows(): Promise<number> {
-        await this.waitForFirstRow();
-        return this.rootElement.all(this.rows).count();
+        try {
+            await this.waitForFirstRow();
+            return this.rootElement.all(this.rows).count();
+        } catch (e) {
+            return 0;
+        }
     }
 
     async waitForFirstRow(): Promise<void> {

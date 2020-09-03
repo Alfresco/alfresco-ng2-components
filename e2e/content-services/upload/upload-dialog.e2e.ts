@@ -231,13 +231,12 @@ describe('Upload component', () => {
         await uploadDialog.dialogIsNotDisplayed();
 
         await uploadToggles.enableFolderUpload();
-        await browser.executeScript(` setInterval(() => {
-               if(document.querySelector('[data-automation-id="adf"]')){
-                    document.querySelector("#adf-upload-dialog-cancel-all").click();
-                    document.querySelector("#adf-upload-dialog-cancel").click();
-                }
-              }, 500)`);
         await contentServicesPage.uploadFolder(adfBigFolder.location);
+
+        await browser.sleep(5000); // Need to wait few files upload
+        await uploadDialog.cancelUploads();
+        await uploadDialog.clickOnConfirmationDialogYesButton();
+        await uploadDialog.fileIsCancelled('a_bmp_file.BMP');
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
