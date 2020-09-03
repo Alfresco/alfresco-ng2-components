@@ -68,6 +68,7 @@ describe('Typeahead widget', () => {
         await expect(suggestions.sort()).toEqual(typeaheadWidget.case1.result.sort());
 
         await widget.typeahedWidget().fillTypeaheadField(typeaheadWidget.case2.searchTerm);
+
         await widget.typeahedWidget().checkDropDownListIsDisplayed();
         suggestions = await widget.typeahedWidget().getDropDownList();
         await expect(suggestions.sort()).toEqual(typeaheadWidget.case2.result);
@@ -80,6 +81,9 @@ describe('Typeahead widget', () => {
 
         await taskPage.tasksListPage().selectRow(name);
         await widget.typeahedWidget().checkTypeaheadFieldIsDisplayed();
+
+        await browser.sleep(1000);
+
         await expect(await widget.typeahedWidget().getFieldValue('1583773306434')).toBe(typeaheadWidget.case2.result[0]);
     });
 });

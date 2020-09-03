@@ -37,11 +37,15 @@ export class BrowserActions {
     }
 
     static async clickScript(elementFinder: ElementFinder): Promise<void> {
+        Logger.info(`Click script ${elementFinder.locator().toString()}`);
+
         await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
         await browser.executeScript(`arguments[0].click();`, elementFinder);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
+        Logger.info(`Click execute script ${elementCssSelector}`);
+
         await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
@@ -123,13 +127,22 @@ export class BrowserActions {
         }
     }
 
-    static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
+    static async clearSendKeys(elementFinder: ElementFinder, text: string, sleepTime: number = 0): Promise<void> {
         Logger.info(`Clear and sendKeys text:${text} locator:${elementFinder.locator().toString()}`);
 
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
-        await elementFinder.sendKeys(text);
+
+        if (sleepTime === 0) {
+            await elementFinder.sendKeys(text);
+        } else {
+            for (let i = 0; i < text.length; i++) {
+                await elementFinder.sendKeys(text[i]);
+                await browser.sleep(sleepTime);
+            }
+        }
+
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {

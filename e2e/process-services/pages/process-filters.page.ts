@@ -83,6 +83,7 @@ export class ProcessFiltersPage {
     }
 
     async numberOfProcessRows(): Promise<number> {
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(this.rows).first());
         return element.all(this.rows).count();
     }
 

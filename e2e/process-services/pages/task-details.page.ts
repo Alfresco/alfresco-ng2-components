@@ -218,11 +218,13 @@ export class TaskDetailsPage {
         await BrowserActions.clearWithBackSpace(this.priority);
         await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority ? priority : ' ');
         await this.priority.sendKeys(Key.TAB);
+        await browser.sleep(1000);
     }
 
     async updateDueDate(): Promise<void> {
         await BrowserActions.click(this.dueDateField);
         await BrowserActions.click(element.all(by.css('.mat-datetimepicker-calendar-body-cell')).first());
+        await browser.sleep(1000);
     }
 
     async updateDescription(description?: string): Promise<void> {
@@ -230,6 +232,7 @@ export class TaskDetailsPage {
         await BrowserActions.clearWithBackSpace(this.descriptionField);
         await BrowserActions.clearSendKeys(element(by.css('[data-automation-id="card-textitem-value-description"]')), description ? description : '');
         await this.descriptionField.sendKeys(Key.TAB);
+        await browser.sleep(1000);
     }
 
     async updateAssignee(fullName: string): Promise<void> {
@@ -237,6 +240,7 @@ export class TaskDetailsPage {
         await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
         await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
         await BrowserActions.click(element(by.css('button[id="add-people"]')));
+        await browser.sleep(1000);
     }
 
     getTitle(): Promise<string> {

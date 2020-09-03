@@ -907,7 +907,7 @@ describe('ContentNodeSelectorComponent', () => {
 
                     tick(debounceSearch);
 
-                    const spinnerSelector: Locator = by.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
+                    const spinnerSelector = By.css('[data-automation-id="content-node-selector-search-pagination"] [data-automation-id="adf-infinite-pagination-spinner"]');
                     const paginationLoading = fixture.debugElement.query(spinnerSelector);
                     expect(paginationLoading).not.toBeNull();
                 }));

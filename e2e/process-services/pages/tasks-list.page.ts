@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 export class TasksListPage {
 
@@ -46,6 +46,7 @@ export class TasksListPage {
 
     async selectRow(taskName: string): Promise<void> {
         await this.dataTable.selectRow('Name', taskName);
+        await browser.sleep(1000);
     }
 
     getAllRowsNameColumn(): Promise<string[]> {

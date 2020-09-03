@@ -105,8 +105,8 @@ describe('Upload component', () => {
     });
 
     afterEach(async () => {
-        const nbResults = await contentServicesPage.numberOfResultsDisplayed();
-        if (nbResults > 1) {
+        const nbResults = await contentServicesPage.emptyFolder.isPresent();
+        if (nbResults) {
             const nodeIds = await contentServicesPage.getElementsDisplayedId();
             for (const nodeId of nodeIds) {
                 await uploadActions.deleteFileOrFolder(nodeId);

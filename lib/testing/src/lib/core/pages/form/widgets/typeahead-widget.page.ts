@@ -68,7 +68,7 @@ export class TypeaheadWidgetPage {
 
     async fillTypeaheadField(value: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsClickable(this.field);
-        await BrowserActions.clearSendKeys(this.field, value);
+        await BrowserActions.clearSendKeys(this.field, value, 10);
     }
 
     async selectOptionFromDropdown(): Promise<void> {

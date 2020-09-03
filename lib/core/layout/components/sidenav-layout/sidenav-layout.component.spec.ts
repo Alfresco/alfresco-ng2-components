@@ -271,7 +271,7 @@ describe('Template transclusion', () => {
 
     describe('adf-sidenav-layout-navigation', () => {
 
-        const injectedElementSelector: Locator = by.css('[data-automation-id="adf-layout-container"] #nav-test');
+        const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #nav-test');
 
         it('should contain the transcluded side navigation template', () => {
             const injectedElement = fixture.debugElement.query(injectedElementSelector);
@@ -288,8 +288,8 @@ describe('Template transclusion', () => {
 
     describe('adf-sidenav-layout-header', () => {
 
-        const outerHeaderSelector: Locator = by.css('.adf-sidenav-layout-full-space > #header-test');
-        const innerHeaderSelector: Locator = by.css('.adf-layout__content > #header-test');
+        const outerHeaderSelector = By.css('.adf-sidenav-layout-full-space > #header-test');
+        const innerHeaderSelector = By.css('.adf-layout__content > #header-test');
 
         it('should contain the transcluded header template outside of the layout-container', () => {
             mediaQueryList.matches = false;
@@ -326,7 +326,7 @@ describe('Template transclusion', () => {
 
     describe('adf-sidenav-layout-content', () => {
 
-        const injectedElementSelector: Locator = by.css('[data-automation-id="adf-layout-container"] #content-test');
+        const injectedElementSelector = By.css('[data-automation-id="adf-layout-container"] #content-test');
 
         it('should contain the transcluded content template', () => {
             const injectedElement = fixture.debugElement.query(injectedElementSelector);

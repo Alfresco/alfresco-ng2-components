@@ -39,7 +39,7 @@ export class PaginationPage {
     totalFiles = element(by.css('.adf-pagination__range'));
 
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
-        await browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
+        await BrowserActions.clickExecuteScript(`div[class*="adf-pagination__perpage-block"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         await BrowserVisibility.waitUntilElementIsPresent(itemsPerPage);
@@ -80,7 +80,7 @@ export class PaginationPage {
     }
 
     async clickOnNextPage(): Promise<void> {
-        await browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
+        return BrowserActions.click(this.nextPageButton);
     }
 
     async clickOnPageDropdown(): Promise<void> {
