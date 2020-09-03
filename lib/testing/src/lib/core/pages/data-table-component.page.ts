@@ -18,6 +18,7 @@
 import { Locator, browser, by, element, protractor, ElementFinder, ElementArrayFinder } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { Logger } from '../utils/logger';
 
 export class DataTableComponentPage {
 
@@ -286,7 +287,18 @@ export class DataTableComponentPage {
     }
 
     async waitTillContentLoaded(): Promise<void> {
-        await browser.driver.sleep(500);
+        await browser.sleep(500);
+        Logger.log('wait datatable loading');
+
+        if (element(by.tagName('mat-spinner')).isPresent()) {
+            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+        } else {
+            try {
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')), 500);
+            } catch (error) {
+            }
+        }
+
         await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
     }
 

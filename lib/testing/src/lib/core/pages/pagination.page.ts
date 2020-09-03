@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, browser, by, element } from 'protractor';
+import { Locator, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -137,30 +137,5 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
         const totalNumberOfFiles = await BrowserActions.getText(this.totalFiles);
         return totalNumberOfFiles.split('of ')[1];
-    }
-
-    /*
-     * Wait until the total number of items is less then specified value
-     */
-    async waitUntilNoOfItemsIsLessThenValue(expectedValue: number): Promise<any> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const condition = () => this.totalFiles.getText().then(value => value && +value.split('of ')[1] < expectedValue);
-        return browser.wait(condition, 10000);
-    }
-
-    async waitUntilRangeOfItemsIsEqualTo(expectedValue: string): Promise<any> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const condition = () => this.totalFiles.getText().then(value => {
-            return value && value === expectedValue;
-        });
-        return browser.wait(condition, 10000);
-    }
-
-    async waitUntilNoOfItemsIsEqualTo(expectedValue: number): Promise<any> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const condition = () => this.totalFiles.getText().then(value => {
-            return value && +value.split('of ')[1] === expectedValue;
-        });
-        return browser.wait(condition, 10000);
     }
 }
