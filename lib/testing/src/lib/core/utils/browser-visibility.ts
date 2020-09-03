@@ -95,8 +95,6 @@ export class BrowserVisibility {
         return browser.wait(protractor.ExpectedConditions.textToBePresentInElement(elementToCheck, text), waitTimeout, `Element doesn\'t have the text ${text}  ${elementToCheck.locator()}`);
     }
 
-
-
     static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.NOT_VISIBLE_DEFAULT_TIMEOUT): Promise<any> {
         Logger.info(`Wait Until Element is not present ${elementToCheck.locator().toString()} for ${waitTimeout}`);
 
