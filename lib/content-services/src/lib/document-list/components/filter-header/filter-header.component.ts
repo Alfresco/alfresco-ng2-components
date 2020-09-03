@@ -53,12 +53,6 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.documentList.pagination
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((newPagination: PaginationModel) => {
-                this.searchHeaderQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
-            });
-
         this.searchHeaderQueryBuilder.executed
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((newNodePaging: NodePaging) => {
@@ -66,11 +60,8 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
                 this.documentList.reload();
             });
 
-        this.documentList.sortingSubject
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((sorting: DataSorting[]) => {
-                this.searchHeaderQueryBuilder.setSorting(sorting);
-            });
+        this.initDataPagination();
+        this.initDataSorting();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -90,6 +81,22 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
 
     resetFilterHeader() {
         this.searchHeaderQueryBuilder.resetActiveFilters();
+    }
+
+    initDataPagination() {
+        this.documentList.pagination
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((newPagination: PaginationModel) => {
+                this.searchHeaderQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
+            });
+    }
+
+    initDataSorting() {
+        this.documentList.sortingSubject
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((sorting: DataSorting[]) => {
+                this.searchHeaderQueryBuilder.setSorting(sorting);
+            });
     }
 
     private configureSearchParent(currentFolderId: string) {

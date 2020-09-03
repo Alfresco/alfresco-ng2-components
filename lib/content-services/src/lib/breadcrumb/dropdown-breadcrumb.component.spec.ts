@@ -31,7 +31,7 @@ describe('DropdownBreadcrumb', () => {
     let component: DropdownBreadcrumbComponent;
     let fixture: ComponentFixture<DropdownBreadcrumbComponent>;
     let documentList: DocumentListComponent;
-    let documentListService: DocumentListService = jasmine.createSpyObj({'loadFolderByNodeId' : of(''), 'isCustomSourceService': false});
+    let documentListService: DocumentListService = jasmine.createSpyObj({ 'loadFolderByNodeId': of(''), 'isCustomSourceService': false });
 
     setupTestBed({
         imports: [
@@ -39,7 +39,7 @@ describe('DropdownBreadcrumb', () => {
             ContentTestingModule
         ],
         schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers : [{ provide: DocumentListService, useValue: documentListService }]
+        providers: [{ provide: DocumentListService, useValue: documentListService }]
     });
 
     beforeEach(async(() => {
@@ -133,7 +133,7 @@ describe('DropdownBreadcrumb', () => {
         });
     });
 
-    it('should update document list  when clicking on an option', (done) => {
+    it('should update document list when clicking on an option', (done) => {
         component.target = documentList;
         const fakeNodeWithCreatePermissionInstance = JSON.parse(JSON.stringify(fakeNodeWithCreatePermission));
         fakeNodeWithCreatePermissionInstance.path.elements = [{ id: '1', name: 'Stark Industries' }];
@@ -144,7 +144,7 @@ describe('DropdownBreadcrumb', () => {
             fixture.whenStable().then(() => {
                 clickOnTheFirstOption();
 
-                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined, ['name ASC']);
+                expect(documentListService.loadFolderByNodeId).toHaveBeenCalledWith('1', documentList.DEFAULT_PAGINATION, undefined, undefined, null);
                 done();
             });
         });

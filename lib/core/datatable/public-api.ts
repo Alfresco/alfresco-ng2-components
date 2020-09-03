@@ -47,6 +47,5 @@ export * from './directives/header-filter-template.directive';
 export * from './directives/custom-empty-content-template.directive';
 export * from './directives/custom-loading-template.directive';
 export * from './directives/custom-no-permission-template.directive';
-export * from './directives/custom-header-filter-template.directive';
 
 export * from './datatable.module';

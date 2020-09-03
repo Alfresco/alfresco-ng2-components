@@ -41,7 +41,6 @@ import {
     CustomLoadingContentTemplateDirective,
     CustomNoPermissionTemplateDirective,
     CustomEmptyContentTemplateDirective,
-    CustomHeaderFilterTemplateDirective,
     RequestPaginationModel,
     AlfrescoApiService,
     UserPreferenceValues,
@@ -99,9 +98,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     @ContentChild(CustomEmptyContentTemplateDirective)
     customNoContentTemplate: CustomEmptyContentTemplateDirective;
-
-    @ContentChild(CustomHeaderFilterTemplateDirective)
-    customHeaderFilterTemplate: CustomHeaderFilterTemplateDirective;
 
     /** Include additional information about the node in the server request. For example: association, isLink, isLocked and others. */
     @Input()
@@ -261,11 +257,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     stickyHeader: boolean = false;
 
-    /** Toggles the sticky header mode. */
+    /** Toggles the header filters mode. */
     @Input()
     headerFilters: boolean = false;
 
-    /** Toggles the sticky header mode. */
+    /** Initial value for filter. */
     @Input()
     filterValue: any;
 
@@ -720,10 +716,10 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     private buildOrderByArray(currentKey: string, currentDirection: string): string[] {
-        const orderArray = [];
-        orderArray.push(`${this.additionalSorting.key} ${this.additionalSorting.direction}`);
-        orderArray.push(`${currentKey} ${currentDirection}`);
-        return orderArray;
+        return [
+            `${this.additionalSorting.key} ${this.additionalSorting.direction}`,
+            `${currentKey} ${currentDirection}`
+        ];
     }
 
     /**
@@ -890,8 +886,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     private onDataReady(nodePaging: NodePaging) {
         this.ready.emit(nodePaging);
-        nodePaging.list.pagination.skipCount =  this._pagination.skipCount;
-        nodePaging.list.pagination.maxItems =  this._pagination.maxItems;
         this.pagination.next(nodePaging.list.pagination);
     }
 
@@ -900,6 +894,11 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this._pagination.merge = requestPaginationModel.merge;
         this._pagination.skipCount = requestPaginationModel.skipCount;
         this.reload();
+    }
+
+    private syncPagination() {
+        this.node.list.pagination.maxItems = this._pagination.maxItems;
+        this.node.list.pagination.skipCount = this._pagination.skipCount;
     }
 
     onFilterSelectionChange(activeFilters: FilterSearch[]) {
