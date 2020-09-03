@@ -407,7 +407,6 @@ describe('Start Task - Custom App', () => {
 
         it('[C280630] Should be able to see No tasks found when typing an invalid taskId', async () => {
             await taskListSinglePage.typeTaskId(invalidTaskId);
-            await taskListSinglePage.taskList().getDataTable().waitTillContentLoaded();
 
             await expect(await taskListSinglePage.getTaskId()).toEqual(invalidTaskId);
 
