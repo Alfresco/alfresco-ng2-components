@@ -39,7 +39,6 @@ import moment = require('moment');
 describe('Info Drawer', () => {
 
     const app = browser.params.resources.Files.SIMPLE_APP_WITH_USER_FORM;
-
     const loginPage = new LoginPage();
     const navigationBarPage = new NavigationBarPage();
     const taskPage = new TasksPage();
@@ -138,8 +137,12 @@ describe('Info Drawer', () => {
         await taskPage.checkTaskTitle(name);
         await expect(await taskPage.taskDetails().getPriority()).toEqual(taskDetails.priority);
         await taskPage.taskDetails().updatePriority('40');
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
+        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().getPriority()).toEqual('40');
         await taskPage.taskDetails().updatePriority();
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
+        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().getPriority()).toEqual('0');
 
         await taskPage.taskDetails().clickCompleteFormTask();
@@ -254,10 +257,12 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.tasksListPage().checkContentIsNotDisplayed(app.taskName);
+
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await taskPage.tasksListPage().checkTaskListIsLoaded();
-        await taskPage.tasksListPage().getDataTable().waitForTableBody();
 
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
+        await browser.sleep(2000);
         await shouldHaveInfoDrawerDetails({
             ...taskDetails,
             dueDate: date.header,
@@ -277,10 +282,13 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().checkTaskListIsLoaded();
         await taskPage.tasksListPage().getDataTable().waitForTableBody();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
+
         await taskPage.tasksListPage().checkContentIsDisplayed(app.taskName);
         await taskPage.tasksListPage().selectRow(app.taskName);
 
         await taskPage.checkTaskTitle(app.taskName);
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
+        await browser.sleep(2000);
         await shouldHaveInfoDrawerDetails({
             ...taskDetails,
             dueDate: 'No date',
@@ -303,6 +311,8 @@ describe('Info Drawer', () => {
         await taskPage.tasksListPage().selectRow(name);
 
         await taskPage.checkTaskTitle(name);
+        await taskPage.taskDetails().checkTaskDetailsDisplayed();
+        await browser.sleep(2000);
         await expect(await taskPage.taskDetails().isAssigneeClickable()).toBeTruthy();
         await shouldHaveInfoDrawerDetails({
             ...taskDetails,

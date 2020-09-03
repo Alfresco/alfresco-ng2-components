@@ -98,6 +98,11 @@ export class UsersActions {
         return user;
     }
 
+    async createUserWithName(firstName: string, lastName: string): Promise<UserModel> {
+        const user = new UserModel({ firstName:  firstName, lastName: lastName});
+        return this.createUser(user);
+    }
+
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 

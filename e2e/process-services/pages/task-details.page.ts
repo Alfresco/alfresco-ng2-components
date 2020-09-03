@@ -24,6 +24,7 @@ export class TaskDetailsPage {
     appSettingsTogglesClass = new AppSettingsTogglesPage();
 
     formContent = element(by.css('adf-form'));
+
     formNameField = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
     formNameButton = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
     assigneeField = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
@@ -239,8 +240,10 @@ export class TaskDetailsPage {
         await BrowserActions.click(this.assigneeButton);
         await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
         await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`adf-datatable-row[class*='is-selected']`)));
+
+        await browser.sleep(2000);
         await BrowserActions.click(element(by.css('button[id="add-people"]')));
-        await browser.sleep(1000);
     }
 
     getTitle(): Promise<string> {
