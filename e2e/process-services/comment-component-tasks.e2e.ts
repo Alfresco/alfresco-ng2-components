@@ -116,6 +116,7 @@ describe('Comment component for Processes', () => {
         await expect(await commentsPage.getTime(0)).toMatch(/(ago|few)/);
         await expect(await commentsPage.getTime(1)).toMatch(/(ago|few)/);
 
+        await navigationBarPage.clickLogoutButton();
         await loginPage.login(secondUser.email, secondUser.password);
 
         await apiService.getInstance().activiti.taskApi.addTaskComment(thirdTaskComment, newTaskId);
