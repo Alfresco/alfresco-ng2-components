@@ -18,7 +18,6 @@
 import {
     ApiService,
     ApplicationsUtil,
-    BrowserActions,
     LoginPage,
     ProcessUtil,
     UsersActions,
@@ -44,12 +43,12 @@ describe('Form widgets', () => {
 
     const newTask = 'First task';
     let processUserModel;
-    let appModel;
+    let appModelWidget;
 
     describe('Form widgets', () => {
 
-        const app = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
-        const appFields = app.form_fields;
+        const appWidget = browser.params.resources.Files.WIDGETS_SMOKE_TEST;
+        const appFields = appWidget.form_fields;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -58,17 +57,17 @@ describe('Form widgets', () => {
 
             await apiService.getInstance().login(processUserModel.email, processUserModel.password);
 
-            appModel = await applicationsService.importPublishDeployApp(app.file_path);
+            appModelWidget = await applicationsService.importPublishDeployApp(appWidget.file_path);
 
             await loginPage.login(processUserModel.email, processUserModel.password);
 
-            await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModel.name);
+            await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModelWidget.name);
 
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             const task = await taskPage.createNewTask();
             await task.addName(newTask);
             await task.addDescription('Description');
-            await task.selectForm(app.formName);
+            await task.selectForm(appWidget.formName);
             await task.clickStartButton();
 
             await taskPage.tasksListPage().checkContentIsDisplayed(newTask);
@@ -83,9 +82,11 @@ describe('Form widgets', () => {
         });
 
         afterAll(async () => {
+            await new NavigationBarPage().clickLogoutButton();
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(processUserModel.tenantId);
+            await apiService.getInstance().logout();
         });
 
         it('[C272778] Should display text and multi-line in form', async () => {
@@ -193,8 +194,9 @@ describe('Form widgets', () => {
 
     describe('with fields involving other people', () => {
         const app = browser.params.resources.Files.FORM_ADF;
-        let deployedApp, process;
+        let process;
         const appFields = app.form_fields;
+        let appModel;
 
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
@@ -204,18 +206,14 @@ describe('Form widgets', () => {
             await apiService.getInstance().login(processUserModel.email, processUserModel.password);
             appModel = await applicationsService.importPublishDeployApp(app.file_path);
 
-            const appDefinitions = await apiService.getInstance().activiti.appsApi.getAppDefinitions();
-            deployedApp = appDefinitions.data.find((currentApp) => {
-                return currentApp.modelId === appModel.id;
-            });
             const processUtil = new ProcessUtil(apiService);
             process = await processUtil.startProcessOfApp(appModel.name);
             await loginPage.login(processUserModel.email, processUserModel.password);
         });
 
         beforeEach(async () => {
-            const urlToNavigateTo = `${browser.baseUrl}/activiti/apps/${deployedApp.id}/tasks/`;
-            await BrowserActions.getUrl(urlToNavigateTo);
+            await (await new NavigationBarPage().navigateToProcessServicesPage()).goToApp(appModel.name);
+
             await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
             await taskPage.formFields().checkFormIsDisplayed();
         });
