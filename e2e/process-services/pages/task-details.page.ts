@@ -313,8 +313,7 @@ export class TaskDetailsPage {
     }
 
     async getInvolvedUserEmail(user): Promise<string> {
-        const row = this.getRowsUser(user)
-        await browser.sleep(100000);
+        const row = this.getRowsUser(user);
         const email = row.element(this.emailInvolvedUser);
         return BrowserActions.getText(email);
     }
