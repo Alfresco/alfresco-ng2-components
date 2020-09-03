@@ -34,6 +34,7 @@ export class ProcessFiltersPage {
     tableBody = element.all(by.css('adf-datatable .adf-datatable-body')).first();
     nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
     processIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
+    startProcessEl = element(by.css('adf-start-process .adf-start-process'));
 
     async startProcess(): Promise<StartProcessPage> {
         await this.clickCreateProcessButton();
@@ -65,6 +66,10 @@ export class ProcessFiltersPage {
     async clickNewProcessDropdown(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.buttonWindow);
         await BrowserActions.click(this.newProcessButton);
+    }
+
+    async checkStartProcessIsDisplay(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessEl);
     }
 
     async checkNoContentMessage(): Promise<void> {
