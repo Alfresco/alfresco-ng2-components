@@ -71,7 +71,7 @@ export class UploadDialogPage {
 
     async fileIsUploaded(content: string): Promise<void> {
         const row = await this.getRowByRowName(content);
-        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon));
+        await BrowserVisibility.waitUntilElementIsVisible(row.element(this.uploadedStatusIcon),60000);
     }
 
     async fileIsError(content: string) {

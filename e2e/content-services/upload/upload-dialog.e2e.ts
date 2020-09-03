@@ -202,6 +202,7 @@ describe('Upload component', () => {
         await BrowserActions.click(versionManagePage.showNewVersionButton);
         await versionManagePage.uploadNewVersionFile(pngFileModel.location);
         await versionManagePage.closeVersionDialog();
+
         await uploadDialog.removeUploadedFile(pngFileModel.name);
         await contentServicesPage.checkContentIsDisplayed(pngFileModel.name);
         await uploadDialog.clickOnCloseButton();
@@ -233,10 +234,11 @@ describe('Upload component', () => {
         await uploadToggles.enableFolderUpload();
         await contentServicesPage.uploadFolder(adfBigFolder.location);
 
-        await browser.sleep(5000); // Need to wait few files upload
+        await uploadDialog.fileIsUploaded('a_png_noBackground_file.PNG');
+
         await uploadDialog.cancelUploads();
         await uploadDialog.clickOnConfirmationDialogYesButton();
-        await uploadDialog.fileIsCancelled('a_bmp_file.BMP');
+        await uploadDialog.fileIsCancelled('a_png_noBackground_file.PNG');
 
         await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
         await uploadDialog.clickOnCloseButton();
