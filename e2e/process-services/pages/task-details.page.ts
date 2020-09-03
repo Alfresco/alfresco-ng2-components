@@ -44,7 +44,7 @@ export class TaskDetailsPage {
     addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
+    addInvolvedUserButton = element(by.css('button[id="add-people"]'));
     emailInvolvedUser: Locator = by.css('[data-automation-id="adf-people-email"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
@@ -136,8 +136,8 @@ export class TaskDetailsPage {
         return BrowserActions.click(this.attachFormButton);
     }
 
-    async checkFormIsAttached(): Promise<string> {
-        return BrowserActions.getInputValue(this.formNameField);
+    async checkFormIsAttached(formName: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasValue(this.formNameField, formName);
     }
 
     getFormName(): Promise<string> {
@@ -292,7 +292,7 @@ export class TaskDetailsPage {
     }
 
     async checkUserIsSelected(user: string): Promise<void> {
-        const row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
+        const row = this.getRowsUser(user);
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
@@ -301,7 +301,7 @@ export class TaskDetailsPage {
     }
 
     getRowsUser(user: string) {
-        return element(by.cssContainingText('div[data-automation-id="adf-people-full-name"]', user));
+        return element(by.css(`div[data-automation-id="adf-people-full-name-${user.replace(' ', '-')}"]`));
     }
 
     async removeInvolvedUser(user): Promise<void> {
@@ -313,7 +313,8 @@ export class TaskDetailsPage {
     }
 
     async getInvolvedUserEmail(user): Promise<string> {
-        const row = this.getRowsUser(user);
+        const row = this.getRowsUser(user)
+        await browser.sleep(100000);
         const email = row.element(this.emailInvolvedUser);
         return BrowserActions.getText(email);
     }

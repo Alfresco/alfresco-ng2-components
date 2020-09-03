@@ -17,7 +17,7 @@
 
 import {
     ApiService,
-    BrowserActions,
+    BrowserActions, BrowserVisibility,
     LoginPage,
     UploadActions,
     UserModel,
@@ -98,7 +98,7 @@ describe('Upload component', () => {
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
-   });
+    });
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
@@ -106,7 +106,7 @@ describe('Upload component', () => {
 
     afterEach(async () => {
         const nbResults = await contentServicesPage.emptyFolder.isPresent();
-        if (nbResults) {
+        if (!nbResults) {
             const nodeIds = await contentServicesPage.getElementsDisplayedId();
             for (const nodeId of nodeIds) {
                 await uploadActions.deleteFileOrFolder(nodeId);
@@ -173,7 +173,7 @@ describe('Upload component', () => {
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.uploadFile(pdfFileModel.location);
-        await contentServicesPage .checkContentIsDisplayed(pdfFileModel.name);
+        await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
         await uploadDialog.fileIsUploaded(pdfFileModel.name);
         await uploadDialog.fileIsNotDisplayedInDialog(pngFileModel.name);
         await uploadDialog.fileIsNotDisplayedInDialog(pngFileModelTwo.name);
@@ -232,6 +232,13 @@ describe('Upload component', () => {
         await uploadDialog.dialogIsNotDisplayed();
 
         await uploadToggles.enableFolderUpload();
+
+        await browser.executeScript(` setInterval(() => {
+               if(document.querySelector('[data-automation-id="adf"]')){
+                    document.querySelector("#adf-upload-dialog-cancel-all").click();
+                    document.querySelector("#adf-upload-dialog-cancel").click();
+                }
+              }, 2000)`);
         await contentServicesPage.uploadFolder(adfBigFolder.location);
 
         await uploadDialog.fileIsUploaded('a_png_noBackground_file.PNG');
@@ -240,10 +247,11 @@ describe('Upload component', () => {
         await uploadDialog.clickOnConfirmationDialogYesButton();
         await uploadDialog.fileIsCancelled('a_png_noBackground_file.PNG');
 
-        await expect(await uploadDialog.getTitleText()).toEqual('Upload canceled');
+        await BrowserVisibility.waitUntilElementHasText(uploadDialog.title, 'Upload canceled');
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
         await contentServicesPage.openFolder(adfBigFolder.name);
+        await browser.sleep(2000); // We need to wai when we upload too many files we have to wait the revert
         await expect(contentServicesPage.numberOfResultsDisplayed()).toBe(0);
     });
 });

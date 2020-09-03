@@ -116,7 +116,7 @@ describe('Task Details - Form', () => {
         await attachFormPage.checkCancelButtonIsDisplayed();
         await attachFormPage.clickCancelButton();
 
-        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual(attachedForm.name);
+        await taskDetailsPage.checkFormIsAttached(attachedForm.name);
 
         await taskDetailsPage.clickForm();
 
@@ -128,7 +128,7 @@ describe('Task Details - Form', () => {
         await attachFormPage.checkAttachFormButtonIsDisplayed();
         await attachFormPage.clickAttachFormButton();
 
-        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual(newForm.name);
+        await taskDetailsPage.checkFormIsAttached(newForm.name);
     });
 
     it('[C280019] Should be able to remove the form form a task', async () => {
@@ -138,7 +138,7 @@ describe('Task Details - Form', () => {
         await taskDetailsPage.checkRemoveAttachFormIsDisplayed();
         await taskDetailsPage.clickRemoveAttachForm();
 
-        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual('No form');
+        await taskDetailsPage.checkFormIsAttached('No form');
 
         await expect(await taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
@@ -151,7 +151,7 @@ describe('Task Details - Form', () => {
 
         await tasksListPage.selectRow(otherTask.name);
 
-        await expect(await taskDetailsPage.checkFormIsAttached()).toEqual(otherAttachedForm.name);
+        await taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
     });
 
     describe('Task Details - Complete form with visibility conditions on tabs', () => {
