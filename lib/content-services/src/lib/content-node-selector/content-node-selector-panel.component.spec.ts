@@ -31,7 +31,6 @@ import { DropdownSitesComponent } from '../site-dropdown/sites-dropdown.componen
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { TranslateModule } from '@ngx-translate/core';
-import { Locator } from 'protractor';
 
 const ONE_FOLDER_RESULT = {
     list: {
