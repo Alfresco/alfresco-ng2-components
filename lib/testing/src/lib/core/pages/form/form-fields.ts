@@ -99,7 +99,7 @@ export class FormFields {
 
     async refreshForm(): Promise<void> {
         await BrowserActions.click(this.refreshButton);
-        await browser.sleep(500)
+        await browser.sleep(500);
     }
 
     async saveForm(): Promise<void> {
