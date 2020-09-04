@@ -136,14 +136,11 @@ export class BrowserActions {
 
         if (sleepTime === 0) {
             await elementFinder.sendKeys(text);
-            await BrowserVisibility.waitUntilElementHasValue(elementFinder, text);
         } else {
             for (let i = 0; i < text.length; i++) {
                 await elementFinder.sendKeys(text[i]);
                 await browser.sleep(sleepTime);
             }
-            await BrowserVisibility.waitUntilElementHasValue(elementFinder, text);
-
         }
 
     }
