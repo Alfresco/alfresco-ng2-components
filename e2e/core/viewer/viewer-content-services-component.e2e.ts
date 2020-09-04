@@ -139,7 +139,7 @@ describe('Content Services Viewer', () => {
         await viewerPage.clickCloseButton();
     });
 
-    it('[C260040] Should be able to change pages and zoom when .pdf file is open', async () => {
+    fit('[C260040] Should be able to change pages and zoom when .pdf file is open', async () => {
         await viewerPage.viewFile(pdfFile.name);
         await viewerPage.checkZoomInButtonIsDisplayed();
 

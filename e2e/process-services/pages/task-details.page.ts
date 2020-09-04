@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { Locator, browser, by, element, Key } from 'protractor';
+import { browser, by, element, Key } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
@@ -45,7 +45,6 @@ export class TaskDetailsPage {
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     addInvolvedUserButton = element(by.css('button[id="add-people"]'));
-    emailInvolvedUser: Locator = by.css('[data-automation-id="adf-people-email"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -294,6 +293,7 @@ export class TaskDetailsPage {
     async checkUserIsSelected(user: string): Promise<void> {
         const row = this.getRowsUser(user);
         await BrowserVisibility.waitUntilElementIsVisible(row);
+        await browser.sleep(2000);
     }
 
     async clickAddInvolvedUserButton(): Promise<void> {
@@ -313,9 +313,7 @@ export class TaskDetailsPage {
     }
 
     async getInvolvedUserEmail(user): Promise<string> {
-        const row = this.getRowsUser(user);
-        const email = row.element(this.emailInvolvedUser);
-        return BrowserActions.getText(email);
+        return BrowserActions.getText(element(by.css(`div[data-automation-id="adf-people-email-${user.replace(' ', '-')}"]`)));
     }
 
     async clickAuditLogButton(): Promise<void> {

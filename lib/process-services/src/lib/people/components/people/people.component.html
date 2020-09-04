@@ -41,8 +41,8 @@
                         <data-column key="email" class="adf-full-width">
                             <ng-template let-entry="$implicit">
                                 <div class="adf-people-user-info">
-                                    <div data-automation-id="adf-people-full-name" class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
-                                    <div data-automation-id="adf-people-email" class="adf-people-email">{{ entry.row.obj.email }}</div>
+                                    <div [attr.data-automation-id]="'adf-people-full-name-'+ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, '-')" class="adf-people-full-name">{{ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, ' ') }}</div>
+                                    <div [attr.data-automation-id]="'adf-people-email-'+ getDisplayUser(entry.row.obj.firstName, entry.row.obj.lastName, '-')"  class="adf-people-email">{{ entry.row.obj.email }}</div>
                                 </div>
                             </ng-template>
                         </data-column>

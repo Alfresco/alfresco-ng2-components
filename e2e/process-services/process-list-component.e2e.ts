@@ -186,6 +186,7 @@ describe('Process List Test', () => {
         await expect(JSON.stringify(processList) === JSON.stringify(sortedProcessListNamesAsc)).toBe(true);
 
         await processListDemoPage.selectSorting('desc');
+        await processListDemoPage.dataTable.waitTillContentLoaded();
 
         const sortedProcessListNamesDesc = await processListDemoPage.getDisplayedProcessesNames();
         await expect(JSON.stringify(processList.reverse()) === JSON.stringify(sortedProcessListNamesDesc)).toBe(true);

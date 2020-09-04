@@ -80,6 +80,7 @@ describe('Start Task - Custom App', () => {
 
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
+
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.checkUserIsSelected(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
 
