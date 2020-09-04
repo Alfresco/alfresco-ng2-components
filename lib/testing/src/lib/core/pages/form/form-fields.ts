@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, by, element, ElementFinder } from 'protractor';
+import { browser, Locator, by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../utils/public-api';
 import { DropdownPage } from '../material/dropdown.page';
 
@@ -42,6 +42,7 @@ export class FormFields {
     async setFieldValue(locator, field, value: string): Promise<void> {
         const fieldElement = element(locator(field));
         await BrowserActions.clearSendKeys(fieldElement, value);
+        await BrowserVisibility.waitUntilElementHasValue(fieldElement, value);
     }
 
     async checkWidgetIsVisible(fieldId: string): Promise<void> {
@@ -67,7 +68,7 @@ export class FormFields {
         const valueWidget = await (await this.getWidget(fieldId)).element(valueLocatorParam || this.valueLocator);
         await BrowserVisibility.waitUntilElementIsVisible(valueWidget);
 
-        return valueWidget.getAttribute('value');
+        return BrowserActions.getInputValue(valueWidget);
     }
 
     async getFieldLabel(fieldId: string, labelLocatorParam?: any) {
@@ -98,6 +99,7 @@ export class FormFields {
 
     async refreshForm(): Promise<void> {
         await BrowserActions.click(this.refreshButton);
+        await browser.sleep(500)
     }
 
     async saveForm(): Promise<void> {
