@@ -242,9 +242,6 @@ describe('Upload component', () => {
         await contentServicesPage.uploadFolder(adfBigFolder.location);
 
         await uploadDialog.fileIsUploaded('a_png_noBackground_file.PNG');
-
-        await uploadDialog.cancelUploads();
-        await uploadDialog.clickOnConfirmationDialogYesButton();
         await uploadDialog.fileIsCancelled('a_png_noBackground_file.PNG');
 
         await BrowserVisibility.waitUntilElementHasText(uploadDialog.title, 'Upload canceled');
