@@ -17,7 +17,7 @@
 
 import { DataTableComponentPage, DatePickerCalendarPage, DateUtil, LocalStorageUtil, LoginPage } from '@alfresco/adf-testing';
 import { browser, ElementFinder } from 'protractor';
-import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchBarPage } from '../pages/search-bar.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchResultsPage } from '../pages/search-results.page';
@@ -26,7 +26,7 @@ import { SearchConfiguration } from '../search.config';
 describe('Search Date Range Filter', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchFilters = new SearchFiltersPage();
     const dateRangeFilter = searchFilters.createdDateRangeFilterPage();
     const searchResults = new SearchResultsPage();
@@ -37,9 +37,9 @@ describe('Search Date Range Filter', () => {
     beforeAll(async () => {
         await loginPage.login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('*');
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
    });
 
     beforeEach(async () => {
@@ -181,8 +181,8 @@ describe('Search Date Range Filter', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter('*');
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
             await searchFilters.checkCreatedRangeFilterIsDisplayed();
             await searchFilters.clickCreatedRangeFilterHeader();
             await searchFilters.checkCreatedRangeFilterIsExpanded();

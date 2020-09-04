@@ -16,7 +16,6 @@
  */
 
 import { Logger } from '../../core/utils/logger';
-import * as remote from 'selenium-webdriver/remote';
 import { browser } from 'protractor';
 import { ApiService } from '../../core/actions/api.service';
 import { AppDefinitionUpdateResultRepresentation } from '@alfresco/js-api';
@@ -50,8 +49,6 @@ export class ApplicationsUtil {
     }
 
     async publishDeployApp(appId: number): Promise<AppDefinitionUpdateResultRepresentation> {
-        browser.setFileDetector(new remote.FileDetector());
-
         const publishApp = await this.api.getInstance().activiti.appsApi.publishAppDefinition(appId, new AppPublish());
 
         await this.api.getInstance().activiti.appsApi.deployAppDefinitions({ appDefinitions: [{ id: publishApp.appDefinition.id }] });
@@ -71,8 +68,6 @@ export class ApplicationsUtil {
     }
 
     async importNewVersionAppDefinitionPublishDeployApp(appFileLocation: string, modelId: number) {
-        browser.setFileDetector(new remote.FileDetector());
-
         const pathFile = path.join(browser.params.testConfig.main.rootPath + appFileLocation);
         const file = fs.createReadStream(pathFile);
 
@@ -87,7 +82,6 @@ export class ApplicationsUtil {
 
     async importApplication(appFileLocation: string, options = {}): Promise<any> {
         try {
-            browser.setFileDetector(new remote.FileDetector());
             const file = fs.createReadStream(appFileLocation);
             return await this.api.getInstance().activiti.appsDefinitionApi.importAppDefinition(file, options);
         } catch (error) {

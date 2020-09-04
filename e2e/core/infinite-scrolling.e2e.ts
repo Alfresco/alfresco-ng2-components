@@ -121,6 +121,7 @@ describe('Enable infinite scrolling', () => {
         await contentServicesPage.doubleClickRow(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
+
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
         await infinitePaginationPage.clickLoadMoreButton();
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);

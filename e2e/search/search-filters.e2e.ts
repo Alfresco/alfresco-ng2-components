@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SearchDialogPage } from './pages/search-dialog.page';
+import { SearchBarPage } from './pages/search-bar.page';
 import { SearchFiltersPage } from './pages/search-filters.page';
 import { SearchResultsPage } from './pages/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
@@ -38,7 +38,7 @@ import { SearchConfiguration } from './search.config';
 describe('Search Filters', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchFiltersPage = new SearchFiltersPage();
     const paginationPage = new PaginationPage();
     const contentList = new DocumentListPage();
@@ -119,10 +119,10 @@ describe('Search Filters', () => {
     });
 
     it('[C286298] Should be able to cancel a filter using "x" button from the toolbar', async () => {
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
 
-        await searchDialog.enterTextAndPressEnter(fileUploaded.entry.name);
+        await searchBarPage.enterTextAndPressEnter(fileUploaded.entry.name);
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
 
@@ -181,8 +181,8 @@ describe('Search Filters', () => {
         jsonFile['filterWithContains'] = true;
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('*');
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
 
         await searchResults.tableIsLoaded();
 
@@ -191,7 +191,10 @@ describe('Search Filters', () => {
     });
 
     it('[C291980] Should group search facets under specified labels', async () => {
-        await BrowserActions.getUrl(`${browser.baseUrl}/search;q=*`);
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
@@ -203,8 +206,8 @@ describe('Search Filters', () => {
 
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('*');
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
 
         await searchResults.tableIsLoaded();
 
@@ -214,7 +217,9 @@ describe('Search Filters', () => {
     });
 
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await BrowserActions.getUrl(`${browser.baseUrl}/search;q=*`);
+        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();
@@ -232,9 +237,9 @@ describe('Search Filters', () => {
 
     it('[C299200] Should reset the filters facet with search query', async () => {
         await navigationBarPage.clickContentServicesButton();
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter(fileTypeTxt1.entry.name);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(fileTypeTxt1.entry.name);
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
         await searchResults.tableIsLoaded();
@@ -242,10 +247,10 @@ describe('Search Filters', () => {
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
         await searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
 
-        await searchDialog.enterTextAndPressEnter(fileNamePrefix);
+        await searchBarPage.enterTextAndPressEnter(fileNamePrefix);
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
         await searchResults.tableIsLoaded();
         await searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
@@ -262,8 +267,8 @@ describe('Search Filters', () => {
         jsonFile.facetFields.fields[1].label = 'My File Sizes';
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('*');
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
 
         await searchResults.tableIsLoaded();
         await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');

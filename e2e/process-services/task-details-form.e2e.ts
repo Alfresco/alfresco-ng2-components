@@ -150,6 +150,7 @@ describe('Task Details - Form', () => {
         await taskDetailsPage.checkRemoveAttachFormIsDisplayed();
 
         await tasksListPage.selectRow(otherTask.name);
+
         await taskDetailsPage.checkFormIsAttached(otherAttachedForm.name);
     });
 
@@ -214,6 +215,7 @@ describe('Task Details - Form', () => {
             await tasksListPage.checkTaskListIsLoaded();
             await tasksListPage.checkContentIsDisplayed(newTask.name);
             await tasksListPage.selectRow(newTask.name);
+
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldValue);
         });

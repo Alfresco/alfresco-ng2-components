@@ -28,7 +28,7 @@ import {
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
-import { SearchDialogPage } from './pages/search-dialog.page';
+import { SearchBarPage } from './pages/search-bar.page';
 import { ContentServicesPage } from '../core/pages/content-services.page';
 import { SearchResultsPage } from './pages/search-results.page';
 import { FileModel } from '../models/ACS/file.model';
@@ -51,7 +51,7 @@ describe('Search component - Search Bar', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchResultPage = new SearchResultsPage();
     const viewerPage = new ViewerPage();
 
@@ -126,140 +126,140 @@ describe('Search component - Search Bar', () => {
    });
 
     it('[C272798] Search bar should be visible', async () => {
-        await searchDialog.checkSearchBarIsNotVisible();
-        await searchDialog.checkSearchIconIsVisible();
+        await searchBarPage.checkSearchBarIsNotVisible();
+        await searchBarPage.checkSearchIconIsVisible();
 
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.checkSearchIconIsVisible();
 
         await BrowserActions.closeMenuAndDialogs();
 
-        await searchDialog.checkSearchBarIsNotVisible();
-        await searchDialog.checkSearchIconIsVisible();
+        await searchBarPage.checkSearchBarIsNotVisible();
+        await searchBarPage.checkSearchIconIsVisible();
     });
 
     it('[C272799] Should be possible to hide search bar after input', async () => {
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterText(firstFolderModel.shortName);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterText(firstFolderModel.shortName);
     });
 
     it('[C260255] Should display message when searching for an inexistent file', async () => {
-        await searchDialog.checkSearchBarIsNotVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkNoResultMessageIsNotDisplayed();
-        await searchDialog.enterText(search.inactive.name);
-        await searchDialog.checkNoResultMessageIsDisplayed();
+        await searchBarPage.checkSearchBarIsNotVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkNoResultMessageIsNotDisplayed();
+        await searchBarPage.enterText(search.inactive.name);
+        await searchBarPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C260256] Should display file/folder in search suggestion when typing first characters', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterText(firstFolderModel.shortName);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterText(firstFolderModel.shortName);
 
-        await searchDialog.resultTableContainsRow(firstFolderModel.name);
+        await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
-        await expect(await searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
-        await expect(await searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        await expect(await searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
-        await searchDialog.clearText();
+        await searchBarPage.clearText();
 
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterText(firstFileModel.shortName);
-        await searchDialog.resultTableContainsRow(firstFileModel.name);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterText(firstFileModel.shortName);
+        await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
-        await expect(await searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
-        await expect(await searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
 
-        await expect(await searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
     it('[C272800] Should display file/folder in search suggestion when typing name', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterText(firstFolderModel.name);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterText(firstFolderModel.name);
 
-        await searchDialog.resultTableContainsRow(firstFolderModel.name);
+        await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
-        await expect(await searchDialog.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
-        await expect(await searchDialog.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        await expect(await searchDialog.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
-        await searchDialog.clearText();
+        await searchBarPage.clearText();
 
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterText(firstFileModel.name);
-        await searchDialog.resultTableContainsRow(firstFileModel.name);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterText(firstFileModel.name);
+        await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
-        await expect(await searchDialog.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
-        await expect(await searchDialog.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
-        await expect(await searchDialog.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
+        await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
     it('[C260257] Should display content when clicking on folder from search suggestions', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterText(firstFolderModel.shortName);
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterText(firstFolderModel.shortName);
 
-        await searchDialog.resultTableContainsRow(firstFolderModel.name);
-        await searchDialog.clickOnSpecificRow(firstFolderModel.name);
+        await searchBarPage.resultTableContainsRow(firstFolderModel.name);
+        await searchBarPage.clickOnSpecificRow(firstFolderModel.name);
 
         await expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterText(firstFileModel.name);
-        await searchDialog.resultTableContainsRow(firstFileModel.name);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterText(firstFileModel.name);
+        await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
-        await searchDialog.clickOnSpecificRow(firstFileModel.name);
+        await searchBarPage.clickOnSpecificRow(firstFileModel.name);
         await expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
 
         await viewerPage.clickCloseButton();
     });
 
     it('[C272801] Should display message when searching for non-existent folder', async () => {
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterTextAndPressEnter(search.inactive.name);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterTextAndPressEnter(search.inactive.name);
 
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C272802] Should be able to find an existent folder in search results', async () => {
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterTextAndPressEnter(firstFolderModel.name);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterTextAndPressEnter(firstFolderModel.name);
 
         await searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
 
     it('[C260258] Should be able to find an existent file in search results', async () => {
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterTextAndPressEnter(firstFileModel.name);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterTextAndPressEnter(firstFileModel.name);
 
         await searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
 
     it('[C91321] Should be able to use down arrow key when navigating throw suggestions', async () => {
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.checkSearchBarIsVisible();
-        await searchDialog.enterText(secondFolder.shortName);
-        await searchDialog.pressDownArrowAndEnter();
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.checkSearchBarIsVisible();
+        await searchBarPage.enterText(secondFolder.shortName);
+        await searchBarPage.pressDownArrowAndEnter();
 
         await expect(await contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
 
     it('[C290137] Should be able to search by \'%\'', async () => {
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('%');
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('%');
         await searchResultPage.tableIsLoaded();
     });
 
@@ -271,10 +271,10 @@ describe('Search component - Search Bar', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(searchConfiguration));
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(term);
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(term);
         });
 
         it('[C299212] Should be able to configure the highlight option for search results', async () => {

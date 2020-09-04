@@ -70,8 +70,8 @@ export class LoginPage {
 
         const loginURL: string = browser.baseUrl + (browser.params.loginRoute ? browser.params.loginRoute : '');
 
-        await BrowserActions.getUrl(loginURL);
         const oauth2 = await LocalStorageUtil.getConfigField('oauth2');
+        await BrowserActions.getUrl(loginURL);
 
         if (oauth2 && oauth2.silentLogin === false) {
             await this.clickOnSSOButton();

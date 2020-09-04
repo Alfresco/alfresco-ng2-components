@@ -86,6 +86,7 @@ describe('Start Task - Task App', () => {
         await task.clickStartButton();
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[0]);
         const taskDetails = await taskPage.taskDetails();
+
         await taskDetails.clickInvolvePeopleButton();
         await taskDetails.typeUser(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);
         await taskDetails.selectUserToInvolve(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName);

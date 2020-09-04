@@ -78,6 +78,7 @@ describe('Dynamic Table', () => {
         afterAll(async () => {
             await apiService.getInstance().login(user.email, user.password);
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
+            await navigationBarPage.clickLogoutButton();
         });
 
         beforeEach(async () => {

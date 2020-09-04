@@ -6,7 +6,7 @@ cd $DIR/../../../
 
 export CONTEXT_ENV="process-services"
 export PROVIDER='BPM'
-export AUTH_TYPE='BASIC'
+export AUTH_TYPE="OAUTH"
 
 echo "Start process services e2e"
 
@@ -19,8 +19,9 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]; then
     echo "Affected e2e ${AFFECTED_E2E}"
 fi;
 
-./node_modules/@alfresco/adf-cli/bin/adf-cli check-ps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" -e "$E2E_EMAIL" --use-dist -m 2 || exit 1)
+#./node_modules/@alfresco/adf-cli/bin/adf-cli check-ps-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1 TODO chanvge login check SSO
+
+RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -host_sso "$HOST_SSO" -identity_admin_email "$E2E_ADMIN_EMAIL_IDENTITY" -identity_admin_password "$E2E_ADMIN_PASSWORD_IDENTITY" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist -m 2 -b || exit 1)
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" || "${TRAVIS_EVENT_TYPE}" == "push"  ]]; then
     echo "Run all e2e $CONTEXT_ENV"

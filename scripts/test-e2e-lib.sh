@@ -4,7 +4,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/../"
 BROWSER_RUN=false
 DEVELOPMENT=false
-EXECLINT=false
 LITESERVER=false
 EXEC_VERSION_JSAPI=false
 TIMEOUT=120000
@@ -18,7 +17,6 @@ show_help() {
     echo "-p or --password"
     echo "-identity_admin_email"
     echo "-identity_admin_password"
-    echo "-e or --email"
     echo "-b or --browser run the test in the browser (No headless mode)"
     echo "-s or --spec run a single test file"
     echo "-f or --folder run a single folder test"
@@ -29,7 +27,6 @@ show_help() {
     echo "-host_sso the entire path including the name of the realm"
     echo "-save  save the error screenshot and report in the remote env"
     echo "-timeout or --timeout override the timeout foe the wait utils"
-    echo "-l --lint enable lint"
     echo "-m --maxInstances max instances parallel for tests"
     echo "-log or --log print all the browser log"
     echo "-db or --debug run the debugger"
@@ -58,10 +55,7 @@ set_identity_admin_password(){
     IDENTITY_ADMIN_PASSWORD=$1
     export IDENTITY_ADMIN_PASSWORD=$IDENTITY_ADMIN_PASSWORD
 }
-set_email(){
-    EMAIL=$1
-    export EMAIL_ADF=$EMAIL
-}
+
 set_host(){
     HOST=$1
     export URL_HOST_ADF=$HOST
@@ -120,10 +114,6 @@ set_prefix(){
     export PREFIX=$PREFIX
 }
 
-lint(){
-    EXECLINT=true
-}
-
 debug(){
     export DEBUG=true;
 }
@@ -155,7 +145,6 @@ while [[ $1 == -* ]]; do
       -p|--password)  set_password $2; shift 2;;
       -identity_admin_email)  set_identity_admin_email $2; shift 2;;
       -identity_admin_password)  set_identity_admin_password $2; shift 2;;
-      -e|--email)  set_email $2; shift 2;;
       -f|--folder)  set_test_folder $2; shift 2;;
       -timeout|--timeout)  set_timeout $2; shift 2;;
       -b|--browser)  set_browser; shift;;
@@ -167,11 +156,10 @@ while [[ $1 == -* ]]; do
       -ud|--use-dist)  lite_server; shift;;
       -save)   set_save_screenshot; shift;;
       -proxy|--proxy)  set_proxy $2; shift 2;;
-      -s|--seleniumServer) set_selenium $2; shift 2;;
+      --seleniumServer) set_selenium $2; shift 2;;
       -host|--host)  set_host $2; shift 2;;
       -log|--log)  set_log; shift ;;
       -host_sso|--host_sso) set_host_sso $2; shift 2;;
-      -l|--lint)  lint; shift;;
       -m|--maxInstances)  max_instances $2; shift 2;;
       -vjsapi)  version_js_api $2; shift 2;;
       -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
@@ -186,10 +174,6 @@ export TIMEOUT=$TIMEOUT
 if $EXEC_VERSION_JSAPI == true; then
   echo "====== Use the alfresco JS-API '$JSAPI_VERSION'====="
   npm install alfresco-js-api@${JSAPI_VERSION}
-fi
-
-if [[  $EXECLINT == "true" ]]; then
-    npm run lint-e2e || exit 1
 fi
 
 echo "====== Update webdriver-manager ====="
@@ -220,6 +204,7 @@ else
 
         npm run lite-server-e2e>/dev/null & $DEBUG_OPTION ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
      else
+        echo "====== Run without lite-server  ====="
         $DEBUG_OPTION  ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js || exit 1
     fi
 fi

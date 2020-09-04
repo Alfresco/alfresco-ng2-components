@@ -82,6 +82,7 @@ describe('Task Assignee', () => {
         afterAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await navigationBarPage.clickLogoutButton();
         });
 
         beforeEach(async () => {
@@ -214,6 +215,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(candidate2.email, candidate2.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
@@ -225,6 +227,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkTaskListIsLoaded();
             await taskPage.tasksListPage().checkContentIsNotDisplayed(app.userTasks.candidateTask);
 
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(candidate1.email, candidate1.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();
@@ -253,6 +256,7 @@ describe('Task Assignee', () => {
             await taskPage.tasksListPage().checkContentIsDisplayed(app.userTasks.candidateTask);
             await taskPage.taskDetails().checkClaimEnabled();
 
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(candidate2.email, candidate2.password);
             await navigationBarPage.navigateToProcessServicesPage();
             await processServicesPage.checkApsContainer();

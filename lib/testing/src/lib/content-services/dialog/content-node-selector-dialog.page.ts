@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, browser } from 'protractor';
-import * as remote from 'selenium-webdriver/remote';
+import { by, element } from 'protractor';
 import { DocumentListPage } from '../pages/document-list.page';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
@@ -137,7 +136,6 @@ export class ContentNodeSelectorDialogPage {
         await this.dataTable.waitForTableBody();
         await this.breadcrumbDropdownPage.checkCurrentFolderIsDisplayed();
 
-        await browser.setFileDetector(new remote.FileDetector());
         const uploadButton = element(by.css('adf-upload-button input'));
         await BrowserVisibility.waitUntilElementIsPresent(uploadButton);
         await uploadButton.sendKeys(fileLocation);

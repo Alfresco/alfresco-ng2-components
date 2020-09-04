@@ -29,7 +29,8 @@ export class FiltersPage {
 
     async goToFilter(filterName): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
-        await BrowserActions.clickExecuteScript(`[data-automation-id="${filterName}_filter"]`);
+        const filter = element(by.css(`button[data-automation-id="${filterName}_filter"]`));
+        await BrowserActions.click(filter);
     }
 
     async sortByName(sortOrder: string): Promise<void> {

@@ -17,15 +17,14 @@
 
 import { FormFields } from '../form-fields';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
-import * as remote from 'selenium-webdriver/remote';
-import { element, by, browser } from 'protractor';
+import { Locator, element, by, browser } from 'protractor';
 
 export class AttachFileWidgetPage {
 
     formFields = new FormFields();
-    uploadLocator = by.css('button[id="attachfile"]');
+    uploadLocator: Locator = by.css('button[id="attachfile"]');
     localStorageButton = element(by.css('input[id="attachfile"]'));
-    filesListLocator = by.css('div[id="adf-attach-widget-readonly-list"]');
+    filesListLocator: Locator = by.css('div[id="adf-attach-widget-readonly-list"]');
     attachFileWidget = element(by.css('#attachfile'));
     attachedFileMenu = element(by.css('mat-list-item button'));
     attachedFileOptions = element(by.css('.mat-menu-panel .mat-menu-content'));
@@ -34,7 +33,6 @@ export class AttachFileWidgetPage {
     removeFileOptionButton = element(by.css(`.mat-menu-panel .mat-menu-content button[id$="remove"]`));
 
     async attachFile(fieldId, fileLocation): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
         const widget = await this.formFields.getWidget(fieldId);
         const uploadButton = await widget.element(this.uploadLocator);
         await BrowserActions.click(uploadButton);
@@ -107,7 +105,6 @@ export class AttachFileWidgetPage {
     }
 
     async checkUploadIsNotVisible(fieldId): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
         const widget = await this.formFields.getWidget(fieldId);
         const uploadButton = await widget.element(this.uploadLocator);
         await BrowserVisibility.waitUntilElementIsNotPresent(uploadButton);
@@ -119,7 +116,6 @@ export class AttachFileWidgetPage {
     }
 
     async clickUploadButton(fieldId): Promise<void> {
-        browser.setFileDetector(new remote.FileDetector());
         await BrowserActions.closeMenuAndDialogs();
         const widget = await this.formFields.getWidget(fieldId);
         const uploadButton = await widget.element(this.uploadLocator);

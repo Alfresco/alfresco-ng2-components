@@ -18,7 +18,7 @@
 import CONSTANTS = require('../util/constants');
 import {
     ApiService,
-    ApplicationsUtil,
+    ApplicationsUtil, BrowserActions,
     FileBrowserUtil,
     LocalStorageUtil,
     LoginPage,
@@ -81,6 +81,7 @@ describe('Start Process Component', () => {
     });
 
     describe('Provider: BPM', () => {
+
         beforeAll(async () => {
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
@@ -110,6 +111,10 @@ describe('Start Process Component', () => {
                 await processServicesPage.checkApsContainer();
             });
 
+            afterEach(async () => {
+                await navigationBarPage.clickLogoutButton();
+            });
+
             it('[C260458] Should NOT be able to start a process without process model', async () => {
                 await processServicesPage.goToApp('Task App');
                 await processServiceTabBarPage.clickProcessButton();
@@ -120,13 +125,15 @@ describe('Start Process Component', () => {
         });
 
         describe(' Once logged with user with app', () => {
-            beforeAll(async () => {
-                await loginPage.login(secondProcUserModel.email, secondProcUserModel.password);
-            });
 
             beforeEach(async () => {
+                await loginPage.login(secondProcUserModel.email, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
+            });
+
+            afterEach(async () => {
+                await navigationBarPage.clickLogoutButton();
             });
 
             it('[C260441] Should display start process form and default name when creating a new process after selecting the process definition', async () => {
@@ -373,7 +380,6 @@ describe('Start Process Component', () => {
             });
 
             it('[C260457] Should display process in Completed when cancelled', async () => {
-                await loginPage.login(secondProcUserModel.email, secondProcUserModel.password);
                 await navigationBarPage.navigateToProcessServicesPage();
                 await processServicesPage.checkApsContainer();
                 await processServicesPage.goToApp(app.title);
@@ -494,11 +500,9 @@ describe('Start Process Component', () => {
             await applicationsService.importPublishDeployApp(startProcessAttachFileApp.file_path);
         });
 
-        afterAll(async () => {
-            await navigationBarPage.clickLogoutButton();
-        });
-
         it('[C260490] Should be able to start a Process within ACS', async () => {
+            await BrowserActions.getUrl(`${browser.baseUrl}/settings`);
+
             await LocalStorageUtil.setStorageItem('providers', 'ALL');
 
             await loginPage.login(processUserModel.email, processUserModel.password);

@@ -17,7 +17,7 @@
 
 import { browser } from 'protractor';
 import {
-    ApiService,
+    ApiService, LocalStorageUtil,
     LoginPage,
     StringUtil,
     UploadActions,
@@ -38,7 +38,7 @@ describe('Viewer', () => {
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
 
-    const apiService = new ApiService();
+    const apiService = new ApiService({ authType: 'ECM', provider: 'ECM' });
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
@@ -57,6 +57,9 @@ describe('Viewer', () => {
     });
 
     beforeAll(async () => {
+        await LocalStorageUtil.setStorageItem('providers', 'ECM');
+        await LocalStorageUtil.setStorageItem('authType', 'BASIC');
+
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await usersActions.createUser(acsUser);
 

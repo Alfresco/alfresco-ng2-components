@@ -17,15 +17,15 @@
 
 import { ProcessServiceTabBarPage } from './process-service-tab-bar.page';
 
-import { element, by } from 'protractor';
+import { Locator, element, by } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class ProcessServicesPage {
 
     apsAppsContainer = element(by.css('.adf-app-listgrid'));
     taskApp = element(by.css('mat-card[title="Task App"]'));
-    iconTypeLocator = by.css('mat-icon[class*="card-logo-icon"]');
-    descriptionLocator = by.css('mat-card-subtitle[class*="subtitle"]');
+    iconTypeLocator: Locator = by.css('mat-icon[class*="card-logo-icon"]');
+    descriptionLocator: Locator = by.css('mat-card-subtitle[class*="subtitle"]');
 
     async checkApsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.apsAppsContainer);

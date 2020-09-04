@@ -28,7 +28,7 @@ import {
 import { SearchFiltersPage } from '../pages/search-filters.page';
 import { SearchResultsPage } from '../pages/search-results.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
-import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchConfiguration } from '../search.config';
 import { browser } from 'protractor';
 
@@ -37,7 +37,7 @@ describe('Search Radio Component', () => {
     const loginPage = new LoginPage();
     const searchFiltersPage = new SearchFiltersPage();
     const navigationBarPage = new NavigationBarPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchResults = new SearchResultsPage();
 
     const acsUser = new UserModel();
@@ -148,9 +148,9 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
@@ -161,9 +161,9 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
@@ -173,9 +173,9 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(9);
@@ -200,9 +200,9 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
@@ -229,9 +229,9 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
@@ -276,9 +276,9 @@ describe('Search Radio Component', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.checkSearchBarIsVisible();
-            await searchDialog.enterTextAndPressEnter(randomName);
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.checkSearchBarIsVisible();
+            await searchBarPage.enterTextAndPressEnter(randomName);
             await searchFiltersPage.clickTypeFilterHeader();
 
             await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);

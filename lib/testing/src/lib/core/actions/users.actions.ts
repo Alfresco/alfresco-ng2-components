@@ -17,7 +17,6 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
-import * as remote from 'selenium-webdriver/remote';
 
 import { browser } from 'protractor';
 import { ImageUploadRepresentation, UserRepresentation } from '@alfresco/js-api';
@@ -99,6 +98,11 @@ export class UsersActions {
         return user;
     }
 
+    async createUserWithName(firstName: string, lastName: string): Promise<UserModel> {
+        const user = new UserModel({ firstName:  firstName, lastName: lastName});
+        return this.createUser(user);
+    }
+
     async createTenantAndUser(email?: string, firstName?: string, lastName?: string, password?: string): Promise<UserRepresentation> {
         const newTenant = await this.api.apiService.activiti.adminTenantsApi.createTenant(new Tenant());
 
@@ -127,8 +131,6 @@ export class UsersActions {
     }
 
     async changeProfilePictureAps(fileLocation: string): Promise<ImageUploadRepresentation> {
-        browser.setFileDetector(new remote.FileDetector());
-
         const pathFile = path.join(browser.params.testConfig.main.rootPath + fileLocation);
         const file = fs.createReadStream(pathFile);
 

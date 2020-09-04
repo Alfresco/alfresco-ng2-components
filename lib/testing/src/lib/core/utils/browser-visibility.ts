@@ -83,7 +83,16 @@ export class BrowserVisibility {
     static async waitUntilElementHasValue(elementToCheck: ElementFinder, elementValue, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
         Logger.info(`Wait Until Element has value ${elementToCheck.locator().toString()} for ${waitTimeout}`);
 
-        return browser.wait(protractor.ExpectedConditions.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, 'Element doesn\'t have a value ' + elementToCheck.locator());
+        return browser.wait(protractor.ExpectedConditions.textToBePresentInElementValue(elementToCheck, elementValue), waitTimeout, `Element doesn\'t have a value ${elementValue} ${elementToCheck.locator()}`);
+    }
+
+    /*
+     * Wait for element to have text
+     */
+    static async waitUntilElementHasText(elementToCheck: ElementFinder, text, waitTimeout: number = BrowserVisibility.DEFAULT_TIMEOUT): Promise<any> {
+        Logger.info(`Wait Until Element has value ${elementToCheck.locator().toString()} for ${waitTimeout}`);
+
+        return browser.wait(protractor.ExpectedConditions.textToBePresentInElement(elementToCheck, text), waitTimeout, `Element doesn\'t have the text ${text}  ${elementToCheck.locator()}`);
     }
 
     static async waitUntilElementIsNotPresent(elementToCheck: ElementFinder, waitTimeout: number = BrowserVisibility.NOT_VISIBLE_DEFAULT_TIMEOUT): Promise<any> {

@@ -11,6 +11,10 @@ before_install: . ./scripts/ci/job_hooks/before_install.sh
 install:
     echo "no install"
 
+env:
+    global:
+        - SAVE_SCREENSHOT=true
+
 branches:
   only:
   - master
@@ -21,10 +25,6 @@ branches:
 
 stages:
   - name: Lint & Build Dist & Release
-  - name: Update Rancher
-    if: (type = push AND tag IS blank)  OR type = api
-  - name: Deploy PR
-    if: type = pull_request && commit_message =~ /\[create preview\]/
   - name: Check bundle
     if: type = push AND tag IS blank
   - name: Trigger ADF child build
@@ -55,6 +55,7 @@ jobs:
           script:
             - ./scripts/travis/build/build.sh && ./scripts/lint.sh && ./scripts/travis/release/release-npm.sh
           after_success:
+            - ./scripts/travis/release/release-docker.sh
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./lib/dist -o "$S3_DBP_FOLDER/alfresco-libs.tar.bz2"
 
@@ -109,17 +110,6 @@ jobs:
               - ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
               - ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-libs.tar.bz2" -o "./lib/dist"
           script: ./scripts/travis/e2e/process-services-cloud-e2e.sh
-
-
-        - stage: Update Rancher
-          name: Update Rancher
-          before_script: ./scripts/ci/utils/artifact-from-s3.sh -a "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2" -o "./dist/demo-shell"
-          script: ./scripts/travis/deploy/deploy.sh
-
-        - stage: Deploy PR
-          name: Deploy PR
-          script: ./scripts/travis/deploy/deploy-pr.sh
-
 
         - stage: Check bundle
           script:

@@ -16,7 +16,7 @@
  */
 
 import { FormFields } from '../form-fields';
-import { by, element } from 'protractor';
+import { by, element, Locator } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '../../../utils/public-api';
 
 export class PeopleWidgetPage {
@@ -24,9 +24,9 @@ export class PeopleWidgetPage {
     peopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
     firstResult = element(by.id('adf-people-widget-user-0'));
     formFields = new FormFields();
-    labelLocator = by.css('div[class*="display-text-widget"]');
-    inputLocator = by.id('involvepeople');
-    peopleDropDownList = by.css('div[class*="adf-people-widget-list"]');
+    labelLocator: Locator = by.css('div[class*="display-text-widget"]');
+    inputLocator: Locator = by.id('involvepeople');
+    peopleDropDownList: Locator = by.css('div[class*="adf-people-widget-list"]');
 
     getFieldLabel(fieldId: string): Promise<string> {
         return this.formFields.getFieldLabel(fieldId, this.labelLocator);
@@ -60,7 +60,7 @@ export class PeopleWidgetPage {
 
     async getDropDownList(): Promise<any[]> {
         await this.checkDropDownListIsDisplayed();
-        const users = by.css('.adf-people-label-name');
+        const users: Locator = by.css('.adf-people-label-name');
         await BrowserVisibility.waitUntilElementIsVisible(element(users));
         return element.all(users).map((elementFinder) => elementFinder.getText());
     }

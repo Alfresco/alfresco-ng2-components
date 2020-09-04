@@ -24,7 +24,7 @@ import {
     UserModel,
     UsersActions
 } from '@alfresco/adf-testing';
-import { SearchDialogPage } from '../pages/search-dialog.page';
+import { SearchBarPage } from '../pages/search-bar.page';
 import { SearchResultsPage } from '../pages/search-results.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { SearchFiltersPage } from '../pages/search-filters.page';
@@ -35,7 +35,7 @@ import { SearchConfiguration } from '../search.config';
 describe('Search Slider Filter', () => {
 
     const loginPage = new LoginPage();
-    const searchDialog = new SearchDialogPage();
+    const searchBarPage = new SearchBarPage();
     const searchFilters = new SearchFiltersPage();
     const sizeSliderFilter = searchFilters.sizeSliderFilterPage();
     const searchResults = new SearchResultsPage();
@@ -67,9 +67,9 @@ describe('Search Slider Filter', () => {
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        await searchDialog.checkSearchIconIsVisible();
-        await searchDialog.clickOnSearchIcon();
-        await searchDialog.enterTextAndPressEnter('*');
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter('*');
    });
 
     afterAll(async () => {
@@ -162,9 +162,9 @@ describe('Search Slider Filter', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter('*');
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();
@@ -179,9 +179,9 @@ describe('Search Slider Filter', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter('*');
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();
@@ -198,9 +198,9 @@ describe('Search Slider Filter', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter('*');
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();
@@ -217,9 +217,9 @@ describe('Search Slider Filter', () => {
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-            await searchDialog.checkSearchIconIsVisible();
-            await searchDialog.clickOnSearchIcon();
-            await searchDialog.enterTextAndPressEnter('*');
+            await searchBarPage.checkSearchIconIsVisible();
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();

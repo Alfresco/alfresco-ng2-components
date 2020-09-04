@@ -28,10 +28,12 @@ export class DropdownPage {
     }
 
     async clickDropdown(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.dropDownElement);
         await BrowserActions.click(this.dropDownElement);
     }
 
     async selectOption(option: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first());
         const optionElement = element.all(by.cssContainingText('mat-option span.mat-option-text', option)).first();
         await BrowserActions.click(optionElement);
     }

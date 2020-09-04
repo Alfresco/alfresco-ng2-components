@@ -40,9 +40,9 @@ export class TasksCloudDemoPage {
     selectedRows = element(by.xpath("//div[text()=' Selected Rows: ']"));
     noOfSelectedRows = element.all(by.xpath("//div[text()=' Selected Rows: ']//li"));
     addActionTitle = element(by.cssContainingText('.mat-card-title', 'Add Action'));
-    keyInputField = element(by.css('input[placeholder="Key"]'));
-    titleInputField = element(by.css('input[placeholder="Title"]'));
-    iconInputField = element(by.css('input[placeholder="Icon"]'));
+    keyInputField = element(by.css('input[data-placeholder="Key"]'));
+    titleInputField = element(by.css('input[data-placeholder="Title"]'));
+    iconInputField = element(by.css('input[data-placeholder="Icon"]'));
     addActionButton = element(by.cssContainingText('button span', 'Add'));
     disableCheckbox = element(by.css(`mat-checkbox[formcontrolname='disabled']`));
     visibleCheckbox = element(by.css(`mat-checkbox[formcontrolname='visible']`));

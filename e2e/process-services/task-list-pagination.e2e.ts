@@ -96,13 +96,16 @@ describe('Task List Pagination', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + itemsPerPage.fiveValue + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
+
         await paginationPage.clickOnNextPage();
         currentPage++;
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 6-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);
         await paginationPage.clickOnNextPage();
         currentPage++;
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual('Showing 11-' + itemsPerPage.fiveValue * currentPage + ' of ' + nrOfTasks);
         await expect(await taskPage.tasksListPage().getDataTable().numberOfRows()).toBe(itemsPerPage.fiveValue);

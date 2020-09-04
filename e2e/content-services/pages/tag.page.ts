@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { element, by, protractor, browser } from 'protractor';
+import { Locator, element, by, protractor, browser } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class TagPage {
@@ -26,9 +26,9 @@ export class TagPage {
     tagListRow = element(by.css('adf-tag-node-actions-list mat-list-item'));
     tagListByNodeIdRow = element(by.css('adf-tag-node-list mat-chip'));
     errorMessage = element(by.css('mat-hint[data-automation-id="errorMessage"]'));
-    tagListRowLocator = by.css('adf-tag-node-actions-list mat-list-item div');
-    tagListByNodeIdRowLocator = by.css('adf-tag-node-list mat-chip span');
-    tagListContentServicesRowLocator = by.css('div[class*="adf-list-tag"]');
+    tagListRowLocator: Locator = by.css('adf-tag-node-actions-list mat-list-item div');
+    tagListByNodeIdRowLocator: Locator = by.css('adf-tag-node-list mat-chip span');
+    tagListContentServicesRowLocator: Locator = by.css('div[class*="adf-list-tag"]');
     showDeleteButton = element(by.id('adf-remove-button-tag'));
     showMoreButton = element(by.css('button[data-automation-id="show-more-tags"]'));
     showLessButton = element(by.css('button[data-automation-id="show-fewer-tags"]'));
@@ -76,7 +76,7 @@ export class TagPage {
 
     async getNewTagPlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.newTagInput);
-        return this.newTagInput.getAttribute('placeholder');
+        return this.newTagInput.getAttribute('data-placeholder');
     }
 
     async addTagButtonIsEnabled(): Promise<boolean> {

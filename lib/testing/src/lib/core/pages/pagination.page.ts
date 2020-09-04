@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { Locator, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 
@@ -25,7 +25,7 @@ export class PaginationPage {
     pageSelectorArrow = element(by.css('button[data-automation-id="page-selector"]'));
     itemsPerPage = element(by.css('.adf-pagination__max-items'));
     itemsPerPageOpenDropdown = element(by.css('.adf-pagination__perpage-block button'));
-    itemsPerPageOptions = by.css('.adf-pagination__page-selector .mat-menu-item');
+    itemsPerPageOptions: Locator = by.css('.adf-pagination__page-selector .mat-menu-item');
     currentPage = element(by.css('.adf-pagination__current-page'));
     totalPages = element(by.css('.adf-pagination__total-pages'));
     paginationRange = element(by.css('.adf-pagination__range'));
@@ -33,13 +33,13 @@ export class PaginationPage {
     nextButtonDisabled = element(by.css('button[class*="adf-pagination__next-button"][disabled]'));
     previousButtonDisabled = element(by.css('button[class*="adf-pagination__previous-button"][disabled]'));
     pageDropDown = element(by.css('div[class*="adf-pagination__actualinfo-block"] button'));
-    pageDropDownOptions = by.css('div[class*="mat-menu-content"] button');
+    pageDropDownOptions: Locator = by.css('div[class*="mat-menu-content"] button');
     paginationSection = element(by.css('adf-pagination'));
     paginationSectionEmpty = element(by.css('adf-pagination[class*="adf-pagination__empty"]'));
     totalFiles = element(by.css('.adf-pagination__range'));
 
     async selectItemsPerPage(numberOfItem: string): Promise<void> {
-        await browser.executeScript(`document.querySelector('div[class*="adf-pagination__perpage-block"] button').click();`);
+        await BrowserActions.clickExecuteScript(`div[class*="adf-pagination__perpage-block"] button`);
         await BrowserVisibility.waitUntilElementIsVisible(this.pageSelectorDropDown);
         const itemsPerPage = element.all(by.cssContainingText('.mat-menu-item', numberOfItem)).first();
         await BrowserVisibility.waitUntilElementIsPresent(itemsPerPage);
@@ -80,7 +80,7 @@ export class PaginationPage {
     }
 
     async clickOnNextPage(): Promise<void> {
-        await browser.executeScript(`document.querySelector('button[class*="adf-pagination__next-button"]').click();`);
+        return BrowserActions.click(this.nextPageButton);
     }
 
     async clickOnPageDropdown(): Promise<void> {
@@ -137,14 +137,5 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
         const totalNumberOfFiles = await BrowserActions.getText(this.totalFiles);
         return totalNumberOfFiles.split('of ')[1];
-    }
-
-    /*
-     * Wait until the total number of items is less then specified value
-     */
-    async waitUntilNoOfItemsIsLessThenValue(expectedValue: number): Promise<any> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.totalFiles);
-        const condition = () => this.totalFiles.getText().then(value => value && +value.split('of ')[1] < expectedValue);
-        return browser.wait(condition, 10000);
     }
 }

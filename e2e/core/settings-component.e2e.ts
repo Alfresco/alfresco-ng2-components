@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BrowserActions, SettingsPage } from '@alfresco/adf-testing';
+import { BrowserActions, LocalStorageUtil, SettingsPage } from '@alfresco/adf-testing';
 import { browser, protractor } from 'protractor';
 import { ContentServicesPage } from '../core/pages/content-services.page';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
@@ -33,6 +33,11 @@ describe('Settings component', () => {
         'Possible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.';
 
     describe('Should be able to change Urls in the Settings', () => {
+        beforeAll(async () => {
+            await LocalStorageUtil.setStorageItem('authType', 'BASIC');
+            await browser.refresh();
+        });
+
         beforeEach(async () => {
             await settingsPage.goToSettingsPage();
         });
@@ -94,10 +99,14 @@ describe('Settings component', () => {
 
     describe('Settings Component - Basic Authentication', () => {
         beforeAll(async () => {
+            await LocalStorageUtil.setStorageItem('authType', 'OAUTH');
+            await browser.refresh();
             await settingsPage.goToSettingsPage();
             await settingsPage.setProvider('ALL');
             await settingsPage.setContentServicesURL(browser.params.testConfig.appConfig.ecmHost);
             await settingsPage.setProcessServicesURL(browser.params.testConfig.appConfig.bpmHost);
+            await settingsPage.setImplicitFlow(false);
+            await settingsPage.setSilentLogin(false);
             await settingsPage.clickApply();
         });
 

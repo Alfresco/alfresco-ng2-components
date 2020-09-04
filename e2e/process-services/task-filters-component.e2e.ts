@@ -65,6 +65,7 @@ describe('Task', () => {
             await apiService.getInstance().activiti.modelsApi.deleteModel(appId);
             await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
+            await navigationBarPage.clickLogoutButton();
         });
 
         it('[C279967] Should display default filters when an app is deployed', async () => {

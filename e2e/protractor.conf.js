@@ -176,12 +176,14 @@ exports.config = {
     SELENIUM_PROMISE_MANAGER: false,
 
     plugins: [{
-        package: 'jasmine2-protractor-utils',
-        disableScreenshot: false,
-        screenshotOnExpectFailure: true,
-        screenshotOnSpecFailure: false,
-        clearFoldersBeforeTest: true,
-        screenshotPath: path.resolve(__dirname, 'e2e-output/screenshots/')
+        package: 'protractor-screenshoter-plugin',
+        screenshotPath: path.resolve(__dirname, '../e2e-output/'),
+        screenshotOnExpect: 'failure',
+        withLogs: true,
+        writeReportFreq: 'end',
+        imageToAscii: 'none',
+        htmlOnExpect: 'none',
+        htmlOnSpec: 'none'
     }],
 
     onCleanUp(results) {
@@ -219,7 +221,7 @@ exports.config = {
         jasmine.getEnv().addReporter(
             new SpecReporter({
                 spec: {
-                    displayStacktrace: true,
+                    displayStacktrace: 'raw',
                     displayDuration: true
                 }
             })
@@ -240,9 +242,11 @@ exports.config = {
         await LocalStorageUtil.setStorageItem('baseShareUrl', HOST);
 
         // @ts-ignore
+        await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+
+        // @ts-ignore
         if (browser.params.testConfig.appConfig.authType === 'OAUTH') {
-            // @ts-ignore
-            await LocalStorageUtil.setStorageItem('authType', browser.params.testConfig.appConfig.authType);
+
             // @ts-ignore
             await LocalStorageUtil.setStorageItem('identityHost', browser.params.testConfig.appConfig.identityHost);
             // @ts-ignore
@@ -270,19 +274,19 @@ exports.config = {
 
     afterLaunch: async function () {
         if (SAVE_SCREENSHOT) {
-            console.log(`Save screenshot failures enabled`);
+            console.log(`Save screenshot enabled`);
 
             let retryCount = 1;
             if (argv.retry) {
                 retryCount = ++argv.retry;
             }
             try {
-                await uploadScreenshot(retryCount);
+                await uploadScreenshot(retryCount, (process.env.FOLDER || ''));
             } catch (error) {
                 console.error('Error saving screenshot', error);
             }
         }else{
-            console.log(`Save screenshot failures disabled`);
+            console.log(`Save screenshot disabled`);
         }
 
         return retry.afterLaunch(MAX_RETRIES);

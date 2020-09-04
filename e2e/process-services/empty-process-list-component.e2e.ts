@@ -65,8 +65,10 @@ describe('Empty Process List Test', () => {
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
+        await processFiltersPage.checkStartProcessIsDisplay();
         await startProcessPage.selectFromProcessDropdown(appWithProcess.process_wse_name);
         await startProcessPage.clickStartProcessButton();
+
         await expect(await processFiltersPage.numberOfProcessRows()).toEqual(1);
 
         await processDetailsPage.checkProcessDetailsCard();
@@ -78,6 +80,7 @@ describe('Empty Process List Test', () => {
 
         await processFiltersPage.clickCreateProcessButton();
         await processFiltersPage.clickNewProcessDropdown();
+        await processFiltersPage.checkStartProcessIsDisplay();
         await startProcessPage.selectFromProcessDropdown(simpleAppWithUserForm.processName);
         await startProcessPage.clickStartProcessButton();
 

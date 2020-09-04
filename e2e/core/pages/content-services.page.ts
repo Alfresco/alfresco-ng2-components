@@ -16,7 +16,7 @@
  */
 
 import { DropActions, BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage, DropdownPage } from '@alfresco/adf-testing';
-import { $$, browser, by, element, ElementFinder, protractor } from 'protractor';
+import { Locator, $$, browser, by, element, ElementFinder, protractor } from 'protractor';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
 import { NavigationBarPage } from './navigation-bar.page';
@@ -47,7 +47,7 @@ export class ContentServicesPage {
     deleteNodesButton = element(by.css('button[data-automation-id="delete-toolbar-button"]'));
     createLibraryButton = element(by.css('button[data-automation-id="create-new-library"]'));
     activeBreadcrumb = element(by.css('div[class*="active"]'));
-    tooltip = by.css('div[class*="--text adf-full-width"] span');
+    tooltip: Locator = by.css('div[class*="--text adf-full-width"] span');
     uploadFileButton = element(by.css('.adf-upload-button-file-container button'));
     uploadFileButtonInput = element(by.css('input[data-automation-id="upload-single-file"]'));
     uploadMultipleFileButton = element(by.css('input[data-automation-id="upload-multiple-files"]'));

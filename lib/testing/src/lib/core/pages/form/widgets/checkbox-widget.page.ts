@@ -17,13 +17,13 @@
 
 import { FormFields } from '../form-fields';
 import { BrowserActions, BrowserVisibility } from '../../../utils/public-api';
-import { by, element } from 'protractor';
+import { Locator, by, element } from 'protractor';
 
 export class CheckboxWidgetPage {
 
     formFields = new FormFields();
     checkboxLabel = element(by.css('span[class*="mat-checkbox-label"]'));
-    checkboxLocator = by.css('mat-checkbox');
+    checkboxLocator: Locator = by.css('mat-checkbox');
 
     getCheckboxLabel(): Promise<string> {
         return BrowserActions.getText(this.checkboxLabel);

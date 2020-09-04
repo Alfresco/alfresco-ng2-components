@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DropdownPage, TabsPage } from '@alfresco/adf-testing';
-import { browser, by, element, Key } from 'protractor';
+import { Locator, browser, by, element, Key } from 'protractor';
 import { AppSettingsTogglesPage } from './dialog/app-settings-toggles.page';
 
 export class TaskDetailsPage {
@@ -24,6 +24,7 @@ export class TaskDetailsPage {
     appSettingsTogglesClass = new AppSettingsTogglesPage();
 
     formContent = element(by.css('adf-form'));
+
     formNameField = element(by.css('[data-automation-id="card-textitem-value-formName"]'));
     formNameButton = element(by.css('[data-automation-id="card-textitem-toggle-formName"]'));
     assigneeField = element(by.css('[data-automation-id="card-textitem-value-assignee"]'));
@@ -43,8 +44,8 @@ export class TaskDetailsPage {
     addCommentButton = element(by.css('[data-automation-id="comments-input-add"]'));
     involvePeopleButton = element(by.css('div[class*="add-people"]'));
     addPeopleField = element(by.css('input[data-automation-id="adf-people-search-input"]'));
-    addInvolvedUserButton = element(by.css('button[id="add-people"] span'));
-    emailInvolvedUser = by.xpath('following-sibling::div[@class="adf-people-email"]');
+    addInvolvedUserButton = element(by.css('button[id="add-people"]'));
+    emailInvolvedUser: Locator = by.css('[data-automation-id="adf-people-email"]');
     taskDetailsInfoDrawer = element(by.tagName('adf-info-drawer'));
     taskDetailsSection = element(by.css('div[data-automation-id="app-tasks-details"]'));
     taskDetailsEmptySection = element(by.css('div[data-automation-id="adf-tasks-details--empty"]'));
@@ -110,16 +111,8 @@ export class TaskDetailsPage {
         await this.attachFormDropdown.selectDropdownOption(option);
     }
 
-    async checkCancelAttachFormIsDisplayed(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.cancelAttachForm);
-    }
-
     async noFormIsDisplayed(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsNotVisible(this.formContent);
-    }
-
-    async clickCancelAttachForm(): Promise<void> {
-        await BrowserActions.click(this.cancelAttachForm);
     }
 
     async checkRemoveAttachFormIsDisplayed() {
@@ -128,6 +121,7 @@ export class TaskDetailsPage {
 
     async clickRemoveAttachForm(): Promise<void> {
         await BrowserActions.click(this.removeAttachForm);
+        await browser.sleep(2000);
     }
 
     async checkAttachFormButtonIsDisplayed(): Promise<void> {
@@ -142,9 +136,8 @@ export class TaskDetailsPage {
         return BrowserActions.click(this.attachFormButton);
     }
 
-    async checkFormIsAttached(formName): Promise<void> {
-        const attachedFormName = await BrowserActions.getInputValue(this.formNameField);
-        await expect(attachedFormName).toEqual(formName);
+    async checkFormIsAttached(formName: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasValue(this.formNameField, formName);
     }
 
     getFormName(): Promise<string> {
@@ -210,7 +203,7 @@ export class TaskDetailsPage {
 
     async getDescriptionPlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsPresent(this.descriptionField);
-        return this.descriptionField.getAttribute('placeholder');
+        return this.descriptionField.getAttribute('data-placeholder');
     }
 
     getDueDate(): Promise<string> {
@@ -226,11 +219,13 @@ export class TaskDetailsPage {
         await BrowserActions.clearWithBackSpace(this.priority);
         await BrowserActions.clearSendKeys(element(by.css('input[data-automation-id="card-textitem-value-priority"]')), priority ? priority : ' ');
         await this.priority.sendKeys(Key.TAB);
+        await browser.sleep(1000);
     }
 
     async updateDueDate(): Promise<void> {
         await BrowserActions.click(this.dueDateField);
         await BrowserActions.click(element.all(by.css('.mat-datetimepicker-calendar-body-cell')).first());
+        await browser.sleep(1000);
     }
 
     async updateDescription(description?: string): Promise<void> {
@@ -238,12 +233,16 @@ export class TaskDetailsPage {
         await BrowserActions.clearWithBackSpace(this.descriptionField);
         await BrowserActions.clearSendKeys(element(by.css('[data-automation-id="card-textitem-value-description"]')), description ? description : '');
         await this.descriptionField.sendKeys(Key.TAB);
+        await browser.sleep(1000);
     }
 
     async updateAssignee(fullName: string): Promise<void> {
         await BrowserActions.click(this.assigneeButton);
         await BrowserActions.clearSendKeys(element(by.css('[id="userSearchText"]')), fullName);
         await BrowserActions.click(element(by.cssContainingText('.adf-people-full-name', fullName)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`adf-datatable-row[class*='is-selected']`)));
+
+        await browser.sleep(2000);
         await BrowserActions.click(element(by.css('button[id="add-people"]')));
     }
 
@@ -293,7 +292,7 @@ export class TaskDetailsPage {
     }
 
     async checkUserIsSelected(user: string): Promise<void> {
-        const row = element(by.cssContainingText('div[class*="search-list-container"] div[class*="people-full-name"]', user));
+        const row = this.getRowsUser(user);
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
 
@@ -302,7 +301,7 @@ export class TaskDetailsPage {
     }
 
     getRowsUser(user: string) {
-        return element(by.cssContainingText('div[class*="people-full-name"]', user));
+        return element(by.css(`div[data-automation-id="adf-people-full-name-${user.replace(' ', '-')}"]`));
     }
 
     async removeInvolvedUser(user): Promise<void> {
@@ -349,7 +348,7 @@ export class TaskDetailsPage {
 
     async getInvolvePeoplePlaceholder(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.addPeopleField);
-        return this.addPeopleField.getAttribute('placeholder');
+        return this.addPeopleField.getAttribute('data-placeholder');
     }
 
     async checkCancelButtonIsEnabled(): Promise<void> {
@@ -408,7 +407,7 @@ export class TaskDetailsPage {
     }
 
     async clickCompleteFormTask(): Promise<void> {
-        await BrowserActions.clickScript(this.completeFormTask);
+        await BrowserActions.click(this.completeFormTask);
     }
 
     async getEmptyTaskDetailsMessage(): Promise<string> {

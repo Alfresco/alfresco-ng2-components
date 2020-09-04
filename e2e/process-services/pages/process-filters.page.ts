@@ -16,7 +16,7 @@
  */
 
 import { BrowserActions, BrowserVisibility, DataTableComponentPage, StartProcessPage } from '@alfresco/adf-testing';
-import { by, element } from 'protractor';
+import { Locator, by, element } from 'protractor';
 
 export class ProcessFiltersPage {
 
@@ -30,10 +30,11 @@ export class ProcessFiltersPage {
     accordionMenu = element(by.css('.app-processes-menu mat-accordion'));
     buttonWindow = element(by.css('div > button[data-automation-id="btn-start-process"] > div'));
     noContentMessage = element.all(by.css('.adf-empty-content__title')).first();
-    rows = by.css('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
+    rows: Locator = by.css('adf-process-instance-list .adf-datatable-body adf-datatable-row[class*="adf-datatable-row"]');
     tableBody = element.all(by.css('adf-datatable .adf-datatable-body')).first();
-    nameColumn = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
-    processIcon = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
+    nameColumn: Locator = by.css('div[class*="adf-datatable-body"] adf-datatable-row[class*="adf-datatable-row"] div[title="Name"] span');
+    processIcon: Locator = by.css('adf-icon[data-automation-id="adf-filter-icon"]');
+    startProcessEl = element(by.css('adf-start-process .adf-start-process'));
 
     async startProcess(): Promise<StartProcessPage> {
         await this.clickCreateProcessButton();
@@ -67,6 +68,10 @@ export class ProcessFiltersPage {
         await BrowserActions.click(this.newProcessButton);
     }
 
+    async checkStartProcessIsDisplay(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.startProcessEl);
+    }
+
     async checkNoContentMessage(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.noContentMessage);
     }
@@ -83,6 +88,7 @@ export class ProcessFiltersPage {
     }
 
     async numberOfProcessRows(): Promise<number> {
+        await BrowserVisibility.waitUntilElementIsVisible(element.all(this.rows).first());
         return element.all(this.rows).count();
     }
 

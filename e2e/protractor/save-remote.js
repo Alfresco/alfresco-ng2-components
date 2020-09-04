@@ -13,65 +13,55 @@ function buildNumber() {
     return process.env.TRAVIS_BUILD_NUMBER;
 }
 
-async function uploadScreenshot(retryCount) {
-    console.log(`Start uploading failures screenshot ${retryCount}`);
+async function uploadScreenshot(retryCount, suffixFileName) {
+    console.log(`Start uploading report ${retryCount}`);
 
-    let files = fs.readdirSync(path.join(__dirname, '../e2e-output/screenshots'));
+    let alfrescoJsApi = new AlfrescoApi({
+        provider: 'ECM',
+        hostEcm: TestConfig.screenshot.url
+    });
 
-    if (files && files.length > 0) {
+    await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
 
-        let alfrescoJsApi = new AlfrescoApi({
-            provider: 'ECM',
-            hostEcm: TestConfig.screenshot.url
+    let folderNode;
+
+    try {
+        folderNode = await alfrescoJsApi.nodes.addNode('-my-', {
+            'name': `retry-${retryCount}`,
+            'relativePath': `Builds/${buildNumber()}/`,
+            'nodeType': 'cm:folder'
+        }, {}, {
+            'overwrite': true
         });
-
-        await alfrescoJsApi.login(TestConfig.screenshot.username, TestConfig.screenshot.password);
-
-        let folder;
-
-        try {
-            folder = await alfrescoJsApi.nodes.addNode('-my-', {
-                'name': `retry-${retryCount}`,
-                'relativePath': `Builds/${buildNumber()}/screenshot`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        } catch (error) {
-            folder = await alfrescoJsApi.nodes.getNode('-my-', {
-                'relativePath': `Builds/${buildNumber()}/screenshot/retry-${retryCount}`,
-                'nodeType': 'cm:folder'
-            }, {}, {
-                'overwrite': true
-            });
-        }
-
-        for (const fileName of files) {
-            let pathFile = path.join(__dirname, '../e2e-output/screenshots', fileName);
-            let file = fs.createReadStream(pathFile);
-
-            let safeFileName = fileName.match(/\[(.*?)\]/);
-
-            if (safeFileName) {
-                const safeFileNameMatch = `${safeFileName[1]}.png`;
-                try {
-                    await alfrescoJsApi.upload.uploadFile(
-                        file,
-                        '',
-                        folder.entry.id,
-                        null,
-                        {
-                            'name': safeFileNameMatch,
-                            'nodeType': 'cm:content',
-                            'autoRename': true
-                        }
-                    );
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        }
+    } catch (error) {
+        folderNode = await alfrescoJsApi.nodes.getNode('-my-', {
+            'relativePath': `Builds/${buildNumber()}/retry-${retryCount}`,
+            'nodeType': 'cm:folder'
+        }, {}, {
+            'overwrite': true
+        });
     }
+
+    fs.renameSync(path.resolve(__dirname, '../../e2e-output/'), path.resolve(__dirname, `../../e2e-output-${retryCount}/`))
+
+    const child_process = require("child_process");
+    child_process.execSync(` tar -czvf ../e2e-result-${suffixFileName}-${retryCount}.tar .`, {
+        cwd: path.resolve(__dirname, `../../e2e-output-${retryCount}/`)
+    });
+
+    let pathFile = path.join(__dirname, `../../e2e-result-${suffixFileName}-${retryCount}.tar`);
+    let file = fs.createReadStream(pathFile);
+    await alfrescoJsApi.upload.uploadFile(
+        file,
+        '',
+        folderNode.entry.id,
+        null,
+        {
+            'name': `e2e-result-${suffixFileName}-${retryCount}.tar`,
+            'nodeType': 'cm:content',
+            'autoRename': true
+        }
+    );
 }
 
 module.exports = {

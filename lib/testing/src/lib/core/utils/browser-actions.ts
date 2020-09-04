@@ -37,11 +37,15 @@ export class BrowserActions {
     }
 
     static async clickScript(elementFinder: ElementFinder): Promise<void> {
+        Logger.info(`Click script ${elementFinder.locator().toString()}`);
+
         await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
         await browser.executeScript(`arguments[0].click();`, elementFinder);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
+        Logger.info(`Click execute script ${elementCssSelector}`);
+
         await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
@@ -69,11 +73,24 @@ export class BrowserActions {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
         const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+
         if (present) {
-            return elementFinder.getText();
+            let text = await elementFinder.getText();
+
+            if (text === '') { // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
+                text = await this.getTextScript(elementFinder);
+                return text?.trim();
+            }
+
+            return text;
         } else {
+            Logger.error(`Get Text ${elementFinder.locator().toString()} not present`);
             return '';
         }
+    }
+
+    static async getTextScript(elementFinder: ElementFinder): Promise<string> {
+        return browser.executeScript(`return arguments[0].textContent`, elementFinder);
     }
 
     static async getInputValue(elementFinder: ElementFinder): Promise<string> {
@@ -83,6 +100,7 @@ export class BrowserActions {
         if (present) {
             return elementFinder.getAttribute('value');
         } else {
+            Logger.error(`Get Input value ${elementFinder.locator().toString()} not present`);
             return '';
         }
     }
@@ -109,13 +127,22 @@ export class BrowserActions {
         }
     }
 
-    static async clearSendKeys(elementFinder: ElementFinder, text: string): Promise<void> {
+    static async clearSendKeys(elementFinder: ElementFinder, text: string, sleepTime: number = 0): Promise<void> {
         Logger.info(`Clear and sendKeys text:${text} locator:${elementFinder.locator().toString()}`);
 
         await this.click(elementFinder);
         await elementFinder.sendKeys('');
         await elementFinder.clear();
-        await elementFinder.sendKeys(text);
+
+        if (sleepTime === 0) {
+            await elementFinder.sendKeys(text);
+        } else {
+            for (let i = 0; i < text.length; i++) {
+                await elementFinder.sendKeys(text[i]);
+                await browser.sleep(sleepTime);
+            }
+        }
+
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
@@ -138,7 +165,7 @@ export class BrowserActions {
 
         const container = element(by.css('div.cdk-overlay-backdrop.cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing'));
         await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-        await BrowserVisibility.waitUntilElementIsNotVisible(container);
+        await BrowserVisibility.waitUntilElementIsNotVisible(container, 1000);
     }
 
     static async closeDisabledMenu(): Promise<void> {

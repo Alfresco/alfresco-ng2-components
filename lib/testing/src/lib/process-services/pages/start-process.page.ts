@@ -75,6 +75,7 @@ export class StartProcessPage {
     }
 
     async clickProcessDropdownArrow(): Promise<void> {
+        await BrowserVisibility.waitUntilElementIsVisible(this.selectProcessDropdownArrow);
         await BrowserActions.click(this.selectProcessDropdownArrow);
     }
 

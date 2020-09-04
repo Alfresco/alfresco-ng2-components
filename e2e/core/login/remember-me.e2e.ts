@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { SettingsPage } from '@alfresco/adf-testing';
+import { SettingsPage, LocalStorageUtil } from '@alfresco/adf-testing';
 import { LoginShellPage } from '../../core/pages/login-shell.page';
 
 describe('Login component - Remember Me', () => {
@@ -24,6 +24,8 @@ describe('Login component - Remember Me', () => {
     const loginPage = new LoginShellPage();
 
     beforeAll(async () => {
+        await LocalStorageUtil.setStorageItem('authType', 'BASIC');
+
         await loginPage.goToLoginPage();
         await loginPage.clickSettingsIcon();
         await settingsPage.setProviderEcmBpm();

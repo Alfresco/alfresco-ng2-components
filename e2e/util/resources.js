@@ -676,9 +676,9 @@ exports.Files = {
             folder_name: "images-rendition"
         },
         ADF_FOLDER: {
-            folder_location: "/resources/adf",
-            folder_path: path.join(__dirname, '../resources/adf'),
-            folder_name: "adf"
+            folder_location: "/resources/adf/allFileTypes/images",
+            folder_path: path.join(__dirname, '../resources/adf/allFileTypes/images'),
+            folder_name: "images"
         },
     },
 

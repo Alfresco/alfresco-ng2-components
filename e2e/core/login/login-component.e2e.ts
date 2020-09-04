@@ -53,6 +53,8 @@ describe('Login component', () => {
     const usersActions = new UsersActions(apiService);
 
     beforeAll(async () => {
+        await LocalStorageUtil.setStorageItem('authType', 'BASIC');
+
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await usersActions.createUser(userA);

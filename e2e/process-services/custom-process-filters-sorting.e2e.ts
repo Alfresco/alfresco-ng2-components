@@ -70,7 +70,9 @@ describe('Sorting for process filters', () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(tenantId);
-   });
+
+        await navigationBarPage.clickLogoutButton();
+    });
 
     it('[C260476] Should be able to create a filter on APS for running processes - Oldest first and check on ADF', async () => {
         await apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter({
