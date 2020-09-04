@@ -32,6 +32,7 @@ Displays the documents from a repository.
     -   [Location Column](#location-column)
     -   [Actions](#actions)
     -   [Navigation mode](#navigation-mode)
+    -   [Header filters](#header-filters)
 -   [Advanced usage and customization](#advanced-usage-and-customization)
     -   [Image Resolver and Row Filter functions](#image-resolver-and-row-filter-functions)
     -   [Custom 'empty folder' template](#custom-empty-folder-template)
@@ -85,6 +86,8 @@ Displays the documents from a repository.
 | where | `string` |  | Filters the [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) list using the _where_ condition of the REST API (for example, isFolder=true). See the REST API documentation for more information. |
 | currentFolderId | `string` | null | The ID of the folder node to display or a reserved string alias for special sources |
 | rowFilter | [`RowFilter`](../../../lib/content-services/src/lib/document-list/data/row-filter.model.ts) |  | Custom function to choose whether to show or hide rows. See the [Row Filter Model](row-filter.model.md) page for more information. |
+| headerFilters | `boolean` | false | Toggles the header filters mode. |
+| filterValue | any | | Initial value for filter. |
 
 ### Events
 
@@ -96,7 +99,8 @@ Displays the documents from a repository.
 | nodeDblClick | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user double-clicks a list node |
 | nodeSelected | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md)`[]>` | Emitted when the node selection change |
 | preview | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodeEntityEvent`](../../../lib/content-services/src/lib/document-list/components/node.event.ts)`>` | Emitted when the user acts upon files with either single or double click (depends on `navigation-mode`). Useful for integration with the [Viewer component](../../core/components/viewer.component.md). |
-| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use |
+| ready | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md)`>` | Emitted when the Document List has loaded all items and is ready for use. |
+| filterSelection | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`FilterSearch[]`](../../../lib/content-services/src/lib/search/filter-search.interface.ts)`>` | Emitted when a filter value is selected. |
 
 ## Details
 
@@ -686,6 +690,18 @@ The following example switches navigation to single clicks:
     [navigationMode]="'click'">
 </adf-document-list>
 ```
+
+### Header filters
+
+You can enable Header filters in your document list simply setting to true its `headerFilters` input.
+
+```html
+<adf-document-list 
+    currentFolderId="-my-" 
+    [headerFilters]="true">
+</adf-document-list>
+```
+![Header filters](../../docassets/images/header-filters.png)
 
 ## Advanced usage and customization
 

@@ -27,7 +27,8 @@ import { NodePaging, MinimalNode } from '@alfresco/js-api';
 
 @Component({
     selector: 'adf-filter-header',
-    templateUrl: './filter-header.component.html'
+    templateUrl: './filter-header.component.html',
+    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchFilterQueryBuilderService}]
 })
 export class FilterHeaderComponent implements OnInit, OnChanges {
 
@@ -46,14 +47,13 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     isFilterServiceActive: boolean;
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(
-        @Inject(DocumentListComponent) private documentList: DocumentListComponent,
-        @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchFilterQueryBuilderService) {
-        this.isFilterServiceActive = this.searchHeaderQueryBuilder.isFilterServiceActive();
+    constructor(@Inject(DocumentListComponent) private documentList: DocumentListComponent,
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchFilterQueryBuilderService) {
+        this.isFilterServiceActive = this.searchFilterQueryBuilder.isFilterServiceActive();
     }
 
     ngOnInit() {
-        this.searchHeaderQueryBuilder.executed
+        this.searchFilterQueryBuilder.executed
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((newNodePaging: NodePaging) => {
                 this.documentList.node = newNodePaging;
@@ -72,22 +72,22 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     }
 
     onFilterSelectionChange() {
-        this.filterSelection.emit(this.searchHeaderQueryBuilder.getActiveFilters());
-        if (this.searchHeaderQueryBuilder.isNoFilterActive()) {
+        this.filterSelection.emit(this.searchFilterQueryBuilder.getActiveFilters());
+        if (this.searchFilterQueryBuilder.isNoFilterActive()) {
             this.documentList.node = null;
             this.documentList.reload();
         }
     }
 
     resetFilterHeader() {
-        this.searchHeaderQueryBuilder.resetActiveFilters();
+        this.searchFilterQueryBuilder.resetActiveFilters();
     }
 
     initDataPagination() {
         this.documentList.pagination
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((newPagination: PaginationModel) => {
-                this.searchHeaderQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
+                this.searchFilterQueryBuilder.setupCurrentPagination(newPagination.maxItems, newPagination.skipCount);
             });
     }
 
@@ -95,13 +95,13 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
         this.documentList.sortingSubject
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((sorting: DataSorting[]) => {
-                this.searchHeaderQueryBuilder.setSorting(sorting);
+                this.searchFilterQueryBuilder.setSorting(sorting);
             });
     }
 
     private configureSearchParent(currentFolderId: string) {
-        if (this.searchHeaderQueryBuilder.isCustomSourceNode(currentFolderId)) {
-            this.searchHeaderQueryBuilder.getNodeIdForCustomSource(currentFolderId).subscribe((node: MinimalNode) => {
+        if (this.searchFilterQueryBuilder.isCustomSourceNode(currentFolderId)) {
+            this.searchFilterQueryBuilder.getNodeIdForCustomSource(currentFolderId).subscribe((node: MinimalNode) => {
                 this.initSearchHeader(node.id);
             });
         } else {
@@ -110,10 +110,10 @@ export class FilterHeaderComponent implements OnInit, OnChanges {
     }
 
     private initSearchHeader(currentFolderId: string) {
-        this.searchHeaderQueryBuilder.setCurrentRootFolderId(currentFolderId);
+        this.searchFilterQueryBuilder.setCurrentRootFolderId(currentFolderId);
         if (this.value) {
             Object.keys(this.value).forEach((columnKey) => {
-                this.searchHeaderQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
+                this.searchFilterQueryBuilder.setActiveFilter(columnKey, this.value[columnKey]);
             });
         }
 

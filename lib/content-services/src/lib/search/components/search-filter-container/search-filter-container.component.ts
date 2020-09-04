@@ -68,13 +68,13 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<boolean>();
 
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchHeaderQueryBuilder: SearchFilterQueryBuilderService,
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private searchFilterQueryBuilder: SearchFilterQueryBuilderService,
                 private translationService: TranslationService,
                 private focusTrapFactory: ConfigurableFocusTrapFactory) {
     }
 
     ngOnInit() {
-        this.category = this.searchHeaderQueryBuilder.getCategoryForColumn(this.col.key);
+        this.category = this.searchFilterQueryBuilder.getCategoryForColumn(this.col.key);
         this.initialValue = this.value && this.value[this.col.key] ? this.value[this.col.key] : undefined;
     }
 
@@ -92,7 +92,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     onApply() {
         if (this.widgetContainer.hasValueSelected()) {
-            this.searchHeaderQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
+            this.searchFilterQueryBuilder.setActiveFilter(this.category.columnKey, this.widgetContainer.getCurrentValue());
             this.filterChange.emit();
             this.widgetContainer.applyInnerWidget();
         } else {
@@ -107,7 +107,7 @@ export class SearchFilterContainerComponent implements OnInit, OnDestroy {
 
     resetSearchFilter() {
         this.widgetContainer.resetInnerWidget();
-        this.searchHeaderQueryBuilder.removeActiveFilter(this.category.columnKey);
+        this.searchFilterQueryBuilder.removeActiveFilter(this.category.columnKey);
         this.filterChange.emit();
     }
 
