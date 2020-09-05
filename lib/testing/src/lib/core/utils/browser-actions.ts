@@ -143,6 +143,7 @@ export class BrowserActions {
             }
         }
 
+        await BrowserVisibility.waitUntilElementHasValue(elementFinder, text);
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {
