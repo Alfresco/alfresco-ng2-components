@@ -53,7 +53,8 @@ export class DataTableItem {
 
     async rightClickOnRow(columnName: string, columnValue: string): Promise<void> {
         const row = await this.getRow(columnName, columnValue);
-        await BrowserActions.rightClick(row);
+        await browser.actions().mouseMove(row).perform();
+        await browser.actions().click(row, protractor.Button.RIGHT).perform();
     }
 
     async waitForFirstRow(): Promise<void> {
