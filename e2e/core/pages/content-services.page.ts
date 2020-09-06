@@ -267,6 +267,7 @@ export class ContentServicesPage {
     }
 
     async checkDocumentListElementsAreDisplayed(): Promise<void> {
+        await this.contentList.dataTablePage().waitTillContentLoaded();
         await this.checkAcsContainer();
         await this.waitForTableBody();
     }

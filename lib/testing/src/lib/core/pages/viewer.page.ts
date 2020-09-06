@@ -113,7 +113,7 @@ export class ViewerPage {
     }
 
     async clearPageNumber(): Promise<void> {
-        await BrowserActions.clearSendKeys(this.pageSelectorInput, protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.pageSelectorInput);
     }
 
     async getZoom(): Promise<string> {

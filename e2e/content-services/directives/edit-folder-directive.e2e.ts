@@ -228,6 +228,7 @@ describe('Edit folder directive', () => {
 
     describe('Edit Folder - no permission', () => {
         beforeEach(async () => {
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + editFolder.entry.id);
             await contentServicesPage.getDocumentList().dataTablePage().waitTillContentLoaded();
