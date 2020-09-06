@@ -42,7 +42,6 @@ export class FormFields {
     async setFieldValue(locator, field, value: string): Promise<void> {
         const fieldElement = element(locator(field));
         await BrowserActions.clearSendKeys(fieldElement, value);
-        await BrowserVisibility.waitUntilElementHasValue(fieldElement, value);
     }
 
     async checkWidgetIsVisible(fieldId: string): Promise<void> {

@@ -136,6 +136,9 @@ describe('Edit folder directive', () => {
         await editFolderDialog.checkCreateUpdateBtnIsEnabled();
         await editFolderDialog.clickOnCreateUpdateButton();
         await editFolderDialog.checkFolderDialogIsDisplayed();
+
+        await browser.sleep(3000); // The error needs time to come back
+
         await notificationHistoryPage.checkNotifyContains('There\'s already a folder with this name. Try a different name.');
     });
 

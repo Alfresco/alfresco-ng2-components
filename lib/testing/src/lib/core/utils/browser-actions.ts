@@ -143,8 +143,12 @@ export class BrowserActions {
             }
         }
 
-        if(text !== protractor.Key.SPACE && text !== protractor.Key.ENTER) {
-            await BrowserVisibility.waitUntilElementHasValue(elementFinder, text);
+        try {
+            if (text !== protractor.Key.SPACE && text !== protractor.Key.ENTER) {
+                await BrowserVisibility.waitUntilElementHasValue(elementFinder, text, 1000);
+            }
+        } catch (e) {
+            Logger.info(`Set value different from the input`);
         }
     }
 
