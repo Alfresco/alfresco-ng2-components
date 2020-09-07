@@ -17,7 +17,7 @@
 
 import { Logger } from '../../core/utils/logger';
 import { ApiService } from '../../core/actions/api.service';
-import { UserProcessInstanceFilterRepresentation, UserFilterOrderRepresentation } from '@alfresco/js-api';
+import { UserFilterOrderRepresentation, UserTaskFilterRepresentation } from '@alfresco/js-api';
 
 export class UserFiltersUtil {
 
@@ -27,9 +27,9 @@ export class UserFiltersUtil {
         this.apiService = apiService;
     }
 
-    async createATaskFilter(newTaskFilterName: string, sortType?: string,  stateType?: string, assignmentType?: string, appId?: number, iconName?: string): Promise<any> {
+    async createATaskFilter(newTaskFilterName: string, sortType?: string,  stateType?: string, assignmentType?: string, iconName?: string, appId?: number): Promise<any> {
         try {
-            return this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(new UserProcessInstanceFilterRepresentation(
+            return this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(new UserTaskFilterRepresentation(
                 {appId: appId, name: newTaskFilterName, icon: iconName, filter: {sort: sortType, state: stateType, assignment: assignmentType}}));
         } catch (error) {
             Logger.error('Create Task Filter - Service error, Response: ', JSON.parse(JSON.stringify(error)));
@@ -52,6 +52,18 @@ export class UserFiltersUtil {
         }
     }
 
+    async getUserTaskFilterByName(taskFilterName: string, appId?: number): Promise<any> {
+        try {
+            const taskFiltersList = this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
+            const chosenTaskFilter = (await taskFiltersList).data.find( (taskFilter) => {
+                return taskFilter.name === taskFilterName;
+            });
+            return chosenTaskFilter;
+        } catch (error) {
+            Logger.error('Get user task filters by name - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+        }
+    }
+
     async deleteUserTaskFilter(filterId: number): Promise<any> {
         try {
             return this.apiService.getInstance().activiti.userFiltersApi.deleteUserTaskFilter(filterId);
@@ -59,4 +71,13 @@ export class UserFiltersUtil {
             Logger.error('Delete a task filter - Service error, Response: ', JSON.parse(JSON.stringify(error)));
         }
     }
+
+    async updateUserTaskFilter(filterId: number, updatedTaskFilterName?: string, updatedSortType?: string, updatedStateType?: string, updatedAssignmentType?: string, updatedIconName?: string, appId?: number): Promise<any> {
+        try {
+            return this.apiService.getInstance().activiti.userFiltersApi.updateUserTaskFilter(filterId, new UserTaskFilterRepresentation(
+                {appId: appId, name: updatedTaskFilterName, icon: updatedIconName, filter: {sort: updatedSortType, state: updatedStateType, assignment: updatedAssignmentType}}));
+        } catch (error) {
+            Logger.error('Delete a task filter - Service error, Response: ', JSON.parse(JSON.stringify(error))); }
+    }
+
 }
