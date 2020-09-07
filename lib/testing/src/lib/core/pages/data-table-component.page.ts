@@ -288,18 +288,26 @@ export class DataTableComponentPage {
 
     async waitTillContentLoaded(): Promise<void> {
         await browser.sleep(500);
-        Logger.log('wait datatable loading');
 
         if (element(by.tagName('mat-spinner')).isPresent()) {
+            Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
         } else {
             try {
-                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')), 500);
+                Logger.log('wait datatable loading spinner is present');
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
             } catch (error) {
             }
         }
 
-        await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
+        try {
+            Logger.log('wait first element is present');
+            await BrowserVisibility.waitUntilElementIsVisible(this.contents.first(),1000);
+        } catch (error) {
+            Logger.log('Empty page');
+            await this.waitForEmptyState();
+        }
+
     }
 
     async checkColumnIsDisplayed(column: string): Promise<void> {
@@ -423,7 +431,7 @@ export class DataTableComponentPage {
     }
 
     async waitForEmptyState(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.tableBody.element(this.emptyList));
+        await BrowserVisibility.waitUntilElementIsPresent(this.emptyList);
     }
 
     async getEmptyStateTitle(): Promise<string> {

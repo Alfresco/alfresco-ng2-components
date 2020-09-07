@@ -230,9 +230,9 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileThumbnail);
     }
 
-    async checkFileNameIsDisplayed(file): Promise<void> {
+    async checkFileNameIsDisplayed(filename: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        await expect(await BrowserActions.getText(this.fileName)).toEqual(file);
+        await BrowserVisibility.waitUntilElementHasText(this.fileName, filename);
     }
 
     async checkPreviousPageButtonIsDisplayed() {

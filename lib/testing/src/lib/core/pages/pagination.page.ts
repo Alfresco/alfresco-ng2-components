@@ -18,6 +18,7 @@
 import { Locator, by, element } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
+import { Logger } from '../utils/logger';
 
 export class PaginationPage {
 
@@ -45,6 +46,7 @@ export class PaginationPage {
         await BrowserVisibility.waitUntilElementIsPresent(itemsPerPage);
         await BrowserActions.click(itemsPerPage);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);
+        Logger.log('Select page size ', numberOfItem);
     }
 
     async checkPageSelectorIsNotDisplayed(): Promise<void> {
@@ -81,10 +83,12 @@ export class PaginationPage {
 
     async clickOnNextPage(): Promise<void> {
         return BrowserActions.click(this.nextPageButton);
+        Logger.log('Next page');
     }
 
     async clickOnPageDropdown(): Promise<void> {
         await BrowserActions.click(this.pageDropDown);
+        Logger.log('Click page dropdown');
     }
 
     async clickOnPageDropdownOption(numberOfItemPerPage: string): Promise<void> {
