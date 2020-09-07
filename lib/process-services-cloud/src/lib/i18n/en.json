@@ -165,10 +165,24 @@
       "LAST_MODIFIED_DATE_FORM": "LastModifiedFrom",
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "PROCESS_NAME": "ProcessName",
-      "APP_VERSION": "AppReleaseVersion"
+      "APP_VERSION": "AppReleaseVersion",
+      "CREATED_DATE": "Created Date",
+      "DATE_RANGE": {
+        "TODAY": "today",
+        "WEEK": "this week",
+        "MONTH": "this month",
+        "QUARTER": "this quarter",
+        "YEAR": "this year",
+        "RANGE": "Date within"
+      },
+      "DATE_RANGE_TITLE": "Start date - End date",
+      "START_DATE": "Start date",
+      "END_DATE": "End date"
     },
     "ERROR": {
-      "DATE": "Date format DD/MM/YYYY"
+      "DATE": "Date format DD/MM/YYYY",
+      "INDALID_START_DATE": "Invalid start date",
+      "INDALID_END_DATE": "Invalid end date"
     },
     "TOOL_TIP": {
       "SAVE": "Save filter",

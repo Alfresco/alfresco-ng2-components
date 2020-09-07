@@ -99,3 +99,17 @@ export class ProcessFilterProperties {
         }
     }
 }
+
+export enum ProcessDateFilterType {
+    today = 'today',
+    week = 'week',
+    month = 'month',
+    quarter = 'quarter',
+    year = 'year',
+    range = 'range'
+}
+
+export interface DateRangeFilter {
+    startDate: Date;
+    endDate: Date;
+}
