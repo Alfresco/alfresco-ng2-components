@@ -34,9 +34,19 @@ export class FiltersPage {
     }
 
     async isFilterHighlighted(filterName: string): Promise<boolean> {
-        const processNameHighlighted = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
+        const filterNameHighlighted = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(processNameHighlighted);
+            await BrowserVisibility.waitUntilElementIsVisible(filterNameHighlighted);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async isFilterNotHighlighted(filterName: string): Promise<boolean> {
+        const filterNameHighlighted = element(by.css(`.adf-active [data-automation-id='${filterName}_filter']`));
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(filterNameHighlighted);
             return true;
         } catch (error) {
             return false;
