@@ -48,12 +48,24 @@ export class ProcessFiltersPage {
         return this.filtersPage.isFilterHighlighted(this.defaultProcessFilters.running);
     }
 
+    async isRunningFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultProcessFilters.running);
+    }
+
     async isCompletedFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted(this.defaultProcessFilters.completed);
     }
 
+    async isCompletedFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultProcessFilters.completed);
+    }
+
     async isAllFilterHighlighted(): Promise<boolean> {
         return this.filtersPage.isFilterHighlighted(this.defaultProcessFilters.all);
+    }
+
+    async isAllFilterNotHighlighted(): Promise<boolean> {
+        return this.filtersPage.isFilterNotHighlighted(this.defaultProcessFilters.all);
     }
 
     async isRunningFilterDisplayed(): Promise<boolean> {
