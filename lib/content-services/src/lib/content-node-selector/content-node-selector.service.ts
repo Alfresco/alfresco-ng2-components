@@ -59,7 +59,7 @@ export class ContentNodeSelectorService {
 
         const defaultSearchNode: any = {
             query: {
-                query: `${searchTerm}* OR name:${searchTerm}*`
+                query: `${searchTerm}*`
             },
             include: ['path', 'allowableOperations', 'properties'],
             paging: {
