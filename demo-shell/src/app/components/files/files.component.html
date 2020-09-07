@@ -552,7 +552,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" [(ngModel)]="multipleFileUpload">
+            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" (change)="onMultipleFilesUpload()" [(ngModel)]="multipleFileUpload" >
                 {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>

@@ -23,7 +23,7 @@ import { Location } from '@angular/common';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry, NodeEntry } from '@alfresco/js-api';
 import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
@@ -48,7 +48,7 @@ import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-a
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil, debounceTime, scan } from 'rxjs/operators';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -284,9 +284,25 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         this.uploadService.fileUploadComplete
         .pipe(
             debounceTime(300),
+            scan((files, currentFile) => [...files, currentFile], []),
             takeUntil(this.onDestroy$)
         )
-        .subscribe(value => this.onFileUploadEvent(value));
+        .subscribe((value: any[]) => {
+            let selectedNodes: NodeEntry[] = [];
+
+            if (this.preselectNodes) {
+                if (value && value.length > 0 ) {
+                    if (this.selectionMode === 'single') {
+                        selectedNodes = [...[value[value.length - 1]].map((uploadedFile) => uploadedFile.data)];
+                    } else {
+                        selectedNodes = [...value.map((uploadedFile) => uploadedFile.data)];
+                    }
+                    this.selectedNodes = [...selectedNodes];
+                }
+            }
+
+            this.onFileUploadEvent(value[0]);
+        });
 
         this.uploadService.fileUploadDeleted
         .pipe(takeUntil(this.onDestroy$))
@@ -710,6 +726,10 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             return [];
         }
+    }
+
+    onMultipleFilesUpload() {
+        this.selectedNodes = [];
     }
 
 }
