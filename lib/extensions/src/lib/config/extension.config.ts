@@ -25,7 +25,7 @@ export interface ExtensionRef {
     $version: string;
     $vendor: string;
     $license: string;
-    $runtime: string;
+    $runtime?: string;
     $description?: string;
 
     $dependencies?: Array<string>;
