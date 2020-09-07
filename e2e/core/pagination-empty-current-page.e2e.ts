@@ -112,7 +112,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
 
         await paginationPage.clickOnNextPage();
 
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
