@@ -193,7 +193,7 @@ describe('Document List - Pagination', () => {
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.tenValue * currentPage} of ${nrOfFiles}`);
-        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue, );
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
         let list = await contentServicesPage.getAllRowsNameColumn();
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
