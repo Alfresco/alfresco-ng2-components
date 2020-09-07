@@ -274,12 +274,15 @@ describe('Document List - Pagination', () => {
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await contentServicesPage.openFolder(newFolderModel.name);
+
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
-        await contentServicesPage.checkPaginationIsNotDisplayed();
 
+        await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
+
+        await contentServicesPage.checkPaginationIsNotDisplayed();
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
+
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
