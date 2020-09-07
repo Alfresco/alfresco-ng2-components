@@ -18,13 +18,22 @@
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 import { BrowserActions } from '../../core/utils/browser-actions';
-import { element, by } from 'protractor';
+import { element, by, ElementFinder } from 'protractor';
 
 export class ProcessListPage {
+    rootElement: ElementFinder;
+    dataTable: DataTableComponentPage;
+    processListEmptyTitle: ElementFinder;
 
-    processListEmptyTitle = element(by.css('.adf-empty-content__title'));
-    processInstanceList = element(by.css('adf-process-instance-list'));
-    dataTable = new DataTableComponentPage(this.processInstanceList);
+    constructor(
+        rootElement = element.all(by.css('adf-process-instance-list')).first()
+    ) {
+        this.rootElement = rootElement;
+        this.dataTable = new DataTableComponentPage(this.rootElement);
+        this.processListEmptyTitle = this.rootElement.element(
+            by.css('.adf-empty-content__title')
+        );
+    }
 
     getDisplayedProcessListEmptyTitle(): Promise<string> {
         return BrowserActions.getText(this.processListEmptyTitle);
@@ -36,7 +45,7 @@ export class ProcessListPage {
 
     async isProcessListDisplayed(): Promise<boolean> {
         try {
-            await BrowserVisibility.waitUntilElementIsVisible(this.processInstanceList);
+            await BrowserVisibility.waitUntilElementIsVisible(this.rootElement);
             return true;
         } catch (error) {
             return false;
