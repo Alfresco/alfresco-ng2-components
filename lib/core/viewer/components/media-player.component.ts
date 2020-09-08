@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 
 @Component({
@@ -39,6 +39,9 @@ export class MediaPlayerComponent implements OnChanges {
     @Input()
     nameFile: string;
 
+    @Output()
+    error = new EventEmitter<any>();
+
     constructor(private contentService: ContentService ) {}
 
     ngOnChanges(changes: SimpleChanges) {
@@ -51,5 +54,9 @@ export class MediaPlayerComponent implements OnChanges {
         if (!this.urlFile && !this.blobFile) {
             throw new Error('Attribute urlFile or blobFile is required');
         }
+    }
+
+    onMediaPlayerError() {
+        this.error.emit();
     }
 }

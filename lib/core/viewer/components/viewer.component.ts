@@ -669,6 +669,10 @@ export class ViewerComponent implements OnChanges, OnInit, OnDestroy {
 
     }
 
+    onUnsupportedFile() {
+        this.viewerType = 'unknown';
+    }
+
     private generateCacheBusterNumber() {
         this.cacheBusterNumber = Date.now();
     }

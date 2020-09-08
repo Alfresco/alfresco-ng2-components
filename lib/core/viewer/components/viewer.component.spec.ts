@@ -878,6 +878,21 @@ describe('ViewerComponent', () => {
                 component.ngOnChanges();
             });
 
+            it('should swicth to the unkwown template if the type specific viewers throw an error', (done) => {
+                component.urlFile = 'fake-url-file.icns';
+                component.mimeType = 'image/png';
+                component.ngOnChanges();
+                fixture.detectChanges();
+
+                component.onUnsupportedFile();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('adf-viewer-unknown-format')).toBeDefined();
+                    done();
+                });
+            });
+
         });
 
         describe('Events', () => {
