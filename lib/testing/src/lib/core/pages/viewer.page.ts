@@ -143,7 +143,7 @@ export class ViewerPage {
     }
 
     async checkFileIsLoaded(fileName?: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `${fileName} not loaded`);
+        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 60000, `${fileName} not loaded`);
     }
 
     async clickClosePasswordDialog(): Promise<void> {
