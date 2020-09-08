@@ -62,7 +62,6 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     offsetY: number = 0;
     step: number = 4;
     isDragged: boolean = false;
-    isUnsupported: boolean = false;
 
     private drag = { x: 0, y: 0 };
     private delta = { x: 0, y: 0 };
