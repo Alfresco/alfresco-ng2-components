@@ -127,7 +127,7 @@ export class BrowserActions {
         }
     }
 
-    static async clearSendKeys(elementFinder: ElementFinder, text: string, sleepTime: number = 0): Promise<void> {
+    static async clearSendKeys(elementFinder: ElementFinder, text: string = '', sleepTime: number = 0): Promise<void> {
         Logger.info(`Clear and sendKeys text:${text} locator:${elementFinder.locator().toString()}`);
 
         await this.click(elementFinder);
@@ -143,6 +143,13 @@ export class BrowserActions {
             }
         }
 
+        try {
+            if (text !== protractor.Key.SPACE && text !== protractor.Key.ENTER) {
+                await BrowserVisibility.waitUntilElementHasValue(elementFinder, text, 1000);
+            }
+        } catch (e) {
+            Logger.info(`Set value different from the input`);
+        }
     }
 
     static async checkIsDisabled(elementFinder: ElementFinder): Promise<void> {

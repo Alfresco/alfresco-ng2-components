@@ -259,7 +259,6 @@ describe('Task Details - Form', () => {
         });
 
         it('[C315193] Should be able to complete a standalone task with invisible tab with invalid value for field', async () => {
-            // ACTIVITI-3746
             await tasksListPage.selectRow(newTask.name);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabWithFields);
             await widget.tab().checkTabIsDisplayedByLabel(tab.tabFieldField);

@@ -158,6 +158,7 @@ describe('People component', () => {
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
+        await navigationBarPage.clickLogoutButton();
         await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
@@ -216,6 +217,7 @@ describe('People component', () => {
         await expect(await taskPage.taskDetails().getInvolvedUserEmail(assigneeUserModel.firstName + ' ' + assigneeUserModel.lastName))
             .toEqual(assigneeUserModel.email);
 
+        await navigationBarPage.clickLogoutButton();
         await loginPage.login(assigneeUserModel.email, assigneeUserModel.password);
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.COMPLETED_TASKS);

@@ -105,7 +105,7 @@ describe('Document List - Pagination', () => {
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
     });
 
     it('[C260062] Should use default pagination settings', async () => {
@@ -122,7 +122,7 @@ describe('Document List - Pagination', () => {
     it('[C274713] Should be able to set Items per page to 20', async () => {
         await contentServicesPage.openFolder(newFolderModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${nrOfFiles} of ${nrOfFiles}`);
@@ -134,9 +134,11 @@ describe('Document List - Pagination', () => {
 
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.email, acsUser.password);
+
         await contentServicesPage.goToDocumentList();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
+
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.email, acsUser.password);
     });
@@ -144,7 +146,7 @@ describe('Document List - Pagination', () => {
     it('[C260069] Should be able to set Items per page to 5', async () => {
         await contentServicesPage.openFolder(newFolderModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
@@ -153,7 +155,7 @@ describe('Document List - Pagination', () => {
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 6-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
@@ -161,7 +163,7 @@ describe('Document List - Pagination', () => {
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 11-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
@@ -169,7 +171,7 @@ describe('Document List - Pagination', () => {
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 16-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
@@ -177,7 +179,7 @@ describe('Document List - Pagination', () => {
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(15, 20))).toEqual(true);
 
         await browser.refresh();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await navigationBarPage.clickLogoutButton();
         await loginPage.login(acsUser.email, acsUser.password);
@@ -187,7 +189,7 @@ describe('Document List - Pagination', () => {
         currentPage = 1;
         await contentServicesPage.openFolder(newFolderModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.tenValue * currentPage} of ${nrOfFiles}`);
@@ -196,7 +198,7 @@ describe('Document List - Pagination', () => {
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 10))).toEqual(true);
         await paginationPage.clickOnNextPage();
         currentPage++;
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.ten);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 11-${itemsPerPage.tenValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.tenValue);
@@ -216,7 +218,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.openFolder(newFolderModel.name);
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.fifteenValue * currentPage} of ${nrOfFiles}`);
@@ -225,7 +227,7 @@ describe('Document List - Pagination', () => {
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 15))).toEqual(true);
         currentPage++;
         await paginationPage.clickOnNextPage();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 16-${nrOfFiles} of ${nrOfFiles}`);
@@ -241,8 +243,9 @@ describe('Document List - Pagination', () => {
     it('[C91320] Pagination should preserve sorting', async () => {
         await contentServicesPage.openFolder(newFolderModel.name);
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
+
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('ASC', 'Display name'));
 
@@ -250,28 +253,36 @@ describe('Document List - Pagination', () => {
         await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.clickOnNextPage();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
 
         await paginationPage.selectItemsPerPage(itemsPerPage.ten);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await contentServicesPage.getDocumentList().dataTablePage().checkListIsSorted('DESC', 'Display name'));
     });
 
     it('[C260107] Should not display pagination bar when a folder is empty', async () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await contentServicesPage.openFolder(newFolderModel.name);
+
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
-        await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
-        await contentServicesPage.checkPaginationIsNotDisplayed();
 
+        await contentServicesPage.createAndOpenNewFolder(folderTwoModel.name);
+
+        await contentServicesPage.checkPaginationIsNotDisplayed();
         await contentServicesPage.deleteSubFolderUnderRoot(newFolderModel.name, folderTwoModel.name);
+
     });
 
     it('[C260071] Should be able to change pagination when having 25 files', async () => {
@@ -279,7 +290,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.openFolder(folderThreeModel.name);
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(folderThreeModel.name);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.fifteenValue * currentPage} of ${secondSetNumber}`);
@@ -289,7 +300,7 @@ describe('Document List - Pagination', () => {
 
         currentPage++;
         await paginationPage.clickOnNextPage();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 16-${secondSetNumber} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.fifteenValue);
@@ -298,7 +309,7 @@ describe('Document List - Pagination', () => {
 
         currentPage = 1;
         await paginationPage.selectItemsPerPage(itemsPerPage.twenty);
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.twentyValue * currentPage} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.twentyValue);
@@ -307,7 +318,7 @@ describe('Document List - Pagination', () => {
 
         currentPage++;
         await paginationPage.clickOnNextPage();
-        await contentServicesPage.checkDocumentListElementsAreDisplayed();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 21-${secondSetNumber} of ${secondSetNumber}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(secondSetNumber - itemsPerPage.twentyValue);
@@ -317,6 +328,8 @@ describe('Document List - Pagination', () => {
 
     it('[C216321] Should be able to modify the supported page size value', async () => {
         await paginationPage.clickItemsPerPageDropdown();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getItemsPerPageDropdownOptions()).toEqual(['5', '10', '15', '20']);
 
         await LocalStorageUtil.setUserPreference('supportedPageSizes', JSON.stringify([5, 10, 15, 21]));
@@ -328,11 +341,18 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
+
         await paginationPage.clickItemsPerPageDropdown();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getItemsPerPageDropdownOptions()).toEqual(['5', '10', '15', '21']);
 
         await paginationPage.clickItemsPerPageDropdown();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await paginationPage.selectItemsPerPage(itemsPerPage.twentyOne);
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twentyOne);
         await browser.refresh();
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 1-${itemsPerPage.twentyOneValue} of ${numberOfFilesAfterUpload}`);
@@ -341,11 +361,15 @@ describe('Document List - Pagination', () => {
         await LocalStorageUtil.setUserPreference('supportedPageSizes', JSON.stringify([5, 10, 15, 20]));
         await browser.refresh();
         await paginationPage.clickItemsPerPageDropdown();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getItemsPerPageDropdownOptions()).toEqual(['5', '10', '15', '20']);
     });
 
     it('[C272767] Should propagate the option chosen regarding displaying items per page to files/folders inside a folder', async () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await contentServicesPage.openFolder(newFolderModel.name);
         await expect(await contentServicesPage.getActiveBreadcrumb()).toEqual(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
@@ -380,14 +404,16 @@ describe('Document List - Pagination', () => {
 
     it('[C260064] Should download only the last selection when changing pages in Single mode', async () => {
         await paginationPage.selectItemsPerPage(itemsPerPage.five);
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await contentServicesPage.openFolder(newFolderModel.name);
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
-        await apiService.getInstance().login(acsUser.email, acsUser.password);
         await contentServicesPage.createNewFolder(folderTwoModel.name);
         const nodeIdSubFolderTwo = await contentServicesPage.getAttributeValueForElement(folderTwoModel.name, 'Node id');
         await contentServicesPage.openFolder(folderTwoModel.name);
 
+        await apiService.getInstance().login(acsUser.email, acsUser.password);
         for (let i = 0; i < numberOfSubFolders; i++) {
             await uploadActions.createFolder('subfolder' + (i + 1), nodeIdSubFolderTwo);
         }

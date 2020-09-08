@@ -345,6 +345,7 @@ export class ContentServicesPage {
 
     async doubleClickRow(nodeName): Promise<void> {
         await this.contentList.doubleClickRow(nodeName);
+        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async selectRow(nodeName): Promise<void> {
@@ -394,7 +395,6 @@ export class ContentServicesPage {
 
     async openFolder(folderName: string): Promise<void> {
         await this.doubleClickRow(folderName);
-        await this.checkDocumentListElementsAreDisplayed();
     }
 
     async checkContentIsDisplayed(content): Promise<void> {

@@ -113,7 +113,7 @@ export class ViewerPage {
     }
 
     async clearPageNumber(): Promise<void> {
-        await BrowserActions.clearSendKeys(this.pageSelectorInput, protractor.Key.ENTER);
+        await BrowserActions.clearSendKeys(this.pageSelectorInput);
     }
 
     async getZoom(): Promise<string> {
@@ -143,7 +143,7 @@ export class ViewerPage {
     }
 
     async checkFileIsLoaded(fileName?: string): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 30000, `${fileName} not loaded`);
+        await BrowserVisibility.waitUntilElementIsVisible(this.pdfPageLoaded, 60000, `${fileName} not loaded`);
     }
 
     async clickClosePasswordDialog(): Promise<void> {
@@ -230,9 +230,9 @@ export class ViewerPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileThumbnail);
     }
 
-    async checkFileNameIsDisplayed(file): Promise<void> {
+    async checkFileNameIsDisplayed(filename: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.fileName);
-        await expect(await BrowserActions.getText(this.fileName)).toEqual(file);
+        await BrowserVisibility.waitUntilElementHasText(this.fileName, filename);
     }
 
     async checkPreviousPageButtonIsDisplayed() {

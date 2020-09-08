@@ -93,7 +93,6 @@ describe('Viewer', () => {
     });
 
     it('[C362242] Should the Viewer be able to view a previous version of a file', async () => {
-        await viewerPage.clickCloseButton();
         await contentServicesPage.versionManagerContent(txtFileInfo.name);
         await BrowserActions.click(versionManagePage.showNewVersionButton);
         await versionManagePage.uploadNewVersionFile(fileModelVersionTwo.location);
