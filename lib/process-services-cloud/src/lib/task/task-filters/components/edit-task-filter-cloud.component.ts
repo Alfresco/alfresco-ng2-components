@@ -326,8 +326,12 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     }
 
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
-        this.editTaskFilterForm.get(property.rangeKeys.from).setValue(dateRange.startDate.toISOString());
-        this.editTaskFilterForm.get(property.rangeKeys.to).setValue(dateRange.endDate.toISOString());
+        this.editTaskFilterForm.get(property.rangeKeys.from).setValue(
+            dateRange.startDate ? dateRange.startDate.toISOString() : null
+        );
+        this.editTaskFilterForm.get(property.rangeKeys.to).setValue(
+            dateRange.endDate ? dateRange.endDate.toISOString() : null
+        );
     }
 
     hasError(property: TaskFilterProperties): boolean {

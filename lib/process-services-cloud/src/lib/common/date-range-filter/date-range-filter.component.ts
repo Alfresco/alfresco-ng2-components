@@ -64,7 +64,9 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
     onSelectionChange(option: MatSelectChange) {
         this.type = option.value;
         const dateRange = this.dateRangeFilterService.getDateRange(this.type);
-        this.dateChanged.emit(dateRange);
+        if (!this.isDateRangeType()) {
+            this.dateChanged.emit(dateRange);
+        }
     }
 
     isDateRangeType(): boolean {

@@ -51,14 +51,14 @@ export class DateRangeFilterService {
     private getNext7DaysDateRange(): DateRangeFilter {
         return {
             startDate: moment().startOf('day').toDate(),
-            endDate: moment().add(7, 'day').endOf('day').toDate()
+            endDate: moment().add(7, 'days').endOf('day').toDate()
         };
     }
 
     private getTomorrowDateRange(): DateRangeFilter {
         return {
             startDate: moment().endOf('day').toDate(),
-            endDate: moment().add(1, 'day').startOf('day').toDate()
+            endDate: moment().add(1, 'days').startOf('day').toDate()
         };
     }
 
