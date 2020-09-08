@@ -70,11 +70,11 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     lastModifiedTo: string = '';
 
-     /** Filter the tasks. Display only tasks with startDueDate equal to the supplied date. */
+     /** Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. */
     @Input()
     dueDateFrom: string = '';
 
-    /** Filter the tasks. Display only tasks with endDueDate equal to the supplied date. */
+    /** Filter the tasks. Display only tasks with dueDate less or equal to the supplied date. */
     @Input()
     dueDateTo: string = '';
 
