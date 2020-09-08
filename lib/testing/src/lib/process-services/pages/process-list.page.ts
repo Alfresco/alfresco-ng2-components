@@ -35,6 +35,10 @@ export class ProcessListPage {
         );
     }
 
+    getDataTable() {
+        return this.dataTable;
+    }
+
     getDisplayedProcessListEmptyTitle(): Promise<string> {
         return BrowserActions.getText(this.processListEmptyTitle);
     }
