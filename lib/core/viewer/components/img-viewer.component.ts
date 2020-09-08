@@ -23,7 +23,9 @@ import {
     ViewEncapsulation,
     ElementRef,
     OnInit,
-    OnDestroy
+    OnDestroy,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { ContentService } from '../../services/content.service';
 import { AppConfigService } from './../../app-config/app-config.service';
@@ -50,6 +52,9 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     nameFile: string;
 
+    @Output()
+    error = new EventEmitter<any>();
+
     rotate: number = 0;
     scaleX: number = 1.0;
     scaleY: number = 1.0;
@@ -57,6 +62,7 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
     offsetY: number = 0;
     step: number = 4;
     isDragged: boolean = false;
+    isUnsupported: boolean = false;
 
     private drag = { x: 0, y: 0 };
     private delta = { x: 0, y: 0 };
@@ -215,5 +221,9 @@ export class ImgViewerComponent implements OnInit, OnChanges, OnDestroy {
         this.scaleY = 1.0;
         this.offsetX = 0;
         this.offsetY = 0;
+    }
+
+    onImageError() {
+        this.error.emit();
     }
 }
