@@ -68,10 +68,10 @@
                         </mat-checkbox>
                     </div>
 
-                    <div fxFlex="23%" class="adf-edit-task-filter-dateRange" *ngIf="isDateRangeType(taskFilterProperty)">
-                        <adf-date-range-widget [field]="taskFilterProperty"
-                            [group]="editTaskFilterForm"></adf-date-range-widget>
-                    </div>
+                    <adf-cloud-date-range-filter *ngIf="isDateRangeType(taskFilterProperty)"
+                        [processFilterProperty]="taskFilterProperty"
+                        [options]="taskFilterProperty.dateFilterOptions"
+                        (dateChanged)="onDateRangeFilterChanged($event, taskFilterProperty)"></adf-cloud-date-range-filter>
                 </ng-container>
             </div>
             </form>

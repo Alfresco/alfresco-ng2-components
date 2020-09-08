@@ -30,6 +30,7 @@ import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.compo
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
+import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
@@ -163,7 +164,14 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     getFormControlsConfig(taskFilterProperties: TaskFilterProperties[]): any {
         const properties = taskFilterProperties.map((property: TaskFilterProperties) => {
-            return { [property.key]: property.value };
+            if (!property.rangeKeys) {
+                return { [property.key]: property.value };
+            } else {
+                return {
+                    [property.rangeKeys.from]: property.value[property.rangeKeys.from],
+                    [property.rangeKeys.to]: property.value[property.rangeKeys.to]
+                };
+            }
         });
         return properties.reduce(((result, current) => Object.assign(result, current)), {});
     }
@@ -315,6 +323,11 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 this.getPropertyController(dateProperty).setErrors({invalid: true});
             }
         }
+    }
+
+    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
+        this.editTaskFilterForm.get(property.rangeKeys.from).setValue(dateRange.startDate.toISOString());
+        this.editTaskFilterForm.get(property.rangeKeys.to).setValue(dateRange.endDate.toISOString());
     }
 
     hasError(property: TaskFilterProperties): boolean {
@@ -616,7 +629,14 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
                 type: 'date-range',
                 key: 'dueDate',
-                value: currentTaskFilter.dueDate || false
+                rangeKeys: { from: 'dueDateFrom', to: 'dueDateTo'},
+                value: currentTaskFilter.dueDate || false,
+                dateFilterOptions: [
+                    DateCloudFilterType.NO_DATE,
+                    DateCloudFilterType.TOMORROW,
+                    DateCloudFilterType.NEXT_7_DAYS,
+                    DateCloudFilterType.RANGE
+                ]
             })
         ];
     }

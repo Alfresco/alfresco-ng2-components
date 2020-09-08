@@ -168,7 +168,10 @@
       "APP_VERSION": "AppReleaseVersion",
       "CREATED_DATE": "Created Date",
       "DATE_RANGE": {
+        "NO_DATE": "NO_DATE",
         "TODAY": "today",
+        "TOMORROW": "tomorow",
+        "NEXT_7_DAYS": "Next 7 Days",
         "WEEK": "this week",
         "MONTH": "this month",
         "QUARTER": "this quarter",
@@ -182,7 +185,8 @@
     "ERROR": {
       "DATE": "Date format DD/MM/YYYY",
       "INDALID_START_DATE": "Invalid start date",
-      "INDALID_END_DATE": "Invalid end date"
+      "INDALID_END_DATE": "Invalid end date",
+      "INVALID_DATE_FILTER": "Date filter option is not supported"
     },
     "TOOL_TIP": {
       "SAVE": "Save filter",

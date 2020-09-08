@@ -20,6 +20,7 @@ import { CoreModule } from '@alfresco/adf-core';
 import { DateRangeFilterComponent } from './date-range-filter/date-range-filter.component';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
+import { DateRangeFilterService } from './date-range-filter/date-range-filter.service';
 
 @NgModule({
     declarations: [ DateRangeFilterComponent ],
@@ -30,6 +31,9 @@ import { CommonModule } from '@angular/common';
     ],
     exports: [
         DateRangeFilterComponent
+    ],
+    providers: [
+        DateRangeFilterService
     ]
 })
 export class ProcessCommonModule {}

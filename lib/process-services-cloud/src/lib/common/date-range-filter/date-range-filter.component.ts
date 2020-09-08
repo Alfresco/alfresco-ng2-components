@@ -17,9 +17,19 @@
 
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import moment from 'moment-es6';
-import { ProcessFilterProperties, DateRangeFilter, ProcessDateFilterType } from '../../process/process-filters/models/process-filter-cloud.model';
+import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DateRangeFilterService } from './date-range-filter.service';
+import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
+
+const DEFAULT_DATE_RANGE_OPTIONS = [
+    DateCloudFilterType.TODAY,
+    DateCloudFilterType.WEEK,
+    DateCloudFilterType.MONTH,
+    DateCloudFilterType.QUARTER,
+    DateCloudFilterType.YEAR,
+    DateCloudFilterType.RANGE
+];
 
 @Component({
      selector: 'adf-cloud-date-range-filter',
@@ -31,128 +41,86 @@ import { FormGroup, FormControl } from '@angular/forms';
     @Input()
     processFilterProperty: ProcessFilterProperties;
 
+    @Input()
+    options: DateCloudFilterType[] = DEFAULT_DATE_RANGE_OPTIONS;
+
     @Output()
     dateChanged = new EventEmitter<DateRangeFilter>();
 
-    type: ProcessDateFilterType;
-    currentDate = new Date();
-    dateRange: DateRangeFilter = {
-        startDate: null,
-        endDate: null
-    };
-
+    type: DateCloudFilterType;
+    filteredProperties: ProcessFilterOptions[] = [];
     dateRangeForm = new FormGroup({
-        start: new FormControl(),
-        end: new FormControl()
+        from: new FormControl(),
+        to: new FormControl()
     });
 
-    options = [
-        {
-            key: ProcessDateFilterType.today,
-            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TODAY'
-        },
-        {
-            key: ProcessDateFilterType.week,
-            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.WEEK'
-        },
-        {
-            key: ProcessDateFilterType.month,
-            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.MONTH'
-        },
-        {
-            key: ProcessDateFilterType.quarter,
-            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.QUARTER'
-        },
-        {
-            key: ProcessDateFilterType.year,
-            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.YEAR'
-        },
-        {
-            key: ProcessDateFilterType.range,
-            label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.RANGE'
-        }
-    ];
+    constructor(private dateRangeFilterService: DateRangeFilterService) {}
+
+    ngOnInit() {
+        const defaultProperties = this.createDefaultDateOptions();
+        this.filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterOptions) => this.isValidProperty(this.options, filterProperty));
+    }
 
     onSelectionChange(option: MatSelectChange) {
         this.type = option.value;
-        this.setDate();
-        this.dateChanged.emit(this.dateRange);
-    }
-
-    setDate() {
-        switch (this.type) {
-            case ProcessDateFilterType.today:
-                this.setTodayDateRange();
-                break;
-            case ProcessDateFilterType.week:
-                this.setCurrentWeekRange();
-                break;
-            case ProcessDateFilterType.month:
-                this.setCurrentMonthDateRange();
-                break;
-            case ProcessDateFilterType.quarter:
-                this.setQuarterDateRange();
-                break;
-            case ProcessDateFilterType.year:
-                this.setCurrentYearDateRange();
-                break;
-            default: this.resetDateRange();
-        }
+        const dateRange = this.dateRangeFilterService.getDateRange(this.type);
+        this.dateChanged.emit(dateRange);
     }
 
     isDateRangeType(): boolean {
-        return this.type === ProcessDateFilterType.range;
+        return this.type === DateCloudFilterType.RANGE;
     }
 
     onDateRangeClosed() {
-        this.dateRange = {
-            startDate: this.dateRangeForm.controls.start.value,
-            endDate: this.dateRangeForm.controls.end.value
+        const dateRange = {
+            startDate: this.dateRangeForm.controls.from.value,
+            endDate: this.dateRangeForm.controls.to.value
         };
-        this.dateChanged.emit(this.dateRange);
+        this.dateChanged.emit(dateRange);
     }
 
-    private resetDateRange() {
-        this.dateRange = {
-            startDate: null,
-            endDate: null
-        };
+    private isValidProperty(filterProperties: string[], filterProperty: any): boolean {
+        return filterProperties ? filterProperties.indexOf(filterProperty.value) >= 0 : true;
     }
 
-    private setCurrentYearDateRange() {
-        this.dateRange = {
-            startDate: moment().startOf('year').toDate(),
-            endDate: moment().endOf('year').toDate()
-        };
-    }
-
-    private setTodayDateRange() {
-        this.dateRange = {
-            startDate: moment().startOf('day').toDate(),
-            endDate: moment().endOf('day').toDate()
-        };
-    }
-
-    private setCurrentWeekRange() {
-        this.dateRange = {
-            startDate: moment().startOf('week').toDate(),
-            endDate: moment().endOf('week').toDate()
-        };
-    }
-
-    private setCurrentMonthDateRange() {
-        this.dateRange = {
-            startDate: moment().startOf('month').toDate(),
-            endDate: moment().endOf('month').toDate()
-        };
-    }
-
-    private setQuarterDateRange() {
-        const quarter = Math.floor((this.currentDate.getMonth() / 3));
-        const firstDate = new Date(this.currentDate.getFullYear(), quarter * 3, 1);
-        this.dateRange = {
-            startDate: firstDate,
-            endDate: new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0)
-        };
+    private createDefaultDateOptions(): ProcessFilterOptions[] {
+        return  [
+            {
+                value: DateCloudFilterType.NO_DATE,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NO_DATE'
+            },
+            {
+                value: DateCloudFilterType.TODAY,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TODAY'
+            },
+            {
+                value: DateCloudFilterType.TOMORROW,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.TOMORROW'
+            },
+            {
+                value: DateCloudFilterType.NEXT_7_DAYS,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.NEXT_7_DAYS'
+            },
+            {
+                value: DateCloudFilterType.WEEK,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.WEEK'
+            },
+            {
+                value: DateCloudFilterType.MONTH,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.MONTH'
+            },
+            {
+                value: DateCloudFilterType.QUARTER,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.QUARTER'
+            },
+            {
+                value: DateCloudFilterType.YEAR,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.YEAR'
+            },
+            {
+                value: DateCloudFilterType.RANGE,
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE.RANGE'
+            }
+        ];
     }
  }

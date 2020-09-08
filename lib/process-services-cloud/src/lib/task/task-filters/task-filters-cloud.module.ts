@@ -27,7 +27,7 @@ import { EditTaskFilterCloudComponent } from './components/edit-task-filter-clou
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-cloud.component';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { InsightsModule } from '@alfresco/adf-insights';
+import { ProcessCommonModule } from '../../common/process-common.module';
 
 @NgModule({
     imports: [
@@ -39,7 +39,7 @@ import { InsightsModule } from '@alfresco/adf-insights';
         MaterialModule,
         AppListCloudModule,
         CoreModule,
-        InsightsModule.forChild()
+        ProcessCommonModule
     ],
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
     exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],
