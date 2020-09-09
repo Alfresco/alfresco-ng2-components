@@ -22,9 +22,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { By } from '@angular/platform-browser';
 import { MatSelectChange } from '@angular/material/select';
-import moment from 'moment-es6';
 import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from './date-range-filter.service';
+import moment from 'moment-es6';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
@@ -70,53 +70,6 @@ describe('DateRangeFilterComponent', () => {
         expect(service.getDateRange).toHaveBeenCalled();
     });
 
-    it('should emit today range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.TODAY };
-        component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: moment().startOf('day').toDate(),
-            endDate: moment().endOf('day').toDate()
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
-    it('should emit month range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.MONTH };
-        component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: moment().startOf('month').toDate(),
-            endDate: moment().endOf('month').toDate()
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
-    it('should emit year range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.YEAR };
-        component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: moment().startOf('year').toDate(),
-            endDate: moment().endOf('year').toDate()
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
-    it('should emit quarter range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.QUARTER };
-        component.onSelectionChange(value);
-        const currentDate = new Date();
-        const quarter = Math.floor((currentDate.getMonth() / 3));
-        const firstDate = new Date(currentDate.getFullYear(), quarter * 3, 1);
-        const expectedDate = {
-            startDate: firstDate,
-            endDate: new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0)
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
     it('should reset date range when no_date type is selected', () => {
         spyOn(component.dateChanged, 'emit');
         const value = <MatSelectChange> { value: DateCloudFilterType.NO_DATE };
@@ -124,6 +77,17 @@ describe('DateRangeFilterComponent', () => {
         const expectedDate = {
             startDate: null,
             endDate: null
+        };
+        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
+    });
+
+    it('should emit date range when any type is selected', () => {
+        spyOn(component.dateChanged, 'emit');
+        const value = <MatSelectChange> { value: DateCloudFilterType.TOMORROW };
+        component.onSelectionChange(value);
+        const expectedDate = {
+            startDate: moment().endOf('day').toDate(),
+            endDate: moment().add(1, 'days').startOf('day').toDate()
         };
         expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
     });
