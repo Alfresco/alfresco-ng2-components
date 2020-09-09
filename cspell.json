@@ -130,7 +130,8 @@
     "processwithstarteventform",
     "processstring",
     "typeahed",
-    "minmax"
+    "minmax",
+    "jsons"
   ],
   "dictionaries": [
     "html",
