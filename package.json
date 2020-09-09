@@ -155,7 +155,7 @@
     "mdast-zone": "^4.0.0",
     "mini-css-extract-plugin": "^0.10.0",
     "nconf": "^0.10.0",
-    "ng-packagr": "^10.0.4",
+    "ng-packagr": "^10.1.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "protractor": "^7.0.0",
     "protractor-retry": "^1.2.9",
