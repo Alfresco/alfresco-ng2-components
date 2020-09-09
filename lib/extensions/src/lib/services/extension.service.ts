@@ -55,10 +55,10 @@ export class ExtensionService {
     authGuards: { [key: string]: Type<{}> } = {};
 
     constructor(
-        @Inject(EXTENSION_JSONS) protected extensionJsons: ExtensionRef[],
         protected loader: ExtensionLoaderService,
         protected componentRegister: ComponentRegisterService,
-        protected ruleService: RuleService
+        protected ruleService: RuleService,
+        @Inject(EXTENSION_JSONS) protected extensionJsons: ExtensionRef[]
     ) {
     }
 
