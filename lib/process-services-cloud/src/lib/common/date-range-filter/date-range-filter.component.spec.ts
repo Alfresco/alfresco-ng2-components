@@ -128,15 +128,17 @@ describe('DateRangeFilterComponent', () => {
         expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
     });
 
-    it('should reset date range when range type is selected', () => {
+    it('should not emit any date change events when range type is selected', () => {
         spyOn(component.dateChanged, 'emit');
         const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
         component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: null,
-            endDate: null
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
+        expect(component.dateChanged.emit).not.toHaveBeenCalled();
+    });
+
+    it('should emit custom date range on date picker closed', () => {
+        spyOn(component.dateChanged, 'emit');
+        component.onDateRangeClosed();
+        expect(component.dateChanged.emit).toHaveBeenCalled();
     });
 
     it('should throw error no supported type is selected', () => {
