@@ -131,9 +131,8 @@ describe('Enable infinite scrolling', () => {
         await infinitePaginationPage.clickLoadMoreButton();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
 
-        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
-
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
     });
 
     it('[C299202] Should not display load more button when all the files are already displayed', async () => {
