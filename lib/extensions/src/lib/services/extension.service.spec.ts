@@ -56,6 +56,7 @@ describe('ExtensionService', () => {
         await service.load();
 
         expect(loader.load).toHaveBeenCalled();
+        expect(loader.load).toHaveBeenCalledWith('assets/app.extensions.json', 'assets/plugins', []);
         expect(service.setup).toHaveBeenCalledWith(blankConfig);
     });
 
