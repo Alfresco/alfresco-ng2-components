@@ -46,11 +46,12 @@ describe('Attach File - Content service', () => {
 
     const apiServiceExternal = new ApiService({
         provider: 'ECM',
-        hostEcm: browser.params.testConfig.adf_external_acs.host
+        hostEcm: browser.params.testConfig.adf_external_acs.host,
+        authType: 'BASIC'
     });
     const usersActionsExternal = new UsersActions(apiServiceExternal);
 
-    const apiService = new ApiService({ provider: 'ALL'});
+    const apiService = new ApiService({ provider: 'ALL' });
     const integrationService = new IntegrationService(apiService);
     const applicationService = new ApplicationsUtil(apiService);
     const uploadActions = new UploadActions(apiService);
@@ -81,8 +82,16 @@ describe('Attach File - Content service', () => {
         await apiServiceExternal.login(email, password);
         await usersActionsExternal.createUser(user);
 
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[0], host: browser.params.testConfig.appConfig.ecmHost });
-        await integrationService.addCSIntegration({ tenantId: user.tenantId, name: csIntegrations[1], host: browser.params.testConfig.adf_external_acs.host });
+        await integrationService.addCSIntegration({
+            tenantId: user.tenantId,
+            name: csIntegrations[0],
+            host: browser.params.testConfig.appConfig.ecmHost
+        });
+        await integrationService.addCSIntegration({
+            tenantId: user.tenantId,
+            name: csIntegrations[1],
+            host: browser.params.testConfig.adf_external_acs.host
+        });
 
         await apiService.getInstance().login(user.email, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
@@ -94,11 +103,11 @@ describe('Attach File - Content service', () => {
         await apiService.getInstance().activiti.adminTenantsApi.deleteTenant(user.tenantId);
     });
 
-    beforeEach( async () => {
+    beforeEach(async () => {
         await loginPage.login(user.email, user.password);
     });
 
-    afterEach( async () => {
+    afterEach(async () => {
         await navigationBarPage.clickLogoutButton();
     });
 
@@ -114,6 +123,8 @@ describe('Attach File - Content service', () => {
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
+
+        await contentNodeSelector.contentList.dataTablePage().waitTillContentLoaded();
 
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();

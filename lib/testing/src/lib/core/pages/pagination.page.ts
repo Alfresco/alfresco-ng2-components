@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Locator, by, element } from 'protractor';
+import { Locator, by, element, browser } from 'protractor';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { BrowserActions } from '../utils/browser-actions';
 import { Logger } from '../utils/logger';
@@ -47,6 +47,7 @@ export class PaginationPage {
         await BrowserActions.click(itemsPerPage);
         await BrowserVisibility.waitUntilElementIsNotVisible(this.pageSelectorDropDown);
         Logger.log('Select page size ', numberOfItem);
+        await browser.sleep(500);
     }
 
     async checkPageSelectorIsNotDisplayed(): Promise<void> {
@@ -82,8 +83,8 @@ export class PaginationPage {
     }
 
     async clickOnNextPage(): Promise<void> {
-        return BrowserActions.click(this.nextPageButton);
         Logger.log('Next page');
+        return BrowserActions.click(this.nextPageButton);
     }
 
     async clickOnPageDropdown(): Promise<void> {
