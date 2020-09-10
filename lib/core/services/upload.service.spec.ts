@@ -28,7 +28,7 @@ import { CoreTestingModule } from '../testing/core.testing.module';
 import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
 import { DiscoveryApiService } from './discovery-api.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { EcmProductVersionModel } from '../models';
 
 declare let jasmine: any;
@@ -36,7 +36,7 @@ declare let jasmine: any;
 describe('UploadService', () => {
     let service: UploadService;
     let alfrescoApiService: AlfrescoApiService;
-    const mockProductInfo = new Subject<EcmProductVersionModel>();
+    const mockProductInfo = new BehaviorSubject<EcmProductVersionModel>(null);
 
     setupTestBed({
         imports: [

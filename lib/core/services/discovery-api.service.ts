@@ -16,10 +16,10 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, merge, Observable, Subject, throwError } from 'rxjs';
+import { from, merge, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { catchError, filter, map, switchMap, takeWhile } from 'rxjs/operators';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import { Activiti, SystemPropertiesRepresentation } from '@alfresco/js-api';
 import { AuthenticationService } from './authentication.service';
 
@@ -31,7 +31,7 @@ export class DiscoveryApiService {
     /**
      * Gets product information for Content Services.
      */
-    ecmProductInfo$ = new Subject<EcmProductVersionModel>();
+    ecmProductInfo$ = new BehaviorSubject<EcmProductVersionModel>(null);
 
     constructor(
         private apiService: AlfrescoApiService,
@@ -40,8 +40,7 @@ export class DiscoveryApiService {
         merge(this.apiService.alfrescoApiInitialized, this.authenticationService.onLogin)
             .pipe(
                 filter(() => this.apiService.getInstance()?.isEcmLoggedIn()),
-                switchMap(() => this.getEcmProductInfo()),
-                takeWhile((info) => !info)
+                switchMap(() => this.getEcmProductInfo())
             )
             .subscribe((info) => this.ecmProductInfo$.next(info));
     }
