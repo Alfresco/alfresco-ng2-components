@@ -139,6 +139,11 @@ describe('Task Cloud Service', () => {
         expect(isTaskEditable).toEqual(true);
     });
 
+    it('should verify if the task assignee property is clickable', () => {
+        const isAssigneePropertyClickable = service.isAssigneePropertyClickable(assignedTaskDetailsCloudMock, [ { icon: '', value: 'user' } ], [ { icon: '', value: 'group' } ]);
+        expect(isAssigneePropertyClickable).toEqual(true);
+    });
+
     it('should complete task with owner as null', async(() => {
         const appName = 'simple-app';
         const taskId = '68d54a8f';

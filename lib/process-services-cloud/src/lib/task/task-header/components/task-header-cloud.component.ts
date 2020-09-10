@@ -29,10 +29,9 @@ import {
     UpdateNotification,
     CardViewUpdateService,
     CardViewDatetimeItemModel,
-    CardViewArrayItem,
-    JwtHelperService
+    CardViewArrayItem
 } from '@alfresco/adf-core';
-import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
+import { TaskDetailsCloudModel } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { NumericFieldValidator } from '../../../validators/numeric-field.validator';
 
@@ -84,7 +83,6 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
-        private jwtHelperService: JwtHelperService,
         private cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
@@ -321,20 +319,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     isAssigneePropertyClickable(): boolean {
-        let isClickable = false;
-        let states: TaskStatus[] = [];
-        if (this.jwtHelperService.hasRealmRole('ACTIVITI_ADMIN')) {
-            states = ['ASSIGNED', 'CREATED'];
-            isClickable = states.includes(this.taskDetails.status);
-        } else if (this.hasCandidates()) {
-            states = ['ASSIGNED'];
-            isClickable = states.includes(this.taskDetails.status);
-        }
-        return isClickable;
-    }
-
-    hasCandidates() {
-        return (this.candidateGroups && this.candidateGroups.length) || (this.candidateUsers && this.candidateUsers.length);
+        return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, this.candidateGroups);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {

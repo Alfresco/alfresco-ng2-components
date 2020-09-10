@@ -19,7 +19,7 @@ import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { setupTestBed, AppConfigService, JwtHelperService } from '@alfresco/adf-core';
+import { setupTestBed, AppConfigService } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -43,8 +43,6 @@ describe('TaskHeaderCloudComponent', () => {
     let getCandidateGroupsSpy: jasmine.Spy;
     let getCandidateUsersSpy: jasmine.Spy;
     let isTaskEditableSpy: jasmine.Spy;
-    let jwtHelperService: JwtHelperService;
-    let hasRealmRoleSpy: jasmine.Spy;
 
     const mockCandidateUsers = ['mockuser1', 'mockuser2', 'mockuser3'];
     const mockCandidateGroups = ['mockgroup1', 'mockgroup2', 'mockgroup3'];
@@ -62,14 +60,12 @@ describe('TaskHeaderCloudComponent', () => {
         component = fixture.componentInstance;
         appConfigService = TestBed.inject(AppConfigService);
         taskCloudService = TestBed.inject(TaskCloudService);
-        jwtHelperService = TestBed.inject(JwtHelperService);
         component.appName = 'mock-app-name';
         component.taskId = 'mock-task-id';
         getTaskByIdSpy = spyOn(taskCloudService, 'getTaskById').and.returnValue(of(assignedTaskDetailsCloudMock));
         isTaskEditableSpy = spyOn(taskCloudService, 'isTaskEditable').and.returnValue(true);
         getCandidateUsersSpy = spyOn(taskCloudService, 'getCandidateUsers').and.returnValue(of(mockCandidateUsers));
         getCandidateGroupsSpy = spyOn(taskCloudService, 'getCandidateGroups').and.returnValue(of(mockCandidateGroups));
-        hasRealmRoleSpy = spyOn(jwtHelperService, 'hasRealmRole').and.returnValue(false);
     });
 
     describe('Task Details', () => {
@@ -268,74 +264,23 @@ describe('TaskHeaderCloudComponent', () => {
             });
         }));
 
-        it('should render assignee edit icon for a assigned task if the task shared among condidates', () => {
-            fixture.detectChanges();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(editIcon).not.toBeNull();
-            expect(editIcon.nativeElement.innerText).toBe('create');
-        });
-
-        it('should not render assignee edit icon for a created task if the task shared among condidates', async () => {
-            getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
-
-            component.ngOnChanges();
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(editIcon).toBeNull();
-        });
-
-        it('should not render assignee edit icon for a assigned task if current logged user has just user role', async() => {
-            getCandidateUsersSpy.and.returnValue(of([]));
-            getCandidateGroupsSpy.and.returnValue(of([]));
-            component.ngOnChanges();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(editIcon).toBeNull();
-        });
-
-        it('should not render edit assignee icon for a created task if current logged user has just user role', async () => {
-            getCandidateUsersSpy.and.returnValue(of([]));
-            getCandidateGroupsSpy.and.returnValue(of([]));
-            component.ngOnChanges();
-
-            fixture.detectChanges();
-            await fixture.whenStable();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(editIcon).toBeNull();
-        });
-
-        it('should render edit icon for a assigned task if current logged user has admin role', () => {
-            hasRealmRoleSpy.and.returnValue(true);
-            fixture.detectChanges();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(editIcon).not.toBeNull();
-            expect(editIcon.nativeElement.innerText).toBe('create');
-        });
-
-        it('should render edit icon for a created task if current logged user has admin role', () => {
-            hasRealmRoleSpy.and.returnValue(true);
-            getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
-            fixture.detectChanges();
-
-            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
-            expect(editIcon).not.toBeNull();
-            expect(editIcon.nativeElement.innerText).toBe('create');
-        });
-
-        it('should render defined edit icon for assignee property if the task in created state and assingee should have admin role', () => {
+        it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', () => {
             fixture.detectChanges();
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('create');
+        });
+
+        it('should not render defined edit icon for assignee property if the task in created state and shared among condidates', async () => {
+            getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(editIcon).toBeNull();
         });
 
         it('should render edit icon if the task in assigned state and assingee should be current user', () => {
