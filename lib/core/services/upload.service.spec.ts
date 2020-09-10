@@ -27,18 +27,30 @@ import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
 import { AssocChildBody, AssociationBody } from '@alfresco/js-api';
 import { TranslateModule } from '@ngx-translate/core';
+import { DiscoveryApiService } from './discovery-api.service';
+import { Subject } from 'rxjs';
+import { EcmProductVersionModel } from '../models';
 
 declare let jasmine: any;
 
 describe('UploadService', () => {
     let service: UploadService;
     let alfrescoApiService: AlfrescoApiService;
+    const mockProductInfo = new Subject<EcmProductVersionModel>();
 
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule,
             AppConfigModule
+        ],
+        providers: [
+            {
+                provide: DiscoveryApiService,
+                useValue: {
+                    ecmProductInfo$: mockProductInfo
+                }
+            }
         ]
     });
 
@@ -67,6 +79,7 @@ describe('UploadService', () => {
         service.queue = [];
         service.activeTask = null;
         jasmine.Ajax.install();
+        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: true } } as EcmProductVersionModel);
     });
 
     afterEach(() => {
@@ -425,4 +438,28 @@ describe('UploadService', () => {
 
         expect(service.fileUploadCancelled.next).toHaveBeenCalled();
     }));
+
+    it('Should not pass rendition if it is disabled', () => {
+        mockProductInfo.next({ status: { isThumbnailGenerationEnabled: false } } as EcmProductVersionModel);
+
+        const uploadFileSpy = spyOn(alfrescoApiService.getInstance().upload, 'uploadFile').and.callThrough();
+        const emitter = new EventEmitter();
+
+        const filesFake = new FileModel(<File> { name: 'fake-name', size: 10 }, {
+            newVersion: true
+        });
+        service.addToQueue(filesFake);
+        service.uploadFilesInTheQueue(emitter);
+
+        expect(uploadFileSpy).toHaveBeenCalledWith({
+            name: 'fake-name',
+            size: 10
+        }, undefined, undefined, { newVersion: true }, {
+            include: ['allowableOperations'],
+            overwrite: true,
+               majorVersion: undefined,
+            comment: undefined,
+            name: 'fake-name'
+        });
+    });
 });
