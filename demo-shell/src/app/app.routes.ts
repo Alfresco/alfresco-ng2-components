@@ -53,6 +53,7 @@ import { ConfirmDialogExampleComponent } from './components/confirm-dialog/confi
 import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
+import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
@@ -197,6 +198,7 @@ export const appRoutes: Routes = [
                         path: ':appName',
                         canActivate: [AuthGuardSsoRoleService],
                         data: { clientRoles: ['appName'], roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
+                        component: ProcessCloudLayoutComponent,
                         children: [
                             {
                                 path: '',

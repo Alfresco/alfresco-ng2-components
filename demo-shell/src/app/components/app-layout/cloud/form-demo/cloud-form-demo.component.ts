@@ -16,9 +16,19 @@
  */
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormFieldModel, NotificationService, CoreAutomationService, FormModel, FormRenderingService } from '@alfresco/adf-core';
-import { FormCloudService, CloudFormRenderingService } from '@alfresco/adf-process-services-cloud';
+import {
+    CoreAutomationService,
+    FormFieldModel,
+    FormModel,
+    FormRenderingService,
+    NotificationService
+} from '@alfresco/adf-core';
+import {
+    CloudFormRenderingService,
+    FormCloudService
+} from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
+import { SampleWidgetComponent } from '../../../cloud/custom-form-components/sample-widget.component';
 
 @Component({
     templateUrl: 'cloud-form-demo.component.html',
@@ -47,7 +57,11 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
     constructor(
         private notificationService: NotificationService,
         private formService: FormCloudService,
-        private automationService: CoreAutomationService) {
+        private automationService: CoreAutomationService,
+        private formRenderingService: FormRenderingService) {
+        this.formRenderingService.register({
+            'custom': () => SampleWidgetComponent
+        });
     }
 
     logErrors(errorFields: FormFieldModel[]) {
