@@ -1,10 +1,10 @@
 {
   "C362240": "Include once ADF starts using ACS 7 , https://issues.alfresco.com/jira/browse/ADF-5182",
   "C362241": "Include once ADF starts using ACS 7, https://issues.alfresco.com/jira/browse/ADF-5182",
-  "C291980": "Facet not working",
-  "C291981": "Facet not working",
-  "C299200": "Facet not working",
-  "C297509": "Facet not working",
+  "C291980": "https://issues.alfresco.com/jira/browse/ADF-5235",
+  "C291981": "https://issues.alfresco.com/jira/browse/ADF-5235",
+  "C299200": "https://issues.alfresco.com/jira/browse/ADF-5235",
+  "C297509": "https://issues.alfresco.com/jira/browse/ADF-5235",
   "C277751": "setting problem APS not basic",
   "C277752": "setting problem APS not basic",
   "C277753": "setting problem APS not basic",
@@ -13,12 +13,7 @@
   "C279932": "login problem APS not basic",
   "C279931": "login problem APS not basic",
   "C279930": "login problem APS not basic",
-  "C315268": "Attach file issue",
-  "C246522": "Attach file issue",
-  "C299040": "Attach file issue",
-  "C286516": "Attach file issue",
-  "C246534": "Attach file issue",
-  "C279886": "Attach file issue",
+  "C246534": "https://issues.alfresco.com/jira/browse/ADF-5236",
   "C291893": "flaky test"
 }
 

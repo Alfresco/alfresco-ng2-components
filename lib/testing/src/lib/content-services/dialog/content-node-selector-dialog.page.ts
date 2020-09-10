@@ -151,6 +151,7 @@ export class ContentNodeSelectorDialogPage {
 
     async searchAndSelectResult(searchText: string, name: string) {
         await this.typeIntoNodeSelectorSearchField(searchText);
+        await this.contentListPage().dataTablePage().waitTillContentLoaded();
         try {
             await this.contentListPage().dataTablePage().checkRowContentIsDisplayed(name);
         } catch (e) {

@@ -93,6 +93,8 @@ describe('Enable infinite scrolling', () => {
         await contentServicesPage.doubleClickRow(folderModel.name);
         await contentServicesPage.enableInfiniteScrolling();
         await infinitePaginationPage.clickLoadMoreButton();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
+
         for (let i = 0; i < nrOfFiles; i++) {
             await contentServicesPage.checkContentIsDisplayed(fileNames[i]);
         }
@@ -102,6 +104,8 @@ describe('Enable infinite scrolling', () => {
         await contentServicesPage.openFolder(deleteUploaded.entry.name);
         await contentServicesPage.enableInfiniteScrolling();
         await infinitePaginationPage.clickLoadMoreButton();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
+
         for (let i = 0; i < nrOfDeletedFiles; i++) {
             await contentServicesPage.checkContentIsDisplayed(deleteFileNames[i]);
         }
@@ -121,15 +125,14 @@ describe('Enable infinite scrolling', () => {
         await contentServicesPage.doubleClickRow(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
-        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
 
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(pageSize);
         await infinitePaginationPage.clickLoadMoreButton();
-        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
-
-        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
 
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
+        await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
     });
 
     it('[C299202] Should not display load more button when all the files are already displayed', async () => {

@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { DropActions, BrowserActions, BrowserVisibility, DateUtil, DocumentListPage, TogglePage, DropdownPage } from '@alfresco/adf-testing';
+import {
+    DropActions,
+    BrowserActions,
+    BrowserVisibility,
+    DateUtil,
+    DocumentListPage,
+    TogglePage,
+    DropdownPage,
+    Logger
+} from '@alfresco/adf-testing';
 import { Locator, $$, browser, by, element, ElementFinder, protractor } from 'protractor';
 import { CreateLibraryDialogPage } from './dialog/create-library-dialog.page';
 import { FolderDialogPage } from './dialog/folder-dialog.page';
@@ -344,6 +353,7 @@ export class ContentServicesPage {
     }
 
     async doubleClickRow(nodeName): Promise<void> {
+        Logger.log(`Open Folder ${nodeName}`);
         await this.contentList.doubleClickRow(nodeName);
         await this.contentList.dataTablePage().waitTillContentLoaded();
     }
@@ -648,9 +658,11 @@ export class ContentServicesPage {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.multiSelectToggle);
     }
+
     async multiSelectToggleIsEnabled(): Promise<boolean> {
         return this.multiSelectToggle.isEnabled();
     }
+
     async clickSelectAllCheckbox(): Promise<void> {
         await BrowserActions.click(this.selectAllCheckbox);
     }

@@ -302,6 +302,29 @@ export class DataTableComponentPage {
 
         try {
             Logger.log('wait first element is present');
+            await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
+        } catch (error) {
+            Logger.log('Possible empty page');
+        }
+
+    }
+
+    async waitTillContentLoadedInfinitePagination(): Promise<void> {
+        await browser.sleep(500);
+
+        if (element(by.tagName('mat-progress-bar')).isPresent()) {
+            Logger.log('wait datatable loading spinner disappear');
+            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-progress-bar')));
+        } else {
+            try {
+                Logger.log('wait datatable loading spinner is present');
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-progress-bar')));
+            } catch (error) {
+            }
+        }
+
+        try {
+            Logger.log('wait first element is present');
             await BrowserVisibility.waitUntilElementIsVisible(this.contents.first(), 1000);
         } catch (error) {
             Logger.log('Possible empty page');
