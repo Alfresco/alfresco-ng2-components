@@ -1,10 +1,10 @@
 
 <mat-form-field [attr.data-automation-id]="processFilterProperty.key">
     <mat-select
-        placeholder="{{processFilterProperty.label | translate}}"
+        placeholder="{{ processFilterProperty.label | translate }}"
         (selectionChange)="onSelectionChange($event)"
         [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-        <mat-option *ngFor="let propertyOption of options" [value]="propertyOption.key" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.key">
+        <mat-option *ngFor="let propertyOption of filteredProperties" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.value">
             {{ propertyOption.label | translate }}
         </mat-option>
     </mat-select>
@@ -14,13 +14,13 @@
     <mat-form-field class="adf-cloud-date-range-picker">
         <mat-label>{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE_TITLE' | translate }}</mat-label>
         <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
+          <input matStartDate formControlName="from" placeholder="Start date">
+          <input matEndDate formControlName="to" placeholder="End date">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker (closed)="onDateRangeClosed()"></mat-date-range-picker>
 
-        <mat-error *ngIf="dateRangeForm.controls.start.hasError('matStartDateInvalid')">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INDALID_START_DATE' | translate }}</mat-error>
-        <mat-error *ngIf="dateRangeForm.controls.end.hasError('matEndDateInvalid')">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INDALID_END_DATE' | translate }}</mat-error>
+        <mat-error *ngIf="dateRangeForm.controls.from.hasError('matStartDateInvalid')">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INDALID_START_DATE' | translate }}</mat-error>
+        <mat-error *ngIf="dateRangeForm.controls.to.hasError('matEndDateInvalid')">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INDALID_END_DATE' | translate }}</mat-error>
     </mat-form-field>
 </ng-container>

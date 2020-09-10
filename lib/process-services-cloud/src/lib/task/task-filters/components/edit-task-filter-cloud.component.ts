@@ -30,6 +30,7 @@ import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.compo
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
+import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
 @Component({
     selector: 'adf-cloud-edit-task-filter',
@@ -163,7 +164,14 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     getFormControlsConfig(taskFilterProperties: TaskFilterProperties[]): any {
         const properties = taskFilterProperties.map((property: TaskFilterProperties) => {
-            return { [property.key]: property.value };
+            if (!property.rangeKeys) {
+                return { [property.key]: property.value };
+            } else {
+                return {
+                    [property.rangeKeys.from]: property.value[property.rangeKeys.from],
+                    [property.rangeKeys.to]: property.value[property.rangeKeys.to]
+                };
+            }
         });
         return properties.reduce(((result, current) => Object.assign(result, current)), {});
     }
@@ -317,6 +325,15 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         }
     }
 
+    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: TaskFilterProperties) {
+        this.editTaskFilterForm.get(property.rangeKeys.from).setValue(
+            dateRange.startDate ? dateRange.startDate.toISOString() : null
+        );
+        this.editTaskFilterForm.get(property.rangeKeys.to).setValue(
+            dateRange.endDate ? dateRange.endDate.toISOString() : null
+        );
+    }
+
     hasError(property: TaskFilterProperties): boolean {
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }
@@ -441,6 +458,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
 
     isDateType(property: TaskFilterProperties): boolean {
         return property.type === 'date';
+    }
+
+    isDateRangeType(property: TaskFilterProperties): boolean {
+        return property.type === 'date-range';
     }
 
     isSelectType(property: TaskFilterProperties): boolean {
@@ -589,12 +610,6 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 value: ''
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
-                type: 'date',
-                key: 'dueDate',
-                value: ''
-            }),
-            new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
@@ -613,6 +628,19 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 type: 'checkbox',
                 key: 'standalone',
                 value: currentTaskFilter.standalone || false
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DUE_DATE',
+                type: 'date-range',
+                key: 'dueDate',
+                rangeKeys: { from: 'dueDateFrom', to: 'dueDateTo'},
+                value: currentTaskFilter.dueDate || false,
+                dateFilterOptions: [
+                    DateCloudFilterType.NO_DATE,
+                    DateCloudFilterType.TOMORROW,
+                    DateCloudFilterType.NEXT_7_DAYS,
+                    DateCloudFilterType.RANGE
+                ]
             })
         ];
     }

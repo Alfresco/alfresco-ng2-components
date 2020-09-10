@@ -27,6 +27,7 @@ import { EditTaskFilterCloudComponent } from './components/edit-task-filter-clou
 import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-cloud.component';
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { ProcessCommonModule } from '../../common/process-common.module';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
         FlexLayoutModule,
         MaterialModule,
         AppListCloudModule,
-        CoreModule
+        CoreModule,
+        ProcessCommonModule
     ],
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
     exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],

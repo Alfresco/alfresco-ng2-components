@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+
 export class TaskFilterCloudModel  {
     id: string;
     name: string;
@@ -31,6 +33,8 @@ export class TaskFilterCloudModel  {
     processInstanceId: string;
     createdDate: Date;
     dueDate: Date;
+    dueDateFrom: string;
+    dueDateTo: string;
     taskName: string;
     taskId: string;
     parentTaskId: string;
@@ -56,6 +60,8 @@ export class TaskFilterCloudModel  {
             this.processInstanceId = obj.processInstanceId || null;
             this.createdDate = obj.createdDate || null;
             this.dueDate = obj.dueDate || null;
+            this.dueDateFrom = obj.dueDateFrom || null;
+            this.dueDateTo = obj.dueDateTo || null;
             this.taskName = obj.taskName || null;
             this.taskId = obj.taskId || null;
             this.parentTaskId = obj.parentTaskId || null;
@@ -104,12 +110,19 @@ export interface FilterOptions {
     value?: string;
 }
 
+export interface RangeKeys {
+    from: string;
+    to: string;
+}
+
 export class TaskFilterProperties {
     label: string;
     type: string;
     value: any;
     key: string;
+    rangeKeys?: RangeKeys;
     options: FilterOptions[];
+    dateFilterOptions?: DateCloudFilterType[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -117,7 +130,9 @@ export class TaskFilterProperties {
             this.type = obj.type || null;
             this.value = obj.value || '';
             this.key = obj.key || null;
+            this.rangeKeys = obj.rangeKeys || null;
             this.options = obj.options || null;
+            this.dateFilterOptions = obj.dateFilterOptions || null;
         }
     }
 }

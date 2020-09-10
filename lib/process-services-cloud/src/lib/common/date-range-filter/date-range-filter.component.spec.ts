@@ -16,18 +16,20 @@
  */
 
 import { DateRangeFilterComponent } from './date-range-filter.component';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { setupTestBed } from 'core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { By } from '@angular/platform-browser';
-import { ProcessDateFilterType } from '../../process/process-filters/models/process-filter-cloud.model';
 import { MatSelectChange } from '@angular/material/select';
+import { DateCloudFilterType } from '../../models/date-cloud-filter.model';
+import { DateRangeFilterService } from './date-range-filter.service';
 import moment from 'moment-es6';
 
 describe('DateRangeFilterComponent', () => {
     let component: DateRangeFilterComponent;
     let fixture: ComponentFixture<DateRangeFilterComponent>;
+    let service: DateRangeFilterService;
 
     setupTestBed({
         imports: [
@@ -39,6 +41,7 @@ describe('DateRangeFilterComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(DateRangeFilterComponent);
         component = fixture.componentInstance;
+        service = TestBed.inject(DateRangeFilterService);
 
         component.processFilterProperty = {
             key: 'createdDate',
@@ -54,8 +57,8 @@ describe('DateRangeFilterComponent', () => {
         fixture.destroy();
     });
 
-    it('should setDate on option change', async(() => {
-        spyOn(component, 'setDate');
+    it('should get on option change', async () => {
+        spyOn(service, 'getDateRange');
         const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
         stateElement.click();
         fixture.detectChanges();
@@ -63,61 +66,13 @@ describe('DateRangeFilterComponent', () => {
         const options = fixture.debugElement.queryAll(By.css('.mat-option-text'));
         options[2].nativeElement.click();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-            expect(component.setDate).toHaveBeenCalled();
-        });
-    }));
-
-    it('should emit today range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: ProcessDateFilterType.today };
-        component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: moment().startOf('day').toDate(),
-            endDate: moment().endOf('day').toDate()
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
+        await fixture.whenStable();
+        expect(service.getDateRange).toHaveBeenCalled();
     });
 
-    it('should emit month range', () => {
+    it('should reset date range when no_date type is selected', () => {
         spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: ProcessDateFilterType.month };
-        component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: moment().startOf('month').toDate(),
-            endDate: moment().endOf('month').toDate()
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
-    it('should emit year range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: ProcessDateFilterType.year };
-        component.onSelectionChange(value);
-        const expectedDate = {
-            startDate: moment().startOf('year').toDate(),
-            endDate: moment().endOf('year').toDate()
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
-    it('should emit quarter range', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: ProcessDateFilterType.quarter };
-        component.onSelectionChange(value);
-        const currentDate = new Date();
-        const quarter = Math.floor((currentDate.getMonth() / 3));
-        const firstDate = new Date(currentDate.getFullYear(), quarter * 3, 1);
-        const expectedDate = {
-            startDate: firstDate,
-            endDate: new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0)
-        };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
-    });
-
-    it('should reset date range when no type is selected', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: null };
+        const value = <MatSelectChange> { value: DateCloudFilterType.NO_DATE };
         component.onSelectionChange(value);
         const expectedDate = {
             startDate: null,
@@ -126,8 +81,36 @@ describe('DateRangeFilterComponent', () => {
         expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
     });
 
+    it('should emit date range when any type is selected', () => {
+        spyOn(component.dateChanged, 'emit');
+        const value = <MatSelectChange> { value: DateCloudFilterType.TOMORROW };
+        component.onSelectionChange(value);
+        const expectedDate = {
+            startDate: moment().endOf('day').toDate(),
+            endDate: moment().add(1, 'days').startOf('day').toDate()
+        };
+        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
+    });
+
+    it('should not emit any date change events when range type is selected', () => {
+        spyOn(component.dateChanged, 'emit');
+        const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
+        component.onSelectionChange(value);
+        expect(component.dateChanged.emit).not.toHaveBeenCalled();
+    });
+
+    it('should emit custom date range on date picker closed', () => {
+        spyOn(component.dateChanged, 'emit');
+        component.onDateRangeClosed();
+        expect(component.dateChanged.emit).toHaveBeenCalled();
+    });
+
+    it('should throw error no supported type is selected', () => {
+        expect(function () { service.getDateRange(null); } ).toThrow(new Error('ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INVALID_DATE_FILTER'));
+    });
+
     it('should show date-range picker when type is range', async () => {
-        const value = <MatSelectChange> { value: ProcessDateFilterType.range };
+        const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
         component.onSelectionChange(value);
         fixture.detectChanges();
         await fixture.whenStable();
