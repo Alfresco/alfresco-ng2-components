@@ -29,7 +29,8 @@ import {
     UpdateNotification,
     CardViewUpdateService,
     CardViewDatetimeItemModel,
-    CardViewArrayItem
+    CardViewArrayItem,
+    JwtHelperService
 } from '@alfresco/adf-core';
 import { TaskDetailsCloudModel, TaskStatus } from '../../start-task/models/task-details-cloud.model';
 import { TaskCloudService } from '../../services/task-cloud.service';
@@ -83,6 +84,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         private taskCloudService: TaskCloudService,
         private translationService: TranslationService,
         private appConfig: AppConfigService,
+        private jwtHelperService: JwtHelperService,
         private cardViewUpdateService: CardViewUpdateService
     ) {
         this.dateFormat = this.appConfig.get('dateValues.defaultDateFormat');
@@ -141,7 +143,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
                     label: 'ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE',
                     value: this.taskDetails.assignee,
                     key: 'assignee',
-                    clickable: this.isClickable(),
+                    clickable: this.isAssigneePropertyClickable(),
                     default: this.translationService.instant('ADF_CLOUD_TASK_HEADER.PROPERTIES.ASSIGNEE_DEFAULT'),
                     icon: 'create'
                 }
@@ -318,9 +320,21 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
         return this.taskCloudService.isTaskEditable(this.taskDetails);
     }
 
-    isClickable(): boolean {
-        const states: TaskStatus[] = ['ASSIGNED', 'CREATED'];
-        return states.includes(this.taskDetails.status);
+    isAssigneePropertyClickable(): boolean {
+        let isClickable = false;
+        let states: TaskStatus[] = [];
+        if (this.jwtHelperService.hasRealmRole('ACTIVITI_ADMIN')) {
+            states = ['ASSIGNED', 'CREATED'];
+            isClickable = states.includes(this.taskDetails.status);
+        } else if (this.hasCandidates()) {
+            states = ['ASSIGNED'];
+            isClickable = states.includes(this.taskDetails.status);
+        }
+        return isClickable;
+    }
+
+    hasCandidates() {
+        return (this.candidateGroups && this.candidateGroups.length) || (this.candidateUsers && this.candidateUsers.length);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {
