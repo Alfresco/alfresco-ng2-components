@@ -28,7 +28,8 @@ import {
     completedTaskDetailsCloudMock,
     createdStateTaskDetailsCloudMock,
     suspendedTaskDetailsCloudMock,
-    taskDetailsWithParentTaskIdMock
+    taskDetailsWithParentTaskIdMock,
+    createdTaskDetailsCloudMock
 } from '../mocks/task-details-cloud.mock';
 import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
@@ -263,12 +264,23 @@ describe('TaskHeaderCloudComponent', () => {
             });
         }));
 
-        it('should render defined edit icon for assignee property if the task in assigned state and assingee should be current user', () => {
+        it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', () => {
             fixture.detectChanges();
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
             expect(value).not.toBeNull();
             expect(value.nativeElement.innerText).toBe('create');
+        });
+
+        it('should not render defined edit icon for assignee property if the task in created state and shared among condidates', async () => {
+            getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
+
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(editIcon).toBeNull();
         });
 
         it('should render edit icon if the task in assigned state and assingee should be current user', () => {

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService } from '@alfresco/adf-core';
+import { AlfrescoApiService, LogService, AppConfigService, IdentityUserService, CardViewArrayItem } from '@alfresco/adf-core';
 import { throwError, Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
@@ -28,6 +28,7 @@ import { StartTaskCloudRequestModel } from '../start-task/models/start-task-clou
 })
 export class TaskCloudService extends BaseCloudService {
 
+    static TASK_ASSIGNED_STATE = 'ASSIGNED';
     dataChangesDetected$ = new Subject();
 
     constructor(
@@ -63,7 +64,7 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task can be completed
      */
     canCompleteTask(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === 'ASSIGNED' && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === TaskCloudService.TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
     }
 
     /**
@@ -72,7 +73,16 @@ export class TaskCloudService extends BaseCloudService {
      * @returns Boolean value if the task is editable
      */
     isTaskEditable(taskDetails: TaskDetailsCloudModel): boolean {
-        return taskDetails && taskDetails.status === 'ASSIGNED' && this.isAssignedToMe(taskDetails.assignee);
+        return taskDetails && taskDetails.status === TaskCloudService.TASK_ASSIGNED_STATE && this.isAssignedToMe(taskDetails.assignee);
+    }
+
+    isAssigneePropertyClickable(taskDetails: TaskDetailsCloudModel, candidateUsers: CardViewArrayItem[], candidateGroups: CardViewArrayItem[]): boolean {
+        let isClickable = false;
+        const states = [TaskCloudService.TASK_ASSIGNED_STATE];
+        if (candidateUsers?.length || candidateGroups?.length) {
+            isClickable = states.includes(taskDetails.status);
+        }
+        return isClickable;
     }
 
     /**
@@ -91,7 +101,7 @@ export class TaskCloudService extends BaseCloudService {
      */
     canUnclaimTask(taskDetails: TaskDetailsCloudModel): boolean {
         const currentUser = this.identityUserService.getCurrentUserInfo().username;
-        return taskDetails && taskDetails.status === 'ASSIGNED' && taskDetails.assignee === currentUser;
+        return taskDetails && taskDetails.status === TaskCloudService.TASK_ASSIGNED_STATE && taskDetails.assignee === currentUser;
     }
 
     /**
