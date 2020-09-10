@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable, Type } from '@angular/core';
+import { Injectable, Type, InjectionToken, Inject } from '@angular/core';
 import { RuleEvaluator, RuleRef, RuleContext } from '../config/rule.extensions';
-import { ExtensionConfig } from '../config/extension.config';
+import { ExtensionConfig, ExtensionRef } from '../config/extension.config';
 import { ExtensionLoaderService } from './extension-loader.service';
 import { RouteRef } from '../config/routing.extensions';
 import { ActionRef } from '../config/action.extensions';
@@ -25,6 +25,19 @@ import * as core from '../evaluators/core.evaluators';
 import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
+
+const EXTENSION_JSONS = new InjectionToken<ExtensionRef[][]>('extension-jsons', {
+    providedIn: 'root',
+    factory: () => []
+});
+
+export function provideExtensionConfig(jsons: ExtensionRef[]) {
+    return {
+        provide: EXTENSION_JSONS,
+        useValue: jsons,
+        multi: true
+    };
+}
 
 @Injectable({
     providedIn: 'root'
@@ -44,7 +57,8 @@ export class ExtensionService {
     constructor(
         protected loader: ExtensionLoaderService,
         protected componentRegister: ComponentRegisterService,
-        protected ruleService: RuleService
+        protected ruleService: RuleService,
+        @Inject(EXTENSION_JSONS) protected extensionJsons: ExtensionRef[]
     ) {
     }
 
@@ -55,7 +69,8 @@ export class ExtensionService {
     async load(): Promise<ExtensionConfig> {
         const config = await this.loader.load(
             this.configPath,
-            this.pluginsPath
+            this.pluginsPath,
+            this.extensionJsons.flat()
         );
         this.setup(config);
         return config;
