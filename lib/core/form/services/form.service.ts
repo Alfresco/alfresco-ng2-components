@@ -102,9 +102,9 @@ export class FormService {
      * @param readOnly Should the form fields be read-only?
      * @returns Form model created from input data
      */
-    parseForm(json: any, data?: FormValues, readOnly: boolean = false): FormModel {
+    parseForm(json: any, data?: FormValues, readOnly: boolean = false, fixedSpace?: boolean): FormModel {
         if (json) {
-            const form = new FormModel(json, data, readOnly, this);
+            const form = new FormModel(json, data, readOnly, this, fixedSpace);
             if (!json.fields) {
                 form.outcomes = [
                     new FormOutcomeModel(<any> form, {

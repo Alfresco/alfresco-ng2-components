@@ -320,17 +320,17 @@ describe('Form Renderer Component', () => {
         });
 
         it('[C309654] - Should display Number widget spans on 2 columns when colspan is set to 2', async () => {
-            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition);
+            formRendererComponent.formDefinition = formService.parseForm(colspanForm.formRepresentation.formDefinition, null , false, false);
             fixture.detectChanges();
             await fixture.whenStable();
-            const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list');
+            const formSizedElement = fixture.nativeElement.querySelector('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section.adf-grid-list-column-view');
             expectElementToBeVisible(formSizedElement);
-            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section .adf-grid-list-column');
+            const sectionGridElement: HTMLElement[] = fixture.nativeElement.querySelectorAll('#field-2bc275fb-e113-4d7d-885f-6e74a7332d40-container section .adf-grid-list-single-column');
             sectionGridElement.forEach((element) => {
                 expect(element.style['width']).toBe('50%', 'Elemens is wrong sized for this section');
             });
 
-            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list .adf-grid-list-column');
+            const fullWidthElement = fixture.nativeElement.querySelector('#field-d52ada4e-cbdc-4f0c-a480-5b85fa00e4f8-container section.adf-grid-list-column-view .adf-grid-list-single-column');
             expect(fullWidthElement.style['width']).toBe('100%');
         });
 
