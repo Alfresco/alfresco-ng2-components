@@ -117,7 +117,6 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
 
         list = await contentServicesPage.getAllRowsNameColumn();
-        console.log(list);
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(5, 6))).toEqual(true);
 
         await contentServicesPage.deleteContent(lastFile);
