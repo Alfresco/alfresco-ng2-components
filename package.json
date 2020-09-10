@@ -137,7 +137,7 @@
     "jasmine-reporters": "^2.3.2",
     "jasmine-spec-reporter": "~5.0.2",
     "js-yaml": "^3.14.0",
-    "karma": "^5.1.1",
+    "karma": "^5.2.2",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "2.1.0",
     "karma-jasmine": "~1.1.0",
