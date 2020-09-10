@@ -22,6 +22,7 @@ import { HyperlinkWidgetComponent } from './hyperlink.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('HyperlinkWidgetComponent', () => {
 
@@ -32,7 +33,8 @@ describe('HyperlinkWidgetComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreTestingModule
+            CoreTestingModule,
+            MatTooltipModule
         ]
     });
 
@@ -191,5 +193,23 @@ describe('HyperlinkWidgetComponent', () => {
         const hyperlinkWidgetLink = element.querySelector('a');
         expect(hyperlinkWidgetLink.href).toBe(url);
         expect(hyperlinkWidgetLink.innerText).toBe(displayText);
+    });
+
+    it('should display tooltip when tooltip is set', () => {
+        const displayText = 'displayText';
+        const url = 'https://www.alfresco.com/';
+        widget.field = new FormFieldModel(new FormModel(), {
+            id: 'hyperlink',
+            hyperlinkUrl: url,
+            displayText: displayText,
+            type: FormFieldTypes.HYPERLINK,
+            tooltip: 'hyperlink widget'
+        });
+
+        fixture.detectChanges();
+        const checkbox = fixture.debugElement.nativeElement.querySelector('.adf-hyperlink-widget div');
+        const tooltip = checkbox.getAttribute('ng-reflect-message');
+
+        expect(tooltip).toEqual(widget.field.tooltip);
     });
 });

@@ -210,7 +210,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         });
     }));
 
-    it('should be able to attach files coming from content selector', async() => {
+    it('should be able to attach files coming from content selector', async () => {
         spyOn(
             contentCloudNodeSelectorService,
             'openUploadFileDialog'
@@ -237,7 +237,7 @@ describe('AttachFileCloudWidgetComponent', () => {
         expect(fileIcon).not.toBeNull();
     });
 
-    it('should be able to attach files coming from all files source', async() => {
+    it('should be able to attach files coming from all files source', async () => {
         spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
         spyOn(
             contentCloudNodeSelectorService,
@@ -299,7 +299,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             openUploadFileDialogSpy = spyOn(contentCloudNodeSelectorService, 'openUploadFileDialog').and.returnValue(of([fakeMinimalNode]));
         }));
 
-        it('should be able to fetch nodeId if destinationFolderPath is defined', async() => {
+        it('should be able to fetch nodeId if destinationFolderPath is defined', async () => {
             const fetchNodeIdFromRelativePathSpy = spyOn(contentCloudNodeSelectorService, 'fetchNodeIdFromRelativePath').and.returnValue(mockNodeId);
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
@@ -324,7 +324,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(widget.rootNodeId).toEqual('mock-node-id');
         });
 
-        it('Should be able to set given alias as rootNodeId if the nodeId of the alias is not fetched from the api', async() => {
+        it('Should be able to set given alias as rootNodeId if the nodeId of the alias is not fetched from the api', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -345,7 +345,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', true);
         });
 
-        it('Should be able to set default alias as rootNodeId if destinationFolderPath contains wrong alias', async() => {
+        it('Should be able to set default alias as rootNodeId if destinationFolderPath contains wrong alias', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -367,7 +367,7 @@ describe('AttachFileCloudWidgetComponent', () => {
             expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'multiple', true);
         });
 
-        it('Should be able to set default alias as rootNodeId if destinationFolderPath does not have alias', async() => {
+        it('Should be able to set default alias as rootNodeId if destinationFolderPath does not have alias', async () => {
             widget.field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.UPLOAD,
                 value: []
@@ -391,7 +391,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         describe('FilesSource', () => {
 
-            it('should be able to set myFiles folderId as rootNodeId if fileSource set only to content', async() => {
+            it('should be able to set myFiles folderId as rootNodeId if fileSource set only to content', async () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.UPLOAD,
                     value: []
@@ -412,7 +412,7 @@ describe('AttachFileCloudWidgetComponent', () => {
                 expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', false);
             });
 
-            it('should be able to set root folderId as rootNodeId if fileSource set to content and local', async() => {
+            it('should be able to set root folderId as rootNodeId if fileSource set to content and local', async () => {
                 widget.field = new FormFieldModel(new FormModel(), {
                     type: FormFieldTypes.UPLOAD,
                     value: []
@@ -433,6 +433,21 @@ describe('AttachFileCloudWidgetComponent', () => {
                 expect(widget.rootNodeId).toEqual('-root-');
                 expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', true);
             });
+
+            it('should display tooltip when tooltip is set', async(() => {
+                widget.field = new FormFieldModel(new FormModel(), {
+                    id: 'attach-file-attach',
+                    type: FormFieldTypes.UPLOAD,
+                    value: [],
+                    tooltip: 'attach file widget'
+                });
+
+                fixture.detectChanges();
+                const attachElement: any = element.querySelector('#attach-file-attach');
+                const tooltip = attachElement.getAttribute('ng-reflect-message');
+
+                expect(tooltip).toEqual(widget.field.tooltip);
+            }));
         });
     });
 
@@ -487,7 +502,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     });
 
     describe('when a file is uploaded', () => {
-        beforeEach(async() => {
+        beforeEach(async () => {
             spyOn(
                 contentCloudNodeSelectorService,
                 'openUploadFileDialog'
@@ -585,7 +600,7 @@ describe('AttachFileCloudWidgetComponent', () => {
 
         it('should request form to be updated with metadata when retrieve is clicked', (done) => {
             const updateFormSpy = spyOn(formService.updateFormValuesRequested, 'next');
-            const expectedValues = { pfx_property_one: 'testValue', pfx_property_two: true};
+            const expectedValues = { pfx_property_one: 'testValue', pfx_property_two: true };
 
             const menuButton: HTMLButtonElement = <HTMLButtonElement> (
                 fixture.debugElement.query(By.css('#file-fake-option-menu'))

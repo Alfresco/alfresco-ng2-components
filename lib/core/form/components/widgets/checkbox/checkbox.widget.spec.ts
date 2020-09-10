@@ -26,6 +26,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderService } from 'core/services';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CoreTestingModule } from '../../../../testing';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('CheckboxWidgetComponent', () => {
 
@@ -38,7 +39,8 @@ describe('CheckboxWidgetComponent', () => {
             TranslateModule.forRoot(),
             CoreTestingModule,
             FormBaseModule,
-            MatCheckboxModule
+            MatCheckboxModule,
+            MatTooltipModule
         ],
         providers: [
             { provide: TranslateLoader, useClass: TranslateLoaderService }
@@ -55,7 +57,7 @@ describe('CheckboxWidgetComponent', () => {
     describe('when template is ready', () => {
 
         beforeEach(() => {
-            widget.field = new FormFieldModel(new FormModel({taskId: 'fake-task-id'}), {
+            widget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
                 id: 'check-id',
                 name: 'check-name',
                 value: '',
@@ -91,5 +93,17 @@ describe('CheckboxWidgetComponent', () => {
                 expect(checkbox.getAttribute('aria-checked')).toBe('false');
             });
         }));
-   });
+
+        it('should display tooltip when tooltip is set', async(() => {
+            widget.field.tooltip = 'checkbox widget';
+
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                const checkbox = fixture.debugElement.nativeElement.querySelector('#check-id');
+                const tooltip = checkbox.getAttribute('ng-reflect-message');
+
+                expect(tooltip).toEqual(widget.field.tooltip);
+            });
+        }));
+    });
 });

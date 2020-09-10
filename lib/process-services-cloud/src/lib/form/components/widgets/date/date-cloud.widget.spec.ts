@@ -178,5 +178,22 @@ describe('DateWidgetComponent', () => {
 
             expect(widget.field.isValid).toBeFalsy();
         }));
+
+        it('should display tooltip when tooltip is set', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: 'aa',
+                type: 'date',
+                readOnly: 'false',
+                tooltip: 'date widget'
+            });
+
+            fixture.detectChanges();
+            const dateElement: any = element.querySelector('#date-field-id');
+            const tooltip = dateElement.getAttribute('ng-reflect-message');
+
+            expect(tooltip).toEqual(widget.field.tooltip);
+        }));
     });
 });

@@ -23,6 +23,7 @@ import { DateTimeWidgetComponent } from './date-time.widget';
 import { setupTestBed } from '../../../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('DateTimeWidgetComponent', () => {
 
@@ -33,7 +34,8 @@ describe('DateTimeWidgetComponent', () => {
     setupTestBed({
         imports: [
             TranslateModule.forRoot(),
-            CoreTestingModule
+            CoreTestingModule,
+            MatTooltipModule
         ]
     });
 
@@ -116,12 +118,12 @@ describe('DateTimeWidgetComponent', () => {
             });
             fixture.detectChanges();
             fixture.whenStable()
-            .then(() => {
-                expect(element.querySelector('#date-field-id')).toBeDefined();
-                expect(element.querySelector('#date-field-id')).not.toBeNull();
-                const dateElement: any = element.querySelector('#date-field-id');
-                expect(dateElement.value).toBe('30-11-9999 10:30 AM');
-            });
+                .then(() => {
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    const dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toBe('30-11-9999 10:30 AM');
+                });
         }));
 
         it('should show the correct format type', async(() => {
@@ -163,6 +165,24 @@ describe('DateTimeWidgetComponent', () => {
 
             dateButton = <HTMLButtonElement> element.querySelector('button');
             expect(dateButton.disabled).toBeTruthy();
+        }));
+
+        it('should display tooltip when tooltip is set', async(() => {
+            widget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '12-30-9999 10:30 AM',
+                dateDisplayFormat: 'MM-DD-YYYY HH:mm A',
+                type: 'datetime',
+                readOnly: 'false',
+                tooltip: 'datetime widget'
+            });
+
+            fixture.detectChanges();
+            const dateElement: any = element.querySelector('#date-field-id');
+            const tooltip = dateElement.getAttribute('ng-reflect-message');
+
+            expect(tooltip).toEqual(widget.field.tooltip);
         }));
     });
 });
