@@ -16,21 +16,34 @@
  */
 
 import { Injectable } from '@angular/core';
-import { from, throwError, Observable } from 'rxjs';
+import { from, merge, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { BpmProductVersionModel, EcmProductVersionModel } from '../models/product-version.model';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { map, catchError } from 'rxjs/operators';
-import {
-    SystemPropertiesRepresentation,
-    Activiti
-  } from '@alfresco/js-api';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { Activiti, SystemPropertiesRepresentation } from '@alfresco/js-api';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DiscoveryApiService {
 
-    constructor(private apiService: AlfrescoApiService) { }
+    /**
+     * Gets product information for Content Services.
+     */
+    ecmProductInfo$ = new BehaviorSubject<EcmProductVersionModel>(null);
+
+    constructor(
+        private apiService: AlfrescoApiService,
+        private authenticationService: AuthenticationService) {
+
+        merge(this.apiService.alfrescoApiInitialized, this.authenticationService.onLogin)
+            .pipe(
+                filter(() => this.apiService.getInstance()?.isEcmLoggedIn()),
+                switchMap(() => this.getEcmProductInfo())
+            )
+            .subscribe((info) => this.ecmProductInfo$.next(info));
+    }
 
     /**
      * Gets product information for Content Services.
@@ -63,10 +76,10 @@ export class DiscoveryApiService {
     public getBPMSystemProperties(): Observable<SystemPropertiesRepresentation> {
         return from(this.systemPropertiesApi.getProperties())
             .pipe(
-                map( (res) => {
-                    if ('string' === typeof(res)) {
+                map((res) => {
+                    if ('string' === typeof (res)) {
                         throw new Error('Not valid response');
-                       }
+                    }
                     return res;
                 }),
                 catchError((err) => throwError(err.error))

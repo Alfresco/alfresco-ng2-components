@@ -27,6 +27,8 @@ import {
 } from '../events/file.event';
 import { FileModel, FileUploadProgress, FileUploadStatus } from '../models/file.model';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { DiscoveryApiService } from './discovery-api.service';
+import { filter } from 'rxjs/operators';
 
 const MIN_CANCELLABLE_FILE_SIZE = 1000000;
 const MAX_CANCELLABLE_FILE_PERCENTAGE = 50;
@@ -44,6 +46,7 @@ export class UploadService {
     private matchingOptions: any = null;
     private folderMatchingOptions: any = null;
     private abortedFile: string;
+    private isThumbnailGenerationEnabled: boolean;
 
     activeTask: Promise<any> = null;
     queue: FileModel[] = [];
@@ -73,8 +76,15 @@ export class UploadService {
     >();
     fileDeleted: Subject<string> = new Subject<string>();
 
-    constructor(protected apiService: AlfrescoApiService, private appConfigService: AppConfigService) {
+    constructor(
+        protected apiService: AlfrescoApiService,
+        private appConfigService: AppConfigService,
+        private discoveryApiService: DiscoveryApiService) {
 
+        this.discoveryApiService.ecmProductInfo$.pipe(filter(info => !!info))
+            .subscribe(({ status }) => {
+                this.isThumbnailGenerationEnabled = status.isThumbnailGenerationEnabled;
+            });
     }
 
     /**
@@ -220,9 +230,12 @@ export class UploadService {
      */
     getUploadPromise(file: FileModel): any {
         const opts: any = {
-            renditions: 'doclib',
             include: ['allowableOperations']
         };
+
+        if (this.isThumbnailGenerationEnabled) {
+            opts.renditions = 'doclib';
+        }
 
         if (file.options.newVersion === true) {
             opts.overwrite = true;
