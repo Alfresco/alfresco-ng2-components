@@ -78,6 +78,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`${randomName}`);
+            await searchResults.dataTable.waitTillContentLoaded();
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
@@ -103,6 +104,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`${randomName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
@@ -170,6 +172,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
@@ -217,6 +220,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
         });
@@ -232,6 +236,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');

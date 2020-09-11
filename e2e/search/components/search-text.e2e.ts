@@ -91,6 +91,8 @@ describe('Search component - Text widget', () => {
 
             await searchFiltersPage.checkNameFilterIsDisplayed();
             await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.name);
+            await searchResultPage.dataTable.waitTillContentLoaded();
+
             await searchResultPage.checkContentIsDisplayed(newFolderModel.name);
 
             await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
@@ -103,7 +105,7 @@ describe('Search component - Text widget', () => {
 
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
-            await searchResultPage.tableIsLoaded();
+            await searchResultPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkCheckListFilterIsDisplayed();
             await searchFiltersPage.clickCheckListFilter();
@@ -114,6 +116,8 @@ describe('Search component - Text widget', () => {
             await searchResultPage.checkContentIsNotDisplayed(newFolderModel.name);
 
             await searchFiltersPage.textFiltersPage().searchByName(newFolderModel.description);
+            await searchResultPage.dataTable.waitTillContentLoaded();
+
             await searchResultPage.checkContentIsDisplayed(newFolderModel.name);
         });
     });

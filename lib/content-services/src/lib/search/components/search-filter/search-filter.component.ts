@@ -303,7 +303,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     private getResponseQueryBuckets(responseField: GenericFacetResponse, configGroup: any): FacetFieldBucket[] {
         return (configGroup || []).map((query) => {
             const respBucket = ((responseField && responseField.buckets) || [])
-                .find((bucket) => bucket.label === query.label);
+                .find((bucket) => bucket.label === query.label) || {};
 
             respBucket['count'] = this.getCountValue(respBucket);
             return <FacetFieldBucket> {
@@ -316,8 +316,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     }
 
     private getCountValue(bucket: GenericBucket): number {
-        return (!!bucket && !!bucket.metrics && bucket.metrics[0] && bucket.metrics[0].value && bucket.metrics[0].value.count)
-            || 0;
+        return (!!bucket && !!bucket.metrics && bucket.metrics[0]?.value?.count) || 0;
     }
 
     getBucketCountDisplay(bucket: FacetFieldBucket): string {

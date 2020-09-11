@@ -123,6 +123,7 @@ describe('Search Filters', () => {
         await searchBarPage.clickOnSearchIcon();
 
         await searchBarPage.enterTextAndPressEnter(fileUploaded.entry.name);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
 
@@ -183,8 +184,7 @@ describe('Search Filters', () => {
 
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
-
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.creatorCheckListFiltersPage().searchInFilter('dminis');
         await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListOptionIsDisplayed('Administrator');
@@ -195,6 +195,7 @@ describe('Search Filters', () => {
 
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
@@ -208,8 +209,7 @@ describe('Search Filters', () => {
 
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
-
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
@@ -220,6 +220,7 @@ describe('Search Filters', () => {
         await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.checkFacetIntervalsByCreatedIsDisplayed();
         await searchFiltersPage.checkFacetIntervalsByCreatedIsExpanded();
@@ -240,9 +241,9 @@ describe('Search Filters', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(fileTypeTxt1.entry.name);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
-        await searchResults.tableIsLoaded();
         await searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (1)');
         await searchFiltersPage.checkFileTypeFacetLabelIsNotDisplayed('JPEG Image');
@@ -251,8 +252,9 @@ describe('Search Filters', () => {
         await searchBarPage.clickOnSearchIcon();
 
         await searchBarPage.enterTextAndPressEnter(fileNamePrefix);
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchFiltersPage.checkSearchFiltersIsDisplayed();
-        await searchResults.tableIsLoaded();
         await searchResults.checkContentIsDisplayed(fileTypeTxt1.entry.name);
         await searchResults.checkContentIsDisplayed(fileTypeTxt2.entry.name);
         await searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
@@ -269,8 +271,8 @@ describe('Search Filters', () => {
 
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
+        await searchResults.dataTable.waitTillContentLoaded();
 
-        await searchResults.tableIsLoaded();
         await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
         await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
     });

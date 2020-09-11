@@ -151,6 +151,8 @@ describe('Search Radio Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
@@ -164,6 +166,8 @@ describe('Search Radio Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(10);
@@ -176,6 +180,8 @@ describe('Search Radio Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(9);
@@ -203,6 +209,8 @@ describe('Search Radio Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
@@ -232,6 +240,8 @@ describe('Search Radio Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickTypeFilterHeader();
 
             await expect(await searchFiltersPage.typeFiltersPage().getRadioButtonsNumberOnPage()).toBe(5);
@@ -263,6 +273,7 @@ describe('Search Radio Component', () => {
         });
 
         beforeAll(async () => {
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(acsUser.email, acsUser.password);
         });
 
@@ -279,6 +290,8 @@ describe('Search Radio Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickTypeFilterHeader();
 
             await searchFiltersPage.typeFiltersPage().checkFilterRadioButtonIsDisplayed(filterType.none);

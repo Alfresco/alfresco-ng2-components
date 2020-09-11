@@ -101,12 +101,15 @@ describe('Search component - Search Page', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(notExistentFileName);
+        await searchResultPage.dataTable.waitTillContentLoaded();
+
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C272810] Should display only files corresponding to search', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
         await expect(await searchResultPage.numberOfResultsDisplayed()).toBe(1);
@@ -115,8 +118,11 @@ describe('Search component - Search Page', () => {
     it('[C260267] Should display content when opening a folder from search results', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkNoResultMessageIsNotDisplayed();
+        await searchResultPage.dataTable.waitTillContentLoaded();
+
         await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
         await searchResultPage.navigateToFolder(emptyFolderModel.name);
         const result = await contentServicesPage.currentFolderName();
@@ -126,6 +132,7 @@ describe('Search component - Search Page', () => {
     it('[C260261] Should be able to delete a file from search results', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkContentIsDisplayed(search.active.firstFile);
 
@@ -138,15 +145,20 @@ describe('Search component - Search Page', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search.active.firstFile);
+        await searchResultPage.dataTable.waitTillContentLoaded();
+
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C272809] Should be able to delete a folder from search results', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
         await searchResultPage.checkNoResultMessageIsNotDisplayed();
+        await searchResultPage.dataTable.waitTillContentLoaded();
+
         await searchResultPage.checkContentIsDisplayed(emptyFolderModel.name);
         await searchResultPage.deleteContent(emptyFolderModel.name);
         await searchResultPage.checkNoResultMessageIsDisplayed();
@@ -155,12 +167,15 @@ describe('Search component - Search Page', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(emptyFolderModel.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
+
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
 
     it('[C286675] Should display results when searching for all elements', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkNoResultMessageIsNotDisplayed();
     });

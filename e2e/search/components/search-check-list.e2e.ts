@@ -107,12 +107,14 @@ describe('Search Checklist Component', () => {
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.document);
         await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.folder);
         await searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
         await searchFiltersPage.checkListFiltersPage().clickClearAllButton();
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.folder);
         await searchResults.checkContentIsDisplayed(nodeNames.document);
@@ -121,6 +123,7 @@ describe('Search Checklist Component', () => {
         await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.folder);
         await searchResults.checkContentIsDisplayed(nodeNames.document);
@@ -128,6 +131,7 @@ describe('Search Checklist Component', () => {
         await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.document);
         await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
@@ -154,6 +158,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -193,6 +199,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -207,6 +215,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -246,6 +256,10 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -269,6 +283,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -293,6 +309,7 @@ describe('Search Checklist Component', () => {
         });
 
         beforeAll(async () => {
+            await navigationBarPage.clickLogoutButton();
             await loginPage.login(acsUser.email, acsUser.password);
         });
 
@@ -306,10 +323,13 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
             await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchResults.checkContentIsDisplayed(nodeNames.folder);
             await searchResults.checkContentIsNotDisplayed(nodeNames.document);
@@ -333,6 +353,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
@@ -346,6 +368,7 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchResults.checkContentIsDisplayed(nodeNames.folder);
             await searchResults.checkContentIsDisplayed(nodeNames.document);

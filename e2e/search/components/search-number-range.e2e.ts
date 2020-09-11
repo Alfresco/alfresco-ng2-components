@@ -77,7 +77,8 @@ describe('Search Number Range Filter', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
-   });
+        await searchResults.dataTable.waitTillContentLoaded();
+    });
 
     afterAll(async () => {
         await apiService.getInstance().login(acsUser.email, acsUser.password);
@@ -170,8 +171,9 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
         await searchResults.sortBySize('DESC');
+        await searchResults.dataTable.waitTillContentLoaded();
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
@@ -237,14 +239,14 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
         await searchFilters.checkCheckListFilterIsDisplayed();
         await searchFilters.clickCheckListFilter();
         await searchFilters.checkCheckListFilterIsExpanded();
 
         await searchFilters.checkListFiltersPage().clickCheckListOption('Folder');
 
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
         await searchResults.checkNoResultMessageIsDisplayed();
     });
 
@@ -255,7 +257,8 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchResults.sortBySize('DESC');
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
@@ -327,7 +330,8 @@ describe('Search Number Range Filter', () => {
 
         await sizeRangeFilter.clickApplyButton();
 
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchResults.checkContentIsDisplayed(file2BytesModel.name);
 
         await sizeRangeFilter.checkToFieldIsDisplayed();
@@ -337,7 +341,8 @@ describe('Search Number Range Filter', () => {
 
         await sizeRangeFilter.clickApplyButton();
 
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
 
         await sizeRangeFilter.checkToFieldIsDisplayed();
@@ -347,7 +352,8 @@ describe('Search Number Range Filter', () => {
 
         await sizeRangeFilter.clickApplyButton();
 
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchResults.checkContentIsDisplayed(file2BytesModel.name);
 
         await sizeRangeFilter.checkToFieldIsDisplayed();
@@ -357,7 +363,8 @@ describe('Search Number Range Filter', () => {
 
         await sizeRangeFilter.clickApplyButton();
 
-        await searchResults.tableIsLoaded();
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
     });
 
@@ -378,6 +385,7 @@ describe('Search Number Range Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeRangeFilterIsDisplayed();
             await searchFilters.clickSizeRangeFilterHeader();
@@ -392,7 +400,8 @@ describe('Search Number Range Filter', () => {
             await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
             await sizeRangeFilter.clickApplyButton();
-            await searchResults.tableIsLoaded();
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchResults.sortByCreated('DESC');
 
             const results = await dataTable.geCellElementDetail('Created') as ElementFinder[];
@@ -415,6 +424,7 @@ describe('Search Number Range Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeRangeFilterIsDisplayed();
             await searchFilters.clickSizeRangeFilterHeader();
@@ -427,7 +437,8 @@ describe('Search Number Range Filter', () => {
 
             await sizeRangeFilter.clickApplyButton();
 
-            await searchResults.tableIsLoaded();
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
 
             await sizeRangeFilter.checkToFieldIsDisplayed();
@@ -437,7 +448,8 @@ describe('Search Number Range Filter', () => {
 
             await sizeRangeFilter.clickApplyButton();
 
-            await searchResults.tableIsLoaded();
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchResults.checkContentIsDisplayed(file2BytesModel.name);
         });
 
@@ -451,6 +463,7 @@ describe('Search Number Range Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeRangeFilterIsDisplayed();
             await searchFilters.clickSizeRangeFilterHeader();
@@ -463,7 +476,8 @@ describe('Search Number Range Filter', () => {
 
             await sizeRangeFilter.clickApplyButton();
 
-            await searchResults.tableIsLoaded();
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchResults.checkContentIsDisplayed(file2BytesModel.name);
 
             await sizeRangeFilter.checkToFieldIsDisplayed();
@@ -473,7 +487,8 @@ describe('Search Number Range Filter', () => {
 
             await sizeRangeFilter.clickApplyButton();
 
-            await searchResults.tableIsLoaded();
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchResults.checkContentIsNotDisplayed(file2BytesModel.name);
         });
     });

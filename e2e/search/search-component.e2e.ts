@@ -150,6 +150,8 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.checkNoResultMessageIsNotDisplayed();
         await searchBarPage.enterText(search.inactive.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
+
         await searchBarPage.checkNoResultMessageIsDisplayed();
     });
 
@@ -161,7 +163,8 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
         await expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.shortName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchBarPage.clearText();
@@ -171,7 +174,8 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
         await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
 
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
@@ -184,7 +188,8 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
 
         await expect(await searchBarPage.getSpecificRowsHighlightName(firstFolderModel.name)).toEqual(firstFolderModel.name);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchBarPage.clearText();
@@ -194,7 +199,8 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
         await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toEqual(acsUser.firstName + ' ' + acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
@@ -225,6 +231,7 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.checkSearchBarIsVisible();
         await searchBarPage.enterTextAndPressEnter(search.inactive.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkNoResultMessageIsDisplayed();
     });
@@ -234,6 +241,7 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.checkSearchBarIsVisible();
         await searchBarPage.enterTextAndPressEnter(firstFolderModel.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkContentIsDisplayed(firstFolderModel.name);
     });
@@ -243,6 +251,7 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.checkSearchBarIsVisible();
         await searchBarPage.enterTextAndPressEnter(firstFileModel.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await searchResultPage.checkContentIsDisplayed(firstFileModel.name);
     });
@@ -260,7 +269,7 @@ describe('Search component - Search Bar', () => {
     it('[C290137] Should be able to search by \'%\'', async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('%');
-        await searchResultPage.tableIsLoaded();
+        await searchResultPage.dataTable.waitTillContentLoaded();
     });
 
     describe('Highlight', () => {
