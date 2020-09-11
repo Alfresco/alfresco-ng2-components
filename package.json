@@ -166,7 +166,7 @@
     "rimraf": "^3.0.2",
     "rxjs-tslint-rules": "^4.10.0",
     "sass-loader": "10.0.2",
-    "scss-bundle": "2.3.2",
+    "scss-bundle": "3.1.2",
     "selenium-webdriver": "4.0.0-alpha.7",
     "stylelint": "^13.6.1",
     "ts-node": "^9.0.0",
