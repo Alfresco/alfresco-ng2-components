@@ -26,9 +26,13 @@ import { ComponentRegisterService } from './component-register.service';
 import { RuleService } from './rule.service';
 import { ExtensionElement } from '../config/extension-element';
 
-const EXTENSION_JSONS = new InjectionToken<ExtensionRef[][]>('extension-jsons', {
+export function extensionJsonsFactory() {
+    return [];
+}
+
+export const EXTENSION_JSONS = new InjectionToken<ExtensionRef[][]>('extension-jsons', {
     providedIn: 'root',
-    factory: () => []
+    factory: extensionJsonsFactory
 });
 
 export function provideExtensionConfig(jsons: ExtensionRef[]) {
