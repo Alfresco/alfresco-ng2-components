@@ -78,7 +78,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`${randomName}`);
-            await searchResults.dataTable.waitTillContentLoaded();
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
