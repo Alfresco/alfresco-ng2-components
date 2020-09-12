@@ -88,6 +88,7 @@ describe('Social component', () => {
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
+        await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(emptyFile.entry.email);
     });
 

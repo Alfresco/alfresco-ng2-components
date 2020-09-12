@@ -99,6 +99,7 @@ export class ContentNodeSelectorDialogPage {
     async typeIntoNodeSelectorSearchField(text): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
         await BrowserActions.clearSendKeys(this.searchInputElement, text);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async clickContentNodeSelectorResult(name: string): Promise<void> {

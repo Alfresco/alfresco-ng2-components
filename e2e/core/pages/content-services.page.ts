@@ -285,7 +285,7 @@ export class ContentServicesPage {
     }
 
     async waitForTableBody(): Promise<void> {
-        await this.contentList.waitForTableBody();
+        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async goToDocumentList(): Promise<void> {

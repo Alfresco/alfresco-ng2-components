@@ -204,6 +204,7 @@ describe('Share file', () => {
             const sharedLink = await shareDialog.getShareLink();
             await shareDialog.clickCloseButton();
             await navigationBarPage.clickLogoutButton();
+
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });

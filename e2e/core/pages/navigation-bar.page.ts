@@ -35,6 +35,7 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
+    logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
 
     async clickNavigationBarItem(title: string): Promise<void> {
         const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
@@ -175,6 +176,7 @@ export class NavigationBarPage {
         Logger.log('Logout');
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
+        await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
     }
 
     async clickThemeButton(): Promise<void> {

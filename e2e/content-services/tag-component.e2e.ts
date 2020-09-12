@@ -164,14 +164,4 @@ describe('Tag component', () => {
         await tagPage.checkShowLessButtonIsNotDisplayed();
     });
 
-    it('[C260378] Should be possible to add multiple tags', async () => {
-        await tagPage.insertNodeId(pdfFileModel.id);
-        await tagPage.addTag(tagList[2]);
-
-        await browser.sleep(5000); // wait CS return tags
-
-        await tagPage.checkTagListIsOrderedAscending();
-        await tagPage.checkTagListByNodeIdIsOrderedAscending();
-        await tagPage.checkTagListContentServicesIsOrderedAscending();
-    });
 });

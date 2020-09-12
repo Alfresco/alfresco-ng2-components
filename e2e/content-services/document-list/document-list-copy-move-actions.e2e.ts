@@ -97,7 +97,7 @@ describe('Document List Component', () => {
                 }
             });
 
-        await browser.driver.sleep(12000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
     });
 
     afterAll(async () => {
@@ -119,6 +119,7 @@ describe('Document List Component', () => {
         beforeEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
             await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         });
 
         it('[C260128] Move - Same name file', async () => {
