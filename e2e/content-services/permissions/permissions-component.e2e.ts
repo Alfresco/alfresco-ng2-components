@@ -243,7 +243,7 @@ describe('Permissions Component', () => {
         });
     });
 
-    fdescribe('Changing and duplicate Permissions', () => {
+    describe('Changing and duplicate Permissions', () => {
 
         beforeEach(async () => {
             await apiService.getInstance().login(fileOwnerUser.email, fileOwnerUser.password);

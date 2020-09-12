@@ -20,7 +20,7 @@ if [ "${TRAVIS_EVENT_TYPE}" == "pull_request" ];then
 fi;
 
 ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist -m 2 || exit 1)
+RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist -m 2 -b || exit 1)
 
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "content-services" || "${TRAVIS_EVENT_TYPE}" == "push"  ]];
 then

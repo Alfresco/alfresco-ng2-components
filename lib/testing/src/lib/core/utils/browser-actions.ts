@@ -27,7 +27,7 @@ export class BrowserActions {
     static async click(elementFinder: ElementFinder): Promise<void> {
         try {
             Logger.info(`Click element: ${elementFinder.locator().toString()}`);
-            await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+            await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
             await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
             await elementFinder.click();
         } catch (clickErr) {
@@ -46,7 +46,7 @@ export class BrowserActions {
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
         Logger.info(`Click execute script ${elementCssSelector}`);
 
-        await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
@@ -72,7 +72,7 @@ export class BrowserActions {
     static async getText(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
-        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
 
         if (present) {
             let text = await elementFinder.getText();
@@ -99,7 +99,7 @@ export class BrowserActions {
     static async getInputValue(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Input value ${elementFinder.locator().toString()}`);
 
-        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
             return elementFinder.getAttribute('value');
         } else {

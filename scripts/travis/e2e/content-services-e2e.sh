@@ -22,7 +22,7 @@ fi;
 ./node_modules/@alfresco/adf-cli/bin/adf-cli check-cs-env --host "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" || exit 1
 
 #-b is needed to run the Folder upload test that are not workin in Headless chrome
-RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist -b -m 4 || exit 1)
+RUN_E2E=$(echo ./scripts/test-e2e-lib.sh -host http://localhost:4200 -proxy "$E2E_HOST" -u "$E2E_USERNAME" -p "$E2E_PASSWORD" --use-dist -b -m 2 || exit 1)
 if [[  $AFFECTED_LIBS =~ "testing" || $AFFECTED_LIBS =~ "$CONTEXT_ENV" ||  "${TRAVIS_EVENT_TYPE}" == "push" ]]; then
     echo "Run all e2e $CONTEXT_ENV"
     $RUN_CHECK
