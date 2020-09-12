@@ -63,7 +63,7 @@ describe('Search Slider Filter', () => {
         await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
-        await browser.sleep(15000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         await loginPage.login(acsUser.email, acsUser.password);
 

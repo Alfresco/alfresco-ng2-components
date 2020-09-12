@@ -76,7 +76,7 @@ describe('Search Checklist Component', () => {
             nodeType: 'cm:content'
         });
 
-        await browser.sleep(15000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         await loginPage.login(acsUser.email, acsUser.password);
     });

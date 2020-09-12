@@ -71,7 +71,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFileSite = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.sleep(15000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
             await loginPage.login(acsUser.email, acsUser.password);
 
@@ -165,7 +165,7 @@ describe('Search Component - Multi-Select Facet', () => {
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.sleep(15000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
             await loginPage.login(userUploadingImg.email, userUploadingImg.password);
 
@@ -213,7 +213,7 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.sleep(15000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
             await loginPage.login(acsUser.email, acsUser.password);
 

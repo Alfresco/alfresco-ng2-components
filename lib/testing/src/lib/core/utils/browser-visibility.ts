@@ -101,7 +101,9 @@ export class BrowserVisibility {
         return browser.wait(protractor.ExpectedConditions.stalenessOf(elementToCheck), waitTimeout, 'Element is present ' + elementToCheck.locator());
     }
 
-    static async waitUntilDialogIsClose(): Promise<any> {
+    static async waitUntilDialogIsClose(): Promise<void> {
+        Logger.info(`Wait Until dialog close`);
+
         const dialog = element(by.css('mat-dialog-container'));
         await this.waitUntilElementIsNotPresent(dialog);
     }

@@ -78,6 +78,8 @@ export class BrowserActions {
             let text = await elementFinder.getText();
 
             if (text === '') { // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
+                Logger.info(`Use backup get text script`);
+
                 text = await this.getTextScript(elementFinder);
                 return text?.trim();
             }

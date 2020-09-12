@@ -108,10 +108,10 @@ describe('Search component - Search Bar', () => {
         filesToDelete.push(await uploadActions.createFolder(secondFolder.name, '-my-'));
         filesToDelete.push(await uploadActions.createFolder(thirdFolder.name, '-my-'));
 
-        await browser.sleep(15000); // wait search index previous file/folder uploaded
+        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
 
         await loginPage.login(acsUser.email, acsUser.password);
-   });
+    });
 
     afterAll(async () => {
         for (const currentNode of filesToDelete) {
@@ -123,7 +123,7 @@ describe('Search component - Search Bar', () => {
 
     afterEach(async () => {
         await BrowserActions.getUrl(browser.baseUrl);
-   });
+    });
 
     it('[C272798] Search bar should be visible', async () => {
         await searchBarPage.checkSearchBarIsNotVisible();
@@ -168,15 +168,13 @@ describe('Search component - Search Bar', () => {
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFolderModel.name)).toEqual(firstFolderModel.name);
 
         await searchBarPage.clearText();
-
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterText(firstFileModel.shortName);
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
         await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.shortName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
-
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.firstName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.lastName);
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
@@ -199,8 +197,8 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
         await expect(await searchBarPage.getSpecificRowsHighlightName(firstFileModel.name)).toEqual(firstFileModel.name);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.firstName);
-        await expect(await searchBarPage.getSpecificRowsAuthor(firstFolderModel.name)).toContain(acsUser.lastName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.firstName);
+        await expect(await searchBarPage.getSpecificRowsAuthor(firstFileModel.name)).toContain(acsUser.lastName);
         await expect(await searchBarPage.getSpecificRowsCompleteName(firstFileModel.name)).toEqual(firstFileModel.name);
     });
 
@@ -211,6 +209,7 @@ describe('Search component - Search Bar', () => {
 
         await searchBarPage.resultTableContainsRow(firstFolderModel.name);
         await searchBarPage.clickOnSpecificRow(firstFolderModel.name);
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await expect(await contentServicesPage.currentFolderName()).toEqual(firstFolderModel.name);
 
@@ -221,6 +220,7 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.resultTableContainsRow(firstFileModel.name);
 
         await searchBarPage.clickOnSpecificRow(firstFileModel.name);
+
         await expect(await viewerPage.getDisplayedFileName()).toEqual(firstFileModel.name);
 
         await viewerPage.clickCloseButton();
@@ -262,6 +262,7 @@ describe('Search component - Search Bar', () => {
         await searchBarPage.checkSearchBarIsVisible();
         await searchBarPage.enterText(secondFolder.shortName);
         await searchBarPage.pressDownArrowAndEnter();
+        await searchResultPage.dataTable.waitTillContentLoaded();
 
         await expect(await contentServicesPage.currentFolderName()).toEqual(secondFolder.name);
     });
@@ -284,6 +285,8 @@ describe('Search component - Search Bar', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(term);
+            await searchResultPage.dataTable.waitTillContentLoaded();
+
         });
 
         it('[C299212] Should be able to configure the highlight option for search results', async () => {

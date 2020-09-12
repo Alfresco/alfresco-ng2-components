@@ -102,7 +102,7 @@ describe('Search Filters', () => {
 
         await loginPage.login(acsUser.email, acsUser.password);
 
-        await browser.sleep(15000); // wait search index previous file/folder uploaded
+        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
 
         jsonFile = SearchConfiguration.getConfiguration();
     });
