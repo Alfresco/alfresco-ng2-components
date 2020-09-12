@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
@@ -172,6 +172,7 @@ export class NavigationBarPage {
     }
 
     async clickLogoutButton(): Promise<void> {
+        Logger.log('Logout');
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
     }

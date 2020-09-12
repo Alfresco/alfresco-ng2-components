@@ -107,9 +107,9 @@ module.exports = {
     },
 
     timeouts: {
-        visible_timeout: 20000,
-        no_visible_timeout: 20000,
-        index_search: 20000
+        visible_timeout: 10000,
+        no_visible_timeout: 10000,
+        index_search: 15000
     }
 
 };

@@ -57,6 +57,7 @@ export class AddPermissionsDialogPage {
 
     async searchUserOrGroup(name: string): Promise<void> {
         await BrowserActions.clearSendKeys(this.searchUserInput, name);
+        await this.dataTableComponentPage.waitTillContentLoaded();
     }
 
     async checkResultListIsDisplayed(): Promise<void> {
@@ -65,7 +66,7 @@ export class AddPermissionsDialogPage {
 
     async clickUserOrGroup(name: string): Promise<void> {
         const userOrGroupName = element(by.cssContainingText('mat-list-option .mat-list-text', name));
-        await BrowserActions.clickScript(userOrGroupName);
+        await BrowserActions.click(userOrGroupName);
         await BrowserActions.click(this.addButton);
     }
 
@@ -95,8 +96,8 @@ export class AddPermissionsDialogPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.noPermissions);
     }
 
-    async getPermissionInheritedButtonText(): Promise<string> {
-        return BrowserActions.getText(this.permissionInheritedButton);
+    async getPermissionInheritedButtonText(text: string): Promise<void> {
+        BrowserVisibility.waitUntilElementHasText(this.permissionInheritedButton, text);
     }
 
     async checkPermissionsDatatableIsDisplayed(): Promise<void> {

@@ -91,7 +91,8 @@ export class BrowserActions {
         }
     }
 
-    static async getTextScript(elementFinder: ElementFinder): Promise<string> {
+    // Don't make it pub,ic use getText
+    private static async getTextScript(elementFinder: ElementFinder): Promise<string> {
         return browser.executeScript(`return arguments[0].textContent`, elementFinder);
     }
 
