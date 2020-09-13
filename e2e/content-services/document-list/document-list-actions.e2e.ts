@@ -15,24 +15,19 @@
  * limitations under the License.
  */
 
-import { browser, by, element } from 'protractor';
+import { browser} from 'protractor';
 import {
     ApiService,
-    BreadcrumbPage,
-    BreadcrumbDropdownPage,
     ContentNodeSelectorDialogPage,
     LoginPage,
-    PaginationPage,
     StringUtil,
     UploadActions,
-    UserModel,
     UsersActions,
     ViewerPage
 } from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
 import { FileModel } from '../../models/ACS/file.model';
-import { InfinitePaginationPage } from '../../core/pages/infinite-pagination.page';
 import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Document List Component - Actions', () => {
@@ -40,17 +35,12 @@ describe('Document List Component - Actions', () => {
     const loginPage = new LoginPage();
     const contentServicesPage = new ContentServicesPage();
     const navigationBarPage = new NavigationBarPage();
-    const contentListPage = contentServicesPage.getDocumentList();
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
-    const paginationPage = new PaginationPage();
-    const breadCrumbDropdownPage = new BreadcrumbDropdownPage();
-    const breadCrumbPage = new BreadcrumbPage();
     const viewerPage = new ViewerPage();
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
 
     const uploadActions = new UploadActions(apiService);
-    const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
     describe('Document List Component - Check Actions', () => {
         let uploadedFolder, secondUploadedFolder;
@@ -98,6 +88,7 @@ describe('Document List Component - Actions', () => {
 
         beforeEach(async () => {
             await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         });
 
         describe('File Actions', () => {
@@ -256,140 +247,4 @@ describe('Document List Component - Actions', () => {
         });
     });
 
-    describe('Folder Actions - Copy and Move', () => {
-        const folderModel1 = new FolderModel({ name: StringUtil.generateRandomString() });
-        const folderModel2 = new FolderModel({ name: StringUtil.generateRandomString() });
-        const folderModel3 = new FolderModel({ name: StringUtil.generateRandomString() });
-        const folderModel4 = new FolderModel({ name: StringUtil.generateRandomString() });
-        const folderModel5 = new FolderModel({ name: StringUtil.generateRandomString() });
-        const folderModel6 = new FolderModel({ name: StringUtil.generateRandomString() });
-
-        let folder1, folder2, folder3, folder4, folder5, folder6;
-
-        let folders;
-        const contentServicesUser = new UserModel();
-
-        beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await usersActions.createUser(contentServicesUser);
-            await apiService.getInstance().login(contentServicesUser.email, contentServicesUser.password);
-            folder1 = await uploadActions.createFolder('A' + folderModel1.name, '-my-');
-            folder2 = await uploadActions.createFolder('B' + folderModel2.name, '-my-');
-            folder3 = await uploadActions.createFolder('C' + folderModel3.name, '-my-');
-            folder4 = await uploadActions.createFolder('D' + folderModel4.name, '-my-');
-            folder5 = await uploadActions.createFolder('E' + folderModel5.name, '-my-');
-            folder6 = await uploadActions.createFolder('F' + folderModel6.name, '-my-');
-            folders = [folder1, folder2, folder3, folder4, folder5, folder6];
-        });
-
-        beforeEach(async () => {
-            await loginPage.login(contentServicesUser.email, contentServicesUser.password);
-            await contentServicesPage.goToDocumentList();
-            await contentServicesPage.waitForTableBody();
-            await paginationPage.selectItemsPerPage('5');
-            await contentServicesPage.checkAcsContainer();
-            await contentListPage.waitForTableBody();
-        });
-
-        afterAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            for (const folder of folders) {
-                await uploadActions.deleteFileOrFolder(folder.entry.id);
-            }
-        });
-
-        it('[C260132] Move action on folder with - Load more', async () => {
-            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
-
-            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
-            await contentServicesPage.checkContextActionIsVisible('Move');
-            await contentServicesPage.pressContextMenuActionNamed('Move');
-            await contentNodeSelector.checkDialogIsDisplayed();
-
-            await expect(await contentNodeSelector.getDialogHeaderText()).toBe('Move \'' + 'A' + folderModel1.name + '\' to...');
-            await contentNodeSelector.checkSearchInputIsDisplayed();
-            await expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
-            await contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
-            await contentNodeSelector.checkCancelButtonIsDisplayed();
-            await contentNodeSelector.checkMoveCopyButtonIsDisplayed();
-
-            await expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('MOVE');
-            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
-            await infinitePaginationPage.clickLoadMoreButton();
-
-            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
-            await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
-            await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
-            await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
-            await contentNodeSelector.clickCancelButton();
-            await contentNodeSelector.checkDialogIsNotDisplayed();
-            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-
-            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
-            await contentServicesPage.checkContextActionIsVisible('Move');
-            await contentServicesPage.pressContextMenuActionNamed('Move');
-            await contentNodeSelector.checkDialogIsDisplayed();
-            await infinitePaginationPage.clickLoadMoreButton();
-            await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
-            await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
-            await contentNodeSelector.clickMoveCopyButton();
-            await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
-            await contentServicesPage.doubleClickRow('F' + folderModel6.name);
-            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-
-            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
-            await contentServicesPage.checkContextActionIsVisible('Move');
-            await contentServicesPage.pressContextMenuActionNamed('Move');
-            await contentNodeSelector.checkDialogIsDisplayed();
-            await breadCrumbDropdownPage.clickParentFolder();
-            await breadCrumbDropdownPage.checkBreadCrumbDropdownIsDisplayed();
-            await breadCrumbDropdownPage.choosePath(contentServicesUser.email);
-            await contentNodeSelector.clickMoveCopyButton();
-            await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
-
-            await breadCrumbPage.chooseBreadCrumb(contentServicesUser.email);
-            await contentServicesPage.waitForTableBody();
-            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-        });
-
-        it('[C305051] Copy action on folder with - Load more', async () => {
-            await expect(await paginationPage.getCurrentItemsPerPage()).toEqual('5');
-            await expect(await paginationPage.getPaginationRange()).toEqual('Showing 1-' + 5 + ' of ' + 6);
-            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
-            await contentServicesPage.checkContextActionIsVisible('Copy');
-            await contentServicesPage.pressContextMenuActionNamed('Copy');
-            await contentNodeSelector.checkDialogIsDisplayed();
-            await expect(await contentNodeSelector.getDialogHeaderText()).toBe('Copy \'' + 'A' + folderModel1.name + '\' to...');
-            await contentNodeSelector.checkSearchInputIsDisplayed();
-            await expect(await contentNodeSelector.getSearchLabel()).toBe('Search');
-            await contentNodeSelector.checkSelectedSiteIsDisplayed('My files');
-            await contentNodeSelector.checkCancelButtonIsDisplayed();
-            await contentNodeSelector.checkMoveCopyButtonIsDisplayed();
-            await expect(await contentNodeSelector.getMoveCopyButtonText()).toBe('COPY');
-            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(5);
-            await infinitePaginationPage.clickLoadMoreButton();
-            await expect(await contentNodeSelector.numberOfResultsDisplayed()).toBe(6);
-            await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
-            await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
-            await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
-            await contentNodeSelector.clickCancelButton();
-            await contentNodeSelector.checkDialogIsNotDisplayed();
-            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-
-            await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
-            await contentServicesPage.checkContextActionIsVisible('Copy');
-            await contentServicesPage.pressContextMenuActionNamed('Copy');
-            await contentNodeSelector.checkDialogIsDisplayed();
-            await infinitePaginationPage.clickLoadMoreButton();
-            await contentNodeSelector.contentListPage().dataTablePage().selectRowByContent('F' + folderModel6.name);
-            await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
-            await contentNodeSelector.clickMoveCopyButton();
-            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-            await paginationPage.clickOnNextPage();
-            await contentServicesPage.getDocumentList().waitForTableBody();
-            await contentServicesPage.doubleClickRow('F' + folderModel6.name);
-            await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
-        });
-    });
 });
