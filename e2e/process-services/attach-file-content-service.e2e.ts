@@ -96,6 +96,8 @@ describe('Attach File - Content service', () => {
         await apiService.getInstance().login(user.email, user.password);
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
+
+        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
     });
 
     afterAll(async () => {
@@ -127,6 +129,7 @@ describe('Attach File - Content service', () => {
         await contentNodeSelector.contentList.dataTablePage().waitTillContentLoaded();
 
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
+
         await contentNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
     });

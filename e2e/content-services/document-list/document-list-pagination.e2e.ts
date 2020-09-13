@@ -105,7 +105,6 @@ describe('Document List - Pagination', () => {
 
     beforeEach(async () => {
         await contentServicesPage.goToDocumentList();
-        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
     });
 
     it('[C260062] Should use default pagination settings', async () => {
@@ -136,7 +135,6 @@ describe('Document List - Pagination', () => {
         await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
-        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.twenty);
 
         await navigationBarPage.clickLogoutButton();
