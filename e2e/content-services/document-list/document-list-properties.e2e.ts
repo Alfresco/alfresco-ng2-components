@@ -61,7 +61,7 @@ describe('Document List Component - Properties', () => {
 
         it('[C299154] Should disallow upload content on a folder row if allowDropFiles is false', async () => {
             await navigationBar.clickContentServicesButton();
-            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            await contentServicesPage.openFolder(parentFolder.entry.name);
 
             await contentServicesPage.disableDropFilesInAFolder();
 
@@ -69,13 +69,13 @@ describe('Document List Component - Properties', () => {
 
             await DropActions.dropFile(dragAndDropArea, pngFile.location);
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
-            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.openFolder(subFolder.entry.name);
             await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         });
 
         it('[C91319] Should allow upload content on a folder row if allowDropFiles is true', async () => {
             await navigationBar.clickContentServicesButton();
-            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            await contentServicesPage.openFolder(parentFolder.entry.name);
 
             await contentServicesPage.enableDropFilesInAFolder();
 
@@ -84,7 +84,7 @@ describe('Document List Component - Properties', () => {
             await DropActions.dropFile(dragAndDropArea, pngFile.location);
 
             await contentServicesPage.checkContentIsNotDisplayed(pngFile.name);
-            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.openFolder(subFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(pngFile.name);
         });
     });

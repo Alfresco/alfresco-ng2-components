@@ -176,7 +176,11 @@ export class NavigationBarPage {
         Logger.log('Logout');
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
-        await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+        } catch (error) {
+        }
     }
 
     async clickThemeButton(): Promise<void> {

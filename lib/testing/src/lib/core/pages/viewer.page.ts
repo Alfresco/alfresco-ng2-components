@@ -20,6 +20,7 @@ import { TabsPage } from './material/tabs.page';
 import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, browser, protractor } from 'protractor';
+import { Logger } from '../../../..';
 
 export class ViewerPage {
 
@@ -110,6 +111,22 @@ export class ViewerPage {
         const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         await BrowserActions.click(fileView);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await this.waitTillContentLoaded();
+    }
+
+    async waitTillContentLoaded(): Promise<void> {
+        await browser.sleep(500);
+
+        try {
+            if (element(by.tagName('mat-spinner')).isPresent()) {
+                Logger.log('wait datatable loading spinner disappear');
+                await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+            } else {
+                Logger.log('wait datatable loading spinner is present');
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
+            }
+        } catch (error) {
+        }
     }
 
     async clearPageNumber(): Promise<void> {

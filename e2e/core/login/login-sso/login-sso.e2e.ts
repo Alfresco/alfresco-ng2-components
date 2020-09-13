@@ -38,7 +38,12 @@ describe('Login component - SSO', () => {
         it('[C261050] Should be possible login with SSO', async () => {
             await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, false, true, browser.params.testConfig.appConfig.oauth2.clientId);
+                browser.params.testConfig.appConfig.identityHost,
+                false,
+                true,
+                browser.params.testConfig.appConfig.oauth2.clientId,
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
+
             await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         });
 
@@ -49,18 +54,22 @@ describe('Login component - SSO', () => {
                 browser.params.testConfig.appConfig.identityHost,
                 true,
                 true,
-                browser.params.testConfig.appConfig.oauth2.clientId
-            );
+                browser.params.testConfig.appConfig.oauth2.clientId,
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
 
             await loginSSOPage.loginSSOIdentityService(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         });
-   });
+    });
 
     describe('Login component - SSO Grant type password (implicit flow false)', () => {
         it('[C299158] Should be possible to login with SSO, with  grant type password (Implicit Flow false)', async () => {
             await settingsPage.setProviderEcmSso(browser.params.testConfig.appConfig.ecmHost,
                 browser.params.testConfig.appConfig.oauth2.host,
-                browser.params.testConfig.appConfig.identityHost, false, false, browser.params.testConfig.appConfig.oauth2.clientId);
+                browser.params.testConfig.appConfig.identityHost,
+                false,
+                false,
+                browser.params.testConfig.appConfig.oauth2.clientId,
+                browser.params.testConfig.appConfig.oauth2.redirectUriLogout);
 
             await loginPage.waitForElements();
 

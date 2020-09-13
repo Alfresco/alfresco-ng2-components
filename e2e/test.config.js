@@ -110,7 +110,7 @@ module.exports = {
     timeouts: {
         visible_timeout: 10000,
         no_visible_timeout: 10000,
-        index_search: 15000
+        index_search: 20000
     }
 
 };

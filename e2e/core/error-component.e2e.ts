@@ -18,6 +18,7 @@
 import { ApiService, BrowserActions, ErrorPage, LoginPage, UserModel, UsersActions } from '@alfresco/adf-testing';
 import { browser } from 'protractor';
 import { NavigationBarPage } from '../core/pages/navigation-bar.page';
+import { ContentServicesPage } from './pages/content-services.page';
 
 describe('Error Component', () => {
 
@@ -28,12 +29,15 @@ describe('Error Component', () => {
 
     const apiService = new ApiService();
     const usersActions = new UsersActions(apiService);
+    const contentServicesPage = new ContentServicesPage();
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);
-   });
+        await contentServicesPage.goToDocumentList();
+        await contentServicesPage.checkAcsContainer();
+    });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();

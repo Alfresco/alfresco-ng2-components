@@ -90,7 +90,7 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C260484] Should be possible to enable infinite scrolling', async () => {
-        await contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.openFolder(folderModel.name);
         await contentServicesPage.enableInfiniteScrolling();
         await infinitePaginationPage.clickLoadMoreButton();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
@@ -122,7 +122,7 @@ describe('Enable infinite scrolling', () => {
     it('[C299201] Should use default pagination settings for infinite pagination', async () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.openFolder(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoadedInfinitePagination();
@@ -141,7 +141,7 @@ describe('Enable infinite scrolling', () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
 
-        await contentServicesPage.doubleClickRow(folderModel.name);
+        await contentServicesPage.openFolder(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(nrOfFiles);
@@ -153,7 +153,7 @@ describe('Enable infinite scrolling', () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.checkAcsContainer();
 
-        await contentServicesPage.doubleClickRow(emptyFolderModel.entry.name);
+        await contentServicesPage.openFolder(emptyFolderModel.entry.name);
 
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();
     });

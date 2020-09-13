@@ -143,11 +143,11 @@ describe('Document List Component', () => {
             await contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed(sourceFolder.entry.name);
-            await contentServicesPage.doubleClickRow(destinationFolder.entry.name);
+            await contentServicesPage.openFolder(destinationFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
-            await contentServicesPage.doubleClickRow(sourceFolder.entry.name);
+            await contentServicesPage.openFolder(sourceFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.openFolder(subFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
         });
 

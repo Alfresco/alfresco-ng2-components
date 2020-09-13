@@ -353,10 +353,9 @@ export class ContentServicesPage {
         return this.checkListIsSortedByCreatedColumn(sortOrder);
     }
 
-    async doubleClickRow(nodeName): Promise<void> {
-        Logger.log(`Open Folder ${nodeName}`);
+    async doubleClickRow(nodeName: string): Promise<void> {
+        Logger.log(`Open Folder/File ${nodeName}`);
         await this.contentList.doubleClickRow(nodeName);
-        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async selectRow(nodeName): Promise<void> {
@@ -406,6 +405,7 @@ export class ContentServicesPage {
 
     async openFolder(folderName: string): Promise<void> {
         await this.doubleClickRow(folderName);
+        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async checkContentIsDisplayed(content): Promise<void> {

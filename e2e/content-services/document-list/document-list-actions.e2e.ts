@@ -101,7 +101,7 @@ describe('Document List Component - Actions', () => {
                 await contentNodeSelector.clickContentNodeSelectorResult(folderName);
                 await contentNodeSelector.clickMoveCopyButton();
                 await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
-                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.openFolder(uploadedFolder.entry.name);
                 await contentServicesPage.checkContentIsDisplayed(pdfFileModel.name);
             });
 
@@ -126,7 +126,7 @@ describe('Document List Component - Actions', () => {
                 await contentNodeSelector.clickContentNodeSelectorResult(folderName);
                 await contentNodeSelector.clickMoveCopyButton();
                 await contentServicesPage.checkContentIsNotDisplayed(testFileModel.name);
-                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.openFolder(uploadedFolder.entry.name);
                 await contentServicesPage.checkContentIsDisplayed(testFileModel.name);
             });
 
@@ -142,7 +142,7 @@ describe('Document List Component - Actions', () => {
             });
 
             it('[C280561] Should be able to delete a file via dropdown menu', async () => {
-                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.openFolder(uploadedFolder.entry.name);
 
                 await contentServicesPage.checkContentIsDisplayed(fileNames[0]);
                 await contentServicesPage.deleteContent(fileNames[0]);
@@ -150,7 +150,7 @@ describe('Document List Component - Actions', () => {
             });
 
             it('[C280562] Only one file is deleted when multiple files are selected using dropdown menu', async () => {
-                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.openFolder(uploadedFolder.entry.name);
 
                 await contentServicesPage.getDocumentList().selectRow(fileNames[1]);
                 await contentServicesPage.getDocumentList().selectRow(fileNames[2]);
@@ -160,7 +160,7 @@ describe('Document List Component - Actions', () => {
             });
 
             it('[C280565] Should be able to delete a file using context menu', async () => {
-                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.openFolder(uploadedFolder.entry.name);
                 await contentServicesPage.checkContentIsDisplayed(fileNames[2]);
                 await contentServicesPage.getDocumentList().rightClickOnRow(fileNames[2]);
                 await contentServicesPage.pressContextMenuActionNamed('Delete');
@@ -168,7 +168,7 @@ describe('Document List Component - Actions', () => {
             });
 
             it('[C280567] Only one file is deleted when multiple files are selected using context menu', async () => {
-                await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+                await contentServicesPage.openFolder(uploadedFolder.entry.name);
 
                 await contentServicesPage.getDocumentList().selectRow(fileNames[3]);
                 await contentServicesPage.getDocumentList().selectRow(fileNames[4]);
@@ -207,7 +207,7 @@ describe('Document List Component - Actions', () => {
                 await contentNodeSelector.clickContentNodeSelectorResult(secondUploadedFolder.entry.name);
                 await contentNodeSelector.clickMoveCopyButton();
                 await contentServicesPage.checkContentIsDisplayed(folderName);
-                await contentServicesPage.doubleClickRow(secondUploadedFolder.entry.name);
+                await contentServicesPage.openFolder(secondUploadedFolder.entry.name);
                 await contentServicesPage.checkContentIsDisplayed(folderName);
             });
 

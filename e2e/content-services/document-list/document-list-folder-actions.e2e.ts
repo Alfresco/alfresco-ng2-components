@@ -126,7 +126,7 @@ describe('Document List Component - Actions', () => {
             await contentNodeSelector.contentListPage().dataTablePage().checkRowByContentIsSelected('F' + folderModel6.name);
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed('A' + folderModel1.name);
-            await contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            await contentServicesPage.openFolder('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
 
             await contentServicesPage.getDocumentList().rightClickOnRow('A' + folderModel1.name);
@@ -179,7 +179,7 @@ describe('Document List Component - Actions', () => {
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
             await paginationPage.clickOnNextPage();
             await contentServicesPage.getDocumentList().waitForTableBody();
-            await contentServicesPage.doubleClickRow('F' + folderModel6.name);
+            await contentServicesPage.openFolder('F' + folderModel6.name);
             await contentServicesPage.checkContentIsDisplayed('A' + folderModel1.name);
         });
     });

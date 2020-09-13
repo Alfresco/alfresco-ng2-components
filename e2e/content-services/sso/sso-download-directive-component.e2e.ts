@@ -79,7 +79,7 @@ describe('SSO in ADF using ACS and AIS, Download Directive, Viewer, DocumentList
 
             await navigationBarPage.clickContentServicesButton();
             await contentServicesPage.checkAcsContainer();
-            await contentListPage.doubleClickRow(folderName);
+            await contentServicesPage.openFolder(folderName);
             await contentListPage.waitForTableBody();
         });
 

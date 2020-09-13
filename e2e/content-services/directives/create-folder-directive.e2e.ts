@@ -101,7 +101,7 @@ describe('Create folder directive', () => {
         await contentServicesPage.createNewFolder(folderName);
         await contentServicesPage.checkContentIsDisplayed(folderName);
 
-        await contentServicesPage.doubleClickRow(folderName);
+        await contentServicesPage.openFolder(folderName);
 
         await contentServicesPage.createNewFolder(folderName);
         await contentServicesPage.checkContentIsDisplayed(folderName);

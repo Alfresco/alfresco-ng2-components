@@ -334,7 +334,7 @@ describe('Document List - Pagination', () => {
         await contentServicesPage.goToDocumentList();
         await browser.refresh();
 
-        await contentServicesPage.doubleClickRow(newFolderModel.name);
+        await contentServicesPage.openFolder(newFolderModel.name);
         await contentServicesPage.uploadFile(docxFileModel.location);
         await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);
         await uploadDialog.clickOnCloseButton();

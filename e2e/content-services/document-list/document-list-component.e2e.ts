@@ -222,7 +222,7 @@ describe('Document List Component', () => {
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.createNewFolder(folderName);
-        await contentServicesPage.doubleClickRow(folderName);
+        await contentServicesPage.openFolder(folderName);
         await contentServicesPage.checkEmptyFolderTextToBe('This folder is empty');
         await contentServicesPage.checkEmptyFolderImageUrlToContain('/assets/images/empty_doc_lib.svg');
     });
@@ -241,7 +241,7 @@ describe('Document List Component', () => {
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
         await contentServicesPage.checkContentIsDisplayed(uploadedFolder.entry.name);
-        await contentServicesPage.doubleClickRow(uploadedFolder.entry.name);
+        await contentServicesPage.openFolder(uploadedFolder.entry.name);
         await contentServicesPage.uploadFile(testFile.location);
         await contentServicesPage.checkContentIsDisplayed(testFile.name);
     });

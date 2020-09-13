@@ -55,7 +55,7 @@ export class SearchResultsPage {
     }
 
     async navigateToFolder(content: string): Promise<void> {
-        await this.dataTable.doubleClickRow('Display name', content);
+        await this.contentServices.openFolder(content);
     }
 
     async deleteContent(content: string): Promise<void> {

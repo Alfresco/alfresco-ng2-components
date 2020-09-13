@@ -175,7 +175,7 @@ describe('Restore content directive', () => {
 
     it('[C260240] Should validate restore when the original location no longer exists', async () => {
         await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
-        await contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
+        await contentServicesPage.openFolder(folderWithFolder.entry.name);
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
         await contentServicesPage.deleteContent(subFolder.entry.name);
         await contentServicesPage.checkContentIsNotDisplayed(subFolder.entry.name);
@@ -204,7 +204,7 @@ describe('Restore content directive', () => {
         await navigationBarPage.clickContentServicesButton();
         await contentServicesPage.waitForTableBody();
         await contentServicesPage.checkContentIsDisplayed(folderWithFolder.entry.name);
-        await contentServicesPage.doubleClickRow(folderWithFolder.entry.name);
+        await contentServicesPage.openFolder(folderWithFolder.entry.name);
         await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
     });
 
@@ -266,7 +266,7 @@ describe('Restore content directive', () => {
             await contentServicesPage.selectSite(publicSite.entry.title);
             await contentServicesPage.waitForTableBody();
             await contentServicesPage.checkContentIsDisplayed(siteFolder.entry.name);
-            await contentServicesPage.doubleClickRow(siteFolder.entry.name);
+            await contentServicesPage.openFolder(siteFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(siteFile.entry.name);
             await notificationHistoryPage.checkNotifyContains(publicSite.entry.id + ' item restored');
         });
@@ -318,9 +318,9 @@ describe('Restore content directive', () => {
             await contentServicesPage.checkContentIsDisplayed(parentFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(mainFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(mainFile.entry.name);
-            await contentServicesPage.doubleClickRow(parentFolder.entry.name);
+            await contentServicesPage.openFolder(parentFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(folderWithin.entry.name);
-            await contentServicesPage.doubleClickRow(folderWithin.entry.name);
+            await contentServicesPage.openFolder(folderWithin.entry.name);
             await contentServicesPage.checkContentIsDisplayed(pdfFile.entry.name);
             await contentServicesPage.checkContentIsDisplayed(pngFile.entry.name);
         });

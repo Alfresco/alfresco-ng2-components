@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-import { browser } from 'protractor';
-import { ApiService, LoginPage, UploadActions, UserModel, UsersActions, ViewerPage } from '@alfresco/adf-testing';
+import { browser, by, element, protractor } from 'protractor';
+import {
+    ApiService,
+    BrowserActions,
+    LoginPage,
+    UploadActions,
+    UserModel,
+    UsersActions,
+    ViewerPage
+} from '@alfresco/adf-testing';
 import { ContentServicesPage } from '../../core/pages/content-services.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { NavigationBarPage } from '../../core/pages/navigation-bar.page';
@@ -102,7 +110,7 @@ describe('Content Services Viewer', () => {
         await loginPage.login(acsUser.email, acsUser.password);
 
         await contentServicesPage.goToDocumentList();
-   });
+    });
 
     afterAll(async () => {
         await uploadActions.deleteFileOrFolder(pdfFile.getId());
@@ -113,10 +121,11 @@ describe('Content Services Viewer', () => {
         await uploadActions.deleteFileOrFolder(pptFile.getId());
         await uploadActions.deleteFileOrFolder(unsupportedFile.getId());
         await navigationBarPage.clickLogoutButton();
-   });
+    });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
         await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.goToDocumentList();
 
         await viewerPage.viewFile(pdfFile.name);
         await viewerPage.checkZoomInButtonIsDisplayed();
@@ -369,7 +378,9 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C269109] Should not be able to open thumbnail panel before the pdf is loaded', async () => {
-        await viewerPage.viewFile(pdfFile.name);
+        const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${pdfFile.name}"]`)).first();
+        await BrowserActions.click(fileView);
+        await browser.actions().sendKeys(protractor.Key.ENTER).perform();
 
         await viewerPage.checkThumbnailsBtnIsDisabled();
 

@@ -173,7 +173,7 @@ describe('Unshare file', () => {
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {
             await navBar.goToSite(testSite);
-            await contentListPage.doubleClickRow('documentLibrary');
+            await contentServicesPage.openFolder('documentLibrary');
             await contentListPage.selectRow(nodeBody.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
