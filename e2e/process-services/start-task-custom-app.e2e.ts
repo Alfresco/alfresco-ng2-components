@@ -118,7 +118,7 @@ describe('Start Task - Custom App', () => {
 
         await taskPage.formFields().noFormIsDisplayed();
 
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C263948] Should be possible to cancel a task', async () => {

@@ -143,6 +143,10 @@ export class TaskDetailsPage {
         return BrowserActions.getInputValue(this.formNameField);
     }
 
+    async waitFormNameEqual(formName: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasValue(this.formNameField, formName);
+    }
+
     async clickForm(): Promise<void> {
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(this.formNameButton);
