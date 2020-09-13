@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser} from 'protractor';
+import { browser } from 'protractor';
 import {
     ApiService,
     ContentNodeSelectorDialogPage,

@@ -47,7 +47,6 @@ describe('Document List Component - Actions', () => {
     const uploadActions = new UploadActions(apiService);
     const infinitePaginationPage = new InfinitePaginationPage(element(by.css('adf-content-node-selector')));
 
-
     describe('Folder Actions - Copy and Move', () => {
         const folderModel1 = new FolderModel({ name: StringUtil.generateRandomString() });
         const folderModel2 = new FolderModel({ name: StringUtil.generateRandomString() });
