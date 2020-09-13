@@ -24,7 +24,8 @@
     "redirectUriLogout": "/logout",
     "publicUrls": [
       "**/preview/s/*",
-      "**/settings"
+      "**/settings",
+      "**/logout"
     ]
   },
   "application": {
