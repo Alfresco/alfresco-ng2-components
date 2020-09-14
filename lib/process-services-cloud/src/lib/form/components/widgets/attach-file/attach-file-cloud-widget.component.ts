@@ -24,7 +24,8 @@ import {
   ThumbnailService,
   NotificationService,
   FormValues,
-  ContentLinkModel
+  ContentLinkModel,
+  AppConfigService
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -53,6 +54,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     static MY_FILES_FOLDER_ID = '-my-';
     static ROOT_FOLDER_ID = '-root-';
+    static APP_NAME = '-appname-';
     static VALID_ALIAS = [AttachFileCloudWidgetComponent.ROOT_FOLDER_ID, AttachFileCloudWidgetComponent.MY_FILES_FOLDER_ID, '-shared-'];
 
     typeId = 'AttachFileCloudWidgetComponent';
@@ -64,7 +66,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         thumbnails: ThumbnailService,
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
-        private contentNodeSelectorService: ContentCloudNodeSelectorService
+        private contentNodeSelectorService: ContentCloudNodeSelectorService,
+        private appConfigService: AppConfigService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -85,6 +88,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.removeFile(file);
     }
 
+    fetchAppNameFromAppConfig(): string {
+        return this.appConfigService.get('alfresco-deployed-apps')[0]?.name;
+    }
+
+    replaceAppNameAliasWithValue(path: string): string {
+        if (path?.match(AttachFileCloudWidgetComponent.APP_NAME)) {
+            const appName = this.fetchAppNameFromAppConfig();
+            return path.replace(AttachFileCloudWidgetComponent.APP_NAME, appName);
+        }
+        return path;
+    }
+
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
 
@@ -92,6 +107,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             const destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
             const opts = { relativePath: destinationFolderPath.path };
 
+            destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
             const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, opts);
             this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
         }

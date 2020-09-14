@@ -27,7 +27,8 @@ import {
     FormFieldTypes,
     FormFieldMetadata,
     FormService,
-    DownloadService
+    DownloadService,
+    AppConfigService
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../../testing/process-service-cloud.testing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -43,6 +44,7 @@ describe('AttachFileCloudWidgetComponent', () => {
     let fixture: ComponentFixture<AttachFileCloudWidgetComponent>;
     let element: HTMLInputElement;
     let contentCloudNodeSelectorService: ContentCloudNodeSelectorService;
+    let appConfigService: AppConfigService;
     let processCloudContentService: ProcessCloudContentService;
     let formService: FormService;
     let downloadService: DownloadService;
@@ -172,6 +174,9 @@ describe('AttachFileCloudWidgetComponent', () => {
         processCloudContentService = TestBed.inject(ProcessCloudContentService);
         contentCloudNodeSelectorService = TestBed.inject(
             ContentCloudNodeSelectorService
+        );
+        appConfigService = TestBed.inject(
+            AppConfigService
         );
         formService = TestBed.inject(FormService);
     }));
@@ -387,6 +392,21 @@ describe('AttachFileCloudWidgetComponent', () => {
 
             expect(widget.rootNodeId).toEqual('-root-');
             expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'multiple', true);
+        });
+
+        it('should return the application name in case -appname- placeholder is present', async() => {
+            appConfigService.config = Object.assign(appConfigService.config, {
+                'alfresco-deployed-apps': [
+                    {
+                      'name': 'fakeapp'
+                    }
+                  ]
+            });
+            expect(widget.replaceAppNameAliasWithValue('/myfiles/-appname-/folder')).toBe('/myfiles/fakeapp/folder');
+        });
+
+        it('should return the same value in case -appname- placeholder is NOT present', async() => {
+            expect(widget.replaceAppNameAliasWithValue('/myfiles/fakepath/folder')).toBe('/myfiles/fakepath/folder');
         });
 
         describe('FilesSource', () => {
