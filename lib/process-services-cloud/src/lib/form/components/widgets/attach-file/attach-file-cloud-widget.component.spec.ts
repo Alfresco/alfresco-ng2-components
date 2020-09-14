@@ -368,8 +368,8 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(widget.rootNodeId).toEqual('-root-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'multiple', true);
+            expect(widget.rootNodeId).toEqual('-my-');
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true);
         });
 
         it('Should be able to set default alias as rootNodeId if destinationFolderPath does not have alias', async () => {
@@ -390,8 +390,8 @@ describe('AttachFileCloudWidgetComponent', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(widget.rootNodeId).toEqual('-root-');
-            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'multiple', true);
+            expect(widget.rootNodeId).toEqual('-my-');
+            expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'multiple', true);
         });
 
         it('should return the application name in case -appname- placeholder is present', async() => {
@@ -450,8 +450,8 @@ describe('AttachFileCloudWidgetComponent', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(widget.rootNodeId).toEqual('-root-');
-                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-root-', 'single', true);
+                expect(widget.rootNodeId).toEqual('-my-');
+                expect(openUploadFileDialogSpy).toHaveBeenCalledWith('-my-', 'single', true);
             });
 
             it('should display tooltip when tooltip is set', async(() => {
