@@ -16,7 +16,7 @@
     "build-doc-tools": "tsc -p ./tools/doc/tsconfig.json",
     "markdownlint": "markdownlint ./docs",
     "docbuild": "node node_modules/typedoc/bin/typedoc --tsconfig lib/tsconfig.doc.json && node tools/doc/buildYamlSourceInfo.js docs/docs.json && node ./tools/doc/docProcessor.js",
-    "license-checker": "license-checker --production  --failOn 'GPL' > licenses.txt",
+    "license-checker": "license-checker --production  --failOn 'GPL;GPL-2.0' > licenses.txt",
     "review-checker": "node ./tools/doc/reviewChecker.js",
     "01": "echo -------------------------------------------- Build Lib  -----------------------------------------------",
     "01s": "",
