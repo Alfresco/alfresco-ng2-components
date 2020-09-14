@@ -173,7 +173,6 @@ describe('Search Number Range Filter', () => {
         await sizeRangeFilter.clickApplyButton();
         await searchResults.dataTable.waitTillContentLoaded();
         await searchResults.sortBySize('DESC');
-        await searchResults.dataTable.waitTillContentLoaded();
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {

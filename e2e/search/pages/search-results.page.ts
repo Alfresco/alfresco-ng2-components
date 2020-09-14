@@ -64,18 +64,22 @@ export class SearchResultsPage {
 
     async sortByName(sortOrder: string): Promise<void> {
         await this.searchSortingPicker.sortBy(sortOrder, 'Name');
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async sortByAuthor(sortOrder: string): Promise<void> {
         await this.searchSortingPicker.sortBy(sortOrder, 'Author');
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async sortByCreated(sortOrder: string): Promise<void> {
         await this.searchSortingPicker.sortBy(sortOrder, 'Created');
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async sortBySize(sortOrder: string): Promise<void> {
         await this.searchSortingPicker.sortBy(sortOrder, 'Size');
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async checkListIsOrderedByNameAsc(): Promise<any> {

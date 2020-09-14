@@ -157,6 +157,8 @@ export class DataTableComponentPage {
     }
 
     async rightClickOnRow(columnName: string, columnValue: string): Promise<void> {
+        Logger.log(`Right Click On Row ${columnName} ${columnValue}`);
+
         const row = this.getRow(columnName, columnValue);
         await BrowserActions.rightClick(row);
 
@@ -256,6 +258,7 @@ export class DataTableComponentPage {
     }
 
     async checkContentIsDisplayed(columnName: string, columnValue: string): Promise<void> {
+        Logger.log(`Wait content is displayed ${columnName} ${columnValue}`);
         const row = this.getCellElementByValue(columnName, columnValue);
         await BrowserVisibility.waitUntilElementIsVisible(row);
     }
@@ -289,30 +292,49 @@ export class DataTableComponentPage {
     async waitTillContentLoaded(): Promise<void> {
         await browser.sleep(500);
 
-        if (element(by.tagName('mat-spinner')).isPresent()) {
+        if (this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+            await this.waitFirstElementPresent();
+        } else if (this.isEmpty()) {
+            Logger.log('empty page');
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
                 await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
             } catch (error) {
             }
+            await this.waitFirstElementPresent();
+        }
+    }
+
+    private async isSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await element(by.tagName('mat-spinner')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
         }
 
+        return isSpinnerPresent;
+    }
+
+    private async waitFirstElementPresent(): Promise<void> {
         try {
             Logger.log('wait first element is present');
             await BrowserVisibility.waitUntilElementIsVisible(this.contents.first());
         } catch (error) {
             Logger.log('Possible empty page');
         }
-
     }
 
     async waitTillContentLoadedInfinitePagination(): Promise<void> {
         await browser.sleep(500);
 
-        if (element(by.tagName('mat-progress-bar')).isPresent()) {
+        const isSpinnerPresent = await element(by.tagName('mat-progress-bar')).isPresent();
+
+        if (isSpinnerPresent) {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-progress-bar')));
         } else {
@@ -449,11 +471,18 @@ export class DataTableComponentPage {
     }
 
     async isEmpty(): Promise<boolean> {
-        return this.emptyList.isPresent();
+        let isDisplayed;
+
+        try {
+            isDisplayed = await this.emptyList.isDisplayed();
+        } catch (error) {
+            isDisplayed = false;
+        }
+        return isDisplayed;
     }
 
     async waitForEmptyState(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsPresent(this.emptyList);
+        await BrowserVisibility.waitUntilElementIsVisible(this.emptyList);
     }
 
     async getEmptyStateTitle(): Promise<string> {

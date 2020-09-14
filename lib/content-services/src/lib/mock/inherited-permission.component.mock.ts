@@ -35,7 +35,6 @@ export class SimpleInheritedPermissionTestComponent {
     }
 
     onUpdate(node: any) {
-        this.updatedNode = node.permissions.isInheritanceEnabled;
+        this.updatedNode = node.permissions?.isInheritanceEnabled ?? false;
     }
-
 }

@@ -51,12 +51,12 @@ export class DemoPermissionComponent implements OnInit {
         this.nodeService
             .getNode(this.nodeId, {include: ['permissions'] })
             .subscribe( (currentNode: MinimalNodeEntryEntity) => {
-                this.toggleStatus = currentNode.permissions.isInheritanceEnabled;
+                this.toggleStatus = currentNode.permissions?.isInheritanceEnabled ?? false;
             });
     }
 
     onUpdatedPermissions(node: MinimalNodeEntryEntity) {
-        this.toggleStatus = node.permissions.isInheritanceEnabled;
+        this.toggleStatus = node.permissions?.isInheritanceEnabled ?? false;
         this.displayPermissionComponent.reload();
     }
 

@@ -118,7 +118,7 @@ export class ViewerPage {
         await browser.sleep(500);
 
         try {
-            if (element(by.tagName('mat-spinner')).isPresent()) {
+            if (await element(by.tagName('mat-spinner')).isPresent()) {
                 Logger.log('wait datatable loading spinner disappear');
                 await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
             } else {

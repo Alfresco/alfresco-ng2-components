@@ -38,6 +38,8 @@ export class NavigationBarPage {
     logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
 
     async clickNavigationBarItem(title: string): Promise<void> {
+        Logger.log(`clickNavigationBarItem ${title}`);
+
         const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(menu);

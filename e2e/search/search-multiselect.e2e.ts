@@ -111,12 +111,14 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
 
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(4);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -177,12 +179,14 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
 
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -241,6 +245,7 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(1);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);

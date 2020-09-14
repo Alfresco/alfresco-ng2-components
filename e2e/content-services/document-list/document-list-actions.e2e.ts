@@ -79,7 +79,7 @@ describe('Document List Component - Actions', () => {
 
             await loginPage.login(acsUser.email, acsUser.password);
 
-            await browser.sleep(10000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
         });
 
         afterAll(async () => {

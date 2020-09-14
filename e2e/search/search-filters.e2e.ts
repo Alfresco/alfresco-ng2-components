@@ -176,48 +176,18 @@ describe('Search Filters', () => {
         });
     });
 
-    it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
-        await navigationBarPage.clickContentServicesButton();
-
-        jsonFile['filterWithContains'] = true;
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter('*');
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchFiltersPage.creatorCheckListFiltersPage().searchInFilter('dminis');
-        await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListOptionIsDisplayed('Administrator');
-    });
-
     it('[C291980] Should group search facets under specified labels', async () => {
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
         await searchResults.dataTable.waitTillContentLoaded();
 
         await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
         await searchFiltersPage.checkTypeFacetQueryGroupIsDisplayed();
+
         await searchFiltersPage.checkSizeFacetQueryGroupIsDisplayed();
     });
 
-    it('[C291981] Should group search facets under the default label, by default', async () => {
-        await navigationBarPage.clickContentServicesButton();
-
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
-
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter('*');
-        await searchResults.dataTable.waitTillContentLoaded();
-
-        await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
-        await expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
-        await expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
-    });
-
     it('[C297509] Should display search intervals under specified labels from config', async () => {
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
         await searchResults.dataTable.waitTillContentLoaded();
@@ -260,20 +230,51 @@ describe('Search Filters', () => {
         await searchResults.checkContentIsDisplayed(fileTypeJpg.entry.name);
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('Plain Text (2)');
         await searchFiltersPage.checkFileTypeFacetLabelIsDisplayed('JPEG Image (1)');
-   });
+    });
 
-    it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
-        await navigationBarPage.clickContentServicesButton();
+    describe('Change config', () => {
 
-        jsonFile.facetFields.fields[0].label = 'My File Types';
-        jsonFile.facetFields.fields[1].label = 'My File Sizes';
-        await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+        it('[C291802] Should be able to filter facet fields with "Contains"', async () => {
+            await navigationBarPage.clickContentServicesButton();
 
-        await searchBarPage.clickOnSearchIcon();
-        await searchBarPage.enterTextAndPressEnter('*');
-        await searchResults.dataTable.waitTillContentLoaded();
+            jsonFile['filterWithContains'] = true;
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
 
-        await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
-        await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
+
+            await searchFiltersPage.creatorCheckListFiltersPage().searchInFilter('dminis');
+            await searchFiltersPage.creatorCheckListFiltersPage().checkCheckListOptionIsDisplayed('Administrator');
+        });
+
+        it('[C291981] Should group search facets under the default label, by default', async () => {
+            await navigationBarPage.clickContentServicesButton();
+
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
+
+            await searchFiltersPage.checkDefaultFacetQueryGroupIsDisplayed();
+            await expect(await searchFiltersPage.isTypeFacetQueryGroupPresent()).toBe(false);
+            await expect(await searchFiltersPage.isSizeFacetQueryGroupPresent()).toBe(false);
+        });
+
+        it('[C299124] Should be able to parse escaped empty spaced labels inside facetFields', async () => {
+            await navigationBarPage.clickContentServicesButton();
+
+            jsonFile.facetFields.fields[0].label = 'My File Types';
+            jsonFile.facetFields.fields[1].label = 'My File Sizes';
+            await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
+
+            await searchBarPage.clickOnSearchIcon();
+            await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
+
+            await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Types');
+            await searchFiltersPage.checkCustomFacetFieldLabelIsDisplayed('My File Sizes');
+        });
     });
 });

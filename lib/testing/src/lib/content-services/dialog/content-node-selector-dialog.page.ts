@@ -21,6 +21,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { BreadcrumbDropdownPage } from '../pages/breadcrumb/breadcrumb-dropdown.page';
+import { Logger } from '../../../..';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));
@@ -96,9 +97,11 @@ export class ContentNodeSelectorDialogPage {
         return this.dataTable.numberOfRows();
     }
 
-    async typeIntoNodeSelectorSearchField(text): Promise<void> {
+    async typeIntoNodeSelectorSearchField(text: string): Promise<void> {
+        Logger.log(`Search Node content node selector ${text}`);
+
         await BrowserVisibility.waitUntilElementIsVisible(this.searchInputElement);
-        await BrowserActions.clearSendKeys(this.searchInputElement, text, 10);
+        await BrowserActions.clearSendKeys(this.searchInputElement, text, 100);
         await this.dataTable.waitTillContentLoaded();
     }
 
