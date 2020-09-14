@@ -69,19 +69,16 @@ describe('Tag component', () => {
         await apiService.getInstance().core.tagsApi.addTag(nodeId, tags);
 
         await loginPage.login(acsUser.email, acsUser.password);
+        await navigationBarPage.clickTagButton();
     });
 
     afterAll(async () => {
         await navigationBarPage.clickLogoutButton();
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         await uploadActions.deleteFileOrFolder(pdfUploadedFile.entry.id);
-
-        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     it('[C260374] Should NOT be possible to add a new tag without Node ID', async () => {
-        await navigationBarPage.clickTagButton();
-
         await expect(await tagPage.getNodeId()).toEqual('');
         await expect(await tagPage.getNewTagPlaceholder()).toEqual('New Tag');
         await expect(await tagPage.addTagButtonIsEnabled()).toEqual(false);

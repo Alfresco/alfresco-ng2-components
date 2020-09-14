@@ -86,9 +86,7 @@ describe('Create library directive', () => {
         const libraryName = 'cancelLibrary';
 
         await createLibraryDialog.typeLibraryName(libraryName);
-
         await createLibraryDialog.clickCancel();
-
         await createLibraryDialog.waitForDialogToClose();
     });
 
@@ -103,8 +101,6 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
-
-        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
