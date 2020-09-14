@@ -46,7 +46,7 @@ import {
     AlfrescoApiService,
     UserPreferenceValues,
     LockService,
-    UploadService
+    DataRow
 } from '@alfresco/adf-core';
 
 import { Node, NodeEntry, NodePaging, Pagination } from '@alfresco/js-api';
@@ -61,7 +61,7 @@ import { NavigableComponentInterface } from '../../breadcrumb/navigable-componen
 import { RowFilter } from '../data/row-filter.model';
 import { DocumentListService } from '../services/document-list.service';
 import { DocumentLoaderNode } from '../models/document-folder.model';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'adf-document-list',
@@ -259,6 +259,13 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
     @Input()
     currentFolderId: string = null;
 
+    /** Array of nodes to be pre-selected. All nodes in the
+     * array are pre-selected in multi selection mode, but only the first node
+     * is pre-selected in single selection mode.
+     */
+    @Input()
+    preselectNodes: NodeEntry[] = [];
+
     /** The Document list will show all the nodes contained in the NodePaging entity */
     @Input()
     node: NodePaging = null;
@@ -327,7 +334,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
                 private appConfig: AppConfigService,
                 private userPreferencesService: UserPreferencesService,
                 private contentService: ContentService,
-                private uploadService: UploadService,
                 private thumbnailService: ThumbnailService,
                 private alfrescoApiService: AlfrescoApiService,
                 private lockService: LockService) {
@@ -337,18 +343,6 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             .subscribe(pagSize => {
                 this.maxItems = this._pagination.maxItems = pagSize;
             });
-
-        this.uploadService.fileUploadComplete
-            .pipe(
-                debounceTime(300),
-                takeUntil(this.onDestroy$))
-            .subscribe(() => this.reload());
-
-        this.uploadService.fileUploadDeleted
-            .pipe(
-                debounceTime(300),
-                takeUntil(this.onDestroy$))
-            .subscribe(() => this.reload());
     }
 
     getContextActions(node: NodeEntry) {
@@ -469,7 +463,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
         if (changes['currentFolderId']?.currentValue !== changes['currentFolderId']?.previousValue) {
             if (this.data) {
-                this.data.loadPage(null, false);
+                this.data.loadPage(null, false, null, this.getPreselectNodesBasedOnSelectionMode());
+                this.onPreselectNodes();
                 this.resetNewFolderPagination();
             }
 
@@ -483,7 +478,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         if (this.data) {
             if (changes.node && changes.node.currentValue) {
                 const merge = this._pagination ? this._pagination.merge : false;
-                this.data.loadPage(changes.node.currentValue, merge);
+                this.data.loadPage(changes.node.currentValue, merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                this.onPreselectNodes();
                 this.onDataReady(changes.node.currentValue);
             } else if (changes.imageResolver) {
                 this.data.setImageResolver(changes.imageResolver.currentValue);
@@ -495,7 +491,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.ngZone.run(() => {
             this.resetSelection();
             if (this.node) {
-                this.data.loadPage(this.node, this._pagination.merge);
+                this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
+                this.onPreselectNodes();
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
@@ -685,7 +682,8 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
 
     onPageLoaded(nodePaging: NodePaging) {
         if (nodePaging) {
-            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles);
+            this.data.loadPage(nodePaging, this._pagination.merge, this.allowDropFiles, this.getPreselectNodesBasedOnSelectionMode());
+            this.onPreselectNodes();
             this.setLoadingState(false);
             this.onDataReady(nodePaging);
         }
@@ -787,7 +785,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.selection = event.selection.map((entry) => entry.node);
         const domEvent = new CustomEvent('node-select', {
             detail: {
-                node: event.row.node,
+                node: event.row ? event.row.node : null,
                 selection: this.selection
             },
             bubbles: true
@@ -897,5 +895,41 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
         }
         this.setLoadingState(false);
         this.error.emit(err);
+    }
+
+    getPreselectNodesBasedOnSelectionMode(): NodeEntry[] {
+        let selectedNodes: NodeEntry[] = [];
+
+        if (this.hasPreselectNodes()) {
+            if (this.isSingleSelectionMode()) {
+                selectedNodes = [this.preselectNodes[0]];
+            } else {
+                selectedNodes = this.preselectNodes;
+            }
+        }
+
+        return selectedNodes;
+    }
+
+    private onPreselectNodes() {
+        if (this.hasPreselectNodes()) {
+            let selectedNodes: DataRow[] = [];
+
+            if (this.isSingleSelectionMode()) {
+                selectedNodes = [this.data.getPreselectRows()[0]];
+            } else {
+                selectedNodes = this.data.getPreselectRows();
+            }
+
+            this.onNodeSelect({ row: undefined, selection: <ShareDataRow[]> selectedNodes });
+        }
+    }
+
+    isSingleSelectionMode(): boolean {
+        return this.selectionMode === 'single';
+    }
+
+    hasPreselectNodes(): boolean {
+        return this.preselectNodes && this.preselectNodes.length > 0;
     }
 }

@@ -23,13 +23,14 @@ import { Location } from '@angular/common';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry } from '@alfresco/js-api';
+import { MinimalNodeEntity, NodePaging, Pagination, MinimalNodeEntryEntity, SiteEntry, SearchEntry, NodeEntry } from '@alfresco/js-api';
 import {
     AlfrescoApiService, AuthenticationService, AppConfigService, AppConfigValues, ContentService, TranslationService, FolderCreatedEvent, LogService, NotificationService,
     UploadService, DataRow, UserPreferencesService,
     PaginationComponent, FormValues, DisplayMode, ShowHeaderMode, InfinitePaginationComponent, HighlightDirective,
     SharedLinksApiService,
-    FormRenderingService
+    FormRenderingService,
+    FileUploadEvent
 } from '@alfresco/adf-core';
 
 import {
@@ -47,7 +48,7 @@ import { VersionManagerDialogAdapterComponent } from './version-manager-dialog-a
 import { MetadataDialogAdapterComponent } from './metadata-dialog-adapter.component';
 import { Subject } from 'rxjs';
 import { PreviewService } from '../../services/preview.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime, scan } from 'rxjs/operators';
 
 const DEFAULT_FOLDER_TO_SHOW = '-my-';
 
@@ -208,6 +209,7 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     permissionsStyle: PermissionStyleModel[] = [];
     infiniteScrolling: boolean;
     stickyHeader: boolean;
+    preselectNodes: boolean;
     warnOnMultipleUploads = false;
     thumbnails = false;
 
@@ -215,6 +217,8 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
     enableMediumTimeFormat = false;
     displayEmptyMetadata = false;
     hyperlinkNavigation = false;
+
+    selectedNodes = [];
 
     constructor(private notificationService: NotificationService,
                 private uploadService: UploadService,
@@ -277,6 +281,33 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
+        this.uploadService.fileUploadComplete
+        .pipe(
+            debounceTime(300),
+            scan((files, currentFile) => [...files, currentFile], []),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe((value: any[]) => {
+            let selectedNodes: NodeEntry[] = [];
+
+            if (this.preselectNodes) {
+                if (value && value.length > 0 ) {
+                    if (this.selectionMode === 'single') {
+                        selectedNodes = [...[value[value.length - 1]].map((uploadedFile) => uploadedFile.data)];
+                    } else {
+                        selectedNodes = [...value.map((uploadedFile) => uploadedFile.data)];
+                    }
+                    this.selectedNodes = [...selectedNodes];
+                }
+            }
+
+            this.onFileUploadEvent(value[0]);
+        });
+
+        this.uploadService.fileUploadDeleted
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(value => this.onFileUploadEvent(value));
+
         this.contentService.folderCreated
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(value => this.onFolderCreated(value));
@@ -300,6 +331,12 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((err: { message: string }) => {
                 this.notificationService.showError(err.message);
             });
+    }
+
+    onFileUploadEvent(event: FileUploadEvent) {
+        if (event && event.file.options.parentId === this.documentList.currentFolderId) {
+            this.documentList.reload();
+        }
     }
 
     ngOnDestroy() {
@@ -667,6 +704,32 @@ export class FilesComponent implements OnInit, OnChanges, OnDestroy {
         });
 
         this.router.navigate([], { relativeTo: this.route, queryParams: objectFromMap });
+    }
+
+    setPreselectNodes(nodes: string) {
+        this.selectedNodes = this.getArrayFromString(nodes);
+        this.documentList.reload();
+    }
+
+    isStringArray(str: string): boolean {
+        try {
+            const result = JSON.parse(str);
+            return Array.isArray(result);
+        } catch (e) {
+            return false;
+        }
+    }
+
+    private getArrayFromString<T = any>(value: string): T[] {
+        if (this.isStringArray(value)) {
+            return JSON.parse(value);
+        } else {
+            return [];
+        }
+    }
+
+    onMultipleFilesUpload() {
+        this.selectedNodes = [];
     }
 
 }

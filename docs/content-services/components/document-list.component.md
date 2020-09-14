@@ -73,6 +73,7 @@ Displays the documents from a repository.
 | navigationMode | `string` |  | [User](../../../lib/core/pipes/user-initial.pipe.ts) interaction for folder navigation or file preview. Valid values are "click" and "dblclick". Default value: "dblclick" |
 | node | [`NodePaging`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) | null | The Document list will show all the nodes contained in the [NodePaging](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/NodePaging.md) entity |
 | permissionsStyle | [`PermissionStyleModel`](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts)`[]` | \[] | Define a set of CSS styles to apply depending on the permission of the user on that node. See the [Permission Style model](../../../lib/content-services/src/lib/document-list/models/permissions-style.model.ts) page for further details and examples. |
+| preselectNodes | [`NodeEntry`](https://github.com/Alfresco/alfresco-js-api/blob/master/src/alfresco-core-rest-api/docs/NodeEntry.md) `[]` | \[] | Array of nodes to preselect . |
 | rowStyle | `string` |  | The inline style to apply to every row. See the Angular NgStyle docs for more details and usage examples. |
 | rowStyleClass | `string` |  | The CSS class to apply to every row |
 | selectionMode | `string` | "single" | Row selection mode. Can be null, `single` or `multiple`. For `multiple` mode, you can use Cmd (macOS) or Ctrl (Win) modifier key to toggle selection for multiple rows. |

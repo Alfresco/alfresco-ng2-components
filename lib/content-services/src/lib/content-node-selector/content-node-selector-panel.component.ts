@@ -23,7 +23,9 @@ import {
     UserPreferenceValues,
     InfinitePaginationComponent, PaginatedComponent,
     NodesApiService,
-    SitesService
+    SitesService,
+    UploadService,
+    FileUploadCompleteEvent
 } from '@alfresco/adf-core';
 import { FormControl } from '@angular/forms';
 import { Node, NodePaging, Pagination, SiteEntry, SitePaging, NodeEntry } from '@alfresco/js-api';
@@ -31,7 +33,7 @@ import { DocumentListComponent } from '../document-list/components/document-list
 import { RowFilter } from '../document-list/data/row-filter.model';
 import { ImageResolver } from '../document-list/data/image-resolver.model';
 import { ContentNodeSelectorService } from './content-node-selector.service';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
@@ -222,6 +224,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     searchInput: FormControl = new FormControl();
 
     target: PaginatedComponent;
+    preselectNodes: NodeEntry[] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -229,6 +232,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 private customResourcesService: CustomResourcesService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
+                private uploadService: UploadService,
                 private sitesService: SitesService) {
     }
 
@@ -267,11 +271,25 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;
+        this.onFileUploadEvent();
     }
 
     ngOnDestroy() {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
+    }
+
+    private onFileUploadEvent() {
+        this.uploadService.fileUploadComplete
+        .pipe(
+            debounceTime(300),
+            scan((files, currentFile) => [...files, currentFile], []),
+            takeUntil(this.onDestroy$)
+        )
+        .subscribe((uploadedFiles: FileUploadCompleteEvent[]) => {
+            this.preselectNodes = this.getPreselectNodesBasedOnSelectionMode(uploadedFiles);
+            this.documentList.reload();
+        });
     }
 
     private getStartSite() {
@@ -363,7 +381,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.searchTerm = '';
         this.nodePaging = null;
         this.pagination.maxItems = this.pageSize;
-        this.chosenNode = null;
+        this.resetChosenNode();
         this.showingSearchResults = false;
     }
 
@@ -434,6 +452,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         this.showingSearchResults = false;
         this.infiniteScroll = false;
         this.breadcrumbFolderTitle = null;
+        this.preselectNodes = [];
         this.clearSearch();
         this.navigationChange.emit($event);
     }
@@ -476,8 +495,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     private attemptNodeSelection(entry: Node): void {
         if (entry && this.isSelectionValid(entry)) {
             this.chosenNode = [entry];
-        } else {
-            this.resetChosenNode();
         }
     }
 
@@ -509,5 +526,27 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         } else {
             this.breadcrumbFolderTitle = null;
         }
+    }
+
+    hasPreselectNodes(): boolean {
+        return this.preselectNodes && this.preselectNodes.length > 0;
+    }
+
+    isSingleSelectionMode(): boolean {
+        return this.selectionMode === 'single';
+    }
+
+    private getPreselectNodesBasedOnSelectionMode(uploadedFiles: FileUploadCompleteEvent[]): NodeEntry[] {
+        let selectedNodes: NodeEntry[] = [];
+
+        if (uploadedFiles && uploadedFiles.length > 0 ) {
+            if (this.isSingleSelectionMode()) {
+                selectedNodes = [...[uploadedFiles[uploadedFiles.length - 1]].map((uploadedFile) => uploadedFile.data)];
+            } else {
+                selectedNodes = [...uploadedFiles.map((uploadedFile) => uploadedFile.data)];
+            }
+        }
+
+        return selectedNodes;
     }
 }

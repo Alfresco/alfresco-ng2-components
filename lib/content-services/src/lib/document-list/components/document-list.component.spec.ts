@@ -26,7 +26,8 @@ import {
     DataTableComponent,
     DataTableModule,
     ObjectDataTableAdapter,
-    ShowHeaderMode
+    ShowHeaderMode,
+    ThumbnailService
 } from '@alfresco/adf-core';
 import { Subject, of, throwError } from 'rxjs';
 import {
@@ -34,7 +35,9 @@ import {
     fakeNodeAnswerWithNOEntries,
     fakeNodeWithNoPermission,
     fakeGetSitesAnswer,
-    fakeGetSiteMembership
+    fakeGetSiteMembership,
+    mockPreselectedNodes,
+    mockNodePagingWithPreselectedNodes
 } from '../../mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { NodeMinimal, NodeMinimalEntry, NodePaging } from '../models/document-library.model';
@@ -56,6 +59,7 @@ describe('DocumentList', () => {
     let documentListService: DocumentListService;
     let apiService: AlfrescoApiService;
     let customResourcesService: CustomResourcesService;
+    let thumbnailService: ThumbnailService;
     let fixture: ComponentFixture<DocumentListComponent>;
     let element: HTMLElement;
     let eventMock: any;
@@ -86,6 +90,7 @@ describe('DocumentList', () => {
         documentListService = TestBed.inject(DocumentListService);
         apiService = TestBed.inject(AlfrescoApiService);
         customResourcesService = TestBed.inject(CustomResourcesService);
+        thumbnailService = TestBed.inject(ThumbnailService);
 
         spyFolder = spyOn(documentListService, 'getFolder').and.callFake(() => {
             return Promise.resolve({ list: {} });
@@ -1515,6 +1520,74 @@ describe('DocumentList', () => {
             where: undefined
         }), undefined);
     });
+
+    describe('Preselect nodes', () => {
+
+        beforeEach(() => {
+            spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue(`assets/images/ft_ic_created.svg`);
+        });
+
+        it('should able to emit nodeSelected event with preselectNodes on the reload', async () => {
+            const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
+
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.reload();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(documentList.preselectNodes.length).toBe(2);
+            expect(nodeSelectedSpy).toHaveBeenCalled();
+        });
+
+        it('should able to select first node from the preselectNodes when selectionMode set to single', async () => {
+            documentList.selectionMode = 'single';
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.reload();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(documentList.preselectNodes.length).toBe(2);
+            expect(documentList.getPreselectNodesBasedOnSelectionMode().length).toBe(1);
+        });
+
+        it('should able to select all preselectNodes when selectionMode set to multiple', async () => {
+            documentList.selectionMode = 'multiple';
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preselectNodes = mockPreselectedNodes;
+            documentList.reload();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(documentList.preselectNodes.length).toBe(2);
+            expect(documentList.getPreselectNodesBasedOnSelectionMode().length).toBe(2);
+        });
+
+        it('should not emit nodeSelected event when preselectNodes undefined/empty', async () => {
+            const nodeSelectedSpy = spyOn(documentList.nodeSelected, 'emit');
+
+            fixture.detectChanges();
+
+            documentList.node = mockNodePagingWithPreselectedNodes;
+            documentList.preselectNodes = [];
+            documentList.reload();
+
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            expect(nodeSelectedSpy).not.toHaveBeenCalled();
+        });
+   });
 });
 
 @Component({

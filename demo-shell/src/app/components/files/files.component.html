@@ -13,6 +13,7 @@
                 [currentFolderId]="'-recent-'"
                 locationFormat="/files"
                 [display]="'gallery'"
+                [preselectNodes]="selectedNodes"
                 [showHeader]="false"
                 [maxItems]="5"
                 (preview)="showFile($event)"
@@ -221,6 +222,7 @@
                 [contentActions]="true"
                 [allowDropFiles]="allowDropFiles"
                 [selectionMode]="selectionMode"
+                [preselectNodes]="selectedNodes"
                 [multiselect]="multiselect"
                 [display]="displayMode"
                 [node]="nodeResult"
@@ -550,7 +552,7 @@
         </section>
 
         <section>
-            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" [(ngModel)]="multipleFileUpload">
+            <mat-slide-toggle id="adf-multiple-upload-switch" [color]="'primary'" (change)="onMultipleFilesUpload()" [(ngModel)]="multipleFileUpload" >
                 {{'DOCUMENT_LIST.MULTIPLE_FILE_UPLOAD' | translate}}
             </mat-slide-toggle>
         </section>
@@ -642,6 +644,21 @@
                 Sticky Header
             </mat-slide-toggle>
         </section>
+
+        <section>
+            <mat-slide-toggle
+                color="primary" [(ngModel)]="preselectNodes" id="preselectNodes">
+                Preselect Nodes
+            </mat-slide-toggle>
+        </section>
+
+        <form class="example-form">
+            <mat-form-field *ngIf="preselectNodes" class="adf-preselect-nodes-input">
+                <input matInput
+                (input)="setPreselectNodes($event.target?.value)"
+                placeholder="NodeEntry[] => [{ entry: { isFile: true, id: 'node-id' }}, { entry: { isFile: true, id: 'node-id' }} ]">
+            </mat-form-field>
+        </form>
 
         <h5>Upload</h5>
         <section *ngIf="acceptedFilesTypeShow">
