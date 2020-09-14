@@ -151,25 +151,31 @@ describe('Document List - Pagination', () => {
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         let list = await contentServicesPage.getAllRowsNameColumn();
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(0, 5))).toEqual(true);
+
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 6-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         list = await contentServicesPage.getAllRowsNameColumn();
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(5, 10))).toEqual(true);
+
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 11-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);
         list = await contentServicesPage.getAllRowsNameColumn();
         await expect(ArrayUtil.arrayContainsArray(list, fileNames.slice(10, 15))).toEqual(true);
+
         await paginationPage.clickOnNextPage();
         currentPage++;
         await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.five);
         await expect(await paginationPage.getPaginationRange()).toEqual(`Showing 16-${itemsPerPage.fiveValue * currentPage} of ${nrOfFiles}`);
         await expect(await contentServicesPage.numberOfResultsDisplayed()).toBe(itemsPerPage.fiveValue);

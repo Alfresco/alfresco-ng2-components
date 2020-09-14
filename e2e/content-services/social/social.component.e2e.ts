@@ -60,9 +60,7 @@ describe('Social component', () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         await usersActions.createUser(componentOwner);
-
         await usersActions.createUser(componentVisitor);
-
         await usersActions.createUser(secondComponentVisitor);
 
         await apiService.getInstance().login(componentOwner.email, componentOwner.password);
