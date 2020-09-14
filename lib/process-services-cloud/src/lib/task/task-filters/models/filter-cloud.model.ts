@@ -29,6 +29,7 @@ export class TaskFilterCloudModel  {
     assignee: string;
     order: string;
     owner: string;
+    processDefinitionName?: string;
     processDefinitionId: string;
     processInstanceId: string;
     createdDate: Date;
@@ -56,6 +57,7 @@ export class TaskFilterCloudModel  {
             this.assignee = obj.assignee || null;
             this.order = obj.order || null;
             this.owner = obj.owner || null;
+            this.processDefinitionName = obj.processDefinitionName || null;
             this.processDefinitionId = obj.processDefinitionId || null;
             this.processInstanceId = obj.processInstanceId || null;
             this.createdDate = obj.createdDate || null;

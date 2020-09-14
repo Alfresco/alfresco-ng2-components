@@ -45,7 +45,6 @@ Manages task cloud.
 
     -   _appName:_ `string`  - 
     -   **Returns** `string` - 
-
 -   **getCandidateGroups**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>`<br/>
     Gets candidate groups of the task.
     -   _appName:_ `string`  - Name of the app
@@ -56,6 +55,10 @@ Manages task cloud.
     -   _appName:_ `string`  - Name of the app
     -   _taskId:_ `string`  - ID of the task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<string[]>` - Candidate users
+-   **getProcessDefinitions**(appName: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>`<br/>
+    Gets the process definitions associated with an app.
+    -   _appName:_ `string`  - Name of the target app
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`ProcessDefinitionCloud`](../../../lib/process-services-cloud/src/lib/models/process-definition-cloud.model.ts)`[]>` - Array of process definitions
 -   **getTaskById**(appName: `string`, taskId: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
     Gets details of a task.
     -   _appName:_ `string`  - Name of the app

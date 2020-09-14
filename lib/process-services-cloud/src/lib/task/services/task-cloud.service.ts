@@ -22,6 +22,7 @@ import { map } from 'rxjs/operators';
 import { TaskDetailsCloudModel, StartTaskCloudResponseModel } from '../start-task/models/task-details-cloud.model';
 import { BaseCloudService } from '../../services/base-cloud.service';
 import { StartTaskCloudRequestModel } from '../start-task/models/start-task-cloud-request.model';
+import { ProcessDefinitionCloud } from '../../models/process-definition-cloud.model';
 
 @Injectable({
     providedIn: 'root'
@@ -233,6 +234,26 @@ export class TaskCloudService extends BaseCloudService {
         } else {
             this.logService.error('AppName and TaskId are mandatory to get candidate groups');
             return of([]);
+        }
+    }
+
+    /**
+     * Gets the process definitions associated with an app.
+     * @param appName Name of the target app
+     * @returns Array of process definitions
+     */
+    getProcessDefinitions(appName: string): Observable<ProcessDefinitionCloud[]> {
+        if (appName || appName === '') {
+            const url = `${this.getBasePath(appName)}/rb/v1/process-definitions`;
+
+            return this.get(url).pipe(
+                map((res: any) => {
+                    return res.list.entries.map((processDefs) => new ProcessDefinitionCloud(processDefs.entry));
+                })
+            );
+        } else {
+            this.logService.error('AppName is mandatory for querying task');
+            return throwError('AppName not configured');
         }
     }
 
