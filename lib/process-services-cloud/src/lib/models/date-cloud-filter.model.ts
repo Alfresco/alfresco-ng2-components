@@ -31,3 +31,7 @@ export interface DateRangeFilter {
     startDate: Date;
     endDate: Date;
 }
+export interface RangeKeys {
+    from: string;
+    to: string;
+}

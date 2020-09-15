@@ -164,7 +164,14 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
         const properties = processFilterProperties.map((property: ProcessFilterProperties) => {
-            return { [property.key]: property.value };
+            if (!property.rangeKeys) {
+                return { [property.key]: property.value };
+            } else {
+                return {
+                    [property.rangeKeys.from]: property.value[property.rangeKeys.from],
+                    [property.rangeKeys.to]: property.value[property.rangeKeys.to]
+                };
+            }
         });
         return properties.reduce(((result, current) => Object.assign(result, current)), {});
     }
@@ -447,8 +454,13 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         this.toggleFilterActions = false;
     }
 
-    onDateRangeFilterChange(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
-        this.getPropertyController(property).setValue(`${dateRange.startDate}, ${dateRange.endDate}`);
+    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
+        this.editProcessFilterForm.get(property.rangeKeys.from).setValue(
+            dateRange.startDate ? dateRange.startDate.toISOString() : null
+        );
+        this.editProcessFilterForm.get(property.rangeKeys.to).setValue(
+            dateRange.endDate ? dateRange.endDate.toISOString() : null
+        );
     }
 
     isDateType(property: ProcessFilterProperties): boolean {
@@ -456,7 +468,7 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
     }
 
     isDateRangeType(property: ProcessFilterProperties): boolean {
-        return property.type === 'dateRange';
+        return property.type === 'date-range';
     }
 
     isSelectType(property: ProcessFilterProperties): boolean {
@@ -684,12 +696,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 options: this.directions
             }),
             new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.CREATED_DATE',
-                type: 'dateRange',
-                key: 'createdDate',
-                value: currentProcessFilter.createdDate || ''
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.START_DATE',
+                type: 'date-range',
+                key: 'startDateRange',
+                rangeKeys: { from: 'startFrom', to: 'startTo'},
+                values: {
+                    from: currentProcessFilter.startFrom || null,
+                    to: currentProcessFilter.startTo || null
+                }
             })
         ];
     }
-
 }

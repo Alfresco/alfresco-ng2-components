@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { DateCloudFilterType, RangeKeys } from '../../../models/date-cloud-filter.model';
 
 export class ProcessFilterCloudModel {
     id: string;
@@ -35,7 +36,9 @@ export class ProcessFilterCloudModel {
     lastModified: Date;
     lastModifiedTo: Date;
     lastModifiedFrom: Date;
-    createdDate: string;
+    startedDate: Date;
+    startFrom: Date;
+    startTo: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -58,7 +61,9 @@ export class ProcessFilterCloudModel {
             this.lastModified = obj.lastModified || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
-            this.createdDate = obj.createdDate || null;
+            this.startedDate = obj.startedDate || null;
+            this.startFrom = obj.startFrom || null;
+            this.startTo = obj.startTo || null;
         }
     }
 }
@@ -90,6 +95,8 @@ export class ProcessFilterProperties {
     value: string;
     key: string;
     options: ProcessFilterOptions[];
+    rangeKeys?: RangeKeys;
+    dateFilterOptions: DateCloudFilterType[];
 
     constructor(obj?: any) {
         if (obj) {
@@ -98,6 +105,8 @@ export class ProcessFilterProperties {
             this.value = obj.value || '';
             this.key = obj.key || null;
             this.options = obj.options || null;
+            this.rangeKeys = obj.rangeKeys || null;
+            this.dateFilterOptions = obj.dateFilterOptions || [];
         }
     }
 }

@@ -23,6 +23,7 @@ import { DateRangeFilterService } from './date-range-filter.service';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
 
 const DEFAULT_DATE_RANGE_OPTIONS = [
+    DateCloudFilterType.NO_DATE,
     DateCloudFilterType.TODAY,
     DateCloudFilterType.WEEK,
     DateCloudFilterType.MONTH,
