@@ -65,6 +65,7 @@ import { TasksCloudDemoComponent } from './components/cloud/tasks-cloud-demo.com
 import { ProcessesCloudDemoComponent } from './components/cloud/processes-cloud-demo.component';
 import { TaskDetailsCloudDemoComponent } from './components/cloud/task-details-cloud-demo.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
+import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 import { CloudViewerComponent } from './components/cloud/cloud-viewer.component';
 import { ProcessDetailsCloudDemoComponent } from './components/cloud/process-details-cloud-demo.component';
 import { StartTaskCloudDemoComponent } from './components/cloud/start-task-cloud-demo.component';
@@ -189,7 +190,8 @@ registerLocaleData(localeSv);
         FormCloudDemoComponent,
         ConfirmDialogExampleComponent,
         SampleWidgetComponent,
-        ProcessCloudLayoutComponent
+        ProcessCloudLayoutComponent,
+        ServiceTaskListCloudDemoComponent
     ],
     providers: [
         {

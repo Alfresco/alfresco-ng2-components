@@ -17,7 +17,7 @@
 
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 
-export class TaskFilterCloudModel  {
+export class TaskFilterCloudModel {
     id: string;
     name: string;
     key: string;
@@ -74,6 +74,64 @@ export class TaskFilterCloudModel  {
         }
     }
 }
+
+export class ServiceTaskFilterCloudModel {
+    id: string;
+    name: string;
+    key: string;
+    icon: string;
+    index: number;
+    appName: string;
+    status: string;
+    sort: string;
+    order: string;
+    activityName: string;
+    activityType: string;
+    completedDate: Date;
+    elementId: string;
+    executionId: string;
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    processDefinitionVersion: number;
+    processInstanceId: string;
+    serviceFullName: string;
+    serviceName: string;
+    serviceVersion: string;
+    startedDate: Date;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.id = obj.id || Math.random().toString(36).substr(2, 9);
+            this.name = obj.name || null;
+            this.key = obj.key || null;
+            this.icon = obj.icon || null;
+            this.index = obj.index || null;
+            this.appName = obj.appName || obj.appName === '' ? obj.appName : null;
+            this.status = obj.status || null;
+            this.sort = obj.sort || null;
+            this.order = obj.order || null;
+            this.activityName = obj.activityName || null;
+            this.activityType = obj.activityType || null;
+            this.elementId = obj.elementId || null;
+            this.executionId = obj.executionId || null;
+            this.processDefinitionId = obj.processDefinitionId || null;
+            this.processDefinitionKey = obj.processDefinitionKey || null;
+            this.processDefinitionVersion = obj.processDefinitionVersion || null;
+            this.processInstanceId = obj.processInstanceId || null;
+            this.completedDate = obj.completedDate || null;
+            this.startedDate = obj.startedDate || null;
+            this.serviceVersion = obj.serviceVersion || null;
+            this.serviceName = obj.serviceName || null;
+            this.serviceFullName = obj.serviceFullName || null;
+        }
+    }
+}
+
+export enum TaskType {
+    UserTask = 'userTask',
+    ServiceTask = 'serviceTask'
+}
+
 export class FilterParamsModel {
 
     id?: string;
