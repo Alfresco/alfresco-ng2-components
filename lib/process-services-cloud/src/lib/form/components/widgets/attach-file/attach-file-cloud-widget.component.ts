@@ -53,6 +53,7 @@ import { DestinationFolderPathModel } from '../../../models/form-cloud-represent
 export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent implements OnInit {
 
     static ALIAS_USER_FOLDER = '-my-';
+    static APP_NAME = '-appname-';
     static VALID_ALIAS = ['-root-', AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, '-shared-'];
 
     typeId = 'AttachFileCloudWidgetComponent';
