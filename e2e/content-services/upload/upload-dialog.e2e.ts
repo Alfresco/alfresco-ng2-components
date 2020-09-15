@@ -234,14 +234,11 @@ describe('Upload component', () => {
         await uploadToggles.enableFolderUpload();
 
         await browser.executeScript(` setInterval(() => {
-               if(document.querySelector('[data-automation-id="adf"]')){
                     document.querySelector("#adf-upload-dialog-cancel-all").click();
                     document.querySelector("#adf-upload-dialog-cancel").click();
-                }
-              }, 2000)`);
-        await contentServicesPage.uploadFolder(adfBigFolder.location);
+              }, 4000)`);
 
-        await uploadDialog.fileIsUploaded('a_png_noBackground_file.PNG');
+        await contentServicesPage.uploadFolder(adfBigFolder.location);
         await uploadDialog.fileIsCancelled('a_png_noBackground_file.PNG');
 
         await BrowserVisibility.waitUntilElementHasText(uploadDialog.title, 'Upload canceled');
