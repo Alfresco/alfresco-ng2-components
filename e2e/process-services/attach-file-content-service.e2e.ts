@@ -133,7 +133,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileTwo.name);
     });
 
-    it('[C246522]  Attach file - Local file', async () => {
+    it('[C246522] Attach file - Local file', async () => {
         const name = 'Attach local file';
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
@@ -156,6 +156,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
+        await externalNodeSelector.waitForLogInDialog();
         await expect(await externalNodeSelector.getTitle()).toEqual(`Sign into '${browser.params.testConfig.adf_external_acs.host}'`);
         await externalNodeSelector.login(user.email, user.password);
 
@@ -188,7 +189,9 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[1]);
 
-        await externalNodeSelector.checkDialogIsDisplayed();
+        await externalNodeSelector.waitForLogInDialog();
+        await externalNodeSelector.login(user.email, user.password);
+
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
