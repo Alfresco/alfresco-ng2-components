@@ -75,8 +75,8 @@ describe('Process List - Pagination when adding processes', () => {
         let page = 1;
 
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        await processFiltersPage.dataTable.waitTillContentLoaded();
         await processDetailsPage.checkProcessTitleIsDisplayed();
-        await processFiltersPage.waitForTableBody();
 
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + page);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
