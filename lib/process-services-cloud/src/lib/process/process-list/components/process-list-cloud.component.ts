@@ -91,10 +91,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     lastModifiedTo: string = '';
 
-    /** Filter the processes. Display only process with createdDate equal to the supplied date. */
-    @Input()
-    createdDate: string = '';
-
     /** Filter the processes. Display only process with startedDate greater then the supplied date. */
     @Input()
     startFrom: string = '';
@@ -332,7 +328,6 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             lastModifiedTo: this.lastModifiedTo,
             startFrom: this.startFrom,
             startTo: this.startTo,
-            createdDate: this.createdDate,
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);
