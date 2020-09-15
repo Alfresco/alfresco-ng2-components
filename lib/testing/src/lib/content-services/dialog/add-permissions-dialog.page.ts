@@ -97,7 +97,7 @@ export class AddPermissionsDialogPage {
     }
 
     async getPermissionInheritedButtonText(text: string): Promise<void> {
-        BrowserVisibility.waitUntilElementHasText(this.permissionInheritedButton, text);
+        await BrowserVisibility.waitUntilElementHasText(this.permissionInheritedButton, text);
     }
 
     async checkPermissionsDatatableIsDisplayed(): Promise<void> {

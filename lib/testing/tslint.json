@@ -1,6 +1,7 @@
 {
   "extends": "../tslint.json",
   "rules": {
+    "no-floating-promises": true,
     "directive-selector": [
       true,
       "attribute",

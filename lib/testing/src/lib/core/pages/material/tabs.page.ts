@@ -35,12 +35,12 @@ export class TabsPage {
     }
 
     async getNoOfTabs(): Promise<number> {
-        BrowserVisibility.waitUntilElementIsVisible(this.tabs.first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.tabs.first());
         return this.tabs.count();
     }
 
     async getTabsLabels(): Promise<string> {
-        BrowserVisibility.waitUntilElementIsVisible(this.tabs.first());
+        await BrowserVisibility.waitUntilElementIsVisible(this.tabs.first());
         return this.tabs.getText();
     }
 }

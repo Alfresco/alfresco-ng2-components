@@ -33,7 +33,9 @@ export class AttachmentListPage {
     }
 
     async clickAttachFileButton(fileLocation: string): Promise<void> {
+        await browser.sleep(500);
         await BrowserVisibility.waitUntilElementIsPresent(this.attachFileButton);
+        await BrowserVisibility.waitUntilElementIsClickable(element(by.id('add_new_process_content_button')));
         await this.attachFileButton.sendKeys(path.resolve(path.join(browser.params.testConfig.main.rootPath, fileLocation)));
     }
 
