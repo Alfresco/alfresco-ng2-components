@@ -16,11 +16,13 @@
 
 <div id="adf-attach-widget-readonly-list">
     <mat-list *ngIf="hasFile">
-        <mat-list-item class="adf-attach-files-row" *ngFor="let file of uploadedFiles">
-            <img mat-list-icon class="adf-attach-widget__icon" [id]="'file-'+file?.id+'-icon'"
+        <mat-list-item
+            [ngClass]="{'adf-attach-files-row': true, 'adf-attach-selected-file-row': displayMenuOption('retrieveMetadata') && file.id === selectedNode.id}"
+            *ngFor="let file of uploadedFiles">
+            <img mat-list-icon class="adf-attach-widget__icon" [id]="'file-'+file?.id+'-icon'" (click)="contentModelFormFileHandler(file)"
                 [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)" [alt]="mimeTypeIcon"
                 role="button" tabindex="0" />
-            <span matLine id="{{'file-'+file?.id}}" role="button" tabindex="0" class="adf-file">{{file.name}}</span>
+            <span matLine id="{{'file-'+file?.id}}" role="button" tabindex="0" class="adf-file" (click)="contentModelFormFileHandler(file)">{{file.name}}</span>
             <button id="{{'file-'+file?.id+'-option-menu'}}" mat-icon-button [matMenuTriggerFor]="fileActionMenu">
                 <mat-icon>more_vert</mat-icon>
             </button>
@@ -36,7 +38,7 @@
                     <span>{{ 'FORM.FIELD.DOWNLOAD_FILE' | translate }}</span>
                 </button>
                 <button *ngIf="displayMenuOption('retrieveMetadata')" id="{{'file-'+file?.id+'-retrieve-file-metadata'}}"
-                        mat-menu-item (click)="onRetrieveFileMetadata(file);">
+                        mat-menu-item (click)="contentModelFormFileHandler(file)">
                     <mat-icon class="mat-24">low_priority</mat-icon>
                     <span>{{ 'ADF_CLOUD_FORM_COMPONENT.RETRIEVE_METADATA' | translate }}</span>
                 </button>

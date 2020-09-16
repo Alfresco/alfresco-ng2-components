@@ -31,6 +31,7 @@ import { ProcessVariableModel } from './process-variable.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validator';
 import { FormFieldTemplates } from './form-field-templates';
+import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 
 export interface FormRepresentationModel {
     [key: string]: any;
@@ -384,8 +385,12 @@ export class FormModel {
             }
         });
         const data = [];
-        const fields = Object.keys(this.values);
-        fields.forEach(field => data.push({ name: field, value: this.values[field] }));
+        this.getFormFields().forEach(field => {
+            if (this.values[field.id]) {
+                field.value = this.values[field.id];
+                data.push({ name: field.id, value: this.values[field.id] });
+            }
+        });
         return data;
     }
 
@@ -394,5 +399,18 @@ export class FormModel {
             return typeof this.values[key] === 'string' ? this.values[key] === 'empty' : Object.keys(this.values[key]).length === 0;
         }
         return false;
+    }
+
+    setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel): { name: string; value: any }[] {
+        const data = [];
+        const subscribedViewers = this.getFormFields().filter(field =>
+            field.type === FormFieldTypes.FILE_VIEWER && linkedUploadWidgetContentSelected.uploadWidgetId === field?.params['uploadWidget']
+        );
+        subscribedViewers?.forEach(viewer => {
+            viewer.value = linkedUploadWidgetContentSelected.id;
+            this.values[viewer.id] = linkedUploadWidgetContentSelected.id;
+            data.push({ name: viewer.id, value: this.values[viewer.id] });
+        });
+        return data;
     }
 }

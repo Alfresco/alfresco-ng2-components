@@ -61,7 +61,7 @@ export interface Container {
 }
 
 export type FormFieldRepresentation = (DateField | DateTimeField | TextField | AttachFileField | DropDownField |
-    RadioField | TypeaheadField | PeopleField | AmountField | NumberField | CheckboxField | HyperlinkField | NumberField);
+    RadioField | TypeaheadField | PeopleField | AmountField | NumberField | CheckboxField | HyperlinkField );
 
 export interface AttachFileField extends FormField {
     required: boolean;
@@ -229,5 +229,6 @@ export enum FormFieldType {
     uploadFile = 'upload',
     uploadFolder = 'uploadFolder',
     displayValue = 'readonly',
-    displayText = 'readonly-text'
+    displayText = 'readonly-text',
+    fileViewer = 'file-viewer'
 }

@@ -39,6 +39,7 @@ import { FormRendererComponent } from './components/form-renderer.component';
 import { EditJsonDialogModule } from '../dialogs/edit-json/edit-json.dialog.module';
 import { A11yModule } from '@angular/cdk/a11y';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ViewerModule } from '../viewer/viewer.module';
 
 @NgModule({
     imports: [
@@ -55,7 +56,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         PipeModule,
         MatDatetimepickerModule,
         MatNativeDatetimeModule,
-        EditJsonDialogModule
+        EditJsonDialogModule,
+        ViewerModule
     ],
     declarations: [
         ContentWidgetComponent,

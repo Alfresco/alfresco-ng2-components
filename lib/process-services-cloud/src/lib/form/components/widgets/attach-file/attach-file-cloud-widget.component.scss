@@ -1,5 +1,4 @@
 .adf {
-
     &-attach-widget-container {
         margin-bottom: 15px;
         display: flex;
@@ -70,4 +69,13 @@
         }
     }
 
+    &-attach-selected-file-row {
+        div.mat-list-item-content > div.mat-list-text > span.adf-file {
+            font-weight: bolder;
+        }
+
+        .mat-line {
+            margin-bottom: 0;
+        }
+    }
 }

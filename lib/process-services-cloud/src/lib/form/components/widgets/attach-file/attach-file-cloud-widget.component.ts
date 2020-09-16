@@ -25,7 +25,9 @@ import {
   NotificationService,
   FormValues,
   ContentLinkModel,
-  AppConfigService
+  AppConfigService,
+  AlfrescoApiService,
+  UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -55,9 +57,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     static ALIAS_USER_FOLDER = '-my-';
     static APP_NAME = '-appname-';
     static VALID_ALIAS = ['-root-', AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, '-shared-'];
+    static RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
     typeId = 'AttachFileCloudWidgetComponent';
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
+    selectedNode: Node;
 
     constructor(
         formService: FormService,
@@ -66,9 +70,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
-        private appConfigService: AppConfigService
+        private appConfigService: AppConfigService,
+        private apiService: AlfrescoApiService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.hasFile) {
+            const files = this.field.value || this.field.form.values[this.field.id];
+            this.contentModelFormFileHandler(files[0]);
+        }
     }
 
     isAlfrescoAndLocal(): boolean {
@@ -85,6 +98,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
+        this.contentModelFormFileHandler();
     }
 
     fetchAppNameFromAppConfig(): string {
@@ -115,6 +129,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
                 this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
+                this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
             });
     }
 
@@ -152,20 +167,26 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     displayMenuOption(option: string): boolean {
-        return this.field.params.menuOptions ? this.field.params.menuOptions[option] : option !== 'retrieveMetadata';
+        return this.field.params.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
     }
 
-    onRetrieveFileMetadata(file: Node) {
-        const values: FormValues = {};
-        const metadata = file?.properties;
-        if (metadata) {
-            const keys = Object.keys(metadata);
-            keys.forEach(key => {
-                const sanitizedKey = key.replace(':', '_');
-                values[sanitizedKey] = metadata[key];
+    contentModelFormFileHandler(file?: Node) {
+        if (file?.id && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
+            const values: FormValues = {};
+            this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
+                const metadata = acsNode?.entry?.properties;
+                if (metadata) {
+                    const keys = Object.keys(metadata);
+                    keys.forEach(key => {
+                        const sanitizedKey = key.replace(':', '_');
+                        values[sanitizedKey] = metadata[key];
+                    });
+                    this.formService.updateFormValuesRequested.next(values);
+                }
             });
-            this.formService.updateFormValuesRequested.next(values);
         }
+        this.selectedNode = file;
+        this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
     }
 
     isValidAlias(alias: string): boolean {

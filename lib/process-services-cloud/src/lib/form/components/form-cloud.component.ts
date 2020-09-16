@@ -32,7 +32,8 @@ import {
     FormFieldValidator,
     FormValues,
     FormModel,
-    ContentLinkModel
+    ContentLinkModel,
+    UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import { FormCloudService } from '../services/form-cloud.service';
 import { TaskVariableCloud } from '../models/task-variable-cloud.model';
@@ -110,14 +111,25 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formService.formContentClicked
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((content) => {
-                this.formContentClicked.emit(content);
+                if (content instanceof UploadWidgetContentLinkModel) {
+                    const viewerData = this.form.setNodeIdValueForViewersLinkedToUploadWidget(content);
+                    viewerData?.forEach(vData => {
+                        const index = this.data.findIndex(data => data.name === vData.name);
+                        if (index >= 0) {
+                            this.data[index] = vData;
+                        } else {
+                            this.data.push(vData);
+                        }
+                    });
+                } else {
+                    this.formContentClicked.emit(content);
+                }
             });
 
         this.formService.updateFormValuesRequested
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((valuesToSetIfNotPresent) => {
                 this.data = this.form.addValuesNotPresent(valuesToSetIfNotPresent);
-                this.refreshFormData();
             });
     }
 
@@ -219,7 +231,7 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             .getForm(appName, formId, appVersion)
             .pipe(
                 map((form: any) => {
-                    const flattenForm = {...form.formRepresentation, ...form.formRepresentation.formDefinition};
+                    const flattenForm = { ...form.formRepresentation, ...form.formRepresentation.formDefinition };
                     delete flattenForm.formDefinition;
                     return flattenForm;
                 }),
