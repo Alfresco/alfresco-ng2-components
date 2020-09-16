@@ -1,20 +1,20 @@
 {
   "$schema": "../../lib/core/app-config/schema.json",
-  "ecmHost": "https://aaedev.envalfresco.com",
+  "ecmHost": "{protocol}//{hostname}{:port}",
   "bpmHost": "{protocol}//{hostname}{:port}",
   "identityHost": "{protocol}//{hostname}{:port}/auth/admin/realms/alfresco",
   "loginRoute": "login",
   "providers": "ALL",
   "contextRootBpm": "activiti-app",
-  "authType": "OAUTH",
+  "authType": "BASIC",
   "locale": "en",
   "notificationDefaultDuration": 2000,
   "auth": {
     "withCredentials": false
   },
   "oauth2": {
-    "host": "https://aaedev.envalfresco.com/auth/realms/alfresco",
-    "clientId": "content-form-test",
+    "host": "{protocol}//{hostname}{:port}/auth/realms/alfresco",
+    "clientId": "alfresco",
     "scope": "openid",
     "secret": "",
     "implicitFlow": true,
