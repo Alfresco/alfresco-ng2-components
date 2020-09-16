@@ -53,7 +53,7 @@ describe('ContentNodeSelectorService', () => {
     });
 
     it('should have the proper main query for search string', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.query).toEqual({
             query: 'nuka cola quantum*'
@@ -61,75 +61,75 @@ describe('ContentNodeSelectorService', () => {
     });
 
     it('should make it including the path and allowableOperations', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.include).toEqual(['path', 'allowableOperations', 'properties']);
     });
 
     it('should make the search restricted to nodes only', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.scope.locations).toEqual(['nodes']);
     });
 
     it('should set the maxItems and paging properly by parameters', () => {
-        service.search('nuka cola quantum', null, 10, 100);
+        service.searchByContent('nuka cola quantum', null, 10, 100);
 
         expect(search.query.paging.maxItems).toEqual(100);
         expect(search.query.paging.skipCount).toEqual(10);
     });
 
     it('should set the maxItems and paging properly by default', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.paging.maxItems).toEqual(25);
         expect(search.query.paging.skipCount).toEqual(0);
     });
 
     it('should filter the search for folders', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.filterQueries).toContain({ query: "TYPE:'cm:folder'" });
     });
 
     it('should filter the search for files', () => {
-        service.search('nuka cola quantum', null, 0, 25, [], true);
+        service.searchByContent('nuka cola quantum', null, 0, 25, [], true);
 
         expect(search.query.filterQueries).toContain({ query: "TYPE:'cm:folder' OR TYPE:'cm:content'" });
     });
 
     it('should filter out the "system-base" entries', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.filterQueries).toContain({ query: 'NOT cm:creator:System' });
     });
 
     it('should filter for the provided ancestor if defined', () => {
-        service.search('nuka cola quantum', 'diamond-city');
+        service.searchByContent('nuka cola quantum', 'diamond-city');
 
         expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\'' });
     });
 
     it('should NOT filter for the ancestor if NOT defined', () => {
-        service.search('nuka cola quantum');
+        service.searchByContent('nuka cola quantum');
 
         expect(search.query.filterQueries).not.toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/null\'' });
     });
 
     it('should filter for the extra provided ancestors if defined', () => {
-        service.search('nuka cola quantum', 'diamond-city', 0, 25, ['extra-diamond-city']);
+        service.searchByContent('nuka cola quantum', 'diamond-city', 0, 25, ['extra-diamond-city']);
 
         expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\' OR ANCESTOR:\'workspace://SpacesStore/extra-diamond-city\'' });
     });
 
     it('should NOT filter for extra ancestors if an empty list of ids is provided', () => {
-        service.search('nuka cola quantum', 'diamond-city', 0, 25, []);
+        service.searchByContent('nuka cola quantum', 'diamond-city', 0, 25, []);
 
         expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\'' });
     });
 
     it('should NOT filter for the extra provided ancestor if it\'s the same as the rootNodeId', () => {
-        service.search('nuka cola quantum', 'diamond-city', 0, 25, ['diamond-city']);
+        service.searchByContent('nuka cola quantum', 'diamond-city', 0, 25, ['diamond-city']);
 
         expect(search.query.filterQueries).toContain({ query: 'ANCESTOR:\'workspace://SpacesStore/diamond-city\'' });
     });

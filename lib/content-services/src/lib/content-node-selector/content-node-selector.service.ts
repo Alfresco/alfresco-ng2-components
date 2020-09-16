@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { SearchService } from '@alfresco/adf-core';
+import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
-import { ResultSetPaging } from '@alfresco/js-api';
-import { Observable } from 'rxjs';
+import { BaseQueryBuilderService } from '../search/base-query-builder.service';
+import { QueryBody } from '@alfresco/js-api';
 
 /**
  * Internal service used by ContentNodeSelector component.
@@ -26,9 +26,20 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class ContentNodeSelectorService {
+export class ContentNodeSelectorService extends BaseQueryBuilderService {
 
-    constructor(private searchService: SearchService) {
+    query: QueryBody;
+
+    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
+        super(appConfig, alfrescoApiService);
+    }
+
+    public isFilterServiceActive(): boolean {
+        return true;
+    }
+
+    loadConfiguration(): any {
+        return [];
     }
 
     /**
@@ -43,8 +54,12 @@ export class ContentNodeSelectorService {
      * and search is not supported for that alias, but can be performed on its corresponding nodes.
      * @param [showFiles]   shows the files in the dialog search result
      */
-    public search(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean): Observable<ResultSetPaging> {
+    public searchByContent(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean) {
+        this.query = this.createQuery(searchTerm, rootNodeId, skipCount, maxItems, extraNodeIds, showFiles);
+        this.execute();
+    }
 
+    createQuery(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean): QueryBody {
         let extraParentFiltering = '';
 
         if (extraNodeIds && extraNodeIds.length) {
@@ -57,7 +72,7 @@ export class ContentNodeSelectorService {
 
         const parentFiltering = rootNodeId ? [{ query: `ANCESTOR:'workspace://SpacesStore/${rootNodeId}'${extraParentFiltering}` }] : [];
 
-        const defaultSearchNode: any = {
+        return {
             query: {
                 query: `${searchTerm}*`
             },
@@ -70,12 +85,13 @@ export class ContentNodeSelectorService {
                 { query: `TYPE:'cm:folder'${ showFiles ? " OR TYPE:'cm:content'" : '' }` },
                 { query: 'NOT cm:creator:System' },
                 ...parentFiltering
-            ],
-            scope: {
-                locations: ['nodes']
-            }
+            ]
         };
 
-        return this.searchService.searchByQueryBody(defaultSearchNode);
     }
+
+    buildQuery(): QueryBody {
+        return this.query;
+    }
+
 }

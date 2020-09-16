@@ -24,10 +24,13 @@ import { ContentNodeSelectorPanelComponent } from './content-node-selector-panel
 import { ContentNodeSelectorComponent } from './content-node-selector.component';
 import { SitesDropdownModule } from '../site-dropdown/sites-dropdown.module';
 import { BreadcrumbModule } from '../breadcrumb/breadcrumb.module';
+import { SearchModule } from '../search/search.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 import { UploadModule } from '../upload/upload.module';
+import { SearchPanelQueryBuilderService } from '../search/search-panel-query-builder.service';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
 
 @NgModule({
     imports: [
@@ -38,6 +41,7 @@ import { UploadModule } from '../upload/upload.module';
         MaterialModule,
         SitesDropdownModule,
         BreadcrumbModule,
+        SearchModule,
         DocumentListModule,
         UploadModule
     ],
@@ -50,6 +54,7 @@ import { UploadModule } from '../upload/upload.module';
         ContentNodeSelectorPanelComponent,
         NameLocationCellComponent,
         ContentNodeSelectorComponent
-    ]
+    ],
+    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchPanelQueryBuilderService}]
 })
 export class ContentNodeSelectorModule {}

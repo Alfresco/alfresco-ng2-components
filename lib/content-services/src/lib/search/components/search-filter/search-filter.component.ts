@@ -77,7 +77,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
         this.queryBuilder.updated
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => this.queryBuilder.execute());
+            .subscribe((query) => this.queryBuilder.execute(query));
     }
 
     ngOnInit() {

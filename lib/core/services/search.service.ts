@@ -28,8 +28,8 @@ export class SearchService {
 
     dataLoaded: Subject<ResultSetPaging> = new Subject();
 
-    constructor(private apiService: AlfrescoApiService,
-                private searchConfigurationService: SearchConfigurationService) {
+    constructor(protected apiService: AlfrescoApiService,
+                protected searchConfigurationService: SearchConfigurationService) {
     }
 
     /**

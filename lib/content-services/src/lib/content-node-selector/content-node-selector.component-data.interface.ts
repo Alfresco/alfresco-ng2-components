@@ -25,6 +25,7 @@ export interface ContentNodeSelectorComponentData {
     dropdownHideMyFiles?: boolean;
     restrictRootToCurrentFolderId?: boolean;
     dropdownSiteList?: SitePaging;
+    customModels?: any [];
     rowFilter?: any;
     where?: string;
     imageResolver?: any;

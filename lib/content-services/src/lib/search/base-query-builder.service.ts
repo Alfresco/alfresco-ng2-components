@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable, from } from 'rxjs';
 import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import {
     QueryBody,
@@ -196,8 +196,8 @@ export abstract class BaseQueryBuilderService {
     /**
      * Builds the current query and triggers the `updated` event.
      */
-    update(): void {
-        const query = this.buildQuery();
+    update(queryBody?: QueryBody): void {
+        const query = queryBody ? queryBody : this.buildQuery();
         this.updated.next(query);
     }
 
@@ -205,9 +205,9 @@ export abstract class BaseQueryBuilderService {
      * Builds and executes the current query.
      * @returns Nothing
      */
-    async execute() {
+    async execute(queryBody?: QueryBody) {
         try {
-            const query = this.buildQuery();
+            const query = queryBody ? queryBody : this.buildQuery();
             if (query) {
                 const resultSetPaging: ResultSetPaging = await this.alfrescoApiService.searchApi.search(query);
                 this.executed.next(resultSetPaging);
@@ -224,6 +224,16 @@ export abstract class BaseQueryBuilderService {
                 }
             });
         }
+    }
+
+    search(queryBody: QueryBody): Observable<ResultSetPaging> {
+        const promise = this.alfrescoApiService.searchApi.search(queryBody);
+
+        promise.then((resultSetPaging) => {
+            this.executed.next(resultSetPaging);
+        });
+
+        return from(promise);
     }
 
     /**

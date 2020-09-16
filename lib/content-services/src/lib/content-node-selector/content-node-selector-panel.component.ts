@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
 import {
     HighlightDirective,
     UserPreferencesService,
@@ -37,6 +37,8 @@ import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
+import { SearchPanelQueryBuilderService } from '../search/search-panel-query-builder.service';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -69,6 +71,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     /** Node ID of the folder currently listed. */
     @Input()
     currentFolderId: string = null;
+
+    /** Node ID of the folder currently listed. */
+    @Input()
+    customModels: any [] = [];
 
     /** Hide the "My Files" option added to the site list by default.
      * See the [Sites Dropdown component](sites-dropdown.component.md)
@@ -230,6 +236,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN)
+                private queryBuilderService: SearchPanelQueryBuilderService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
@@ -252,6 +260,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe(searchValue => this.search(searchValue));
+
+        this.queryBuilderService.executed
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.showSearchResults.bind(this));
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
@@ -421,15 +433,13 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
-                        this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles)
-                            .subscribe(this.showSearchResults.bind(this));
-                    },
+                    this.contentNodeSelectorService.searchByContent(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles);
+                },
                     () => {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.search(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles)
-                .subscribe(this.showSearchResults.bind(this));
+            this.contentNodeSelectorService.searchByContent(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles);
         }
     }
 
