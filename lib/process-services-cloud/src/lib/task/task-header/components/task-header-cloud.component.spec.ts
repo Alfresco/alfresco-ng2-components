@@ -268,7 +268,7 @@ describe('TaskHeaderCloudComponent', () => {
             expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
 
-        it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', () => {
+        it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
