@@ -22,8 +22,10 @@ import {
     IntegrationService,
     LocalStorageUtil,
     LoginPage,
+    StringUtil,
     UserModel,
     UsersActions,
+    UploadActions,
     Widget
 } from '@alfresco/adf-testing';
 import { TasksPage } from './pages/tasks.page';
@@ -46,6 +48,7 @@ describe('Attach Folder', () => {
     const contentNodeSelector = new ContentNodeSelectorDialogPage();
 
     let user: UserModel;
+    const folderName = StringUtil.generateRandomString(5);
 
     beforeAll(async () => {
         await LocalStorageUtil.setStorageItem('providers', 'ALL');
@@ -60,6 +63,7 @@ describe('Attach Folder', () => {
         });
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
+        await new UploadActions(apiService).createFolder(folderName, '-my-');
         await loginPage.login(user.email, user.password);
     });
 
@@ -76,7 +80,7 @@ describe('Attach Folder', () => {
         const contentFileWidget = widget.attachFolderWidget();
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
 
-        await contentNodeSelector.searchAndSelectResult(user.email, user.email);
+        await contentNodeSelector.searchAndSelectResult(folderName, folderName);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
@@ -85,19 +89,19 @@ describe('Attach Folder', () => {
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
 
         await contentNodeSelector.clickCancelButton();
-        await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
+        await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
 
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
         await contentNodeSelector.checkDialogIsDisplayed();
 
-        await contentNodeSelector.searchAndSelectResult(user.email, user.email);
+        await contentNodeSelector.searchAndSelectResult(folderName, folderName);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
         await contentNodeSelector.clickMoveCopyButton();
-        await widget.attachFolderWidget().checkFolderIsAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
-        await widget.attachFolderWidget().removeFolder(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
+        await widget.attachFolderWidget().checkFolderIsAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
+        await widget.attachFolderWidget().removeFolder(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
         await taskPage.formFields().checkWidgetIsVisible(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
-        await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, user.email);
+        await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
     });
 });
