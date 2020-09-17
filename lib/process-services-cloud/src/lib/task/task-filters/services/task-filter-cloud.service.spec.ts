@@ -38,6 +38,7 @@ import {
 import { UserPreferenceCloudService } from '../../../services/user-preference-cloud.service';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 
 describe('TaskFilterCloudService', () => {
     let service: TaskFilterCloudService;
@@ -257,7 +258,7 @@ describe('Inject [LocalPreferenceCloudService] into the TaskFilterCloudService',
 
     it('should create default task filters if there are no task filter preferences', (done) => {
         const appName = 'fakeAppName';
-        service.getTaskListFilters(appName).subscribe((res) => {
+        service.getTaskListFilters(appName).subscribe((res: TaskFilterCloudModel[]) => {
             expect(res.length).toEqual(3);
 
             expect(res[0].name).toEqual('ADF_CLOUD_TASK_FILTERS.MY_TASKS');

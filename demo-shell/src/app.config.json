@@ -972,13 +972,19 @@
   "adf-edit-service-task-filter": {
     "filterProperties": [
       "appName",
-      "id",
+      "serviceTaskId",
       "activityName",
+      "activityType",
       "completedDate",
       "startedDate",
       "sort",
       "order",
-      "status"
+      "status",
+      "elementId",
+      "serviceName",
+      "processInstanceId",
+      "processDefinitionId",
+      "serviceName"
     ],
     "sortProperties": [
       "id",
@@ -1095,32 +1101,32 @@
         {
           "key": "entry.id",
           "type": "text",
-          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.ID",
+          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ID",
           "sortable": true
         },
         {
           "key": "entry.activityName",
           "type": "text",
-          "title": "Activity name",
+          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME",
           "sortable": true
         },
         {
           "key": "entry.status",
           "type": "text",
-          "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.STATUS",
+          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS",
           "sortable": true
         },
         {
           "key": "entry.startedDate",
           "type": "date",
-          "title": "Started date",
+          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE",
           "sortable": true,
           "format": "timeAgo"
         },
         {
           "key": "entry.completedDate",
           "type": "date",
-          "title": "Completed date",
+          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE",
           "sortable": true,
           "format": "timeAgo"
         }

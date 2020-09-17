@@ -22,7 +22,7 @@ import {
     PaginatedComponent, PaginationModel,
     DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent
 } from '@alfresco/adf-core';
-import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
+import { taskPresetsCloudDefaultModel, serviceTaskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { TaskQueryCloudRequestModel, ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
@@ -39,7 +39,8 @@ import { TaskType } from '../../task-filters/models/filter-cloud.model';
 
 export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
-    static PRESET_KEY = 'adf-cloud-service-task-list.presets';
+    static USER_TASKS_PRESET_KEY = 'adf-cloud-task-list.presets';
+    static SERVICE_TASKS_PRESET_KEY = 'adf-cloud-service-task-list.presets';
     static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -73,7 +74,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     lastModifiedTo: string = '';
 
-     /** Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. */
+    /** Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. */
     @Input()
     dueDateFrom: string = '';
 
@@ -161,7 +162,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     /** Task type: userTask | serviceTask */
     @Input()
-    taskType = TaskType.UserTask;
+    taskType: string = TaskType.UserTask;
 
     /** An object that contains properties used to query the task list */
     @Input()
@@ -212,7 +213,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
+        super(appConfigService, TaskListCloudComponent.USER_TASKS_PRESET_KEY, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
@@ -228,6 +229,12 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(pageSize => this.size = pageSize);
+
+        if (this.taskType === TaskType.ServiceTask) {
+            super.presetKey =  TaskListCloudComponent.SERVICE_TASKS_PRESET_KEY;
+            super.presetsModel = serviceTaskPresetsCloudDefaultModel;
+            super.loadLayoutPresets();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -368,7 +375,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
         if (this.taskType === TaskType.UserTask) {
             return this.createUserTaskRequest();
         } else {
-           return this.createServiceTaskRequest();
+            return this.createServiceTaskRequest();
         }
     }
 
@@ -403,6 +410,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     createServiceTaskRequest() {
         const requestNode = {
             appName: this.appName,
+            id: this.queryParams.serviceTaskId,
             activityName: this.queryParams.activityName,
             activityType: this.queryParams.activityType,
             completedDate: this.queryParams.completedDate,

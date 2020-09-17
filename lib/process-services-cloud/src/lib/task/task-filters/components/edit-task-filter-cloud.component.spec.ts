@@ -38,6 +38,7 @@ import { AbstractControl } from '@angular/forms';
 import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -68,11 +69,13 @@ describe('EditTaskFilterCloudComponent', () => {
         appsService = TestBed.inject(AppsProcessCloudService);
         taskService = TestBed.inject(TaskCloudService);
         dialog = TestBed.inject(MatDialog);
-        spyOn(dialog, 'open').and.returnValue({ afterClosed: of({
-            action: TaskFilterDialogCloudComponent.ACTION_SAVE,
-            icon: 'icon',
-            name: 'fake-name'
-        }) });
+        spyOn(dialog, 'open').and.returnValue({
+            afterClosed: of({
+                action: TaskFilterDialogCloudComponent.ACTION_SAVE,
+                icon: 'icon',
+                name: 'fake-name'
+            })
+        });
         getTaskFilterSpy = spyOn(service, 'getTaskFilterById').and.returnValue(of(fakeFilter));
         getRunningApplicationsSpy = spyOn(appsService, 'getDeployedApplicationsByStatus').and.returnValue(of(fakeApplicationInstance));
         fixture.detectChanges();
@@ -172,7 +175,7 @@ describe('EditTaskFilterCloudComponent', () => {
             expect(component.editTaskFilterForm).toBeDefined();
         });
 
-        it('should create editTaskFilter form with default properties', async(() => {
+        it('should create editTaskFilter form with default user task properties', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 const stateController = component.editTaskFilterForm.get('status');
@@ -187,6 +190,24 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(assigneeController.value).toBe('fake-involved');
             });
         }));
+
+        it('should emit ServiceTaskFilterCloudModel when the taskType is set to serviceTask', (done) => {
+            component.appName = 'fake';
+            component.taskType = 'serviceTask';
+            component.filterProperties = ['appName', 'status'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const statusControl: AbstractControl = component.editTaskFilterForm.get('status');
+            statusControl.setValue('COMPLETED');
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter instanceof ServiceTaskFilterCloudModel).toBeTruthy();
+                done();
+            });
+            component.onFilterChange();
+        });
 
         describe('Save & Delete buttons', () => {
             it('should disable save and delete button for default task filters', async(() => {
@@ -244,13 +265,13 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editTaskFilterForm.valueChanges
-                .pipe(debounceTime(300))
-                .subscribe(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toBe(false);
-                    done();
-                });
+                    .pipe(debounceTime(300))
+                    .subscribe(() => {
+                        const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-save"]');
+                        fixture.detectChanges();
+                        expect(saveButton.disabled).toBe(false);
+                        done();
+                    });
 
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
@@ -330,13 +351,13 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editTaskFilterForm.valueChanges
-                .pipe(debounceTime(300))
-                .subscribe(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                });
+                    .pipe(debounceTime(300))
+                    .subscribe(() => {
+                        const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                        fixture.detectChanges();
+                        expect(saveButton.disabled).toEqual(false);
+                        done();
+                    });
 
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
@@ -354,13 +375,13 @@ describe('EditTaskFilterCloudComponent', () => {
                 fixture.detectChanges();
 
                 component.editTaskFilterForm.valueChanges
-                .pipe(debounceTime(300))
-                .subscribe(() => {
-                    const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
-                    fixture.detectChanges();
-                    expect(saveButton.disabled).toEqual(false);
-                    done();
-                });
+                    .pipe(debounceTime(300))
+                    .subscribe(() => {
+                        const saveButton = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-filter-action-saveAs"]');
+                        fixture.detectChanges();
+                        expect(saveButton.disabled).toEqual(false);
+                        done();
+                    });
 
                 const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-task-property-sort"] .mat-select-trigger');
                 stateElement.click();
@@ -657,7 +678,9 @@ describe('EditTaskFilterCloudComponent', () => {
             });
 
             component.filterChange.subscribe(() => {
-                expect(component.changedTaskFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                if (component.changedTaskFilter instanceof TaskFilterCloudModel) {
+                    expect(component.changedTaskFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                }
                 done();
             });
             component.onFilterChange();
@@ -764,7 +787,7 @@ describe('EditTaskFilterCloudComponent', () => {
 
         it('should not call restore default filters service on deletion of first filter', async(() => {
             component.toggleFilterActions = true;
-            spyOn(service, 'deleteFilter').and.returnValue(of([{ name: 'mock-filter-name'}]));
+            spyOn(service, 'deleteFilter').and.returnValue(of([{ name: 'mock-filter-name' }]));
             const restoreDefaultFiltersSpy = spyOn(component, 'restoreDefaultTaskFilters').and.returnValue(of([]));
             fixture.detectChanges();
             const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');

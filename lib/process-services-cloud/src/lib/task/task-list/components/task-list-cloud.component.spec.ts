@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { AppConfigService, setupTestBed, DataRowEvent, ObjectDataRow } from '@alfresco/adf-core';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudComponent } from './task-list-cloud.component';
-import { fakeGlobalTask, fakeCustomSchema } from '../mock/fake-task-response.mock';
+import { fakeGlobalTask, fakeCustomSchema, fakeServiceTask } from '../mock/fake-task-response.mock';
 import { of } from 'rxjs';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { Person } from '@alfresco/js-api';
@@ -50,7 +50,7 @@ class CustomTaskListComponent {
     getFullName(person: Person): string {
         return `${person.firstName} ${person.lastName}`;
     }
- }
+}
 @Component({
     template: `
     <adf-cloud-task-list>
@@ -130,7 +130,7 @@ describe('TaskListCloudComponent', () => {
     });
 
     it('should display empty content when process list is empty', () => {
-        const emptyList = {list: {entries: []}};
+        const emptyList = { list: { entries: [] } };
         spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
 
         fixture.detectChanges();
@@ -254,6 +254,34 @@ describe('TaskListCloudComponent', () => {
         component.onRowClick(rowEvent);
     });
 
+    it('should display service task list when typeTask is set to serviceTask', () => {
+        component.taskType = 'serviceTask';
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(component.columns).toBeDefined();
+        expect(component.columns.length).toEqual(4);
+    });
+
+    it('should load the service task list when input parameters changed', () => {
+        const getServiceTaskByRequestSpy = spyOn(taskListCloudService, 'getServiceTaskByRequest').and.returnValue(of(fakeServiceTask));
+        component.appName = 'mock-app-name';
+        component.priority = 1;
+        component.status = 'mock-status';
+        component.lastModifiedFrom = 'mock-lastmodified-date';
+        component.owner = 'mock-owner-name';
+
+        component.taskType = 'serviceTask';
+        component.ngOnInit();
+
+        const queryParams = new SimpleChange(undefined, {
+            activityName: 'service1'
+        }, true);
+        component.ngOnChanges({ queryParams });
+        fixture.detectChanges();
+        expect(component.isListEmpty()).toBeFalsy();
+        expect(getServiceTaskByRequestSpy).toHaveBeenCalled();
+    });
+
     describe('component changes', () => {
 
         beforeEach(() => {
@@ -341,14 +369,14 @@ describe('TaskListCloudComponent', () => {
             const size = component.size;
             const skipCount = component.skipCount;
             component.pagination.pipe(skip(3))
-            .subscribe((updatedPagination) => {
+                .subscribe((updatedPagination) => {
                     fixture.detectChanges();
                     expect(component.size).toBe(size);
                     expect(component.skipCount).toBe(skipCount);
                     expect(updatedPagination.maxItems).toEqual(size);
                     expect(updatedPagination.skipCount).toEqual(skipCount);
                     done();
-            });
+                });
 
             const pagination = {
                 maxItems: 250,
@@ -371,14 +399,14 @@ describe('TaskListCloudComponent', () => {
                 skipCount: 200
             };
             component.pagination.pipe(skip(1))
-            .subscribe((updatedPagination) => {
+                .subscribe((updatedPagination) => {
                     fixture.detectChanges();
                     expect(component.size).toBe(pagination.maxItems);
                     expect(component.skipCount).toBe(pagination.skipCount);
                     expect(updatedPagination.maxItems).toEqual(pagination.maxItems);
                     expect(updatedPagination.skipCount).toEqual(pagination.skipCount);
                     done();
-            });
+                });
 
             component.updatePagination(pagination);
         });
@@ -442,7 +470,7 @@ describe('TaskListCloudComponent', () => {
 
         it('it should not show copy tooltip when key is not present in data-column', (done) => {
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            customCopyComponent.taskList.success.subscribe( () => {
+            customCopyComponent.taskList.success.subscribe(() => {
                 copyFixture.whenStable().then(() => {
                     copyFixture.detectChanges();
                     const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
@@ -456,13 +484,13 @@ describe('TaskListCloudComponent', () => {
             customCopyComponent.taskList.ngOnChanges({ 'appName': appName });
             copyFixture.detectChanges();
         });
-   });
+    });
 
     describe('Creating an empty custom template - EmptyTemplateComponent', () => {
         let fixtureEmpty: ComponentFixture<EmptyTemplateComponent>;
 
         beforeEach(() => {
-            const emptyList = {list: {entries: []}};
+            const emptyList = { list: { entries: [] } };
             spyOn(taskListCloudService, 'getTaskByRequest').and.returnValue(of(emptyList));
 
             fixtureEmpty = TestBed.createComponent(EmptyTemplateComponent);
@@ -498,7 +526,7 @@ describe('TaskListCloudComponent', () => {
             ]
         });
 
-        beforeEach( () => {
+        beforeEach(() => {
             appConfig = TestBed.inject(AppConfigService);
             taskListCloudService = TestBed.inject(TaskListCloudService);
             appConfig.config = Object.assign(appConfig.config, {
@@ -536,7 +564,7 @@ describe('TaskListCloudComponent', () => {
             taskSpy.and.returnValue(of(fakeGlobalTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
 
-            component.success.subscribe( () => {
+            component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="11fe013d-c263-11e8-b75b-0a5864600540"]');
@@ -555,7 +583,7 @@ describe('TaskListCloudComponent', () => {
         it('shoud not show tooltip if config copyContent flag is true', async(() => {
             taskSpy.and.returnValue(of(fakeGlobalTask));
             const appName = new SimpleChange(null, 'FAKE-APP-NAME', true);
-            component.success.subscribe( () => {
+            component.success.subscribe(() => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     const spanHTMLElement: HTMLInputElement = <HTMLInputElement> element.querySelector('span[title="standalone-subtask"]');
