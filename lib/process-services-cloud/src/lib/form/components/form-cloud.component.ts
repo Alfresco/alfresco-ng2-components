@@ -112,15 +112,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((content) => {
                 if (content instanceof UploadWidgetContentLinkModel) {
-                    const viewerData = this.form.setNodeIdValueForViewersLinkedToUploadWidget(content);
-                    viewerData?.forEach(vData => {
-                        const index = this.data.findIndex(data => data.name === vData.name);
-                        if (index >= 0) {
-                            this.data[index] = vData;
-                        } else {
-                            this.data.push(vData);
-                        }
-                    });
+                    this.form.setNodeIdValueForViewersLinkedToUploadWidget(content);
+                    this.onFormDataRefreshed(this.form);
                 } else {
                     this.formContentClicked.emit(content);
                 }
@@ -129,7 +122,8 @@ export class FormCloudComponent extends FormBaseComponent implements OnChanges, 
         this.formService.updateFormValuesRequested
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((valuesToSetIfNotPresent) => {
-                this.data = this.form.addValuesNotPresent(valuesToSetIfNotPresent);
+                this.form.addValuesNotPresent(valuesToSetIfNotPresent);
+                this.onFormDataRefreshed(this.form);
             });
     }
 

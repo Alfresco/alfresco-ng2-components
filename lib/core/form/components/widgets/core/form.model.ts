@@ -377,21 +377,14 @@ export class FormModel {
         }
     }
 
-    addValuesNotPresent(valuesToSetIfNotPresent: FormValues): { name: string; value: any }[] {
-        const keys = Object.keys(valuesToSetIfNotPresent);
-        keys.forEach(key => {
-            if (!this.values[key] || this.isEmptyDropdownOption(key)) {
-                this.values[key] = valuesToSetIfNotPresent[key];
-            }
-        });
-        const data = [];
+    addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {
         this.getFormFields().forEach(field => {
-            if (this.values[field.id]) {
-                field.value = this.values[field.id];
-                data.push({ name: field.id, value: this.values[field.id] });
+            if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isEmptyDropdownOption(field.id))) {
+                this.values[field.id] = valuesToSetIfNotPresent[field.id];
+                field.json.value = this.values[field.id];
+                field.value = field.parseValue(field.json);
             }
         });
-        return data;
     }
 
     private isEmptyDropdownOption(key: string): boolean {
@@ -401,16 +394,14 @@ export class FormModel {
         return false;
     }
 
-    setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel): { name: string; value: any }[] {
-        const data = [];
+    setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
         const subscribedViewers = this.getFormFields().filter(field =>
             field.type === FormFieldTypes.FILE_VIEWER && linkedUploadWidgetContentSelected.uploadWidgetId === field?.params['uploadWidget']
         );
         subscribedViewers?.forEach(viewer => {
-            viewer.value = linkedUploadWidgetContentSelected.id;
             this.values[viewer.id] = linkedUploadWidgetContentSelected.id;
-            data.push({ name: viewer.id, value: this.values[viewer.id] });
+            viewer.json.value = this.values[viewer.id];
+            viewer.value = viewer.parseValue(viewer.json);
         });
-        return data;
     }
 }

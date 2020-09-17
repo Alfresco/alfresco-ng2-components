@@ -17,7 +17,7 @@
 <div id="adf-attach-widget-readonly-list">
     <mat-list *ngIf="hasFile">
         <mat-list-item
-            [ngClass]="{'adf-attach-files-row': true, 'adf-attach-selected-file-row': displayMenuOption('retrieveMetadata') && file.id === selectedNode.id}"
+            [ngClass]="{'adf-attach-files-row': true, 'adf-attach-selected-file-row': displayMenuOption('retrieveMetadata') && selectedNode && file.id === selectedNode.id}"
             *ngFor="let file of uploadedFiles">
             <img mat-list-icon class="adf-attach-widget__icon" [id]="'file-'+file?.id+'-icon'" (click)="contentModelFormFileHandler(file)"
                 [src]="file.content ? getIcon(file.content.mimeType) : getIcon(file.mimeType)" [alt]="mimeTypeIcon"

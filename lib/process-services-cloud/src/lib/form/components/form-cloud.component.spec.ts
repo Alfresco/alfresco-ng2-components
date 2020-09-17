@@ -1140,7 +1140,6 @@ describe('retrieve metadata on submit', () => {
         formComponent.form.values['pfx_property_five'] = 'green';
 
         const addValuesNotPresent = spyOn<any>(formComponent.form, 'addValuesNotPresent').and.callThrough();
-        const refreshFormSpy = spyOn<any>(formComponent, 'refreshFormData').and.stub();
 
         const values = {
             pfx_property_one: 'testValue',
@@ -1154,7 +1153,6 @@ describe('retrieve metadata on submit', () => {
         formService.updateFormValuesRequested.next(values);
 
         expect(addValuesNotPresent).toHaveBeenCalledWith(values);
-        expect(refreshFormSpy).toHaveBeenCalled();
         expect(formComponent.data).toContain({ name: 'pfx_property_one', value: 'testValue' });
         expect(formComponent.data).toContain({ name: 'pfx_property_two', value: true });
         expect(formComponent.data).toContain({ name: 'pfx_property_three', value: 'opt_1' });

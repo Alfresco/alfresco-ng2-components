@@ -19,15 +19,15 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-  FormService,
-  LogService,
-  ThumbnailService,
-  NotificationService,
-  FormValues,
-  ContentLinkModel,
-  AppConfigService,
-  AlfrescoApiService,
-  UploadWidgetContentLinkModel
+    FormService,
+    LogService,
+    ThumbnailService,
+    NotificationService,
+    FormValues,
+    ContentLinkModel,
+    AppConfigService,
+    AlfrescoApiService,
+    UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -78,7 +78,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     ngOnInit() {
         super.ngOnInit();
-        if (this.hasFile) {
+        if (this.hasFile && this.field.value.length === 1) {
             const files = this.field.value || this.field.form.values[this.field.id];
             this.contentModelFormFileHandler(files[0]);
         }
@@ -98,7 +98,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
-        this.contentModelFormFileHandler();
+        if (!this.field.value || this.field.value.length === 0) {
+            this.contentModelFormFileHandler();
+        }
     }
 
     fetchAppNameFromAppConfig(): string {
@@ -129,7 +131,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
                 this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
-                this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
+                if (this.field.value.length === 1) {
+                    this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
+                }
             });
     }
 
@@ -167,11 +171,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     displayMenuOption(option: string): boolean {
-        return this.field.params.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
+        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
     }
 
     contentModelFormFileHandler(file?: Node) {
-        if (file?.id && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
+        if (file?.id && this.field?.params?.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
             const values: FormValues = {};
             this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
                 const metadata = acsNode?.entry?.properties;

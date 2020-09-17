@@ -64,6 +64,12 @@
     }
 
     &-attach-files-row {
+
+
+        div.mat-list-item-content {
+            cursor: pointer;
+        }
+
         .mat-line {
             margin-bottom: 0;
         }
@@ -71,11 +77,7 @@
 
     &-attach-selected-file-row {
         div.mat-list-item-content > div.mat-list-text > span.adf-file {
-            font-weight: bolder;
-        }
-
-        .mat-line {
-            margin-bottom: 0;
+            font-style: italic;
         }
     }
 }
