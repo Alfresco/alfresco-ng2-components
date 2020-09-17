@@ -160,7 +160,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     taskType: string = TaskType.UserTask;
 
-    /** An object that contains properties used to query the task list */
+    /** An object that contains properties used to query the service task list */
     @Input()
     queryParams: any = {};
 

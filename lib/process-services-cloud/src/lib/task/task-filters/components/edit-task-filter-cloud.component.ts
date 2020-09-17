@@ -609,25 +609,25 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SERVICE_TASK_ID',
                 type: 'text',
                 key: 'serviceTaskId',
-                value: ''
+                value: currentTaskFilter.serviceTaskId || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ELEMENT_ID',
                 type: 'text',
                 key: 'elementId',
-                value: ''
+                value: currentTaskFilter.elementId || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ACTIVITY_NAME',
                 type: 'text',
                 key: 'activityName',
-                value: ''
+                value: currentTaskFilter.activityName || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ACTIVITY_TYPE',
                 type: 'text',
                 key: 'activityType',
-                value: ''
+                value: currentTaskFilter.activityType || ''
             }),
             new TaskFilterProperties({
                 label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SORT',
