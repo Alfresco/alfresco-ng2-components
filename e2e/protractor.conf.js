@@ -97,7 +97,8 @@ let specExists = function (listSpecs) {
 specs();
 
 exports.config = {
-    allScriptsTimeout: TIMEOUT,
+
+    allScriptsTimeout: 30000,
 
     specs: arraySpecs,
 
@@ -154,13 +155,14 @@ exports.config = {
         resources: RESOURCES
     },
 
-    framework: 'jasmine2',
+    framework: 'jasmine',
 
     getPageTimeout: 90000,
 
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 120000,
+        defaultTimeoutInterval: 180000,
+        includeStackTrace: true,
         print: () => {
         },
         ...smartRunner.withOptionalExclusions(

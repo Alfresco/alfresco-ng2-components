@@ -59,7 +59,7 @@ jobs:
             - ./scripts/lint.sh
             - ./scripts/travis/release/release-npm.sh
             - ./scripts/travis/release/release-docker.sh
-            
+
           after_success:
             - ./scripts/travis/release/release-docker.sh
             - ./scripts/ci/utils/artifact-to-s3.sh -a ./dist/demo-shell -o "$S3_DBP_FOLDER/alfresco-demoshell.tar.bz2"

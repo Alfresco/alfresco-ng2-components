@@ -109,6 +109,7 @@ describe('Delete Directive', () => {
     });
 
     describe('Handling multiselection', () => {
+
         beforeEach(async () => {
             await uploadActions.uploadFile(txtFileModel.location, txtFileModel.name, baseFolderUploaded.entry.id);
             await uploadActions.uploadFile(file0BytesModel.location, file0BytesModel.name, baseFolderUploaded.entry.id);

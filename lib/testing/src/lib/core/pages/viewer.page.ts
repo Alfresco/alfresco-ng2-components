@@ -114,19 +114,32 @@ export class ViewerPage {
         await this.waitTillContentLoaded();
     }
 
+
     async waitTillContentLoaded(): Promise<void> {
         await browser.sleep(500);
 
-        try {
-            if (await element(by.tagName('mat-spinner')).isPresent()) {
-                Logger.log('wait datatable loading spinner disappear');
-                await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
-            } else {
-                Logger.log('wait datatable loading spinner is present');
+        if (this.isSpinnerPresent()) {
+            Logger.log('wait spinner disappear');
+            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+        } else {
+            try {
+                Logger.log('wait spinner is present');
                 await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
+            } catch (error) {
             }
-        } catch (error) {
         }
+    }
+
+    private async isSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await element(by.tagName('mat-spinner')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
     }
 
     async clearPageNumber(): Promise<void> {
