@@ -20,7 +20,7 @@ import { TabsPage } from './material/tabs.page';
 import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, browser, protractor } from 'protractor';
-import { Logger } from '../../../..';
+import { Logger } from '../utils/logger';
 
 export class ViewerPage {
 
