@@ -513,6 +513,7 @@ export class DocumentListComponent implements OnInit, OnChanges, OnDestroy, Afte
             if (this.node) {
                 this.data.loadPage(this.node, this._pagination.merge, null, this.getPreselectNodesBasedOnSelectionMode());
                 this.onPreselectNodes();
+                this.syncPagination();
                 this.onDataReady(this.node);
             } else {
                 this.loadFolder();
