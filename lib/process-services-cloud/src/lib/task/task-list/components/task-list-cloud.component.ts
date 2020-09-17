@@ -227,8 +227,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             .subscribe(pageSize => this.size = pageSize);
 
         if (this.taskType === TaskType.ServiceTask) {
-            super.presetKey =  TaskListCloudComponent.SERVICE_TASKS_PRESET_KEY;
-            super.presetsModel = serviceTaskPresetsCloudDefaultModel;
+            super.setPresetKey(TaskListCloudComponent.SERVICE_TASKS_PRESET_KEY);
+            super.setPresetsModel(serviceTaskPresetsCloudDefaultModel);
             super.loadLayoutPresets();
         }
     }
