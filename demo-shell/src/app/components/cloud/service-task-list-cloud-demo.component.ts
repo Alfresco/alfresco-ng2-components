@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { TaskListCloudComponent, TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
@@ -31,11 +31,6 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_DELETE = 'delete';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-service-task-filter';
 
-    @ViewChild('taskCloud')
-    taskCloud: TaskListCloudComponent;
-
-    appName: string = 'simpleApp';
-
     isFilterLoaded = false;
 
     selectedRow: any;
@@ -44,7 +39,6 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     editedFilter: TaskFilterCloudModel;
     taskFilterProperties: any  = { filterProperties: [], sortProperties: [], actions: [] };
 
-    filterId;
     multiselect: boolean;
     selectedRows: string[] = [];
     actionMenu: boolean;
@@ -52,9 +46,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     actions: any[] = [];
     selectedAction: { id: number, name: string, actionType: string};
     selectedContextAction: { id: number, name: string, actionType: string};
-    testingMode: boolean;
     selectionMode: string;
-    taskDetailsRedirection: boolean;
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -84,9 +76,7 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     setCurrentSettings(settings) {
         if (settings) {
             this.multiselect = settings.multiselect;
-            this.testingMode = settings.testingMode;
             this.selectionMode = settings.selectionMode;
-            this.taskDetailsRedirection = settings.taskDetailsRedirection;
             this.actionMenu = settings.actionMenu;
             this.contextMenu = settings.contextMenu;
             this.actions = settings.actions;
