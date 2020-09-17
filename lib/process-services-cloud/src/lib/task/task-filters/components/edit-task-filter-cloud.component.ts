@@ -51,7 +51,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     public static SORT: string = 'sort';
     public static ORDER: string = 'order';
     public static DEFAULT_TASK_FILTER_PROPERTIES = ['status', 'assignee', 'sort', 'order'];
-    public static DEFAULT_SERVICE_TASK_FILTER_PROPERTIES = ['appName', 'id', 'activityName', 'activityType', 'status', 'sort', 'order'];
+    public static DEFAULT_SERVICE_TASK_FILTER_PROPERTIES = ['appName', 'activityName', 'status', 'sort', 'order'];
     public static DEFAULT_USER_TASK_SORT_PROPERTIES = ['id', 'name', 'createdDate', 'priority'];
     public static DEFAULT_SERVICE_TASK_SORT_PROPERTIES = ['id', 'name', 'startedDate', 'completedDate'];
     public static DEFAULT_ACTIONS = ['save', 'saveAs', 'delete'];
@@ -469,7 +469,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                     id: filterId,
                     key: 'custom-' + filterKey
                 };
-                const resultFilter: TaskFilterCloudModel = Object.assign({}, this.changedTaskFilter, newFilter);
+                const resultFilter: TaskFilterCloudModel | ServiceTaskFilterCloudModel = Object.assign({}, this.changedTaskFilter, newFilter);
                 this.taskFilterCloudService.addFilter(resultFilter)
                     .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
                         saveAsAction.filter = resultFilter;
@@ -497,7 +497,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return name.replace(regExt, '-');
     }
 
-    restoreDefaultTaskFilters(): Observable<TaskFilterCloudModel[]> {
+    restoreDefaultTaskFilters(): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
         return this.taskFilterCloudService.getTaskListFilters(this.appName);
     }
 
@@ -599,50 +599,86 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     createServiceTaskFilterProperties(currentTaskFilter: ServiceTaskFilterCloudModel): TaskFilterProperties[] {
         return [
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.APP_NAME',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.APP_NAME',
                 type: 'select',
                 key: 'appName',
                 value: currentTaskFilter.appName || '',
                 options: this.applicationNames
             }),
             new TaskFilterProperties({
-                label: 'Id',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SERVICE_TASK_ID',
                 type: 'text',
-                key: 'id',
+                key: 'serviceTaskId',
                 value: ''
             }),
             new TaskFilterProperties({
-                label: 'Activity Name',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ELEMENT_ID',
+                type: 'text',
+                key: 'elementId',
+                value: ''
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ACTIVITY_NAME',
                 type: 'text',
                 key: 'activityName',
                 value: ''
             }),
             new TaskFilterProperties({
-                label: 'Activity Type',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.ACTIVITY_TYPE',
                 type: 'text',
                 key: 'activityType',
                 value: ''
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.SORT',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SORT',
                 type: 'select',
                 key: 'sort',
                 value: currentTaskFilter.sort || this.createSortProperties[0].value,
                 options: this.createSortProperties
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.DIRECTION',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.DIRECTION',
                 type: 'select',
                 key: 'order',
                 value: currentTaskFilter.order || this.directions[0].value,
                 options: this.directions
             }),
             new TaskFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.STATUS',
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STATUS',
                 type: 'select',
                 key: 'status',
                 value: currentTaskFilter.status || this.serviceTaskStatus[0].value,
                 options: this.serviceTaskStatus
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.STARTED_DATE',
+                type: 'date',
+                key: 'startedDate',
+                value: currentTaskFilter.completedDate || false
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.COMPLETED_DATE',
+                type: 'date',
+                key: 'completedDate',
+                value: currentTaskFilter.completedDate || false
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.PROCESS_INSTANCE_ID',
+                type: 'text',
+                key: 'processInstanceId',
+                value: currentTaskFilter.processInstanceId || ''
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.PROCESS_DEF_ID',
+                type: 'text',
+                key: 'processDefinitionId',
+                value: currentTaskFilter.processDefinitionId || ''
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_SERVICE_TASK_FILTER.LABEL.SERVICE_NAME',
+                type: 'text',
+                key: 'serviceName',
+                value: currentTaskFilter.serviceName || ''
             })
         ];
     }

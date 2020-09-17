@@ -39,3 +39,34 @@ export let taskPresetsCloudDefaultModel = {
         }
     ]
 };
+
+export let serviceTaskPresetsCloudDefaultModel = {
+    'default': [
+        {
+            'key': 'entry.activityName',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME',
+            'sortable': true
+        },
+        {
+            'key': 'entry.status',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS',
+            'sortable': true
+        },
+        {
+            'key': 'entry.startedDate',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE',
+            'cssClass': 'hidden',
+            'sortable': true
+        },
+        {
+            'key': 'entry.completedDate',
+            'type': 'text',
+            'title': 'ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE',
+            'cssClass': 'hidden',
+            'sortable': true
+        }
+    ]
+};

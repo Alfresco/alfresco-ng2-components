@@ -94,6 +94,7 @@ export class ServiceTaskFilterCloudModel {
     processDefinitionKey: string;
     processDefinitionVersion: number;
     processInstanceId: string;
+    serviceTaskId: string;
     serviceFullName: string;
     serviceName: string;
     serviceVersion: string;
@@ -121,6 +122,7 @@ export class ServiceTaskFilterCloudModel {
             this.completedDate = obj.completedDate || null;
             this.startedDate = obj.startedDate || null;
             this.serviceVersion = obj.serviceVersion || null;
+            this.serviceTaskId = obj.serviceTaskId || null;
             this.serviceName = obj.serviceName || null;
             this.serviceFullName = obj.serviceFullName || null;
         }
@@ -153,7 +155,7 @@ export class TaskFilterAction {
     actionType: string;
     icon: string;
     tooltip: string;
-    filter: TaskFilterCloudModel;
+    filter: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
 
     constructor(obj?: any) {
         if (obj) {
