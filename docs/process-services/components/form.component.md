@@ -73,6 +73,7 @@ Any content in the body of `<adf-form>` will be shown when no form definition is
 | showTitle | `boolean` | true | Toggle rendering of the form title. |
 | showValidationIcon | `boolean` | true | Toggle rendering of the validation icon next to the form title. |
 | taskId | `string` |  | Task id to fetch corresponding form and values. |
+| enableFixedSpacedForm | `boolean` | true | The form will set a prefixed space for invisible fields |
 
 ### Events
 
