@@ -260,10 +260,6 @@ describe('Task Header cloud component', () => {
         await peopleCloudComponentPage.selectAssigneeFromList('HR User');
         await peopleCloudComponentPage.checkSelectedPeople('HR User');
 
-        await peopleCloudComponentPage.searchAssignee('processAdmin');
-        await peopleCloudComponentPage.selectAssigneeFromList('Process Admin User');
-        await peopleCloudComponentPage.checkSelectedPeople('Process Admin User');
-
         await peopleCloudComponentPage.searchAssignee('modeler');
         await peopleCloudComponentPage.checkNoResultsFoundError();
     });

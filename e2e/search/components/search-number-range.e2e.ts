@@ -191,6 +191,7 @@ describe('Search Number Range Filter', () => {
         await searchFilters.checkNameFilterIsDisplayed();
         await searchFilters.checkNameFilterIsExpanded();
         await nameFilter.searchByName('*');
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await sizeRangeFilter.checkFromFieldIsDisplayed();
         await sizeRangeFilter.putFromNumber(fromSize);
@@ -199,6 +200,8 @@ describe('Search Number Range Filter', () => {
         await expect(await sizeRangeFilter.checkApplyButtonIsEnabled()).toBe(true);
 
         await sizeRangeFilter.clickApplyButton();
+        await searchResults.dataTable.waitTillContentLoaded();
+
         await searchResults.sortBySize('DESC');
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
@@ -212,6 +215,7 @@ describe('Search Number Range Filter', () => {
         await searchFilters.checkNameFilterIsDisplayed();
         await searchFilters.checkNameFilterIsExpanded();
         await nameFilter.searchByName('z*');
+        await searchResults.dataTable.waitTillContentLoaded();
         await searchResults.sortBySize('DESC');
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];

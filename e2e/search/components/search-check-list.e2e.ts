@@ -304,18 +304,12 @@ describe('Search Checklist Component', () => {
     describe('Properties', () => {
         let jsonFile;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
-        });
-
-        beforeAll(async () => {
-            await navigationBarPage.clickLogoutButton();
-            await loginPage.login(acsUser.email, acsUser.password);
+            await navigationBarPage.clickContentServicesButton();
         });
 
         it('[C277018] Should be able to change the operator', async () => {
-            await navigationBarPage.clickContentServicesButton();
-
             jsonFile.categories[1].component.settings.operator = 'AND';
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -341,8 +335,6 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277019] Should be able to add new properties with different types', async () => {
-            await navigationBarPage.clickContentServicesButton();
-
             jsonFile.categories[1].component.settings.options.push({
                 'name': filterType.custom,
                 'value': "TYPE:'cm:auditable'"

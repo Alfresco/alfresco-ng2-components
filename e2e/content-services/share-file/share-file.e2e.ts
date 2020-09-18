@@ -62,7 +62,7 @@ describe('Share file', () => {
                 return sharedLinkEntry.entry.nodeId === nodeIdSharedFile;
             });
 
-            return sharedLink !== null;
+            return !!sharedLink;
         };
 
         const apiCall = async () => {
@@ -162,6 +162,7 @@ describe('Share file', () => {
     });
 
     describe('Shared link preview', () => {
+
         beforeEach(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();

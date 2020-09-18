@@ -190,7 +190,7 @@ export class BrowserActions {
 
         const fileWithPath = path.join(screenshotFilePath, filenameWithExt);
         const stream = fs.createWriteStream(fileWithPath);
-        stream.write(new Buffer(pngData, 'base64'));
+        stream.write(Buffer.from(pngData, 'base64'));
         stream.end();
     }
 

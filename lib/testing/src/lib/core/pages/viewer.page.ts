@@ -367,7 +367,7 @@ export class ViewerPage {
     }
 
     async clickInfoButton(): Promise<void> {
-        await BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
+        await BrowserActions.click(element(by.css('button[data-automation-id="adf-toolbar-sidebar"]')));
     }
 
     async clickOnTab(tabName: string): Promise<void> {

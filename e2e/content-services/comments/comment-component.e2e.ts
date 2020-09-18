@@ -96,7 +96,7 @@ describe('Comment Component', () => {
         await apiService.getInstance().core.commentsApi.addComment(nodeId, { content: comments.test });
 
         await viewerPage.viewFile(pngFileModel.name);
-        await viewerPage.checkImgViewerIsDisplayed();
+
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
 
@@ -111,7 +111,7 @@ describe('Comment Component', () => {
 
     it('[C276948] Should be able to add a comment on a file', async () => {
         await viewerPage.viewFile(pngFileModel.name);
-        await viewerPage.checkImgViewerIsDisplayed();
+
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnCommentsTab();
@@ -127,7 +127,7 @@ describe('Comment Component', () => {
 
     it('[C280021] Should be able to add a multiline comment on a file', async () => {
         await viewerPage.viewFile(pngFileModel.name);
-        await viewerPage.checkImgViewerIsDisplayed();
+
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnCommentsTab();
@@ -151,7 +151,6 @@ describe('Comment Component', () => {
 
     it('[C280022] Should not be able to add an HTML or other code input into the comment input filed', async () => {
         await viewerPage.viewFile(pngFileModel.name);
-        await viewerPage.checkImgViewerIsDisplayed();
         await viewerPage.clickInfoButton();
         await viewerPage.checkInfoSideBarIsDisplayed();
         await viewerPage.clickOnCommentsTab();
@@ -198,7 +197,6 @@ describe('Comment Component', () => {
             await contentServicesPage.checkAcsContainer();
 
             await viewerPage.viewFile(pngUploadedFile.entry.name);
-            await viewerPage.checkImgViewerIsDisplayed();
             await viewerPage.checkInfoButtonIsDisplayed();
             await viewerPage.clickInfoButton();
             await viewerPage.checkInfoSideBarIsDisplayed();
