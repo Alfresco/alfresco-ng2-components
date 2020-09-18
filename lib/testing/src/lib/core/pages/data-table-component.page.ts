@@ -294,17 +294,24 @@ export class DataTableComponentPage {
 
         if (this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
-            await this.waitFirstElementPresent();
-        } else if (this.isEmpty()) {
-            Logger.log('empty page');
+            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-spinner')));
+
+            if (this.isEmpty()) {
+                Logger.log('empty page');
+            } else {
+                await this.waitFirstElementPresent();
+            }
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-spinner')));
             } catch (error) {
             }
-            await this.waitFirstElementPresent();
+            if (this.isEmpty()) {
+                Logger.log('empty page');
+            } else {
+                await this.waitFirstElementPresent();
+            }
         }
     }
 

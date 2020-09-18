@@ -275,15 +275,18 @@ export class ContentServicesPage {
         return BrowserActions.getText(this.recentFileIcon);
     }
 
+    // @deprecated prefer waitTillContentLoaded
     async checkDocumentListElementsAreDisplayed(): Promise<void> {
         await this.checkAcsContainer();
         await this.waitForTableBody();
     }
 
+    // @deprecated prefer waitTillContentLoaded
     async checkAcsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
 
+    // @deprecated prefer waitTillContentLoaded
     async waitForTableBody(): Promise<void> {
         await this.contentList.dataTablePage().waitTillContentLoaded();
     }

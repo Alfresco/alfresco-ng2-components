@@ -274,6 +274,8 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
 
             await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();
@@ -454,6 +456,8 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);
@@ -489,6 +493,8 @@ describe('Start Task Form', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedById(taskId);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedById(taskId);
             await tasksCloudDemoPage.taskListCloudComponent().selectRowByTaskId(taskId);
             await contentFileWidget.checkFileIsAttached(testFileModel.name);

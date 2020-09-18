@@ -287,7 +287,6 @@ describe('Restore content directive', () => {
 
             await loginPage.login(anotherAcsUser.email, anotherAcsUser.password);
             await contentServicesPage.goToDocumentList();
-            await contentServicesPage.waitForTableBody();
         });
 
         afterAll(async () => {

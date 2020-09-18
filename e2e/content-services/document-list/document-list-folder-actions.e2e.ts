@@ -76,7 +76,6 @@ describe('Document List Component - Actions', () => {
         beforeEach(async () => {
             await loginPage.login(contentServicesUser.email, contentServicesUser.password);
             await contentServicesPage.goToDocumentList();
-            await contentServicesPage.waitForTableBody();
             await paginationPage.selectItemsPerPage('5');
             await contentServicesPage.checkAcsContainer();
             await contentListPage.waitForTableBody();

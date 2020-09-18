@@ -508,7 +508,6 @@ describe('Start Process Component', () => {
             await loginPage.login(processUserModel.email, processUserModel.password);
 
             await contentServicesPage.goToDocumentList();
-            await contentServicesPage.checkDocumentListElementsAreDisplayed();
             await contentServicesPage.uploadFile(imageUploaded.location);
             await contentServicesPage.checkContentIsDisplayed(imageUploaded.name);
             await uploadDialog.clickOnCloseButton();

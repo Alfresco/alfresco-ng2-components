@@ -345,7 +345,6 @@ describe('Document List Component', () => {
 
             await loginPage.login(acsUser.email, acsUser.password);
             await contentServicesPage.goToDocumentList();
-            await contentServicesPage.waitForTableBody();
         });
 
         it('[C291843] Should be able to navigate using nodes hyperlink when activated', async () => {

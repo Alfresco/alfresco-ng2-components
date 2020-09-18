@@ -145,6 +145,7 @@ describe('Process Task - Attach content file', () => {
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(taskName);
 
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
 
         await processCloudDemoPage.processFilterCloudComponent.clickOnProcessFilters();

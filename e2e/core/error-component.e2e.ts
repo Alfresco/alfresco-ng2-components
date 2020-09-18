@@ -36,7 +36,6 @@ describe('Error Component', () => {
         await usersActions.createUser(acsUser);
         await loginPage.login(acsUser.email, acsUser.password);
         await contentServicesPage.goToDocumentList();
-        await contentServicesPage.checkAcsContainer();
     });
 
     afterAll(async () => {

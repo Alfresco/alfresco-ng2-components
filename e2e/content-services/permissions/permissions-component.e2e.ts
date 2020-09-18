@@ -179,10 +179,13 @@ describe('Permissions Component', () => {
         beforeEach(async () => {
             await apiService.getInstance().login(fileOwnerUser.email, fileOwnerUser.password);
             file = await uploadActions.uploadFile(fileModel.location, fileModel.name, '-my-');
+
             await loginPage.login(fileOwnerUser.email, fileOwnerUser.password);
+
             await contentServicesPage.goToDocumentList();
+            await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
             await contentServicesPage.checkContentIsDisplayed(fileModel.name);
-            await contentServicesPage.checkSelectedSiteIsDisplayed('My files');
+
             await contentList.rightClickOnRow(fileModel.name);
             await contentServicesPage.pressContextMenuActionNamed('Permission');
             await permissionsPage.addPermissionsDialog.checkPermissionContainerIsDisplayed();

@@ -327,6 +327,7 @@ describe('Task form cloud component', () => {
 
         async function chooseFilterAndSelectTaskByName(filterName: string, taskName: string): Promise<void> {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(filterName);
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(taskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(taskName);
         }
@@ -339,6 +340,7 @@ describe('Task form cloud component', () => {
 
         async function chooseFilter(filterName: string, filterTitle: string): Promise<void> {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter(filterName);
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe(filterTitle);
         }
    });

@@ -181,10 +181,11 @@ describe('Upload component', () => {
 
         it('[C260174] Should be possible to set a max size', async () => {
             await contentServicesPage.goToDocumentList();
-            await contentServicesPage.checkAcsContainer();
+
             await uploadToggles.enableMaxSize();
             await uploadToggles.checkMaxSizeToggleIsEnabled();
             await uploadToggles.addMaxSize('400');
+
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
             await uploadDialog.fileIsUploaded(fileWithSpecificSize.name);
             await uploadDialog.clickOnCloseButton();
@@ -193,8 +194,6 @@ describe('Upload component', () => {
             await contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
             await uploadToggles.addMaxSize('399');
             await contentServicesPage.uploadFile(fileWithSpecificSize.location);
-
-            //  await expect(await contentServicesPage.getErrorMessage()).toEqual('File ' + fileWithSpecificSize.name + ' is larger than the allowed file size');
 
             await contentServicesPage.checkContentIsNotDisplayed(fileWithSpecificSize.name);
             await uploadDialog.fileIsNotDisplayedInDialog(fileWithSpecificSize.name);
