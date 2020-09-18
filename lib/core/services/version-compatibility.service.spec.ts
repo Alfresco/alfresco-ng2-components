@@ -16,21 +16,18 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { AppConfigService } from '../app-config/app-config.service';
 import { DiscoveryApiService } from './discovery-api.service';
 import { setupTestBed } from '../testing/setup-test-bed';
 import { CoreTestingModule } from '../testing/core.testing.module';
-import { AlfrescoApiServiceMock } from '../mock/alfresco-api.service.mock';
 import { VersionCompatibilityService } from './version-compatibility.service';
-import { of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService } from './authentication.service';
+import { EcmProductVersionModel } from './../models/product-version.model';
 
 describe('VersionCompatibilityService', () => {
     let versionCompatibilityService: VersionCompatibilityService;
-    let alfrescoApiService: AlfrescoApiServiceMock;
     let discoveryApiService: DiscoveryApiService;
-    let authenticationService: AuthenticationService;
+    const mockProductInfo = new BehaviorSubject<EcmProductVersionModel>(null);
 
     const acsResponceMock = {
         version: {
@@ -45,22 +42,22 @@ describe('VersionCompatibilityService', () => {
         imports: [
             TranslateModule.forRoot(),
             CoreTestingModule
+        ],
+        providers: [
+            {
+                provide: DiscoveryApiService,
+                useValue: {
+                    ecmProductInfo$: mockProductInfo
+                }
+            }
         ]
     });
 
     beforeEach(async () => {
         discoveryApiService = TestBed.inject(DiscoveryApiService);
-        authenticationService = TestBed.inject(AuthenticationService);
-        spyOn(discoveryApiService, 'getEcmProductInfo').and.returnValue(of(acsResponceMock));
-        spyOn(authenticationService, 'isEcmLoggedIn').and.returnValue(true);
         versionCompatibilityService = TestBed.inject(VersionCompatibilityService);
-        alfrescoApiService = new AlfrescoApiServiceMock(new AppConfigService(null), null);
-        versionCompatibilityService = new VersionCompatibilityService(
-            alfrescoApiService,
-            authenticationService,
-            discoveryApiService
-        );
-        await alfrescoApiService.initialize();
+        mockProductInfo.next(acsResponceMock as EcmProductVersionModel);
+        versionCompatibilityService = new VersionCompatibilityService(discoveryApiService);
     });
 
     it('should get ACS running version', () => {
