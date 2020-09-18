@@ -40,7 +40,7 @@ import { PeopleCloudModule } from '../../people/people-cloud.module';
         MaterialModule,
         AppListCloudModule,
         CoreModule,
-        ProcessCommonModule
+        ProcessCommonModule,
         PeopleCloudModule
     ],
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
