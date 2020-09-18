@@ -44,7 +44,7 @@ export class SearchService {
 
                 return this.apiService.performECMOperation(path, method, queryParams, postBody);
             } catch (error) {
-                Logger.error('Failed to folder');
+                Logger.error('Failed to search folder');
             }
         };
 
