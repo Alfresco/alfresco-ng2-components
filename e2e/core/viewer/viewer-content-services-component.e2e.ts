@@ -420,48 +420,23 @@ describe('Content Services Viewer', () => {
     });
 });
 
-    describe('Viewer - version update with unsupported file', () => {
-        beforeAll(async () => {
-            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
-            await usersActions.createUser(acsUser);
-            await apiService.getInstance().login(acsUser.email, acsUser.password);
+        describe('Viewer - version update with unsupported file', () => {
+            it('[C587084] Should display the preview for an unsupported file', async () => {
+                await changeFileNameInViewer(unsupportedFile.name, 'generic-unsupported-file-1st.3DS');
+                await uploadNewVersion(jpgFile.name, unsupportedFileByLocation.location);
+                await previewUnsupportedFile(unsupportedFileByLocation.name);
 
-            const pdfFileUploaded = await uploadActions.uploadFile(pdfFile.location, pdfFile.name, '-my-');
-            Object.assign(pdfFile, pdfFileUploaded.entry);
+                await changeFileNameInViewer(unsupportedFileByLocation.name, 'generic-unsupported-file-2nd.3DS');
+                await uploadNewVersion(pdfFile.name, unsupportedFileByLocation.location);
+                await previewUnsupportedFile(unsupportedFileByLocation.name);
 
-            const jpgFileUploaded = await uploadActions.uploadFile(jpgFile.location, jpgFile.name, '-my-');
-            Object.assign(jpgFile, jpgFileUploaded.entry);
-
-            const mp4FileUploaded = await uploadActions.uploadFile(mp4File.location, mp4File.name, '-my-');
-            Object.assign(mp4File, mp4FileUploaded.entry);
-
-            await loginPage.login(acsUser.email, acsUser.password);
-            await contentServicesPage.goToDocumentList();
+                await changeFileNameInViewer(unsupportedFileByLocation.name, 'generic-unsupported-file-3rd.3DS');
+                await uploadNewVersion(mp4File.name, unsupportedFileByLocation.location);
+                await previewUnsupportedFile(unsupportedFileByLocation.name);
+            });
         });
 
-        afterAll(async () => {
-            try {
-                await uploadActions.deleteFileOrFolder(pdfFile.getId());
-                await uploadActions.deleteFileOrFolder(jpgFile.getId());
-                await uploadActions.deleteFileOrFolder(mp4File.getId());
-                await navigationBarPage.clickLogoutButton();
-            } catch (error) {
-                throw new Error(`cleanup afterAll call failed with error ${error}`);
-            }
-        });
-
-        it('[C587084] Should display the preview for an unsupported file', async () => {
-            await uploadNewVersion(jpgFile.name, unsupportedFileByLocation.location);
-            await previewUnsupportedFile(unsupportedFileByLocation.name);
-
-            await changeFileNameInViewer(unsupportedFileByLocation.name, 'generic-unsupported-file-2nd.3DS');
-            await uploadNewVersion(pdfFile.name, unsupportedFileByLocation.location);
-            await previewUnsupportedFile(unsupportedFileByLocation.name);
-
-            await changeFileNameInViewer(unsupportedFileByLocation.name, 'generic-unsupported-file-3rd.3DS');
-            await uploadNewVersion(mp4File.name, unsupportedFileByLocation.location);
-            await previewUnsupportedFile(unsupportedFileByLocation.name);
-        });
+    });
 
         async function uploadNewVersion(originalFileName: string, newVersionLocation: string): Promise<void> {
             await viewerPage.viewFile(originalFileName);
