@@ -41,6 +41,7 @@ export class IdentityService {
     }
 
     async createIdentityUser(user: UserModel = new UserModel()): Promise<any> {
+        Logger.log(`Create Identity User ${user.email}`);
         await this.createUser(user);
 
         const userIdentity = await this.getUserInfoByUsername(user.username);
@@ -99,6 +100,8 @@ export class IdentityService {
     }
 
     async addUserToGroup(userId: string, groupId: string): Promise<any> {
+        Logger.log(`Add user to group userId ${userId} ${groupId}`);
+
         try {
             const path = `/users/${userId}/groups/${groupId}`;
             const method = 'PUT';

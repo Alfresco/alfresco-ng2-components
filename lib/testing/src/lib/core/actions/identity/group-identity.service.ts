@@ -60,6 +60,8 @@ export class GroupIdentityService {
     }
 
     async getGroupInfoByGroupName(groupName: string): Promise<any> {
+        Logger.log(`Get GroupInfoByGroupName ${groupName}`);
+
         const predicate = (result: any) => {
             return !!result;
         };
@@ -71,6 +73,9 @@ export class GroupIdentityService {
                 const queryParams = { search: groupName }, postBody = {};
 
                 const data = await this.api.performIdentityOperation(path, method, queryParams, postBody);
+
+                Logger.log(`Data ${JSON.stringify(data)}`);
+
                 return data[0];
             } catch (error) {
                 Logger.error('Group not found');
@@ -81,6 +86,8 @@ export class GroupIdentityService {
     }
 
     async assignRole(groupId: string, roleId: string, roleName: string): Promise<any> {
+        Logger.log(`Assign to group ${groupId} Role ${roleName}`);
+
         const path = `/groups/${groupId}/role-mappings/realm`;
         const method = 'POST';
         const queryParams = {};

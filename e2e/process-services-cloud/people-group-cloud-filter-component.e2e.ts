@@ -45,7 +45,7 @@ describe('People Groups Cloud Component', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
-            testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
+            apsUser = await identityService.createIdentityUser();
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
@@ -83,9 +83,11 @@ describe('People Groups Cloud Component', () => {
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
+
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
+
             await browser.sleep(100);
             await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`));
         });
@@ -104,7 +106,6 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
 
-            await peopleCloudComponent.searchAssignee(noRoleUser.firstName);
             await peopleCloudComponent.checkNoResultsFoundError();
         });
 
