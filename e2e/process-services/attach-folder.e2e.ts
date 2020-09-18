@@ -26,7 +26,8 @@ import {
     UserModel,
     UsersActions,
     UploadActions,
-    Widget
+    Widget,
+    SearchService
 } from '@alfresco/adf-testing';
 import { TasksPage } from './pages/tasks.page';
 import { browser } from 'protractor';
@@ -37,6 +38,7 @@ describe('Attach Folder', () => {
     const app = browser.params.resources.Files.WIDGET_CHECK_APP;
 
     const apiService = new ApiService({ provider: 'ALL' });
+    const searchService = new SearchService(apiService);
     const integrationService = new IntegrationService(apiService);
     const applicationService = new ApplicationsUtil(apiService);
     const usersActions = new UsersActions(apiService);
@@ -64,6 +66,7 @@ describe('Attach Folder', () => {
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await new UploadActions(apiService).createFolder(folderName, '-my-');
+        await searchService.isFolderSearchable(folderName);
         await loginPage.login(user.email, user.password);
     });
 
@@ -80,10 +83,12 @@ describe('Attach Folder', () => {
         const contentFileWidget = widget.attachFolderWidget();
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
 
+        await searchService.isFolderSearchable(folderName);
         await contentNodeSelector.searchAndSelectResult(folderName, folderName);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
+        await searchService.isFolderSearchable('Meeting Notes');
         await contentNodeSelector.searchAndSelectResult('Meeting Notes', 'Meeting Notes');
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
@@ -103,5 +108,15 @@ describe('Attach Folder', () => {
         await widget.attachFolderWidget().removeFolder(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
         await taskPage.formFields().checkWidgetIsVisible(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
         await widget.attachFolderWidget().checkFolderIsNotAttached(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id, folderName);
+
+        await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
+        await contentNodeSelector.checkDialogIsDisplayed();
+
+        await searchService.isFolderSearchable(folderName);
+        await contentNodeSelector.searchAndSelectResult(folderName, folderName);
+        await contentNodeSelector.checkCancelButtonIsEnabled();
+        await contentNodeSelector.checkCopyMoveButtonIsEnabled();
+        await contentNodeSelector.clickMoveCopyButton();
+        await taskPage.taskDetails().clickCompleteFormTask();
     });
 });

@@ -122,4 +122,22 @@ export class ApiService {
                 .catch((err) => reject(err));
         });
     }
+
+    async performECMOperation(path: string, method: string, queryParams: any, postBody: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const uri = this.config.hostEcm + path;
+            const pathParams = {}, formParams = {};
+            const contentTypes = ['application/json'];
+            const accepts = ['application/json'];
+
+            const headerParams = {
+                Authorization: 'bearer ' + this.apiService.oauth2Auth.token
+            };
+
+            this.apiService.contentClient
+                .callCustomApi(uri, method, pathParams, queryParams, headerParams, formParams, postBody, contentTypes, accepts, Object)
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
+        });
+    }
 }
