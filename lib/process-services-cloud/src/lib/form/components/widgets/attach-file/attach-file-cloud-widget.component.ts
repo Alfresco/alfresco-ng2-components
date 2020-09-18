@@ -98,7 +98,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
-        if (!this.field.value || this.field.value.length === 0) {
+        if (file instanceof Node && file.id === this.selectedNode?.id) {
             this.contentModelFormFileHandler();
         }
     }
@@ -174,6 +174,15 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
     }
 
+    onRowClicked(file?: Node) {
+        if (this.selectedNode?.id === file?.id) {
+            this.selectedNode = null;
+        } else {
+            this.selectedNode = file;
+        }
+        this.contentModelFormFileHandler(this.selectedNode);
+    }
+
     contentModelFormFileHandler(file?: Node) {
         if (file?.id && this.field?.params?.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
             const values: FormValues = {};
@@ -189,7 +198,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 }
             });
         }
-        this.selectedNode = file;
         this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
     }
 

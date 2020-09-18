@@ -76,8 +76,11 @@
     }
 
     &-attach-selected-file-row {
-        div.mat-list-item-content > div.mat-list-text > span.adf-file {
-            font-style: italic;
+        div.mat-list-item-content {
+            .adf-datatable-selected {
+                color: #00bcd4 !important;
+                padding-right: 6px;
+            }
         }
     }
 }
