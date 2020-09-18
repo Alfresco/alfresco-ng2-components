@@ -21,7 +21,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { BreadcrumbDropdownPage } from '../pages/breadcrumb/breadcrumb-dropdown.page';
-import { Logger } from '../../../..';
+import { Logger } from '../../core/utils/logger';
 
 export class ContentNodeSelectorDialogPage {
     dialog = element(by.css(`adf-content-node-selector`));

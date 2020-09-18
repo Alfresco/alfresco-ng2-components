@@ -113,7 +113,7 @@ export class ViewerPage {
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await this.waitTillContentLoaded();
     }
-    
+
     async waitTillContentLoaded(): Promise<void> {
         await browser.sleep(500);
 
