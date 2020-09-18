@@ -74,7 +74,6 @@ describe('Enable infinite scrolling', () => {
         emptyFolderModel = await uploadActions.createFolder('emptyFolder', '-my-');
 
         await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
-
         deleteUploaded = await uploadActions.createFolder('deleteFolder', '-my-');
 
         await uploadActions.createEmptyFiles(deleteFileNames, deleteUploaded.entry.id);
@@ -86,7 +85,7 @@ describe('Enable infinite scrolling', () => {
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
-        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
     });
 
     it('[C260484] Should be possible to enable infinite scrolling', async () => {
@@ -120,8 +119,6 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C299201] Should use default pagination settings for infinite pagination', async () => {
-        await navigationBarPage.clickContentServicesButton();
-        await contentServicesPage.checkAcsContainer();
         await contentServicesPage.openFolder(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
@@ -138,9 +135,6 @@ describe('Enable infinite scrolling', () => {
     it('[C299202] Should not display load more button when all the files are already displayed', async () => {
         await LocalStorageUtil.setUserPreference('paginationSize', '30');
 
-        await navigationBarPage.clickContentServicesButton();
-        await contentServicesPage.checkAcsContainer();
-
         await contentServicesPage.openFolder(folderModel.name);
 
         await contentServicesPage.enableInfiniteScrolling();
@@ -150,9 +144,6 @@ describe('Enable infinite scrolling', () => {
     });
 
     it('[C299203] Should not display load more button when a folder is empty', async () => {
-        await navigationBarPage.clickContentServicesButton();
-        await contentServicesPage.checkAcsContainer();
-
         await contentServicesPage.openFolder(emptyFolderModel.entry.name);
 
         await infinitePaginationPage.checkLoadMoreButtonIsNotDisplayed();

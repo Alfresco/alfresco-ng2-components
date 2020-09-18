@@ -124,9 +124,6 @@ describe('Content Services Viewer', () => {
     });
 
     it('[C260038] Should display first page, toolbar and pagination when opening a .pdf file', async () => {
-        await contentServicesPage.checkAcsContainer();
-        await contentServicesPage.goToDocumentList();
-
         await viewerPage.viewFile(pdfFile.name);
         await viewerPage.checkZoomInButtonIsDisplayed();
 

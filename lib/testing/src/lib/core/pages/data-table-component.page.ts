@@ -339,27 +339,27 @@ export class DataTableComponentPage {
     async waitTillContentLoadedInfinitePagination(): Promise<void> {
         await browser.sleep(500);
 
-        const isSpinnerPresent = await element(by.tagName('mat-progress-bar')).isPresent();
-
-        if (isSpinnerPresent) {
+        if (this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
-            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-progress-bar')));
+            await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-bar')));
+
+            if (this.isEmpty()) {
+                Logger.log('empty page');
+            } else {
+                await this.waitFirstElementPresent();
+            }
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-progress-bar')));
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')));
             } catch (error) {
             }
-        }
-
-        try {
-            Logger.log('wait first element is present');
-            await BrowserVisibility.waitUntilElementIsVisible(this.contents.first(), 1000);
-        } catch (error) {
-            Logger.log('Possible empty page');
-        }
-
-    }
+            if (this.isEmpty()) {
+                Logger.log('empty page');
+            } else {
+                await this.waitFirstElementPresent();
+            }
+        }    }
 
     async checkColumnIsDisplayed(column: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
