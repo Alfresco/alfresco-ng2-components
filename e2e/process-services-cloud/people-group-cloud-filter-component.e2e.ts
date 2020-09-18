@@ -45,7 +45,7 @@ describe('People Groups Cloud Component', () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
             hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
-            apsUser = await identityService.createIdentityUser();
+            testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
 
             testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
             apsUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
@@ -106,6 +106,7 @@ describe('People Groups Cloud Component', () => {
             await peopleCloudComponent.selectAssigneeFromList(`${apsUser.firstName} ${apsUser.lastName}`);
             await peopleCloudComponent.checkSelectedPeople(`${apsUser.firstName} ${apsUser.lastName}`);
 
+            await peopleCloudComponent.searchAssignee(noRoleUser.firstName);
             await peopleCloudComponent.checkNoResultsFoundError();
         });
 
