@@ -208,44 +208,5 @@ describe('Upload component', () => {
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
     });
-
-    it('[C291893] Should enable folder upload in selected node', async () => {
-        await contentServicesPage.checkUploadButton();
-        await expect(await uploadToggles.checkFolderUploadToggleIsNotEnabled()).toBe(true);
-
-        await uploadToggles.enableFolderUpload();
-        await expect(await uploadToggles.checkFolderUploadToggleIsEnabled()).toBe(true);
-        await contentServicesPage.uploadFolder(parentFolder.location);
-        await uploadDialog.fileIsUploaded(fileInsideParentFolder.name);
-        await expect(await uploadDialog.numberOfCurrentFilesUploaded()).toEqual('1');
-        await expect(await uploadDialog.numberOfInitialFilesUploaded()).toEqual('1');
-        await uploadDialog.clickOnCloseButton();
-        await uploadDialog.dialogIsNotDisplayed();
-
-        await contentServicesPage.openFolder(parentFolder.name);
-        await expect(await uploadToggles.checkFolderUploadToggleIsNotEnabled()).toBe(true);
-        await uploadToggles.enableFolderUpload();
-        await expect(await uploadToggles.checkFolderUploadToggleIsEnabled()).toBe(true);
-        await contentServicesPage.uploadFolder(subFolder.location);
-        await uploadDialog.fileIsUploaded(fileInsideSubFolder.name);
-        await uploadDialog.clickOnCloseButton();
-        await uploadDialog.dialogIsNotDisplayed();
-
-        await uploadToggles.enableFolderUpload();
-
-        await browser.executeScript(` setInterval(() => {
-                    document.querySelector("#adf-upload-dialog-cancel-all").click();
-                    document.querySelector("#adf-upload-dialog-cancel").click();
-              }, 4000)`);
-
-        await contentServicesPage.uploadFolder(adfBigFolder.location);
-        await uploadDialog.fileIsCancelled('a_png_noBackground_file.PNG');
-
-        await BrowserVisibility.waitUntilElementHasText(uploadDialog.title, 'Upload canceled');
-        await uploadDialog.clickOnCloseButton();
-        await uploadDialog.dialogIsNotDisplayed();
-        await contentServicesPage.openFolder(adfBigFolder.name);
-        await browser.sleep(2000); // We need to wai when we upload too many files we have to wait the revert
-        await expect(contentServicesPage.numberOfResultsDisplayed()).toBe(0);
-    });
+    
 });
