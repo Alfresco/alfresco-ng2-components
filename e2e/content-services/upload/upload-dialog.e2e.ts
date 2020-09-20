@@ -17,7 +17,7 @@
 
 import {
     ApiService,
-    BrowserActions, BrowserVisibility,
+    BrowserActions,
     LoginPage,
     UploadActions,
     UserModel,
@@ -29,7 +29,6 @@ import { UploadTogglesPage } from '../../core/pages/dialog/upload-toggles.page';
 import { FileModel } from '../../models/ACS/file.model';
 import { browser } from 'protractor';
 import { VersionManagePage } from '../../core/pages/version-manager.page';
-import { FolderModel } from '../../models/ACS/folder.model';
 
 describe('Upload component', () => {
 
@@ -67,30 +66,6 @@ describe('Upload component', () => {
     });
     const filesLocation = [pdfFileModel.location, docxFileModel.location, pngFileModel.location, firstPdfFileModel.location];
     const filesName = [pdfFileModel.name, docxFileModel.name, pngFileModel.name, firstPdfFileModel.name];
-
-    const parentFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_ONE.folder_location
-    });
-
-    const fileInsideParentFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_ONE.file_location
-    });
-    const subFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FOLDER_TWO.folder_location
-    });
-
-    const fileInsideSubFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.FILE_INSIDE_FOLDER_TWO.file_location
-    });
-
-    const adfBigFolder = new FolderModel({
-        name: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_name,
-        location: browser.params.resources.Files.ADF_DOCUMENTS.ADF_FOLDER.folder_location
-    });
 
     beforeAll(async () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
