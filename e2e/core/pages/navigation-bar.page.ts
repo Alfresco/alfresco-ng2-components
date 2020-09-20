@@ -66,8 +66,8 @@ export class NavigationBarPage {
     }
 
     async clickProcessCloudButton() {
-        await this.clickNavigationBarItem('Process Cloud');
-        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Cloud'), this.linkMenuChildrenContainer);
     }
 
     async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
@@ -90,8 +90,12 @@ export class NavigationBarPage {
     }
 
     async clickProcessServicesButton() {
-        await this.clickNavigationBarItem('Process Services');
-        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Services'), this.linkMenuChildrenContainer);
+    }
+
+    private getMenuItem(title: string) {
+        return element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
     }
 
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {

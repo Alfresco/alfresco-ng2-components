@@ -21,26 +21,48 @@ import { Logger } from './logger';
 
 import * as path from 'path';
 import * as fs from 'fs';
+import { ApiUtil } from '../actions/api.util';
 
 export class BrowserActions {
 
-    static async click(elementFinder: ElementFinder): Promise<void> {
+    static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
+        Logger.info(`Click until element is not present: ${elementToClick.locator().toString()}`);
+
+        const predicate = (isVisible: boolean) => {
+            return isVisible;
+        };
+
+        const apiCall = async () => {
+            await this.click(elementToClick);
+
+            try {
+                return BrowserVisibility.waitUntilElementIsVisible(elementToFind);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate, 5, 2000);
+    }
+
+    static async click(elementToClick: ElementFinder): Promise<void> {
         try {
-            Logger.info(`Click element: ${elementFinder.locator().toString()}`);
-            await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
-            await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
-            await elementFinder.click();
+            Logger.info(`Click element: ${elementToClick.locator().toString()}`);
+            await BrowserVisibility.waitUntilElementIsVisible(elementToClick);
+            await BrowserVisibility.waitUntilElementIsClickable(elementToClick);
+            await elementToClick.click();
         } catch (clickErr) {
-            Logger.warn(`click error element ${elementFinder.locator().toString()} consider to use directly clickScript`);
-            await this.clickScript(elementFinder);
+            Logger.warn(`click error element ${elementToClick.locator().toString()} consider to use directly clickScript`);
+            await this.clickScript(elementToClick);
         }
     }
 
-    static async clickScript(elementFinder: ElementFinder): Promise<void> {
-        Logger.info(`Click script ${elementFinder.locator().toString()}`);
+    static async clickScript(elementToClick: ElementFinder): Promise<void> {
+        Logger.info(`Click script ${elementToClick.locator().toString()}`);
 
-        await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
-        await browser.executeScript(`arguments[0].click();`, elementFinder);
+        await browser.executeScript(`arguments[0].scrollIntoView();`, elementToClick);
+        await browser.executeScript(`arguments[0].click();`, elementToClick);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
