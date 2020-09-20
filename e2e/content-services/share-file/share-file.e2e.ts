@@ -127,7 +127,7 @@ describe('Share file', () => {
             await BrowserActions.closeMenuAndDialogs();
         });
 
-       fit('[C286548] Should be possible to set expiry date for link', async () => {
+        it('[C286548] Should be possible to set expiry date for link', async () => {
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();
             await shareDialog.clickExpireToggle();
