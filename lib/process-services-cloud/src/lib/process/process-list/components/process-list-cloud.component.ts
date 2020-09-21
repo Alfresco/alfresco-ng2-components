@@ -106,7 +106,7 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     completedTo: string = '';
 
-    /** Filter the processes. Display only process with completedTo equal to the supplied date. */
+    /** Filter the processes. Display only process with completedDate equal to the supplied date. */
     @Input()
     completedDate: string = '';
 
