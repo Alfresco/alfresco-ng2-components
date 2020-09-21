@@ -17,7 +17,6 @@
 
 import {
     ApiService,
-    BrowserActions,
     LocalStorageUtil,
     LoginPage,
     StringUtil,
@@ -83,7 +82,10 @@ describe('Search Checklist Component', () => {
 
     beforeEach(async () => {
         await navigationBarPage.clickContentServicesButton();
-        await BrowserActions.getUrl(`${browser.baseUrl}/search;q=${randomName}`);
+        await searchBarPage.checkSearchIconIsVisible();
+        await searchBarPage.clickOnSearchIcon();
+        await searchBarPage.enterTextAndPressEnter(randomName);
+        await searchResults.dataTable.waitTillContentLoaded();
     });
 
     afterAll(async () => {

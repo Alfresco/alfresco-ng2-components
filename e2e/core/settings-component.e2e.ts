@@ -82,7 +82,7 @@ describe('Settings component', () => {
             await loginPage.enterUsername(browser.params.testConfig.admin.email);
             await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
-            await expect(await loginPage.getLoginError()).toMatch(loginError);
+            await loginPage.checkLoginErrorIsDisplayed(loginError);
         });
 
         it('[C291952] Should not be able to sign in with invalid Process Services Url', async () => {
@@ -93,7 +93,7 @@ describe('Settings component', () => {
             await loginPage.enterUsername(browser.params.testConfig.admin.email);
             await loginPage.enterPassword(browser.params.testConfig.admin.password);
             await loginPage.clickSignInButton();
-            await expect(await loginPage.getLoginError()).toMatch(loginError);
+            await loginPage.checkLoginErrorIsDisplayed(loginError);
         });
     });
 

@@ -55,7 +55,7 @@ export class NotificationDemoPage {
     }
 
     async waitForSnackBarToClose(): Promise<void> {
-        await this.snackbarPage.waitForSnackBarToClose();
+        await this.snackbarPage.waitForSnackBarToClose(15000);
     }
 
     async enterMessageField(text: string): Promise<void> {

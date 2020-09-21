@@ -92,6 +92,10 @@ export class LoginShellPage {
         return BrowserActions.getText(this.loginError);
     }
 
+    async checkLoginErrorIsDisplayed(loginError: string): Promise<void> {
+        await BrowserVisibility.waitUntilElementHasText(this.loginError, loginError);
+    }
+
     async checkLoginImgURL(): Promise<string> {
         await BrowserVisibility.waitUntilElementIsVisible(this.logoImg);
         return this.logoImg.getAttribute('src');
