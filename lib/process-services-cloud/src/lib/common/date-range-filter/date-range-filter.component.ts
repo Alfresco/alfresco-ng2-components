@@ -42,7 +42,7 @@ import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-fi
     processFilterProperty: ProcessFilterProperties;
 
     @Input()
-    options: DateCloudFilterType[] = this.defaultRangeOptions;
+    options: DateCloudFilterType[];
 
     @Output()
     dateChanged = new EventEmitter<DateRangeFilter>();

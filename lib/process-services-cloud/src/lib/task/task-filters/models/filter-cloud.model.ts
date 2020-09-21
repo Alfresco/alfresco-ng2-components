@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateCloudFilterType, RangeKeys } from '../../../models/date-cloud-filter.model';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 
 export class TaskFilterCloudModel  {
     id: string;
