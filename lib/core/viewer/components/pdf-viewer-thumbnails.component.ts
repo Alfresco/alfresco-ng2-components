@@ -78,17 +78,17 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         return item.id;
     }
 
-    isSelected(pageNum: number) {
-        return this.pdfViewer.currentPageNumber === pageNum;
+    isSelected(pageNumber: number) {
+        return this.pdfViewer.currentPageNumber === pageNumber;
     }
 
-    goTo(pageNum: number) {
-        this.pdfViewer.currentPageNumber = pageNum;
+    goTo(pageNumber: number) {
+        this.pdfViewer.currentPageNumber = pageNumber;
     }
 
-    scrollInto(item: any) {
+    scrollInto(pageNumber: number) {
         if (this.items.length) {
-            const index: number = this.items.findIndex((element) => element.id === item);
+            const index: number = this.items.findIndex((element) => element.id === pageNumber);
 
             if (index < 0 || index >= this.items.length) {
                 return;
