@@ -28,9 +28,5 @@
         &__thumb:hover {
             box-shadow: 0 0 5px 0 $black-87-opacity;
         }
-
-        &__thumb--selected:not(:hover) {
-            box-shadow: 0 0 5px 0 $black-87-opacity;
-        }
     }
 }

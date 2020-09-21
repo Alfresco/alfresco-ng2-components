@@ -17,19 +17,28 @@
 
 import {
     Component, Input, ContentChild, TemplateRef, HostListener, OnInit,
-    AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation, Inject
+    AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation, EventEmitter, Output, Inject, ViewChildren, QueryList
 } from '@angular/core';
+import { ESCAPE } from '@angular/cdk/keycodes';
 import { DOCUMENT } from '@angular/common';
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { PdfThumbComponent } from './pdf-viewer-thumb.component';
 
 @Component({
     selector: 'adf-pdf-thumbnails',
     templateUrl: './pdf-viewer-thumbnails.component.html',
     styleUrls: ['./pdf-viewer-thumbnails.component.scss'],
-    host: { 'class': 'adf-pdf-thumbnails' },
+    host: {
+        class: 'adf-pdf-thumbnails',
+        tabindex: '0'
+    },
     encapsulation: ViewEncapsulation.None
 })
 export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() pdfViewer: any;
+
+    @Output()
+    close: EventEmitter<any> = new EventEmitter<void>();
 
     virtualHeight: number = 0;
     translateY: number = 0;
@@ -41,9 +50,25 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     private margin: number = 15;
     private itemHeight: number = 114 + this.margin;
     private previouslyFocusedElement: HTMLElement | null = null;
+    private keyManager: FocusKeyManager<PdfThumbComponent>;
 
     @ContentChild(TemplateRef)
     template: any;
+
+    @ViewChildren(PdfThumbComponent)
+    thumbsList: QueryList<PdfThumbComponent>;
+
+    @HostListener('keydown', ['$event'])
+    onKeydown(event: KeyboardEvent): void {
+        const keyCode = event.keyCode;
+
+        if (keyCode === ESCAPE) {
+            this.close.emit();
+        }
+
+        this.keyManager.setFocusOrigin('keyboard');
+        event.preventDefault();
+    }
 
     @HostListener('window:resize')
     onResize() {
@@ -63,17 +88,28 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setHeight(this.pdfViewer.currentPageNumber);
         this.items = this.getPages();
         this.calculateItems();
+
         this.previouslyFocusedElement = this.document.activeElement as HTMLElement;
     }
 
     ngAfterViewInit() {
-        setTimeout(() => this.scrollInto(this.pdfViewer.currentPageNumber), 0);
+        this.keyManager = new FocusKeyManager(this.thumbsList);
+
+        this.thumbsList
+            .changes
+            .subscribe(_ => this.keyManager.setActiveItem(this.getPageIndex(this.pdfViewer.currentPageNumber)));
+
+        setTimeout(() => {
+            this.scrollInto(this.pdfViewer.currentPageNumber);
+            this.keyManager.setActiveItem(this.getPageIndex(this.pdfViewer.currentPageNumber));
+        }, 0);
     }
 
     ngOnDestroy() {
         this.element.nativeElement.removeEventListener('scroll', this.calculateItems, true);
         /* cspell:disable-next-line */
         this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
+
         if (this.previouslyFocusedElement) {
             this.previouslyFocusedElement.focus();
             this.previouslyFocusedElement = null;
@@ -170,5 +206,12 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (index >= this.renderItems.length - 1) {
             this.element.nativeElement.scrollTop += this.itemHeight;
         }
+
+        this.keyManager.setActiveItem(this.getPageIndex(event.pageNumber));
+    }
+
+    getPageIndex(pageNumber: number): number {
+        const thumbsListArray = this.thumbsList.toArray();
+        return thumbsListArray.findIndex(el => el.page.id === pageNumber);
     }
 }
