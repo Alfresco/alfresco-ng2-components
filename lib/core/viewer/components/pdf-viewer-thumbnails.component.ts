@@ -55,7 +55,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
         /* cspell:disable-next-line */
-        this.pdfViewer.eventBus.on('pagechange', this.onPageChange);
+        this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
         this.element.nativeElement.addEventListener('scroll', this.calculateItems, true);
 
         this.setHeight(this.pdfViewer.currentPageNumber);
@@ -71,7 +71,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy() {
         this.element.nativeElement.removeEventListener('scroll', this.calculateItems, true);
         /* cspell:disable-next-line */
-        this.pdfViewer.eventBus.off('pagechange', this.onPageChange);
+        this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
     }
 
     trackByFn(_: number, item: any): number {
