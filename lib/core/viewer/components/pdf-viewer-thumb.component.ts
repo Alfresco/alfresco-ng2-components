@@ -15,26 +15,32 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FocusableOption } from '@angular/cdk/a11y';
 
 @Component({
     selector: 'adf-pdf-thumb',
     templateUrl: './pdf-viewer-thumb.component.html',
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: { tabindex: '-1'}
 })
-export class PdfThumbComponent implements OnInit {
+export class PdfThumbComponent implements OnInit, FocusableOption {
 
     @Input()
     page: any = null;
 
     image$: Promise<string>;
 
-    constructor(private sanitizer: DomSanitizer) {
+    constructor(private sanitizer: DomSanitizer, private element: ElementRef) {
     }
 
     ngOnInit() {
         this.image$ = this.page.getPage().then((page) => this.getThumb(page));
+    }
+
+    focus() {
+        this.element.nativeElement.focus();
     }
 
     private getThumb(page): Promise<string> {
