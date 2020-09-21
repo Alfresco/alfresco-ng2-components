@@ -54,6 +54,7 @@ export class SearchCheckListPage {
         await this.checkSearchFilterInputIsDisplayed();
         await this.searchInFilter(option);
         await this.clickCheckListOption(option);
+
         return this;
     }
 

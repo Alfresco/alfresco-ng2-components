@@ -104,7 +104,7 @@ describe('Task Details component', () => {
         const taskForm = await apiService.getInstance().activiti.taskFormsApi.getTaskForm(allTasks.data[0].id);
         formModel = new FormModel(taskForm);
 
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
+        await taskPage.taskDetails().waitFormNameEqual(formModel.getName());
     });
 
     it('[C263946] Should display task details for standalone task - Custom App', async () => {
@@ -136,7 +136,7 @@ describe('Task Details component', () => {
 
         formModel = new FormModel(taskForm);
 
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(formModel.getName());
+        await taskPage.taskDetails().waitFormNameEqual(formModel.getName());
     });
 
     it('[C286706] Should display task details for task - Task App', async () => {
@@ -169,8 +169,7 @@ describe('Task Details component', () => {
 
         formModel = new FormModel(taskForm);
 
-        await expect(await taskPage.taskDetails().getFormName())
-            .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
+        await taskPage.taskDetails().waitFormNameEqual(formModel.getName());
     });
 
     it('[C286705] Should display task details for task - Custom App', async () => {
@@ -201,8 +200,7 @@ describe('Task Details component', () => {
 
         formModel = new FormModel(taskForm);
 
-        await expect(await taskPage.taskDetails().getFormName())
-            .toEqual(formModel.getName() === null ? CONSTANTS.TASK_DETAILS.NO_FORM : formModel.getName());
+        await taskPage.taskDetails().waitFormNameEqual(formModel.getName());
     });
 
     it('[C286708] Should display task details for subtask - Task App', async () => {

@@ -62,7 +62,7 @@ describe('Share file', () => {
                 return sharedLinkEntry.entry.nodeId === nodeIdSharedFile;
             });
 
-            return sharedLink !== null;
+            return !!sharedLink;
         };
 
         const apiCall = async () => {
@@ -162,6 +162,7 @@ describe('Share file', () => {
     });
 
     describe('Shared link preview', () => {
+
         beforeEach(async () => {
             await loginPage.login(acsUser.email, acsUser.password);
             await navigationBarPage.clickContentServicesButton();
@@ -204,6 +205,7 @@ describe('Share file', () => {
             const sharedLink = await shareDialog.getShareLink();
             await shareDialog.clickCloseButton();
             await navigationBarPage.clickLogoutButton();
+
             await BrowserActions.getUrl(sharedLink);
             await viewerPage.checkFileNameIsDisplayed(pngFileModel.name);
         });

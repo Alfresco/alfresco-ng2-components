@@ -22,7 +22,7 @@ import {
     EditTaskFilterCloudComponentPage,
     BrowserVisibility,
     TaskListCloudComponentPage,
-    BrowserActions, DropdownPage
+    BrowserActions, DropdownPage, Logger
 } from '@alfresco/adf-testing';
 
 export class TasksCloudDemoPage {
@@ -164,6 +164,31 @@ export class TasksCloudDemoPage {
     async clickStartNewTaskButton() {
         await BrowserActions.click(this.createButton);
         await BrowserActions.click(this.newTaskButton);
+    }
+
+    async waitTillContentLoaded(): Promise<void> {
+        if (this.isSpinnerPresent()) {
+            Logger.log('wait loading spinner disappear');
+            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+        }  else {
+            try {
+                Logger.log('wait loading spinner is present');
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
+            } catch (error) {
+            }
+        }
+    }
+
+    private async isSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await element(by.tagName('mat-spinner')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
     }
 
 }

@@ -63,14 +63,16 @@ describe('Search Slider Filter', () => {
         await apiService.getInstance().login(acsUser.email, acsUser.password);
 
         file2Bytes = await uploadActions.uploadFile(file2BytesModel.location, file2BytesModel.name, '-my-');
-        await browser.sleep(15000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         await loginPage.login(acsUser.email, acsUser.password);
 
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
-   });
+        await searchResults.dataTable.waitTillContentLoaded();
+
+    });
 
     afterAll(async () => {
         try {
@@ -122,7 +124,6 @@ describe('Search Slider Filter', () => {
         await sizeSliderFilter.checkSliderIsDisplayed();
         await sizeSliderFilter.setValue(size);
         await searchResults.sortBySize('DESC');
-        await searchResults.tableIsLoaded();
 
         const results = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of results) {
@@ -137,7 +138,6 @@ describe('Search Slider Filter', () => {
         await sizeSliderFilter.clickClearButton();
 
         await searchResults.sortBySize('DESC');
-        await searchResults.tableIsLoaded();
 
         const resultsSize = await dataTable.geCellElementDetail('Size') as ElementFinder[];
         for (const currentResult of resultsSize) {
@@ -165,6 +165,7 @@ describe('Search Slider Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();
@@ -182,6 +183,7 @@ describe('Search Slider Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();
@@ -201,6 +203,7 @@ describe('Search Slider Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();
@@ -220,6 +223,7 @@ describe('Search Slider Filter', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchFilters.checkSizeSliderFilterIsDisplayed();
             await searchFilters.clickSizeSliderFilterHeader();

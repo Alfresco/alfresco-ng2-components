@@ -97,7 +97,8 @@ let specExists = function (listSpecs) {
 specs();
 
 exports.config = {
-    allScriptsTimeout: TIMEOUT,
+
+    allScriptsTimeout: 30000,
 
     specs: arraySpecs,
 
@@ -136,7 +137,7 @@ exports.config = {
                 '--no-sandbox',
                 '--disable-web-security',
                 '--disable-browser-side-navigation',
-                '-allow-running-insecure-content',
+                '--allow-running-insecure-content',
                 ...(BROWSER_RUN === true ? [] : ['--headless'])]
         }
     },
@@ -154,13 +155,14 @@ exports.config = {
         resources: RESOURCES
     },
 
-    framework: 'jasmine2',
+    framework: 'jasmine',
 
     getPageTimeout: 90000,
 
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 120000,
+        defaultTimeoutInterval: 180000,
+        includeStackTrace: true,
         print: () => {
         },
         ...smartRunner.withOptionalExclusions(
@@ -184,7 +186,8 @@ exports.config = {
         writeReportFreq: 'end',
         imageToAscii: 'none',
         htmlOnExpect: 'none',
-        htmlOnSpec: 'none'
+        htmlOnSpec: 'none',
+        clearFoldersBeforeTest: false
     }],
 
     onCleanUp(results) {

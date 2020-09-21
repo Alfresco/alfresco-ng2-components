@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AppListCloudPage, BrowserActions, BrowserVisibility } from '@alfresco/adf-testing';
+import { AppListCloudPage, BrowserActions, BrowserVisibility, Logger } from '@alfresco/adf-testing';
 import { browser, by, element, ElementFinder } from 'protractor';
 import { ProcessServicesPage } from '../../process-services/pages/process-services.page';
 
@@ -35,8 +35,11 @@ export class NavigationBarPage {
     menuButton = element(by.css('button[data-automation-id="adf-menu-icon"]'));
     formButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="Form"]'));
     peopleGroupCloudButton = this.linkMenuChildrenContainer.element(by.css('.app-sidenav-link[data-automation-id="People/Group Cloud"]'));
+    logoutSection: ElementFinder = element(by.css('div[data-automation-id="adf-logout-section"]'));
 
     async clickNavigationBarItem(title: string): Promise<void> {
+        Logger.log(`clickNavigationBarItem ${title}`);
+
         const menu = element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.click(menu);
@@ -63,8 +66,8 @@ export class NavigationBarPage {
     }
 
     async clickProcessCloudButton() {
-        await this.clickNavigationBarItem('Process Cloud');
-        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Cloud'), this.linkMenuChildrenContainer);
     }
 
     async navigateToProcessServicesCloudPage(): Promise<AppListCloudPage> {
@@ -87,8 +90,12 @@ export class NavigationBarPage {
     }
 
     async clickProcessServicesButton() {
-        await this.clickNavigationBarItem('Process Services');
-        await BrowserVisibility.waitUntilElementIsVisible(this.linkMenuChildrenContainer);
+        await BrowserActions.closeMenuAndDialogs();
+        await BrowserActions.clickUntilIsNotVisible(this.getMenuItem('Process Services'), this.linkMenuChildrenContainer);
+    }
+
+    private getMenuItem(title: string) {
+        return element(by.css(`.app-sidenav-link[data-automation-id="${title}"]`));
     }
 
     async navigateToProcessServicesPage(): Promise<ProcessServicesPage> {
@@ -172,8 +179,14 @@ export class NavigationBarPage {
     }
 
     async clickLogoutButton(): Promise<void> {
+        Logger.log('Logout');
         await BrowserActions.closeMenuAndDialogs();
         await BrowserActions.clickExecuteScript('.app-sidenav-link[adf-logout]');
+
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(this.logoutSection);
+        } catch (error) {
+        }
     }
 
     async clickThemeButton(): Promise<void> {

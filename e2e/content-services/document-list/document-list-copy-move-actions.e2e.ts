@@ -97,7 +97,7 @@ describe('Document List Component', () => {
                 }
             });
 
-        await browser.driver.sleep(12000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
     });
 
     afterAll(async () => {
@@ -119,6 +119,7 @@ describe('Document List Component', () => {
         beforeEach(async () => {
             await BrowserActions.closeMenuAndDialogs();
             await navigationBarPage.clickContentServicesButton();
+            await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
         });
 
         it('[C260128] Move - Same name file', async () => {
@@ -142,11 +143,11 @@ describe('Document List Component', () => {
             await contentNodeSelector.clickContentNodeSelectorResult(destinationFolder.entry.name);
             await contentNodeSelector.clickMoveCopyButton();
             await contentServicesPage.checkContentIsNotDisplayed(sourceFolder.entry.name);
-            await contentServicesPage.doubleClickRow(destinationFolder.entry.name);
+            await contentServicesPage.openFolder(destinationFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(sourceFolder.entry.name);
-            await contentServicesPage.doubleClickRow(sourceFolder.entry.name);
+            await contentServicesPage.openFolder(sourceFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(subFolder.entry.name);
-            await contentServicesPage.doubleClickRow(subFolder.entry.name);
+            await contentServicesPage.openFolder(subFolder.entry.name);
             await contentServicesPage.checkContentIsDisplayed(subFile.entry.name);
         });
 

@@ -46,13 +46,12 @@ describe('Create library directive', () => {
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
 
         acsUser = await usersActions.createUser();
-
-        await loginPage.login(acsUser.email, acsUser.password);
-
         createSite = await apiService.getInstance().core.sitesApi.createSite({
             title: StringUtil.generateRandomString(20).toLowerCase(),
             visibility: 'PUBLIC'
         });
+
+        await loginPage.login(acsUser.email, acsUser.password);
     });
 
     afterAll(async () => {
@@ -86,15 +85,14 @@ describe('Create library directive', () => {
         const libraryName = 'cancelLibrary';
 
         await createLibraryDialog.typeLibraryName(libraryName);
-
         await createLibraryDialog.clickCancel();
-
         await createLibraryDialog.waitForDialogToClose();
     });
 
     it('[C290160] Should create a public library', async () => {
         const libraryName = StringUtil.generateRandomString();
         const libraryDescription = StringUtil.generateRandomString();
+
         await createLibraryDialog.typeLibraryName(libraryName);
         await createLibraryDialog.typeLibraryDescription(libraryDescription);
         await createLibraryDialog.selectPublic();
@@ -103,8 +101,6 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
-
-        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
@@ -116,6 +112,7 @@ describe('Create library directive', () => {
     it('[C290173] Should create a private library', async () => {
         const libraryName = StringUtil.generateRandomString();
         const libraryDescription = StringUtil.generateRandomString();
+
         await createLibraryDialog.typeLibraryName(libraryName);
         await createLibraryDialog.typeLibraryDescription(libraryDescription);
         await createLibraryDialog.selectPrivate();
@@ -124,8 +121,6 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
-
-        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
@@ -147,8 +142,6 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
-
-        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create Library dialog is not closed');
 
         await customSourcesPage.navigateToCustomSources();
         await customSourcesPage.selectMySitesSourceType();
@@ -247,8 +240,6 @@ describe('Create library directive', () => {
 
         await createLibraryDialog.clickCreate();
         await createLibraryDialog.waitForDialogToClose();
-
-        await expect(await createLibraryDialog.isDialogOpen()).not.toBe(true, 'The Create library dialog remained open');
     });
 
     it('[C290179] Should not accept more than the expected characters for input fields', async () => {

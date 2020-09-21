@@ -46,6 +46,7 @@ describe('Start Task - Group Cloud Component', () => {
     const apiService = new ApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
+    const rolesService = new RolesService(apiService);
 
     const bothGroupsTaskName = StringUtil.generateRandomString(5);
     const oneGroupTaskName = StringUtil.generateRandomString(5);
@@ -58,9 +59,8 @@ describe('Start Task - Group Cloud Component', () => {
         apsUser = await identityService.createIdentityUser();
 
         hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
-        testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
+        testGroup = await groupIdentityService.createIdentityGroup();
 
-        const rolesService = new RolesService(apiService);
         const apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.ACTIVITI_USER);
         await groupIdentityService.assignRole(testGroup.id, apsAdminRoleId, identityService.ROLES.ACTIVITI_USER);
 

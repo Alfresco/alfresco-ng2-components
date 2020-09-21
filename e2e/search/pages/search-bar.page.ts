@@ -30,7 +30,8 @@ export class SearchBarPage {
     searchBarPage = element(by.css(`mat-list[id='autocomplete-search-result-list']`));
 
     async pressDownArrowAndEnter(): Promise<void> {
-        await element(by.css(`adf-search-control div input`)).sendKeys(protractor.Key.ARROW_DOWN);
+        await BrowserVisibility.waitUntilElementIsVisible(this.searchBar);
+        await this.searchBar.sendKeys(protractor.Key.ARROW_DOWN);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
@@ -74,25 +75,25 @@ export class SearchBarPage {
         await BrowserVisibility.waitUntilElementIsVisible(this.getRowByRowName(name));
     }
 
-    async clickOnSpecificRow(name: string): Promise<void> {
-        await this.resultTableContainsRow(name);
-        await BrowserActions.click(this.getRowByRowName(name));
+    async clickOnSpecificRow(fileName: string): Promise<void> {
+        await this.resultTableContainsRow(fileName);
+        await BrowserActions.click(this.getRowByRowName(fileName));
     }
 
     getRowByRowName(name: string): ElementFinder {
         return element(by.css(`mat-list-item[data-automation-id='autocomplete_for_${name}']`));
     }
 
-    async getSpecificRowsHighlightName(name: string): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.highlightName));
+    async getSpecificRowsHighlightName(fileName: string): Promise<string> {
+        return BrowserActions.getText(this.getRowByRowName(fileName).element(this.highlightName));
     }
 
-    async getSpecificRowsCompleteName(name: string): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.completeName));
+    async getSpecificRowsCompleteName(fileName: string): Promise<string> {
+        return BrowserActions.getText(this.getRowByRowName(fileName).element(this.completeName));
     }
 
-    async getSpecificRowsAuthor(name: string): Promise<string> {
-        return BrowserActions.getText(this.getRowByRowName(name).element(this.rowsAuthor));
+    async getSpecificRowsAuthor(fileName: string): Promise<string> {
+        return BrowserActions.getText(this.getRowByRowName(fileName).element(this.rowsAuthor));
     }
 
     async clearText(): Promise<void> {

@@ -120,6 +120,7 @@ describe('Unshare file', () => {
 
     describe('with permission', () => {
         afterAll(async () => {
+            await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
             await uploadActions.deleteFileOrFolder(nodeId);
         });
 
@@ -160,7 +161,7 @@ describe('Unshare file', () => {
             await shareDialog.confirmationDialogIsDisplayed();
             await shareDialog.clickConfirmationDialogRemoveButton();
             await shareDialog.dialogIsClosed();
-            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, browser.baseUrl ));
+            await BrowserActions.getUrl(sharedLink.replace(browser.params.testConfig.appConfig.ecmHost, browser.baseUrl));
             await errorPage.checkErrorCode();
         });
     });
@@ -173,7 +174,7 @@ describe('Unshare file', () => {
 
         it('[C286555] Should NOT be able to unshare file without permission', async () => {
             await navBar.goToSite(testSite);
-            await contentListPage.doubleClickRow('documentLibrary');
+            await contentServicesPage.openFolder('documentLibrary');
             await contentListPage.selectRow(nodeBody.name);
             await contentServicesPage.clickShareButton();
             await shareDialog.checkDialogIsDisplayed();

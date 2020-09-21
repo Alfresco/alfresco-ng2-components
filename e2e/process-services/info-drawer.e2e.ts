@@ -359,6 +359,6 @@ describe('Info Drawer', () => {
         await expect(await taskPage.taskDetails().getCategory()).toEqual(category);
         await expect(await taskPage.taskDetails().getParentName()).toEqual(parentName);
         await expect(await taskPage.taskDetails().getCreated()).toEqual(moment(Date.now()).format(dateFormat));
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(formName);
+        await taskPage.taskDetails().waitFormNameEqual(formName);
     }
 });

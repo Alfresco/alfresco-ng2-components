@@ -157,7 +157,7 @@ describe('Document List Component', () => {
         it('[C280130] Should be able to go back to List View', async () => {
             await contentServicesPage.clickGridViewButton();
             await contentServicesPage.checkAcsContainer();
-            await contentServicesPage.doubleClickRow(folderName);
+            await contentServicesPage.openFolder(folderName);
             await contentServicesPage.checkRowIsDisplayed(pdfFile.name);
         });
 

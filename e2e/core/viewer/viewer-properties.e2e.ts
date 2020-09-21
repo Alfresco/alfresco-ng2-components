@@ -68,8 +68,6 @@ describe('Viewer - properties', () => {
 
         await contentServicesPage.goToDocumentList();
 
-        await contentServicesPage.checkAcsContainer();
-
         await viewerPage.viewFile(pngFile.name);
 
         await viewerPage.clickLeftSidebarButton();

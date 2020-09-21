@@ -21,32 +21,54 @@ import { Logger } from './logger';
 
 import * as path from 'path';
 import * as fs from 'fs';
+import { ApiUtil } from '../actions/api.util';
 
 export class BrowserActions {
 
-    static async click(elementFinder: ElementFinder): Promise<void> {
+    static async clickUntilIsNotVisible(elementToClick: ElementFinder, elementToFind: ElementFinder): Promise<void> {
+        Logger.info(`Click until element is not present: ${elementToClick.locator().toString()}`);
+
+        const predicate = (isVisible: boolean) => {
+            return isVisible;
+        };
+
+        const apiCall = async () => {
+            await this.click(elementToClick);
+
+            try {
+                return BrowserVisibility.waitUntilElementIsVisible(elementToFind);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        };
+
+        return ApiUtil.waitForApi(apiCall, predicate, 5, 2000);
+    }
+
+    static async click(elementToClick: ElementFinder): Promise<void> {
         try {
-            Logger.info(`Click element: ${elementFinder.locator().toString()}`);
-            await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
-            await BrowserVisibility.waitUntilElementIsClickable(elementFinder);
-            await elementFinder.click();
+            Logger.info(`Click element: ${elementToClick.locator().toString()}`);
+            await BrowserVisibility.waitUntilElementIsVisible(elementToClick);
+            await BrowserVisibility.waitUntilElementIsClickable(elementToClick);
+            await elementToClick.click();
         } catch (clickErr) {
-            Logger.warn(`click error element ${elementFinder.locator().toString()} consider to use directly clickScript`);
-            await this.clickScript(elementFinder);
+            Logger.warn(`click error element ${elementToClick.locator().toString()} consider to use directly clickScript`);
+            await this.clickScript(elementToClick);
         }
     }
 
-    static async clickScript(elementFinder: ElementFinder): Promise<void> {
-        Logger.info(`Click script ${elementFinder.locator().toString()}`);
+    static async clickScript(elementToClick: ElementFinder): Promise<void> {
+        Logger.info(`Click script ${elementToClick.locator().toString()}`);
 
-        await browser.executeScript(`arguments[0].scrollIntoView();`, elementFinder);
-        await browser.executeScript(`arguments[0].click();`, elementFinder);
+        await browser.executeScript(`arguments[0].scrollIntoView();`, elementToClick);
+        await browser.executeScript(`arguments[0].click();`, elementToClick);
     }
 
     static async clickExecuteScript(elementCssSelector: string): Promise<void> {
         Logger.info(`Click execute script ${elementCssSelector}`);
 
-        await BrowserVisibility.waitUntilElementIsPresent(element(by.css(elementCssSelector)));
+        await BrowserVisibility.waitUntilElementIsVisible(element(by.css(elementCssSelector)));
         await browser.executeScript(`document.querySelector('${elementCssSelector}').click();`);
     }
 
@@ -72,12 +94,14 @@ export class BrowserActions {
     static async getText(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Text ${elementFinder.locator().toString()}`);
 
-        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
 
         if (present) {
             let text = await elementFinder.getText();
 
             if (text === '') { // DO NOT REMOVE BUG sometime wrongly return empty text for cdk elements
+                Logger.info(`Use backup get text script`);
+
                 text = await this.getTextScript(elementFinder);
                 return text?.trim();
             }
@@ -89,14 +113,15 @@ export class BrowserActions {
         }
     }
 
-    static async getTextScript(elementFinder: ElementFinder): Promise<string> {
+    // Don't make it pub,ic use getText
+    private static async getTextScript(elementFinder: ElementFinder): Promise<string> {
         return browser.executeScript(`return arguments[0].textContent`, elementFinder);
     }
 
     static async getInputValue(elementFinder: ElementFinder): Promise<string> {
         Logger.info(`Get Input value ${elementFinder.locator().toString()}`);
 
-        const present = await BrowserVisibility.waitUntilElementIsPresent(elementFinder);
+        const present = await BrowserVisibility.waitUntilElementIsVisible(elementFinder);
         if (present) {
             return elementFinder.getAttribute('value');
         } else {
@@ -187,7 +212,7 @@ export class BrowserActions {
 
         const fileWithPath = path.join(screenshotFilePath, filenameWithExt);
         const stream = fs.createWriteStream(fileWithPath);
-        stream.write(new Buffer(pngData, 'base64'));
+        stream.write(Buffer.from(pngData, 'base64'));
         stream.end();
     }
 

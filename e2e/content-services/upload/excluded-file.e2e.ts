@@ -134,6 +134,9 @@ describe('Upload component - Excluded Files', () => {
 
         await uploadToggles.enableFolderUpload();
         await contentServicesPage.uploadFolder(folderUpload.location);
+
+        await contentServicesPage.checkContentIsDisplayed(folderUpload.name);
+
         await uploadDialog.clickOnCloseButton();
         await uploadDialog.dialogIsNotDisplayed();
 

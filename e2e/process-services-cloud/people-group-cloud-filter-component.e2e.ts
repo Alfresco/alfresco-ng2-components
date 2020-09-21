@@ -83,9 +83,11 @@ describe('People Groups Cloud Component', () => {
             await peopleGroupCloudComponentPage.checkPeopleCloudSingleSelectionIsSelected();
             await peopleGroupCloudComponentPage.clickPeopleFilerByApp();
             await peopleGroupCloudComponentPage.enterPeopleAppName(browser.params.resources.ACTIVITI_CLOUD_APPS.SIMPLE_APP.name);
+
             await peopleCloudComponent.searchAssignee(testUser.firstName);
             await peopleCloudComponent.checkUserIsDisplayed(`${testUser.firstName} ${testUser.lastName}`);
             await peopleCloudComponent.selectAssigneeFromList(`${testUser.firstName} ${testUser.lastName}`);
+
             await browser.sleep(100);
             await expect(await peopleCloudComponent.checkSelectedPeople(`${testUser.firstName} ${testUser.lastName}`));
         });

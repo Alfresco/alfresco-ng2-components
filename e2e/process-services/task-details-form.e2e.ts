@@ -140,7 +140,7 @@ describe('Task Details - Form', () => {
 
         await taskDetailsPage.checkFormIsAttached('No form');
 
-        await expect(await taskDetailsPage.getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await taskDetailsPage.waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C280557] Should display task details when selecting another task while the Attach Form dialog is displayed', async () => {

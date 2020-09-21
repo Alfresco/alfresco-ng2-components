@@ -93,7 +93,7 @@ export class ProcessFiltersPage {
     }
 
     async waitForTableBody(): Promise<void> {
-        await BrowserVisibility.waitUntilElementIsVisible(this.tableBody);
+        await this.dataTable.waitForTableBody();
     }
 
     /**

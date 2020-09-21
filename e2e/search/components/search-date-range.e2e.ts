@@ -40,7 +40,8 @@ describe('Search Date Range Filter', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter('*');
-   });
+        await searchResults.dataTable.waitTillContentLoaded();
+    });
 
     beforeEach(async () => {
         await searchFilters.checkCreatedRangeFilterIsDisplayed();
@@ -183,6 +184,8 @@ describe('Search Date Range Filter', () => {
 
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter('*');
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFilters.checkCreatedRangeFilterIsDisplayed();
             await searchFilters.clickCreatedRangeFilterHeader();
             await searchFilters.checkCreatedRangeFilterIsExpanded();

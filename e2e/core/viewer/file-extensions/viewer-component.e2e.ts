@@ -88,7 +88,7 @@ describe('Viewer', () => {
         await loginPage.login(acsUser.email, acsUser.password);
 
         await navigationBarPage.goToSite(site);
-        await contentServicesPage.checkAcsContainer();
+        await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
 
         await viewerPage.viewFile(pngFileUploaded.entry.name);
 

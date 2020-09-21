@@ -94,10 +94,11 @@ describe('Attachment list action menu for processes', () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
         await processFiltersPage.selectFromProcessList(processName.active);
-
         await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
+
         await attachmentListPage.viewFile(pngFile.name);
 
         await viewerPage.checkFileNameIsDisplayed(pngFile.name);
@@ -105,6 +106,7 @@ describe('Attachment list action menu for processes', () => {
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.active);
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.doubleClickFile(pngFile.name);
 
@@ -113,6 +115,7 @@ describe('Attachment list action menu for processes', () => {
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.active);
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.downloadFile(pngFile.name);
 
@@ -127,12 +130,11 @@ describe('Attachment list action menu for processes', () => {
     it('[C279886] Should be able to access options of a file attached to a completed process', async () => {
         await (await (await navigationBarPage.navigateToProcessServicesPage()).goToApp(app.title)).clickProcessButton();
 
-        await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.completed);
-
         await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.clickAttachFileButton(pngFile.location);
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
 
         await processDetailsPage.clickCancelProcessButton();
         await processFiltersPage.clickCompletedFilterButton();
@@ -140,6 +142,7 @@ describe('Attachment list action menu for processes', () => {
         await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.checkAttachFileButtonIsNotDisplayed();
+        await attachmentListPage.checkFileIsAttached(pngFile.name);
         await attachmentListPage.viewFile(pngFile.name);
 
         await viewerPage.checkFileNameIsDisplayed(pngFile.name);
@@ -162,7 +165,6 @@ describe('Attachment list action menu for processes', () => {
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.taskApp);
-
         await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.clickAttachFileButton(pngFile.location);
@@ -174,6 +176,7 @@ describe('Attachment list action menu for processes', () => {
 
         await processFiltersPage.clickRunningFilterButton();
         await processFiltersPage.selectFromProcessList(processName.emptyList);
+        await processDetailsPage.checkProcessTitleIsDisplayed();
 
         await attachmentListPage.checkEmptyAttachmentList();
         await attachmentListPage.clickAttachFileButton(pngFile.location);

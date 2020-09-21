@@ -137,8 +137,12 @@ describe('Task Header cloud component', () => {
 
     it('[C291943] Should display task details for assigned task', async () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(basicCreatedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(basicCreatedTaskName);
+        await tasksCloudDemoPage.waitTillContentLoaded();
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         await expect(await taskHeaderCloudPage.getId()).toEqual(basicCreatedTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
@@ -157,8 +161,12 @@ describe('Task Header cloud component', () => {
 
     it('[C291944] Should display task details for completed task', async () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+        await tasksCloudDemoPage.waitTillContentLoaded();
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         await expect(await taskHeaderCloudPage.getId()).toEqual(completedTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
@@ -177,8 +185,12 @@ describe('Task Header cloud component', () => {
 
     it('[C291945] Should Parent Name and Parent Id not be empty in task details for sub task', async () => {
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(subTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(subTask.entry.name);
+        await tasksCloudDemoPage.waitTillContentLoaded();
+        await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         await expect(await taskHeaderCloudPage.getId()).toEqual(subTask.entry.id);
         await expect(await taskHeaderCloudPage.getDescription())
@@ -203,8 +215,12 @@ describe('Task Header cloud component', () => {
         await startTaskCloudPage.typePriorityOf('50');
         await startTaskCloudPage.clickStartButton();
         await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+        await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(myTaskName);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(myTaskName);
+        await tasksCloudDemoPage.waitTillContentLoaded();
+
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         await taskHeaderCloudPage.priorityCardTextItem.enterTextField('$$%£W21');
@@ -223,6 +239,8 @@ describe('Task Header cloud component', () => {
 
         await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(unclaimedTask.entry.name);
         await tasksCloudDemoPage.taskListCloudComponent().selectRow(unclaimedTask.entry.name);
+        await tasksCloudDemoPage.waitTillContentLoaded();
+
         await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
 
         const currentAssignee = await taskHeaderCloudPage.assigneeCardTextItem.getFieldValue();
@@ -242,10 +260,6 @@ describe('Task Header cloud component', () => {
         await peopleCloudComponentPage.selectAssigneeFromList('HR User');
         await peopleCloudComponentPage.checkSelectedPeople('HR User');
 
-        await peopleCloudComponentPage.searchAssignee('processAdmin');
-        await peopleCloudComponentPage.selectAssigneeFromList('Process Admin User');
-        await peopleCloudComponentPage.checkSelectedPeople('Process Admin User');
-
         await peopleCloudComponentPage.searchAssignee('modeler');
         await peopleCloudComponentPage.checkNoResultsFoundError();
     });
@@ -264,8 +278,12 @@ describe('Task Header cloud component', () => {
 
         it('[C311280] Should pick up the default date format from the app configuration', async () => {
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTaskName);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(completedTaskName);
+            await tasksCloudDemoPage.waitTillContentLoaded();
+
             await taskHeaderCloudPage.checkTaskPropertyListIsDisplayed();
             await expect(await taskHeaderCloudPage.getCreated()).toEqual(defaultDate);
         });

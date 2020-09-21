@@ -173,7 +173,7 @@ describe('Favorite directive', () => {
         await contentNodeSelector.clickContentNodeSelectorResult(testFolder1.entry.name);
         await contentNodeSelector.clickMoveCopyButton();
         await contentServicesPage.checkContentIsNotDisplayed(testFile.entry.name);
-        await contentServicesPage.doubleClickRow(testFolder1.entry.name);
+        await contentServicesPage.openFolder(testFolder1.entry.name);
         await contentServicesPage.checkContentIsDisplayed(testFile.entry.name);
 
         await contentServicesPage.getDocumentList().dataTablePage().selectRow('Display name', testFile.entry.name);

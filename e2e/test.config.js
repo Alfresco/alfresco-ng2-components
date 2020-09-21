@@ -51,6 +51,7 @@ const appConfig = {
         "redirectUriLogout": REDIRECT_URI_LOGOUT,
         "redirectSilentIframeUri": `${HOST}/assets/silent-refresh.html`,
         "publicUrls": [
+            "**/logout",
             "**/preview/s/*",
             "**/settings"
         ]
@@ -108,7 +109,8 @@ module.exports = {
 
     timeouts: {
         visible_timeout: 20000,
-        no_visible_timeout: 20000
+        no_visible_timeout: 20000,
+        index_search: 25000
     }
 
 };

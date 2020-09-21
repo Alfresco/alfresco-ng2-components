@@ -85,6 +85,7 @@ describe('Search Sorting Picker', () => {
     beforeEach(async () => {
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
     });
 
     afterEach(async () => {
@@ -114,6 +115,7 @@ describe('Search Sorting Picker', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
@@ -130,6 +132,7 @@ describe('Search Sorting Picker', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
@@ -155,6 +158,7 @@ describe('Search Sorting Picker', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.clickSortingDropdown();
@@ -206,6 +210,7 @@ describe('Search Sorting Picker', () => {
         await searchBarPage.checkSearchIconIsVisible();
         await searchBarPage.clickOnSearchIcon();
         await searchBarPage.enterTextAndPressEnter(search);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchSortingPicker.checkSortingDropdownIsDisplayed();
         await searchSortingPicker.sortBy('ASC', 'Modified Date');

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 
@@ -34,7 +34,6 @@ export class TaskFiltersCloudComponentPage {
         this.filter = this.getTaskFilterLocatorByFilterName(filterName);
         await BrowserVisibility.waitUntilElementIsClickable(this.filter);
         await BrowserActions.click(this.filter);
-        await browser.sleep(1500);
     }
 
     async checkTaskFilterNotDisplayed(filterName: string): Promise<void> {

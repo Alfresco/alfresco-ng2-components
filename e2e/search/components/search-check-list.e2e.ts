@@ -76,7 +76,7 @@ describe('Search Checklist Component', () => {
             nodeType: 'cm:content'
         });
 
-        await browser.sleep(15000);
+        await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
         await loginPage.login(acsUser.email, acsUser.password);
     });
@@ -107,12 +107,14 @@ describe('Search Checklist Component', () => {
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.document);
         await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.folder);
         await searchResults.checkContentIsNotDisplayed(nodeNames.document);
 
         await searchFiltersPage.checkListFiltersPage().clickClearAllButton();
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.folder);
         await searchResults.checkContentIsDisplayed(nodeNames.document);
@@ -121,6 +123,7 @@ describe('Search Checklist Component', () => {
         await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.folder);
         await searchResults.checkContentIsDisplayed(nodeNames.document);
@@ -128,6 +131,7 @@ describe('Search Checklist Component', () => {
         await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.document);
         await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsNotSelected(filterType.folder);
+        await searchResults.dataTable.waitTillContentLoaded();
 
         await searchResults.checkContentIsDisplayed(nodeNames.document);
         await searchResults.checkContentIsNotDisplayed(nodeNames.folder);
@@ -154,6 +158,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -193,6 +199,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -207,6 +215,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(10);
@@ -246,6 +256,10 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -269,6 +283,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await expect(await searchFiltersPage.checkListFiltersPage().getCheckListOptionsNumberOnPage()).toBe(5);
@@ -288,17 +304,12 @@ describe('Search Checklist Component', () => {
     describe('Properties', () => {
         let jsonFile;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             jsonFile = SearchConfiguration.getConfiguration();
-        });
-
-        beforeAll(async () => {
-            await loginPage.login(acsUser.email, acsUser.password);
+            await navigationBarPage.clickContentServicesButton();
         });
 
         it('[C277018] Should be able to change the operator', async () => {
-            await navigationBarPage.clickContentServicesButton();
-
             jsonFile.categories[1].component.settings.operator = 'AND';
 
             await LocalStorageUtil.setConfigField('search', JSON.stringify(jsonFile));
@@ -306,10 +317,13 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
             await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsSelected(filterType.folder);
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchResults.checkContentIsDisplayed(nodeNames.folder);
             await searchResults.checkContentIsNotDisplayed(nodeNames.document);
@@ -321,8 +335,6 @@ describe('Search Checklist Component', () => {
         });
 
         it('[C277019] Should be able to add new properties with different types', async () => {
-            await navigationBarPage.clickContentServicesButton();
-
             jsonFile.categories[1].component.settings.options.push({
                 'name': filterType.custom,
                 'value': "TYPE:'cm:auditable'"
@@ -333,6 +345,8 @@ describe('Search Checklist Component', () => {
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.checkSearchBarIsVisible();
             await searchBarPage.enterTextAndPressEnter(randomName);
+            await searchResults.dataTable.waitTillContentLoaded();
+
             await searchFiltersPage.clickCheckListFilter();
 
             await searchFiltersPage.checkListFiltersPage().checkCheckListOptionIsDisplayed(filterType.folder);
@@ -346,6 +360,7 @@ describe('Search Checklist Component', () => {
 
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.document);
             await searchFiltersPage.checkListFiltersPage().clickCheckListOption(filterType.folder);
+            await searchResults.dataTable.waitTillContentLoaded();
 
             await searchResults.checkContentIsDisplayed(nodeNames.folder);
             await searchResults.checkContentIsDisplayed(nodeNames.document);

@@ -53,19 +53,19 @@ describe('Task filters cloud', () => {
         beforeAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
-            testUser = await identityService.createIdentityUserWithRole( [identityService.ROLES.ACTIVITI_USER]);
+            testUser = await identityService.createIdentityUserWithRole([identityService.ROLES.ACTIVITI_USER]);
             groupInfo = await groupIdentityService.getGroupInfoByGroupName('hr');
             await identityService.addUserToGroup(testUser.idIdentityService, groupInfo.id);
 
             await apiService.login(testUser.email, testUser.password);
 
             await loginSSOPage.login(testUser.email, testUser.password);
-    });
+        });
 
         afterAll(async () => {
             await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
             await identityService.deleteIdentityUser(testUser.idIdentityService);
-    });
+        });
 
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
@@ -78,10 +78,14 @@ describe('Task filters cloud', () => {
             await tasksService.claimTask(task.entry.id, simpleApp);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(newTask);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(newTask);
@@ -94,10 +98,14 @@ describe('Task filters cloud', () => {
 
             await queryService.getTaskByStatus(toBeCompletedTask.entry.name, simpleApp, 'COMPLETED');
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('my-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('My Tasks');
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(completedTask);
 
             await tasksCloudDemoPage.taskFilterCloudComponent.clickTaskFilter('completed-tasks');
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
+
             await expect(await tasksCloudDemoPage.taskFilterCloudComponent.getActiveFilterName()).toBe('Completed Tasks');
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(completedTask);

@@ -51,23 +51,20 @@ describe('Modify applications', () => {
         appVersionToBeDeleted = await applicationService.importPublishDeployApp(appToBeDeleted.file_path);
 
         await loginPage.login(user.email, user.password);
-   });
+    });
+
+    beforeEach(async () => {
+        await navigationBarPage.navigateToProcessServicesPage();
+        await processServicesPage.checkApsContainer();
+    });
 
     it('[C260198] Should the app be displayed on dashboard when is deployed on APS', async () => {
-        await navigationBarPage.navigateToProcessServicesPage();
-
-        await processServicesPage.checkApsContainer();
-
         await expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
         await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
     });
 
     it('[C260213] Should a new version of the app be displayed on dashboard when is replaced by importing another app in APS', async () => {
-        await navigationBarPage.navigateToProcessServicesPage();
-
-        await processServicesPage.checkApsContainer();
-
         await expect(await processServicesPage.getAppIconType(app.title)).toEqual(CONSTANTS.APP_ICON.UNIT);
         await expect(await processServicesPage.getBackgroundColor(app.title)).toEqual(CONSTANTS.APP_COLOR.BLUE);
         await expect(await processServicesPage.getDescription(app.title)).toEqual(app.description);
@@ -85,10 +82,6 @@ describe('Modify applications', () => {
     });
 
     it('[C260220] Should the app not be displayed on dashboard after it was deleted in APS', async () => {
-        await navigationBarPage.navigateToProcessServicesPage();
-
-        await processServicesPage.checkApsContainer();
-
         await processServicesPage.checkAppIsDisplayed(app.title);
 
         await modelActions.deleteEntireModel(firstApp.id);
@@ -100,10 +93,6 @@ describe('Modify applications', () => {
     });
 
     it('[C260215] Should the penultimate version of an app be displayed on dashboard when the last version is deleted in APS', async () => {
-        await navigationBarPage.navigateToProcessServicesPage();
-
-        await processServicesPage.checkApsContainer();
-
         await processServicesPage.checkAppIsDisplayed(appToBeDeleted.title);
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);
 
@@ -130,9 +119,6 @@ describe('Modify applications', () => {
 
     it('[C260207] Should the app be updated when is edited in APS', async () => {
         const newDescription = 'new description';
-
-        await navigationBarPage.navigateToProcessServicesPage();
-        await processServicesPage.checkApsContainer();
 
         await expect(await processServicesPage.getAppIconType(appToBeDeleted.title)).toEqual(CONSTANTS.APP_ICON.USER);
         await expect(await processServicesPage.getBackgroundColor(appToBeDeleted.title)).toEqual(CONSTANTS.APP_COLOR.ORANGE);

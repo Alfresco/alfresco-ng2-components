@@ -86,7 +86,7 @@ describe('Task list cloud - selection', () => {
             await tasksCloudDemoPage.selectSelectionMode('None');
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
@@ -98,7 +98,7 @@ describe('Task list cloud - selection', () => {
             await tasksCloudDemoPage.selectSelectionMode('Single');
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
@@ -116,7 +116,7 @@ describe('Task list cloud - selection', () => {
             await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().selectRow(tasks[0]);
@@ -133,7 +133,7 @@ describe('Task list cloud - selection', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);
@@ -154,7 +154,7 @@ describe('Task list cloud - selection', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.disableDisplayTaskDetails();
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRowsButtonIsDisplayed();
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().checkAllRows();
@@ -167,7 +167,7 @@ describe('Task list cloud - selection', () => {
             await tasksCloudDemoPage.clickSettingsButton();
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();
-            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
+            await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(tasks[0]);
             await tasksCloudDemoPage.taskListCloudComponent().clickCheckbox(tasks[0]);

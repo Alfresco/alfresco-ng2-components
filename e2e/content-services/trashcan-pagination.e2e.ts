@@ -63,17 +63,20 @@ describe('Trashcan - Pagination', () => {
         const fileNames = StringUtil.generateFilesNames(10, noOfFiles + 9, pagination.base, pagination.extension);
         await apiService.getInstance().login(browser.params.testConfig.admin.email, browser.params.testConfig.admin.password);
         acsUser = await usersActions.createUser();
+
         await apiService.getInstance().login(acsUser.email, acsUser.password);
         const folderUploadedModel = await uploadActions.createFolder(newFolderModel.name, '-my-');
         const emptyFiles: any = await uploadActions.createEmptyFiles(fileNames, folderUploadedModel.entry.id);
+
         for (const entry of emptyFiles.list.entries) {
             await apiService.getInstance().node.deleteNode(entry.entry.id).then(() => {}, async () => {
                 await apiService.getInstance().node.deleteNode(entry.entry.id);
             });
         }
+
         await loginPage.login(acsUser.email, acsUser.password);
         await navigationBarPage.clickTrashcanButton();
-        await trashcanPage.waitForTableBody();
+        await trashcanPage.getDocumentList().dataTablePage().waitTillContentLoaded();
     });
 
     afterAll(async () => {
@@ -82,7 +85,7 @@ describe('Trashcan - Pagination', () => {
 
     afterEach(async () => {
         await browser.refresh();
-        await trashcanPage.waitForTableBody();
+        await trashcanPage.getDocumentList().dataTablePage().waitTillContentLoaded();
    });
 
     it('[C272811] Should be able to set Items per page to 20', async () => {

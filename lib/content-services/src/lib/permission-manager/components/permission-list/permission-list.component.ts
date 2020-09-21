@@ -71,13 +71,13 @@ export class PermissionListComponent implements OnInit {
 
     private getPermissionList(node: Node): PermissionDisplayModel[] {
         const allPermissions: PermissionDisplayModel[] = [];
-        if (node.permissions.locallySet) {
+        if (node?.permissions?.locallySet) {
             node.permissions.locallySet.map((permissionElement: PermissionElement) => {
                 const permission = new PermissionDisplayModel(permissionElement);
                 allPermissions.push(permission);
             });
         }
-        if (node.permissions.inherited) {
+        if (node?.permissions?.inherited) {
             node.permissions.inherited.map((permissionElement: PermissionElement) => {
                 const permissionInherited = new PermissionDisplayModel(permissionElement);
                 permissionInherited.isInherited = true;

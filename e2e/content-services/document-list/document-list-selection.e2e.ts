@@ -48,7 +48,6 @@ describe('Document List - Selection', () => {
             await loginPage.login(acsUser.email, acsUser.password);
 
             await contentServicesPage.goToDocumentList();
-            await contentServicesPage.checkDocumentListElementsAreDisplayed();
             await contentServicesPage.createNewFolder(folderModel.name);
             await contentServicesPage.uploadFile(docxFileModel.location);
             await contentServicesPage.checkContentIsDisplayed(docxFileModel.name);

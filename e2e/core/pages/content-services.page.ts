@@ -275,22 +275,26 @@ export class ContentServicesPage {
         return BrowserActions.getText(this.recentFileIcon);
     }
 
+    // @deprecated prefer waitTillContentLoaded
     async checkDocumentListElementsAreDisplayed(): Promise<void> {
         await this.checkAcsContainer();
         await this.waitForTableBody();
     }
 
+    // @deprecated prefer waitTillContentLoaded
     async checkAcsContainer(): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(this.uploadBorder);
     }
 
+    // @deprecated prefer waitTillContentLoaded
     async waitForTableBody(): Promise<void> {
-        await this.contentList.waitForTableBody();
+        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async goToDocumentList(): Promise<void> {
         const navigationBarPage = new NavigationBarPage();
         await navigationBarPage.clickContentServicesButton();
+        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async clickOnContentServices(): Promise<void> {
@@ -352,10 +356,9 @@ export class ContentServicesPage {
         return this.checkListIsSortedByCreatedColumn(sortOrder);
     }
 
-    async doubleClickRow(nodeName): Promise<void> {
-        Logger.log(`Open Folder ${nodeName}`);
+    async doubleClickRow(nodeName: string): Promise<void> {
+        Logger.log(`Open Folder/File ${nodeName}`);
         await this.contentList.doubleClickRow(nodeName);
-        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async selectRow(nodeName): Promise<void> {
@@ -405,6 +408,7 @@ export class ContentServicesPage {
 
     async openFolder(folderName: string): Promise<void> {
         await this.doubleClickRow(folderName);
+        await this.contentList.dataTablePage().waitTillContentLoaded();
     }
 
     async checkContentIsDisplayed(content): Promise<void> {
@@ -695,7 +699,7 @@ export class ContentServicesPage {
     async selectItemWithCheckbox(itemName: string): Promise<void> {
         const item = element(by.css(`adf-datatable-row[aria-label="${itemName}"] mat-checkbox .mat-checkbox-input`));
         await BrowserVisibility.waitUntilElementIsVisible(item);
-        await BrowserActions.clickScript(item);
+        await BrowserActions.click(item);
     }
 
     async unSelectItemWithCheckbox(itemName: string): Promise<void> {

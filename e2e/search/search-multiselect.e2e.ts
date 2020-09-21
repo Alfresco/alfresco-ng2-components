@@ -71,13 +71,14 @@ describe('Search Component - Multi-Select Facet', () => {
 
             txtFileSite = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, site.entry.guid);
 
-            await browser.sleep(15000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
             await loginPage.login(acsUser.email, acsUser.password);
 
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`${randomName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
@@ -103,18 +104,21 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`${randomName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             userOption = `${acsUser.firstName} ${acsUser.lastName}`;
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(userOption);
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(txtFileSite.entry.name);
 
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(4);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -163,23 +167,26 @@ describe('Search Component - Multi-Select Facet', () => {
 
             jpgFile = await uploadActions.uploadFile(jpgFileInfo.location, jpgFileInfo.name, site.entry.guid);
 
-            await browser.sleep(15000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
             await loginPage.login(userUploadingImg.email, userUploadingImg.password);
 
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingTxt.firstName} ${userUploadingTxt.lastName}`);
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${userUploadingImg.firstName} ${userUploadingImg.lastName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
             await searchResultsPage.checkContentIsDisplayed(jpgFile.entry.name);
 
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('JPEG Image');
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(2);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);
@@ -210,13 +217,14 @@ describe('Search Component - Multi-Select Facet', () => {
             });
 
             txtFile = await uploadActions.uploadFile(txtFileInfo.location, txtFileInfo.name, '-my-');
-            await browser.sleep(15000);
+            await browser.sleep(browser.params.testConfig.timeouts.index_search);
 
             await loginPage.login(acsUser.email, acsUser.password);
 
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
         });
@@ -232,10 +240,12 @@ describe('Search Component - Multi-Select Facet', () => {
             await searchBarPage.checkSearchIconIsVisible();
             await searchBarPage.clickOnSearchIcon();
             await searchBarPage.enterTextAndPressEnter(`*${randomName}*`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await searchFiltersPage.checkSearchFiltersIsDisplayed();
             await searchFiltersPage.fileTypeCheckListFiltersPage().filterBy('Plain Text');
             await searchFiltersPage.creatorCheckListFiltersPage().filterBy(`${acsUser.firstName} ${acsUser.lastName}`);
+            await searchResultsPage.dataTable.waitTillContentLoaded();
 
             await expect(await searchResultsPage.numberOfResultsDisplayed()).toBe(1);
             await searchResultsPage.checkContentIsDisplayed(txtFile.entry.name);

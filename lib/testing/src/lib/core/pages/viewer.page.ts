@@ -20,6 +20,7 @@ import { TabsPage } from './material/tabs.page';
 import { TogglePage } from './material/toggle.page';
 import { BrowserVisibility } from '../utils/browser-visibility';
 import { element, by, browser, protractor } from 'protractor';
+import { Logger } from '../utils/logger';
 
 export class ViewerPage {
 
@@ -110,6 +111,34 @@ export class ViewerPage {
         const fileView = element.all(by.css(`#document-list-container div[data-automation-id="${fileName}"]`)).first();
         await BrowserActions.click(fileView);
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+        await this.waitTillContentLoaded();
+    }
+
+    async waitTillContentLoaded(): Promise<void> {
+        await browser.sleep(500);
+
+        if (this.isSpinnerPresent()) {
+            Logger.log('wait spinner disappear');
+            await BrowserVisibility.waitUntilElementIsNotPresent(element(by.tagName('mat-spinner')));
+        } else {
+            try {
+                Logger.log('wait spinner is present');
+                await BrowserVisibility.waitUntilElementIsPresent(element(by.tagName('mat-spinner')));
+            } catch (error) {
+            }
+        }
+    }
+
+    private async isSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await element(by.tagName('mat-spinner')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
     }
 
     async clearPageNumber(): Promise<void> {
@@ -338,7 +367,7 @@ export class ViewerPage {
     }
 
     async clickInfoButton(): Promise<void> {
-        await BrowserActions.clickExecuteScript('button[data-automation-id="adf-toolbar-sidebar"]');
+        await BrowserActions.click(element(by.css('button[data-automation-id="adf-toolbar-sidebar"]')));
     }
 
     async clickOnTab(tabName: string): Promise<void> {

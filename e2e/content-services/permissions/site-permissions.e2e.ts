@@ -165,6 +165,8 @@ describe('Permissions Component', () => {
             await loginPage.login(folderOwnerUser.email, folderOwnerUser.password);
 
             await BrowserActions.getUrl(browser.baseUrl + '/files/' + publicSite.entry.guid);
+            await contentServicesPage.contentList.dataTablePage().waitTillContentLoaded();
+
         });
 
         it('[C277002] Should display the Role Site dropdown', async () => {

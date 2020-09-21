@@ -73,7 +73,7 @@ describe('Start Task - Task App', () => {
         await taskDetails.checkCompleteTaskButtonIsEnabled();
         await taskPage.taskDetails().checkAttachFormButtonIsDisplayed();
         await taskPage.taskDetails().checkAttachFormButtonIsEnabled();
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
         await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
     });
 
@@ -90,7 +90,7 @@ describe('Start Task - Task App', () => {
         await expect(await taskPage.formFields().getCompletedTaskNoFormMessage()).toEqual('Task ' + tasks[1] + ' completed');
 
         await taskPage.formFields().noFormIsDisplayed();
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
     });
 
     it('[C268911] Should allow adding a form to a standalone task when clicking on Add form button', async () => {
@@ -108,7 +108,7 @@ describe('Start Task - Task App', () => {
 
         await taskPage.formFields().checkFormIsDisplayed();
         await taskPage.taskDetails().checkCompleteFormButtonIsDisplayed();
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
+        await taskPage.taskDetails().waitFormNameEqual(app.formName);
     });
 
     it('[C268912] Should a standalone task be displayed when removing the form from APS', async () => {
@@ -119,7 +119,7 @@ describe('Start Task - Task App', () => {
         await task.clickStartButton();
 
         await taskPage.tasksListPage().checkContentIsDisplayed(tasks[3]);
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(app.formName);
+        await taskPage.taskDetails().waitFormNameEqual(app.formName);
 
         const listOfTasks = await apiService.getInstance().activiti.taskApi.listTasks(new Task({ sort: 'created-desc' }));
         await apiService.getInstance().activiti.taskApi.removeForm(listOfTasks.data[0].id);
@@ -129,7 +129,7 @@ describe('Start Task - Task App', () => {
         await taskPage.checkTaskTitle(tasks[3]);
 
         await taskPage.formFields().noFormIsDisplayed();
-        await expect(await taskPage.taskDetails().getFormName()).toEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
+        await taskPage.taskDetails().waitFormNameEqual(CONSTANTS.TASK_DETAILS.NO_FORM);
         await expect(await taskDetails.getNoFormMessage()).toEqual(noFormMessage);
     });
 });

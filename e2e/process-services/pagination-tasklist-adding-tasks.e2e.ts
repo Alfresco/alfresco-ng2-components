@@ -74,6 +74,8 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.INV_TASKS);
         await paginationPage.selectItemsPerPage(itemsPerPage.fifteen);
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);
@@ -87,6 +89,8 @@ describe('Items per page set to 15 and adding of tasks', () => {
 
         currentPage++;
         await paginationPage.clickOnNextPage();
+        await taskPage.tasksListPage().getDataTable().waitTillContentLoaded();
+
         await expect(await paginationPage.getCurrentItemsPerPage()).toEqual(itemsPerPage.fifteen);
         await expect(await paginationPage.getCurrentPage()).toEqual('Page ' + currentPage);
         await expect(await paginationPage.getTotalPages()).toEqual('of ' + totalPages);

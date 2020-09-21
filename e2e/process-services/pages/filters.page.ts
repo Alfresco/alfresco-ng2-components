@@ -31,6 +31,7 @@ export class FiltersPage {
         await BrowserActions.closeMenuAndDialogs();
         const filter = element(by.css(`button[data-automation-id="${filterName}_filter"]`));
         await BrowserActions.click(filter);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async sortByName(sortOrder: string): Promise<void> {

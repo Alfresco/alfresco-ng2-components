@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { browser, by, element, ElementFinder } from 'protractor';
+import { by, element, ElementFinder } from 'protractor';
+import { BrowserVisibility } from '@alfresco/adf-testing';
 
 export class IconsPage {
 
@@ -28,7 +29,7 @@ export class IconsPage {
     }
 
     async isCustomIconDisplayed(name: string) {
-        const present = await browser.isElementPresent(this.locateCustomIcon(name));
+        const present = await BrowserVisibility.waitUntilElementIsVisible(this.locateCustomIcon(name));
         if (present) {
           return this.locateCustomIcon(name).isDisplayed();
         } else {
@@ -37,7 +38,7 @@ export class IconsPage {
     }
 
     async isLigatureIconDisplayed(name: string) {
-        const present = await browser.isElementPresent(this.locateLigatureIcon(name));
+        const present = await BrowserVisibility.waitUntilElementIsVisible(this.locateLigatureIcon(name));
         if (present) {
           return this.locateLigatureIcon(name).isDisplayed();
         } else {

@@ -167,7 +167,7 @@ while [[ $1 == -* ]]; do
 done
 
 rm -rf ./e2e/downloads/
-rm -rf ./e2e-output/screenshots/
+rm -rf ./e2e-output/
 
 export TIMEOUT=$TIMEOUT
 

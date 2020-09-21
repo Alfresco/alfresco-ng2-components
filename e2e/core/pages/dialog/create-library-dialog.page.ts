@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { by, element, browser, protractor } from 'protractor';
+import { by, element, protractor } from 'protractor';
 import { BrowserVisibility, BrowserActions } from '@alfresco/adf-testing';
 
 export class CreateLibraryDialogPage {
@@ -47,7 +47,7 @@ export class CreateLibraryDialogPage {
     }
 
     async isDialogOpen(): Promise<any> {
-        return browser.isElementPresent(this.libraryDialog);
+        return BrowserVisibility.waitUntilElementIsVisible(this.libraryDialog);
     }
 
     async getTitle(): Promise<string> {

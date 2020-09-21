@@ -20,6 +20,7 @@ import { EditTaskFilterDialogPage } from './dialog/edit-task-filter-dialog.page'
 import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
+import { DataTableComponentPage } from '../../core/pages/data-table-component.page';
 
 export class EditTaskFilterCloudComponentPage {
 
@@ -51,6 +52,8 @@ export class EditTaskFilterCloudComponentPage {
 
     editTaskFilterDialogPage = new EditTaskFilterDialogPage();
 
+    dataTable = new DataTableComponentPage( element(by.css('adf-cloud-task-list')));
+
     editTaskFilterDialog(): EditTaskFilterDialogPage {
         return this.editTaskFilterDialogPage;
     }
@@ -66,6 +69,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setStatusFilterDropDown(option: string): Promise<void> {
         await this.statusDropdown.selectDropdownOption(option);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getStatusFilterDropDownValue(): Promise<string> {
@@ -74,6 +78,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setSortFilterDropDown(option: string): Promise<void> {
         await this.sortDropdown.selectDropdownOption(option);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getSortFilterDropDownValue(): Promise<string> {
@@ -82,7 +87,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setOrderFilterDropDown(option: string): Promise<void> {
         await this.orderDropdown.selectDropdownOption(option);
-        await browser.sleep(1500);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getOrderFilterDropDownValue(): Promise<string> {
@@ -124,6 +129,7 @@ export class EditTaskFilterCloudComponentPage {
     async setLastModifiedFrom(lastModifiedFromDate: string) {
         await this.clearField(this.lastModifiedFrom);
         await BrowserActions.clearSendKeys(this.lastModifiedFrom, lastModifiedFromDate);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getLastModifiedFrom(): Promise<string> {
@@ -133,6 +139,7 @@ export class EditTaskFilterCloudComponentPage {
     async setLastModifiedTo(lastModifiedToDate: string): Promise<void> {
         await this.clearField(this.lastModifiedTo);
         await BrowserActions.clearSendKeys(this.lastModifiedTo, lastModifiedToDate);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getLastModifiedTo(): Promise<string> {
@@ -194,6 +201,7 @@ export class EditTaskFilterCloudComponentPage {
 
     async setAppNameDropDown(option: string): Promise<void> {
         await this.appNameDropdown.selectDropdownOption(option);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getAppNameDropDownValue(): Promise<string> {
@@ -234,6 +242,7 @@ export class EditTaskFilterCloudComponentPage {
         await locator.clear();
         await locator.sendKeys(option);
         await locator.sendKeys(protractor.Key.ENTER);
+        await this.dataTable.waitTillContentLoaded();
     }
 
     async getProcessInstanceId(): Promise<string> {

@@ -63,6 +63,8 @@ export class LoginPage {
         } else {
             await this.loginBasicAuth(username, password);
         }
+
+        await browser.waitForAngular();
     }
 
     async loginSSOIdentityService(username: string, password: string) {
@@ -84,8 +86,6 @@ export class LoginPage {
         await this.clickLoginButton();
         await browser.actions().sendKeys(protractor.Key.ENTER).perform();
         await BrowserVisibility.waitUntilElementIsVisible(this.header);
-
-        await browser.waitForAngular();
     }
 
     async loginBasicAuth(username: string, password: string): Promise<void> {

@@ -143,7 +143,7 @@ describe('Pagination - returns to previous page when current is empty', () => {
         await paginationPage.clickOnNextPage();
         await contentServicesPage.checkDocumentListElementsAreDisplayed();
 
-        await contentServicesPage.doubleClickRow(lastFolderResponse.entry.name);
+        await contentServicesPage.openFolder(lastFolderResponse.entry.name);
         await contentServicesPage.checkContentIsDisplayed(pngFileInfo.name);
 
         await viewerPage.viewFile(pngFileUploaded.entry.name);
