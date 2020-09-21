@@ -22,16 +22,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DateRangeFilterService } from './date-range-filter.service';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
 
-const DEFAULT_DATE_RANGE_OPTIONS = [
-    DateCloudFilterType.NO_DATE,
-    DateCloudFilterType.TODAY,
-    DateCloudFilterType.WEEK,
-    DateCloudFilterType.MONTH,
-    DateCloudFilterType.QUARTER,
-    DateCloudFilterType.YEAR,
-    DateCloudFilterType.RANGE
-];
-
 @Component({
      selector: 'adf-cloud-date-range-filter',
      styleUrls: ['./date-range-filter.component.scss'],
@@ -39,11 +29,20 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
  })
  export class DateRangeFilterComponent {
 
+    defaultRangeOptions = [
+        DateCloudFilterType.TODAY,
+        DateCloudFilterType.WEEK,
+        DateCloudFilterType.MONTH,
+        DateCloudFilterType.QUARTER,
+        DateCloudFilterType.YEAR,
+        DateCloudFilterType.RANGE
+    ];
+
     @Input()
     processFilterProperty: ProcessFilterProperties;
 
     @Input()
-    options: DateCloudFilterType[] = DEFAULT_DATE_RANGE_OPTIONS;
+    options: DateCloudFilterType[] = this.defaultRangeOptions;
 
     @Output()
     dateChanged = new EventEmitter<DateRangeFilter>();
@@ -58,6 +57,7 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
     constructor(private dateRangeFilterService: DateRangeFilterService) {}
 
     ngOnInit() {
+        this.options = this.options ? this.options : this.createDefaultRangeOptions();
         const defaultProperties = this.createDefaultDateOptions();
         this.filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterOptions) => this.isValidProperty(this.options, filterProperty));
     }
@@ -84,6 +84,17 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
 
     private isValidProperty(filterProperties: string[], filterProperty: any): boolean {
         return filterProperties ? filterProperties.indexOf(filterProperty.value) >= 0 : true;
+    }
+
+    private createDefaultRangeOptions(): DateCloudFilterType[] {
+        return [
+            DateCloudFilterType.TODAY,
+            DateCloudFilterType.WEEK,
+            DateCloudFilterType.MONTH,
+            DateCloudFilterType.QUARTER,
+            DateCloudFilterType.YEAR,
+            DateCloudFilterType.RANGE
+        ];
     }
 
     private createDefaultDateOptions(): ProcessFilterOptions[] {

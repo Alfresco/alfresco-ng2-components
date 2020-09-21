@@ -316,6 +316,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
     }
 
+    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
+        this.editProcessFilterForm.get(property.rangeKeys.from).setValue(
+            dateRange.startDate ? dateRange.startDate.toISOString() : null
+        );
+        this.editProcessFilterForm.get(property.rangeKeys.to).setValue(
+            dateRange.endDate ? dateRange.endDate.toISOString() : null
+        );
+    }
+
     hasError(property: ProcessFilterProperties): boolean {
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }

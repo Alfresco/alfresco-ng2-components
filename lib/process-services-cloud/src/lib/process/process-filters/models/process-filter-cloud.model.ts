@@ -111,6 +111,7 @@ export class ProcessFilterProperties {
             this.type = obj.type || null;
             this.value = obj.value || '';
             this.key = obj.key || null;
+            this.rangeKeys = obj.rangeKeys || null;
             this.options = obj.options || null;
             this.rangeKeys = obj.rangeKeys || null;
             this.dateFilterOptions = obj.dateFilterOptions || [];
