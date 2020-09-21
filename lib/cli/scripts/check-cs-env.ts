@@ -3,8 +3,8 @@ const program = require('commander');
 const path = require('path');
 const fs = require('fs');
 
-const MAX_RETRY = 10;
-const TIMEOUT = 60000;
+const MAX_RETRY = 3;
+const TIMEOUT = 20000;
 let counter = 0;
 
 export default async function main(_args: string[]) {
@@ -16,6 +16,8 @@ export default async function main(_args: string[]) {
         .option('--host [type]', 'Remote environment host adf.lab.com ')
         .option('-p, --password [type]', 'password ')
         .option('-u, --username [type]', 'username ')
+        .option('-t, --time [type]', 'time ')
+        .option('-r, --retry [type]', 'retry ')
         .parse(process.argv);
 
 
@@ -34,12 +36,14 @@ async function checkEnv() {
     } catch (error) {
         console.log('Login error environment down or inaccessible');
         counter++;
-        if (MAX_RETRY === counter) {
+        const retry = program.retry || MAX_RETRY;
+        const time = program.time || TIMEOUT;
+        if (retry === counter) {
             console.log('Give up');
             process.exit(1);
         } else {
             console.log(`Retry in 1 minute attempt N ${counter}`, error);
-            sleep(TIMEOUT);
+            sleep(time);
             checkEnv();
         }
     }
@@ -95,8 +99,9 @@ async function checkDiskSpaceFullEnv() {
         counter++;
 
         console.log('error', error);
-
-        if (MAX_RETRY === counter) {
+        const retry = program.retry || MAX_RETRY;
+        const time = program.time || TIMEOUT;
+        if (retry === counter) {
             console.log('=============================================================');
             console.log('================ Not able to upload a file ==================');
             console.log('================ Possible cause CS is full ==================');
@@ -104,7 +109,7 @@ async function checkDiskSpaceFullEnv() {
             process.exit(1);
         } else {
             console.log(`Retry in 1 minute attempt N ${counter}`, error);
-            sleep(TIMEOUT);
+            sleep(time);
             checkDiskSpaceFullEnv();
         }
 
