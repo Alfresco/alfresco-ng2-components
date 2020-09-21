@@ -17,8 +17,9 @@
 
 import {
     Component, Input, ContentChild, TemplateRef, HostListener, OnInit,
-    AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation
+    AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation, Inject
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'adf-pdf-thumbnails',
@@ -39,6 +40,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     private items = [];
     private margin: number = 15;
     private itemHeight: number = 114 + this.margin;
+    private previouslyFocusedElement: HTMLElement | null = null;
 
     @ContentChild(TemplateRef)
     template: any;
@@ -48,7 +50,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.calculateItems();
     }
 
-    constructor(private element: ElementRef) {
+    constructor(private element: ElementRef, @Inject(DOCUMENT) private document: any) {
         this.calculateItems = this.calculateItems.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
     }
@@ -61,7 +63,7 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setHeight(this.pdfViewer.currentPageNumber);
         this.items = this.getPages();
         this.calculateItems();
-
+        this.previouslyFocusedElement = this.document.activeElement as HTMLElement;
     }
 
     ngAfterViewInit() {
@@ -72,6 +74,10 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.element.nativeElement.removeEventListener('scroll', this.calculateItems, true);
         /* cspell:disable-next-line */
         this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
+        if (this.previouslyFocusedElement) {
+            this.previouslyFocusedElement.focus();
+            this.previouslyFocusedElement = null;
+        }
     }
 
     trackByFn(_: number, item: any): number {
