@@ -121,7 +121,7 @@
     "@types/pdfjs-dist": "^2.1.5",
     "@types/request": "^2.48.5",
     "@types/selenium-webdriver": "^4.0.9",
-    "ajv-cli": "^3.0.0",
+    "ajv-cli": "^3.3.0",
     "codelyzer": "^6.0.0",
     "commander": "6.0.0",
     "concurrently": "^5.3.0",
