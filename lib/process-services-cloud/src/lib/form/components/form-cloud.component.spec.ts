@@ -1153,10 +1153,10 @@ describe('retrieve metadata on submit', () => {
         formService.updateFormValuesRequested.next(values);
 
         expect(addValuesNotPresent).toHaveBeenCalledWith(values);
-        expect(formComponent.data).toContain({ name: 'pfx_property_one', value: 'testValue' });
-        expect(formComponent.data).toContain({ name: 'pfx_property_two', value: true });
-        expect(formComponent.data).toContain({ name: 'pfx_property_three', value: 'opt_1' });
-        expect(formComponent.data).toContain({ name: 'pfx_property_four', value: 'option_2' });
-        expect(formComponent.data).toContain({ name: 'pfx_property_five', value: 'green' });
+        expect(formComponent.form.values['pfx_property_one']).toBe('testValue');
+        expect(formComponent.form.values['pfx_property_two']).toBe(true);
+        expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
+        expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+        expect(formComponent.form.values['pfx_property_five']).toEqual('green');
     });
 });

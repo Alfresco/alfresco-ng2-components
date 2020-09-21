@@ -98,7 +98,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
-        if (file instanceof Node && file.id === this.selectedNode?.id) {
+        if (file['id'] === this.selectedNode?.id) {
+            this.selectedNode = null;
             this.contentModelFormFileHandler();
         }
     }
@@ -184,7 +185,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     contentModelFormFileHandler(file?: Node) {
-        if (file?.id && this.field?.params?.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
+        if (file?.id && this.field?.params?.menuOptions && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
             const values: FormValues = {};
             this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
                 const metadata = acsNode?.entry?.properties;
