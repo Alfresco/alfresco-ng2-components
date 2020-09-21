@@ -296,7 +296,7 @@ export class DataTableComponentPage {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-spinner')));
 
-            if (this.isEmpty()) {
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -307,7 +307,8 @@ export class DataTableComponentPage {
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-spinner')));
             } catch (error) {
             }
-            if (this.isEmpty()) {
+
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -343,7 +344,7 @@ export class DataTableComponentPage {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-bar')));
 
-            if (this.isEmpty()) {
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -354,7 +355,7 @@ export class DataTableComponentPage {
                 await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')));
             } catch (error) {
             }
-            if (this.isEmpty()) {
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -485,6 +486,9 @@ export class DataTableComponentPage {
         } catch (error) {
             isDisplayed = false;
         }
+
+        Logger.log(`empty page isDisplayed ${isDisplayed}`);
+
         return isDisplayed;
     }
 
