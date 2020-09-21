@@ -18,7 +18,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="!thumbnailsTemplate">
-                    <adf-pdf-thumbnails [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
+                    <adf-pdf-thumbnails (close)="toggleThumbnails()" [pdfViewer]="pdfViewer"></adf-pdf-thumbnails>
                 </ng-container>
             </div>
         </div>
