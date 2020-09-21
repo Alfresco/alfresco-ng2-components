@@ -104,10 +104,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
         if (this.isAlfrescoAndLocal()) {
             const destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
-            const opts = { relativePath: destinationFolderPath.path };
-
             destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);
-            const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, opts);
+            const nodeId = await this.contentNodeSelectorService.fetchNodeIdFromRelativePath(destinationFolderPath.alias, { relativePath: destinationFolderPath.path });
             this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
         }
 
