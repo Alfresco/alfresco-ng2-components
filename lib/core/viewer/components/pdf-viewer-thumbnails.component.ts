@@ -19,7 +19,7 @@ import {
     Component, Input, ContentChild, TemplateRef, HostListener, OnInit,
     AfterViewInit, ElementRef, OnDestroy, ViewEncapsulation, EventEmitter, Output, Inject, ViewChildren, QueryList
 } from '@angular/core';
-import { ESCAPE } from '@angular/cdk/keycodes';
+import { ESCAPE, UP_ARROW, DOWN_ARROW } from '@angular/cdk/keycodes';
 import { DOCUMENT } from '@angular/common';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { PdfThumbComponent } from './pdf-viewer-thumb.component';
@@ -61,6 +61,14 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     @HostListener('keydown', ['$event'])
     onKeydown(event: KeyboardEvent): void {
         const keyCode = event.keyCode;
+
+        if (keyCode === UP_ARROW && this.canSelectPreviousItem()) {
+            this.pdfViewer.currentPageNumber -= 1;
+        }
+
+        if (keyCode === DOWN_ARROW && this.canSelectNextItem()) {
+            this.pdfViewer.currentPageNumber += 1;
+        }
 
         if (keyCode === ESCAPE) {
             this.close.emit();
@@ -210,8 +218,16 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.keyManager.setActiveItem(this.getPageIndex(event.pageNumber));
     }
 
-    getPageIndex(pageNumber: number): number {
+    private getPageIndex(pageNumber: number): number {
         const thumbsListArray = this.thumbsList.toArray();
         return thumbsListArray.findIndex(el => el.page.id === pageNumber);
+    }
+
+    private canSelectNextItem(): boolean {
+        return this.pdfViewer.currentPageNumber !== this.pdfViewer.pagesCount;
+    }
+
+    private canSelectPreviousItem(): boolean {
+        return this.pdfViewer.currentPageNumber !== 1;
     }
 }
