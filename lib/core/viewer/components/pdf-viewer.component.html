@@ -3,7 +3,12 @@
         <div class="adf-pdf-viewer__thumbnails">
             <div class="adf-thumbnails-template__container">
                 <div class="adf-thumbnails-template__buttons">
-                    <button mat-icon-button data-automation-id='adf-thumbnails-close' (click)="toggleThumbnails()">
+                    <button
+                        mat-icon-button
+                        data-automation-id='adf-thumbnails-close'
+                        (click)="toggleThumbnails()"
+                        [attr.aria-label]="'ADF_VIEWER.ARIA.THUMBNAILS_PANLEL_CLOSE' | translate"
+                        title="{{ 'ADF_VIEWER.ACTIONS.CLOSE' | translate }}">
                         <mat-icon>close</mat-icon>
                     </button>
                 </div>
