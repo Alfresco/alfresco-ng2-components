@@ -31,7 +31,9 @@ import {
     TRANSLATION_PROVIDER,
     WidgetVisibilityService,
     VersionCompatibilityService,
-    FormService
+    FormService,
+    UploadWidgetContentLinkModel,
+    ContentLinkModel
 } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../testing/process-service-cloud.testing.module';
 import { FormCloudService } from '../services/form-cloud.service';
@@ -49,6 +51,7 @@ import { FormCloudModule } from '../form-cloud.module';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CloudFormRenderingService } from './cloud-form-rendering.service';
+import { Node } from '@alfresco/js-api';
 
 describe('FormCloudComponent', () => {
     let formCloudService: FormCloudService;
@@ -1123,6 +1126,18 @@ describe('retrieve metadata on submit', () => {
     let fixture: ComponentFixture<FormCloudComponent>;
     let formService: FormService;
 
+    const fakeNodeWithProperties: Node = <Node> {
+        id: 'fake-properties',
+        name: 'fake-properties-name',
+        content: {
+            mimeType: 'application/pdf'
+        },
+        properties: {
+            'pfx:property_one': 'testValue',
+            'pfx:property_two': true
+        }
+    };
+
     beforeEach(async(() => {
        const appConfigService = TestBed.inject(AppConfigService);
        spyOn(appConfigService, 'get').and.returnValue([]);
@@ -1140,6 +1155,7 @@ describe('retrieve metadata on submit', () => {
         formComponent.form.values['pfx_property_five'] = 'green';
 
         const addValuesNotPresent = spyOn<any>(formComponent.form, 'addValuesNotPresent').and.callThrough();
+        const formDataRefreshed = spyOn<any>(formComponent.formDataRefreshed, 'emit').and.callThrough();
 
         const values = {
             pfx_property_one: 'testValue',
@@ -1158,5 +1174,34 @@ describe('retrieve metadata on submit', () => {
         expect(formComponent.form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
         expect(formComponent.form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
         expect(formComponent.form.values['pfx_property_five']).toEqual('green');
+        expect(formDataRefreshed).toHaveBeenCalled();
+    });
+
+    it('should call setNodeIdValueForViewersLinkedToUploadWidget when content is UploadWidgetContentLinkModel', async () => {
+        const uploadWidgetContentLinkModel = new UploadWidgetContentLinkModel(fakeNodeWithProperties, 'attach-file-alfresco');
+
+        const setNodeIdValueForViewersLinkedToUploadWidget = spyOn<any>(formComponent.form, 'setNodeIdValueForViewersLinkedToUploadWidget').and.callThrough();
+        const formDataRefreshed = spyOn<any>(formComponent.formDataRefreshed, 'emit').and.callThrough();
+        const formContentClicked = spyOn<any>(formComponent.formContentClicked, 'emit').and.callThrough();
+
+        formService.formContentClicked.next(uploadWidgetContentLinkModel);
+
+        expect(setNodeIdValueForViewersLinkedToUploadWidget).toHaveBeenCalledWith(uploadWidgetContentLinkModel);
+        expect(formDataRefreshed).toHaveBeenCalled();
+        expect(formContentClicked).not.toHaveBeenCalled();
+    });
+
+    it('should not call setNodeIdValueForViewersLinkedToUploadWidget when content is not UploadWidgetContentLinkModel', async () => {
+        const contentLinkModel = new ContentLinkModel(fakeNodeWithProperties);
+
+        const setNodeIdValueForViewersLinkedToUploadWidget = spyOn<any>(formComponent.form, 'setNodeIdValueForViewersLinkedToUploadWidget').and.callThrough();
+        const formDataRefreshed = spyOn<any>(formComponent.formDataRefreshed, 'emit').and.callThrough();
+        const formContentClicked = spyOn<any>(formComponent.formContentClicked, 'emit').and.callThrough();
+
+        formService.formContentClicked.next(contentLinkModel);
+
+        expect(setNodeIdValueForViewersLinkedToUploadWidget).not.toHaveBeenCalled();
+        expect(formDataRefreshed).not.toHaveBeenCalled();
+        expect(formContentClicked).toHaveBeenCalledWith(contentLinkModel);
     });
 });

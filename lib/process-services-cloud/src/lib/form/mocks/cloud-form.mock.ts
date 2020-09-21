@@ -1150,6 +1150,22 @@ export let fakeMetadataForm = {
                             'restIdProperty': null,
                             'restLabelProperty': null
                         }
+                    ],
+                    '7': [
+                        {
+                            'id': 'cmfb85b2a7295ba41209750bca176ccaf9a',
+                            'name': 'File viewer',
+                            'type': 'file-viewer',
+                            'readOnly': false,
+                            'required': false,
+                            'colspan': 1,
+                            'visibilityCondition': null,
+                            'params': {
+                                'existingColspan': 1,
+                                'maxColspan': 2,
+                                'uploadWidget': 'content_form_nodes'
+                            }
+                        }
                     ]
                 },
                 'numberOfColumns': 2

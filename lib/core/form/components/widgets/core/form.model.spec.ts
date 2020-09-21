@@ -25,6 +25,8 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { fakeMetadataForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
+import { Node } from '@alfresco/js-api';
+import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 
 describe('FormModel', () => {
     let formService: FormService;
@@ -570,7 +572,7 @@ describe('FormModel', () => {
             form.values['pfx_property_five'] = 'green';
         });
 
-        it('should not find a process variable', () => {
+        it('should add values to form that are not already present', () => {
             const values = {
                 pfx_property_one: 'testValue',
                 pfx_property_two: true,
@@ -580,13 +582,40 @@ describe('FormModel', () => {
                 pfx_property_none: 'no_form_field'
             };
 
-            const data = form.addValuesNotPresent(values);
+            form.addValuesNotPresent(values);
 
-            expect(data).toContain({ name: 'pfx_property_one', value: 'testValue' });
-            expect(data).toContain({ name: 'pfx_property_two', value: true });
-            expect(data).toContain({ name: 'pfx_property_three', value: 'opt_1' });
-            expect(data).toContain({ name: 'pfx_property_four', value: 'option_2' });
-            expect(data).toContain({ name: 'pfx_property_five', value: 'green' });
+            expect(form.values['pfx_property_one']).toBe('testValue');
+            expect(form.values['pfx_property_two']).toBe(true);
+            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
+            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+            expect(form.values['pfx_property_five']).toEqual('green');
+        });
+    });
+
+    describe('setNodeIdValueForViewersLinkedToUploadWidget', () => {
+        const fakeNodeWithProperties: Node = <Node> {
+            id: 'fake-properties',
+            name: 'fake-properties-name',
+            content: {
+                mimeType: 'application/pdf'
+            },
+            properties: {
+                'pfx:property_one': 'testValue',
+                'pfx:property_two': true
+            }
+        };
+        let form: FormModel;
+
+        beforeEach(() => {
+            form = new FormModel(fakeMetadataForm);
+        });
+
+        it('should set the node id to the viewers linked to the upload widget in the event', () => {
+            const uploadWidgetContentLinkModel = new UploadWidgetContentLinkModel(fakeNodeWithProperties, 'content_form_nodes');
+
+            form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
+
+            expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBe(fakeNodeWithProperties.id);
         });
     });
 });
