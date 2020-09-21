@@ -39,6 +39,9 @@ export class ProcessFilterCloudModel {
     startedDate: Date;
     startFrom: Date;
     startTo: Date;
+    completedFrom: Date;
+    completedTo: Date;
+    completedDate: Date;
 
     constructor(obj?: any) {
         if (obj) {
@@ -64,7 +67,11 @@ export class ProcessFilterCloudModel {
             this.startedDate = obj.startedDate || null;
             this.startFrom = obj.startFrom || null;
             this.startTo = obj.startTo || null;
+            this.completedFrom = obj.completedFrom || null;
+            this.completedTo = obj.completedTo || null;
+            this.completedDate = obj.completedDate || null;
         }
+
     }
 }
 
