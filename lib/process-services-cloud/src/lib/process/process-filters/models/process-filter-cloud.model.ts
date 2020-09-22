@@ -99,3 +99,9 @@ export class ProcessFilterProperties {
         }
     }
 }
+
+export interface ProcessSortFilterProperties {
+    label: string;
+    value: string;
+    key: string;
+}

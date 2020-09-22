@@ -178,7 +178,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display processes ordered by last modified date when Last Modified is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'LastModified', order: 'ASC' });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Last Modified', order: 'ASC' });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Last Modified')).toBe(true);
@@ -189,7 +189,7 @@ describe('Process list cloud', () => {
         });
 
         it('[C305054] Should display processes ordered by business key date when BusinessKey is selected from sort dropdown', async () => {
-            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'BusinessKey', order: 'ASC' });
+            await processCloudDemoPage.editProcessFilterCloudComponent().setFilter({ status: 'ALL', sort: 'Business Key', order: 'ASC' });
             await processCloudDemoPage.processListCloudComponent().getDataTable().waitTillContentLoaded();
 
             await expect(await processCloudDemoPage.processListCloudComponent().getDataTable().checkListIsSorted('ASC', 'Business Key')).toBe(true);

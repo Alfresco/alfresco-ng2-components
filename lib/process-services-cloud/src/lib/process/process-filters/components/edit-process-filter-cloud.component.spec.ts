@@ -380,7 +380,7 @@ describe('EditProcessFilterCloudComponent', () => {
                 expect(sortElement).toBeDefined();
                 expect(orderElement).toBeDefined();
                 expect(stateElement.innerText.trim()).toEqual('RUNNING');
-                expect(sortElement.innerText.trim()).toEqual('Id');
+                expect(sortElement.innerText.trim()).toEqual('ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.ID');
                 expect(orderElement.innerText.trim()).toEqual('ASC');
             });
         }));
@@ -556,7 +556,7 @@ describe('EditProcessFilterCloudComponent', () => {
             processDefinitionId: 'process-definition-id',
             priority: '12'
         }));
-        component.sortProperties = ['id', 'processName', 'processDefinitionId'];
+        component.sortProperties = ['id', 'name', 'processDefinitionId'];
         fixture.detectChanges();
         const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
         component.ngOnChanges({ 'id': processFilterIdChange });
@@ -577,6 +577,29 @@ describe('EditProcessFilterCloudComponent', () => {
             expect(sortOptions.length).toEqual(3);
         });
     }));
+
+    it('should display the process name label for the name property', async () => {
+        getProcessFilterByIdSpy.and.returnValue(of({
+            id: 'filter-id',
+            processName: 'process-name',
+            sort: 'my-custom-sort',
+            processDefinitionId: 'process-definition-id',
+            priority: '12'
+        }));
+        component.sortProperties = ['name'];
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        const expansionPanel = fixture.debugElement.nativeElement.querySelector('mat-expansion-panel-header');
+        expansionPanel.click();
+        fixture.detectChanges();
+        const sortElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-sort"]');
+        sortElement.click();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const sortOptions = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+        expect(sortOptions[0].nativeElement.textContent).toEqual(' ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_NAME ');
+    });
 
     describe('edit filter actions', () => {
 
