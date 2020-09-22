@@ -66,7 +66,7 @@ describe('Attach Folder', () => {
         await apiService.getInstance().login(user.email, user.password);
         await applicationService.importPublishDeployApp(app.file_path);
         await new UploadActions(apiService).createFolder(folderName, '-my-');
-        await searchService.isFolderSearchable(folderName);
+        await searchService.isSearchable(folderName);
         await loginPage.login(user.email, user.password);
     });
 
@@ -83,12 +83,12 @@ describe('Attach Folder', () => {
         const contentFileWidget = widget.attachFolderWidget();
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
 
-        await searchService.isFolderSearchable(folderName);
+        await searchService.isSearchable(folderName);
         await contentNodeSelector.searchAndSelectResult(folderName, folderName);
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(true);
 
-        await searchService.isFolderSearchable('Meeting Notes');
+        await searchService.isSearchable('Meeting Notes');
         await contentNodeSelector.searchAndSelectResult('Meeting Notes', 'Meeting Notes');
         await expect(await contentNodeSelector.checkCancelButtonIsEnabled()).toBe(true);
         await expect(await contentNodeSelector.checkCopyMoveButtonIsEnabled()).toBe(false);
@@ -112,7 +112,7 @@ describe('Attach Folder', () => {
         await contentFileWidget.clickWidget(app.UPLOAD_FOLDER_FORM_CS.FIELD.widget_id);
         await contentNodeSelector.checkDialogIsDisplayed();
 
-        await searchService.isFolderSearchable(folderName);
+        await searchService.isSearchable(folderName);
         await contentNodeSelector.searchAndSelectResult(folderName, folderName);
         await contentNodeSelector.checkCancelButtonIsEnabled();
         await contentNodeSelector.checkCopyMoveButtonIsEnabled();

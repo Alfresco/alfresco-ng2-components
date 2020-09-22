@@ -27,11 +27,11 @@ export class SearchService {
         this.apiService = apiService;
     }
 
-    async isFolderSearchable(folderName: string): Promise<any> {
-        const query = `{"query":{"query":"${folderName}*"},"include":["path","allowableOperations","properties"],"paging":{"maxItems":20,"skipCount":0},"filterQueries":[{"query":"TYPE:'cm:folder'"},{"query":"NOT cm:creator:System"}],"scope":{"locations":["nodes"]}}`;
+    async isSearchable(name: string): Promise<any> {
+        const query =  this.createSearchQuery(name);
 
         const predicate = (result: ResultSetPaging) => {
-            return result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.name === folderName);
+            return result.list && result.list.entries.length > 0 && !!result.list.entries.find(({ entry }) => entry.name === name);
         };
 
         const apiCall = async () => {
@@ -49,5 +49,38 @@ export class SearchService {
         };
 
         return ApiUtil.waitForApi(apiCall, predicate);
+    }
+
+    private createSearchQuery(name: string) {
+        return `{
+            "query": {
+                "query": "${name}*"
+            },
+            "include": [
+                "path",
+                "allowableOperations",
+                "properties"
+            ],
+            "paging": {
+                "maxItems": 20,
+                "skipCount": 0
+            },
+            "filterQueries": [
+                {
+                    "query": "TYPE:'cm:content'"
+                },
+                {
+                    "query": "TYPE:'cm:folder'"
+                },
+                {
+                    "query": "NOT cm:creator:System"
+                }
+            ],
+            "scope": {
+                "locations": [
+                    "nodes"
+                ]
+            }
+        }`;
     }
 }
