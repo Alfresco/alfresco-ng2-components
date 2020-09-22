@@ -28,9 +28,7 @@ We have developed some practical examples to show you how to interact with an in
 
 To focus the description on the [`NodesApiService`](../core/services/nodes-api.service.md), we will develop on top of the
 [Alfresco Example Content Application](https://github.com/Alfresco/alfresco-content-app).
-If you don't have it already installed in your development environment then see the
-_how-to_ description in
-[preparation of the development environment](./preparing-environment.md).
+If you don't have it already installed in your development environment then see the prerequisites section in [creating your first ADF Application](./creating-your-first-adf-application.md).
 
 When you have the Alfresco Example Content Application up and running, edit the `FileComponent`
 defined in `src/app/components/files/files.component.ts`. Change the  `navigateTo` method

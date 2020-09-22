@@ -8,7 +8,6 @@ Github only: true
 | Name | Level | Abstract |
 | --- | --- | --- |
 | [**Creating your first ADF application**](creating-your-first-adf-application.md) | Basic | This tutorial shows you how to set up your development environment and create an ADF application. |
-| [**Creating your ADF application using Yeoman**](creating-the-app-using-yeoman.md) | Basic | In this tutorial you are going to see how to create an ADF application from scratch, using the [Yeoman scaffolding tool](http://yeoman.io/). |
 | [**Creating your Alfresco JavaScript application**](creating-javascript-app-using-alfresco-js-api.md) | Basic | In this tutorial you will learn how to create an application in JavaScript from scratch to interact with Alfresco. |
 | [**Adding a new component**](new-component.md) | Basic | In this tutorial, you will learn how to create a component using [Angular CLI](https://cli.angular.io/) within an existing application. |
 | [**Adding a new view**](new-view.md) | Beginner | In this tutorial you will learn how to create a new view in your application and how to access it using a defined endpoint. |

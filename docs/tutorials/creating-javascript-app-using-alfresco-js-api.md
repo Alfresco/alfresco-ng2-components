@@ -22,12 +22,7 @@ services then you might need to proxy your application first.
 The only prerequisite of this tutorial is that an instance of Alfresco Content Services in a [Docker](https://www.docker.com/) container should be available. Docker is not the only option for deployment,
 but its simplicity allows us to focus more on the development of the environment setup.
 
-If you don't have an instance of Alfresco Content Services up and running, see
-[Preparing the development environment](./preparing-environment.md)
-to learn how to set it up.
-
-You will need the `npm` client to download the requested [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) libraries (also explained in
-[Preparing the development environment](./preparing-environment.md)).
+You will need the `npm` client to download the requested [`Node`](https://github.com/Alfresco/alfresco-js-api/blob/develop/src/api/content-rest-api/docs/Node.md) libraries.
 
 ## Creating the JavaScript application
 
