@@ -185,7 +185,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     contentModelFormFileHandler(file?: Node) {
-        if (file?.id && this.field?.params?.menuOptions && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION]) {
+        if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
             const values: FormValues = {};
             this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
                 const metadata = acsNode?.entry?.properties;
@@ -200,6 +200,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             });
         }
         this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
+    }
+
+    isRetrieveMetadataOptionEnabled() {
+        return this.field?.params?.menuOptions && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION];
     }
 
     isValidAlias(alias: string): boolean {
