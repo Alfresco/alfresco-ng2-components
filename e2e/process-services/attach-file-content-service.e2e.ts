@@ -110,7 +110,7 @@ describe('Attach File - Content service', () => {
 
     beforeEach(async () => {
         await loginPage.login(user.email, user.password);
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton()
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
         await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
