@@ -180,7 +180,7 @@
         "RANGE": "Date within"
       },
       "DATE_RANGE_TITLE": "Start date - End date",
-      "START_DATE": "Start date",
+      "START_DATE": "Start Date",
       "END_DATE": "End date",
       "ID": "Id",
       "BUSINESS_KEY": "Business Key"

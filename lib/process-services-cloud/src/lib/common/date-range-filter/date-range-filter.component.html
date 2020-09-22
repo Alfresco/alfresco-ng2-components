@@ -14,8 +14,8 @@
     <mat-form-field class="adf-cloud-date-range-picker">
         <mat-label>{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.DATE_RANGE_TITLE' | translate }}</mat-label>
         <mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="picker">
-          <input matStartDate formControlName="from" placeholder="Start date">
-          <input matEndDate formControlName="to" placeholder="End date">
+          <input matStartDate formControlName="from" placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.START_DATE' | translate }}">
+          <input matEndDate formControlName="to" placeholder="{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.END_DATE' | translate }}">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker (closed)="onDateRangeClosed()"></mat-date-range-picker>
