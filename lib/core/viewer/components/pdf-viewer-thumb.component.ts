@@ -23,7 +23,7 @@ import { FocusableOption } from '@angular/cdk/a11y';
     selector: 'adf-pdf-thumb',
     templateUrl: './pdf-viewer-thumb.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { tabindex: '-1'}
+    host: { tabindex: '0'}
 })
 export class PdfThumbComponent implements OnInit, FocusableOption {
 
