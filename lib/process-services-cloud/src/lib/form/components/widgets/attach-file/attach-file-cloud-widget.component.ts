@@ -202,7 +202,7 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
     }
 
-    isRetrieveMetadataOptionEnabled() {
+    isRetrieveMetadataOptionEnabled(): boolean {
         return this.field?.params?.menuOptions && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION];
     }
 
