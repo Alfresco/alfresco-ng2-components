@@ -57,6 +57,14 @@ function useContext(args: KubeArgs) {
     logger.info(response);
 }
 
+function getNamespaces(): string [] {
+    logger.info('Perform get namespaces name...');
+    const result =  exec('kubectl', [`get`, `namespaces`, `-l`, `type=application`, `-o`, `name`], {});
+    const namespaces = result.replace('namespace/', '').split(/\r?\n/);
+    logger.info(`namespaces found: ${namespaces}`);
+    return namespaces;
+}
+
 function getDeploymentName(args: KubeArgs, namespace: string): string {
     logger.info('Perform get deployment name...');
     const result =  exec('kubectl', [`get`, `deployments`, `--namespace=${namespace}`, `-l`, `app=${args.label}`, `-o`, `name`], {});
@@ -111,12 +119,23 @@ function main(args) {
         setCredentials(args);
         setContext(args);
         useContext(args);
-        const namespaces: string [] = args.namespaces.split(',');
+        let namespaces: string [];
+        if (namespaces === undefined || args.namespace === null || args.namespace === 'default') {
+            logger.info(`No namespaces provided. Fetch all of them`);
+            namespaces = getNamespaces();
+        } else {
+            namespaces = args.namespaces.split(',');
+        }
         namespaces.forEach( (namespace) => {
             logger.info(`Find deployment name based on label and namespace ${namespace}`);
             const deploymentName = getDeploymentName(args, namespace);
-            logger.info(`Found ${deploymentName}`);
-            setImage(args, deploymentName.trim(), '*', namespace);
+            if (deploymentName) {
+                logger.info(`Found ${deploymentName}`);
+                setImage(args, deploymentName.trim(), '*', namespace);
+            } else {
+                logger.info(`No container with the label app=${args.label} found`);
+            }
+
         });
     }
 }
