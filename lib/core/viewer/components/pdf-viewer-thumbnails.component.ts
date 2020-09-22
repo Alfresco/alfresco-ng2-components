@@ -101,9 +101,9 @@ export class PdfThumbListComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit() {
         this.keyManager = new FocusKeyManager(this.thumbsList);
 
-        this.thumbsList
-            .changes
-            .subscribe(_ => this.keyManager.setActiveItem(this.getPageIndex(this.pdfViewer.currentPageNumber)));
+        this.thumbsList.changes
+            .pipe(delay(0))
+            .subscribe(() => this.keyManager.setActiveItem(this.getPageIndex(this.pdfViewer.currentPageNumber)));
 
         setTimeout(() => {
             this.scrollInto(this.pdfViewer.currentPageNumber);
