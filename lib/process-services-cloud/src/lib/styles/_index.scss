@@ -9,6 +9,7 @@
 @import './../task/task-filters/components/edit-task-filter-cloud.component.scss';
 @import './../task/task-filters/components/task-filters-cloud.component.scss';
 @import './../process/start-process/components/start-process-cloud.component';
+@import './../form/components/widgets/attach-file/attach-file-cloud-widget.component.scss';
 
 
 @mixin adf-process-services-cloud-theme($theme) {
@@ -23,4 +24,5 @@
     @include adf-cloud-group-theme($theme);
     @include adf-cloud-task-form-theme($theme);
     @include adf-cloud-start-service-theme($theme);
+    @include adf-cloud-attach-file-cloud-widget($theme);
 }

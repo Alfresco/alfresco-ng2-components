@@ -24,7 +24,9 @@ import { FormFieldModel } from './form-field.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
-import { fakeMetadataForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
+import { fakeMetadataForm, fakeViewerForm } from 'process-services-cloud/src/lib/form/mocks/cloud-form.mock';
+import { Node } from '@alfresco/js-api';
+import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 
 describe('FormModel', () => {
     let formService: FormService;
@@ -568,25 +570,65 @@ describe('FormModel', () => {
             form.values['pfx_property_three'] = {};
             form.values['pfx_property_four'] = 'empty';
             form.values['pfx_property_five'] = 'green';
+            form.values['pfx_property_six'] = 'text-value';
+            form.values['pfx_property_seven'] = null;
         });
 
-        it('should not find a process variable', () => {
+        it('should add values to form that are not already present', () => {
             const values = {
                 pfx_property_one: 'testValue',
                 pfx_property_two: true,
                 pfx_property_three: 'opt_1',
                 pfx_property_four: 'option_2',
                 pfx_property_five: 'orange',
+                pfx_property_six: 'other-value',
                 pfx_property_none: 'no_form_field'
             };
 
-            const data = form.addValuesNotPresent(values);
+            form.addValuesNotPresent(values);
 
-            expect(data).toContain({ name: 'pfx_property_one', value: 'testValue' });
-            expect(data).toContain({ name: 'pfx_property_two', value: true });
-            expect(data).toContain({ name: 'pfx_property_three', value: 'opt_1' });
-            expect(data).toContain({ name: 'pfx_property_four', value: 'option_2' });
-            expect(data).toContain({ name: 'pfx_property_five', value: 'green' });
+            expect(form.values['pfx_property_one']).toBe('testValue');
+            expect(form.values['pfx_property_two']).toBe(true);
+            expect(form.values['pfx_property_three']).toEqual({ id: 'opt_1', name: 'Option 1'});
+            expect(form.values['pfx_property_four']).toEqual({ id: 'option_2', name: 'Option: 2'});
+            expect(form.values['pfx_property_five']).toEqual('green');
+            expect(form.values['pfx_property_six']).toEqual('text-value');
+            expect(form.values['pfx_property_seven']).toBeNull();
+            expect(form.values['pfx_property_eight']).toBeNull();
+
+        });
+    });
+
+    describe('setNodeIdValueForViewersLinkedToUploadWidget', () => {
+        const fakeNodeWithProperties: Node = <Node> {
+            id: 'fake-properties',
+            name: 'fake-properties-name',
+            content: {
+                mimeType: 'application/pdf'
+            },
+            properties: {
+                'pfx:property_one': 'testValue',
+                'pfx:property_two': true
+            }
+        };
+        let form: FormModel;
+
+        it('should set the node id to the viewers linked to the upload widget in the event', () => {
+            form = new FormModel(fakeMetadataForm);
+            const uploadWidgetContentLinkModel = new UploadWidgetContentLinkModel(fakeNodeWithProperties, 'content_form_nodes');
+
+            form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
+
+            expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBe(fakeNodeWithProperties.id);
+        });
+
+        it('should not set the node id to the viewers when they are not linked', () => {
+            form = new FormModel(fakeViewerForm);
+            const uploadWidgetContentLinkModel = new UploadWidgetContentLinkModel(fakeNodeWithProperties, 'upload_widget');
+
+            form.setNodeIdValueForViewersLinkedToUploadWidget(uploadWidgetContentLinkModel);
+
+            expect(form.values['cmfb85b2a7295ba41209750bca176ccaf9a']).toBeNull();
         });
     });
 });
