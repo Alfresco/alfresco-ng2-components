@@ -28,7 +28,7 @@ import {
     TasksService,
     ApiService,
     IdentityService,
-    GroupIdentityService, RolesService
+    GroupIdentityService
 } from '@alfresco/adf-testing';
 
 describe('Start Task - Group Cloud Component', () => {
@@ -46,7 +46,6 @@ describe('Start Task - Group Cloud Component', () => {
     const apiService = new ApiService();
     const identityService = new IdentityService(apiService);
     const groupIdentityService = new GroupIdentityService(apiService);
-    const rolesService = new RolesService(apiService);
 
     const bothGroupsTaskName = StringUtil.generateRandomString(5);
     const oneGroupTaskName = StringUtil.generateRandomString(5);
@@ -56,16 +55,15 @@ describe('Start Task - Group Cloud Component', () => {
         await apiService.login(browser.params.identityAdmin.email, browser.params.identityAdmin.password);
 
         testUser = await identityService.createIdentityUser();
-        apsUser = await identityService.createIdentityUser();
-
         hrGroup = await groupIdentityService.getGroupInfoByGroupName('hr');
-        testGroup = await groupIdentityService.createIdentityGroup();
 
-        const apsAdminRoleId = await rolesService.getRoleIdByRoleName(identityService.ROLES.ACTIVITI_USER);
-        await groupIdentityService.assignRole(testGroup.id, apsAdminRoleId, identityService.ROLES.ACTIVITI_USER);
+        apsUser = await identityService.createIdentityUser();
+        testGroup = await groupIdentityService.getGroupInfoByGroupName('testgroup');
 
-        await identityService.addUserToGroup(testUser.idIdentityService, testGroup.id);
-        await identityService.addUserToGroup(apsUser.idIdentityService, hrGroup.id);
+        await identityService.addUserToGroup(testUser.idIdentityService, hrGroup.id);
+        await identityService.addUserToGroup(apsUser.idIdentityService, testGroup.id);
+
+        await loginSSOPage.login(testUser.email, testUser.password);
     });
 
     afterAll(async () => {
@@ -84,7 +82,6 @@ describe('Start Task - Group Cloud Component', () => {
    });
 
     beforeEach(async () => {
-        await loginSSOPage.login(testUser.email, testUser.password);
         await navigationBarPage.navigateToProcessServicesCloudPage();
         await appListCloudComponent.checkApsContainer();
         await appListCloudComponent.checkAppIsDisplayed(simpleApp);
@@ -92,10 +89,6 @@ describe('Start Task - Group Cloud Component', () => {
         await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitForTableBody();
         await tasksCloudDemoPage.openNewTaskForm();
         await startTask.checkFormIsDisplayed();
-    });
-
-    afterEach(async () => {
-        await navigationBarPage.clickLogoutButton();
     });
 
     it('[C291954] Should be able to select/delete an group for a standalone task', async () => {
