@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel.service';
+import { SearchQueryBuilderService } from '../../search-query-builder.service';
 
 @Component({
     selector: 'adf-search-panel',
@@ -25,8 +27,13 @@ import { Component, ViewEncapsulation, Input } from '@angular/core';
     host: { class: 'adf-search-panel' }
 
 })
-export class SearchPanelComponent {
+export class SearchPanelComponent implements OnInit {
 
-    @Input()
-    customModels: any [] = [];
+    constructor(public contentNodeSelectorSearchPanelService: ContentNodeSelectorPanelService,
+                private queryBuilderService: SearchQueryBuilderService) {
+    }
+
+    ngOnInit(): void {
+        this.queryBuilderService.categories = this.contentNodeSelectorSearchPanelService.convertCustomModelPropertiesToSearchCategories();
+    }
 }

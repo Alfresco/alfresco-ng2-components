@@ -34,6 +34,7 @@ import { ContentCloudNodeSelectorService } from '../../../services/content-cloud
 import { ProcessCloudContentService } from '../../../services/process-cloud-content.service';
 import { UploadCloudWidgetComponent } from './upload-cloud.widget';
 import { DestinationFolderPathModel } from '../../../models/form-cloud-representation.model';
+import { ContentNodeSelectorPanelService } from '@alfresco/adf-content-services';
 
 @Component({
     selector: 'adf-cloud-attach-file-cloud-widget',
@@ -75,7 +76,8 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         notificationService: NotificationService,
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
         private appConfigService: AppConfigService,
-        private apiService: AlfrescoApiService
+        private apiService: AlfrescoApiService,
+        private contentNodeSelectorPanelService: ContentNodeSelectorPanelService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
     }
@@ -129,8 +131,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
             this.rootNodeId = nodeId ? nodeId : destinationFolderPath.alias;
         }
 
+        this.contentNodeSelectorPanelService.customModels = this.field.params.customModels;
+
         this.contentNodeSelectorService
-            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal(), this.field.params.customModels)
+            .openUploadFileDialog(this.rootNodeId, selectedMode, this.isAlfrescoAndLocal())
             .subscribe((selections: Node[]) => {
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);

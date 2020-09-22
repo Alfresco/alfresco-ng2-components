@@ -16,24 +16,22 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { SearchConfiguration } from './search-configuration.interface';
-import { BaseQueryBuilderService } from './base-query-builder.service';
-import { SearchCategory } from './search-category.interface';
+import { SearchCategory } from '../search';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SearchPanelQueryBuilderService extends BaseQueryBuilderService {
+export class ContentNodeSelectorPanelService {
 
-    customModels: any [] = [];
+    customModels: any[];
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
-        super(appConfig, alfrescoApiService);
-    }
+    convertCustomModelPropertiesToSearchCategories(): any[] {
+        const searchConfig = [];
+        this.customModels?.forEach( (propertyModel) => {
+            searchConfig.push(this.convertModelPropertyIntoSearchFilter(propertyModel));
+        });
 
-    public isFilterServiceActive(): boolean {
-        return true;
+        return searchConfig;
     }
 
     convertModelPropertyIntoSearchFilter(modelProperty: any): SearchCategory {
@@ -55,15 +53,6 @@ export class SearchPanelQueryBuilderService extends BaseQueryBuilderService {
             };
         }
         return filterSearch;
-    }
-
-    loadConfiguration(): SearchConfiguration {
-        const searchConfig = [];
-        this.customModels?.forEach( (propertyModel) => {
-            searchConfig.push(this.convertModelPropertyIntoSearchFilter(propertyModel));
-        });
-
-        return { categories: searchConfig };
     }
 
 }

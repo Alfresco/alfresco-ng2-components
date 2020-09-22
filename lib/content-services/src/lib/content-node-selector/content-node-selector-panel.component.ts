@@ -71,10 +71,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
     @Input()
     currentFolderId: string = null;
 
-    /** Node ID of the folder currently listed. */
-    @Input()
-    customModels: any [] = [];
-
     /** Hide the "My Files" option added to the site list by default.
      * See the [Sites Dropdown component](sites-dropdown.component.md)
      * for more information.
@@ -282,8 +278,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 this.getStartSite();
             }
         }
-
-        this.queryBuilderService.categories = this.contentNodeSelectorService.convertCustomModelPropertiesToSearchCategories(this.customModels);
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;

@@ -33,7 +33,6 @@ export class ContentNodeSelectorComponent {
     action: string;
     buttonActionName: string;
     chosenNode: Node[];
-    customModels: any[];
     currentDirectoryId: string;
 
     constructor(private translation: TranslationService,
@@ -42,7 +41,6 @@ export class ContentNodeSelectorComponent {
         this.action = data.actionName ? data.actionName.toUpperCase() : 'CHOOSE';
         this.buttonActionName = `NODE_SELECTOR.${this.action}`;
         this.title = data.title;
-        this.customModels = data.customModels;
         this.currentDirectoryId = data.currentFolderId;
     }
 
