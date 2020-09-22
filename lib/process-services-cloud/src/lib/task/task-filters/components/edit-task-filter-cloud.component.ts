@@ -667,6 +667,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                 value: currentTaskFilter.dueDate || false,
                 dateFilterOptions: [
                     DateCloudFilterType.NO_DATE,
+                    DateCloudFilterType.TODAY,
                     DateCloudFilterType.TOMORROW,
                     DateCloudFilterType.NEXT_7_DAYS,
                     DateCloudFilterType.RANGE
