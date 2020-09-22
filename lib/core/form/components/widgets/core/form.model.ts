@@ -31,6 +31,7 @@ import { ProcessVariableModel } from './process-variable.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldValidator, FORM_FIELD_VALIDATORS } from './form-field-validator';
 import { FormFieldTemplates } from './form-field-templates';
+import { UploadWidgetContentLinkModel } from './upload-widget-content-link.model';
 
 export interface FormRepresentationModel {
     [key: string]: any;
@@ -376,17 +377,14 @@ export class FormModel {
         }
     }
 
-    addValuesNotPresent(valuesToSetIfNotPresent: FormValues): { name: string; value: any }[] {
-        const keys = Object.keys(valuesToSetIfNotPresent);
-        keys.forEach(key => {
-            if (!this.values[key] || this.isEmptyDropdownOption(key)) {
-                this.values[key] = valuesToSetIfNotPresent[key];
+    addValuesNotPresent(valuesToSetIfNotPresent: FormValues) {
+        this.getFormFields().forEach(field => {
+            if (valuesToSetIfNotPresent[field.id] && (!this.values[field.id] || this.isEmptyDropdownOption(field.id))) {
+                this.values[field.id] = valuesToSetIfNotPresent[field.id];
+                field.json.value = this.values[field.id];
+                field.value = field.parseValue(field.json);
             }
         });
-        const data = [];
-        const fields = Object.keys(this.values);
-        fields.forEach(field => data.push({ name: field, value: this.values[field] }));
-        return data;
     }
 
     private isEmptyDropdownOption(key: string): boolean {
@@ -394,5 +392,17 @@ export class FormModel {
             return typeof this.values[key] === 'string' ? this.values[key] === 'empty' : Object.keys(this.values[key]).length === 0;
         }
         return false;
+    }
+
+    setNodeIdValueForViewersLinkedToUploadWidget(linkedUploadWidgetContentSelected: UploadWidgetContentLinkModel) {
+        const subscribedViewers = this.getFormFields().filter(field =>
+            field.type === FormFieldTypes.FILE_VIEWER && linkedUploadWidgetContentSelected.uploadWidgetId === field.params['uploadWidget']
+        );
+
+        subscribedViewers.forEach(viewer => {
+            this.values[viewer.id] = linkedUploadWidgetContentSelected.id;
+            viewer.json.value = this.values[viewer.id];
+            viewer.value = viewer.parseValue(viewer.json);
+        });
     }
 }

@@ -195,8 +195,8 @@ export class EditTaskFilterCloudComponentPage {
     }
 
     async clearField(locator: ElementFinder): Promise<void> {
-        await BrowserActions.clearSendKeys(locator, ' ');
-        await locator.sendKeys(protractor.Key.BACK_SPACE);
+        await BrowserVisibility.waitUntilElementIsVisible(locator);
+        await BrowserActions.clearWithBackSpace(locator);
     }
 
     async setAppNameDropDown(option: string): Promise<void> {

@@ -47,6 +47,7 @@ import { UploadWidgetComponent } from './upload/upload.widget';
 import { DateTimeWidgetComponent } from './date-time/date-time.widget';
 import { JsonWidgetComponent } from './json/json.widget';
 import { UploadFolderWidgetComponent } from './upload-folder/upload-folder.widget';
+import { FileViewerWidgetComponent } from './file-viewer/file-viewer.widget';
 
 // core
 export * from './widget.component';
@@ -78,6 +79,7 @@ export * from './document/document.widget';
 export * from './date-time/date-time.widget';
 export * from './json/json.widget';
 export * from './upload-folder/upload-folder.widget';
+export * from './file-viewer/file-viewer.widget';
 
 // editors (dynamic table)
 export * from './dynamic-table/dynamic-table.widget.model';
@@ -120,7 +122,8 @@ export const WIDGET_DIRECTIVES: any[] = [
     DateTimeEditorComponent,
     JsonWidgetComponent,
     AmountEditorComponent,
-    UploadFolderWidgetComponent
+    UploadFolderWidgetComponent,
+    FileViewerWidgetComponent
 ];
 
 export const MASK_DIRECTIVE: any[] = [

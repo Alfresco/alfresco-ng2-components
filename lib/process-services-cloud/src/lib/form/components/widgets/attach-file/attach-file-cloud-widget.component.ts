@@ -19,13 +19,15 @@
 
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-  FormService,
-  LogService,
-  ThumbnailService,
-  NotificationService,
-  FormValues,
-  ContentLinkModel,
-  AppConfigService
+    FormService,
+    LogService,
+    ThumbnailService,
+    NotificationService,
+    FormValues,
+    ContentLinkModel,
+    AppConfigService,
+    AlfrescoApiService,
+    UploadWidgetContentLinkModel
 } from '@alfresco/adf-core';
 import { Node, RelatedContentRepresentation } from '@alfresco/js-api';
 import { ContentCloudNodeSelectorService } from '../../../services/content-cloud-node-selector.service';
@@ -55,9 +57,11 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     static ALIAS_USER_FOLDER = '-my-';
     static APP_NAME = '-appname-';
     static VALID_ALIAS = ['-root-', AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER, '-shared-'];
+    static RETRIEVE_METADATA_OPTION = 'retrieveMetadata';
 
     typeId = 'AttachFileCloudWidgetComponent';
     rootNodeId = AttachFileCloudWidgetComponent.ALIAS_USER_FOLDER;
+    selectedNode: Node;
 
     constructor(
         formService: FormService,
@@ -66,9 +70,18 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
         processCloudContentService: ProcessCloudContentService,
         notificationService: NotificationService,
         private contentNodeSelectorService: ContentCloudNodeSelectorService,
-        private appConfigService: AppConfigService
+        private appConfigService: AppConfigService,
+        private apiService: AlfrescoApiService
     ) {
         super(formService, thumbnails, processCloudContentService, notificationService, logger);
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        if (this.hasFile && this.field.value.length === 1) {
+            const files = this.field.value || this.field.form.values[this.field.id];
+            this.contentModelFormFileHandler(files[0]);
+        }
     }
 
     isAlfrescoAndLocal(): boolean {
@@ -85,6 +98,10 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     onRemoveAttachFile(file: File | RelatedContentRepresentation | Node) {
         this.removeFile(file);
+        if (file['id'] === this.selectedNode?.id) {
+            this.selectedNode = null;
+            this.contentModelFormFileHandler();
+        }
     }
 
     fetchAppNameFromAppConfig(): string {
@@ -115,6 +132,9 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
                 selections.forEach(node => (node['isExternal'] = true));
                 const selectionWithoutDuplication = this.removeExistingSelection(selections);
                 this.fixIncompatibilityFromPreviousAndNewForm(selectionWithoutDuplication);
+                if (this.field.value.length === 1) {
+                    this.contentModelFormFileHandler(selections && selections.length > 0 ? selections[0] : null);
+                }
             });
     }
 
@@ -152,20 +172,38 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
     }
 
     displayMenuOption(option: string): boolean {
-        return this.field.params.menuOptions ? this.field.params.menuOptions[option] : option !== 'retrieveMetadata';
+        return this.field?.params?.menuOptions ? this.field.params.menuOptions[option] : option !== AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION;
     }
 
-    onRetrieveFileMetadata(file: Node) {
-        const values: FormValues = {};
-        const metadata = file?.properties;
-        if (metadata) {
-            const keys = Object.keys(metadata);
-            keys.forEach(key => {
-                const sanitizedKey = key.replace(':', '_');
-                values[sanitizedKey] = metadata[key];
-            });
-            this.formService.updateFormValuesRequested.next(values);
+    onRowClicked(file?: Node) {
+        if (this.selectedNode?.id === file?.id) {
+            this.selectedNode = null;
+        } else {
+            this.selectedNode = file;
         }
+        this.contentModelFormFileHandler(this.selectedNode);
+    }
+
+    contentModelFormFileHandler(file?: Node) {
+        if (file?.id && this.isRetrieveMetadataOptionEnabled()) {
+            const values: FormValues = {};
+            this.apiService.getInstance().node.getNode(file.id).then(acsNode => {
+                const metadata = acsNode?.entry?.properties;
+                if (metadata) {
+                    const keys = Object.keys(metadata);
+                    keys.forEach(key => {
+                        const sanitizedKey = key.replace(':', '_');
+                        values[sanitizedKey] = metadata[key];
+                    });
+                    this.formService.updateFormValuesRequested.next(values);
+                }
+            });
+        }
+        this.fileClicked(new UploadWidgetContentLinkModel(file, this.field.id));
+    }
+
+    isRetrieveMetadataOptionEnabled(): boolean {
+        return this.field?.params?.menuOptions && this.field.params.menuOptions[AttachFileCloudWidgetComponent.RETRIEVE_METADATA_OPTION];
     }
 
     isValidAlias(alias: string): boolean {

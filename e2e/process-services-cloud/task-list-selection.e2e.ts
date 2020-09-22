@@ -165,6 +165,7 @@ describe('Task list cloud - selection', () => {
 
         it('[C297472] Should be able to see selected tasks with Multiselection and Testing switched on', async () => {
             await tasksCloudDemoPage.clickSettingsButton();
+            await tasksCloudDemoPage.enableMultiSelection();
             await tasksCloudDemoPage.enableTestingMode();
             await tasksCloudDemoPage.clickAppButton();
             await tasksCloudDemoPage.taskListCloudComponent().getDataTable().waitTillContentLoaded();

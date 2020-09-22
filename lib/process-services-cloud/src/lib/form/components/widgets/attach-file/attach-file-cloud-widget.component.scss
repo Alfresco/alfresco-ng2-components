@@ -1,5 +1,7 @@
-.adf {
+@mixin adf-cloud-attach-file-cloud-widget($theme) {
+    $primary: map-get($theme, primary);
 
+.adf {
     &-attach-widget-container {
         margin-bottom: 15px;
         display: flex;
@@ -65,9 +67,24 @@
     }
 
     &-attach-files-row {
+
+
+        div.mat-list-item-content {
+            cursor: pointer;
+        }
+
         .mat-line {
             margin-bottom: 0;
         }
     }
 
+    &-attach-selected-file-row {
+        div.mat-list-item-content {
+            .adf-datatable-selected {
+                color: mat-color($primary);
+                padding-right: 6px;
+            }
+        }
+    }
+}
 }
