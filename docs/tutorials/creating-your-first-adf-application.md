@@ -10,7 +10,9 @@ This tutorial shows you how to set up your development environment and create an
 To get up and running with ADF development, you will need to install a few prerequisites: `node.js`, `Yeoman`, and a code editor.
 Once you have the prerequisites installed, you need to create the application using the ADF Yeoman generator, then configure your ADF application to point to your Alfresco Content Services repository.
 
-## Install node.js
+## Prerequisites
+
+### Install node.js
 
 You need the latest `node.js` release, which you can download from [https://nodejs.org/en/](https://nodejs.org/en/). Choose the installer for your OS and follow the install instructions. Once completed, open a terminal and verify the installation with the following command:
 
@@ -20,16 +22,7 @@ You need the latest `node.js` release, which you can download from [https://node
 
 **TIP**: If you are planning to do extensive development with ADF, `node.js`, and `Angular`, you might consider installing a version manager for `node.js` such as [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm/). This tool will allow you to have multiple `node.js` versions installed simultaneously and quickly switch between versions.
 
-## Installing a code editor
-
-All Angular development is using [Typescript](https://www.typescriptlang.org). With this in mind, it a great thing to have tools that make development a little easier, but any text editor will do just fine.
-
-We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, lightweight, and *very* powerful tool from Microsoft that works well with Angular development and has a [big ecosystem of plugins](https://marketplace.visualstudio.com/VSCode) to make the developer experience even better.
-
-Other recommendations include IntelliJ IDEA or WebStorm from [JetBrains](https://www.jetbrains.com) *but note that the community edition does not support [Typescript](https://www.typescriptlang.org).*
-
-
-## Install ADF Yeoman generator
+### Install ADF Yeoman generator
 
 ![yeoman_creation](../docassets/images/yeoman-alfresco-adf-app.jpg)
 
@@ -43,6 +36,21 @@ Now install the latest version of the `generator-alfresco-adf-app`:
 
 	npm install -g generator-alfresco-adf-app@latest
 
+### Install Angular CLI
+
+To take full advantage of Angular, we suggest you install the latest version of [Angular CLI](https://cli.angular.io)
+
+    npm install -g @angular/cli
+
+This will make it easy to create components, libraries, and much more. 
+
+### Installing a code editor
+
+All Angular development is using [Typescript](https://www.typescriptlang.org). With this in mind, it a great thing to have tools that make development a little easier, but any text editor will do just fine.
+
+We recommend [Visual Studio Code](http://code.visualstudio.com) - it's a free, lightweight, and *very* powerful tool from Microsoft that works well with Angular development and has a [big ecosystem of plugins](https://marketplace.visualstudio.com/VSCode) to make the developer experience even better.
+
+Other recommendations include IntelliJ IDEA or WebStorm from [JetBrains](https://www.jetbrains.com) *but note that the community edition does not support [Typescript](https://www.typescriptlang.org).*
 
 ## Create your first ADF application
 
