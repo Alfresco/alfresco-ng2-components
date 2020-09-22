@@ -55,7 +55,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
                 { href: '/cloud/community', icon: 'cloud', title: 'APP_LAYOUT.COMMUNITY' },
                 { href: '/form-cloud', icon: 'poll', title: 'APP_LAYOUT.FORM' },
                 { href: '/cloud/people-group-cloud', icon: 'group', title: 'APP_LAYOUT.PEOPLE_GROUPS_CLOUD' },
-                { href: '/cloud/task-header-cloud', icon: 'cloud', title: 'APP_LAYOUT.TASK_HEADER_CLOUD.COMPONENT_NAME' }
+                { href: '/cloud/task-header-cloud', icon: 'cloud', title: 'APP_LAYOUT.TASK_HEADER_CLOUD.COMPONENT_NAME' },
+                { href: '/cloud/service-task-list', icon: 'cloud', title: 'APP_LAYOUT.SERVICE_TASK_LIST' }
             ]
         },
         { href: '/activiti', icon: 'device_hub', title: 'APP_LAYOUT.PROCESS_SERVICES', children: [

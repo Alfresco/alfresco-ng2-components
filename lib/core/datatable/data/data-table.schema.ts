@@ -79,4 +79,12 @@ export abstract class DataTableSchema {
     private getDefaultLayoutPreset(): DataColumn[] {
         return (this.layoutPresets['default']).map((col) => new ObjectDataColumn(col));
     }
+
+    public setPresetKey(presetKey: string) {
+        this.presetKey = presetKey;
+    }
+
+    public setPresetsModel(presetsModel: any) {
+        this.presetsModel = presetsModel;
+    }
 }
