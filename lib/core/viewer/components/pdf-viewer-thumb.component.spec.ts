@@ -66,4 +66,12 @@ describe('PdfThumbComponent', () => {
             done();
         });
     });
+
+    it('should focus element', () => {
+        component.page = page;
+        fixture.detectChanges();
+        component.focus();
+
+        expect(fixture.debugElement.nativeElement.id).toBe(document.activeElement.id);
+    });
 });
