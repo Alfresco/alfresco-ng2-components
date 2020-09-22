@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import {
     HighlightDirective,
     UserPreferencesService,
@@ -37,8 +37,7 @@ import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
-import { SearchPanelQueryBuilderService } from '../search/search-panel-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
+import { SearchQueryBuilderService } from '../search';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -236,8 +235,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
-                @Inject(SEARCH_QUERY_SERVICE_TOKEN)
-                private queryBuilderService: SearchPanelQueryBuilderService,
+                private queryBuilderService: SearchQueryBuilderService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
@@ -261,6 +259,10 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
             )
             .subscribe(searchValue => this.search(searchValue));
 
+        this.contentNodeSelectorService.executed
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(this.showSearchResults.bind(this));
+
         this.queryBuilderService.executed
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(this.showSearchResults.bind(this));
@@ -280,6 +282,8 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 this.getStartSite();
             }
         }
+
+        this.queryBuilderService.categories = this.contentNodeSelectorService.convertCustomModelPropertiesToSearchCategories(this.customModels);
 
         this.breadcrumbTransform = this.breadcrumbTransform ? this.breadcrumbTransform : null;
         this.isSelectionValid = this.isSelectionValid ? this.isSelectionValid : defaultValidation;

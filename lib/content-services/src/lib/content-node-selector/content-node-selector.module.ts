@@ -29,8 +29,6 @@ import { CoreModule } from '@alfresco/adf-core';
 import { DocumentListModule } from '../document-list/document-list.module';
 import { NameLocationCellComponent } from './name-location-cell/name-location-cell.component';
 import { UploadModule } from '../upload/upload.module';
-import { SearchPanelQueryBuilderService } from '../search/search-panel-query-builder.service';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token';
 
 @NgModule({
     imports: [
@@ -54,7 +52,6 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../search/search-query-service.token
         ContentNodeSelectorPanelComponent,
         NameLocationCellComponent,
         ContentNodeSelectorComponent
-    ],
-    providers: [{ provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchPanelQueryBuilderService}]
+    ]
 })
 export class ContentNodeSelectorModule {}

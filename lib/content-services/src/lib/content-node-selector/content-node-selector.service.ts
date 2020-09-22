@@ -19,6 +19,7 @@ import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
 import { Injectable } from '@angular/core';
 import { BaseQueryBuilderService } from '../search/base-query-builder.service';
 import { QueryBody } from '@alfresco/js-api';
+import { SearchCategory } from '../search';
 
 /**
  * Internal service used by ContentNodeSelector component.
@@ -30,6 +31,8 @@ export class ContentNodeSelectorService extends BaseQueryBuilderService {
 
     query: QueryBody;
 
+    customModels: any[] = [];
+
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
         super(appConfig, alfrescoApiService);
     }
@@ -38,8 +41,38 @@ export class ContentNodeSelectorService extends BaseQueryBuilderService {
         return true;
     }
 
+    convertModelPropertyIntoSearchFilter(modelProperty: any): SearchCategory {
+        let filterSearch: SearchCategory;
+        if (modelProperty.dataType === 'd:text') {
+            filterSearch = {
+                id : modelProperty.prefixedName,
+                name: modelProperty.prefixedName,
+                expanded: false,
+                enabled: true,
+                component: {
+                    selector: 'text',
+                    settings: {
+                        pattern: `${modelProperty.prefixedName}:'(.*?)'`,
+                        field: `${modelProperty.prefixedName}`,
+                        placeholder: `Enter the ${modelProperty.name}`
+                    }
+                }
+            };
+        }
+        return filterSearch;
+    }
+
     loadConfiguration(): any {
         return [];
+    }
+
+    convertCustomModelPropertiesToSearchCategories(customModels: any[]): any[] {
+        const searchConfig = [];
+        customModels?.forEach( (propertyModel) => {
+            searchConfig.push(this.convertModelPropertyIntoSearchFilter(propertyModel));
+        });
+
+        return searchConfig;
     }
 
     /**

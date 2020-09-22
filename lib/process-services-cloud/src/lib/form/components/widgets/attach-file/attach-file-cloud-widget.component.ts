@@ -122,36 +122,6 @@ export class AttachFileCloudWidgetComponent extends UploadCloudWidgetComponent i
 
     async openSelectDialog() {
         const selectedMode = this.field.params.multiple ? 'multiple' : 'single';
-        this.field.params['customModels'] = [
-            {
-                'name': 'topspeed',
-                'prefixedName': 'car:topspeed',
-                'title': '',
-                'description': '',
-                'dataType': 'd:text',
-                'multiValued': false,
-                'mandatory': false,
-                'mandatoryEnforced': false,
-                'indexed': false,
-                'facetable': 'FALSE',
-                'indexTokenisationMode': '',
-                'constraints': []
-            },
-            {
-                'name': 'VIN',
-                'prefixedName': 'account:VIN',
-                'title': '',
-                'description': '',
-                'dataType': 'd:text',
-                'multiValued': false,
-                'mandatory': false,
-                'mandatoryEnforced': false,
-                'indexed': false,
-                'facetable': 'FALSE',
-                'indexTokenisationMode': '',
-                'constraints': []
-            }
-        ];
         if (this.isAlfrescoAndLocal()) {
             const destinationFolderPath = this.getAliasAndRelativePathFromDestinationFolderPath(this.field.params.fileSource.destinationFolderPath);
             destinationFolderPath.path = this.replaceAppNameAliasWithValue(destinationFolderPath.path);

@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewEncapsulation, OnInit, Input, Inject } from '@angular/core';
-import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
-import { SearchPanelQueryBuilderService } from '../../search-panel-query-builder.service';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
     selector: 'adf-search-panel',
@@ -27,18 +25,8 @@ import { SearchPanelQueryBuilderService } from '../../search-panel-query-builder
     host: { class: 'adf-search-panel' }
 
 })
-export class SearchPanelComponent implements OnInit {
+export class SearchPanelComponent {
 
     @Input()
     customModels: any [] = [];
-
-    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN)
-        private queryBuilderService: SearchPanelQueryBuilderService) {
-    }
-
-    ngOnInit(): void {
-        this.queryBuilderService.customModels = this.customModels;
-        const currentConfig = this.queryBuilderService.loadConfiguration();
-        this.queryBuilderService.categories = [...currentConfig.categories];
-    }
 }
