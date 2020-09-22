@@ -169,7 +169,7 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C297478] Should be able to see only tasks that are assigned to a specific user when assignee is set', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setAssignee('admin.adf');
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setAssignee(testUser.username);
 
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(notAssigned.entry.name);
@@ -228,7 +228,7 @@ describe('Edit task filters and task list properties', () => {
         });
 
         it('[C297485] Task is displayed when typing into lastModifiedTo field a date after the task CreatedDate', async () => {
-            await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(afterDate);
+            await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(afterDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedTo(beforeDate);
