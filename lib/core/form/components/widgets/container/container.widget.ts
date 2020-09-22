@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- /* tslint:disable:component-selector  */
+/* tslint:disable:component-selector  */
 
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormService } from './../../../services/form.service';
@@ -43,9 +43,10 @@ import { ContainerWidgetComponentModel } from './container.widget.model';
 export class ContainerWidgetComponent extends WidgetComponent implements OnInit, AfterViewInit {
 
     content: ContainerWidgetComponentModel;
+    numberOfColumns: number;
 
     constructor(public formService: FormService) {
-         super(formService);
+        super(formService);
     }
 
     onExpanderClicked() {
@@ -57,6 +58,7 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
     ngOnInit() {
         if (this.field) {
             this.content = new ContainerWidgetComponentModel(this.field);
+            this.numberOfColumns = this.content?.json?.numberOfColumns || 1;
         }
     }
 
@@ -65,23 +67,31 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
      */
     get fields(): FormFieldModel[] {
         const fields = [];
-
-        let rowContainsElement = true,
-            rowIndex = 0;
-
-        while (rowContainsElement) {
-            rowContainsElement = false;
-            for (let i = 0; i < this.content.columns.length; i++ ) {
-                const field = this.content.columns[i].fields[rowIndex];
-                if (field) {
-                    rowContainsElement = true;
-                }
-
-                fields.push(field);
-            }
-            rowIndex++;
+        const toBeComputed = [];
+        const rowspanOffset = [];
+        for (let i = 0; i < this.numberOfColumns; i++) {
+            toBeComputed.push(this.content.columns[i]?.fields?.length || 0);
+            rowspanOffset[i] = 0;
         }
 
+        for (let i = 0; i < 9; i++) {
+            let columnIndex = 0;
+            while (columnIndex < this.numberOfColumns) {
+                let field;
+                if (rowspanOffset[columnIndex] > 0) {
+                    rowspanOffset[columnIndex] = rowspanOffset[columnIndex] - 1;
+                } else {
+                    const rowToCompute = (this.content.columns[columnIndex]?.fields?.length || 0) - toBeComputed[columnIndex];
+                    field = this.content.columns[columnIndex]?.fields[rowToCompute];
+                    fields.push(field);
+                    for (let k = 0; k < (field?.colspan || 1); k++) {
+                        rowspanOffset[columnIndex + k] = field?.rowspan > 0 ? field?.rowspan - 1 : 0;
+                    }
+                    toBeComputed[columnIndex] = toBeComputed[columnIndex] - 1;
+                }
+                columnIndex = columnIndex + (field?.colspan || 1);
+            }
+        }
         return fields;
     }
 

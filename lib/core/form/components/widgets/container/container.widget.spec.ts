@@ -141,6 +141,7 @@ describe('ContainerWidgetComponent', () => {
             ];
 
             widget.content = container;
+            widget.numberOfColumns = 3;
 
             expect(widget.fields[0].id).toEqual('1');
             expect(widget.fields[1].id).toEqual('4');
