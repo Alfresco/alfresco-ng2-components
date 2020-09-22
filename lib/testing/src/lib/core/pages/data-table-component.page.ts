@@ -479,6 +479,8 @@ export class DataTableComponentPage {
     }
 
     async isEmpty(): Promise<boolean> {
+        await browser.sleep(500);
+
         let isDisplayed;
 
         try {
