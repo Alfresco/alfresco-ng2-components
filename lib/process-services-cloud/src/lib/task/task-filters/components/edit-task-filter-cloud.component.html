@@ -76,7 +76,8 @@
 
                     <div fxFlex="23%" class="adf-edit-task-filter-checkbox" *ngIf="isUserSelectType(taskFilterProperty)">
                         <adf-cloud-people
-                            [preSelectUsers]="[]"
+                            [preSelectUsers]="taskFilterProperty.value | async"
+                            [title]="taskFilterProperty.label"
                             [validate]="true"
                             [appName]="appName"
                             [mode]="taskFilterProperty.selectionMode"
