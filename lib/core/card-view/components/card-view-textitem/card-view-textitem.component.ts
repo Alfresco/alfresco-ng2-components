@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CardViewTextItemModel } from '../../models/card-view-textitem.model';
 import { CardViewUpdateService } from '../../services/card-view-update.service';
 import { BaseCardView } from '../base-card-view';
@@ -23,6 +23,9 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { ClipboardService } from '../../../clipboard/clipboard.service';
 import { TranslationService } from '../../../services/translation.service';
 import { CardViewItemValidator } from '../../interfaces/card-view-item-validator.interface';
+import { FormControl } from '@angular/forms';
+import { debounceTime, takeUntil, filter } from 'rxjs/operators';
+import { Subject } from 'rxjs/internal/Subject';
 
 export const DEFAULT_SEPARATOR = ', ';
 const templateTypes = {
@@ -59,15 +62,36 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
     errors: CardViewItemValidator[];
     templateType: string;
 
+    textInput: FormControl = new FormControl();
+
+    private onDestroy$ = new Subject<boolean>();
+
     constructor(cardViewUpdateService: CardViewUpdateService,
                 private clipboardService: ClipboardService,
                 private translateService: TranslationService) {
         super(cardViewUpdateService);
     }
 
-    ngOnChanges(): void {
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.property && changes.property.firstChange) {
+            this.textInput.valueChanges
+                .pipe(
+                    filter(textInputValue => textInputValue !== this.editedValue),
+                    debounceTime(500),
+                    takeUntil(this.onDestroy$)
+                )
+                .subscribe(textInputValue => {
+                    this.editedValue = textInputValue;
+                    this.update();
+                });
+        }
+
         this.resetValue();
         this.setTemplateType();
+
+        if (changes.editable) {
+            this.isEditable ? this.textInput.enable() : this.textInput.disable();
+        }
     }
 
     private setTemplateType() {
@@ -89,6 +113,7 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             this.editedValue = this.property.value ? Array.from(this.property.value) : [];
         } else {
             this.editedValue = this.property.displayValue;
+            this.textInput.setValue(this.editedValue);
         }
 
         this.resetErrorMessages();
@@ -136,7 +161,8 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
 
             if (chipInput) {
                 chipInput.value = '';
-            }        }
+            }
+        }
     }
 
     clicked(): void {
@@ -156,6 +182,11 @@ export class CardViewTextItemComponent extends BaseCardView<CardViewTextItemMode
             const clipboardMessage = this.translateService.instant('CORE.METADATA.ACCESSIBILITY.COPY_TO_CLIPBOARD_MESSAGE');
             this.clipboardService.copyContentToClipboard(valueToCopy, clipboardMessage);
         }
+    }
+
+    ngOnDestroy() {
+        this.onDestroy$.next(true);
+        this.onDestroy$.complete();
     }
 
     get showProperty(): boolean {

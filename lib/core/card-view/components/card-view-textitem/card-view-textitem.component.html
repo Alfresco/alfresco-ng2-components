@@ -13,10 +13,8 @@
                    *ngIf="!property.multiline"
                    class="adf-property-value"
                    [placeholder]="property.default"
-                   [(ngModel)]="editedValue"
-                   (blur)="update()"
-                   (keydown.enter)="update()"
-                   [disabled]="!isEditable"
+                   [value]="editedValue"
+                   [formControl]="textInput"
                    (dblclick)="copyToClipboard(property.displayValue)"
                    matTooltipShowDelay="1000"
                    [matTooltip]="'CORE.METADATA.ACTIONS.COPY_TO_CLIPBOARD' | translate"
@@ -29,10 +27,7 @@
                       matAutosizeMaxRows="5"
                       class="adf-property-value"
                       [placeholder]="property.default"
-                      [(ngModel)]="editedValue"
-                      (blur)="update()"
-                      (keydown.enter)="update()"
-                      [disabled]="!isEditable"
+                      [formControl]="textInput"
                       [attr.data-automation-id]="'card-textitem-value-' + property.key"></textarea>
             <button mat-button
                     matSuffix
