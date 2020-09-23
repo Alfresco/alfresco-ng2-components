@@ -266,7 +266,7 @@ export class DataTableComponentPage {
         } catch (error) {
             if (retry < 3) {
                 retry++;
-                this.checkContentIsDisplayed(columnName, columnValue, retry);
+                await this.checkContentIsDisplayed(columnName, columnValue, retry);
             }
         }
     }
@@ -280,7 +280,7 @@ export class DataTableComponentPage {
         } catch (error) {
             if (retry < 3) {
                 retry++;
-                this.checkContentIsNotDisplayed(columnName, columnValue, retry);
+                await this.checkContentIsNotDisplayed(columnName, columnValue, retry);
             }
         }
     }
