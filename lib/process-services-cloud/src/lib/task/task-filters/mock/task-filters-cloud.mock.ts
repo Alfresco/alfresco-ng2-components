@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 
 export let fakeGlobalFilter = [
     new TaskFilterCloudModel({
@@ -52,18 +52,6 @@ export let fakeFilter = new TaskFilterCloudModel({
     appName: 'mock-app-name',
     processDefinitionId: 'process-def-id',
     assignee: 'fake-involved',
-    order: 'ASC',
-    sort: 'id'
-});
-
-export let fakeServiceFilter = new ServiceTaskFilterCloudModel({
-    name: 'FakeInvolvedTasks',
-    icon: 'adjust',
-    id: 'mock-task-filter-id',
-    status: 'CREATED',
-    appName: 'mock-app-name',
-    processDefinitionId: 'process-def-id',
-    activityName: 'fake-activity',
     order: 'ASC',
     sort: 'id'
 });

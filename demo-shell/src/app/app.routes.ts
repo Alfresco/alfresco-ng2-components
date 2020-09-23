@@ -54,7 +54,6 @@ import { DemoErrorComponent } from './components/error/demo-error.component';
 import { TaskHeaderCloudDemoComponent } from './components/cloud/task-header-cloud-demo.component';
 import { FilteredSearchComponent } from './components/files/filtered-search.component';
 import { ProcessCloudLayoutComponent } from './components/cloud/process-cloud-layout.component';
-import { ServiceTaskListCloudDemoComponent } from './components/cloud/service-task-list-cloud-demo.component';
 
 export const appRoutes: Routes = [
     { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.AppLoginModule) },
@@ -177,31 +176,22 @@ export const appRoutes: Routes = [
             {
                 path: 'cloud',
                 canActivate: [AuthGuardSsoRoleService],
-                data: { roles: ['ACTIVITI_ADMIN', 'ACTIVITI_USER'], redirectUrl: '/error/403' },
+                data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                 children: [
                     {
                         path: '',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: AppsCloudDemoComponent
                     },
                     {
                         path: 'people-group-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: PeopleGroupCloudDemoComponent
                     },
                     {
                         path: 'task-header-cloud',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         component: TaskHeaderCloudDemoComponent
                     },
                     {
-                        path: 'service-task-list',
-                        data: { roles: ['ACTIVITI_ADMIN'], redirectUrl: '/error/403' },
-                        component: ServiceTaskListCloudDemoComponent
-                    },
-                    {
                         path: 'community',
-                        data: { roles: ['ACTIVITI_USER'], redirectUrl: '/error/403' },
                         loadChildren: () => import('./components/cloud/community/community.module').then(m => m.AppCommunityModule)
                     },
                     {

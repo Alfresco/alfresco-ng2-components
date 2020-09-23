@@ -52,14 +52,13 @@ Edits task filter details.
 | showTaskFilterName | `boolean` | true | Toggles display of task filter name |
 | showTitle | `boolean` | true | Toggles the title. |
 | sortProperties | `string[]` |  | List of sort properties to display. |
-| TaskType | `string` | userTask | The type of tasks to be listed. `userTask | serviceTask` |
 
 ### Events
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | action | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterAction`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a filter action occurs (i.e Save, Save As, Delete). |
-| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)` | `[`ServiceTaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
+| filterChange | [`EventEmitter`](https://angular.io/api/core/EventEmitter)`<`[`TaskFilterCloudModel`](../../../lib/process-services-cloud/src/lib/task/task-filters/models/filter-cloud.model.ts)`>` | Emitted when a task filter property changes. |
 
 ## Details
 
@@ -211,18 +210,6 @@ Users can save a filter if they make any changes to it in an application using t
 -   An Activiti 7 community version stores saved filters in the local browser storage. This restricts a user's custom filters to that single session.
 
 -   An Activiti Enterprise version uses the preference service to store saved filters. This allows for user's custom filters to be available between sessions and between devices. 
-
-### Filtering Service Tasks
-
-Use the `taskType` to choose which task type to edit:
-
-```html
-<adf-cloud-edit-task-filter
-    [id]="taskFilterId"
-    [appName]="appName"
-    [taskType]="'serviceTask'">
-</adf-cloud-edit-task-filter>
-```
 
 ## See also
 

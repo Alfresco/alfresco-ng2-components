@@ -16,31 +16,27 @@
  */
 
 import { Component, ViewEncapsulation, OnChanges, Input, SimpleChanges, Output, EventEmitter, ContentChild, AfterContentInit, OnDestroy, OnInit } from '@angular/core';
-import {
-    AppConfigService, UserPreferencesService,
-    DataTableSchema, UserPreferenceValues,
-    PaginatedComponent, PaginationModel,
-    DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent
-} from '@alfresco/adf-core';
-import { taskPresetsCloudDefaultModel, serviceTaskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
-import { TaskQueryCloudRequestModel, ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { AppConfigService, UserPreferencesService,
+         DataTableSchema, UserPreferenceValues,
+         PaginatedComponent, PaginationModel,
+         DataRowEvent, CustomEmptyContentTemplateDirective, DataCellEvent, DataRowActionEvent } from '@alfresco/adf-core';
+import { taskPresetsCloudDefaultModel } from '../models/task-preset-cloud.model';
+import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { TaskListCloudService } from '../services/task-list-cloud.service';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { takeUntil } from 'rxjs/operators';
-import { TaskType } from '../../task-filters/models/filter-cloud.model';
 
 @Component({
-    selector: 'adf-cloud-task-list',
-    templateUrl: './task-list-cloud.component.html',
-    styleUrls: ['./task-list-cloud.component.scss'],
-    encapsulation: ViewEncapsulation.None
+  selector: 'adf-cloud-task-list',
+  templateUrl: './task-list-cloud.component.html',
+  styleUrls: ['./task-list-cloud.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class TaskListCloudComponent extends DataTableSchema implements OnChanges, AfterContentInit, PaginatedComponent, OnDestroy, OnInit {
 
-    static USER_TASKS_PRESET_KEY = 'adf-cloud-task-list.presets';
-    static SERVICE_TASKS_PRESET_KEY = 'adf-cloud-service-task-list.presets';
+    static PRESET_KEY = 'adf-cloud-task-list.presets';
     static ENTRY_PREFIX = 'entry.';
 
     @ContentChild(CustomEmptyContentTemplateDirective)
@@ -74,7 +70,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     lastModifiedTo: string = '';
 
-    /** Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. */
+     /** Filter the tasks. Display only tasks with dueDate greater or equal than the supplied date. */
     @Input()
     dueDateFrom: string = '';
 
@@ -156,14 +152,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     showContextMenu: boolean = false;
 
-    /** Task type: userTask | serviceTask */
-    @Input()
-    taskType: string = TaskType.UserTask;
-
-    /** An object that contains properties used to query the service task list */
-    @Input()
-    queryParams: any = {};
-
     /** Emitted before the context menu is displayed for a row. */
     @Output()
     showRowContextMenu = new EventEmitter<DataCellEvent>();
@@ -209,7 +197,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     constructor(private taskListCloudService: TaskListCloudService,
                 appConfigService: AppConfigService,
                 private userPreferences: UserPreferencesService) {
-        super(appConfigService, TaskListCloudComponent.USER_TASKS_PRESET_KEY, taskPresetsCloudDefaultModel);
+        super(appConfigService, TaskListCloudComponent.PRESET_KEY, taskPresetsCloudDefaultModel);
         this.size = userPreferences.paginationSize;
 
         this.pagination = new BehaviorSubject<PaginationModel>(<PaginationModel> {
@@ -225,12 +213,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             .select(UserPreferenceValues.PaginationSize)
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(pageSize => this.size = pageSize);
-
-        if (this.taskType === TaskType.ServiceTask) {
-            super.setPresetKey(TaskListCloudComponent.SERVICE_TASKS_PRESET_KEY);
-            super.setPresetsModel(serviceTaskPresetsCloudDefaultModel);
-            super.loadLayoutPresets();
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -279,14 +261,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
 
     private load(requestNode: TaskQueryCloudRequestModel) {
         this.isLoading = true;
-        let taskRequest: Observable<any>;
-        if (this.taskType === TaskType.UserTask) {
-            taskRequest = this.taskListCloudService.getTaskByRequest(<TaskQueryCloudRequestModel> requestNode);
-        } else {
-            taskRequest = this.taskListCloudService.getServiceTaskByRequest(<ServiceTaskQueryCloudRequestModel> requestNode);
-        }
-
-        taskRequest.subscribe(
+        this.taskListCloudService.getTaskByRequest(requestNode).subscribe(
             (tasks) => {
                 this.rows = tasks.list.entries;
                 this.success.emit(tasks);
@@ -368,14 +343,7 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     }
 
     private createRequestNode() {
-        if (this.taskType === TaskType.UserTask) {
-            return this.createUserTaskRequest();
-        } else {
-            return this.createServiceTaskRequest();
-        }
-    }
 
-    createUserTaskRequest() {
         const requestNode = {
             appName: this.appName,
             assignee: this.assignee,
@@ -400,31 +368,6 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             standalone: this.standalone
         };
         return new TaskQueryCloudRequestModel(requestNode);
-    }
-
-    createServiceTaskRequest() {
-        const requestNode = {
-            appName: this.appName,
-            id: this.queryParams.serviceTaskId,
-            activityName: this.queryParams.activityName,
-            activityType: this.queryParams.activityType,
-            completedDate: this.queryParams.completedDate,
-            elementId: this.queryParams.elementId,
-            executionId: this.queryParams.executionId,
-            processDefinitionId: this.queryParams.processDefinitionId,
-            processDefinitionKey: this.queryParams.processDefinitionKey,
-            processDefinitionVersion: this.queryParams.processDefinitionVersion,
-            processInstanceId: this.queryParams.processInstanceId,
-            serviceFullName: this.queryParams.serviceFullName,
-            serviceName: this.queryParams.serviceName,
-            serviceVersion: this.queryParams.serviceVersion,
-            startedDate: this.queryParams.startedDate,
-            status: this.queryParams.status,
-            maxItems: this.size,
-            skipCount: this.skipCount,
-            sorting: this.sorting
-        };
-        return new ServiceTaskQueryCloudRequestModel(requestNode);
     }
 
     setSorting(sortDetail) {

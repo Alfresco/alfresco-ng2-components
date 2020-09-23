@@ -969,35 +969,6 @@
       "delete"
     ]
   },
-  "adf-edit-service-task-filter": {
-    "filterProperties": [
-      "appName",
-      "serviceTaskId",
-      "activityName",
-      "activityType",
-      "completedDate",
-      "startedDate",
-      "sort",
-      "order",
-      "status",
-      "elementId",
-      "serviceName",
-      "processInstanceId",
-      "processDefinitionId",
-      "serviceName"
-    ],
-    "sortProperties": [
-      "id",
-      "activityName",
-      "completedDate",
-      "startedDate"
-    ],
-    "actions": [
-      "save",
-      "saveAs",
-      "delete"
-    ]
-  },
   "adf-edit-process-filter": {
     "filterProperties": [
       "status",
@@ -1089,44 +1060,6 @@
           "key": "entry.lastModified",
           "type": "date",
           "title": "ADF_CLOUD_TASK_LIST.PROPERTIES.LAST_MODIFIED",
-          "sortable": true,
-          "format": "timeAgo"
-        }
-      ]
-    }
-  },
-  "adf-cloud-service-task-list": {
-    "presets": {
-      "default": [
-        {
-          "key": "entry.id",
-          "type": "text",
-          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ID",
-          "sortable": true
-        },
-        {
-          "key": "entry.activityName",
-          "type": "text",
-          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.ACTIVITY_NAME",
-          "sortable": true
-        },
-        {
-          "key": "entry.status",
-          "type": "text",
-          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STATUS",
-          "sortable": true
-        },
-        {
-          "key": "entry.startedDate",
-          "type": "date",
-          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.STARTED_DATE",
-          "sortable": true,
-          "format": "timeAgo"
-        },
-        {
-          "key": "entry.completedDate",
-          "type": "date",
-          "title": "ADF_CLOUD_SERVICE_TASK_LIST.PROPERTIES.COMPLETED_DATE",
           "sortable": true,
           "format": "timeAgo"
         }
