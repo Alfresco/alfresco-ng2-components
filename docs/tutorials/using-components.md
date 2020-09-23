@@ -5,7 +5,7 @@ Level: Basic
 
 # Using ADF Components
 
-In this tutorial you will learn how to extend, use and configure ADF Components.
+In this tutorial, you will learn how to extend, use, and configure ADF Components.
 
 ![login](../docassets/images/login.jpg)
 
@@ -15,7 +15,7 @@ The final result will look like this:
 
 ![login](../docassets/images/login-customized.jpg)
 
-We have carefully picked these three customizations because they cover the three fundamental ways you can ways to use, extend and configure ADF Components:
+We have carefully picked these three customizations because they cover the three fundamental ways you can use, extend, and configure ADF Components:
 
 1.  Configuration Properties
 2.  Event Listeners
@@ -24,11 +24,11 @@ We have carefully picked these three customizations because they cover the three
 You should always consult the documentation for the component you are looking to use. For this exercise it would be useful to open a browser window with the [Login Component](../core/components/login.component.md)
 documentation.
 
-Let's do a practical example with each approach.
+Let's do a practical example for each approach.
 
 ## Configuration Properties
 
-Angular components can easily be configured via properties in the HTML template. In this example we will remove the `Remember me`, `Need Help?` and `Register` links in the footer.
+Angular components can be configured via properties in the HTML template. In this example, we will remove the `Remember me`, `Need Help?` and `Register` links in the footer.
 
 Make sure you have the application running from the [previous tutorial](creating-your-first-adf-application.md).
 
@@ -115,11 +115,11 @@ export class LoginComponent {
 }
 ```
 
-Save the files, go to the [login component,](../core/components/login.component.md) enter a valid username and password and you should now see an alert. Looking in the console in the browser, you'll see the event data. Here we get all the details for the form. 
+Save the files, go to the [login component,](../core/components/login.component.md) enter a valid username and password, and you should now see an alert. Looking in the console in the browser, you'll see the event data. Here we get all the details for the form. 
 
 ## Content Projection / HTMl Extensions
 
-The last way a component can be configured or extended is through an approach called Content Projection. This allows components to put placeholders in their template, allowing developers to "project" their own code or components into pre-defined locations within the component.
+The last way a component can be configured or extended is through an approach called Content Projection. This allows components to put placeholders in their template, allowing developers to "project" their code or components into pre-defined locations within the component.
 
 In normal HTML, elements can be nested, for example:
 
@@ -134,7 +134,7 @@ In normal HTML, elements can be nested, for example:
 We can use the same approach with ADF Components to inject custom code or whole components into the ADF component.
 
 The documentation gives information about which targets are in place.  Components that support content
-project have a
+project has a
 [Transclusions](../user-guide/transclusion.md)
 section in the doc page with all the relevant details.
 
@@ -159,7 +159,7 @@ Let's add a simple Hello World message in the footer. Open the template `src/app
 
 Be careful that you place the `<adf-login-footer/>` tag _inside_ the `<adf-login/>` tag.
 
-Inside the `<adf-login-footer/>` or `<adf-login-header/>` tags we can put anything we want, as long as we wrap it inside an `<ng-template/>` tag. We can also source in custom or 3rd party components.
+Inside the `<adf-login-footer/>` or `<adf-login-header/>` tags, we can put anything we want, as long as we wrap it inside an `<ng-template/>` tag. We can also source in custom or 3rd party components.
 
 ### Bonus objective: Add a custom logo and background to the login screen
 
@@ -168,7 +168,7 @@ docs to find out how you can change the logo and background image!
 
 # Next steps
 
-We have a number of tutorials for you to explore. Here are a few suggested ones to try next:
+We have some tutorials for you to explore. Here are a few suggested ones to try next:
 
 -   [Basic theming](basic-theming.md)
 -   [Create a new page](new-view.md)
