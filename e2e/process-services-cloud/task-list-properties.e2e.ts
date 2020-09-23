@@ -215,7 +215,7 @@ describe('Edit task filters and task list properties', () => {
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
+        fit('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
