@@ -32,7 +32,7 @@ export class UserFiltersUtil {
             return this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(new UserTaskFilterRepresentation(
                 {appId: appId, name: newTaskFilterName, icon: iconName, filter: {sort: sortType, state: stateType, assignment: assignmentType}}));
         } catch (error) {
-            Logger.error('Create Task Filter - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Create Task Filter - Service error, Response: ', error);
         }
     }
 
@@ -40,7 +40,7 @@ export class UserFiltersUtil {
         try {
             return this.apiService.getInstance().activiti.userFiltersApi.orderUserTaskFilters(new UserFilterOrderRepresentation({appId: appId, order: filtersIdOrder}));
         } catch (error) {
-            Logger.error('Re-order the list of user task filters - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Re-order the list of user task filters - Service error, Response: ', error);
         }
     }
 
@@ -48,7 +48,7 @@ export class UserFiltersUtil {
         try {
             return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } catch (error) {
-            Logger.error('List task filters - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('List task filters - Service error, Response: ', error);
         }
     }
 
@@ -60,7 +60,7 @@ export class UserFiltersUtil {
             });
             return chosenTaskFilter;
         } catch (error) {
-            Logger.error('Get user task filters by name - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Get user task filters by name - Service error, Response: ', error);
         }
     }
 
@@ -68,7 +68,7 @@ export class UserFiltersUtil {
         try {
             return this.apiService.getInstance().activiti.userFiltersApi.deleteUserTaskFilter(filterId);
         } catch (error) {
-            Logger.error('Delete a task filter - Service error, Response: ', JSON.parse(JSON.stringify(error)));
+            Logger.error('Delete a task filter - Service error, Response: ', error);
         }
     }
 
@@ -77,7 +77,7 @@ export class UserFiltersUtil {
             return this.apiService.getInstance().activiti.userFiltersApi.updateUserTaskFilter(filterId, new UserTaskFilterRepresentation(
                 {appId: appId, name: updatedTaskFilterName, icon: updatedIconName, filter: {sort: updatedSortType, state: updatedStateType, assignment: updatedAssignmentType}}));
         } catch (error) {
-            Logger.error('Delete a task filter - Service error, Response: ', JSON.parse(JSON.stringify(error))); }
+            Logger.error('Delete a task filter - Service error, Response: ', error);
+        }
     }
-
 }
