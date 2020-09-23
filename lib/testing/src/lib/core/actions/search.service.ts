@@ -67,10 +67,7 @@ export class SearchService {
             },
             "filterQueries": [
                 {
-                    "query": "TYPE:'cm:content'"
-                },
-                {
-                    "query": "TYPE:'cm:folder'"
+                    "query": "TYPE:'cm:folder' OR TYPE:'cm:content'"
                 },
                 {
                     "query": "NOT cm:creator:System"
