@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+import { DateCloudFilterType, RangeKeys } from '../../../models/date-cloud-filter.model';
 
 export class TaskFilterCloudModel  {
     id: string;
@@ -110,11 +110,6 @@ export class TaskFilterAction {
 export interface FilterOptions {
     label?: string;
     value?: string;
-}
-
-export interface RangeKeys {
-    from: string;
-    to: string;
 }
 
 export class TaskFilterProperties {
