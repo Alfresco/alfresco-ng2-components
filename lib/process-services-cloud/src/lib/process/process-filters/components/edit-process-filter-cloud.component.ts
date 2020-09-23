@@ -32,7 +32,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { DateRangeFilter } from '../../../models/date-cloud-filter.model';
+import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
@@ -165,16 +165,20 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
         const properties = processFilterProperties.map((property: ProcessFilterProperties) => {
-            if (!property.rangeKeys) {
-                return { [property.key]: property.value };
+            if (!!property.attributes) {
+                return this.getAttributesControlConfig(property);
             } else {
-                return {
-                    [property.rangeKeys.from]: property.value[property.rangeKeys.from],
-                    [property.rangeKeys.to]: property.value[property.rangeKeys.to]
-                };
+                return { [property.key]: property.value };
             }
         });
         return properties.reduce(((result, current) => Object.assign(result, current)), {});
+    }
+
+    getAttributesControlConfig(property: ProcessFilterProperties) {
+        return Object.values(property.attributes).reduce((result, key) => {
+            result[key] = property.value[key];
+            return result;
+        }, {});
     }
 
     /**
@@ -316,11 +320,15 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
     }
 
+    onDateTypeChange(dateType: DateCloudFilterType, property: ProcessFilterProperties) {
+        this.editProcessFilterForm.get(property.attributes.dateType).setValue(dateType);
+    }
+
     onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
-        this.editProcessFilterForm.get(property.rangeKeys.from).setValue(
+        this.editProcessFilterForm.get(property.attributes?.from).setValue(
             dateRange.startDate ? dateRange.startDate.toISOString() : null
         );
-        this.editProcessFilterForm.get(property.rangeKeys.to).setValue(
+        this.editProcessFilterForm.get(property.attributes?.to).setValue(
             dateRange.endDate ? dateRange.endDate.toISOString() : null
         );
     }
@@ -715,8 +723,12 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
                 key: 'completedDateRange',
-                rangeKeys: { from: 'completedFrom', to: 'completedTo'},
-                value: currentProcessFilter.completedDate || false
+                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
+                value: {
+                    completedDateType: currentProcessFilter.completedDateType || null,
+                    _completedFrom: currentProcessFilter.completedFrom || null,
+                    _completedTo: currentProcessFilter.completedTo || null
+                }
             })
         ];
     }

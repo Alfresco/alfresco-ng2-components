@@ -974,7 +974,8 @@
       "status",
       "sort",
       "order",
-      "processName"
+      "processName",
+      "completedDateRange"
     ],
     "sortProperties": [
       "id",

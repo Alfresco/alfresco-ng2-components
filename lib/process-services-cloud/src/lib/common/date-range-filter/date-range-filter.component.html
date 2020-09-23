@@ -2,9 +2,10 @@
 <mat-form-field [attr.data-automation-id]="processFilterProperty.key">
     <mat-select
         placeholder="{{ processFilterProperty.label | translate }}"
+        [value]="type"
         (selectionChange)="onSelectionChange($event)"
         [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-        <mat-option *ngFor="let propertyOption of filteredProperties" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + processFilterProperty.value">
+        <mat-option *ngFor="let propertyOption of filteredProperties" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + propertyOption.value">
             {{ propertyOption.label | translate }}
         </mat-option>
     </mat-select>

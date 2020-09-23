@@ -14,9 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DateCloudFilterType, RangeKeys } from '../../../models/date-cloud-filter.model';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 
 export class ProcessFilterCloudModel {
+
+    private dateRangeFilterService = new DateRangeFilterService();
+
     id: string;
     name: string;
     key: string;
@@ -39,9 +43,11 @@ export class ProcessFilterCloudModel {
     startedDate: Date;
     startFrom: Date;
     startTo: Date;
-    completedFrom: Date;
-    completedTo: Date;
+    completedDateType: DateCloudFilterType;
     completedDate: Date;
+
+    private _completedFrom: string;
+    private _completedTo: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -67,11 +73,45 @@ export class ProcessFilterCloudModel {
             this.startedDate = obj.startedDate || null;
             this.startFrom = obj.startFrom || null;
             this.startTo = obj.startTo || null;
-            this.completedFrom = obj.completedFrom || null;
-            this.completedTo = obj.completedTo || null;
+            this.completedDateType = obj.completedDateType || null;
+            this.completedFrom = obj._completedFrom || null;
+            this.completedTo = obj._completedTo || null;
             this.completedDate = obj.completedDate || null;
         }
+    }
 
+    set completedFrom(completedFrom: string) {
+        this._completedFrom = completedFrom;
+    }
+
+    set completedTo(completedTo: string) {
+        this._completedTo = completedTo;
+    }
+
+    get completedFrom() {
+        if (this.isDateRangeType(this.completedDateType)) {
+            return this._completedFrom;
+        }
+        return this.getStartDate(this.completedDateType);
+    }
+
+    get completedTo() {
+        if (this.isDateRangeType(this.completedDateType)) {
+            return this._completedTo;
+        }
+        return this.getEndDate(this.completedDateType);
+    }
+
+    private getStartDate(key: DateCloudFilterType) {
+        return this.dateRangeFilterService.getDateRange(key).startDate?.toISOString();
+    }
+
+    private getEndDate(key: DateCloudFilterType) {
+        return this.dateRangeFilterService.getDateRange(key).endDate?.toISOString();
+    }
+
+    private isDateRangeType(type: DateCloudFilterType) {
+        return !!this.dateRangeFilterService.isDateRangeType(type);
     }
 }
 
@@ -99,10 +139,10 @@ export interface ProcessFilterOptions {
 export class ProcessFilterProperties {
     label: string;
     type: string;
-    value: string;
+    value: string | object;
     key: string;
+    attributes: { [key: string]: string; };
     options: ProcessFilterOptions[];
-    rangeKeys?: RangeKeys;
     dateFilterOptions?: DateCloudFilterType[];
 
     constructor(obj?: any) {
@@ -111,9 +151,8 @@ export class ProcessFilterProperties {
             this.type = obj.type || null;
             this.value = obj.value || '';
             this.key = obj.key || null;
-            this.rangeKeys = obj.rangeKeys || null;
+            this.attributes = obj.attributes || null;
             this.options = obj.options || null;
-            this.rangeKeys = obj.rangeKeys || null;
             this.dateFilterOptions = obj.dateFilterOptions || [];
         }
     }
