@@ -29,15 +29,6 @@ import moment from 'moment-es6';
  })
  export class DateRangeFilterComponent {
 
-    defaultRangeOptions = [
-        DateCloudFilterType.TODAY,
-        DateCloudFilterType.WEEK,
-        DateCloudFilterType.MONTH,
-        DateCloudFilterType.QUARTER,
-        DateCloudFilterType.YEAR,
-        DateCloudFilterType.RANGE
-    ];
-
     @Input()
     processFilterProperty: ProcessFilterProperties;
 
@@ -105,6 +96,7 @@ import moment from 'moment-es6';
 
     private createDefaultRangeOptions(): DateCloudFilterType[] {
         return [
+            DateCloudFilterType.NO_DATE,
             DateCloudFilterType.TODAY,
             DateCloudFilterType.WEEK,
             DateCloudFilterType.MONTH,

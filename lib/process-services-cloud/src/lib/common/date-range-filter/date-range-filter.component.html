@@ -5,7 +5,7 @@
         [value]="type"
         (selectionChange)="onSelectionChange($event)"
         [attr.data-automation-id]="'adf-cloud-edit-process-property-' + processFilterProperty.key">
-        <mat-option *ngFor="let propertyOption of filteredProperties" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + propertyOption.value">
+        <mat-option *ngFor="let propertyOption of filteredProperties" [value]="propertyOption.value" [attr.data-automation-id]="'adf-cloud-edit-process-property-options-' + propertyOption.value.toString()">
             {{ propertyOption.label | translate }}
         </mat-option>
     </mat-select>
@@ -20,8 +20,5 @@
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker (closed)="onDateRangeClosed()"></mat-date-range-picker>
-
-        <mat-error *ngIf="dateRangeForm.controls.from.hasError('matStartDateInvalid')">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INDALID_START_DATE' | translate }}</mat-error>
-        <mat-error *ngIf="dateRangeForm.controls.to.hasError('matEndDateInvalid')">{{ 'ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INDALID_END_DATE' | translate }}</mat-error>
     </mat-form-field>
 </ng-container>

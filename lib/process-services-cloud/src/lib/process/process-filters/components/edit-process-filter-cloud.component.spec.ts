@@ -37,6 +37,7 @@ import { PROCESS_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.ser
 import { LocalPreferenceCloudService } from '../../../services/local-preference-cloud.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessCloudService } from '../../services/process-cloud.service';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 
 describe('EditProcessFilterCloudComponent', () => {
     let component: EditProcessFilterCloudComponent;
@@ -443,6 +444,21 @@ describe('EditProcessFilterCloudComponent', () => {
         });
     }));
 
+    it('should get form attributes', async() => {
+        fixture.detectChanges();
+        component.filterProperties = ['appName', 'completedDateRange'];
+        fixture.detectChanges();
+        const processFilterIdChange = new SimpleChange(null, 'mock-process-filter-id', true);
+        component.ngOnChanges({ 'id': processFilterIdChange });
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(component.editProcessFilterForm.get('_completedFrom')).toBeDefined();
+            expect(component.editProcessFilterForm.get('_completedTo')).toBeDefined();
+            expect(component.editProcessFilterForm.get('completedDateType')).toBeDefined();
+        });
+    });
+
     it('should able to build a editProcessFilter form with default properties if input is empty', async(() => {
         fixture.detectChanges();
         component.filterProperties = [];
@@ -762,6 +778,64 @@ describe('EditProcessFilterCloudComponent', () => {
 
             component.filterChange.subscribe(() => {
                 expect(component.changedProcessFilter.lastModifiedTo.toISOString()).toEqual(lastModifiedToFilter.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
+
+        it('should set the correct started date range when date range option is changed', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const startedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
+            const dateFilter = {
+                startFrom: moment().startOf('day').toDate(),
+                startTo: moment().endOf('day').toDate()
+            };
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startFrom.toISOString());
+                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.startTo.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
+
+        it('should update form on date range value is updated', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'completedDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const dateFilter = {
+                startDate: moment().startOf('day').toDate(),
+                endDate: moment().endOf('day').toDate()
+            };
+
+            const startedDateTypeControl: AbstractControl = component.editProcessFilterForm.get('completedDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.RANGE);
+
+            component.onDateRangeFilterChanged(dateFilter, {
+                key: 'completedDateRange',
+                label: '',
+                type: 'date-range',
+                value: '',
+                attributes: {
+                    dateType: 'completedDateType',
+                    from: '_completedFrom',
+                    to: '_completedTo'
+                }
+            });
+
+            fixture.detectChanges();
+            component.filterChange.subscribe(() => {
+                expect(component.changedProcessFilter.completedFrom).toEqual(dateFilter.startDate.toISOString());
+                expect(component.changedProcessFilter.completedTo).toEqual(dateFilter.endDate.toISOString());
                 done();
             });
             component.onFilterChange();

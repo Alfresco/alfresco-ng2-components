@@ -37,6 +37,7 @@ import { fakeFilter } from '../mock/task-filters-cloud.mock';
 import { AbstractControl } from '@angular/forms';
 import moment from 'moment-es6';
 import { TranslateModule } from '@ngx-translate/core';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 
 describe('EditTaskFilterCloudComponent', () => {
     let component: EditTaskFilterCloudComponent;
@@ -467,6 +468,64 @@ describe('EditTaskFilterCloudComponent', () => {
                 expect(appController.value).toBe('mock-app-name');
             });
         }));
+
+        it('should set the correct started date range when date range option is changed', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('dueDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.TODAY);
+            const dateFilter = {
+                startFrom: moment().startOf('day').toDate(),
+                startTo: moment().endOf('day').toDate()
+            };
+
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startFrom.toISOString());
+                expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.startTo.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
+
+        it('should update form on date range value is updated', (done) => {
+            component.appName = 'fake';
+            component.filterProperties = ['appName', 'processInstanceId', 'priority', 'dueDateRange'];
+            const taskFilterIdChange = new SimpleChange(undefined, 'mock-task-filter-id', true);
+            component.ngOnChanges({ 'id': taskFilterIdChange });
+            fixture.detectChanges();
+
+            const dateFilter = {
+                startDate: moment().startOf('day').toDate(),
+                endDate: moment().endOf('day').toDate()
+            };
+
+            const startedDateTypeControl: AbstractControl = component.editTaskFilterForm.get('dueDateType');
+            startedDateTypeControl.setValue(DateCloudFilterType.RANGE);
+
+            component.onDateRangeFilterChanged(dateFilter, {
+                key: 'dueDateRange',
+                label: '',
+                type: 'date-range',
+                value: '',
+                attributes: {
+                    dateType: 'dueDateType',
+                    from: '_dueDateFrom',
+                    to: '_dueDateTo'
+                }
+            });
+
+            fixture.detectChanges();
+            component.filterChange.subscribe(() => {
+                expect(component.changedTaskFilter.dueDateFrom).toEqual(dateFilter.startDate.toISOString());
+                expect(component.changedTaskFilter.dueDateTo).toEqual(dateFilter.endDate.toISOString());
+                done();
+            });
+            component.onFilterChange();
+        });
     });
 
     describe('sort properties', () => {

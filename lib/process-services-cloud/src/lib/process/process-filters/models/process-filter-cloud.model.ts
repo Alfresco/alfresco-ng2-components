@@ -41,13 +41,14 @@ export class ProcessFilterCloudModel {
     lastModifiedTo: Date;
     lastModifiedFrom: Date;
     startedDate: Date;
-    startFrom: Date;
-    startTo: Date;
     completedDateType: DateCloudFilterType;
+    startedDateType: DateCloudFilterType;
     completedDate: Date;
 
     private _completedFrom: string;
     private _completedTo: string;
+    private _startFrom: string;
+    private _startTo: string;
 
     constructor(obj?: any) {
         if (obj) {
@@ -71,9 +72,10 @@ export class ProcessFilterCloudModel {
             this.lastModifiedTo = obj.lastModifiedTo || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.startedDate = obj.startedDate || null;
-            this.startFrom = obj.startFrom || null;
-            this.startTo = obj.startTo || null;
+            this.startFrom = obj._startFrom || null;
+            this.startTo = obj._startTo || null;
             this.completedDateType = obj.completedDateType || null;
+            this.startedDateType = obj.startedDateType || null;
             this.completedFrom = obj._completedFrom || null;
             this.completedTo = obj._completedTo || null;
             this.completedDate = obj.completedDate || null;
@@ -100,6 +102,28 @@ export class ProcessFilterCloudModel {
             return this._completedTo;
         }
         return this.getEndDate(this.completedDateType);
+    }
+
+    set startFrom(startFrom: string) {
+        this._startFrom = startFrom;
+    }
+
+    set startTo(startTo: string) {
+        this._startTo = startTo;
+    }
+
+    get startFrom() {
+        if (this.isDateRangeType(this.startedDateType)) {
+            return this._startFrom;
+        }
+        return this.getStartDate(this.startedDateType);
+    }
+
+    get startTo() {
+        if (this.isDateRangeType(this.startedDateType)) {
+            return this._startTo;
+        }
+        return this.getEndDate(this.startedDateType);
     }
 
     private getStartDate(key: DateCloudFilterType) {
@@ -133,7 +157,7 @@ export class ProcessFilterAction {
 
 export interface ProcessFilterOptions {
     label?: string;
-    value?: string;
+    value?: string | object;
 }
 
 export class ProcessFilterProperties {
@@ -141,8 +165,8 @@ export class ProcessFilterProperties {
     type: string;
     value: string | object;
     key: string;
-    attributes: { [key: string]: string; };
-    options: ProcessFilterOptions[];
+    attributes?: { [key: string]: string; };
+    options?: ProcessFilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
 
     constructor(obj?: any) {
@@ -153,13 +177,13 @@ export class ProcessFilterProperties {
             this.key = obj.key || null;
             this.attributes = obj.attributes || null;
             this.options = obj.options || null;
-            this.dateFilterOptions = obj.dateFilterOptions || [];
+            this.dateFilterOptions = obj.dateFilterOptions || null;
         }
     }
 }
 
 export interface ProcessSortFilterProperties {
     label: string;
-    value: string;
+    value: string | object;
     key: string;
 }

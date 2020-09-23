@@ -167,7 +167,7 @@
       "LAST_MODIFIED_TO": "LastModifiedTo",
       "PROCESS_NAME": "Process Name",
       "APP_VERSION": "AppReleaseVersion",
-      "CREATED_DATE": "Created Date",
+      "STARTED_DATE": "Started Date",
       "COMPLETED_DATE": "Completed Date",
       "DATE_RANGE": {
         "NO_DATE": "No Date",
