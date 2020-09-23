@@ -257,15 +257,32 @@ export class DataTableComponentPage {
         }
     }
 
-    async checkContentIsDisplayed(columnName: string, columnValue: string): Promise<void> {
-        Logger.log(`Wait content is displayed ${columnName} ${columnValue}`);
+    async checkContentIsDisplayed(columnName: string, columnValue: string, retry = 0): Promise<void> {
+        Logger.log(`Wait content is displayed ${columnName} ${columnValue} retry: ${retry}`);
         const row = this.getCellElementByValue(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsVisible(row);
+
+        try {
+            await BrowserVisibility.waitUntilElementIsVisible(row);
+        } catch (error) {
+            if (retry < 3) {
+                retry++;
+                await this.checkContentIsDisplayed(columnName, columnValue, retry);
+            }
+        }
     }
 
-    async checkContentIsNotDisplayed(columnName: string, columnValue: string): Promise<void> {
+    async checkContentIsNotDisplayed(columnName: string, columnValue: string, retry = 0): Promise<void> {
+        Logger.log(`Wait content is displayed ${columnName} ${columnValue} retry: ${retry}`);
         const row = this.getCellElementByValue(columnName, columnValue);
-        await BrowserVisibility.waitUntilElementIsNotVisible(row);
+
+        try {
+            await BrowserVisibility.waitUntilElementIsNotVisible(row);
+        } catch (error) {
+            if (retry < 3) {
+                retry++;
+                await this.checkContentIsNotDisplayed(columnName, columnValue, retry);
+            }
+        }
     }
 
     getRow(columnName: string, columnValue: string): ElementFinder {
@@ -292,11 +309,11 @@ export class DataTableComponentPage {
     async waitTillContentLoaded(): Promise<void> {
         await browser.sleep(500);
 
-        if (this.isSpinnerPresent()) {
+        if (await this.isSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-spinner')));
 
-            if (this.isEmpty()) {
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -304,10 +321,11 @@ export class DataTableComponentPage {
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-spinner')));
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-spinner')), 2000);
             } catch (error) {
             }
-            if (this.isEmpty()) {
+
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -327,6 +345,18 @@ export class DataTableComponentPage {
         return isSpinnerPresent;
     }
 
+    private async isInfiniteSpinnerPresent(): Promise<boolean> {
+        let isSpinnerPresent;
+
+        try {
+            isSpinnerPresent = await element(by.tagName('mat-progress-bar')).isDisplayed();
+        } catch (error) {
+            isSpinnerPresent = false;
+        }
+
+        return isSpinnerPresent;
+    }
+
     private async waitFirstElementPresent(): Promise<void> {
         try {
             Logger.log('wait first element is present');
@@ -339,11 +369,11 @@ export class DataTableComponentPage {
     async waitTillContentLoadedInfinitePagination(): Promise<void> {
         await browser.sleep(500);
 
-        if (this.isSpinnerPresent()) {
+        if (await this.isInfiniteSpinnerPresent()) {
             Logger.log('wait datatable loading spinner disappear');
             await BrowserVisibility.waitUntilElementIsNotVisible(element(by.tagName('mat-progress-bar')));
 
-            if (this.isEmpty()) {
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
@@ -351,15 +381,16 @@ export class DataTableComponentPage {
         } else {
             try {
                 Logger.log('wait datatable loading spinner is present');
-                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')));
+                await BrowserVisibility.waitUntilElementIsVisible(element(by.tagName('mat-progress-bar')), 2000);
             } catch (error) {
             }
-            if (this.isEmpty()) {
+            if (await this.isEmpty()) {
                 Logger.log('empty page');
             } else {
                 await this.waitFirstElementPresent();
             }
-        }    }
+        }
+    }
 
     async checkColumnIsDisplayed(column: string): Promise<void> {
         await BrowserVisibility.waitUntilElementIsVisible(element(by.css(`div[data-automation-id="auto_id_entry.${column}"]`)));
@@ -478,6 +509,8 @@ export class DataTableComponentPage {
     }
 
     async isEmpty(): Promise<boolean> {
+        await browser.sleep(500);
+
         let isDisplayed;
 
         try {
@@ -485,6 +518,9 @@ export class DataTableComponentPage {
         } catch (error) {
             isDisplayed = false;
         }
+
+        Logger.log(`empty page isDisplayed ${isDisplayed}`);
+
         return isDisplayed;
     }
 
