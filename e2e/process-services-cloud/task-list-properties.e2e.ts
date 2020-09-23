@@ -99,6 +99,7 @@ describe('Edit task filters and task list properties', () => {
     });
 
     describe('Edit task filters and task list properties - filter properties', () => {
+
         beforeEach(async () => {
             await navigationBarPage.navigateToProcessServicesCloudPage();
             await appListCloudComponent.checkApsContainer();

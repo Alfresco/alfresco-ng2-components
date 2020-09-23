@@ -60,7 +60,7 @@ function useContext(args: KubeArgs) {
 function getNamespaces(): string [] {
     logger.info('Perform get namespaces name...');
     const result =  exec('kubectl', [`get`, `namespaces`, `-l`, `type=application`, `-o`, `name`], {});
-    const namespaces = result.replace('namespace/', '').split(/\r?\n/);
+    const namespaces = result.replace(/namespace[\/]+/g, '').split(/\r?\n/);
     logger.info(`namespaces found: ${namespaces}`);
     return namespaces;
 }
@@ -127,7 +127,7 @@ function main(args) {
             namespaces = args.namespaces.split(',');
         }
         namespaces.forEach( (namespace) => {
-            logger.info(`Find deployment name based on label and namespace ${namespace}`);
+            logger.info(`Find deployment name based on label ${args.label} and namespace ${namespace}`);
             const deploymentName = getDeploymentName(args, namespace);
             if (deploymentName) {
                 logger.info(`Found ${deploymentName}`);

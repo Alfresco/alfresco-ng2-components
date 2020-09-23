@@ -25,14 +25,14 @@ export class SnackbarPage {
     snackBarAction = element(by.css('simple-snack-bar button span'));
     snackBarContainerCss: Locator = by.css('.mat-snack-bar-container');
 
-    async waitForSnackBarToAppear() {
-        return BrowserVisibility.waitUntilElementIsVisible(element.all(this.snackBarContainerCss).first(), 5000,
+    async waitForSnackBarToAppear(timeout = 5000) {
+        return BrowserVisibility.waitUntilElementIsVisible(element.all(this.snackBarContainerCss).first(), timeout,
             'snackbar did not appear'
         );
     }
 
-    async waitForSnackBarToClose() {
-        return BrowserVisibility.waitUntilElementIsNotVisible(element.all(this.snackBarContainerCss).first(), 5000);
+    async waitForSnackBarToClose(timeout = 5000) {
+        return BrowserVisibility.waitUntilElementIsNotVisible(element.all(this.snackBarContainerCss).first(), timeout);
     }
 
     async getSnackBarMessage(): Promise<string> {
