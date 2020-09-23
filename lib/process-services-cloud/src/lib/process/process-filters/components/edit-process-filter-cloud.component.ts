@@ -25,13 +25,14 @@ import moment from 'moment-es6';
 import { Moment } from 'moment';
 
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
-import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties, DateRangeFilter} from '../models/process-filter-cloud.model';
+import { ProcessFilterCloudModel, ProcessFilterProperties, ProcessFilterAction, ProcessFilterOptions, ProcessSortFilterProperties } from '../models/process-filter-cloud.model';
 import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
 import { ProcessFilterCloudService } from '../services/process-filter-cloud.service';
 import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud.component';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
+import { DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
