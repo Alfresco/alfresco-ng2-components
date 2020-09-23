@@ -202,7 +202,7 @@ describe('Edit task filters and task list properties', () => {
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsNotDisplayedByName(createdTask.entry.name);
         });
 
-        core/pages/data-table-component.page.tit('[C297486] Filter by Owner', async () => {
+        it('[C297486] Filter by Owner', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setStatusFilterDropDown('ALL');
             await tasksCloudDemoPage.editTaskFilterCloudComponent().clearAssignee();
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setOwner(testUser.username);
@@ -215,7 +215,7 @@ describe('Edit task filters and task list properties', () => {
             await expect(await tasksCloudDemoPage.taskListCloudComponent().getNoTasksFoundMessage()).toEqual(noTasksFoundMessage);
         });
 
-        fit('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
+        it('[C297484] Task is displayed when typing into lastModifiedFrom field a date before the task CreatedDate', async () => {
             await tasksCloudDemoPage.editTaskFilterCloudComponent().setLastModifiedFrom(beforeDate);
             await tasksCloudDemoPage.taskListCloudComponent().checkContentIsDisplayedByName(createdTask.entry.name);
 
