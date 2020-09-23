@@ -52,7 +52,9 @@ import moment from 'moment-es6';
         this.options = this.options ? this.options : this.createDefaultRangeOptions();
         const defaultProperties = this.createDefaultDateOptions();
         this.filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterOptions) => this.isValidProperty(this.options, filterProperty));
-        this.setPreselectedValues();
+        if (this.hasPreselectedValues()) {
+            this.setPreselectedValues();
+        }
     }
 
     onSelectionChange(option: MatSelectChange) {
@@ -70,6 +72,10 @@ import moment from 'moment-es6';
             endDate: this.dateRangeForm.controls.to.value
         };
         this.dateChanged.emit(dateRange);
+    }
+
+    private hasPreselectedValues() {
+        return !!this.processFilterProperty?.attributes && !!this.processFilterProperty?.value;
     }
 
     private setPreselectedValues() {

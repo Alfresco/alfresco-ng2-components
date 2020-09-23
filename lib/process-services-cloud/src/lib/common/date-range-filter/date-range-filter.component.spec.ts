@@ -59,6 +59,7 @@ describe('DateRangeFilterComponent', () => {
 
     it('should get on option change', async () => {
         spyOn(service, 'getDateRange');
+        spyOn(component.dateTypeChange, 'emit');
         const stateElement = fixture.debugElement.nativeElement.querySelector('[data-automation-id="adf-cloud-edit-process-property-createdDate"] .mat-select-trigger');
         stateElement.click();
         fixture.detectChanges();
@@ -67,32 +68,27 @@ describe('DateRangeFilterComponent', () => {
         options[2].nativeElement.click();
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(service.getDateRange).toHaveBeenCalled();
+        expect(service.getDateRange).not.toHaveBeenCalled();
+        expect(component.dateTypeChange.emit).toHaveBeenCalled();
     });
 
     it('should reset date range when no_date type is selected', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.NO_DATE };
-        component.onSelectionChange(value);
         const expectedDate = {
             startDate: null,
             endDate: null
         };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
+        expect(service.getDateRange(DateCloudFilterType.NO_DATE)).toEqual(expectedDate);
     });
 
-    it('should emit date range when any type is selected', () => {
-        spyOn(component.dateChanged, 'emit');
-        const value = <MatSelectChange> { value: DateCloudFilterType.TOMORROW };
-        component.onSelectionChange(value);
+    it('should return correct date when any type is selected', () => {
         const expectedDate = {
             startDate: moment().endOf('day').toDate(),
             endDate: moment().add(1, 'days').startOf('day').toDate()
         };
-        expect(component.dateChanged.emit).toHaveBeenCalledWith(expectedDate);
+        expect(service.getDateRange(DateCloudFilterType.TOMORROW)).toEqual(expectedDate);
     });
 
-    it('should not emit any date change events when range type is selected', () => {
+    it('should not emit any date change events when any type is selected', () => {
         spyOn(component.dateChanged, 'emit');
         const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
         component.onSelectionChange(value);
@@ -105,10 +101,6 @@ describe('DateRangeFilterComponent', () => {
         expect(component.dateChanged.emit).toHaveBeenCalled();
     });
 
-    it('should throw error no supported type is selected', () => {
-        expect(function () { service.getDateRange(null); } ).toThrow(new Error('ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INVALID_DATE_FILTER'));
-    });
-
     it('should show date-range picker when type is range', async () => {
         const value = <MatSelectChange> { value: DateCloudFilterType.RANGE };
         component.onSelectionChange(value);
@@ -116,5 +108,30 @@ describe('DateRangeFilterComponent', () => {
         await fixture.whenStable();
         const rangePickerElement = fixture.debugElement.nativeElement.querySelector('.adf-cloud-date-range-picker');
         expect(rangePickerElement).not.toBeNull();
+    });
+
+    it('should preselect values if filterProperty has attribute', () => {
+        const mockFilterProperty = {
+            key: 'createdDate',
+            label: 'mock-filter',
+            value: {
+                createdDateType: DateCloudFilterType.RANGE,
+                _startFrom: new Date().toISOString(),
+                _startTo: new Date().toISOString()
+            },
+            type: 'dateRange',
+            options: null,
+            attributes: {
+                dateType: 'createdDateType',
+                from: '_startFrom',
+                to: '_startTo'
+            }
+        };
+        component.processFilterProperty = mockFilterProperty;
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(component.dateRangeForm.get('from').value).toEqual(moment(mockFilterProperty.value._startFrom));
+        expect(component.dateRangeForm.get('to').value).toEqual(moment(mockFilterProperty.value._startTo));
     });
 });
