@@ -21,6 +21,7 @@ import { PdfThumbListComponent } from './pdf-viewer-thumbnails.component';
 import { setupTestBed } from '../../testing/setup-test-bed';
 import { CoreTestingModule } from '../../testing/core.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { DOWN_ARROW, UP_ARROW, ESCAPE } from '@angular/cdk/keycodes';
 
 declare const pdfjsViewer: any;
 
@@ -41,7 +42,7 @@ describe('PdfThumbListComponent', () => {
         set currentPageNumber(pageNum) {
             this._currentPageNumber = pageNum;
             /* cspell:disable-next-line */
-            this.eventBus.dispatch('pagechange', { pageNumber: pageNum });
+            this.eventBus.dispatch('pagechanging', { pageNumber: pageNum });
         },
         get currentPageNumber() {
             return this._currentPageNumber;
@@ -125,7 +126,7 @@ describe('PdfThumbListComponent', () => {
         expect(renderedIds).toContain(12);
 
         /* cspell:disable-next-line */
-        viewerMock.eventBus.dispatch('pagechange', { pageNumber: 12 });
+        viewerMock.eventBus.dispatch('pagechanging', { pageNumber: 12 });
 
         const newRenderedIds = component.renderItems.map((item) => item.id);
 
@@ -139,10 +140,17 @@ describe('PdfThumbListComponent', () => {
         expect(component.renderItems[component.renderItems.length - 1].id).toBe(6);
         expect(fixture.debugElement.nativeElement.scrollTop).toBe(0);
 
-        viewerMock.currentPageNumber = 6;
+        component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 6 });
 
         expect(component.scrollInto).not.toHaveBeenCalled();
-        expect(fixture.debugElement.nativeElement.scrollTop).toBe(129);
+        expect(fixture.debugElement.nativeElement.scrollTop).toBe(0);
+    });
+
+    it('should set active current page on onPageChange event', () => {
+        fixture.detectChanges();
+        component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 6 });
+
+        expect(document.activeElement.id).toBe('6');
     });
 
     it('should return current viewed page as selected', () => {
@@ -160,5 +168,59 @@ describe('PdfThumbListComponent', () => {
         component.goTo(12);
 
         expect(viewerMock.currentPageNumber).toBe(12);
+    });
+
+    describe('Keyboard events', () => {
+        it('should select next page in the list on DOWN_ARROW event', () => {
+            const event = new KeyboardEvent('keydown', {'keyCode': DOWN_ARROW} as KeyboardEventInit);
+            fixture.detectChanges();
+            component.goTo(1);
+            expect(document.activeElement.id).toBe('1');
+
+            fixture.debugElement.nativeElement.dispatchEvent(event);
+            expect(document.activeElement.id).toBe('2');
+        });
+
+        it('should select previous page in the list on UP_ARROW event', () => {
+            const event = new KeyboardEvent('keydown', {'keyCode': UP_ARROW} as KeyboardEventInit);
+            fixture.detectChanges();
+            component.goTo(2);
+            expect(document.activeElement.id).toBe('2');
+
+            fixture.debugElement.nativeElement.dispatchEvent(event);
+            expect(document.activeElement.id).toBe('1');
+        });
+
+        it('should not select previous page if it is the first page', () => {
+            const event = new KeyboardEvent('keydown', {'keyCode': UP_ARROW} as KeyboardEventInit);
+            fixture.detectChanges();
+            component.goTo(1);
+            expect(document.activeElement.id).toBe('1');
+
+            fixture.debugElement.nativeElement.dispatchEvent(event);
+            expect(document.activeElement.id).toBe('1');
+        });
+
+        it('should not select next item if it is the last page', () => {
+            const event = new KeyboardEvent('keydown', {'keyCode': DOWN_ARROW} as KeyboardEventInit);
+            fixture.detectChanges();
+            component.scrollInto(16);
+            fixture.detectChanges();
+
+            component.pdfViewer.eventBus.dispatch('pagechanging', { pageNumber: 16 });
+            expect(document.activeElement.id).toBe('16');
+
+            fixture.debugElement.nativeElement.dispatchEvent(event);
+            expect(document.activeElement.id).toBe('16');
+        });
+
+        it('should emit on ESCAPE event', () => {
+            const event = new KeyboardEvent('keydown', {'keyCode': ESCAPE} as KeyboardEventInit);
+            spyOn(component.close, 'emit');
+            fixture.detectChanges();
+
+            fixture.debugElement.nativeElement.dispatchEvent(event);
+            expect(component.close.emit).toHaveBeenCalled();
+        });
     });
 });

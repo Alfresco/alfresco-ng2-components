@@ -100,6 +100,8 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
         return Math.round(this.currentScale * 100) + '%';
     }
 
+    private eventBus = new pdfjsViewer.EventBus();
+
     constructor(
         private dialog: MatDialog,
         private renderingQueueServices: RenderingQueueServices,
@@ -200,15 +202,16 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
             this.pdfViewer = new pdfjsViewer.PDFViewer({
                 container: container,
                 viewer: viewer,
-                renderingQueue: this.renderingQueueServices
+                renderingQueue: this.renderingQueueServices,
+                eventBus: this.eventBus
             });
 
             // cspell: disable-next
-            this.pdfViewer.eventBus.on('pagechanging', this.onPageChange);
+            this.eventBus.on('pagechanging', this.onPageChange);
             // cspell: disable-next
-            this.pdfViewer.eventBus.on('pagesloaded', this.onPagesLoaded);
+            this.eventBus.on('pagesloaded', this.onPagesLoaded);
             // cspell: disable-next
-            this.pdfViewer.eventBus.on('textlayerrendered', this.onPageRendered);
+            this.eventBus.on('textlayerrendered', this.onPageRendered);
 
             this.renderingQueueServices.setViewer(this.pdfViewer);
             this.pdfViewer.setDocument(pdfDocument);
@@ -219,11 +222,11 @@ export class PdfViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
         if (this.pdfViewer) {
             // cspell: disable-next
-            this.pdfViewer.eventBus.off('pagechanging');
+            this.eventBus.off('pagechanging');
             // cspell: disable-next
-            this.pdfViewer.eventBus.off('pagesloaded');
+            this.eventBus.off('pagesloaded');
             // cspell: disable-next
-            this.pdfViewer.eventBus.off('textlayerrendered');
+            this.eventBus.off('textlayerrendered');
         }
 
         if (this.loadingTask) {

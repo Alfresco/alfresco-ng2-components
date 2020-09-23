@@ -353,7 +353,8 @@
       "ROTATE_LEFT": "Rotate left",
       "ROTATE_RIGHT": "Rotate right",
       "RESET": "Reset",
-      "THUMBNAILS": "Document thumbnails"
+      "THUMBNAILS": "Document thumbnails",
+      "THUMBNAILS_PANLEL_CLOSE": "Close thumbnails panel"
     },
     "PAGE_LABEL": {
       "SHOWING": "Showing",
