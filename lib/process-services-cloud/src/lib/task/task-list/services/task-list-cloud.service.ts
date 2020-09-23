@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { AlfrescoApiService, AppConfigService, LogService } from '@alfresco/adf-core';
-import { TaskQueryCloudRequestModel, ServiceTaskQueryCloudRequestModel } from '../models/filter-cloud-model';
+import { TaskQueryCloudRequestModel } from '../models/filter-cloud-model';
 import { Observable, throwError } from 'rxjs';
 import { TaskListCloudSortingModel } from '../models/task-list-sorting.model';
 import { BaseCloudService } from '../../../services/base-cloud.service';
@@ -39,26 +39,6 @@ export class TaskListCloudService extends BaseCloudService {
     getTaskByRequest(requestNode: TaskQueryCloudRequestModel): Observable<any> {
         if (requestNode.appName || requestNode.appName === '') {
             const queryUrl = `${this.getBasePath(requestNode.appName)}/query/v1/tasks`;
-            const queryParams = this.buildQueryParams(requestNode);
-            const sortingParams = this.buildSortingParam(requestNode.sorting);
-            if (sortingParams) {
-                queryParams['sort'] = sortingParams;
-            }
-            return this.get(queryUrl, queryParams);
-        } else {
-            this.logService.error('Appname is mandatory for querying task');
-            return throwError('Appname not configured');
-        }
-    }
-
-    /**
-     * Finds a task using an object with optional query properties.
-     * @param requestNode Query object
-     * @returns Task information
-     */
-    getServiceTaskByRequest(requestNode: ServiceTaskQueryCloudRequestModel): Observable<any> {
-        if (requestNode.appName || requestNode.appName === '') {
-            const queryUrl = `${this.getBasePath(requestNode.appName)}/query/admin/v1/service-tasks`;
             const queryParams = this.buildQueryParams(requestNode);
             const sortingParams = this.buildSortingParam(requestNode.sorting);
             if (sortingParams) {

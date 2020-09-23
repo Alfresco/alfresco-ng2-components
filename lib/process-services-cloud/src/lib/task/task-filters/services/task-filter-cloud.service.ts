@@ -18,7 +18,7 @@
 import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
-import { TaskFilterCloudModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -27,8 +27,8 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.servic
     providedIn: 'root'
 })
 export class TaskFilterCloudService {
-    private filtersSubject: BehaviorSubject<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]>;
-    filters$: Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]>;
+    private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
+    filters$: Observable<TaskFilterCloudModel[]>;
 
     constructor(
         private identityUserService: IdentityUserService,
@@ -49,7 +49,9 @@ export class TaskFilterCloudService {
         this.preferenceService.getPreferences(appName, key).pipe(
             switchMap((response: any) => {
                 const preferences = (response && response.list && response.list.entries) ? response.list.entries : [];
-                if (!this.hasPreferences(preferences) || !this.hasTaskFilters(preferences, key)) {
+                if (!this.hasPreferences(preferences)) {
+                    return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
+                } else if (!this.hasTaskFilters(preferences, key)) {
                     return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
                 } else {
                     return of(this.findFiltersByKeyInPreferences(preferences, key));
@@ -89,7 +91,7 @@ export class TaskFilterCloudService {
      * @param filters Details of new task filter
      * @returns Observable of created task filters
      */
-    private createTaskFilters(appName: string, key: string, filters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    private createTaskFilters(appName: string, key: string, filters: TaskFilterCloudModel[]): Observable<TaskFilterCloudModel[]> {
         return this.preferenceService.createPreference(appName, key, filters);
     }
 
@@ -99,7 +101,7 @@ export class TaskFilterCloudService {
      * @param key Key of the task filters
      * @returns Observable of task filters
      */
-    private getTaskFiltersByKey(appName: string, key: string): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    private getTaskFiltersByKey(appName: string, key: string): Observable<TaskFilterCloudModel[]> {
         return this.preferenceService.getPreferenceByKey(appName, key);
     }
 
@@ -108,7 +110,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
-    getTaskListFilters(appName?: string): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    getTaskListFilters(appName?: string): Observable<TaskFilterCloudModel[]> {
         this.createDefaultFilters(appName);
         return this.filters$;
     }
@@ -119,23 +121,23 @@ export class TaskFilterCloudService {
      * @param id ID of the task
      * @returns Details of the task filter
      */
-    getTaskFilterById(appName: string, id: string): Observable<TaskFilterCloudModel | ServiceTaskFilterCloudModel> {
+    getTaskFilterById(appName: string, id: string): Observable<TaskFilterCloudModel> {
         const key: string = this.prepareKey(appName);
         return this.getTaskFiltersByKey(appName, key).pipe(
-            switchMap((filters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]) => {
+            switchMap((filters: TaskFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
                     return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
                 } else {
                     return of(filters);
                 }
             }),
-            map((filters: any) => {
-                return filters.filter((filter: TaskFilterCloudModel | ServiceTaskFilterCloudModel) => {
+            map((filters: TaskFilterCloudModel[]) => {
+                return filters.filter((filter: TaskFilterCloudModel) => {
                     return filter.id === id;
                 })[0];
             }),
             catchError((err) => this.handleTaskError(err))
-        );
+            );
     }
 
     /**
@@ -143,18 +145,18 @@ export class TaskFilterCloudService {
      * @param filter The new filter to add
      * @returns Observable of task instance filters with newly added filter
      */
-    addFilter(newFilter: TaskFilterCloudModel | ServiceTaskFilterCloudModel): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    addFilter(newFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         const key: string = this.prepareKey(newFilter.appName);
         return this.getTaskFiltersByKey(newFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap((filters: TaskFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
-                    return this.createTaskFilters(newFilter.appName, key, <TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> [newFilter]);
+                    return this.createTaskFilters(newFilter.appName, key, [newFilter]);
                 } else {
                     filters.push(newFilter);
                     return this.preferenceService.updatePreference(newFilter.appName, key, filters);
                 }
             }),
-            map((filters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]) => {
+            map((filters: TaskFilterCloudModel[]) => {
                 this.addFiltersToStream(filters);
                 return filters;
             }),
@@ -162,7 +164,7 @@ export class TaskFilterCloudService {
         );
     }
 
-    private addFiltersToStream(filters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]) {
+    private addFiltersToStream(filters: TaskFilterCloudModel[]) {
         this.filtersSubject.next(filters);
     }
 
@@ -171,19 +173,19 @@ export class TaskFilterCloudService {
      * @param filter The filter to update
      * @returns Observable of task instance filters with updated filter
      */
-    updateFilter(updatedFilter: TaskFilterCloudModel | ServiceTaskFilterCloudModel): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    updateFilter(updatedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         const key: string = this.prepareKey(updatedFilter.appName);
         return this.getTaskFiltersByKey(updatedFilter.appName, key).pipe(
             switchMap((filters: any) => {
                 if (filters && filters.length === 0) {
-                    return this.createTaskFilters(updatedFilter.appName, key, <TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> [updatedFilter]);
+                    return this.createTaskFilters(updatedFilter.appName, key, [updatedFilter]);
                 } else {
-                    const itemIndex = filters.findIndex((filter: TaskFilterCloudModel | ServiceTaskFilterCloudModel) => filter.id === updatedFilter.id);
+                    const itemIndex = filters.findIndex((filter: TaskFilterCloudModel) => filter.id === updatedFilter.id);
                     filters[itemIndex] = updatedFilter;
                     return this.updateTaskFilters(updatedFilter.appName, key, filters);
                 }
             }),
-            map((updatedFilters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]) => {
+            map((updatedFilters: TaskFilterCloudModel[]) => {
                 this.addFiltersToStream(updatedFilters);
                 return updatedFilters;
             }),
@@ -196,10 +198,10 @@ export class TaskFilterCloudService {
      * @param filter The filter to delete
      * @returns Observable of task instance filters without deleted filter
      */
-    deleteFilter(deletedFilter: TaskFilterCloudModel | ServiceTaskFilterCloudModel): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    deleteFilter(deletedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
         return this.getTaskFiltersByKey(deletedFilter.appName, key).pipe(
-            switchMap((filters: any) => {
+            switchMap(filters => {
                 if (filters && filters.length > 0) {
                     filters = filters.filter(filter => filter.id !== deletedFilter.id);
                     return this.updateTaskFilters(deletedFilter.appName, key, filters);
@@ -231,7 +233,7 @@ export class TaskFilterCloudService {
      * @param filters Details of update filter
      * @returns Observable of updated task filters
      */
-    private updateTaskFilters(appName: string, key: string, filters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]): Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]> {
+    private updateTaskFilters(appName: string, key: string, filters: TaskFilterCloudModel[]): Observable<TaskFilterCloudModel[]> {
         return this.preferenceService.updatePreference(appName, key, filters);
     }
 
@@ -258,7 +260,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
-    private findFiltersByKeyInPreferences(preferences: any, key: string): TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[] {
+    private findFiltersByKeyInPreferences(preferences: any, key: string): TaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => { return filter.entry.key === key; });
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }

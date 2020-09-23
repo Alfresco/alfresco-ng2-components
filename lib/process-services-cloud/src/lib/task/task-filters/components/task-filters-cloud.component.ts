@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
-import { TaskFilterCloudModel, FilterParamsModel, ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
+import { TaskFilterCloudModel, FilterParamsModel } from '../models/filter-cloud.model';
 import { TranslationService } from '@alfresco/adf-core';
 import { takeUntil } from 'rxjs/operators';
 
@@ -45,7 +45,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     /** Emitted when a filter in the list is clicked. */
     @Output()
-    filterClick: EventEmitter<TaskFilterCloudModel | ServiceTaskFilterCloudModel> = new EventEmitter<TaskFilterCloudModel | ServiceTaskFilterCloudModel>();
+    filterClick: EventEmitter<TaskFilterCloudModel> = new EventEmitter<TaskFilterCloudModel>();
 
     /** Emitted when the list is loaded. */
     @Output()
@@ -55,11 +55,11 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    filters$: Observable<TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]>;
+    filters$: Observable<TaskFilterCloudModel[]>;
 
-    filters: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[] = [];
+    currentFilter: TaskFilterCloudModel;
 
-    currentFilter: TaskFilterCloudModel | ServiceTaskFilterCloudModel;
+    filters: TaskFilterCloudModel [] = [];
 
     private onDestroy$ = new Subject<boolean>();
 
@@ -92,7 +92,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
         this.filters$ = this.taskFilterCloudService.getTaskListFilters(appName);
 
         this.filters$.pipe(takeUntil(this.onDestroy$)).subscribe(
-            (res: TaskFilterCloudModel[] | ServiceTaskFilterCloudModel[]) => {
+            (res: TaskFilterCloudModel[]) => {
                 this.resetFilter();
                 this.filters = Object.assign([], res);
                 this.selectFilterAndEmit(this.filterParam);
@@ -106,7 +106,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
 
     public selectFilter(paramFilter: FilterParamsModel) {
         if (paramFilter) {
-            this.currentFilter = (this.filters as Array<TaskFilterCloudModel | ServiceTaskFilterCloudModel>).find((filter: any, index) =>
+            this.currentFilter = this.filters.find( (filter: TaskFilterCloudModel, index) =>
                 paramFilter.index === index ||
                 paramFilter.key === filter.key ||
                 paramFilter.id === filter.id ||
@@ -137,7 +137,7 @@ export class TaskFiltersCloudComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Return the current task
      */
-    getCurrentFilter(): TaskFilterCloudModel | ServiceTaskFilterCloudModel {
+    getCurrentFilter(): TaskFilterCloudModel {
         return this.currentFilter;
     }
 
