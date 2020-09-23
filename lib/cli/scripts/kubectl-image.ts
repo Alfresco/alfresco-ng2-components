@@ -127,7 +127,7 @@ function main(args) {
             namespaces = args.namespaces.split(',');
         }
         namespaces.forEach( (namespace) => {
-            logger.info(`Find deployment name based on label and namespace ${namespace}`);
+            logger.info(`Find deployment name based on label ${args.label} and namespace ${namespace}`);
             const deploymentName = getDeploymentName(args, namespace);
             if (deploymentName) {
                 logger.info(`Found ${deploymentName}`);
