@@ -96,7 +96,7 @@ export class ProcessFilterProperties {
     key: string;
     options: ProcessFilterOptions[];
     rangeKeys?: RangeKeys;
-    dateFilterOptions: DateCloudFilterType[];
+    dateFilterOptions?: DateCloudFilterType[];
 
     constructor(obj?: any) {
         if (obj) {
