@@ -58,7 +58,9 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
     ngOnInit() {
         if (this.field) {
             this.content = new ContainerWidgetComponentModel(this.field);
-            this.numberOfColumns = this.content?.json?.numberOfColumns || 1;
+            this.numberOfColumns = (this.content.json?.numberOfColumns || 1) > (this.content.columns?.length || 1) ?
+                (this.content.json?.numberOfColumns || 1) :
+                (this.content.columns?.length || 1);
         }
     }
 
@@ -69,12 +71,15 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
         const fields = [];
         const toBeComputed = [];
         const rowspanOffset = [];
+        let size = 0;
         for (let i = 0; i < this.numberOfColumns; i++) {
             toBeComputed.push(this.content.columns[i]?.fields?.length || 0);
             rowspanOffset[i] = 0;
+            size += (this.content.columns[i]?.fields?.length || 0);
         }
 
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < size; i++) {
+            let fieldExist = false;
             let columnIndex = 0;
             while (columnIndex < this.numberOfColumns) {
                 let field;
@@ -84,12 +89,22 @@ export class ContainerWidgetComponent extends WidgetComponent implements OnInit,
                     const rowToCompute = (this.content.columns[columnIndex]?.fields?.length || 0) - toBeComputed[columnIndex];
                     field = this.content.columns[columnIndex]?.fields[rowToCompute];
                     fields.push(field);
+                    if (field) {
+                        fieldExist = true;
+                    }
                     for (let k = 0; k < (field?.colspan || 1); k++) {
                         rowspanOffset[columnIndex + k] = field?.rowspan > 0 ? field?.rowspan - 1 : 0;
                     }
                     toBeComputed[columnIndex] = toBeComputed[columnIndex] - 1;
                 }
                 columnIndex = columnIndex + (field?.colspan || 1);
+            }
+            if (!fieldExist) {
+                // delete last row and exit
+                for (let j = 0; j < this.numberOfColumns; j++) {
+                    fields.pop();
+                }
+                i = size;
             }
         }
         return fields;

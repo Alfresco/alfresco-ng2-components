@@ -103,7 +103,7 @@ describe('ContainerWidgetComponent', () => {
 
     it('should send an event when a value is changed in the form', (done) => {
         const fakeForm = new FormModel();
-        const fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        const fakeField = new FormFieldModel(fakeForm, { id: 'fakeField', value: 'fakeValue' });
         widget.fieldChanged.subscribe((field) => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
@@ -117,27 +117,33 @@ describe('ContainerWidgetComponent', () => {
     describe('fields', () => {
 
         it('should serializes the content fields', () => {
-            const field1 = <FormFieldModel> {id: '1'},
-                field2 = <FormFieldModel> {id: '2'},
-                field3 = <FormFieldModel> {id: '3'},
-                field4 = <FormFieldModel> {id: '4'},
-                field5 = <FormFieldModel> {id: '5'},
-                field6 = <FormFieldModel> {id: '6'};
+            const field1 = <FormFieldModel> { id: '1' },
+                field2 = <FormFieldModel> { id: '2' },
+                field3 = <FormFieldModel> { id: '3' },
+                field4 = <FormFieldModel> { id: '4' },
+                field5 = <FormFieldModel> { id: '5' },
+                field6 = <FormFieldModel> { id: '6' };
 
             const container = new ContainerWidgetComponentModel(new FormFieldModel(new FormModel()));
             container.columns = [
-                <ContainerColumnModel> { fields: [
-                    field1,
-                    field2,
-                    field3
-                ] },
-                <ContainerColumnModel> { fields: [
-                    field4,
-                    field5
-                ] },
-                <ContainerColumnModel> { fields: [
-                    field6
-                ] }
+                <ContainerColumnModel> {
+                    fields: [
+                        field1,
+                        field2,
+                        field3
+                    ]
+                },
+                <ContainerColumnModel> {
+                    fields: [
+                        field4,
+                        field5
+                    ]
+                },
+                <ContainerColumnModel> {
+                    fields: [
+                        field6
+                    ]
+                }
             ];
 
             widget.content = container;
@@ -152,6 +158,99 @@ describe('ContainerWidgetComponent', () => {
             expect(widget.fields[6].id).toEqual('3');
             expect(widget.fields[7]).toEqual(undefined);
             expect(widget.fields[8]).toEqual(undefined);
+        });
+
+        it('should serializes the content fields with rowspan', () => {
+            const form = new FormModel();
+            const json = {
+                id: 'test',
+                name: 'test',
+                type: 'container',
+                tab: null,
+                fields: {
+                    '1': [
+                        {
+                            id: 'a',
+                            colspan: 2,
+                            rowspan: 1
+                        },
+                        {
+                            id: 'b'
+                        },
+                        {
+                            id: 'c'
+                        },
+                        {
+                            id: 'd'
+                        },
+                        {
+                            id: 'e',
+                            colspan: 3
+                        },
+                        {
+                            id: 'f'
+                        },
+                        {
+                            id: 'g'
+                        },
+                        {
+                            id: 'h',
+                            colspan: 2
+                        }
+                    ],
+                    '2': [
+                        {
+                            id: '1',
+                            rowspan: 3
+                        },
+                        {
+                            id: '2',
+                            rowspan: 2,
+                            colspan: 2
+                        },
+                        {
+                            id: '3'
+                        }
+                    ],
+                    '3': [
+                        {
+                            id: 'white'
+                        },
+                        {
+                            id: 'black'
+                        },
+                        {
+                            id: 'green',
+                            rowspan: 2
+                        },
+                        {
+                            id: 'yellow'
+                        }
+                    ]
+                }
+            };
+            const field = new FormFieldModel(form, json);
+            widget.field = field;
+            widget.ngOnInit();
+
+            expect(widget.fields.length).toEqual(17);
+            expect(widget.fields[0].id).toEqual('a');
+            expect(widget.fields[1].id).toEqual('white');
+            expect(widget.fields[2].id).toEqual('b');
+            expect(widget.fields[3].id).toEqual('1');
+            expect(widget.fields[4].id).toEqual('black');
+            expect(widget.fields[5].id).toEqual('c');
+            expect(widget.fields[6].id).toEqual('green');
+            expect(widget.fields[7].id).toEqual('d');
+            expect(widget.fields[8].id).toEqual('e');
+            expect(widget.fields[9].id).toEqual('f');
+            expect(widget.fields[10].id).toEqual('2');
+            expect(widget.fields[11].id).toEqual('g');
+            expect(widget.fields[12].id).toEqual('h');
+            expect(widget.fields[13].id).toEqual('yellow');
+            expect(widget.fields[14]).toEqual(undefined);
+            expect(widget.fields[15].id).toEqual('3');
+            expect(widget.fields[16]).toEqual(undefined);
         });
     });
 

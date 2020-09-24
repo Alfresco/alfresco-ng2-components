@@ -152,6 +152,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.restIdProperty = json.restIdProperty;
             this.restLabelProperty = json.restLabelProperty;
             this.colspan = <number> json.colspan;
+            this.rowspan = <number> json.rowspan;
             this.minLength = <number> json.minLength || 0;
             this.maxLength = <number> json.maxLength || 0;
             this.minValue = json.minValue;
