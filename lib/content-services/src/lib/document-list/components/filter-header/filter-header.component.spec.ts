@@ -62,7 +62,7 @@ describe('FilterHeaderComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(FilterHeaderComponent);
         component = fixture.componentInstance;
-        queryBuilder = fixture.componentInstance['searchHeaderQueryBuilder'];
+        queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
     });
 
     afterEach(() => {

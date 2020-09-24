@@ -25,8 +25,9 @@ import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 import { By } from '@angular/platform-browser';
 import { SearchFilterContainerComponent } from './search-filter-container.component';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { SearchCategory } from '../../search-category.interface';
 
-const mockCategory: any = {
+const mockCategory: SearchCategory = {
     'id': 'queryName',
     'name': 'Name',
     'columnKey': 'name',
@@ -66,7 +67,7 @@ describe('SearchFilterContainerComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SearchFilterContainerComponent);
         component = fixture.componentInstance;
-        queryBuilder = fixture.componentInstance['searchHeaderQueryBuilder'];
+        queryBuilder = fixture.componentInstance['searchFilterQueryBuilder'];
         alfrescoApiService = TestBed.inject(AlfrescoApiService);
         component.col = {key: '123', type: 'text'};
         spyOn(queryBuilder, 'getCategoryForColumn').and.returnValue(mockCategory);
@@ -78,6 +79,8 @@ describe('SearchFilterContainerComponent', () => {
     });
 
     it('should show the filter when a category is found', async () => {
+        await fixture.whenStable();
+        fixture.detectChanges();
         expect(queryBuilder.isFilterServiceActive()).toBe(true);
         const element = fixture.nativeElement.querySelector('.adf-filter');
         expect(element).not.toBeNull();
