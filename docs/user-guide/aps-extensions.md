@@ -1,3 +1,8 @@
+---
+Title: Form Extensibility for APS Stencil
+Added: v1.9.0
+---
+
 ## Form Extensibility for APS Stencil
 This page describes how you can customize ADF forms to your own specification.
 
