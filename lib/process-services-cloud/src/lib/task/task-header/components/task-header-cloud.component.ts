@@ -319,7 +319,7 @@ export class TaskHeaderCloudComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     isAssigneePropertyClickable(): boolean {
-        return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, this.candidateGroups);
+        return this.taskCloudService.isAssigneePropertyClickable(this.taskDetails, this.candidateUsers, []);
     }
 
     private isValidSelection(filteredProperties: string[], cardItem: CardViewBaseItemModel): boolean {

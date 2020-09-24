@@ -19,7 +19,7 @@ import { TaskHeaderCloudComponent } from './task-header-cloud.component';
 import { of, throwError } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { setupTestBed, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { setupTestBed, AppConfigService, AlfrescoApiService, CardViewArrayItem } from '@alfresco/adf-core';
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TaskCloudService } from '../../services/task-cloud.service';
 import { TaskHeaderCloudModule } from '../task-header-cloud.module';
@@ -216,6 +216,17 @@ describe('TaskHeaderCloudComponent', () => {
             const loading = fixture.debugElement.query(By.css('.adf-task-header-loading'));
             expect(loading).toBeTruthy();
         });
+
+        it('should not render edit icon if the task in assigned state and assingned user is different from current logged-in user', () => {
+            isTaskEditableSpy.and.returnValue(false);
+            fixture.detectChanges();
+            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
+            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
+            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
+            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
+            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
+        });
     });
 
     describe('Task with parentTaskId', () => {
@@ -268,7 +279,7 @@ describe('TaskHeaderCloudComponent', () => {
             expect(statusEl.nativeElement.value).toBe('ASSIGNED');
         });
 
-        it('should render defined edit icon for assignee property if the task in assigned state and shared among candidates', async () => {
+        it('should render defined edit icon for assignee property if the task in assigned state and shared among candidate users', async () => {
             fixture.detectChanges();
             await fixture.whenStable();
             const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
@@ -276,9 +287,31 @@ describe('TaskHeaderCloudComponent', () => {
             expect(value.nativeElement.innerText).toBe('create');
         });
 
-        it('should not render defined edit icon for assignee property if the task in created state and shared among condidates', async () => {
+        it('should not render defined edit icon for assignee property if the task in created state and shared among condidate users', async () => {
             getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
 
+            component.ngOnChanges();
+            fixture.detectChanges();
+            await fixture.whenStable();
+
+            const editIcon = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(editIcon).toBeNull();
+        });
+
+        it('should not render defined edit icon for assignee property if the task in assigned state and shared among candidate groups', async () => {
+            component.candidateGroups = <CardViewArrayItem[]> [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
+            component.candidateUsers = [];
+            fixture.detectChanges();
+            await fixture.whenStable();
+            const value = fixture.debugElement.query(By.css(`[data-automation-id="header-assignee"] [data-automation-id="card-textitem-clickable-icon-assignee"]`));
+            expect(value).not.toBeNull();
+            expect(value.nativeElement.innerText).toBe('create');
+        });
+
+        it('should not render defined edit icon for assignee property if the task in created state and shared among condidate groups', async () => {
+            getTaskByIdSpy.and.returnValue(of(createdTaskDetailsCloudMock));
+            component.candidateGroups = <CardViewArrayItem[]> [{ value: 'mock-group-1', icon: 'edit' }, { value: 'mock-group-2', icon: 'edit' }];
+            component.candidateUsers = [];
             component.ngOnChanges();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -303,17 +336,6 @@ describe('TaskHeaderCloudComponent', () => {
 
             const value = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-clickable-icon-assignee"]`));
             expect(value).toBeNull('Edit icon should NOT be shown');
-        });
-
-        it('should not render edit icon if the task in assigned state and assingned user is different from current logged-in user', () => {
-            isTaskEditableSpy.and.returnValue(false);
-            fixture.detectChanges();
-            const priorityEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-priority"]`));
-            const descriptionEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="card-textitem-edit-icon-description"]`));
-            const dueDateEditIcon = fixture.debugElement.query(By.css(`[data-automation-id="datepickertoggle-dueDate"]`));
-            expect(priorityEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(descriptionEditIcon).toBeNull('Edit icon should NOT be shown');
-            expect(dueDateEditIcon).toBeNull('Edit icon should NOT be shown');
         });
     });
 
