@@ -59,7 +59,7 @@ export class LoginPage {
         const authType = await LocalStorageUtil.getConfigField('authType');
         const oauth: any = await LocalStorageUtil.getConfigField('oauth2');
 
-        if ((!authType || authType === 'OAUTH') && oauth.implicitFlow) {
+        if ((!authType || authType === 'OAUTH') && oauth?.implicitFlow) {
             await this.loginSSOIdentityService(username, password);
         } else {
             await this.loginBasicAuth(username, password);

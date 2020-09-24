@@ -20,6 +20,7 @@ import { BrowserVisibility } from '../../core/utils/browser-visibility';
 import { BrowserActions } from '../../core/utils/browser-actions';
 import { DropdownPage } from '../../core/pages/material/dropdown.page';
 import { FormFields } from '../../core/pages/form/form-fields';
+import { Logger } from '../../core/utils/logger';
 
 export class StartProcessPage {
 
@@ -64,9 +65,17 @@ export class StartProcessPage {
         await BrowserActions.clearSendKeys(this.processNameInput, name);
     }
 
-    async selectFromProcessDropdown(name): Promise<void> {
-        await this.clickProcessDropdownArrow();
-        await this.selectProcessOption(name);
+    async selectFromProcessDropdown(name: string, retry = 0): Promise<void> {
+        Logger.log(`select Process Dropdown retry: ${retry}`);
+        try {
+            await this.clickProcessDropdownArrow();
+            await this.selectProcessOption(name);
+        } catch (error) {
+            if (retry < 3) {
+                retry++;
+                await this.selectFromProcessDropdown(name, retry);
+            }
+        }
     }
 
     async selectFromApplicationDropdown(name): Promise<void> {
