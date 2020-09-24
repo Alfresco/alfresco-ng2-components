@@ -32,7 +32,7 @@ import { ProcessFilterDialogCloudComponent } from './process-filter-dialog-cloud
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { ProcessCloudService } from '../../services/process-cloud.service';
 import { ProcessDefinitionCloud } from '../../../models/process-definition-cloud.model';
-import { DateRangeFilter } from '../../../models/date-cloud-filter.model';
+import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
 
 @Component({
     selector: 'adf-cloud-edit-process-filter',
@@ -165,16 +165,20 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     getFormControlsConfig(processFilterProperties: ProcessFilterProperties[]): any {
         const properties = processFilterProperties.map((property: ProcessFilterProperties) => {
-            if (!property.rangeKeys) {
-                return { [property.key]: property.value };
+            if (!!property.attributes) {
+                return this.getAttributesControlConfig(property);
             } else {
-                return {
-                    [property.rangeKeys.from]: property.value[property.rangeKeys.from],
-                    [property.rangeKeys.to]: property.value[property.rangeKeys.to]
-                };
+                return { [property.key]: property.value };
             }
         });
         return properties.reduce(((result, current) => Object.assign(result, current)), {});
+    }
+
+    private getAttributesControlConfig(property: ProcessFilterProperties) {
+        return Object.values(property.attributes).reduce((result, key) => {
+            result[key] = property.value[key];
+            return result;
+        }, {});
     }
 
     /**
@@ -316,6 +320,19 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
         }
     }
 
+    onDateTypeChange(dateType: DateCloudFilterType, property: ProcessFilterProperties) {
+        this.editProcessFilterForm.get(property.attributes.dateType).setValue(dateType);
+    }
+
+    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
+        this.editProcessFilterForm.get(property.attributes?.from).setValue(
+            dateRange.startDate ? dateRange.startDate.toISOString() : null
+        );
+        this.editProcessFilterForm.get(property.attributes?.to).setValue(
+            dateRange.endDate ? dateRange.endDate.toISOString() : null
+        );
+    }
+
     hasError(property: ProcessFilterProperties): boolean {
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }
@@ -453,15 +470,6 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
 
     onClose() {
         this.toggleFilterActions = false;
-    }
-
-    onDateRangeFilterChanged(dateRange: DateRangeFilter, property: ProcessFilterProperties) {
-        this.editProcessFilterForm.get(property.rangeKeys.from).setValue(
-            dateRange.startDate ? dateRange.startDate.toISOString() : null
-        );
-        this.editProcessFilterForm.get(property.rangeKeys.to).setValue(
-            dateRange.endDate ? dateRange.endDate.toISOString() : null
-        );
     }
 
     isDateType(property: ProcessFilterProperties): boolean {
@@ -606,6 +614,11 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 value: 'processDefinitionId'
             },
             {
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_NAME',
+                key: 'processDefinitionName',
+                value: 'processDefinitionName'
+            },
+            {
                 label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.PROCESS_DEF_KEY',
                 key: 'processDefinitionKey',
                 value: 'processDefinitionKey'
@@ -697,13 +710,31 @@ export class EditProcessFilterCloudComponent implements OnInit, OnChanges, OnDes
                 options: this.directions
             }),
             new ProcessFilterProperties({
-                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.START_DATE',
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',
+                type: 'date',
+                key: 'completedDate',
+                value: currentProcessFilter.completedDate || false
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.COMPLETED_DATE',
                 type: 'date-range',
-                key: 'startDateRange',
-                rangeKeys: { from: 'startFrom', to: 'startTo'},
-                values: {
-                    from: currentProcessFilter.startFrom || null,
-                    to: currentProcessFilter.startTo || null
+                key: 'completedDateRange',
+                attributes: { dateType: 'completedDateType', from: '_completedFrom', to: '_completedTo'},
+                value: {
+                    completedDateType: currentProcessFilter.completedDateType || null,
+                    _completedFrom: currentProcessFilter.completedFrom || null,
+                    _completedTo: currentProcessFilter.completedTo || null
+                }
+            }),
+            new ProcessFilterProperties({
+                label: 'ADF_CLOUD_EDIT_PROCESS_FILTER.LABEL.STARTED_DATE',
+                type: 'date-range',
+                key: 'startedDateRange',
+                attributes: { dateType: 'startedDateType', from: '_startFrom', to: '_startTo'},
+                value: {
+                    startedDateType: currentProcessFilter.startedDateType || null,
+                    _startFrom: currentProcessFilter.startFrom || null,
+                    _startTo: currentProcessFilter.startTo || null
                 }
             })
         ];

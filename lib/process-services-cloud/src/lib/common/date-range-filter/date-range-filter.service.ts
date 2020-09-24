@@ -35,10 +35,12 @@ export class DateRangeFilterService {
             case DateCloudFilterType.MONTH: return this.getCurrentMonthDateRange();
             case DateCloudFilterType.QUARTER: return this.getQuarterDateRange();
             case DateCloudFilterType.YEAR: return this.getCurrentYearDateRange();
-            case DateCloudFilterType.RANGE: return this.resetDateRange();
-            case DateCloudFilterType.NO_DATE: return this.resetDateRange();
-            default: throw new Error('ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INVALID_DATE_FILTER');
+            default: return this.resetDateRange();
         }
+    }
+
+    isDateRangeType(type: DateCloudFilterType) {
+        return type === DateCloudFilterType.RANGE;
     }
 
     private resetDateRange(): DateRangeFilter {

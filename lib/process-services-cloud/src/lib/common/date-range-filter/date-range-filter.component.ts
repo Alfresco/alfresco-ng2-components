@@ -19,18 +19,8 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { ProcessFilterProperties, ProcessFilterOptions } from '../../process/process-filters/models/process-filter-cloud.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DateRangeFilterService } from './date-range-filter.service';
 import { DateRangeFilter, DateCloudFilterType } from '../../models/date-cloud-filter.model';
-
-const DEFAULT_DATE_RANGE_OPTIONS = [
-    DateCloudFilterType.NO_DATE,
-    DateCloudFilterType.TODAY,
-    DateCloudFilterType.WEEK,
-    DateCloudFilterType.MONTH,
-    DateCloudFilterType.QUARTER,
-    DateCloudFilterType.YEAR,
-    DateCloudFilterType.RANGE
-];
+import moment from 'moment-es6';
 
 @Component({
      selector: 'adf-cloud-date-range-filter',
@@ -43,10 +33,13 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
     processFilterProperty: ProcessFilterProperties;
 
     @Input()
-    options: DateCloudFilterType[] = DEFAULT_DATE_RANGE_OPTIONS;
+    options: DateCloudFilterType[];
 
     @Output()
     dateChanged = new EventEmitter<DateRangeFilter>();
+
+    @Output()
+    dateTypeChange = new EventEmitter<DateCloudFilterType>();
 
     type: DateCloudFilterType;
     filteredProperties: ProcessFilterOptions[] = [];
@@ -55,19 +48,18 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
         to: new FormControl()
     });
 
-    constructor(private dateRangeFilterService: DateRangeFilterService) {}
-
     ngOnInit() {
+        this.options = this.options ? this.options : this.createDefaultRangeOptions();
         const defaultProperties = this.createDefaultDateOptions();
         this.filteredProperties = defaultProperties.filter((filterProperty: ProcessFilterOptions) => this.isValidProperty(this.options, filterProperty));
+        if (this.hasPreselectedValues()) {
+            this.setPreselectedValues();
+        }
     }
 
     onSelectionChange(option: MatSelectChange) {
         this.type = option.value;
-        const dateRange = this.dateRangeFilterService.getDateRange(this.type);
-        if (!this.isDateRangeType()) {
-            this.dateChanged.emit(dateRange);
-        }
+        this.dateTypeChange.emit(this.type);
     }
 
     isDateRangeType(): boolean {
@@ -82,8 +74,42 @@ const DEFAULT_DATE_RANGE_OPTIONS = [
         this.dateChanged.emit(dateRange);
     }
 
+    private hasPreselectedValues() {
+        return !!this.processFilterProperty?.attributes && !!this.processFilterProperty?.value;
+    }
+
+    private setPreselectedValues() {
+        const from = this.getFilterAttribute('from');
+        const to = this.getFilterAttribute('to');
+        const type = this.getFilterAttribute('dateType');
+
+        this.dateRangeForm.get('from').setValue(moment(this.getFilterValue(from)));
+        this.dateRangeForm.get('to').setValue(moment(this.getFilterValue(to)));
+        this.type = this.getFilterValue(type);
+    }
+
+    private getFilterAttribute(key: string): string {
+        return this.processFilterProperty.attributes[key];
+    }
+
+    private getFilterValue(attribute: string) {
+        return this.processFilterProperty.value[attribute];
+    }
+
     private isValidProperty(filterProperties: string[], filterProperty: any): boolean {
         return filterProperties ? filterProperties.indexOf(filterProperty.value) >= 0 : true;
+    }
+
+    private createDefaultRangeOptions(): DateCloudFilterType[] {
+        return [
+            DateCloudFilterType.NO_DATE,
+            DateCloudFilterType.TODAY,
+            DateCloudFilterType.WEEK,
+            DateCloudFilterType.MONTH,
+            DateCloudFilterType.QUARTER,
+            DateCloudFilterType.YEAR,
+            DateCloudFilterType.RANGE
+        ];
     }
 
     private createDefaultDateOptions(): ProcessFilterOptions[] {

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { DateCloudFilterType, RangeKeys } from '../../../models/date-cloud-filter.model';
+import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
+import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
 
 export class TaskFilterCloudModel  {
     id: string;
@@ -33,9 +34,8 @@ export class TaskFilterCloudModel  {
     processDefinitionId: string;
     processInstanceId: string;
     createdDate: Date;
+    dueDateType: DateCloudFilterType;
     dueDate: Date;
-    dueDateFrom: string;
-    dueDateTo: string;
     taskName: string;
     taskId: string;
     parentTaskId: string;
@@ -43,6 +43,10 @@ export class TaskFilterCloudModel  {
     standalone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
+
+    private _dueDateFrom: string;
+    private _dueDateTo: string;
+    private dateRangeFilterService = new DateRangeFilterService();
 
     constructor(obj?: any) {
         if (obj) {
@@ -61,9 +65,10 @@ export class TaskFilterCloudModel  {
             this.processDefinitionId = obj.processDefinitionId || null;
             this.processInstanceId = obj.processInstanceId || null;
             this.createdDate = obj.createdDate || null;
+            this.dueDateType = obj.dueDateType || null;
             this.dueDate = obj.dueDate || null;
-            this.dueDateFrom = obj.dueDateFrom || null;
-            this.dueDateTo = obj.dueDateTo || null;
+            this._dueDateFrom = obj._dueDateFrom || null;
+            this._dueDateTo = obj._dueDateTo || null;
             this.taskName = obj.taskName || null;
             this.taskId = obj.taskId || null;
             this.parentTaskId = obj.parentTaskId || null;
@@ -72,6 +77,40 @@ export class TaskFilterCloudModel  {
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
         }
+    }
+
+    set dueDateFrom(dueDateFrom: string) {
+        this._dueDateFrom = dueDateFrom;
+    }
+
+    set dueDateTo(dueDateTo: string) {
+        this._dueDateTo = dueDateTo;
+    }
+
+    get dueDateFrom() {
+        if (this.isDateRangeType(this.dueDateType)) {
+            return this._dueDateFrom;
+        }
+        return this.getStartDate(this.dueDateType);
+    }
+
+    get dueDateTo() {
+        if (this.isDateRangeType(this.dueDateType)) {
+            return this._dueDateTo;
+        }
+        return this.getEndDate(this.dueDateType);
+    }
+
+    private getStartDate(key: DateCloudFilterType) {
+        return this.dateRangeFilterService.getDateRange(key).startDate?.toISOString();
+    }
+
+    private getEndDate(key: DateCloudFilterType) {
+        return this.dateRangeFilterService.getDateRange(key).endDate?.toISOString();
+    }
+
+    private isDateRangeType(type: DateCloudFilterType) {
+        return !!this.dateRangeFilterService.isDateRangeType(type);
     }
 }
 export class FilterParamsModel {
@@ -117,8 +156,8 @@ export class TaskFilterProperties {
     type: string;
     value: any;
     key: string;
-    rangeKeys?: RangeKeys;
-    options: FilterOptions[];
+    attributes?: { [key: string]: string; };
+    options?: FilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
 
     constructor(obj?: any) {
@@ -127,7 +166,7 @@ export class TaskFilterProperties {
             this.type = obj.type || null;
             this.value = obj.value || '';
             this.key = obj.key || null;
-            this.rangeKeys = obj.rangeKeys || null;
+            this.attributes = obj.attributes || null;
             this.options = obj.options || null;
             this.dateFilterOptions = obj.dateFilterOptions || null;
         }

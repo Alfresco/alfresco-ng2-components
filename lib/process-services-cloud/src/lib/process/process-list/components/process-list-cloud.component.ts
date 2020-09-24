@@ -99,6 +99,18 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
     @Input()
     startTo: string = '';
 
+    /** Filter the processes. Display only process with completedFrom equal to the supplied date. */
+    @Input()
+    completedFrom: string = '';
+
+    /** Filter the processes. Display only process with completedTo equal to the supplied date. */
+    @Input()
+    completedTo: string = '';
+
+    /** Filter the processes. Display only process with completedDate equal to the supplied date. */
+    @Input()
+    completedDate: string = '';
+
     /**
      * Row selection mode. Can be "none", "single" or "multiple".
      * For multiple mode, you can use Cmd (macOS) or Ctrl (Win) modifier
@@ -328,6 +340,9 @@ export class ProcessListCloudComponent extends DataTableSchema implements OnChan
             lastModifiedTo: this.lastModifiedTo,
             startFrom: this.startFrom,
             startTo: this.startTo,
+            completedFrom: this.completedFrom,
+            completedTo: this.completedTo,
+            completedDate: this.completedDate,
             sorting: this.sorting
         };
         return new ProcessQueryCloudRequestModel(requestNode);

@@ -24,6 +24,7 @@ import { LocalPreferenceCloudService } from '../../../services/local-preference-
 import { ProcessServiceCloudTestingModule } from '../../../testing/process-service-cloud.testing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProcessFilterCloudModel } from '../models/process-filter-cloud.model';
+import { DateCloudFilterType } from 'process-services-cloud/src/lib/models/date-cloud-filter.model';
 
 describe('ProcessFilterCloudService', () => {
     let service: ProcessFilterCloudService;
@@ -40,7 +41,7 @@ describe('ProcessFilterCloudService', () => {
         email: 'fakeIdentity@email.com'
     };
 
-    const fakeProcessFilter: ProcessFilterCloudModel = {
+    const fakeProcessFilter: ProcessFilterCloudModel = new ProcessFilterCloudModel({
         name: 'MOCK_PROCESS_NAME_1',
         id: '1',
         key: 'all-mock-process',
@@ -59,10 +60,14 @@ describe('ProcessFilterCloudService', () => {
         lastModified: null,
         lastModifiedTo: null,
         lastModifiedFrom: null,
+        completedDateType: DateCloudFilterType.NO_DATE,
+        startedDateType: DateCloudFilterType.NO_DATE,
+        _completedFrom: null,
+        _completedTo: null,
         startedDate: null,
-        startFrom: null,
-        startTo: null
-    };
+        _startFrom: null,
+        _startTo: null
+    });
 
     const fakeProcessCloudFilterEntries = {
         list: {
