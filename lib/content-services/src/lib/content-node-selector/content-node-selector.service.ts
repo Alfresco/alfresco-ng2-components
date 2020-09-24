@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AppConfigService } from '@alfresco/adf-core';
-import { Injectable } from '@angular/core';
-import { BaseQueryBuilderService } from '../search/base-query-builder.service';
+import { Inject, Injectable } from '@angular/core';
 import { QueryBody } from '@alfresco/js-api';
+import { SEARCH_QUERY_SERVICE_TOKEN, SearchQueryBuilderService } from '../search';
 
 /**
  * Internal service used by ContentNodeSelector component.
@@ -26,20 +25,11 @@ import { QueryBody } from '@alfresco/js-api';
 @Injectable({
     providedIn: 'root'
 })
-export class ContentNodeSelectorService extends BaseQueryBuilderService {
+export class ContentNodeSelectorService {
 
     query: QueryBody;
 
-    constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
-        super(appConfig, alfrescoApiService);
-    }
-
-    public isFilterServiceActive(): boolean {
-        return true;
-    }
-
-    loadConfiguration(): any {
-        return [];
+    constructor(@Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilderService: SearchQueryBuilderService) {
     }
 
     /**
@@ -56,7 +46,7 @@ export class ContentNodeSelectorService extends BaseQueryBuilderService {
      */
     public searchByContent(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean) {
         this.query = this.createQuery(searchTerm, rootNodeId, skipCount, maxItems, extraNodeIds, showFiles);
-        this.execute();
+        this.queryBuilderService.execute(this.query);
     }
 
     createQuery(searchTerm: string, rootNodeId: string = null, skipCount: number = 0, maxItems: number = 25, extraNodeIds?: string[], showFiles?: boolean): QueryBody {
@@ -89,9 +79,4 @@ export class ContentNodeSelectorService extends BaseQueryBuilderService {
         };
 
     }
-
-    buildQuery(): QueryBody {
-        return this.query;
-    }
-
 }

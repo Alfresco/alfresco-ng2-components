@@ -58,8 +58,7 @@ export const defaultValidation = () => true;
     styleUrls: ['./content-node-selector-panel.component.scss'],
     templateUrl: './content-node-selector-panel.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-node-selector-panel' },
-    providers: [ { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }]
+    host: { 'class': 'adf-content-node-selector-panel' }
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
@@ -265,12 +264,6 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
                 takeUntil(this.onDestroy$)
             )
             .subscribe(searchValue => this.search(searchValue));
-
-        this.contentNodeSelectorService.executed
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((results: NodePaging) => {
-                this.showSearchResults(results);
-            });
 
         this.queryBuilderService.executed
             .pipe(takeUntil(this.onDestroy$))
