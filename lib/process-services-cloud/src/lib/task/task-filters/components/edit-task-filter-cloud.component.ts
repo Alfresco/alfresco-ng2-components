@@ -354,9 +354,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
     }
 
     onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
-        if (users.length > 0) {
-            this.getPropertyController(userProperty).setValue(users[0].username);
-        }
+        this.getPropertyController(userProperty).setValue(users[0]?.username);
     }
 
     hasError(property: TaskFilterProperties): boolean {

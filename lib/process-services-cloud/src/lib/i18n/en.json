@@ -11,6 +11,7 @@
       "STATUS": "Status",
       "START_DATE": "Start Date",
       "COMPLETED_DATE": "Completed Date",
+      "COMPLETED_BY": "Completed By",
       "ID": "Id",
       "INITIATOR": "Initiator",
       "APP_NAME": "Application Name",
