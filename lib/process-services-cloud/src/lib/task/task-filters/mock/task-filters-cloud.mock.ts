@@ -44,6 +44,30 @@ export let fakeGlobalFilter = [
     })
 ];
 
+export let fakeGlobalServiceFilters = [
+    new ServiceTaskFilterCloudModel({
+        name: 'FakeServiceTasks',
+        key: 'fake-involved-tasks',
+        icon: 'adjust',
+        id: 10,
+        status: 'open'
+    }),
+    new ServiceTaskFilterCloudModel({
+        name: 'FakeMyServiceTasks1',
+        key: 'fake-my-tast1',
+        icon: 'done',
+        id: 11,
+        status: 'open'
+    }),
+    new ServiceTaskFilterCloudModel({
+        name: 'FakeMyServiceTasks2',
+        key: 'fake-my-tast2',
+        icon: 'inbox',
+        id: 12,
+        status: 'open'
+    })
+];
+
 export let fakeFilter = new TaskFilterCloudModel({
     name: 'FakeInvolvedTasks',
     icon: 'adjust',
@@ -60,7 +84,7 @@ export let fakeServiceFilter = new ServiceTaskFilterCloudModel({
     name: 'FakeInvolvedTasks',
     icon: 'adjust',
     id: 'mock-task-filter-id',
-    status: 'CREATED',
+    status: 'COMPLETED',
     appName: 'mock-app-name',
     processDefinitionId: 'process-def-id',
     activityName: 'fake-activity',

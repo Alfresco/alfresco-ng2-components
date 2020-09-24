@@ -18,7 +18,7 @@
 import { IdentityUserService } from '@alfresco/adf-core';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
-import { TaskFilterCloudModel } from '../models/filter-cloud.model';
+import { ServiceTaskFilterCloudModel } from '../models/filter-cloud.model';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { PreferenceCloudServiceInterface } from '../../../services/preference-cloud.interface';
 import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.service';
@@ -26,9 +26,9 @@ import { TASK_FILTERS_SERVICE_TOKEN } from '../../../services/cloud-token.servic
 @Injectable({
     providedIn: 'root'
 })
-export class TaskFilterCloudService {
-    private filtersSubject: BehaviorSubject<TaskFilterCloudModel[]>;
-    filters$: Observable<TaskFilterCloudModel[]>;
+export class ServiceTaskFilterCloudService {
+    private filtersSubject: BehaviorSubject<ServiceTaskFilterCloudModel[]>;
+    filters$: Observable<ServiceTaskFilterCloudModel[]>;
 
     constructor(
         private identityUserService: IdentityUserService,
@@ -50,7 +50,7 @@ export class TaskFilterCloudService {
             switchMap((response: any) => {
                 const preferences = (response && response.list && response.list.entries) ? response.list.entries : [];
                 if (!this.hasPreferences(preferences) || !this.hasTaskFilters(preferences, key)) {
-                    return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
+                    return this.createTaskFilters(appName, key, this.defaultServiceTaskFilters(appName));
                 } else {
                     return of(this.findFiltersByKeyInPreferences(preferences, key));
                 }
@@ -89,7 +89,7 @@ export class TaskFilterCloudService {
      * @param filters Details of new task filter
      * @returns Observable of created task filters
      */
-    private createTaskFilters(appName: string, key: string, filters: TaskFilterCloudModel[]): Observable<TaskFilterCloudModel[]> {
+    private createTaskFilters(appName: string, key: string, filters: ServiceTaskFilterCloudModel[]): Observable<ServiceTaskFilterCloudModel[]> {
         return this.preferenceService.createPreference(appName, key, filters);
     }
 
@@ -99,7 +99,7 @@ export class TaskFilterCloudService {
      * @param key Key of the task filters
      * @returns Observable of task filters
      */
-    private getTaskFiltersByKey(appName: string, key: string): Observable<TaskFilterCloudModel[]> {
+    private getTaskFiltersByKey(appName: string, key: string): Observable<ServiceTaskFilterCloudModel[]> {
         return this.preferenceService.getPreferenceByKey(appName, key);
     }
 
@@ -108,7 +108,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Observable of task filter details
      */
-    getTaskListFilters(appName?: string): Observable<TaskFilterCloudModel[]> {
+    getTaskListFilters(appName?: string): Observable<ServiceTaskFilterCloudModel[]> {
         this.createDefaultFilters(appName);
         return this.filters$;
     }
@@ -119,18 +119,18 @@ export class TaskFilterCloudService {
      * @param id ID of the task
      * @returns Details of the task filter
      */
-    getTaskFilterById(appName: string, id: string): Observable<TaskFilterCloudModel> {
+    getTaskFilterById(appName: string, id: string): Observable<ServiceTaskFilterCloudModel> {
         const key: string = this.prepareKey(appName);
         return this.getTaskFiltersByKey(appName, key).pipe(
-            switchMap((filters: TaskFilterCloudModel[]) => {
+            switchMap((filters: ServiceTaskFilterCloudModel[]) => {
                 if (filters && filters.length === 0) {
-                    return this.createTaskFilters(appName, key, this.defaultTaskFilters(appName));
+                    return this.createTaskFilters(appName, key, this.defaultServiceTaskFilters(appName));
                 } else {
                     return of(filters);
                 }
             }),
             map((filters: any) => {
-                return filters.filter((filter: TaskFilterCloudModel) => {
+                return filters.filter((filter: ServiceTaskFilterCloudModel) => {
                     return filter.id === id;
                 })[0];
             }),
@@ -143,18 +143,18 @@ export class TaskFilterCloudService {
      * @param filter The new filter to add
      * @returns Observable of task instance filters with newly added filter
      */
-    addFilter(newFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+    addFilter(newFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key: string = this.prepareKey(newFilter.appName);
         return this.getTaskFiltersByKey(newFilter.appName, key).pipe(
             switchMap((filters: any) => {
                 if (filters && filters.length === 0) {
-                    return this.createTaskFilters(newFilter.appName, key, <TaskFilterCloudModel[]> [newFilter]);
+                    return this.createTaskFilters(newFilter.appName, key, <ServiceTaskFilterCloudModel[]> [newFilter]);
                 } else {
                     filters.push(newFilter);
                     return this.preferenceService.updatePreference(newFilter.appName, key, filters);
                 }
             }),
-            map((filters: TaskFilterCloudModel[]) => {
+            map((filters: ServiceTaskFilterCloudModel[]) => {
                 this.addFiltersToStream(filters);
                 return filters;
             }),
@@ -162,7 +162,7 @@ export class TaskFilterCloudService {
         );
     }
 
-    private addFiltersToStream(filters: TaskFilterCloudModel[]) {
+    private addFiltersToStream(filters: ServiceTaskFilterCloudModel[]) {
         this.filtersSubject.next(filters);
     }
 
@@ -171,19 +171,19 @@ export class TaskFilterCloudService {
      * @param filter The filter to update
      * @returns Observable of task instance filters with updated filter
      */
-    updateFilter(updatedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+    updateFilter(updatedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key: string = this.prepareKey(updatedFilter.appName);
         return this.getTaskFiltersByKey(updatedFilter.appName, key).pipe(
             switchMap((filters: any) => {
                 if (filters && filters.length === 0) {
-                    return this.createTaskFilters(updatedFilter.appName, key, <TaskFilterCloudModel[]> [updatedFilter]);
+                    return this.createTaskFilters(updatedFilter.appName, key, <ServiceTaskFilterCloudModel[]> [updatedFilter]);
                 } else {
-                    const itemIndex = filters.findIndex((filter: TaskFilterCloudModel) => filter.id === updatedFilter.id);
+                    const itemIndex = filters.findIndex((filter: ServiceTaskFilterCloudModel) => filter.id === updatedFilter.id);
                     filters[itemIndex] = updatedFilter;
                     return this.updateTaskFilters(updatedFilter.appName, key, filters);
                 }
             }),
-            map((updatedFilters: TaskFilterCloudModel[]) => {
+            map((updatedFilters: ServiceTaskFilterCloudModel[]) => {
                 this.addFiltersToStream(updatedFilters);
                 return updatedFilters;
             }),
@@ -196,7 +196,7 @@ export class TaskFilterCloudService {
      * @param filter The filter to delete
      * @returns Observable of task instance filters without deleted filter
      */
-    deleteFilter(deletedFilter: TaskFilterCloudModel): Observable<TaskFilterCloudModel[]> {
+    deleteFilter(deletedFilter: ServiceTaskFilterCloudModel): Observable<ServiceTaskFilterCloudModel[]> {
         const key = this.prepareKey(deletedFilter.appName);
         return this.getTaskFiltersByKey(deletedFilter.appName, key).pipe(
             switchMap((filters: any) => {
@@ -220,7 +220,7 @@ export class TaskFilterCloudService {
      * @returns Boolean value for whether the filter is a default filter
      */
     isDefaultFilter(filterName: string): boolean {
-        const defaultFilters = this.defaultTaskFilters();
+        const defaultFilters = this.defaultServiceTaskFilters();
         return defaultFilters.findIndex((filter) => filterName === filter.name) !== -1;
     }
 
@@ -231,7 +231,7 @@ export class TaskFilterCloudService {
      * @param filters Details of update filter
      * @returns Observable of updated task filters
      */
-    private updateTaskFilters(appName: string, key: string, filters: TaskFilterCloudModel[]): Observable<TaskFilterCloudModel[]> {
+    private updateTaskFilters(appName: string, key: string, filters: ServiceTaskFilterCloudModel[]): Observable<ServiceTaskFilterCloudModel[]> {
         return this.preferenceService.updatePreference(appName, key, filters);
     }
 
@@ -258,7 +258,7 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
-    private findFiltersByKeyInPreferences(preferences: any, key: string): TaskFilterCloudModel[] {
+    private findFiltersByKeyInPreferences(preferences: any, key: string): ServiceTaskFilterCloudModel[] {
         const result = preferences.find((filter: any) => { return filter.entry.key === key; });
         return result && result.entry ? JSON.parse(result.entry.value) : [];
     }
@@ -272,36 +272,33 @@ export class TaskFilterCloudService {
      * @param appName Name of the target app
      * @returns Array of TaskFilterCloudModel
      */
-    private defaultTaskFilters(appName?: string): TaskFilterCloudModel[] {
+    private defaultServiceTaskFilters(appName?: string): ServiceTaskFilterCloudModel[] {
         return [
-            new TaskFilterCloudModel({
-                name: 'ADF_CLOUD_TASK_FILTERS.MY_TASKS',
-                key: 'my-tasks',
+            new ServiceTaskFilterCloudModel({
+                name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ALL_SERVICE_TASKS',
+                key: 'my-service-tasks',
                 icon: 'inbox',
                 appName,
-                status: 'ASSIGNED',
-                assignee: this.getUsername(),
-                sort: 'createdDate',
+                status: 'ALL',
+                sort: 'startedDate',
                 order: 'DESC'
             }),
-            new TaskFilterCloudModel({
-                name: 'ADF_CLOUD_TASK_FILTERS.QUEUED_TASKS',
-                key: 'queued-tasks',
-                icon: 'queue',
-                appName,
-                status: 'CREATED',
-                assignee: '',
-                sort: 'createdDate',
-                order: 'DESC'
-            }),
-            new TaskFilterCloudModel({
-                name: 'ADF_CLOUD_TASK_FILTERS.COMPLETED_TASKS',
+            new ServiceTaskFilterCloudModel({
+                name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.COMPLETED_TASKS',
                 key: 'completed-tasks',
                 icon: 'done',
                 appName,
                 status: 'COMPLETED',
-                assignee: '',
-                sort: 'createdDate',
+                sort: 'completedDate',
+                order: 'DESC'
+            }),
+            new ServiceTaskFilterCloudModel({
+                name: 'ADF_CLOUD_SERVICE_TASK_FILTERS.ERRORED_TASKS',
+                key: 'errored-service-tasks',
+                icon: 'error',
+                appName,
+                status: 'ERROR',
+                sort: 'startedDate',
                 order: 'DESC'
             })
         ];

@@ -116,6 +116,11 @@
     "QUEUED_TASKS": "Queued Tasks",
     "COMPLETED_TASKS": "Completed Tasks"
   },
+  "ADF_CLOUD_SERVICE_TASK_FILTERS": {
+    "ALL_SERVICE_TASKS": "All Service Tasks",
+    "ERRORED_TASKS": "Errored Tasks",
+    "COMPLETED_TASKS": "Completed Tasks"
+  },
   "ADF_CLOUD_PROCESS_FILTERS": {
     "ALL_PROCESSES": "All",
     "RUNNING_PROCESSES": "Running",

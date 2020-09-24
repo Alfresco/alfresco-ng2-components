@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TaskListCloudSortingModel, TaskFilterCloudModel } from '@alfresco/adf-process-services-cloud';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { TaskListCloudSortingModel, TaskFilterCloudModel, ServiceTaskListCloudComponent } from '@alfresco/adf-process-services-cloud';
 import { UserPreferencesService, AppConfigService } from '@alfresco/adf-core';
 import { CloudLayoutService } from './services/cloud-layout.service';
 import { Subject } from 'rxjs';
@@ -30,6 +30,9 @@ export class ServiceTaskListCloudDemoComponent implements OnInit, OnDestroy {
     public static ACTION_SAVE_AS = 'saveAs';
     public static ACTION_DELETE = 'delete';
     static TASK_FILTER_PROPERTY_KEYS = 'adf-edit-service-task-filter';
+
+    @ViewChild('taskCloud')
+    taskCloud: ServiceTaskListCloudComponent;
 
     isFilterLoaded = false;
 
