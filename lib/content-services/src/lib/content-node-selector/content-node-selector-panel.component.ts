@@ -58,7 +58,11 @@ export const defaultValidation = () => true;
     styleUrls: ['./content-node-selector-panel.component.scss'],
     templateUrl: './content-node-selector-panel.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-node-selector-panel' }
+    host: { 'class': 'adf-content-node-selector-panel' },
+    providers: [{
+        provide: SEARCH_QUERY_SERVICE_TOKEN,
+        useClass: SearchQueryBuilderService
+    }]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
@@ -439,13 +443,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
         if (this.customResourcesService.hasCorrespondingNodeIds(this.siteId)) {
             this.customResourcesService.getCorrespondingNodeIds(this.siteId)
                 .subscribe((nodeIds) => {
-                    this.contentNodeSelectorService.searchByContent(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles);
+                    const query = this.contentNodeSelectorService.createQuery(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, nodeIds, this.showFiles);
+                    this.queryBuilderService.execute(query);
                 },
                     () => {
                         this.showSearchResults({ list: { entries: [] } });
                     });
         } else {
-            this.contentNodeSelectorService.searchByContent(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles);
+            const query = this.contentNodeSelectorService.createQuery(this.searchTerm, this.siteId, this.pagination.skipCount, this.pagination.maxItems, [], this.showFiles);
+            this.queryBuilderService.execute(query);
         }
     }
 
