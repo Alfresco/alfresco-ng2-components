@@ -17,6 +17,7 @@
 
 import { DateCloudFilterType } from '../../../models/date-cloud-filter.model';
 import { DateRangeFilterService } from '../../../common/date-range-filter/date-range-filter.service';
+import { ComponentSelectionMode } from '../../../types';
 
 export class TaskFilterCloudModel  {
     id: string;
@@ -43,6 +44,7 @@ export class TaskFilterCloudModel  {
     standalone: boolean;
     lastModifiedFrom: Date;
     lastModifiedTo: Date;
+    completedBy: string;
 
     private _dueDateFrom: string;
     private _dueDateTo: string;
@@ -76,6 +78,7 @@ export class TaskFilterCloudModel  {
             this.standalone = obj.standalone || null;
             this.lastModifiedFrom = obj.lastModifiedFrom || null;
             this.lastModifiedTo = obj.lastModifiedTo || null;
+            this.completedBy = obj.completedBy || null;
         }
     }
 
@@ -159,6 +162,7 @@ export class TaskFilterProperties {
     attributes?: { [key: string]: string; };
     options?: FilterOptions[];
     dateFilterOptions?: DateCloudFilterType[];
+    selectionMode?: ComponentSelectionMode;
 
     constructor(obj?: any) {
         if (obj) {
@@ -169,6 +173,7 @@ export class TaskFilterProperties {
             this.attributes = obj.attributes || null;
             this.options = obj.options || null;
             this.dateFilterOptions = obj.dateFilterOptions || null;
+            this.selectionMode = obj.selectionMode || null;
         }
     }
 }

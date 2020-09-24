@@ -28,6 +28,7 @@ import { TaskFilterDialogCloudComponent } from './components/task-filter-dialog-
 import { AppListCloudModule } from './../../app/app-list-cloud.module';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { ProcessCommonModule } from '../../common/process-common.module';
+import { PeopleCloudModule } from '../../people/people-cloud.module';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import { ProcessCommonModule } from '../../common/process-common.module';
         MaterialModule,
         AppListCloudModule,
         CoreModule,
-        ProcessCommonModule
+        ProcessCommonModule,
+        PeopleCloudModule
     ],
     declarations: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent, TaskFilterDialogCloudComponent],
     exports: [TaskFiltersCloudComponent, EditTaskFilterCloudComponent],

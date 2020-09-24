@@ -11,6 +11,7 @@
       "STATUS": "Status",
       "START_DATE": "Start Date",
       "COMPLETED_DATE": "Completed Date",
+      "COMPLETED_BY": "Completed By",
       "ID": "Id",
       "INITIATOR": "Initiator",
       "APP_NAME": "Application Name",
@@ -89,7 +90,8 @@
       "LAST_MODIFIED": "Last Modified",
       "DUE_DATE": "Due Date",
       "CREATED": "Created",
-      "JSON_CELL": "Json"
+      "JSON_CELL": "Json",
+      "COMPLETED_BY": "Completed By"
     },
     "LIST": {
       "MESSAGES": {
@@ -142,7 +144,8 @@
       "OWNER": "Owner",
       "DUE_DATE": "DueDate",
       "SORT": "Sort",
-      "START_DATE": "StartDate"
+      "START_DATE": "StartDate",
+      "COMPLETED_BY": "Completed By"
     },
     "DIALOG": {
       "TITLE": "Save filter as",

@@ -20,14 +20,14 @@ import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, filter, takeUntil, finalize, switchMap } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import moment from 'moment-es6';
 import { Moment } from 'moment';
 
 import { TaskFilterCloudModel, TaskFilterProperties, FilterOptions, TaskFilterAction } from './../models/filter-cloud.model';
 import { TaskFilterCloudService } from '../services/task-filter-cloud.service';
 import { TaskFilterDialogCloudComponent } from './task-filter-dialog-cloud.component';
-import { TranslationService, UserPreferencesService, UserPreferenceValues } from '@alfresco/adf-core';
+import { TranslationService, UserPreferencesService, UserPreferenceValues, IdentityUserModel, IdentityUserService } from '@alfresco/adf-core';
 import { AppsProcessCloudService } from '../../../app/services/apps-process-cloud.service';
 import { ApplicationInstanceModel } from '../../../app/models/application-instance.model';
 import { DateCloudFilterType, DateRangeFilter } from '../../../models/date-cloud-filter.model';
@@ -140,6 +140,7 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         private dateAdapter: DateAdapter<Moment>,
         private userPreferencesService: UserPreferencesService,
         private appsProcessCloudService: AppsProcessCloudService,
+        private identityUserService: IdentityUserService,
         private taskCloudService: TaskCloudService) {
     }
 
@@ -352,6 +353,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         );
     }
 
+    onChangedUser(users: IdentityUserModel[], userProperty: TaskFilterProperties) {
+        this.getPropertyController(userProperty).setValue(users[0]?.username);
+    }
+
     hasError(property: TaskFilterProperties): boolean {
         return this.getPropertyController(property).errors && this.getPropertyController(property).errors.invalid;
     }
@@ -507,6 +512,10 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         return property.type === 'checkbox';
     }
 
+    isUserSelectType(property: TaskFilterProperties): boolean {
+        return property.type === 'people';
+    }
+
     isDisabledAction(action: TaskFilterAction): boolean {
         return this.isDisabledForDefaultFilters(action) ? true : this.hasFormChanged(action);
     }
@@ -530,6 +539,13 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
         }
 
         return false;
+    }
+
+    getUserByUsername(username: string): Observable<IdentityUserModel[]> {
+        if (username) {
+            return this.identityUserService.findUserByUsername(username);
+        }
+        return of([]);
     }
 
     createFilterActions(): TaskFilterAction[] {
@@ -690,6 +706,13 @@ export class EditTaskFilterCloudComponent implements OnInit, OnChanges, OnDestro
                     DateCloudFilterType.NEXT_7_DAYS,
                     DateCloudFilterType.RANGE
                 ]
+            }),
+            new TaskFilterProperties({
+                label: 'ADF_CLOUD_EDIT_TASK_FILTER.LABEL.COMPLETED_BY',
+                type: 'people',
+                key: 'completedBy',
+                value: this.getUserByUsername(currentTaskFilter.completedBy),
+                selectionMode: 'single'
             })
         ];
     }

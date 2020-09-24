@@ -114,6 +114,10 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
     @Input()
     priority: number;
 
+    /** Filter the tasks. Display only tasks with createdBy equal to the supplied value. */
+    @Input()
+    completedBy: number;
+
     /** Filter the tasks. Display only the tasks that belong to a process in case is false or tasks that doesn't belong to a process in case of true. */
     @Input()
     standalone: boolean = false;
@@ -365,7 +369,8 @@ export class TaskListCloudComponent extends DataTableSchema implements OnChanges
             maxItems: this.size,
             skipCount: this.skipCount,
             sorting: this.sorting,
-            standalone: this.standalone
+            standalone: this.standalone,
+            completedBy: this.completedBy
         };
         return new TaskQueryCloudRequestModel(requestNode);
     }
