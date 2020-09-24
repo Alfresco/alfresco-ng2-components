@@ -18,7 +18,7 @@ _Note: it is assumed you are familiar with Alfresco Process Services (powered by
 -   [How components and widgets are rendered on a Form](#how-components-and-widgets-are-rendered-on-a-form)
     -   [Component type resolvers](#component-type-resolvers)
     -   [Default component mappings](#default-component-mappings)
--   [Form Extensibility for APS/AAE](#extend-the-Form-for-APS/AAE)
+-   [Form Extensibility for APS/AAE](#form-extensibility-for-apsaae)
 -   [See Also](#see-also)
 
 ## How components and widgets are rendered on a Form

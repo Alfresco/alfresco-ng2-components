@@ -9,9 +9,10 @@ This page describes how you can customize ADF forms to your own specification.
 ## Contents
 There are two ways to customize the form
 -   [Replacing custom form widgets with custom components](#replacing-custom-form-widgets-with-custom-components)
-    -   [Creating custom stencil](#creating-custom-stencil)
+    -   [Creating custom form widget](#creating-custom-form-widget)
     -   [Creating custom widget](#creating-custom-widget)
--   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-custom-components)
+-   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-aae-form-widgets)
+-   [See Also](#see-also)
 
 ## Replacing default form widgets with AAE form widgets
 
@@ -180,3 +181,11 @@ export class MyView {
 At runtime you should now see your custom Angular component rendered in place of the form widgets:
 
 ![adf form widget runtime](../docassets/images/aae-resolved-widget.png)
+
+## See Also
+
+-   [Extensibility](./extensibility.md)
+-   [Form field model](../core/models/form-field.model.md)
+-   [Form rendering service](../core/services/form-rendering.service.md)
+-   [Form component](../core/components/form.component.md)
+-   [Widget component](../insights/components/widget.component.md)

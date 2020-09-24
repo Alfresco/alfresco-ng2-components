@@ -8,10 +8,11 @@ This page describes how you can customize ADF forms to your own specification.
 
 ## Contents
 There are two ways to customize the form
--   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-custom-components)
+-   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-aps-custom-components)
 -   [Replacing custom stencils with custom components](#replacing-custom-stencils-with-custom-components)
     -   [Creating custom stencil](#creating-custom-stencil)
     -   [Creating custom widget](#creating-custom-widget)
+-   [See Also](#see-also)
 
 ## Replacing default form widgets with APS custom components
 
@@ -180,3 +181,11 @@ export class MyView {
 At runtime you should now see your custom Angular component rendered in place of the stencils:
 
 ![adf stencil runtime](../docassets/images/adf-stencil-02.png)
+
+## See Also
+
+-   [Extensibility](./extensibility.md)
+-   [Form field model](../core/models/form-field.model.md)
+-   [Form rendering service](../core/services/form-rendering.service.md)
+-   [Form component](../core/components/form.component.md)
+-   [Widget component](../insights/components/widget.component.md)
