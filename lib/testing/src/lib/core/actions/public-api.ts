@@ -22,3 +22,4 @@ export * from './users.actions';
 export * from './api';
 export * from './api.util';
 export * from './e2e-request-api.helper';
+export * from './search.service';

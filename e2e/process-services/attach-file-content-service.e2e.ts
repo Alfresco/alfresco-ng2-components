@@ -26,7 +26,8 @@ import {
     UploadActions,
     UserModel,
     UsersActions,
-    Widget
+    Widget,
+    SearchService
 } from '@alfresco/adf-testing';
 import { TasksPage } from './pages/tasks.page';
 import { browser } from 'protractor';
@@ -54,6 +55,7 @@ describe('Attach File - Content service', () => {
     const apiService = new ApiService({ provider: 'ALL' });
     const integrationService = new IntegrationService(apiService);
     const applicationService = new ApplicationsUtil(apiService);
+    const searchService = new SearchService(apiService);
     const uploadActions = new UploadActions(apiService);
     const usersActions = new UsersActions(apiService);
 
@@ -97,7 +99,8 @@ describe('Attach File - Content service', () => {
         await uploadActions.uploadFile(pdfFileTwo.location, pdfFileTwo.name, '-my-');
         await applicationService.importPublishDeployApp(app.file_path);
 
-        await browser.sleep(browser.params.testConfig.timeouts.index_search); // wait search index previous file/folder uploaded
+        await searchService.isSearchable(pdfFileTwo.name);
+        await searchService.isSearchable(externalFile);
     });
 
     afterAll(async () => {
@@ -107,6 +110,8 @@ describe('Attach File - Content service', () => {
 
     beforeEach(async () => {
         await loginPage.login(user.email, user.password);
+        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
+        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
     });
 
     afterEach(async () => {
@@ -115,9 +120,6 @@ describe('Attach File - Content service', () => {
 
     it('[C315268] Attach file - Able to upload more than one file (both ACS and local)', async () => {
         const name = 'Attach local and acs file';
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
         await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().attachFile(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.location);
@@ -127,6 +129,7 @@ describe('Attach File - Content service', () => {
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
 
         await contentNodeSelector.checkDialogIsDisplayed();
+        await searchService.isSearchable(pdfFileTwo.name);
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
 
         await contentNodeSelector.clickMoveCopyButton();
@@ -135,9 +138,6 @@ describe('Attach File - Content service', () => {
 
     it('[C246522] Attach file - Local file', async () => {
         const name = 'Attach local file';
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
         await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().attachFile(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, pdfFileOne.location);
@@ -148,9 +148,6 @@ describe('Attach File - Content service', () => {
 
     it('[C299040] Should display the login screen right, when user has access to 2 alfresco repositiories', async () => {
         const name = 'Attach file';
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
-
         await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
@@ -161,6 +158,7 @@ describe('Attach File - Content service', () => {
         await externalNodeSelector.login(user.email, user.password);
 
         await externalNodeSelector.checkDialogIsDisplayed();
+        await searchService.isSearchable(externalFile);
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
@@ -168,14 +166,13 @@ describe('Attach File - Content service', () => {
 
     it('[C286516] Able to upload a file when user has more than two alfresco repositories', async () => {
         const name = 'Attach file - multiple repo';
-        await (await (await navigationBarPage.navigateToProcessServicesPage()).goToTaskApp()).clickTasksButton();
-        await taskPage.filtersPage().goToFilter(CONSTANTS.TASK_FILTERS.MY_TASKS);
         await taskPage.createTask({ name, formName: app.UPLOAD_FILE_FORM_CS.formName });
 
         await widget.attachFileWidget().clickUploadButton(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id);
         await widget.attachFileWidget().selectUploadSource(csIntegrations[0]);
 
         await contentNodeSelector.checkDialogIsDisplayed();
+        await searchService.isSearchable(pdfFileTwo.name);
         await contentNodeSelector.searchAndSelectResult(pdfFileTwo.name, pdfFileTwo.name);
         await contentNodeSelector.clickMoveCopyButton();
 
@@ -192,6 +189,7 @@ describe('Attach File - Content service', () => {
         await externalNodeSelector.waitForLogInDialog();
         await externalNodeSelector.login(user.email, user.password);
 
+        await searchService.isSearchable(externalFile);
         await externalNodeSelector.searchAndSelectResult(externalFile, externalFile);
         await externalNodeSelector.clickMoveCopyButton();
         await widget.attachFileWidget().checkFileIsAttached(app.UPLOAD_FILE_FORM_CS.FIELD.widget_id, externalFile);
