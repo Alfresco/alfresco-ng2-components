@@ -77,7 +77,7 @@ export class UserFiltersUtil {
             return this.apiService.getInstance().activiti.userFiltersApi.updateUserTaskFilter(filterId, new UserTaskFilterRepresentation(
                 {appId: appId, name: updatedTaskFilterName, icon: updatedIconName, filter: {sort: updatedSortType, state: updatedStateType, assignment: updatedAssignmentType}}));
         } catch (error) {
-            Logger.error('Delete a task filter - Service error, Response: ', error);
+            Logger.error('Update a task filter - Service error, Response: ', error);
         }
     }
 }
