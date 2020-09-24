@@ -18,10 +18,7 @@ _Note: it is assumed you are familiar with Alfresco Process Services (powered by
 -   [How components and widgets are rendered on a Form](#how-components-and-widgets-are-rendered-on-a-form)
     -   [Component type resolvers](#component-type-resolvers)
     -   [Default component mappings](#default-component-mappings)
--   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-custom-components)
--   [Replacing custom stencils with custom components](#replacing-custom-stencils-with-custom-components)
-    -   [Creating custom stencil](#creating-custom-stencil)
-    -   [Creating custom widget](#creating-custom-widget)
+-   [Form Extensibility for APS/AAE](#extend-the-Form-for-APS/AAE)
 -   [See Also](#see-also)
 
 ## How components and widgets are rendered on a Form
@@ -102,9 +99,9 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
 | N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |
 
-## Extend the Form for APS/AAE
--   [Use APS Stencil in ADF](./aps-extensions.md)
--   [Use AAE Form Widget in ADF](./aae-extensions.md)
+## Form Extensibility for APS/AAE
+-   [Form Extensibility for APS Stencil](./aps-extensions.md)
+-   [Form Extensibility for AAE Form Widget](./aae-extensions.md)
 
 ## See Also
 

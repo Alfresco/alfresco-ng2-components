@@ -1,4 +1,4 @@
-## Form extension for APS
+## Form Extensibility for APS Stencil
 This page describes how you can customize ADF forms to your own specification.
 
 ## Contents

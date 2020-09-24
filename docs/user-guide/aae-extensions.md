@@ -1,4 +1,4 @@
-## Form extension for AAE
+## Form Extensibility for AAE Form Widget
 This page describes how you can customize ADF forms to your own specification.
 
 ## Contents
@@ -105,15 +105,12 @@ Now you are ready to design a test form based on your custom form widget:
 
 ![custom form widget form](../docassets/images/aae-form-with-widget.png)
 
-Once wired with a new task it should look like the following within AAE web application:
-
-![custom form widget task](../docassets/images/aae-form-widget-closer.png)
-
 ### Creating custom widget
 
-If you load previously created task into ADF `<adf-form>` component you will see something like the following:
+Once wired with a new task it should look like the following within AAE Process Experience:
 
 ![adf form widget](../docassets/images/aae-unresolved-widget.png)
+
 
 Let's create an Angular component to render missing content:
 
