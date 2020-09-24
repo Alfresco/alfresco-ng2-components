@@ -30,8 +30,6 @@ export class ContentNodeSelectorService extends BaseQueryBuilderService {
 
     query: QueryBody;
 
-    customModels: any[] = [];
-
     constructor(appConfig: AppConfigService, alfrescoApiService: AlfrescoApiService) {
         super(appConfig, alfrescoApiService);
     }

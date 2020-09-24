@@ -21,7 +21,7 @@ import { SearchConfiguration } from './search-configuration.interface';
 import { BaseQueryBuilderService } from './base-query-builder.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class SearchQueryBuilderService extends BaseQueryBuilderService {
 

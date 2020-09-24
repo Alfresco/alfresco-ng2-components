@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContentNodeSelectorPanelService } from '../../../content-node-selector/content-node-selector-panel.service';
 import { SearchQueryBuilderService } from '../../search-query-builder.service';
+import { SEARCH_QUERY_SERVICE_TOKEN } from '../../search-query-service.token';
 
 @Component({
     selector: 'adf-search-panel',
@@ -30,7 +31,7 @@ import { SearchQueryBuilderService } from '../../search-query-builder.service';
 export class SearchPanelComponent implements OnInit {
 
     constructor(public contentNodeSelectorSearchPanelService: ContentNodeSelectorPanelService,
-                private queryBuilderService: SearchQueryBuilderService) {
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilderService: SearchQueryBuilderService) {
     }
 
     ngOnInit(): void {

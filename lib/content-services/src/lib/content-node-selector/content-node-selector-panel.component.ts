@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation,
+    OnDestroy,
+    Inject
+} from '@angular/core';
 import {
     HighlightDirective,
     UserPreferencesService,
@@ -37,7 +47,7 @@ import { debounceTime, takeUntil, scan } from 'rxjs/operators';
 import { CustomResourcesService } from '../document-list/services/custom-resources.service';
 import { NodeEntryEvent, ShareDataRow } from '../document-list';
 import { Subject } from 'rxjs';
-import { SearchQueryBuilderService } from '../search';
+import { SEARCH_QUERY_SERVICE_TOKEN, SearchQueryBuilderService } from '../search';
 
 export type ValidationFunction = (entry: Node) => boolean;
 
@@ -48,7 +58,8 @@ export const defaultValidation = () => true;
     styleUrls: ['./content-node-selector-panel.component.scss'],
     templateUrl: './content-node-selector-panel.component.html',
     encapsulation: ViewEncapsulation.None,
-    host: { 'class': 'adf-content-node-selector-panel' }
+    host: { 'class': 'adf-content-node-selector-panel' },
+    providers: [ { provide: SEARCH_QUERY_SERVICE_TOKEN, useClass: SearchQueryBuilderService }]
 })
 export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
@@ -231,7 +242,7 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
     constructor(private contentNodeSelectorService: ContentNodeSelectorService,
                 private customResourcesService: CustomResourcesService,
-                private queryBuilderService: SearchQueryBuilderService,
+                @Inject(SEARCH_QUERY_SERVICE_TOKEN) private queryBuilderService: SearchQueryBuilderService,
                 private userPreferencesService: UserPreferencesService,
                 private nodesApiService: NodesApiService,
                 private uploadService: UploadService,
@@ -257,11 +268,15 @@ export class ContentNodeSelectorPanelComponent implements OnInit, OnDestroy {
 
         this.contentNodeSelectorService.executed
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.showSearchResults.bind(this));
+            .subscribe((results: NodePaging) => {
+                this.showSearchResults(results);
+            });
 
         this.queryBuilderService.executed
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.showSearchResults.bind(this));
+            .subscribe( (results: NodePaging) => {
+                this.showSearchResults(results);
+            });
 
         this.userPreferencesService
             .select(UserPreferenceValues.PaginationSize)
