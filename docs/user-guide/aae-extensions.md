@@ -20,7 +20,7 @@ rendered within `<adf-form>` component.
 
 First let's create a simple AAE form with `Text` widgets:
 
-![default text widget](../docassets/images/text-default-widget.png)
+![default text widget](../docassets/images/aae-simple-form.png)
 
 Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
 
@@ -31,7 +31,7 @@ import { WidgetComponent } from '@alfresco/adf-core';
 @Component({
     selector: 'custom-editor',
     template: `
-        <div style="color: red">Look, I'm a custom editor!</div>
+        <div style="color: red">Look, I'm a AAE custom editor!</div>
     `
 })
 export class CustomEditorComponent extends WidgetComponent {}
@@ -78,7 +78,9 @@ import { CustomEditorComponent } from './custom-editor.component';
 export class MyView {
 
     constructor(formRenderingService: FormRenderingService) {
-        formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
+        this.formRenderingService.register({
+            'text': () => CustomEditorComponent
+        }, true);
     }
 
 }
@@ -86,7 +88,7 @@ export class MyView {
 
 At runtime it should look similar to the following:
 
-![custom text widget](../docassets/images/text-custom-widget.png)
+![custom text widget](../docassets/images/aae-simple-override-form.png)
 
 ## Replacing custom form widgets with custom components
 
