@@ -58,6 +58,9 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
     @Input()
     data: FormValues;
 
+    @Input()
+    enableFixedSpacedForm: boolean = true;
+
     /** Emitted when the form is submitted with the `Save` or custom outcomes. */
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -277,7 +280,7 @@ export class FormComponent extends FormBaseComponent implements OnInit, OnDestro
 
     parseForm(formRepresentationJSON: any): FormModel {
         if (formRepresentationJSON) {
-            const form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService);
+            const form = new FormModel(formRepresentationJSON, this.data, this.readOnly, this.formService, this.enableFixedSpacedForm);
             if (!formRepresentationJSON.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }

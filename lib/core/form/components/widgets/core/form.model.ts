@@ -67,6 +67,7 @@ export class FormModel {
     readonly taskName = FormModel.UNSET_TASK_NAME;
     readonly processDefinitionId: string;
     readonly selectedOutcome: string;
+    readonly enableFixedSpace: boolean;
 
     json: any;
     nodeId: string;
@@ -83,7 +84,7 @@ export class FormModel {
     processVariables: ProcessVariableModel[] = [];
     variables: FormVariableModel[] = [];
 
-    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
+    constructor(json?: any, formValues?: FormValues, readOnly: boolean = false, protected formService?: FormService, enableFixedSpace?: boolean) {
         this.readOnly = readOnly;
         this.json = json;
 
@@ -98,6 +99,7 @@ export class FormModel {
             this.className = json.className || '';
             this.variables = json.variables || [];
             this.processVariables = json.processVariables || [];
+            this.enableFixedSpace = enableFixedSpace;
 
             const tabCache: FormWidgetModelCache<TabModel> = {};
 
