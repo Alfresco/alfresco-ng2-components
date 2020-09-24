@@ -86,8 +86,4 @@ describe('Date Range Filter service', () => {
         };
         expect(service.getDateRange(DateCloudFilterType.NEXT_7_DAYS)).toEqual(expectedDate);
     });
-
-    it('should throw error no supported type is selected', () => {
-        expect(function () { service.getDateRange(null); } ).toThrow(new Error('ADF_CLOUD_EDIT_PROCESS_FILTER.ERROR.INVALID_DATE_FILTER'));
-    });
 });
