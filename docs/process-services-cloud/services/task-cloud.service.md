@@ -79,6 +79,12 @@ Manages task cloud.
     -   _taskId:_ `string`  - ID of the task to update
     -   _payload:_ `any`  - Data to update the task
     -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Updated task details
+-   **assign**(appName: `string`, taskId: `string`, assignee: `string`): [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>`<br/>
+    Changes assignee of the user task.
+    -   _appName:_ `string`  - Name of the app
+    -   _taskId:_ `string`  - ID of the task to update assignee
+    -   _assignee:_ `string`  - assignee to update current user task assignee
+    -   **Returns** [`Observable`](http://reactivex.io/documentation/observable.html)`<`[`TaskDetailsCloudModel`](../../../lib/process-services-cloud/src/lib/task/start-task/models/task-details-cloud.model.ts)`>` - Updated task details
 
 ## Details
 

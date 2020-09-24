@@ -410,4 +410,40 @@ describe('Task Cloud Service', () => {
                 done();
             });
     });
+
+    it('should call assign api and return updated task details', (done) => {
+        const appName = 'task-app';
+        const taskId = '68d54a8f';
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.assign(appName, taskId, 'Phil Woods').subscribe(
+            (res) => {
+                expect(res.assignee).toBe('Phil Woods');
+                done();
+             });
+    });
+
+    it('should throw error if appName is not defined when changing task assignee', (done) => {
+        const appName = '';
+        const taskId = '68d54a8f';
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.assign(appName, taskId, 'mock-assignee').subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
+    it('should throw error if taskId is not defined when changing task assignee', (done) => {
+        const appName = 'task-app';
+        const taskId = '';
+        spyOn(alfrescoApiMock, 'getInstance').and.callFake(returnFakeTaskDetailsResults);
+        service.assign(appName, taskId, 'mock-assignee').subscribe(
+            () => { },
+            (error) => {
+                expect(error).toBe('AppName/TaskId not configured');
+                done();
+            });
+    });
+
 });

@@ -261,17 +261,17 @@ export class TaskCloudService extends BaseCloudService {
      * Updates the task assignee.
      * @param appName Name of the app
      * @param taskId ID of the task to update assignee
-     * @param assignee assignee of the task
+     * @param assignee assignee to update current user task assignee
      * @returns Updated task details with new assignee
      */
     assign(appName: string, taskId: string, assignee: string): Observable<TaskDetailsCloudModel> {
-        if ((appName || appName === '') && taskId) {
+        if (appName && taskId) {
             const payLoad = { 'assignee': assignee, 'taskId': taskId, 'payloadType': 'AssignTaskPayload' };
             const url = `${this.getBasePath(appName)}/rb/v1/tasks/${taskId}/assign`;
 
             return this.post(url, payLoad).pipe(
                 map((res: any) => {
-                    return res;
+                    return res.entry;
                 })
             );
         } else {
