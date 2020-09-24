@@ -17,35 +17,50 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
+// tslint:disable:component-selector
+
+@Component({
+    selector: 'custom-editor-widget',
+    template: `
+        <div style="color: green">
+            ADF version of custom form widget
+        </div>
+    `
+})
+export class CustomEditorComponent extends WidgetComponent {
+    constructor() {
+        super();
+    }
+}
 
 @Component({
     selector: 'app-sample-widget',
     template: `
         <div style="color: red">
-            Look, I'm custom cloud form widget!
             <p *ngIf="field.readOnly || readOnly">
-               Value :: <span> {{displayValue}}</span>
+                <span>{{displayValue | json}}</span>
             </p>
 
             <mat-form-field *ngIf="!(field.readOnly || readOnly)">
                 <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
-                <input matInput
+                <textarea matInput
                        class="adf-input"
                        type="text"
                        [id]="field.id"
                        [required]="isRequired()"
-                       [value]="field.value"
+                       [value]="field.value | json"
                        [(ngModel)]="field.value"
                        (ngModelChange)="onFieldChanged(field)">
+                </textarea>
             </mat-form-field>
             <error-widget [error]="field.validationSummary"></error-widget>
             <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         </div>
     `
 })
-export class SampleWidgetComponent extends WidgetComponent  implements OnInit {
+export class CustomWidgetComponent extends WidgetComponent  implements OnInit {
 
-    displayValue: string;
+    displayValue: any;
 
     constructor(public formService: FormService) {
         super(formService);

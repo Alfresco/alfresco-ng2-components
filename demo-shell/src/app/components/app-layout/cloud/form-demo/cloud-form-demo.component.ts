@@ -28,7 +28,10 @@ import {
     FormCloudService
 } from '@alfresco/adf-process-services-cloud';
 import { Subscription } from 'rxjs';
-import { SampleWidgetComponent } from '../../../cloud/custom-form-components/sample-widget.component';
+import {
+    CustomEditorComponent,
+    CustomWidgetComponent
+} from '../../../cloud/custom-form-components/custom-editor.component';
 
 @Component({
     templateUrl: 'cloud-form-demo.component.html',
@@ -60,7 +63,8 @@ export class FormCloudDemoComponent implements OnInit, OnDestroy {
         private automationService: CoreAutomationService,
         private formRenderingService: FormRenderingService) {
         this.formRenderingService.register({
-            'custom': () => SampleWidgetComponent
+            'demo-widget': () => CustomEditorComponent,
+            'custom-text': () => CustomWidgetComponent
         });
     }
 

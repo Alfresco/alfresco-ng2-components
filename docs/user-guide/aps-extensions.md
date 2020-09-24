@@ -1,3 +1,13 @@
+## Form extension for APS
+This page describes how you can customize ADF forms to your own specification.
+
+## Contents
+There are two ways to customize the form
+-   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-custom-components)
+-   [Replacing custom stencils with custom components](#replacing-custom-stencils-with-custom-components)
+    -   [Creating custom stencil](#creating-custom-stencil)
+    -   [Creating custom widget](#creating-custom-widget)
+
 ## Replacing default form widgets with APS custom components
 
 This is a short walkthrough on replacing a standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all APS forms

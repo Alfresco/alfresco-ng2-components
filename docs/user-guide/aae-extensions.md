@@ -1,9 +1,19 @@
+## Form extension for AAE
+This page describes how you can customize ADF forms to your own specification.
+
+## Contents
+There are two ways to customize the form
+-   [Replacing custom form widgets with custom components](#replacing-custom-form-widgets-with-custom-components)
+    -   [Creating custom stencil](#creating-custom-stencil)
+    -   [Creating custom widget](#creating-custom-widget)
+-   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-custom-components)
+
 ## Replacing default form widgets with AAE form widgets
 
-This is a short walkthrough on replacing a standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all APS forms
+This is a short walkthrough on replacing a standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all AAE forms
 rendered within `<adf-form>` component.
 
-First let's create a simple APS form with `Text` widgets:
+First let's create a simple AAE form with `Text` widgets:
 
 ![default text widget](../docassets/images/text-default-widget.png)
 
@@ -81,9 +91,9 @@ This is a short walkthrough on rendering custom AAE form widgets by means of cus
 
 First let's create a basic form widget and call it `Custom Editor`:
 
-![custom form widget](../docassets/images/form-widget-01.png)
+![custom form widget](../docassets/images/aae-form-widget.png)
 
-_Note the `internal identifier` value as it will become a `field type` value when corresponding form is rendered._
+_Note the `type` value as it will become a `field type` value when corresponding form is rendered._
 
 Next put some simple html layout for [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
 
@@ -93,17 +103,17 @@ Next put some simple html layout for [`Form`](../../lib/process-services/src/lib
 
 Now you are ready to design a test form based on your custom form widget:
 
-![custom form widget form](../docassets/images/form-widget-02.png)
+![custom form widget form](../docassets/images/aae-form-with-widget.png)
 
-Once wired with a new task it should look like the following within APS web application:
+Once wired with a new task it should look like the following within AAE web application:
 
-![custom form widget task](../docassets/images/form-widget-03.png)
+![custom form widget task](../docassets/images/aae-form-widget-closer.png)
 
 ### Creating custom widget
 
 If you load previously created task into ADF `<adf-form>` component you will see something like the following:
 
-![adf form widget](../docassets/images/adf-form-widget-01.png)
+![adf form widget](../docassets/images/aae-unresolved-widget.png)
 
 Let's create an Angular component to render missing content:
 
@@ -112,23 +122,23 @@ import { Component } from '@angular/core';
 import { WidgetComponent } from '@alfresco/adf-core';
 
 @Component({
-    selector: 'custom-form-widget',
+    selector: 'app-demo-widget',
     template: `<div style="color: green">ADF version of custom form widget</div>`
 })
-export class CustomFormWidget extends WidgetComponent {}
+export class DemoWidgetComponent extends WidgetComponent {}
 ```
 
 Put it inside custom module:
 
 ```ts
 import { NgModule } from '@angular/core';
-import { CustomStencil01 } from './custom-form-widget-01.component';
+import { DemoWidgetComponent } from './demo-widget.component';
 
 @NgModule({
-    declarations: [ CustomStencil01 ],
-    exports: [ CustomStencil01 ]
+    declarations: [ DemoWidgetComponent ],
+    exports: [ DemoWidgetComponent ]
 })
-export class CustomEditorsModule {}
+export class CustomWidgetsModule {}
 ```
 
 And import into your Application Module
@@ -137,7 +147,7 @@ And import into your Application Module
 @NgModule({
     imports: [
         // ...
-        CustomEditorsModule
+        CustomWidgetsModule
         // ...
     ],
     providers: [],
@@ -150,22 +160,19 @@ Now you can import [`FormRenderingService`](../core/services/form-rendering.serv
 
 ```ts
 import { Component } from '@angular/core';
-import { CustomStencil01 } from './custom-form-widget-01.component';
+import { DemoWidgetComponent } from './demo-widget.component';
 
 @Component({...})
 export class MyView {
 
     constructor(formRenderingService: FormRenderingService) {
-        formRenderingService.setComponentTypeResolver('custom-editor', () => CustomStencil01, true);
+        this.formRenderingService.register({
+            'custom-editor': () => DemoWidgetComponent
+        });
     }
-
 }
 ```
 
 At runtime you should now see your custom Angular component rendered in place of the form widgets:
 
-![adf form widget runtime](../docassets/images/adf-form_widget-02.png)
-
-
-## note
-If you are not getting the above widget then it is something wrong 
+![adf form widget runtime](../docassets/images/aae-resolved-widget.png)

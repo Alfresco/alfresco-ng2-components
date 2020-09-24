@@ -102,7 +102,9 @@ formRenderingService.setComponentTypeResolver('text', customResolver, true);
 | Attach | upload | AttachWidgetComponent or [`UploadWidgetComponent`](../../lib/core/form/components/widgets/upload/upload.widget.ts) (based on metadata) |
 | N/A | N/A | [`UnknownWidgetComponent`](../../lib/core/form/components/widgets/unknown/unknown.widget.ts) |
 
-# Todo: Add reference to APS and aae widgets
+## Extend the Form for APS/AAE
+-   [Use APS Stencil in ADF](./aps-extensions.md)
+-   [Use AAE Form Widget in ADF](./aae-extensions.md)
 
 ## See Also
 
