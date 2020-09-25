@@ -8,179 +8,172 @@ This page describes how you can customize ADF forms to your own specification.
 
 ## Contents
 There are two ways to customize the form
--   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-aps-custom-components)
--   [Replacing custom stencils with custom components](#replacing-custom-stencils-with-custom-components)
-    -   [Creating custom stencil](#creating-custom-stencil)
-    -   [Creating custom widget](#creating-custom-widget)
--   [See Also](#see-also)
+-   [Replace default form widgets with custom components](#replacing-default-form-widgets-with-custom-components)
+-   [Replace custom stencils with custom components](#replacing-custom-stencils-with-custom-components)
 
-## Replacing default form widgets with APS custom components
+## Replace default form widgets with custom components
 
-This is a short walkthrough on replacing a standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all APS forms
-rendered within `<adf-form>` component.
+This is an example of replacing the standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all APS forms rendered within the `<adf-form>` component.
 
-First let's create a simple APS form with `Text` widgets:
+1. Create a simple form with some `Text` widgets:
 
-![default text widget](../docassets/images/text-default-widget.png)
+    ![default text widget](../docassets/images/text-default-widget.png)
 
-Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
+    Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit the [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
 
-```ts
-import { Component } from '@angular/core';
-import { WidgetComponent } from '@alfresco/adf-core';
+    ```ts
+    import { Component } from '@angular/core';
+    import { WidgetComponent } from '@alfresco/adf-core';
 
-@Component({
-    selector: 'custom-editor',
-    template: `
-        <div style="color: red">Look, I'm a custom editor!</div>
-    `
-})
-export class CustomEditorComponent extends WidgetComponent {}
-```
+    @Component({
+        selector: 'custom-editor',
+        template: `
+            <div style="color: red">Look, I'm a custom editor!</div>
+        `
+    })
+    export class CustomEditorComponent extends WidgetComponent {}
+    ```
 
-Now you will need to add it to the application module or any custom module that is imported into the application one:
+2. Add it to the application module or any custom module that is imported into the application one:
 
-```ts
-import { NgModule } from '@angular/core';
-import { CustomEditorComponent } from './custom-editor.component';
+    ```ts
+    import { NgModule } from '@angular/core';
+    import { CustomEditorComponent } from './custom-editor.component';
 
-@NgModule({
-    declarations: [ CustomEditorComponent ],
-    exports: [ CustomEditorComponent ]
-})
-export class CustomEditorsModule {}
-```
+    @NgModule({
+        declarations: [ CustomEditorComponent ],
+        exports: [ CustomEditorComponent ]
+    })
+    export class CustomEditorsModule {}
+    ```
 
-Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into the following collections: `declarations`, `exports`.
+3. Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into the  collections: `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library), don't forget to import it into the main application:
 
-If you decided to store custom widgets in a separate dedicated module (and optionally as separate redistributable library)
-don't forget to import it into your main application one:
+    ```ts
+    @NgModule({
+        imports: [
+            // ...
+            CustomEditorsModule
+            // ...
+        ],
+        providers: [],
+        bootstrap: [ AppComponent ]
+    })
+    export class AppModule {}
+    ```
 
-```ts
-@NgModule({
-    imports: [
-        // ...
-        CustomEditorsModule
-        // ...
-    ],
-    providers: [],
-    bootstrap: [ AppComponent ]
-})
-export class AppModule {}
-```
+4. Import the [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and override the default mapping, for example:
 
-Now you can import [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and override default mapping similar to the following:
+    ```ts
+    import { Component } from '@angular/core';
+    import { CustomEditorComponent } from './custom-editor.component';
 
-```ts
-import { Component } from '@angular/core';
-import { CustomEditorComponent } from './custom-editor.component';
+    @Component({...})
+    export class MyView {
 
-@Component({...})
-export class MyView {
+        constructor(formRenderingService: FormRenderingService) {
+            formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
+        }
 
-    constructor(formRenderingService: FormRenderingService) {
-        formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
     }
+    ```
 
-}
-```
+5. At runtime it should look similar to the following:
 
-At runtime it should look similar to the following:
+    ![custom text widget](../docassets/images/text-custom-widget.png)
 
-![custom text widget](../docassets/images/text-custom-widget.png)
+## Replace custom stencils with custom components
 
-## Replacing custom stencils with custom components
+This is an example of rendering custom APS stencils using custom Angular components.
 
-This is a short walkthrough on rendering custom APS stencils by means of custom Angular components.
+### Create a custom stencil
 
-### Creating custom stencil
+1. Create a basic stencil and call it `Custom Stencil 01`:
 
-First let's create a basic stencil and call it `Custom Stencil 01`:
+    ![custom stencil](../docassets/images/activiti-stencil-01.png)
 
-![custom stencil](../docassets/images/activiti-stencil-01.png)
+    **Note**: the `internal identifier` is important as it will become the `field type` when the form is rendered.
 
-_Note the `internal identifier` value as it will become a `field type` value when corresponding form is rendered._
+2. Create a simple html layout for the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
 
-Next put some simple html layout for [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
+    ```html
+    <div style="color: blue">Custom activiti stencil</div>
+    ```
 
-```html
-<div style="color: blue">Custom activiti stencil</div>
-```
+3. Create a test form based on your custom stencil:
 
-Now you are ready to design a test form based on your custom stencil:
+    ![custom stencil form](../docassets/images/activiti-stencil-02.png)
 
-![custom stencil form](../docassets/images/activiti-stencil-02.png)
+4. Create a task using the test form. It will look similar to the following:
 
-Once wired with a new task it should look like the following within APS web application:
+    ![custom stencil task](../docassets/images/activiti-stencil-03.png)
 
-![custom stencil task](../docassets/images/activiti-stencil-03.png)
+### Create a custom widget
 
-### Creating custom widget
+1. Load the form created in the previous steps into the ADF `<adf-form>` component:
 
-If you load previously created task into ADF `<adf-form>` component you will see something like the following:
+    ![adf stencil](../docassets/images/adf-stencil-01.png)
 
-![adf stencil](../docassets/images/adf-stencil-01.png)
+2. Create an Angular component to render the missing content:
 
-Let's create an Angular component to render missing content:
+    ```ts
+    import { Component } from '@angular/core';
+    import { WidgetComponent } from '@alfresco/adf-core';
 
-```ts
-import { Component } from '@angular/core';
-import { WidgetComponent } from '@alfresco/adf-core';
+    @Component({
+        selector: 'custom-stencil-01',
+        template: `<div style="color: green">ADF version of custom Activiti stencil</div>`
+    })
+    export class CustomStencil01 extends WidgetComponent {}
+    ```
 
-@Component({
-    selector: 'custom-stencil-01',
-    template: `<div style="color: green">ADF version of custom Activiti stencil</div>`
-})
-export class CustomStencil01 extends WidgetComponent {}
-```
+3. Place it inside a custom module:
 
-Put it inside custom module:
+    ```ts
+    import { NgModule } from '@angular/core';
+    import { CustomStencil01 } from './custom-stencil-01.component';
 
-```ts
-import { NgModule } from '@angular/core';
-import { CustomStencil01 } from './custom-stencil-01.component';
+    @NgModule({
+        declarations: [ CustomStencil01 ],
+        exports: [ CustomStencil01 ]
+    })
+    export class CustomEditorsModule {}
+    ```
 
-@NgModule({
-    declarations: [ CustomStencil01 ],
-    exports: [ CustomStencil01 ]
-})
-export class CustomEditorsModule {}
-```
+4. Import it into your Application Module:
 
-And import into your Application Module
+    ```ts
+    @NgModule({
+        imports: [
+            // ...
+            CustomEditorsModule
+            // ...
+        ],
+        providers: [],
+        bootstrap: [ AppComponent ]
+    })
+    export class AppModule {}
+    ```
 
-```ts
-@NgModule({
-    imports: [
-        // ...
-        CustomEditorsModule
-        // ...
-    ],
-    providers: [],
-    bootstrap: [ AppComponent ]
-})
-export class AppModule {}
-```
+5. Import the [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and provide the new mapping:
 
-Now you can import [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and provide new mapping:
+    ```ts
+    import { Component } from '@angular/core';
+    import { CustomStencil01 } from './custom-stencil-01.component';
 
-```ts
-import { Component } from '@angular/core';
-import { CustomStencil01 } from './custom-stencil-01.component';
+    @Component({...})
+    export class MyView {
 
-@Component({...})
-export class MyView {
+        constructor(formRenderingService: FormRenderingService) {
+            formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
+        }
 
-    constructor(formRenderingService: FormRenderingService) {
-        formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
     }
+    ```
 
-}
-```
+6. At runtime you should now see your custom Angular component rendered in place of the stencils:
 
-At runtime you should now see your custom Angular component rendered in place of the stencils:
-
-![adf stencil runtime](../docassets/images/adf-stencil-02.png)
+    ![adf stencil runtime](../docassets/images/adf-stencil-02.png)
 
 ## See Also
 

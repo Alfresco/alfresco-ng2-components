@@ -10,14 +10,12 @@ This page describes how you can customize ADF forms to your own specification.
 There are two ways to customize the form
 -   [Replace default form widgets with custom components](#replace-default-form-widgets-with-aae-form-widgets)
 -   [Replace custom form widget with custom components](#replace-custom-form-widgets-with-custom-components)
--   [See Also](#see-also)
 
 ## Replace default form widgets with AAE form widgets
 
-This is an example of replacing the standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all AAE forms
-rendered within the `<adf-form>` component.
+This is an example of replacing the standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all AAE forms rendered within the `<adf-form>` component.
 
-1. Create a simple form withs some `Text` widgets:
+1. Create a simple form with some `Text` widgets:
 
     ![default text widget](../docassets/images/aae-simple-form.png)
 
@@ -47,7 +45,7 @@ rendered within the `<adf-form>` component.
     export class CustomEditorsModule {}
     ```
 
-3. Every custom widget component should be added into the the collections `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library) don't forget to import it into the main application one:
+3. Every custom widget component should be added into the the collections `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library) don't forget to import it into the main application:
 
     ```ts
     @NgModule({
