@@ -113,7 +113,7 @@ Now you are ready to design a test form based on your custom form widget:
 
 ![custom form widget form](../docassets/images/aae-form-with-widget.png)
 
-### Creating custom widget
+### Create a custom widget
 
 When displayed in a task, the field will look similar to the following:
 
