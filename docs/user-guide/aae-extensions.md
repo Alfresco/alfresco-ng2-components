@@ -8,10 +8,8 @@ This page describes how you can customize ADF forms to your own specification.
 
 ## Contents
 There are two ways to customize the form
--   [Replacing custom form widgets with custom components](#replacing-custom-form-widgets-with-custom-components)
-    -   [Creating custom form widget](#creating-custom-form-widget)
-    -   [Creating custom widget](#creating-custom-widget)
--   [Replacing default form widgets with custom components](#replacing-default-form-widgets-with-aae-form-widgets)
+-   [Replace default form widgets with custom components](#replace-default-form-widgets-with-aae-form-widgets)
+-   [Create a custom form widget with custom components](#create-a-custom-form-widget-with-custom-components)
 -   [See Also](#see-also)
 
 ## Replace default form widgets with AAE form widgets
@@ -19,77 +17,69 @@ There are two ways to customize the form
 This is an example of replacing the standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all AAE forms
 rendered within the `<adf-form>` component.
 
-First let's create a simple AAE form with `Text` widgets:
+1. Create a simple form withs some `Text` widgets:
 
-![default text widget](../docassets/images/aae-simple-form.png)
+    ![default text widget](../docassets/images/aae-simple-form.png)
 
-Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
+    Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) must inherit the [`WidgetComponent`](../insights/components/widget.component.md) class in order to function properly:
 
-```ts
-import { Component } from '@angular/core';
-import { WidgetComponent } from '@alfresco/adf-core';
+    ```ts
+    import { Component } from '@angular/core';
+    import { WidgetComponent } from '@alfresco/adf-core';
+    @Component({
+        selector: 'custom-editor',
+        template: `
+            <div style="color: red">Look, I'm a AAE custom editor!</div>
+        `
+    })
+    export class CustomEditorComponent extends WidgetComponent {}
+    ```
 
-@Component({
-    selector: 'custom-editor',
-    template: `
-        <div style="color: red">Look, I'm a AAE custom editor!</div>
-    `
-})
-export class CustomEditorComponent extends WidgetComponent {}
-```
+2. Add it to the application module or any custom module that is imported into the application one:
 
-Now you will need to add it to the application module or any custom module that is imported into the application one:
+    ```ts
+    import { NgModule } from '@angular/core';
+    import { CustomEditorComponent } from './custom-editor.component';
+    @NgModule({
+        declarations: [ CustomEditorComponent ],
+        exports: [ CustomEditorComponent ]
+    })
+    export class CustomEditorsModule {}
+    ```
 
-```ts
-import { NgModule } from '@angular/core';
-import { CustomEditorComponent } from './custom-editor.component';
+3. Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into the the collections `declarations` and `exports`. If you decided to store custom widgets in a separate dedicated module (and optionally as a separate re-distributable library) don't forget to import it into the main application one:
 
-@NgModule({
-    declarations: [ CustomEditorComponent ],
-    exports: [ CustomEditorComponent ]
-})
-export class CustomEditorsModule {}
-```
+    ```ts
+    @NgModule({
+        imports: [
+            // ...
+            CustomEditorsModule
+            // ...
+        ],
+        providers: [],
+        bootstrap: [ AppComponent ]
+    })
+    export class AppModule {}
+    ```
 
-Every custom [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) should be added into the following collections: `declarations`, `exports`.
+4. Import the [`FormRenderingService`](../core/services/form-rendering.service.md) into any of your Views and override the default mapping, for example:
 
-If you decided to store custom widgets in a separate dedicated module (and optionally as separate redistributable library)
-don't forget to import it into your main application one:
-
-```ts
-@NgModule({
-    imports: [
-        // ...
-        CustomEditorsModule
-        // ...
-    ],
-    providers: [],
-    bootstrap: [ AppComponent ]
-})
-export class AppModule {}
-```
-
-Now you can import [`FormRenderingService`](../core/services/form-rendering.service.md) in any of your Views and override default mapping similar to the following:
-
-```ts
-import { Component } from '@angular/core';
-import { CustomEditorComponent } from './custom-editor.component';
-
-@Component({...})
-export class MyView {
-
-    constructor(formRenderingService: FormRenderingService) {
-        this.formRenderingService.register({
-            'text': () => CustomEditorComponent
-        }, true);
+    ```ts
+    import { Component } from '@angular/core';
+    import { CustomEditorComponent } from './custom-editor.component';
+    @Component({...})
+    export class MyView {
+        constructor(formRenderingService: FormRenderingService) {
+            this.formRenderingService.register({
+                'text': () => CustomEditorComponent
+            }, true);
+        }
     }
+    ```
 
-}
-```
+5. At runtime the form should look similar to the following:
 
-At runtime it should look similar to the following:
-
-![custom text widget](../docassets/images/aae-simple-override-form.png)
+    ![custom text widget](../docassets/images/aae-simple-override-form.png)
 
 Create a custom form widget with custom components
 
