@@ -17,14 +17,29 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormService, WidgetComponent } from '@alfresco/adf-core';
+// tslint:disable:component-selector
+
+@Component({
+    selector: 'custom-editor-widget',
+    template: `
+        <div style="color: green">
+            ADF version of custom form widget
+        </div>
+    `
+})
+export class CustomEditorComponent extends WidgetComponent {
+    constructor() {
+        super();
+    }
+}
 
 @Component({
     selector: 'app-sample-widget',
     template: `
         <div style="color: red">
-            Look, I'm custom cloud form widget!
             <p *ngIf="field.readOnly || readOnly">
-               Value :: <span> {{displayValue}}</span>
+                <label class="adf-label" [attr.for]="field.id">{{field.name | translate }}<span *ngIf="isRequired()">*</span></label>
+                <span>{{field.value}}</span>
             </p>
 
             <mat-form-field *ngIf="!(field.readOnly || readOnly)">
@@ -37,21 +52,20 @@ import { FormService, WidgetComponent } from '@alfresco/adf-core';
                        [value]="field.value"
                        [(ngModel)]="field.value"
                        (ngModelChange)="onFieldChanged(field)">
+                <mat-hint>{{field.placeholder}}</mat-hint>
             </mat-form-field>
             <error-widget [error]="field.validationSummary"></error-widget>
             <error-widget *ngIf="isInvalidFieldRequired()" required="{{ 'FORM.FIELD.REQUIRED' | translate }}"></error-widget>
         </div>
     `
 })
-export class SampleWidgetComponent extends WidgetComponent  implements OnInit {
-
-    displayValue: string;
+export class CustomWidgetComponent extends WidgetComponent  implements OnInit {
 
     constructor(public formService: FormService) {
         super(formService);
     }
 
     ngOnInit() {
-        this.displayValue = this.field.value;
+        this.field.value = typeof this.field.value === 'object' ? JSON.stringify(this.field.value) : this.field.value;
     }
 }
