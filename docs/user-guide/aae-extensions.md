@@ -97,7 +97,7 @@ This is an example of rendering custom form widgets using custom Angular compone
 
 ### Create a custom form widget
 
-First let's create a basic form widget and call it `Custom Editor`:
+To begin,  create a basic form widget and call it `Custom Editor`:
 
 ![custom form widget](../docassets/images/aae-form-widget.png)
 
