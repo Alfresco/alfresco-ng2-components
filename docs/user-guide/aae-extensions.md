@@ -93,7 +93,7 @@ At runtime it should look similar to the following:
 
 Create a custom form widget with custom components
 
-This is a short walkthrough on rendering custom AAE form widgets by means of custom Angular components.
+This is an example of rendering custom form widgets using custom Angular components.
 
 ### Create a custom form widget
 
