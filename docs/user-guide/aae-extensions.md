@@ -101,7 +101,7 @@ To begin,  create a basic form widget and call it `Custom Editor`:
 
 ![custom form widget](../docassets/images/aae-form-widget.png)
 
-_Note the `type` value as it will become a `field type` value when corresponding form is rendered._
+**Note**: The `type` is important as it will become the `field type` when the form is rendered.
 
 Next put some simple html layout for [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
 
