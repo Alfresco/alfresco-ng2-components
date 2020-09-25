@@ -103,7 +103,7 @@ To begin,  create a basic form widget and call it `Custom Editor`:
 
 **Note**: The `type` is important as it will become the `field type` when the form is rendered.
 
-Next put some simple html layout for [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
+Input some simple html for the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`runtime template` and the [`Form`](../../lib/process-services/src/lib/task-list/models/form.model.ts)`editor template` fields:
 
 ```html
 <div style="color: blue">Custom form widget</div>
