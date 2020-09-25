@@ -109,7 +109,7 @@ Next put some simple html layout for [`Form`](../../lib/process-services/src/lib
 <div style="color: blue">Custom form widget</div>
 ```
 
-Now you are ready to design a test form based on your custom form widget:
+You can now design a form that uses your custom form widget:
 
 ![custom form widget form](../docassets/images/aae-form-with-widget.png)
 
