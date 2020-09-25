@@ -95,7 +95,7 @@ Create a custom form widget with custom components
 
 This is a short walkthrough on rendering custom AAE form widgets by means of custom Angular components.
 
-### Creating custom form widget
+### Create a custom form widget
 
 First let's create a basic form widget and call it `Custom Editor`:
 
