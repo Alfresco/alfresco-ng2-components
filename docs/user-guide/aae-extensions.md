@@ -16,8 +16,8 @@ There are two ways to customize the form
 
 ## Replace default form widgets with AAE form widgets
 
-This is a short walkthrough on replacing a standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all AAE forms
-rendered within `<adf-form>` component.
+This is an example of replacing the standard `Text` [widget](../../lib/testing/src/lib/core/pages/form/widgets/widget.ts) with a custom component for all AAE forms
+rendered within the `<adf-form>` component.
 
 First let's create a simple AAE form with `Text` widgets:
 
