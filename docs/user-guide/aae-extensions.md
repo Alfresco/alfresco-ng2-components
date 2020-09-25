@@ -91,7 +91,7 @@ At runtime it should look similar to the following:
 
 ![custom text widget](../docassets/images/aae-simple-override-form.png)
 
-## Replacing custom form widgets with custom components
+Create a custom form widget with custom components
 
 This is a short walkthrough on rendering custom AAE form widgets by means of custom Angular components.
 
