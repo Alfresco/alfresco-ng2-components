@@ -115,7 +115,7 @@ Now you are ready to design a test form based on your custom form widget:
 
 ### Creating custom widget
 
-Once wired with a new task it should look like the following within AAE Process Experience:
+When displayed in a task, the field will look similar to the following:
 
 ![adf form widget](../docassets/images/aae-unresolved-widget.png)
 
