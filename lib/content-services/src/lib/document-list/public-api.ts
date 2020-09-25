@@ -23,6 +23,7 @@ export * from './components/library-name-column/library-name-column.component';
 export * from './components/library-role-column/library-role-column.component';
 export * from './components/library-status-column/library-status-column.component';
 export * from './components/name-column/name-column.component';
+export * from './components/filter-header/filter-header.component';
 export * from './components/trashcan-name-column/trashcan-name-column.component';
 
 // data
