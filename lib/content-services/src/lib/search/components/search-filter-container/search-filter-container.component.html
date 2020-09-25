@@ -8,6 +8,7 @@
             (menuOpened)="onMenuOpen()"
             (keyup.enter)="$event.stopPropagation()"
             class="adf-filter-button"
+            [attr.aria-label]="getTooltipTranslation(col?.title)"
             [matTooltip]="getTooltipTranslation(col?.title)">
         <adf-icon value="adf:filter"
                   [ngClass]="{ 'adf-icon-active': isActive() || menuTrigger.menuOpen }"
